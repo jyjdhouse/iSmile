@@ -1,0 +1,349 @@
+.no-items-msg{
+    text-align: center;
+    font-size: 1.5rem;
+}
+.add-to-cart-container,
+.cart-popup-container{
+    position: fixed;
+    z-index: 60;
+    width: 100%;
+    overflow: hidden;
+    background-color: white;
+    transition: all 350ms ease;
+}
+.add-to-cart-container{
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: -100%;
+    height: 45%;
+}
+.cart-popup-container {
+    height: 100vh;
+    top: 0;
+    right: 0;
+    margin-right: -100%;
+}
+.add-to-cart-container-active{
+    margin-bottom: 0;
+}
+.cart-popup-container-active {
+    margin-right: 0;
+    overflow-y: auto;
+}
+
+.quick-add-cart-title,
+.cart-popup-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3% 5%;
+    border-bottom: 1px solid rgba(200, 200, 200, .6);
+}
+.quick-add-cart-title{
+    height: 20%;
+}
+.quick-add-cart-title h2,
+.cart-popup-title h2 {
+    font-size: 1.5rem;
+}
+.close-cart-menu{
+    font-size: 25px;
+}
+.product-selected-container {
+    padding: 4% 6%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-selected-card {
+    display: flex;
+    flex-wrap: wrap;
+    border-right: 0;
+    border-left: 0;
+    justify-content: center;
+    height: 50%;
+    width: 100%;
+}
+
+.product-selected-img-container,
+.cart-product-img-container {
+    width: 48%;
+    height: 100%;
+}
+.product-selected-img-container{
+    text-align: center;
+}
+
+.product-selected-img-container img,
+.cart-product-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.product-selected-img-container img{
+    width: 50%;
+    background: linear-gradient(rgba(200, 200, 200, .4), rgba(255, 255, 255, 0.2));
+}
+
+/* Contenedor que tiene nombre,color,etc */
+.product-selected-info-qty-container,
+.cart-product-selected-info-qty-container {
+    width: 48%;
+    height: 100%;
+}
+
+/* Tacho de basura */
+.product-selected-name-remove-container,
+.cart-product-selected-name-remove-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30%;
+}
+
+.product-selected-name{
+    font-size: 1rem;
+}
+.cart-product-selected-name {
+    font-size: 1.2rem
+}
+
+.product-selected-remove-btn,
+.cart-product-selected-remove-btn {
+    font-size: 1rem;
+    border: 0;
+    outline: 0;
+    color: rgb(100, 100, 100);
+    background: none;
+}
+.product-selected-remove-btn .close-cart-menu{
+    font-size: 1.2rem;
+}
+.product-selected-color-size,
+.cart-product-selected-color-size {
+    font-size: 0.8rem;
+    height: 25%;
+    display: flex;
+    align-items: center;
+}
+.product-selected-color-size{
+    font-size: .6rem;
+}
+
+.product-selected-quantity-container,
+.cart-product-selected-quantity-container {
+    display: flex;
+    height: 30%;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid rgb(166, 166, 166);
+    border-right: 0;
+    border-left: 0;
+    padding: .1% .5%;
+}
+.product-selected-quantity-container{
+    border: none;
+}
+.product-selected-quantity-container .total{
+    font-size: 15px;
+}
+.current-quantity-container {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    justify-content: space-evenly;
+}
+
+.current-quantity {
+    margin-right: 6%;
+    padding: 3% 10%;
+    border-radius: .6rem;
+}
+/* BOTONES DE ADD-TO-CART */
+.add-to-cart-buttons-container,
+.quick-checkout-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: .5rem;
+}
+.checkout-btn,
+.view-bag-btn {
+    width: 60%;
+    font-size: 13px;
+    padding: 2.1% 11%;
+    border: 0;
+    border-radius: 1rem;
+    color: #000;
+}
+
+.subtotal-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 8%;
+    border-bottom: 1px solid rgba(200,200,200,.5);
+    padding-bottom: 4%;
+}
+
+
+
+
+.checkout-btn {
+    color: white;
+    background-color: rgb(35, 35, 35);
+}
+.checkout-btn a{
+    color: #fff;
+}
+.view-bag-btn {
+    border: 1px solid rgb(166, 166, 166);
+
+}
+/* CART POPUP */
+.cart-product-selected-info-qty-container {
+    width: 48%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+/* PRODUCTS SECTION */
+.cart-products-section {
+    padding: 5% 3%;
+    border-bottom: 1px solid rgba(200, 200, 200, .6);
+    height: 60%;
+}
+
+.cart-product-card {
+    display: flex;
+    width: 80%;
+    height: 65%; /* Siempre es 5% mas de lo que es, por el border-bottom y padding */
+    padding-bottom: 5%;
+    margin: 0 auto;
+    border-bottom: 1px solid rgba(200,200,200,.3);
+    transition: all .3s ease;
+}
+.multiple-cart-products-section{
+    height: fit-content !important;
+}
+.two-products{
+    height: 50%;
+}
+.multiple-products{
+    height: 45% ;
+}
+.multiple-products .cart-product-selected-info-qty-container{
+    margin: auto 0;
+    row-gap: 1rem;
+}
+/* CART END SECTION */
+.cart-end-section {
+    padding: 5% 3%;
+    margin-bottom: 21%;
+}
+
+.substract-item-quantity {
+    display: none;
+    margin-left: 3%;
+    pointer-events: none;
+}
+
+
+.substract-item-quantity-active, .add-one-same-product {
+    display: flex;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+@media(min-width:768px) {
+    .add-to-cart-container {
+        width: 50%;
+    }
+
+    .bx-x {
+
+        font-size: 1.7rem;
+    }
+}
+
+@media(min-width:1024px) {
+
+    .add-to-cart-container{
+        width: 40%;
+        margin-bottom: 0;
+        margin-right: -100%;
+        border-radius: .5rem;
+    }
+    .add-to-cart-container{
+        top: -1%;
+        right: -1%;
+        left: unset;
+    }
+    .add-to-cart-container-active{
+        margin-right: 0;
+    }
+    .cart-popup-container {
+        padding: 0;
+        width: 40%;
+    }
+
+    .cart-popup-title {
+        width: 100%;
+        padding: 2.5% 5%;
+        border-bottom: 1px solid rgba(200, 200, 200, .6);
+    }
+
+    .quick-add-cart-title h2,
+    .cart-popup-title h2 {
+        font-size: 2rem;
+    }
+
+    .product-selected-name{
+        font-size: 1.5rem;
+    }
+    .product-selected-color-size,
+    .product-selected-info-qty-container .total{
+        font-size: .95rem;
+    }
+    .bx-x {
+        cursor: pointer;
+        font-size: 2rem;
+    }
+
+    /* BUTTONS EN ADD-TO-CART */
+    .add-to-cart-buttons-container{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .checkout-btn,
+    .view-bag-btn{
+        width: 45%;
+        cursor: pointer;
+    }
+    /* CART POPUP */
+    .multiple-products{
+        height: 150px;
+    }
+    .cart-end-section{
+        margin-bottom: 0;
+    }
+    .cart-products-section{
+        height: 70%;
+    }
+    .cart-product-card{
+        margin-top: 5%;
+    }
+    .two-products{
+        height: 45%;
+    }
+    .remove-cart-product-btn{
+        font-size: 1.3rem;
+        color: #000;
+        cursor: pointer;
+    }
+}

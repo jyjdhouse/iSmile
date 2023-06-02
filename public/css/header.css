@@ -1,0 +1,484 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    user-select: none;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.noScroll {
+    overflow: hidden;
+    /* pointer-events: none; */
+}
+
+.hidden {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.side-navbar-container li {
+    list-style: none;
+}
+
+
+.black-screen {
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.error-msg {
+    color: #d00;
+    margin-top: 2%;
+}
+
+/* MENU HAMBURGUESA */
+
+.burguer-menu-btns-container {
+    display: inline;
+    width: 12.5%;
+    text-align: center;
+    position: relative;
+}
+
+.open-menu-button {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* MENU  */
+
+.side-navbar-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    z-index: 110;
+    right: 0;
+    width: 0;
+    overflow: hidden;
+    transition: width 350ms ease;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.side-navbar-container-active {
+    width: 100%;
+}
+
+.close-button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 30px;
+    cursor: pointer;
+    padding: 2%;
+    border-bottom: 1px solid rgba(40, 40, 40, .2);
+}
+
+.close-menu-button {
+    margin-right: 20px;
+}
+
+.close-menu-text {
+    font-size: 19px;
+}
+
+.logged-logo-mobile {
+    margin-right: 4%;
+}
+
+.burguer-menu-category {
+    padding: 0 2rem;
+    margin-bottom: 15%;
+    border-bottom: 1px solid rgba(40, 40, 40, .2);
+}
+
+.burguer-menu-category:first-child {
+    margin: 15% 0;
+}
+
+.category-link {
+    color: #000;
+    font-size: 20px;
+}
+
+.burguer-menu-category-list {
+    padding: 0 6%;
+}
+
+.burguer-menu-option-list {
+    padding-left: 15%;
+}
+
+.burguer-menu-option-list:last-child {
+    margin-bottom: 15%;
+}
+
+.burguer-menu-option {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0.8rem 0;
+    font-size: 15px;
+}
+
+.burguer-menu-option a {
+    color: #555;
+    font-size: 1.2rem;
+}
+
+.burguer-menu-option i {
+    margin: auto 0;
+}
+
+.burger-submenu-back {
+    color: rgb(166, 166, 166);
+    font-size: 25px;
+}
+
+.burger-menu-info-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 6%;
+    margin: 1.5rem;
+}
+
+.burger-menu-info-container * {
+    color: #000;
+}
+
+.burger-menu-item-container:first-child {
+    margin-bottom: 1rem;
+}
+
+.fa-location-dot,
+.bx-phone {
+    font-size: 1.25rem;
+    margin-right: 0.700rem;
+}
+
+
+
+/* END MENU HAMBURGUESA */
+
+.header {
+    position: fixed;
+    width: 100%;
+    padding: 2.5vh 0;
+    background-color: white;
+    border-bottom: 1px solid rgba(40, 40, 40, .2);
+    height: 10vh;
+    transition: visibility .2s ease-out;
+    z-index: 11;
+    top: 0;
+}
+
+.header-hidden {
+    animation: fadeOutUp .2s ease-in-out;
+    visibility: hidden;
+
+}
+
+.header-active {
+    /* Para cuando scrollean para arriba */
+    animation: fadeInDown .4s ease-in-out;
+    visibility: visible;
+}
+
+.header i {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.nav-start,
+.nav-end {
+    width: 33%;
+    display: flex;
+    column-gap: 1.2rem;
+    align-items: center;
+}
+
+.nav-start {
+    justify-content: flex-start;
+    padding-left: 1rem;
+}
+
+.nav-end {
+    padding-right: 5%;
+    justify-content: flex-end;
+}
+
+.nav-bar-section {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-container {
+    width: 12.5%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.brand-name {
+    color: #000;
+    width: 36%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.wishlist-container{
+    position: relative;
+}
+
+.wishlist-logo {
+    font-size: 18px;
+}
+
+.login-toggler {
+    cursor: pointer;
+}
+
+.login-toggler-desktop {
+    display: none;
+}
+
+.shopping-cart-container {
+    position: relative;
+    width: fit-content;
+    display: flex;
+}
+
+.shopping-cart-container .bx-shopping-bag {
+    font-size: 18px;
+}
+.products-quantity {
+    position: absolute;
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    top: -60%;
+    right: -50%;
+    font-size: .8rem;
+}
+
+/* SEARCH FORM */
+.search-section-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: height .3s ease;
+    overflow: hidden;
+    height: 0%;
+    background-color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.search-section-container-active {
+    height: 12%;
+    border-bottom: 1px solid rgba(40, 40, 40, .2);
+}
+
+
+.search-input-container {
+    position: relative;
+    height: fit-content;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    padding: 3% 10%;
+    display: flex;
+    align-items: center;
+}
+
+.search-input-container .search-logo {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 12%;
+    cursor: pointer;
+}
+
+.close-search-form-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 5%;
+    cursor: pointer;
+    display: none;
+}
+
+.search-input-container .search-input {
+    background-color: #efefef;
+    padding: 15px;
+    padding-left: 40px;
+    width: 100%;
+    height: 80%;
+    border: none;
+    border-radius: 5px;
+    font-size: 17px;
+    outline: none;
+}
+
+.search-container-top .fa-x {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 3vw;
+    opacity: 1;
+    cursor: pointer;
+}
+
+/* END PARTE DE ARRIBA */
+/* TERMINADO SEARCH FORM  */
+/* MEDIAS QUERIES */
+
+/* TABLET */
+@media (min-width:768px) {
+
+    /* MENU */
+    .side-navbar-container-active {
+        width: 50%;
+    }
+}
+
+/* MOBILE */
+@media (min-width: 1024px) {
+    .mobile-category{
+        display: none;
+    }
+    .login-toggler-desktop {
+        display: block;
+    }
+
+    .side-navbar-container-active {
+        width: 40%;
+    }
+
+    .brand-name {
+        font-size: 40px;
+        width: 50%;
+    }
+
+    .nav-start {
+        padding-left: 3%;
+        justify-content: flex-start;
+    }
+
+    .nav-end {
+        padding-right: 3%;
+        justify-content: flex-end;
+    }
+
+    .nav-start,
+    .nav-end {
+        width: 25%;
+        column-gap: 1.8rem;
+    }
+
+    .shopping-cart-container .fa-bag-shopping {
+        font-size: 20px;
+    }
+
+    .products-quantity {
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .wishlist-container .products-quantity{
+        right: -70%;
+    }
+
+
+    .category-link {
+        font-size: 24px;
+    }
+
+    .burguer-menu-option:hover {
+        text-decoration: underline;
+        text-decoration-color: #555;
+    }
+
+    .info-menu-item {
+        margin-top: .6rem;
+    }
+
+    .info-menu-item i {
+        margin-right: .5rem;
+    }
+
+    .info-menu-item a {
+        color: #000;
+    }
+
+
+    /* SEARCH FORM */
+    .search-section-container {
+        margin-top: 0;
+        /* border-top: 1px solid rgba(200, 200, 200, .4); */
+    }
+
+    .search-section-container-active {
+        height: 17%;
+    }
+
+    .close-search-form-button {
+        display: inline-block;
+    }
+
+    .search-input-container {
+        width: 100%;
+        padding: 1.5% 10%;
+        justify-content: center;
+    }
+
+    .search-input-container .search-logo {
+        left: 31%
+    }
+
+    .search-input-container .search-input {
+        width: 40vw;
+    }
+}
+
+
+
+/* ANIMACIONES */
+@keyframes fadeInDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutUp {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}

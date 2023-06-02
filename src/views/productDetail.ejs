@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+        <link rel="stylesheet" href="/css/productDetail.css">
+        <script src="/scripts/productDetail.js" type="module"></script>
+        <title>Cartera #1</title>
+</head>
+
+<body>
+    <%- include('./partials/wpp.ejs') %>
+        <%- include('./partials/blackScreen.ejs') %>
+            <%- include('./partials/login.ejs') %>
+                <%- include('./partials/header.ejs') %>
+                    <%- include('./partials/registrationForm.ejs') %>
+                        <%- include('partials/shoppingCartPopup.ejs') %>
+                            <main class="product-detail-main main desktop-main">
+                                <div class="images-info-container">
+                                    <div class="carousel-container carousel-desktop">
+                                        <div class="carousel-images-container">
+                                            <img src="/img/products/dresses/dress1.webp" alt="product-detail-image"
+                                                class="product-image" id="current-displayed-image">
+                                        </div>
+                                        <div class="side-images-container">
+                                            <img src="/img/products/dresses/dress1.webp" alt="product-detail-image"
+                                                class="product-image product-image-active side-image side-image-desktop">
+                                            <img src="/img/products/dresses/dress2.webp" alt="product-detail-image"
+                                                class="product-image side-image side-image-desktop">
+                                            <img src="/img/products/dresses/dress3.webp" alt="product-detail-image"
+                                                class="product-image side-image side-image-desktop">
+                                            <img src="/img/products/dresses/dress3.webp" alt="product-detail-image"
+                                                class="product-image side-image side-image-desktop">
+                                            <video src="/video/dress1.mp4"
+                                                class="video product-image side-image side-image-desktop" muted
+                                                playsinline loop>
+                                            </video>
+                                        </div>
+                                        <div class="scrollbar-carousel"></div>
+                                    </div>
+                                    <div class="carousel-container carousel-mobile">
+                                        <div class="carousel-images-container">
+                                            <img src="/img/products/dresses/dress1.webp" alt="product-detail-image"
+                                                class="product-image" id="current-displayed-image" data-position='1'>
+                                            <img src="/img/products/dresses/dress2.webp" alt="product-detail-image"
+                                                class="product-image side-image" data-position='2'>
+                                            <img src="/img/products/dresses/dress3.webp" alt="product-detail-image"
+                                                class="product-image side-image" data-position='3'>
+                                            <video src="/video/dress1.mp4" class="video product-image side-image" muted
+                                                playsinline loop data-position="4">
+
+                                                No se puede reproducir el video
+                                            </video>
+                                        </div>
+                                        <div class="dots-carousel-container">
+                                            <div class="dots-carousel"></div>
+                                            <div class="dots-carousel"></div>
+                                            <div class="dots-carousel"></div>
+                                            <div class="dots-carousel"></div>
+                                        </div>
+                                    </div>
+                                    <div class="product-info-container">
+                                        <div class="favourite-logo-container">
+                                            <% if (locals.isLogged && userLogged['user_categories_id']==1) { %>
+                                                <i class="fa-solid fa-ellipsis-vertical admin-container-button"></i>
+                                                <div class="admin-actions-container">
+                                                    <a href="/admin/editProduct/35">Editar producto</a>
+                                                    <a href="/admin/deleteProduct/35">Eliminar producto</a>
+                                                </div>
+                                                <% }else{ %>
+                                                    <% if (1==1) { %> <!-- CONDICION DE SI ESTA EN BOOKMARS -->
+                                                        <i class="fa-regular fa-heart favourite-logo"></i>
+
+                                                        <% }else{ %>
+                                                            <i class="fa-solid fa-heart favourite-logo"></i>
+                                                            <% } %>
+                                                                <% } %>
+                                        </div>
+                                        <div class="product-price-name-container">
+                                            <p class="product-name">Cartera Women Fashion</p>
+                                            <p class="product-price">$8000</p>
+                                        </div>
+                                        <div class="product-description-container">
+                                            <p class="product-description">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum
+                                                dolor
+                                                sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet
+                                                consectetur
+                                                adipisicing elit.
+                                            </p>
+                                        </div>
+                                        <div class="product-color-container">
+                                            <label for="" class="select-label">Colores</label>
+                                            <div class="color-images-container">
+                                                <div class="color-image-border color-image-border-active">
+                                                    <a href="#"><img src="/img/products/handbags/cartera1.avif"
+                                                            alt="color-image-option" class="color-image"></a>
+                                                </div>
+                                                <div class="color-image-border">
+                                                    <a href="#"><img src="/img/products/handbags/cartera1.avif"
+                                                            alt="color-image-option" class="color-image"></a>
+                                                </div>
+                                                <div class="color-image-border">
+                                                    <a href="#"><img src="/img/products/handbags/cartera1.avif"
+                                                            alt="color-image-option" class="color-image"></a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="product-size-container">
+                                            <label for="" class="select-label">Tamaños</label>
+                                            <p class="size-guide" id="size-guide-btn">Guía de Tamaños</p>
+                                            <div class="sizes-container">
+                                                <p class="size">XS</p>
+                                                <p class="size no-stock">S</p>
+                                                <p class="size">M</p>
+                                                <p class="size">L</p>
+                                            </div>
+                                        </div>
+                                        <div class="cart-button-container">
+                                            <button class="cart-add-button">Agregar al Carro</button>
+                                        </div>
+                                        <div class="product-specifications">
+                                            <label class="product-specifications-label"
+                                                id="product-specifications-btn">Product Details</label>
+                                        </div>
+                                        <div class="specifications-dropdown-container">
+                                            <ul class="specifications-list-container">
+                                                <li class="specification-item">Taurillon leather</li>
+                                                <li class="specification-item">Taurillon-leather trim</li>
+                                                <li class="specification-item">Cowhide-leather lining</li>
+                                                <li class="specification-item">Gold-color hardware</li>
+                                                <li class="specification-item">Transforming LV twist-lock</li>
+                                                <li class="specification-item">2 flat pockets</li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="related-products-container complete-outfit-container">
+                                    <label class="related-products-label">COMPLETAR OUTFIT</label>
+                                    <div class="related-product-cards-section">
+                                        <div class="related-product-card" data-productid="12">
+                                            <a href="#" class="related-product-card-link">
+                                                <div class="product-image-container">
+                                                    <img src="/img/products/jewlery/ring.webp"
+                                                        alt="related-product-image" class="related-product-image">
+                                                    <!-- <img src="/img/products/handbags/cartera2.avif"
+                                                    alt="related-product-image" class="related-product-image">
+                                                <img src="/img/products/handbags/cartera3.avif"
+                                                    alt="related-product-image" class="related-product-image">
+                                                <img src="/img/products/handbags/cartera4.avif"
+                                                    alt="related-product-image" class="related-product-image"> -->
+                                                    <% if (1==1) { %> <!-- CONDICION DE SI ESTA EN BOOKMARS -->
+                                                        <i class="fa-regular fa-heart favourite-logo"></i>
+                                                        <% }else{ %>
+                                                            <i class="fa-solid fa-heart favourite-logo"></i>
+                                                            <% } %>
+                                                </div>
+                                                <div class="related-product-info">
+                                                    <p class="related-product-name">Related Handbag #1</p>
+                                                    <p class="related-product-price">$6000</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="related-product-card" data-productid="12">
+                                            <a href="#" class="related-product-card-link">
+                                                <div class="product-image-container">
+                                                    <img src="/img/products/shoes/shoes1.avif"
+                                                        alt="related-product-image" class="related-product-image">
+                                                    <!-- <img src="/img/products/handbags/cartera2.avif"
+                                                    alt="related-product-image" class="related-product-image">
+                                                <img src="/img/products/handbags/cartera3.avif"
+                                                    alt="related-product-image" class="related-product-image">
+                                                <img src="/img/products/handbags/cartera4.avif"
+                                                    alt="related-product-image" class="related-product-image"> -->
+                                                    <% if (1==1) { %> <!-- CONDICION DE SI ESTA EN BOOKMARS -->
+                                                        <i class="fa-regular fa-heart favourite-logo"></i>
+                                                        <% }else{ %>
+                                                            <i class="fa-solid fa-heart favourite-logo"></i>
+                                                            <% } %>
+                                                </div>
+                                                <div class="related-product-info">
+                                                    <p class="related-product-name">Related Handbag #1</p>
+                                                    <p class="related-product-price">$6000</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="related-product-card" data-productid="12">
+                                            <a href="#" class="related-product-card-link">
+                                                <div class="product-image-container">
+                                                    <img src="/img/products/pants/pants.avif"
+                                                        alt="related-product-image" class="related-product-image">
+                                                    <!-- <img src="/img/products/handbags/cartera2.avif"
+                                                    alt="related-product-image" class="related-product-image">
+                                                <img src="/img/products/handbags/cartera3.avif"
+                                                    alt="related-product-image" class="related-product-image">
+                                                <img src="/img/products/handbags/cartera4.avif"
+                                                    alt="related-product-image" class="related-product-image"> -->
+
+                                                    <% if (1==1) { %> <!-- CONDICION DE SI ESTA EN BOOKMARS -->
+                                                        <i class="fa-regular fa-heart favourite-logo"></i>
+                                                        <% }else{ %>
+                                                            <i class="fa-solid fa-heart favourite-logo"></i>
+                                                            <% } %>
+                                                </div>
+                                                <div class="related-product-info">
+                                                    <p class="related-product-name">Related Handbag #1</p>
+                                                    <p class="related-product-price">$6000</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="related-products-container">
+                                    <label class="related-products-label">SUGGESTIONS</label>
+                                    <div class="related-product-cards-section">
+                                        <div class="related-product-card">
+                                            <div class="product-image-container">
+                                                <img src="/img/products/handbags/cartera1.avif"
+                                                    alt="related-product-image" class="related-product-image">
+                                                <% if (1==1) { %> <!-- CONDICION DE SI ESTA EN BOOKMARS -->
+                                                    <i class="fa-regular fa-heart favourite-logo"></i>
+                                                    <% }else{ %>
+                                                        <i class="fa-solid fa-heart favourite-logo"></i>
+                                                        <% } %>
+                                            </div>
+                                            <div class="related-product-info">
+                                                <p class="related-product-name">Related Handbag #1</p>
+                                                <p class="related-product-price">$6000</p>
+                                            </div>
+                                        </div>
+                                        <div class="related-product-card">
+                                            <div class="product-image-container">
+                                                <img src="/img/products/handbags/cartera1.avif"
+                                                    alt="related-product-image" class="related-product-image">
+                                                <% if (1==1) { %> <!-- CONDICION DE SI ESTA EN BOOKMARS -->
+                                                    <i class="fa-regular fa-heart favourite-logo"></i>
+                                                    <% }else{ %>
+                                                        <i class="fa-solid fa-heart favourite-logo"></i>
+                                                        <% } %>
+                                            </div>
+                                            <div class="related-product-info">
+                                                <p class="related-product-name">Related Handbag #1</p>
+                                                <p class="related-product-price">$6000</p>
+                                            </div>
+                                        </div>
+                                        <div class="related-product-card">
+                                            <div class="product-image-container">
+                                                <img src="/img/products/handbags/cartera1.avif"
+                                                    alt="related-product-image" class="related-product-image">
+                                                <% if (1==1) { %> <!-- CONDICION DE SI ESTA EN BOOKMARS -->
+                                                    <i class="fa-regular fa-heart favourite-logo"></i>
+                                                    <% }else{ %>
+                                                        <i class="fa-solid fa-bookmark favourite-logo"></i>
+                                                        <% } %>
+                                            </div>
+                                            <div class="related-product-info">
+                                                <p class="related-product-name">Related Handbag #1</p>
+                                                <p class="related-product-price">$6000</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="client-preferences-container">
+                                    <div class="payment-options-container client-popup-open-btn">
+                                        <i class="fa-regular fa-credit-card credit-card-logo"></i>
+                                        <div class="payment-text-container">
+                                            <p class="payment-label">Métodos de Pago</p>
+                                            <p class="payment-description">Crédito, Débito, o Mercado Pago</p>
+                                        </div>
+                                        <i class="fa-regular fa-clone"></i>
+                                        <div class="client-popup-container payment-popup-container">
+                                            <div class="client-popup-top-container">
+                                                <div class="client-popup-title-container">
+                                                    <p class="client-popup-title">Métodos de Pago</p>
+                                                </div>
+                                                <div class="client-popup-close-btn-container">
+                                                    <i class="fa-solid fa-xmark close-client-popup-btn"></i>
+                                                </div>
+                                            </div>
+                                            <div class="client-popup-info-container">
+                                                <p class="client-popup-info">
+                                                    Payments are accepted via credit card, debit card or PayPal with a
+                                                    valid United States
+                                                    billing and shipping address. Accepted credit cards are Visa,
+                                                    American Express, and
+                                                    Mastercard.<br><br>When placing an order, your billing address must
+                                                    correspond to the address of your
+                                                    credit card, or we will not be able to process your
+                                                    order.<br><br>All transactions are secured. The Louis Vuitton
+                                                    website is provided with an SSL
+                                                    encryption system to protect personal and payment data.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="shipment-options-container client-popup-open-btn">
+                                        <i class="fa-solid fa-truck"></i>
+                                        <div class="shipment-text-container">
+                                            <p class="shipment-label">Envíos</p>
+                                            <p class="shipment-description">Mercado envíos, Retiro por el local</p>
+                                        </div>
+                                        <i class="fa-regular fa-clone"></i>
+                                        <div class="client-popup-container shipment-popup-container">
+                                            <div class="client-popup-top-container">
+                                                <div class="client-popup-title-container">
+                                                    <p class="client-popup-title">Envíos</p>
+                                                </div>
+                                                <div class="client-popup-close-btn-container">
+                                                    <i class="fa-solid fa-xmark close-client-popup-btn"></i>
+                                                </div>
+                                            </div>
+                                            <div class="client-popup-info-container">
+                                                <p class="client-popup-info">
+                                                    Payments are accepted via credit card, debit card or PayPal with a
+                                                    valid United States
+                                                    billing and shipping address. Accepted credit cards are Visa,
+                                                    American Express, and
+                                                    Mastercard.<br><br>When placing an order, your billing address must
+                                                    correspond to the address of your
+                                                    credit card, or we will not be able to process your
+                                                    order.<br><br>All transactions are secured. The Louis Vuitton
+                                                    website is provided with an SSL
+                                                    encryption system to protect personal and payment data.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="change-options-container client-popup-open-btn">
+                                        <i class="fa-solid fa-right-left"></i>
+                                        <div class="change-text-container">
+                                            <p class="change-label">Cambios & Devoluciones</p>
+                                            <p class="change-description">Hasta 30 dias luego de tu compra</p>
+
+                                        </div>
+                                        <i class="fa-regular fa-clone"></i>
+                                        <div class="client-popup-container return-popup-container">
+                                            <div class="client-popup-top-container">
+                                                <div class="client-popup-title-container">
+                                                    <p class="client-popup-title">Cambios & Devoluciones</p>
+                                                </div>
+                                                <div class="client-popup-close-btn-container">
+                                                    <i class="fa-solid fa-xmark close-client-popup-btn"></i>
+                                                </div>
+                                            </div>
+                                            <div class="client-popup-info-container">
+                                                <p class="client-popup-info">
+                                                    Payments are accepted via credit card, debit card or PayPal with a
+                                                    valid United States
+                                                    billing and shipping address. Accepted credit cards are Visa,
+                                                    American Express, and
+                                                    Mastercard.<br><br>When placing an order, your billing address must
+                                                    correspond to the address of your
+                                                    credit card, or we will not be able to process your
+                                                    order.<br><br>All transactions are secured. The Louis Vuitton
+                                                    website is provided with an SSL
+                                                    encryption system to protect personal and payment data.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </main>
+                            <div class="size-guide-img-container">
+                                <img src="/img/size-guide.jpg" alt="" class="size-guide-img">
+                                <i class="fa-solid fa-xmark close-size-guide-btn"></i>
+                            </div>
+                            <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

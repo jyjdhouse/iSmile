@@ -1,0 +1,94 @@
+<div class="registration-form-container popup">
+    <div class="registration-form-top">
+        <p class="registration-top-label">REGISTRATE</p>
+        <div class="registration-exit-btn-container trigger-user-options-btn">
+            <i class="fa-solid fa-arrow-left login-exit-btn" id="close-registration-form-btn"></i>
+        </div>
+    </div>
+    <form action="/user/regist" class="registration-form" method="POST">
+        <div class="registration-input-field">
+            <label for="name" class="input-label">Nombre: *</label>
+            <input type="text" id="name" class="input" name="name">
+            <div class="error-front"></div>
+        </div>
+        <div class="registration-input-field">
+            <label for="last-name" class="input-label">Apellido: *</label>
+            <input type="text" id="last-name" class="input" name="lastName">
+            <div class="error-front"></div>
+        </div>
+        <div class="registration-input-field">
+            <label for="email" class="input-label">Email: *</label>
+            <input type="email" id="email" class="input" name="email">
+            <div class="error-front"></div>
+            <% if (locals.errors && errors.credentials) { %>
+                <p class="front-error"><%= errors.credentials.msg %></p>
+            <% } %>
+        </div>
+        <div class="registration-input-field">
+            <label for="dni" class="input-label">DNI: *</label>
+            <input type="text" id="dni" class="input" name="dni">
+            <div class="error-front"></div>
+        </div>
+        <div class="registration-input-field wpp-input-field">
+            <label for="phone" class="input-label">Telefono:</label>
+            <select name="phone-code" class="prefix-phone" id="">
+                <% countryCodes.forEach(country => { %>
+                    <option value=<%= country.id %> <%= country.code == 54 && 'selected' %> > (+<%= country.code %>) <%= country.country_name %></option>
+                <% }) %>
+            </select>
+
+            <input type="text" id="phone" class="input" name="phone" placeholder="1154676543">
+            <div class="error-front"></div>
+        </div>
+        <div class="add-address-btn-container">
+            <button class="add-address-btn">Agregar dirección</button>
+        </div>
+
+        <div class="address-inputs-container">
+            <div class="registration-input-field wpp-input-field">
+                <label for="address" class="input-label">Dirección</label>
+                <input type="text" class="input" name="address" placeholder="Hipolito Yrigoyen 312">
+                <div class="error-front"></div>
+            </div>
+            <div class="registration-input-field wpp-input-field">
+                <label for="city" class="input-label">Ciudad</label>
+                <input type="text" class="input" name="city" placeholder="Villa Urquiza">
+                <div class="error-front"></div>
+            </div>
+            <div class="registration-input-field wpp-input-field">
+                <label for="zip-code" class="input-label">Código postal</label>
+                <input type="text" class="input" name="zip-code" placeholder="1878">
+                <div class="error-front"></div>
+            </div>
+            <div class="registration-input-field wpp-input-field">
+                <label for="province" class="input-label">Provincia</label>
+                <input type="text" class="input" name="province" placeholder="Buenos Aires">
+                <div class="error-front"></div>
+            </div>
+        </div>
+        
+        <div class="registration-input-field">
+            <label for="password" class="input-label password-input">Contraseña: *</label>
+            <div class="input-container relative-input">
+                <input type="password" id="first-password" class="input input-password register-password-inp" name="password" data-place="regist">
+                <i class="fa-solid fa-eye show-password-btn password-btn-toggler" data-place="regist"></i>
+                <i class="fa-solid fa-eye-slash hide-password-btn password-btn-toggler hidden" data-place="regist"></i>
+            </div>
+            <div class="error-front"></div>
+        </div>
+        <div class="registration-input-field">
+            <label for="repeat-password" class="input-label password-input">Repetir Contraseña: *</label>
+            <div class="input-container relative-input">
+                <input type="password" id="repeat-password" class="input input-password register-password-inp" name="repeatPassword" data-place="regist-repeat">
+                <i class="fa-solid fa-eye show-password-btn password-btn-toggler" data-place="regist-repeat"></i>
+                <i class="fa-solid fa-eye-slash hide-password-btn password-btn-toggler hidden" data-place="regist-repeat"></i>
+            </div>
+            <div class="error-front"></div>
+        </div>
+        <div class="checkbox-notify">
+            <input type="checkbox" id="checkbox" name="notifications">
+            <label for="checkbox">Acepto recibir notificaciones por teléfono y correo electrónico </label>
+        </div>
+        <button class="btn registration-btn" type="submit">CREAR CUENTA</button>
+    </form>
+</div>

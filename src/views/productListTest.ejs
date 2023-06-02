@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+        <script src="/scripts/productList.js" type="module"></script>
+        <script src="/scripts/productCard.js" type="module"></script>
+        <link rel="stylesheet" href="/css/productList.css">
+        <link rel="stylesheet" href="/css/productCard.css">
+        <link rel="stylesheet" href="/css/loadingAnimation.css">
+        <title>Cartera - Lista</title>
+</head>
+
+<body>
+    <%- include('./partials/wpp.ejs') %>
+        <%- include('./partials/blackScreen.ejs') %>
+            <%- include('./partials/login.ejs') %>
+                <%- include('./partials/header.ejs') %>
+                    <%- include('./partials/registrationForm.ejs') %>
+                        <%- include('partials/shoppingCartPopup.ejs') %>
+                        <%- include('partials/wishlist.ejs') %>
+                        <%- include('partials/userOptionsPopup.ejs') %>
+
+                            <main class="main">
+                                <div class="product-list-intro">
+
+                                    <div class="product-title">
+                                        <h2><%= locals.searchTitle && searchTitle %></h2>
+                                    </div>
+
+                                    <div class="filter-btn-container">
+                                        <p class="filter-name">FILTRAR POR </p>
+                                        <span class="filter-amount-parenthesis">(<span
+                                                class="filter-amount"></span>)</span>
+                                        <i class='bx bx-filter-alt'></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="filters-container">
+                                    <ul type="none" class="filters-list-container">
+                                        <li class="filter filter-multiple-items" data-label='color'>
+                                            <p class="filter-name">Talle</p>
+                                            <ul class="filter-dropdown" type="none">
+                                                <li class="filter-value filter-size" data-filterValue="XS">XS</li>
+                                                <li class="filter-value filter-size"
+                                                    data-filterValue="S">S</li>
+                                                <li class="filter-value filter-size" data-filterValue="M">M</li>
+                                                <li class="filter-value filter-size" data-filterValue="L">L</li>
+                                            </ul>
+                                        </li>
+                                        <li class="filter filter-multiple-items" data-label='color'>
+                                            <p class="filter-name">Color</p>
+                                            <div class="filter-dropdown">
+                                                <div class="filter-value filter-color" style="background-color: red;"
+                                                    data-filterValue="Rojo"></div>
+                                                <div class="filter-value filter-color" style="background-color: blue;"
+                                                    data-filterValue="Azul"></div>
+                                                <div class="filter-value filter-color" style="background-color: green;"
+                                                    data-filterValue="Verde"></div>
+                                            </div>
+                                        </li>
+                                        <li class="filter-value filter filter-option" data-filterValue="Tendencias">
+                                            <p class="filter-name">Tendencias</p>
+                                            <div class="border"></div>
+                                        </li>
+                                        <li class="filter-value filter filter-option" data-label='size'
+                                            data-filterValue="Menor a mayor">
+                                            <p class="filter-name">Precio: menor a mayor</p>
+                                            <div class="border"></div>
+                                        </li>
+                                        <li class="filter-value filter filter-option" data-filterValue="Mayor a menor">
+                                            <p class="filter-name">Precio: mayor a menor</p>
+                                            <div class="border"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="active-filters-clear-filters-container">
+                                    <div class="active-filters-container">
+                                    </div>
+                                    <div class="clear-filters-container">
+                                        <button class="clear-all-btn">Clear all</button>
+                                    </div>
+                                </div>
+
+                                <section class="product-list-section">
+                                    <% products.forEach(prod=> { %> <!--Voy por cada producto-->
+                                        <% prod.colors.forEach(col=> { %><!--Voy por cada color del  producto-->
+                                            <div class="product-card-container" data-productId=<%= prod.id %>>
+                                                <a href="/test/<%= prod.id%>/<%= col.id %>" class="product-card-link">
+                                                    <div class="image-container">
+                                                        <div class="image-carousel">
+                                                            <!-- CONDICION DE SI ESTA EN WISHLIST -->
+                                                            <%let condition; %>
+                                                            <% prod.wishedUsers.forEach(user => { %>
+                                                                <% if (isLogged && user.id == userLogged.id) { %>
+                                                                    <% condition = user.wishlistProducts?.find(wishProd=>wishProd.products_id == prod.id && wishProd.colors_id == col.id)%>
+                                                                <% } %>
+                                                            <% }) %>
+                                                            
+                                                            <div class="faved-item-container <%= condition && 'faved-item-container-active'%>" data-productId=<%= prod.id %> data-colorid=<%= col.id %>>
+                                                                <i class='bx bx-heart'></i>
+                                                            </div>
+                                                            <% col.files.forEach((file,i) => { %> <!--Estos son los archivos del color x-->
+                                                                <% if (file.file_types_id == 1) { %> <!--Foto-->
+                                                                    <img src="/img/<%= file.filename %>"
+                                                                    alt="product-image"
+                                                                    class="product-image-test <%= i==0 ? 'product-image-test-active' : 'product-image-test-next-slide' %>"
+                                                                    data-productId=<%= prod.id %>>
+                                                                <% } else if(file.file_types_id == 2){ %><!--Video-->
+                                                                    <video
+                                                                    class="video product-image-test <%= i==0 ? 'product-image-test-active' : 'product-image-test-next-slide' %>"
+                                                                    muted playsinline loop>
+                                                                    <source src="/video/<%= file.filename %>" type="video/mp4">
+                                                                    <source src="/video/<%= file.filename %>" type="video/webm">
+                                                                    No se puede reproducir el video
+                                                                </video>
+                                                                <% } %> 
+                                                            <% }) %>
+                                                        </div>
+                                                        <!-- TODO: HACER CONTENEDOR DE DOTS ACA ABAJO -->
+                                                    </div>
+                                                    <div class="product-info-container">
+                                                        <div class="price-name-container">
+                                                            <p class="product-name"><%= prod.name %></p>
+                                                            <p class="product-price">$<%= prod.price %></p>
+                                                        </div>
+
+                                                    </div>
+                                                </a>
+                                                <div class="product-quick-actions-container" data-productId=<%= prod.id %> data-colorid=<%= col.id %>>
+                                                    <div class="quick-cart-container" data-productid=<%= prod.id %> data-colorid=<%= col.id %>>
+                                                        <div class="logo-container">
+                                                            <i class='bx bx-shopping-bag quick-add-cart-btn'
+                                                                data-productId=<%= prod.id %>></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="quick-fav-container">
+                                                        <div class="logo-container heart-container" data-productId=<%= prod.id %> data-colorid=<%= col.id %>>
+                                                            <i class="fa-regular fa-heart" data-productId=<%= prod.id %> data-colorid=<%= col.id %>></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="quick-sizes-container">
+                                                        <!-- TODO: a estos meterle el data-value = size.id -->
+                                                        <p class="quick-size">XS</p>
+                                                        <p class="quick-size no-stock">S</p>
+                                                        <p class="quick-size">M</p>
+                                                        <p class="quick-size">L</p>
+                                                        <div class="close-size-btn-container">
+                                                            <i class="fa-solid fa-xmark close-sizes-btn"
+                                                                data-productid=<%= prod.id %> data-colorid=<%= col.id %>></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="loading-container">
+                                                        <div class="load-wrapp">
+                                                            <div class="load-3">
+                                                              <div class="line"></div>
+                                                              <div class="line"></div>
+                                                              <div class="line"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                            <% }) %>
+                                </section>
+                            </main>
+                            <%- include('./partials/footer.ejs') %>
+
+
+
+
+
+
+</body>
+
+</html>

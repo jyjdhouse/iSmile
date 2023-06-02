@@ -1,0 +1,367 @@
+/* PARA OCULTAR EL PROGRESO DEL VIDEO */
+/* Ocultar el control de progreso en el video */
+video::-webkit-media-controls-timeline,
+video::-webkit-media-controls-current-time-display,
+video::-webkit-media-controls-time-remaining-display {
+    display: none;
+}
+
+.carrusel-image-container {
+    position: relative;
+    height: 95vh;
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.carrusel-image-container img,
+.carrusel-image-container video {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    z-index: -1;
+    position: relative;
+    height: 100%;
+}
+
+.video-container {
+    position: relative;
+}
+
+.controls-container {
+    display: flex;
+    position: absolute;
+    z-index: 5;
+    color: #fff;
+    left: 48%;
+    transform: translateX(-50%);
+    width: 100px;
+    bottom: 10%;
+    justify-content: space-between;
+}
+
+.carrusel-image-container video {
+    z-index: 1;
+}
+
+.volume-controls-container,
+.play-controls-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.play-controls-container {
+    margin-left: 25%;
+}
+
+.volume-controls-container {
+    margin-right: 15%;
+}
+
+.controls-container * {
+    font-size: 1.5rem;
+}
+
+
+.bx-volume-full,
+.bx-volume-mute {
+    position: absolute;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.bx-play,
+.bx-pause {
+    position: absolute;
+    font-size: 1.2rem;
+    cursor: pointer;
+    left: 15%;
+}
+
+.sticky-options-container {
+    position: absolute;
+    bottom: 15%;
+    transform: translateX(50%);
+    right: 50%;
+    z-index: 1;
+    width: 80%;
+}
+
+.sticky-options-title {
+    color: #fff;
+    font-size: 33px;
+    font-weight: 700;
+    margin-bottom: 4vh;
+    font-size: 22px;
+    text-align: center;
+    width: 100%;
+}
+
+.sticky-options-container a {
+    background: none;
+    border: 1px solid white;
+    color: #fff;
+    border-radius: 20px;
+    padding: 15px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0 auto;
+    display: block;
+    cursor: pointer;
+    width: fit-content;
+    letter-spacing: 1px;
+}
+
+/* GALLERY SHOW */
+.gallery-show-container {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 80vh;
+}
+
+.gallery-show-label-container {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, .5);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    transition: all .6s ease;
+}
+
+.gallery-show-label-container-hidden {
+    opacity: 0;
+    z-index: -1;
+}
+
+.gallery-show-label {
+    font-size: 3rem;
+    color: #fff;
+    margin-top: 3.5%;
+}
+
+.product-gallery-card {
+    width: 0;
+    flex-grow: 1;
+    opacity: .9;
+    transition: all .3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+    filter: brightness(0.75);
+    position: relative;
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-product-detail {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, .65);
+    scale: 0;
+    transition: all .3s ease;
+}
+
+.gallery-product-detail-active {
+    scale: 1;
+}
+
+.gallery-product-detail p {
+    color: #fff;
+}
+
+.gallery-product-name {
+    font-size: 1.8rem;
+    margin-top: 5%;
+}
+
+.gallery-product-link {
+    margin-bottom: 5%;
+    border: 1px solid;
+    padding: 2.5% 4.5%;
+    border-radius: 2rem;
+    font-size: 1.3rem;
+}
+
+.gallery-product-link:hover {
+    border: 2px solid;
+}
+
+.product-gallery-card:hover {
+    cursor: pointer;
+    opacity: 1;
+    width: 50%;
+    object-position: center;
+    filter: contrast(120%);
+}
+
+.other-colors-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50%;
+    padding: 0 2%;
+    align-items: center;
+    row-gap: .5rem;
+}
+
+.gallery-product-other-colors-label {
+    width: 100%;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 5%;
+
+}
+
+.gallery-product-other-colors-image-container {
+    width: 33%;
+    border-radius: 2rem;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.other-color-gallery-product-image {
+    width: 100%;
+    height: auto;
+
+}
+
+/* ABOUT US */
+.about-us-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 40vh;
+}
+
+.column-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.35);
+    transition: all .3s ease;
+    overflow: hidden;
+}
+
+.topic-label {
+    position: absolute;
+    z-index: 1;
+    color: #fff;
+    font-size: 1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    top: 10%;
+    transition: all .9s ease;
+}
+
+.topic-label-hidden {
+    opacity: 0;
+}
+
+.topic-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.topic-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    z-index: -1;
+}
+
+.view-more-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, .65);
+    opacity: 0;
+    z-index: -1;
+    transition: all .9s ease;
+}
+
+.view-more-container-active {
+    z-index: 0;
+    opacity: 1;
+}
+
+.view-more-button {
+    padding: 2% 5%;
+    border-radius: 2rem;
+    outline: none;
+    background: none;
+    border: 0.5px solid;
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translateX(-50%);
+}
+
+.view-more-button a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.mobile-container-active{
+    height: 200%;
+}
+@media (min-width: 1024px) {
+    .carrusel-image-container {
+        height: 100%;
+    }
+
+    .controls-container {
+        left: 85%;
+
+        bottom: 19%;
+
+    }
+
+    .sticky-options-container {
+        width: 80%;
+    }
+
+    .sticky-options-title {
+        font-size: 33px;
+    }
+
+    .sticky-options-container a {
+        font-size: 18px;
+    }
+
+    /* Galerry show*/
+    .product-gallery-card:hover {
+        width: 20%;
+    }
+
+    .other-colors-container {
+        flex-direction: row;
+        margin-top: 30%;
+        justify-content: center;
+        flex-wrap: wrap;
+        column-gap: 2.5%;
+    }
+    /* About us */
+    .about-us-container{
+        flex-direction: row;
+    }
+    .column-container{
+        width: 33.333%;
+    }
+    .topic-label {
+        font-size: 1.8rem;
+    }
+}
