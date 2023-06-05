@@ -1,0 +1,98 @@
+.main {
+    min-height: 70vh;
+    margin-top: 10vh;
+}
+
+.services-title {
+    margin-left: 10%;
+    font-size: 2rem;
+}
+
+/* Services Cards*/
+.service-cards-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 3rem;
+    justify-content: center;
+    margin: 10vh 0;
+}
+
+.service-card {
+    width: 80%;
+    position: relative;
+    height: 30vh;
+    opacity: 0;
+    transition: all .3s;
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+}
+
+.service-card:nth-child(2) {
+    animation-delay: .5s;
+
+}
+
+.service-card-visible {
+    /* Aplica la animación */
+    animation: serviceTranslate 1.3s ease-in-out forwards;
+
+}
+
+.service-card-visible:hover {
+    opacity: 1;
+    filter: contrast(120%);
+    scale: 1.1;
+    cursor: pointer;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .3);
+    z-index: -1;
+}
+
+.service-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -10;
+
+}
+
+.plus {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 2%;
+    font-size: 2rem;
+    color: #fff;
+}
+
+.service-label {
+    font-size: 1.4rem;
+    color: #fff;
+}
+
+
+@keyframes serviceTranslate {
+    0% {
+        transform: translateX(-100%);
+        /* Comienza desde la izquierda */
+    }
+
+    100% {
+        opacity: .8;
+        /* Al final de la animación, muestra los párrafos */
+        transform: translateX(0);
+        /* Los párrafos estarán en su posición original */
+    }
+}

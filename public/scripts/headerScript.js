@@ -1,4 +1,4 @@
-import { activateClass, changeCartProductDimension,changeWishlistProductDimension, deactivateClass } from './utils.js';
+import { activateClass, changeCartProductDimension, changeWishlistProductDimension, deactivateClass } from './utils.js';
 window.addEventListener('load', () => {
     const body = document.querySelector('body');
 
@@ -32,9 +32,9 @@ window.addEventListener('load', () => {
         body.classList.remove('noScroll');
     });
 
-    document.querySelector(`.${blackScreen}`).addEventListener('click', () => { // CERRAR MENU
+    document.querySelector(`.${blackScreen}`)?.addEventListener('click', () => { // CERRAR MENU
 
-        classesToDeactivate = [sideNavbar, blackScreen,popupCart,popupWishlist];
+        classesToDeactivate = [sideNavbar, blackScreen, popupCart, popupWishlist];
         deactivateClass(classesToDeactivate);
 
         body.classList.remove('noScroll');
@@ -50,21 +50,15 @@ window.addEventListener('load', () => {
     const headerShow = () => { //Para hacer el header aparezca/desaparezca
         let prevScrollPos = window.pageYOffset;
         window.onscroll = function () {
-            
+
             let minScroll = window.scrollY >= window.innerHeight * 0.1; //Mayor a 10vh
             let currentScrollPos = window.pageYOffset;
-            if(minScroll){
-                if (prevScrollPos > currentScrollPos) { //Scroll Up
-                    header.classList.add('header-active');
-                    header.classList.remove('header-hidden');
-    
-                } else { //Scroll Down
-                    header.classList.remove('header-active');
-                    header.classList.add('header-hidden');
-                }
-            }    
-            if (isAtTop()) {
+            if (minScroll) {
+                header.classList.add('header-active');
                 header.classList.remove('header-hidden');
+            }
+            if (isAtTop()) {
+                header.classList.add('header-hidden');
                 header.classList.remove('header-active');
             }
             prevScrollPos = currentScrollPos;
@@ -77,28 +71,30 @@ window.addEventListener('load', () => {
     const openPopupCartBtn = document.querySelector('.open-popup-cart-btn');
     const popupCart = 'cart-popup-container';
     const closePopupCartBtn = document.querySelector('.close-popup-cart-btn');
-    openPopupCartBtn.addEventListener('click',()=>{
+    openPopupCartBtn.addEventListener('click', () => {
         body.classList.add('noScroll');
-        activateClass([blackScreen,popupCart]);
+        activateClass([blackScreen, popupCart]);
         changeCartProductDimension();
     });
-    closePopupCartBtn?.addEventListener('click',()=>{
+    closePopupCartBtn?.addEventListener('click', () => {
         body.classList.remove('noScroll');
-        deactivateClass([blackScreen,popupCart]);
+        deactivateClass([blackScreen, popupCart]);
     });
 
     // LOGICA DEL POPUP WHISLIST
     const openPopupWishlistBtn = document.querySelector('.open-popup-wishlist-btn');
     const popupWishlist = 'wishlist-popup-container';
     const closePopupWishlistBtn = document.querySelector('.close-popup-wishlist-btn');
-    openPopupWishlistBtn.addEventListener('click',()=>{
+    openPopupWishlistBtn?.addEventListener('click', () => {
         body.classList.add('noScroll');
-        activateClass([blackScreen,popupWishlist]);
+        activateClass([blackScreen, popupWishlist]);
         changeWishlistProductDimension();
     });
-    closePopupWishlistBtn?.addEventListener('click',()=>{
+    closePopupWishlistBtn?.addEventListener('click', () => {
         body.classList.remove('noScroll');
-        deactivateClass([blackScreen,popupWishlist]);
+        deactivateClass([blackScreen, popupWishlist]);
     });
+
     
+
 })
