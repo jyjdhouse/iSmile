@@ -19,9 +19,9 @@
 }
 
 .service-card {
-    width: 80%;
+    width: 90%;
     position: relative;
-    height: 30vh;
+    height: 20vh;
     opacity: 0;
     transition: all .3s;
     display: flex;
@@ -31,9 +31,11 @@
 
 .service-card:nth-child(2) {
     animation-delay: .5s;
-
 }
 
+.service-card:nth-child(3) {
+    animation-delay: 1s;
+}
 .service-card-visible {
     /* Aplica la animación */
     animation: serviceTranslate 1.3s ease-in-out forwards;
@@ -81,7 +83,14 @@
     font-size: 1.4rem;
     color: #fff;
 }
-
+@media(min-width:1024px){
+    .service-card{
+        height: 30vh;
+    }
+    .service-card:nth-child(3) {
+        animation-delay: initial;
+    }
+}
 
 @keyframes serviceTranslate {
     0% {
