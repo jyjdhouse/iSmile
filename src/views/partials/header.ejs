@@ -2,11 +2,16 @@
     <nav class="nav-bar-section">
         <div class="nav-start">
             <i class="fa-solid fa-bars open-menu-button"></i><!--  -->
-            <i class="fa-solid fa-magnifying-glass open-search-form-button"></i>
+            
         </div>
 
-        <a href="/" class="brand-name" id="header-name">ALTER EGO</a>
+        <a href="/" class="brand-name" id="header-name"><img src="/img/logo.png" alt="" class="header-logo"></a>
         <div class="nav-end">
+            <div class="shopping-cart-container">
+                <i class='bx bx-shopping-bag open-popup-cart-btn'></i>
+                <!-- <i class="fa-solid fa-bag-shopping"></i> -->
+                <p class="products-quantity">5</p>
+            </div>
             <% if (locals.isLogged) { %> <!-- Si esta loggeado...-->
                 <div class="user-logged-container">
                     <p class="user-logged-name login-menu-btn-desktop">Hola, <%= locals.userLogged.name %>
@@ -24,18 +29,10 @@
 
                 <% }else{ %> <!-- Si no esta loggeado...-->
                     <i class="fa-regular fa-user login-toggler login-toggler-desktop"></i>
-                    <% } %>
-                    <div class="wishlist-container">
-                        <i class="fa-regular fa-heart wishlist-logo open-popup-wishlist-btn"></i>
-                        <p class="products-quantity wishlist-quantity-number"></p>
-                    </div>
-                        
-                        <div class="shopping-cart-container">
-                            <i class='bx bx-shopping-bag open-popup-cart-btn'></i>
-                            <!-- <i class="fa-solid fa-bag-shopping"></i> -->
-                            <p class="products-quantity">5</p>
-                        </div>
-        </div>
+                <% } %>
+                    
+                    <i class="fa-solid fa-magnifying-glass open-search-form-button"></i>
+                </div>
     </nav>
 
 </header>
@@ -75,9 +72,6 @@
                         <a href="#" class="category-link">PRODUCTOS</a>
                         <ul class="burguer-menu-option-list">
                             <li class="burguer-menu-option"><a href="/test/list">Ver Todo</a></li>
-                            <% categories.forEach(cat => { %>
-                                <li class="burguer-menu-option"><a href="/test/list/<%= cat.id %>"><%= cat.name %>s</a></li>
-                            <% }) %>
                         </ul>
                     </li>
                     <li class="burguer-menu-category">
