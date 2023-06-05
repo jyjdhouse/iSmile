@@ -84,7 +84,7 @@ app.use('/user', userRouter)
 
 // Correr el servidor
 
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.PORT || 4500;
 app.listen(PORT, () => {
     console.log(" 🚀 Se levanto proyecto en http://localhost:" + PORT)
 });

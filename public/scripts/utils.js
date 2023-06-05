@@ -312,8 +312,23 @@ export async function addCartProduct(productId, colorId) {
 export function disableAllPopups(exception) {
     // desabilita todos los popUps, excepto el que se pasa por argumento
     const popups = document.querySelectorAll('.popup');
-    popups.forEach(elem=>{
+    popups.forEach(elem => {
         const className = elem.classList[0];
         elem.classList.remove(`${className}-active`)
     })
+}
+
+export function checkIfIsInScreen(percentege, cb,arg) {//Se fija si aparece en pantalla para poder hace algo
+    return new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.intersectionRatio >= percentege) {
+                // Si aparece, invoco al cb
+                cb(arg);
+            }
+        });
+    }, { threshold: percentege });
+}
+
+export function isInDesktop () {
+    return window.innerWidth >= 1024 // Mobile & Tablet
 }
