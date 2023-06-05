@@ -1,8 +1,11 @@
+@import 'variables.css';
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 
 .footer{
     position: relative;
@@ -50,7 +53,7 @@
 }
 
 .footer-link{
-    color: black;
+    color: var(--violet-color);
     display: flex;
     align-items: center;
     width: 100%;
