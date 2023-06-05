@@ -12,7 +12,7 @@
     z-index: 25;
     background-color: white;
     padding: 3% 0 5% 0;
- 
+    border: 1px solid var(--gold-color);
 }
 
 .footer-logo-container {
@@ -153,11 +153,11 @@
 @media(min-width:1024px){
 
     .footer{
-        padding: 3% 0 2% 0;  
+        padding: 2% 0;  
     }
 
     .footer-logo-container {
-        width: 50%;
+        width: 40%;
         margin: 0 auto;
     }
 
