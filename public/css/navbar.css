@@ -1,0 +1,62 @@
+/* COLOR PICKER */
+.navbar-container {
+    position: fixed;
+    z-index: 10000;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    max-width: 50%;
+    background-color: black;
+    transition: all .35s ease;
+    margin-right: -100%;
+    overflow: hidden;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.navbar-container-active {
+    margin-right: 0;
+}
+
+.registration-form-top {
+    height: 10%;
+    display: flex;
+    border-bottom: 1px solid rgba(200, 200, 200, .4);
+}
+
+.navbar-list-item {
+    color: #fff;
+}
+
+.navbar-list-item a {
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.navbar-list-item a:visited {
+    color: #fff;
+}
+
+@media(min-width: 768px) {
+
+    /* COLOR PICKER */
+    .registration-form-container-active{
+        width: 35%;
+    }
+}
+
+
+@media(min-width: 1024px) {
+    
+    .registration-form-container{
+    
+        width: 40%;
+    }
+
+    .registration-input-field{
+        width: 75%;
+    }
+
+    /* COLOR PICKER */
+   
+}
