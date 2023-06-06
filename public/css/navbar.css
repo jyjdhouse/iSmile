@@ -1,63 +1,109 @@
 /* COLOR PICKER */
+
+@import 'variables.css';
+
+.noScroll {
+    overflow: hidden;
+}
+
 .navbar-container {
     position: fixed;
     z-index: 10000;
-    bottom: 0;
+    bottom: 100%;
     right: 0;
-    height: 100%;
-    max-width: 50%;
+    left: 0;
+    height: 50%;
     background-color: black;
     transition: all .35s ease;
-    margin-right: -100%;
     overflow: hidden;
     width: 100%;
-    overflow-y: scroll;
-    border: 2px solid gold;
+    padding: 5%;
 }
 
 .navbar-container-active {
-    margin-right: 0;
+    bottom: 50%;
 }
 
-.registration-form-top {
-    height: 10%;
+.close-menu-btn-container {
     display: flex;
-    border-bottom: 1px solid rgba(200, 200, 200, .4);
+    justify-content: flex-start;
+    height: 10%;
+}
+
+.close-menu-btn {
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.navbar {
+    height: 90%;
+}
+
+.navbar ul {
+    height: 100%;
+    width: 100%;
 }
 
 .navbar-list-item {
-    color: #fff;
-}
-
-.navbar-list-item a {
-    color: #fff;
+    color: var(--violet-color);
     text-transform: uppercase;
+    margin: 8% 0;
+    font-weight: 700;
+    font-size: 1rem;
 }
 
-.navbar-list-item a:visited {
-    color: #fff;
+.navbar-list-item a,
+a:visited {
+    color: var(--violet-color);
 }
+
+
+
 
 @media(min-width: 768px) {
 
-    /* COLOR PICKER */
-    .registration-form-container-active{
-        width: 35%;
+    .navbar-list-item {
+
+        margin: 5% 0;
+
     }
 }
 
 
 @media(min-width: 1024px) {
-    
-    .registration-form-container{
-    
-        width: 40%;
+
+    .navbar-container {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        z-index: 10000;
+        left: -100%;
+        width: 50%;
+        height: 100%;
     }
 
-    .registration-input-field{
-        width: 75%;
+    .navbar-container-active {
+       left: 0;
     }
 
-    /* COLOR PICKER */
-   
+
+
+    .close-menu-btn-container {
+        align-items: center;
+    }
+
+    .close-menu-btn {
+        cursor: pointer;
+    }
+
+    .navbar {
+        height: 80%;
+    }
+
+    .navbar ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
 }
