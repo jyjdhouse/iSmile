@@ -138,7 +138,8 @@ li {
 }
 
 .slide-image {
-    width: 100%;
+    width: 60%;
+    height: 60%;
     object-fit: cover;
     z-index: -1;
     position: absolute;
@@ -415,7 +416,7 @@ li {
     }
 
     .slide-image {
-        height: 80%;
+        height: 60%;
     }
 
     .slide-image:hover {
@@ -446,10 +447,9 @@ li {
     }
 
     .gallery-product-name {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
 
-    /* INSTAGRAM POSTS */
     /* INSTAGRAM POSTS */
     .instagram-label {
         text-align: start;

@@ -20,8 +20,7 @@ window.addEventListener('load', () => {
             }
 
         })
-    })
-
+    });
     
     dataXContainer.forEach((item, indexItem) => {
         item.addEventListener('click', () => {
@@ -33,5 +32,16 @@ window.addEventListener('load', () => {
         })
     })
 
+      //Para llamar cuando toca
+      const callBtn = document.querySelector('.call-btn');
+      callBtn.addEventListener('click',()=>{
+          window.location.href = "tel:+541159442644";
+      });
+
+      //Para abrir maps
+      const addressBtn = document.querySelector('.address-btn');
+      addressBtn.addEventListener('click',()=>{
+        window.open('https://goo.gl/maps/tt2tMzZsEzj7UYxa9','_blank');
+    });
 
 })

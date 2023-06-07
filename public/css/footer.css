@@ -12,7 +12,7 @@
     z-index: 25;
     background-color: white;
     padding: 3% 0 5% 0;
-    border: 1px solid var(--gold-color);
+    border-top: 1px solid var(--gold-color);
 }
 
 .footer-logo-container {
@@ -100,7 +100,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    cursor: pointer;
 }
 
 .desktop-footer-data-icon-container {
@@ -123,7 +123,6 @@
 }
 
 .mobile-footer-data-icon-container-active {
-    border: 1.5px solid #01a5fd;
     border-radius: 5px;
     top: 0;
     bottom: 0;
@@ -140,13 +139,12 @@
 
 .footer-icon-container {
     padding: 8%;
-    background-color: #01a5fd;
     border-radius: 5px;
 }
 
 .footer-icon {
-    color: #fcfcfc;
-    font-size: 1.2rem;
+    color: var(--violet-color);
+    font-size: 1.5rem;
 }
 
 .x-container {
@@ -229,7 +227,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #01a5fd;
         margin-right: 2%;
         border-radius: 5px;
         padding: 2% 4%;

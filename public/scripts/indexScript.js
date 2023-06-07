@@ -123,7 +123,7 @@ window.addEventListener('load', () => {
                 container.classList.add('slide-image-group-active');
             } else if (index === (currentIndex + 1) % slideImagesGroup.length) {
                 container.classList.add('slide-image-group-next');
-            } else if (index === (currentIndex - 1 + slideImagesGroup.length) % slideImagesGroup.length) {
+            } else {
                 container.classList.add('slide-image-group-prev');
             }
         });
