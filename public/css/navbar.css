@@ -87,6 +87,7 @@ a:visited {
 }
 .bx-chevron-right{
     transition: all .4s ease;
+    font-size: 1.5rem;
 }
 .item-dropdown-active .bx-chevron-right {
     transform: rotate(90deg);
@@ -154,17 +155,21 @@ a:visited {
     }
     .dropdown-items-container {
         transition: max-height 0.3s ease;
+        margin-top: 4%;
     }
     .bx-chevron-right{
         transition: all .3s ease;
+        font-size: 1.8rem;
     }
 
     .close-menu-btn-container {
         align-items: center;
+        justify-content: flex-end;
     }
 
     .close-menu-btn {
         cursor: pointer;
+        font-size: 2.2rem;
     }
 
     .navbar {

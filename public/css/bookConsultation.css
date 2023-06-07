@@ -71,6 +71,7 @@ textarea {
     outline: 0;
     background-color: transparent;
     border-bottom: 1px solid #fff;
+    resize: none;
 }
 
 @media(min-width: 768px) {
