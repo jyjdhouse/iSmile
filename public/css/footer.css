@@ -65,6 +65,21 @@
     padding: 2% 0;
 }
 
+.item-dropdown-visible-part {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bx-chevron-down {
+    font-size: 1.5rem;
+    color: var(--gold-color);
+}
+
+.item-dropdown-visible-part p {
+    color: var(--violet-color);
+}
+
 
 
 .second-footer-list {

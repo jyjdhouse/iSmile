@@ -5,6 +5,8 @@ window.addEventListener('load', () => {
 
     openMenuBtn.addEventListener('click', () => {
         navbarContainer.classList.add('navbar-container-active')
-    })
+    });
+
+  
 
 })

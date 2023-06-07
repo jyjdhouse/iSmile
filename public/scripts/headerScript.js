@@ -1,45 +1,6 @@
 import { activateClass, changeCartProductDimension, changeWishlistProductDimension, deactivateClass } from './utils.js';
 window.addEventListener('load', () => {
-    const body = document.querySelector('body');
-
-    let openMenuButton = document.querySelector('.open-menu-button');
-
-    let closeMenuButton = document.querySelector('.close-button-container');
-
-    const sideNavbar = 'side-navbar-container';
-
-    const searchSection = 'search-section-container';
-
-    const blackScreen = 'black-screen'; //Pantalla negra
-
-    let classesToActivate = [];
-    let classesToDeactivate
-    openMenuButton.addEventListener('click', () => { // ABRIR MENU
-        classesToActivate = [blackScreen, sideNavbar];
-        activateClass(classesToActivate);
-
-        classesToDeactivate = [searchSection];
-        deactivateClass(classesToDeactivate);
-
-        body.classList.add('noScroll');
-    });
-
-    closeMenuButton.addEventListener('click', () => { // CERRAR MENU
-
-        classesToDeactivate = [sideNavbar, blackScreen];
-        deactivateClass(classesToDeactivate);
-
-        body.classList.remove('noScroll');
-    });
-
-    document.querySelector(`.${blackScreen}`)?.addEventListener('click', () => { // CERRAR MENU
-
-        classesToDeactivate = [sideNavbar, blackScreen, popupCart, popupWishlist];
-        deactivateClass(classesToDeactivate);
-
-        body.classList.remove('noScroll');
-    })
-
+    
 
     // LOGICA DEL HEADER AL SCROLLEAR
     const header = document.querySelector('.header');

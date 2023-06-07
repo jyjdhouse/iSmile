@@ -46,48 +46,22 @@ window.addEventListener('load', () => {
 
 
     // LOGICA QUE APAREZCAN LOS TEXTOS AL SCROLLEAR
-    const aboutUsContainer = document.querySelector('.about-us-container');
-    // Funcion que maneja cuando el contenedor esta visible
-    const handleAboutUsContainer = (visible) => {//Llega true o false
-        const paragraphs = document.querySelectorAll('.about-us-information-paragraph');
-        const list = document.querySelector('.about-us-details-list')
-        const listItems = document.querySelectorAll('.about-us-list-item');
-        const title = document.querySelector('.about-us-information-title');
-        if (visible) { //Si esta en pantalla
-            title.classList.add('about-us-information-title-visible');
-            // Los parrafos
-            paragraphs.forEach((p, i) => {
-                p.style.animationDelay = `${1 * i}s`;
-                p.classList.add('about-us-information-paragraph-visible');
-            });
-            // Los items de la lista
-            listItems.forEach((l, i) => {
-                l.style.animationDelay = `${5 + .5 * i}s`;
-                l.classList.add('about-us-list-item-visible');
-            });
-            list.style.transitionDelay = `${4}s`;
-            list.classList.add('about-us-details-list-visible')
-            return
-        }
-    }
     const handleVisibleLabel = (label) => {
         label.classList.add('slide-image-label-visible');
     }
-    // Crear una instancia del Intersection Observer
-    const observer = checkIfIsInScreen(.4, handleAboutUsContainer, true)
 
     // Logica para mostrar labels en slideShow
     const labels = document.querySelectorAll('.slide-image-label');
     const slideImageContainers = document.querySelectorAll('.slide-image-container')
     if (isInDesktop()) { //Si esta en desktop es distinto el slideShow
-        slideImageContainers.forEach(container => {
+        slideImageContainers?.forEach(container => {
             container.addEventListener('mouseenter', () => {
                 const labelToActivate = container.querySelector('.slide-image-label');
                 labelToActivate.classList.add('slide-image-label-visible');
                 // Freno el slideShow
                 clearInterval(slideIntervalId);
             });
-            container.addEventListener('mouseleave', () => {
+            container?.addEventListener('mouseleave', () => {
                 const labelToDeactivate = container.querySelector('.slide-image-label');
                 labelToDeactivate.classList.remove('slide-image-label-visible');
                 slideIntervalId = setInterval(updateSlideShow, 5000);
@@ -101,8 +75,6 @@ window.addEventListener('load', () => {
         });
     }
 
-    // Observar el contenedor
-    observer.observe(aboutUsContainer);
 
     // LOGICA para slideShow
     let slideImagesGroup;
@@ -112,39 +84,84 @@ window.addEventListener('load', () => {
     } else {
         slideImagesGroup = document.querySelector('.slide-images-wraper-mobile').querySelectorAll('.slide-image-group')
     }
-    let currentIndex = 1;
+    let slideShowIndex = 1;
 
     function updateSlideShow() {
         // Le saco el nombre porque aparece una vez que esta en vista
         labels.forEach(lab => lab.classList.remove('slide-image-label-visible'));
         slideImagesGroup.forEach((container, index) => {
             container.classList.remove('slide-image-group-active', 'slide-image-group-next', 'slide-image-group-prev');
-            if (index === currentIndex) {
+            if (index === slideShowIndex) {
                 container.classList.add('slide-image-group-active');
-            } else if (index === (currentIndex + 1) % slideImagesGroup.length) {
+            } else if (index === (slideShowIndex + 1) % slideImagesGroup.length) {
                 container.classList.add('slide-image-group-next');
             } else {
                 container.classList.add('slide-image-group-prev');
             }
         });
-        currentIndex = (currentIndex + 1) % slideImagesGroup.length;
+        slideShowIndex = (slideShowIndex + 1) % slideImagesGroup.length;
     }
     let slideIntervalId = setInterval(updateSlideShow, 5000);
 
-    // LOGICA para galleryShow
+    // LOGICA para aboutUS
+    const detailsContainer = document.querySelector('.about-us-details-container');
+    const lists = document.querySelectorAll('.about-us-details-list');
+    // Funcion que maneja cuando el contenedor esta visible
+    const handleVisibleLists = () => {
+        lists.forEach((element, i) => {
+            element.style.transitionDelay = `${i * 1}s`
+            element.classList.add('about-us-details-list-visible')
+        });
+        detailsContainer.classList.add('about-us-details-container-active');
+    }
+    // Crear una instancia del Intersection Observer
+    const detailsObserver = checkIfIsInScreen(.4, handleVisibleLists, true);
+    detailsObserver.observe(detailsContainer);
+    if (!isInDesktop()) { //Mobile
+        let aboutUsIndex = 1
+        function toggleActiveAboutUsInfo() {
+            const frames = document.querySelectorAll('.about-us-frame');
+            const details = document.querySelectorAll('.about-us-details-container-mobile .about-us-details-list')
+            frames.forEach((frame, index) => {
+                frame.classList.remove('about-us-frame-active', 'about-us-frame-next', 'about-us-frame-prev');
+                if (index === aboutUsIndex) {
+                    frame.classList.add('about-us-frame-active');
+                } else if (index === (aboutUsIndex + 1) % frames.length) {
+                    frame.classList.add('about-us-frame-next');
+                } else {
+                    frame.classList.add('about-us-frame-prev');
+                }
+            });
+            details.forEach((det, index) => {
+                det.classList.remove('about-us-details-list-active', 'about-us-details-list-next', 'about-us-details-list-prev');
+                if (index === aboutUsIndex) {
+                    det.classList.add('about-us-details-list-active');
+                } else if (index === (aboutUsIndex + 1) % details.length) {
+                    det.classList.add('about-us-details-list-next');
+                } else {
+                    det.classList.add('about-us-details-list-prev');
+                }
+            });
+            aboutUsIndex = (aboutUsIndex + 1) % frames.length;
+        }
+        // Ejecutar la función cada 3 segundos
+        setInterval(toggleActiveAboutUsInfo, 3000);
+    }
+
+
     if (!isInDesktop()) {
         function updateGalleryShow() {
             slideImagesGroup.forEach((container, index) => {
                 container.classList.remove('slide-image-group-active', 'slide-image-group-next', 'slide-image-group-prev');
-                if (index === currentIndex) {
+                if (index === slideShowIndex) {
                     container.classList.add('slide-image-group-active');
-                } else if (index === (currentIndex + 1) % slideImagesGroup.length) {
+                } else if (index === (slideShowIndex + 1) % slideImagesGroup.length) {
                     container.classList.add('slide-image-group-next');
-                } else if (index === (currentIndex - 1 + slideImagesGroup.length) % slideImagesGroup.length) {
+                } else if (index === (slideShowIndex - 1 + slideImagesGroup.length) % slideImagesGroup.length) {
                     container.classList.add('slide-image-group-prev');
                 }
             });
-            currentIndex = (currentIndex + 1) % slideImagesGroup.length;
+            slideShowIndex = (slideShowIndex + 1) % slideImagesGroup.length;
         }
     }
 
@@ -167,14 +184,14 @@ window.addEventListener('load', () => {
             const cards = document.querySelectorAll('.instagram-card');
             console.log(cards);
             for (let i = 0; i < cards.length; i++) {
-              if (cards[i].classList.contains('instagram-card-active')) {
-                cards[i].classList.remove('instagram-card-active');
-                cards[(i + 1) % cards.length].classList.add('instagram-card-active');
-                break;
-              }
+                if (cards[i].classList.contains('instagram-card-active')) {
+                    cards[i].classList.remove('instagram-card-active');
+                    cards[(i + 1) % cards.length].classList.add('instagram-card-active');
+                    break;
+                }
             }
-          }
-          // Ejecutar la función cada 3 segundos
-          setInterval(toggleActiveImage, 3000);
+        }
+        // Ejecutar la función cada 3 segundos
+        setInterval(toggleActiveImage, 3000);
     }
 })

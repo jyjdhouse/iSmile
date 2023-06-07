@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head.ejs') %>
+    <link rel="stylesheet" href="./css/frequentQAndA.css">
+   <!--  <script type="module" src="./scripts/indexScript.js"></script> -->
+    <title>Preguntas Frecuentes</title>
+</head>
+<body>
+    <%- include('./partials/header.ejs') %>
+    <%- include('./partials/navbar.ejs') %>
+    <%- include('./partials/bookConsultation.ejs') %>
+    <div class="frequent-q-a-wrapper">
+        <div class="title-container">
+            <h2>Preguntas frecuentes</h2>
+        </div>
+       
+        <main>
+            <ul class="frequent-a-q-list" type="none">
+                <li class="frequent-a-q-list-item">
+                    <h4>Como pedir un turno?</h4>
+                    <p>Podes llamar al <strong>11 4824-5430</strong> o enviarnos un mail a <strong>info@ismile.com.ar</strong></p>
+                </li>
+                <li class="frequent-a-q-list-item">
+                    <h4>¿Trabajan con Obras Sociales?</h4>
+                    <p>Solo atendemos de forma particular pero podemos emitirte una factura para que puedas pedir el reintegro correspondiente a tu obra social.</p>
+                </li>
+                <li class="frequent-a-q-list-item">
+                    <h4>¿Necesito llevar una radiografía panorámica en la primer consulta?</h4>
+                    <p>Si tenes una traela, sino  podemos realizarla en el momento en nuestro consultorio.</p>
+                </li>
+                <li class="frequent-a-q-list-item">
+                    <h4>¿Cuánto cuesta la primer consulta?</h4>
+                    <p>Para el área de Estética la primera consulta es sin cargo. En odontología el valor es de $500 e incluye la radiografía panorámica.</p>
+                </li>
+                <li class="frequent-a-q-list-item">
+                    <h4>¿A partir de que edad atienden?</h4>
+                    <p>Desde bebes. La visita al dentista pediátrico ayuda a identificar y prevenir problemas que pueden afectar al niño en su etapa de desarrollo.</p>
+                </li>
+                <li class="frequent-a-q-list-item">
+                    <h4>¿Qué opciones de pago ofrecen?</h4>
+                    <p>Aceptamos Efectivo, Tarjeta de Débito y Crédito.</p>
+                </li>
+            </ul>
+
+            <div class="form-content-container">
+                <div class="form-title-container">
+                    <h2>¿Tenes otra pregunta?</h2>
+                    <h3>Estamos encantados de responder cualquier pregunta relacionada con nuestros servicios</h3>
+                </div>
+               
+
+                <form action="" class="faq-form">
+                    <div class="faq-input-container">
+                        
+                        <label class="faq-form-label" for="full_name">Nombre</label>
+                        <input type="text" name="full_name">
+                    </div>
+                    <div class="faq-input-container">
+                      
+                        <label class="faq-form-label" for="email">Email</label>
+                        <input type="email" name="email">
+                    </div>
+                    <div class="faq-input-container">
+                      
+                        <label class="faq-form-label" for="phone">Telefono</label>
+                        <input type="text" name="phone">
+                    </div>
+                    <div class="faq-input-container">
+                      
+                        <label class="faq-form-label" for="title">Titulo</label>
+                        <input type="text" name="title">
+                    </div>
+                    <div class="faq-textarea-container">
+                        <label class="faq-form-label" for="message">Mensaje</label>
+                        <textarea name="message" cols="22" rows="10"></textarea>
+                    </div>
+                    <div class="faq-checkbox-container">
+                        <input type="checkbox" name="suscribe-news"><span for="suscribe-news">Suscribirse al newsletter</span>
+                    </div>
+                    <div class="faq-btn-container">
+                        <button class="faq-send-question" type="submit">Enviar</button>
+                    </div>
+                    
+                </form>
+
+            </div>
+
+           
+
+        </main>
+
+    </div>
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>

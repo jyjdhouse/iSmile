@@ -13,11 +13,24 @@
     right: 0;
     left: 0;
     height: 50%;
-    background-color: black;
+    background-color: white;
     transition: all .35s ease;
-    overflow: hidden;
+    overflow: scroll;
     width: 100%;
     padding: 5%;
+    border-bottom: 2px solid var(--gold-color);
+}
+
+.navbar-container::-webkit-scrollbar {
+    width: 0.1em;
+}
+
+.navbar-container::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.navbar-container::-webkit-scrollbar-thumb {
+    background-color: transparent;
 }
 
 .navbar-container-active {
@@ -32,11 +45,12 @@
 
 .close-menu-btn {
     font-size: 1.2rem;
-    color: #fff;
+    color: var(--gold-color);
 }
 
 .navbar {
-    height: 90%;
+    min-height: 90%;
+    height: fit-content;
 }
 
 .navbar ul {
@@ -56,6 +70,57 @@
 a:visited {
     color: var(--violet-color);
 }
+
+.item-dropdown-visible-part {
+    cursor: pointer;
+}
+
+.dropdown-items-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s ease;
+    padding-left: 5%;
+}
+
+.item-dropdown-active>.dropdown-items-container {
+    max-height: 200px;
+}
+.bx-chevron-down{
+    transition: all .6s ease;
+}
+.item-dropdown-active .bx-chevron-down {
+    transform: rotate(180deg);
+}
+
+.dropdown-list-item {
+    margin: 2% 0;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-container input {
+    width: 10%;
+}
+
+.checkbox-container label {
+    color: #fff;
+    width: 90%;
+}
+
+.send-question {
+    width: 95%;
+    border: 0;
+    outline: 0;
+    border: 1px solid var(--gold-color);
+    background-color: transparent;
+    color: #fff;
+    padding: 3% 0;
+    margin-top: 3%;
+}
+
 
 
 
@@ -80,13 +145,19 @@ a:visited {
         left: -100%;
         width: 50%;
         height: 100%;
+        border-bottom: 0;
+        border-right: 3px solid var(--gold-color);
     }
 
     .navbar-container-active {
        left: 0;
     }
-
-
+    .dropdown-items-container {
+        transition: max-height 0.3s ease;
+    }
+    .bx-chevron-down{
+        transition: all .3s ease;
+    }
 
     .close-menu-btn-container {
         align-items: center;
@@ -97,13 +168,18 @@ a:visited {
     }
 
     .navbar {
-        height: 80%;
+        min-height: 80%;
+        height: fit-content;
     }
 
     .navbar ul {
         display: flex;
         flex-direction: column;
         justify-content: center;
+    }
+
+    .send-question {
+       font-size: 1.2rem;
     }
 
 }

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+        <link rel="stylesheet" href="./css/blogList.css">
+        <!-- <script type="module" src="./scripts/indexScript.js"></script> -->
+        <title>Blogs</title>
+</head>
+
+<body>
+    <%- include('./partials/header.ejs') %>
+        <%- include('./partials/navbar.ejs') %>
+            <%- include('./partials/bookConsultation.ejs') %>
+                <main class="blog-list-main">
+                    <div class="blog-intro-container">
+                        <div class="intro-img-container">
+                            <img class="intro-img" src="/img/treatmentExample.jpg" alt="Treament Example">
+                        </div>
+                        <div class="text-container">
+                            <h2>I SMILE Blog</h2>
+                        </div>
+                    </div>
+                    <section class="blogs-container">
+                        <div class="blogs-wrapper">
+                            <a href="#" class="blog">
+                                <article>
+                                    <div class="black-box"></div>
+                                    <div class="blog-img-container">
+                                        <img src="/img/estheticblog1.jpg" alt="">
+                                    </div>
+                                    <div class="blog-info-container">
+                                        <h3>Titulo</h3>
+                                        <p>Por I SMILE | 06/07/2023</p>
+                                    </div>
+                                </article>
+                            </a>
+
+                            <a href="#" class="blog">
+                                <article>
+                                    <div class="black-box"></div>
+                                    <div class="blog-img-container">
+                                        <img src="/img/estheticblog2.jpg" alt="">
+                                    </div>
+                                    <div class="blog-info-container">
+                                        <h3>Titulo 2</h3>
+                                        <p>Por I SMILE | 07/07/2023</p>
+                                    </div>
+                                </article>
+                            </a>
+
+                            <a href="#" class="blog">
+                                <article>
+                                    <div class="black-box"></div>
+                                    <div class="blog-img-container">
+                                        <img src="/img/estheticblog3.jpg" alt="">
+                                    </div>
+                                    <div class="blog-info-container">
+                                        <h3>Titulo 3</h3>
+                                        <p>Por I SMILE | 08/07/2023</p>
+                                </article>
+                            </a>
+
+                            <a href="#" class="blog">
+                                <article>
+                                    <div class="black-box"></div>
+                                    <div class="blog-img-container">
+                                        <img src="/img/estheticblog4.jpg" alt="">
+                                    </div>
+                                    <div class="blog-info-container">
+                                        <h3>Titulo 4</h3>
+                                        <p>Por I SMILE | 09/07/2023</p>
+                                    </div>
+                                </article>
+                            </a>
+                            <a href="#" class="blog">
+                                <article>
+                                    <div class="black-box"></div>
+                                    <div class="blog-img-container">
+                                        <img src="/img/estheticblog4.jpg" alt="">
+                                    </div>
+                                    <div class="blog-info-container">
+                                        <h3>Titulo 4</h3>
+                                        <p>Por I SMILE | 09/07/2023</p>
+                                    </div>
+                                </article>
+                            </a>
+                        </div>
+                    </section>
+                </main>
+                <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>
