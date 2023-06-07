@@ -222,27 +222,31 @@ li {
 /* BLOG SECTION */
 .blog-section {
     width: 100%;
-    height: 95vh;
+    height: 150vh;
     display: flex;
     flex-wrap: wrap;
     background-color: #fff;
     position: relative;
+    overflow: hidden;
 }
 
 .blog-background {
     width: 100%;
     position: relative;
-    height: 70%;
+    height: 30%;
     background: linear-gradient(rgb(0, 0, 0), rgba(0, 0, 0, .8));
 }
-
+.blog-background .overlay{
+    z-index: 1;
+}
 .blog-background-image {
     width: fit-content;
     object-fit: cover;
     height: 100%;
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
     object-position: top;
 }
 
@@ -250,23 +254,25 @@ li {
     color: #fff;
     margin: auto;
     width: fit-content;
-    font-size: 3rem;
+    font-size: 2rem;
     position: absolute;
-    left: 50%;
     top: 20%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 100%;
+    text-align: center;
 }
 
 .blogs-cards-container {
-    width: 80%;
-    height: 60%;
+    width: 90%;
+    height: 80%;
     position: absolute;
-    top: 70%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     overflow: hidden;
     transition: all .6s ease;
+    z-index: 5;
 }
 
 .blog-group {
@@ -274,6 +280,7 @@ li {
     height: 100%;
     position: absolute;
     display: flex;
+    flex-direction: column;
 }
 
 .blog-group-active {
@@ -285,27 +292,13 @@ li {
 }
 
 .blog-card {
-    width: 33.333333%;
-    height: 100%;
+    width: 100%;
+    height: 33.333333%;
     position: relative;
     display: flex;
     cursor: pointer;
     overflow: hidden;
     outline: none;
-}
-
-/* al hacer hover saca tanto el overlay como el titulo */
-.blog-card:hover>.overlay {
-    /* background: linear-gradient(to right,rgba(0, 0, 0, .4),rgba(0, 0, 0, .2));  */
-    opacity: .6;
-}
-
-/* .blog-card:hover > .blog-info {
-    opacity: 0;
-} */
-.blog-card:hover>.blog-img {
-    width: 110%;
-    height: 110%;
 }
 
 .blog-img {
@@ -325,7 +318,7 @@ li {
 .overlay {
     transition: all .5s ease;
     z-index: -1;
-    background: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .4))
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .6), rgba(0, 0, 0, .4))
 }
 
 .blog-info {
@@ -344,7 +337,7 @@ li {
 
 .blog-title {
     width: 100%;
-    height: 40%;
+    height: 60%;
     font-size: 2rem;
 }
 
@@ -683,6 +676,67 @@ li {
     .gallery-product-name {
         font-size: 1.5rem;
     }
+
+    /* BLOG SECTION */
+    .blog-section {
+        height: 95vh;
+    }
+    .blog-background {
+        height: 70%;
+    }
+    .blog-background .overlay{
+        display: none;
+    }
+    .blog-background-image {
+        height: 100%;
+        left: 20%;
+    }
+    .blog-section-title {
+        font-size: 3rem;
+        left: 50%;
+        top: 20%;
+    }
+    .blogs-cards-container {
+        width: 80%;
+        height: 60%;
+        top: 70%;
+    }
+    .blog-group {
+        flex-direction: row;
+    }
+
+    .blog-group-active {
+        transform: translateX(0);
+    }
+
+    .blog-group-next {
+        transform: translateX(100%);
+    }
+
+    .blog-card {
+        width: 33.333333%;
+        height: 100%;
+    }
+
+    /* al hacer hover saca tanto el overlay como el titulo */
+    .blog-card:hover>.overlay {
+        opacity: .6;
+    }
+
+    .blog-card:hover>.blog-img {
+        width: 110%;
+        height: 110%;
+    }
+
+
+    .overlay {
+        background: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .4))
+    }
+
+    .blog-title {
+        height: 40%;
+    }
+
 
     /* ABOUT US */
     .about-us-information-container {
