@@ -85,11 +85,12 @@ a:visited {
 .item-dropdown-active>.dropdown-items-container {
     max-height: 200px;
 }
-.bx-chevron-down{
-    transition: all .6s ease;
+.bx-chevron-right{
+    transition: all .4s ease;
+    font-size: 1.5rem;
 }
-.item-dropdown-active .bx-chevron-down {
-    transform: rotate(180deg);
+.item-dropdown-active .bx-chevron-right {
+    transform: rotate(90deg);
 }
 
 .dropdown-list-item {
@@ -154,17 +155,21 @@ a:visited {
     }
     .dropdown-items-container {
         transition: max-height 0.3s ease;
+        margin-top: 4%;
     }
-    .bx-chevron-down{
+    .bx-chevron-right{
         transition: all .3s ease;
+        font-size: 1.8rem;
     }
 
     .close-menu-btn-container {
         align-items: center;
+        justify-content: flex-end;
     }
 
     .close-menu-btn {
         cursor: pointer;
+        font-size: 2.2rem;
     }
 
     .navbar {
