@@ -96,6 +96,14 @@ const controller = {
             console.log(`Falle en mainController.blog: ${error}`);
             return res.json({error})
         }
+    },
+    frequentQAndA: async(req,res)=>{
+        try {
+            return res.render('frequentQAndA')
+        } catch (error) {
+            console.log(`Falle en mainController.frequentQAndA: ${error}`);
+            return res.json({error})
+        }
     }
 };
 
