@@ -19,20 +19,20 @@ window.addEventListener('load', () => {
         body.classList.remove('noScroll')
         bookConsultationContainer.classList.remove('book-consultation-container-active')
     })
-<<<<<<< HEAD
     const navBarLinks = document.querySelectorAll('.navbar-list-item');
-    navBarLinks.forEach(link=>{
-        link.addEventListener('click',()=>{
-            body.classList.remove('noScroll')
-            navbarContainer.classList.remove('navbar-container-active');
-            bookConsultationContainer.classList.remove('book-consultation-container-active');
-        })
-    });
-=======
+    // navBarLinks.forEach(link=>{
+    //     link.addEventListener('click',()=>{
+    //         body.classList.remove('noScroll')
+    //         navbarContainer.classList.remove('navbar-container-active');
+    //         bookConsultationContainer.classList.remove('book-consultation-container-active');
+    //     })
+    // });
 
     dropdownVisiblePart.addEventListener('click', () => {
-        dropdownContainer.classList.toggle('dropdown-items-container-active')
+        // Le pongo la clase active al padre nomas, en css afecto a lo que quiero a partir de que este
+        // sea active
+        dropdownVisiblePart.closest('.item-dropdown').classList.toggle('item-dropdown-active');
+
     })
 
->>>>>>> b65b6888c4f0eef166f330fb2b559549b17c9033
 })
