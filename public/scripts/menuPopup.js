@@ -17,5 +17,12 @@ window.addEventListener('load', () => {
         body.classList.remove('noScroll')
         bookConsultationContainer.classList.remove('book-consultation-container-active')
     })
-
+    const navBarLinks = document.querySelectorAll('.navbar-list-item');
+    navBarLinks.forEach(link=>{
+        link.addEventListener('click',()=>{
+            body.classList.remove('noScroll')
+            navbarContainer.classList.remove('navbar-container-active');
+            bookConsultationContainer.classList.remove('book-consultation-container-active');
+        })
+    });
 })
