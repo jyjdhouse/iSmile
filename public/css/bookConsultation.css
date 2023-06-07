@@ -27,8 +27,11 @@
     transition: all .35s ease;
     overflow: scroll;
     width: 100%;
-    transform: translateY(100%);
     padding: 5%;
+    padding-top: 10%;
+    display: flex;
+    flex-direction: column;
+    border-top: 2px solid var(--gold-color);
 }
 
 .book-consultation-container::-webkit-scrollbar {
@@ -44,7 +47,7 @@
 }
 
 .book-consultation-container-active {
-    top: 0;
+    top: 50%;
 }
 
 .book-consultation-form {
@@ -118,6 +121,9 @@ textarea {
         transform: translate(100%, 0);
         padding: 5%;
         left: 100%;
+        border-top: 0;
+        border-left: 3px solid var(--gold-color);
+        justify-content: center;
     }
 
     .book-consultation-container-active {
