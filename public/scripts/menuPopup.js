@@ -5,6 +5,8 @@ window.addEventListener('load', () => {
     const openMenuBtn =  document.querySelector('.open-menu-button')
     const body = document.querySelector('body')
     const closeMenuBtn = document.querySelector('.close-menu-btn-container i')
+    const dropdownVisiblePart =document.querySelector('.item-dropdown-visible-part')
+    const dropdownContainer = document.querySelector('.dropdown-items-container')
 
     openMenuBtn.addEventListener('click', () => {
         navbarContainer.classList.add('navbar-container-active')
@@ -16,6 +18,10 @@ window.addEventListener('load', () => {
         navbarContainer.classList.remove('navbar-container-active')
         body.classList.remove('noScroll')
         bookConsultationContainer.classList.remove('book-consultation-container-active')
+    })
+
+    dropdownVisiblePart.addEventListener('click', () => {
+        dropdownContainer.classList.toggle('dropdown-items-container-active')
     })
 
 })

@@ -13,11 +13,24 @@
     right: 0;
     left: 0;
     height: 50%;
-    background-color: black;
+    background-color: white;
     transition: all .35s ease;
-    overflow: hidden;
+    overflow: scroll;
     width: 100%;
     padding: 5%;
+    border-bottom: 2px solid var(--gold-color);
+}
+
+.navbar-container::-webkit-scrollbar {
+    width: 0.1em;
+}
+
+.navbar-container::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.navbar-container::-webkit-scrollbar-thumb {
+    background-color: transparent;
 }
 
 .navbar-container-active {
@@ -32,7 +45,7 @@
 
 .close-menu-btn {
     font-size: 1.2rem;
-    color: #fff;
+    color: var(--gold-color);
 }
 
 .navbar {
@@ -57,6 +70,51 @@ a:visited {
     color: var(--violet-color);
 }
 
+.item-dropdown-visible-part {
+    cursor: pointer;
+}
+
+.dropdown-items-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s;
+    padding-left: 5%;
+}
+
+.dropdown-items-container-active {
+    max-height: 200px;
+}
+
+.dropdown-list-item {
+    margin: 2% 0;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-container input {
+    width: 10%;
+}
+
+.checkbox-container label {
+    color: #fff;
+    width: 90%;
+}
+
+.send-question {
+    width: 95%;
+    border: 0;
+    outline: 0;
+    border: 1px solid var(--gold-color);
+    background-color: transparent;
+    color: #fff;
+    padding: 3% 0;
+    margin-top: 3%;
+}
+
+
 
 
 
@@ -80,6 +138,8 @@ a:visited {
         left: -100%;
         width: 50%;
         height: 100%;
+        border-bottom: 0;
+        border-right: 3px solid var(--gold-color);
     }
 
     .navbar-container-active {
@@ -104,6 +164,10 @@ a:visited {
         display: flex;
         flex-direction: column;
         justify-content: center;
+    }
+
+    .send-question {
+       font-size: 1.2rem;
     }
 
 }
