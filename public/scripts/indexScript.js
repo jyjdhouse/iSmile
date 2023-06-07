@@ -6,7 +6,8 @@ window.addEventListener('unload', () => {
 window.addEventListener('load', () => {
     window.scrollTo(0, 0);
     let video = document.querySelector('.video');
-    console.log(video);
+    // video.muted = true
+    // video.play();
 
     // Función que se ejecutará cuando se haga scroll
     function detectarElementoEnPantalla(e, element) {
@@ -69,34 +70,111 @@ window.addEventListener('load', () => {
             return
         }
     }
-    const handleVisibleLabel = (label) =>{
+    const handleVisibleLabel = (label) => {
         label.classList.add('slide-image-label-visible');
     }
     // Crear una instancia del Intersection Observer
-    const observer = checkIfIsInScreen(.4,handleAboutUsContainer,true)
+    const observer = checkIfIsInScreen(.4, handleAboutUsContainer, true)
 
     // Logica para mostrar labels en slideShow
     const labels = document.querySelectorAll('.slide-image-label');
-    const slideImagesContainers = document.querySelectorAll('.slide-image-container')
-    if(isInDesktop()){ //Si esta en desktop es distinto el slideShow
-        slideImagesContainers.forEach(container => {
-            container.addEventListener('mouseenter',()=>{
+    const slideImageContainers = document.querySelectorAll('.slide-image-container')
+    if (isInDesktop()) { //Si esta en desktop es distinto el slideShow
+        slideImageContainers.forEach(container => {
+            container.addEventListener('mouseenter', () => {
                 const labelToActivate = container.querySelector('.slide-image-label');
-                labelToActivate.classList.add('slide-image-label-visible')
+                labelToActivate.classList.add('slide-image-label-visible');
+                // Freno el slideShow
+                clearInterval(slideIntervalId);
             });
-            container.addEventListener('mouseleave',()=>{
+            container.addEventListener('mouseleave', () => {
                 const labelToDeactivate = container.querySelector('.slide-image-label');
-                labelToDeactivate.classList.remove('slide-image-label-visible')
+                labelToDeactivate.classList.remove('slide-image-label-visible');
+                slideIntervalId = setInterval(updateSlideShow, 5000);
             });
         });
-    } else{ //Aca es otra logica
-        labels.forEach(lab=>{
-            const labelObserver = checkIfIsInScreen(.5,handleVisibleLabel,lab);
+    } else { //Aca es otra logica
+        labels.forEach(lab => {
+
+            const labelObserver = checkIfIsInScreen(.5, handleVisibleLabel, lab);
             labelObserver.observe(lab);
         });
     }
-    
+
     // Observar el contenedor
     observer.observe(aboutUsContainer);
 
+    // LOGICA para slideShow
+    let slideImagesGroup;
+    // Depende que resolucion agarro los diferentes grupos
+    if (isInDesktop()) {
+        slideImagesGroup = document.querySelector('.slide-images-wraper-desktop').querySelectorAll('.slide-image-group')
+    } else {
+        slideImagesGroup = document.querySelector('.slide-images-wraper-mobile').querySelectorAll('.slide-image-group')
+    }
+    let currentIndex = 1;
+
+    function updateSlideShow() {
+        // Le saco el nombre porque aparece una vez que esta en vista
+        labels.forEach(lab => lab.classList.remove('slide-image-label-visible'));
+        slideImagesGroup.forEach((container, index) => {
+            container.classList.remove('slide-image-group-active', 'slide-image-group-next', 'slide-image-group-prev');
+            if (index === currentIndex) {
+                container.classList.add('slide-image-group-active');
+            } else if (index === (currentIndex + 1) % slideImagesGroup.length) {
+                container.classList.add('slide-image-group-next');
+            } else {
+                container.classList.add('slide-image-group-prev');
+            }
+        });
+        currentIndex = (currentIndex + 1) % slideImagesGroup.length;
+    }
+    let slideIntervalId = setInterval(updateSlideShow, 5000);
+
+    // LOGICA para galleryShow
+    if (!isInDesktop()) {
+        function updateGalleryShow() {
+            slideImagesGroup.forEach((container, index) => {
+                container.classList.remove('slide-image-group-active', 'slide-image-group-next', 'slide-image-group-prev');
+                if (index === currentIndex) {
+                    container.classList.add('slide-image-group-active');
+                } else if (index === (currentIndex + 1) % slideImagesGroup.length) {
+                    container.classList.add('slide-image-group-next');
+                } else if (index === (currentIndex - 1 + slideImagesGroup.length) % slideImagesGroup.length) {
+                    container.classList.add('slide-image-group-prev');
+                }
+            });
+            currentIndex = (currentIndex + 1) % slideImagesGroup.length;
+        }
+    }
+
+    // LOGICA para instagram posts
+
+    if (isInDesktop()) {
+        const igCards = document.querySelectorAll('.instagram-card');
+        igCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const overlay = card.querySelector('.instagram-overlay');
+                overlay.classList.add('instagram-overlay-active');
+            });
+            card.addEventListener('mouseleave', () => {
+                const overlay = card.querySelector('.instagram-overlay');
+                overlay.classList.remove('instagram-overlay-active');
+            });
+        });
+    } else { //Mobile
+        function toggleActiveImage() {
+            const cards = document.querySelectorAll('.instagram-card');
+            console.log(cards);
+            for (let i = 0; i < cards.length; i++) {
+              if (cards[i].classList.contains('instagram-card-active')) {
+                cards[i].classList.remove('instagram-card-active');
+                cards[(i + 1) % cards.length].classList.add('instagram-card-active');
+                break;
+              }
+            }
+          }
+          // Ejecutar la función cada 3 segundos
+          setInterval(toggleActiveImage, 3000);
+    }
 })

@@ -74,6 +74,36 @@ const controller = {
             console.log(`Falle en mainController.services: ${error}`);
             return res.json({error})
         }
+    },
+    blogList: async(req,res)=>{
+        try {
+            return res.render('blogList')
+        } catch (error) {
+            console.log(`Falle en mainController.blogList: ${error}`);
+            return res.json({error})
+        }
+    },
+    blog: async(req,res)=>{
+        try {
+            let blog = await db.Blog.findAll({
+                where:{
+                    id: req.params.id
+                },
+               /*  include: ['keywords','colors'] */
+            });
+            return res.render('blog', blog)
+        } catch (error) {
+            console.log(`Falle en mainController.blog: ${error}`);
+            return res.json({error})
+        }
+    },
+    frequentQAndA: async(req,res)=>{
+        try {
+            return res.render('frequentQAndA')
+        } catch (error) {
+            console.log(`Falle en mainController.frequentQAndA: ${error}`);
+            return res.json({error})
+        }
     }
 };
 

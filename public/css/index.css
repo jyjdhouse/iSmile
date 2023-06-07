@@ -1,3 +1,6 @@
+/* Variables */
+@import 'variables.css';
+
 /* PARA OCULTAR EL PROGRESO DEL VIDEO */
 /* Ocultar el control de progreso en el video */
 video::-webkit-media-controls-timeline,
@@ -15,7 +18,7 @@ li {
 }
 
 .violet {
-    color: #b472e7;
+    color: var(--violet-color);
 }
 
 .bold {
@@ -39,6 +42,10 @@ li {
 }
 
 /* SLIDESHOW */
+.slide-images-wraper.slide-images-wraper-desktop {
+    display: none;
+}
+
 .slide-show {
     position: relative;
     width: 100vw;
@@ -46,6 +53,8 @@ li {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    overflow: hidden;
+
 }
 
 .slide-show-button {
@@ -54,7 +63,7 @@ li {
     left: 50%;
     transform: translateX(-50%);
     padding: 1rem 5rem;
-    border: 1px solid #d9b807;
+    border: 1px solid var(--gold-color);
     background: rgba(250, 250, 250, .5);
     outline: none;
     border-radius: 1rem;
@@ -64,9 +73,43 @@ li {
     white-space: nowrap;
 }
 
-.slide-image-container {
+.slide-images-wraper {
     width: 100%;
-    flex: 0 0 auto;
+    display: flex;
+    height: 100%;
+    background-color: #fff;
+}
+
+.slide-image-group {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all .8s;
+}
+
+/* Para el slideShow */
+.slide-image-group-active {
+    transform: translateX(0);
+}
+
+.slide-image-group-next {
+    z-index: -1;
+    transform: translateX(100%);
+}
+
+.slide-image-group-prev {
+    transform: translateX(-100%);
+}
+
+
+.slide-image-container {
+    width: 0;
+    flex-grow: 1;
+    opacity: .9;
+    transition: all .3s ease;
     display: flex;
     align-items: center;
     height: 100%;
@@ -75,7 +118,6 @@ li {
     object-fit: cover;
     background: linear-gradient(to left, rgba(200, 200, 200, .2), rgba(200, 200, 200, .4));
     position: relative;
-
 }
 
 .slide-image-label {
@@ -96,15 +138,15 @@ li {
 }
 
 .slide-image {
-    width: 100%;
+    width: 60%;
+    height: 60%;
     object-fit: cover;
     z-index: -1;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 }
-
 
 /* GALLERY SHOW */
 .gallery-show {
@@ -112,12 +154,13 @@ li {
     display: flex;
     width: 100%;
     height: 85vh;
+    overflow: hidden;
 }
 
 
 .product-gallery-card {
     width: 0;
-    flex-grow: 1;
+    flex: 0 0 33.33%;
     opacity: .9;
     transition: all .3s ease;
     box-shadow: 0 0 10px rgba(0, 0, 0, .6);
@@ -130,7 +173,7 @@ li {
 .product-gallery-card:hover {
     cursor: pointer;
     opacity: 1;
-    width: 10%;
+    width: 50%;
     object-position: center;
     filter: contrast(120%);
 }
@@ -158,7 +201,7 @@ li {
 }
 
 .gallery-product-name {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     margin-top: 5%;
 }
 
@@ -182,6 +225,8 @@ li {
     width: 100%;
     height: 90vh;
     position: relative;
+    overflow: hidden;
+    margin-bottom: 15vh;
 }
 
 .about-us-background {
@@ -273,32 +318,185 @@ li {
     margin-right: 10px;
 }
 
+.blogs-slideshow-container {
+    width: 100%;
+    height: 300px;
+    border: 1px solid red;
+    margin-bottom: 5vh;
+}
 
+/* INSTAGRAM POSTS */
+.instagram-container {
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.instagram-label {
+    width: 100%;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    height: fit-content;
+    margin-bottom: 5vh;
+}
+
+.instagram-cards-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+    height: 100%;
+}
+
+.instagram-card {
+    width: 80%;
+    height: 60%;
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    transition: all .3s ease;
+    opacity: 0;
+}
+.instagram-card-active {
+    opacity: 1;
+}
+
+.instagram-overlay {
+    background-color: rgba(0, 0, 0, .5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    transition: all .3s ease;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.instagram-logo {
+    width: 100%;
+    text-align: center;
+    font-size: 1.8rem;
+    color: var(--violet-color);
+}
+
+.instagram-page-name {
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--violet-color);
+}
+
+.instagram-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
 
 @media (min-width: 1024px) {
-    .slide-image-container {
-        width: 33.33333%;
+
+    /* SLIDESHOW */
+    .slide-images-wraper-mobile {
+        display: none;
     }
-    .slide-image-label{
+
+    .slide-images-wraper.slide-images-wraper-desktop {
+        display: flex;
+    }
+
+    .slide-image-container {
+        width: 33.333%;
+    }
+
+    .slide-image-container:hover {
+        cursor: pointer;
+        opacity: 1;
+        width: 40%;
+        object-position: center;
+        filter: contrast(120%);
+    }
+
+    .slide-image {
+        height: 60%;
+    }
+
+    .slide-image:hover {
+        object-position: center;
+    }
+
+    .slide-image-label {
         top: 5%;
         transition: .5s;
         transition-delay: 0;
         font-size: 2rem;
     }
-    .slide-image-container:hover {
-        opacity: 1;
-        width: 40%;
-        filter: contrast(120%);
-    }
+
 
     .slide-show-button {
         font-size: 1.2rem;
     }
-    .slide-image{
-        height: 80%;
+
+
+
+    /* GALLERYSHOW */
+    .product-gallery-card {
+        flex: 1 0 20%;
     }
-    .slide-image:hover {
-        object-position: center;
+
+    .product-gallery-card:hover {
+        flex: 0 0 25%;
+    }
+
+    .gallery-product-name {
+        font-size: 1.5rem;
+    }
+
+    /* INSTAGRAM POSTS */
+    .instagram-label {
+        text-align: start;
+        margin-left: 4.1666%;
+        margin-bottom: 10vh;
+    }
+
+   
+
+    .instagram-card {
+        width: 15%;
+        height: 40%;
+        position: relative;
+        opacity: 1;
+    }
+    .instagram-card:nth-child(even) {
+        top: 10%;
+    }
+
+    .instagram-card:hover {
+        scale: 1.2;
+    }
+
+    .instagram-overlay {
+        background-color: rgba(0, 0, 0, .6);
+        opacity: 0;
+    }
+
+    .instagram-overlay-active {
+        opacity: 1;
+    }
+
+    .instagram-logo {
+        font-size: 1.2rem;
+    }
+
+    .instagram-image {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
     }
 }
 

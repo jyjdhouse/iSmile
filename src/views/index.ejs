@@ -10,28 +10,92 @@
 
 <body>
     <%- include('./partials/header.ejs') %>
+    <%- include('./partials/navbar.ejs') %>
+    <%- include('./partials/bookConsultation.ejs') %>
         <main class="main">
             <div class="landing-video-container">
-                <video class="video" src="/video/home.mp4" muted autoplay></video>
+                <video class="video" src="/video/home2.mp4" playsinline muted autoplay loop></video>
             </div>
-            <div class="slide-show">
+            <div class="slide-show" id="products">
                 <button class="slide-show-button"><a href="#">Ver productos</a></button>
-                <div class="slide-image-container">
-                    <img src="/img/crema2.png" alt="" class="slide-image">
-                    <p class="slide-image-label">Crema Restauradora</p>
+                <div class="slide-images-wraper slide-images-wraper-desktop">
+                    <!-- Grupos de 3 (desktop) -->
+                    <div class="slide-image-group slide-image-group-active">
+                        <div class="slide-image-container">
+                            <img src="/img/products/product1.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                        <div class="slide-image-container">
+                            <img src="/img/products/product2.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                        <div class="slide-image-container">
+                            <img src="/img/products/product3.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                    </div>
+                    <div class="slide-image-group slide-image-group-next">
+                        <div class="slide-image-container">
+                            <img src="/img/products/product1.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                        <div class="slide-image-container">
+                            <img src="/img/products/product2.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                        <div class="slide-image-container">
+                            <img src="/img/products/product3.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                    </div>
+                    <div class="slide-image-group slide-image-group-prev">
+                        <div class="slide-image-container">
+                            <img src="/img/products/product1.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                        <div class="slide-image-container">
+                            <img src="/img/products/product2.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                        <div class="slide-image-container">
+                            <img src="/img/products/product3.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="slide-image-container">
-                    <img src="/img/crema2.png" alt="" class="slide-image">
-                    <p class="slide-image-label">Crema Restauradora</p>
+                <div class="slide-images-wraper slide-images-wraper-mobile">
+                    <!-- Grupos de 1 (Mobile) -->
+                    <div class="slide-image-group slide-image-group-active">
+                        <div class="slide-image-container">
+                            <img src="/img/products/product1.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                    </div>
+                    <div class="slide-image-group slide-image-group-next">
+                        <div class="slide-image-container">
+                            <img src="/img/products/product2.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                    </div>
+                    <div class="slide-image-group slide-image-group-prev">
+                        <div class="slide-image-container">
+                            <img src="/img/products/product3.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                    </div>
+                    <div class="slide-image-group slide-image-group-prev">
+                        <div class="slide-image-container">
+                            <img src="/img/products/product4.png" alt="" class="slide-image">
+                            <p class="slide-image-label">Crema Restauradora</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="slide-image-container">
-                    <img src="/img/crema2.png" alt="" class="slide-image">
-                    <p class="slide-image-label">Crema Restauradora</p>
-                </div>
+
             </div>
-            <div class="gallery-show">
+            <div class="gallery-show" id="services">
                 <div class="product-gallery-card">
                     <a href="/servicios">
+                        <div class="overlay"></div>
                         <img src="./img/face.jpg" class="gallery-image" alt="gallery-image">
                         <div class="gallery-product-detail">
                             <p class="gallery-product-name">Harmonizacion
@@ -42,6 +106,7 @@
                 </div>
                 <div class="product-gallery-card">
                     <a href="/servicios">
+                        <div class="overlay"></div>
                         <img src="./img/lips.jpg" class="gallery-image" alt="gallery-image">
                         <div class="gallery-product-detail">
                             <p class="gallery-product-name">Labios</p>
@@ -51,6 +116,7 @@
                 </div>
                 <div class="product-gallery-card">
                     <a href="/servicios">
+                        <div class="overlay"></div>
                         <img src="./img/nose.jpg" class="gallery-image" alt="gallery-image">
                         <div class="gallery-product-detail">
                             <p class="gallery-product-name">Rinomodelacion</p>
@@ -60,6 +126,7 @@
                 </div>
                 <div class="product-gallery-card">
                     <a href="/servicios">
+                        <div class="overlay"></div>
                         <img src="./img/botox.jpg" class="gallery-image" alt="gallery-image">
                         <div class="gallery-product-detail">
                             <p class="gallery-product-name">Botox</p>
@@ -69,6 +136,7 @@
                 </div>
                 <div class="product-gallery-card">
                     <a href="/servicios">
+                        <div class="overlay"></div>
                         <img src="./img/hair.jpg" class="gallery-image" alt="gallery-image">
                         <div class="gallery-product-detail">
                             <p class="gallery-product-name">Masculinizacion facial</p>
@@ -76,7 +144,7 @@
                     </a>
                 </div>
             </div>
-            <div class="about-us-container">
+            <div class="about-us-container" id="us">
                 <div class="about-us-information-container">
                     <p class="about-us-information-title">SOMOS ISMILE</p>
                     <div class="about-us-information-paragraph">
@@ -107,20 +175,78 @@
                     <ul class="about-us-details-list">
                         <li class="about-us-list-item"><i class="fa-solid fa-user-doctor"></i>Profesionales Capacitados
                         </li>
-                        <li class="about-us-list-item a-right"><i class="fa-regular fa-face-smile"></i>Family Friendly</li>
+                        <li class="about-us-list-item a-right"><i class="fa-regular fa-face-smile"></i>Family Friendly
+                        </li>
                         <li class="about-us-list-item">Consultorios Ultra Asepticos</li>
                         <li class="about-us-list-item a-right"><i class='bx bx-home-alt-2'></i>Excelente Ubicacion</li>
                         <li class="about-us-list-item"><i class="fa-solid fa-tooth"></i>Odontologia Laser</li>
-                        <li class="about-us-list-item a-right"><i class="fa-regular fa-clock"></i>Poco Tiempo de Espera</li>
+                        <li class="about-us-list-item a-right"><i class="fa-regular fa-clock"></i>Poco Tiempo de Espera
+                        </li>
                         <li class="about-us-list-item"><i class='bx bx-gift'></i>Precios Especiales</li>
                         <li class="about-us-list-item a-right">Innovacion Tecnologica</li>
                         <li class="about-us-list-item"><i class='bx bx-shield'></i>Garantia de Satisfaccion</li>
-                        <li class="about-us-list-item a-right"><i class="fa-solid fa-microscope"></i>Materiales de Alta Calidad
+                        <li class="about-us-list-item a-right"><i class="fa-solid fa-microscope"></i>Materiales de Alta
+                            Calidad
                         </li>
                         <li class="about-us-list-item"><i class="fa-regular fa-credit-card"></i>Todos los Medios de Pago
                         </li>
                         <li class="about-us-list-item a-right"><i class="fa-solid fa-teeth"></i>Radiografias</li>
                     </ul>
+                </div>
+            </div>
+
+            <div class="blogs-slideshow-container">
+
+            </div>
+
+            <div class="instagram-container">
+                <p class="instagram-label">SIGUENOS</p>
+                <div class="instagram-cards-container">
+                    <div class="instagram-card instagram-card-active">
+                        <div class="instagram-overlay">
+                            <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
+                                <i class="fa-brands fa-instagram instagram-logo"></i>
+                                <p class="instagram-page-name">@iSmile</p>
+                            </a>
+                        </div>
+                        <img src="/img/homePage/home1.png" alt="instagram-image" class="instagram-image">
+                    </div>
+                    <div class="instagram-card">
+                        <div class="instagram-overlay">
+                            <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
+                                <i class="fa-brands fa-instagram instagram-logo"></i>
+                                <p class="instagram-page-name">@iSmile</p>
+                            </a>
+                        </div>
+                        <img src="/img/homePage/home2.jpeg" alt="instagram-image" class="instagram-image">
+                    </div>
+                    <div class="instagram-card">
+                        <div class="instagram-overlay">
+                            <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
+                                <i class="fa-brands fa-instagram instagram-logo"></i>
+                                <p class="instagram-page-name">@iSmile</p>
+                            </a>
+                        </div>
+                        <img src="/img/homePage/home3.jpeg" alt="instagram-image" class="instagram-image">
+                    </div>
+                    <div class="instagram-card">
+                        <div class="instagram-overlay">
+                            <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
+                                <i class="fa-brands fa-instagram instagram-logo"></i>
+                                <p class="instagram-page-name">@iSmile</p>
+                            </a>
+                        </div>
+                        <img src="/img/homePage/home4.jpeg" alt="instagram-image" class="instagram-image">
+                    </div>
+                    <div class="instagram-card">
+                        <div class="instagram-overlay">
+                            <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
+                                <i class="fa-brands fa-instagram instagram-logo"></i>
+                                <p class="instagram-page-name">@iSmile</p>
+                            </a>
+                        </div>
+                        <img src="/img/homePage/home5.jpeg" alt="instagram-image" class="instagram-image">
+                    </div>
                 </div>
             </div>
         </main>
