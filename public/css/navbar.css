@@ -56,19 +56,25 @@
 .navbar ul {
     height: 100%;
     width: 100%;
+    
 }
 
 .navbar-list-item {
-    color: var(--violet-color);
+    color: #000;
     text-transform: uppercase;
     margin: 8% 0;
     font-weight: 700;
     font-size: 1rem;
+    /* list-style: disc; */
+
+}
+.navbar-list-item::marker{
+    color: var(--gold-color);
 }
 
 .navbar-list-item a,
 a:visited {
-    color: var(--violet-color);
+    color: #000;
 }
 
 .item-dropdown-visible-part {
@@ -88,6 +94,7 @@ a:visited {
 .bx-chevron-right{
     transition: all .4s ease;
     font-size: 1.5rem;
+    color: var(--gold-color);
 }
 .item-dropdown-active .bx-chevron-right {
     transform: rotate(90deg);
