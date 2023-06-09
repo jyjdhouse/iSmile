@@ -24,76 +24,36 @@
             </div>
 
             <section class="product-list-section">
-                <div class="product-card-container" data-productId=<%=prod.id %>>
-                    <a href="/test/<%= prod.id%>/<%= col.id %>" class="product-card-link">
+                <div class="product-card-container" data-productId=<%=1%>>
+                    <a href="/product/1" class="product-card-link">
                         <div class="image-container">
                             <div class="image-carousel">
-                                <!-- CONDICION DE SI ESTA EN WISHLIST -->
-                                <%let condition; %>
-                                    <% prod.wishedUsers.forEach(user=> { %>
-                                        <% if (isLogged && user.id==userLogged.id) { %>
-                                            <% condition=user.wishlistProducts?.find(wishProd=>
-                                                wishProd.products_id == prod.id && wishProd.colors_id ==
-                                                col.id)%>
-                                                <% } %>
-                                                    <% }) %>
-
-                                                        <div class="faved-item-container <%= condition && 'faved-item-container-active'%>"
-                                                            data-productId=<%=prod.id %> data-colorid=<%= col.id
-                                                                %>>
-                                                                <i class='bx bx-heart'></i>
-                                                        </div>
-                                                        <% col.files.forEach((file,i)=> { %>
-                                                            <!--Estos son los archivos del color x-->
-                                                            <% if (file.file_types_id==1) { %> <!--Foto-->
-                                                                <img src="/img/<%= file.filename %>"
-                                                                    alt="product-image"
-                                                                    class="product-image-test <%= i==0 ? 'product-image-test-active' : 'product-image-test-next-slide' %>"
-                                                                    data-productId=<%=prod.id %>>
-                                                                <% } else if(file.file_types_id==2){ %>
-                                                                    <!--Video-->
-                                                                    <video
-                                                                        class="video product-image-test <%= i==0 ? 'product-image-test-active' : 'product-image-test-next-slide' %>"
-                                                                        muted playsinline loop>
-                                                                        <source
-                                                                            src="/video/<%= file.filename %>"
-                                                                            type="video/mp4">
-                                                                        <source
-                                                                            src="/video/<%= file.filename %>"
-                                                                            type="video/webm">
-                                                                        No se puede reproducir el video
-                                                                    </video>
-                                                                    <% } %>
-                                                                        <% }) %>
+                                <img src="/img/<%= file.filename %>" alt="product-image"
+                                    class="product-image-test <%= i==0 ? 'product-image-test-active' : 'product-image-test-next-slide' %>"
+                                    data-productId=<%=prod.id %>>
+                                <video
+                                    class="video product-image-test <%= i==0 ? 'product-image-test-active' : 'product-image-test-next-slide' %>"
+                                    muted playsinline loop>
+                                    <source src="/video/<%= file.filename %>" type="video/mp4">
+                                    <source src="/video/<%= file.filename %>" type="video/webm">
+                                    No se puede reproducir el video
+                                </video>
                             </div>
-                            <!-- TODO: HACER CONTENEDOR DE DOTS ACA ABAJO -->
                         </div>
                         <div class="product-info-container">
                             <div class="price-name-container">
                                 <p class="product-name">
-                                    <%= prod.name %>
+                                    Crema Restauradora
                                 </p>
-                                <p class="product-price">$<%= prod.price %>
-                                </p>
+                                <p class="product-price">$5000</p>
                             </div>
-
                         </div>
                     </a>
-                    <div class="product-quick-actions-container" data-productId=<%=prod.id %> data-colorid=<%=
-                            col.id %>>
-                            <div class="quick-cart-container" data-productid=<%=prod.id %> data-colorid=<%=
-                                    col.id %>>
+                    <div class="product-quick-actions-container" data-productId=<%=1 %>>
+                            <div class="quick-cart-container" data-productid=<%=prod.id %>>
                                     <div class="logo-container">
-                                        <i class='bx bx-shopping-bag quick-add-cart-btn'
-                                            data-productId=<%=prod.id %>></i>
+                                        <i class='bx bx-shopping-bag quick-add-cart-btn' data-productId=<%=1%>></i>
                                     </div>
-                            </div>
-                            <div class="quick-fav-container">
-                                <div class="logo-container heart-container" data-productId=<%=prod.id %>
-                                    data-colorid=<%= col.id %>>
-                                        <i class="fa-regular fa-heart" data-productId=<%=prod.id %>
-                                            data-colorid=<%= col.id %>></i>
-                                </div>
                             </div>
                             <div class="loading-container">
                                 <div class="load-wrapp">
@@ -104,7 +64,6 @@
                                     </div>
                                 </div>
                             </div>
-
                     </div>
                 </div>
             </section>
