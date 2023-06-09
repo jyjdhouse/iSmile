@@ -13,3 +13,21 @@
 input{
     outline: none;
 }
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+.bold {
+    font-weight: 600;
+}
+.violet {
+    color: var(--violet-color);
+}
+.overflow-auto{
+    overflow: auto;
+}
