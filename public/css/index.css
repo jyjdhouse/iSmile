@@ -13,6 +13,24 @@ video::-webkit-media-controls-time-remaining-display {
     text-align: end;
 }
 
+/* Buttons */
+.slide-show-button,
+.blog-section-button,
+.product-gallery-button {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem 5rem;
+    border: 1px solid var(--gold-color);
+    background: rgba(250, 250, 250, .5);
+    outline: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    z-index: 1;
+    white-space: nowrap;
+}
+
 /* VIDEO LANDING */
 .landing-video-container {
     height: 100vh;
@@ -42,19 +60,7 @@ video::-webkit-media-controls-time-remaining-display {
 }
 
 .slide-show-button {
-    position: absolute;
     bottom: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 1rem 5rem;
-    border: 1px solid var(--gold-color);
-    background: rgba(250, 250, 250, .5);
-    outline: none;
-    border-radius: 1rem;
-    cursor: pointer;
-    font-size: 1rem;
-    z-index: 1;
-    white-space: nowrap;
 }
 
 .slide-images-wraper {
@@ -153,10 +159,12 @@ video::-webkit-media-controls-time-remaining-display {
     filter: brightness(0.75);
     position: relative;
     background: linear-gradient(to top, rgba(0, 0, 0, .4), transparent);
+    overflow: hidden;
 
 }
 
-.product-gallery-card:hover {
+/* Para mobile */
+.product-gallery-card-hover {
     cursor: pointer;
     opacity: 1;
     width: 50%;
@@ -203,6 +211,30 @@ video::-webkit-media-controls-time-remaining-display {
     border: 2px solid;
 }
 
+.product-gallery-button {
+    display: none;
+    bottom: 5%;
+
+}
+
+.product-gallery-button.individual-button {
+    padding: .5rem 3rem;
+}
+
+.product-gallery-card-hover>.product-gallery-button.individual-button {
+    display: block;
+}
+
+.product-gallery-card .overlay {
+    z-index: 0;
+    opacity: 0;
+    transition-delay: .3s;
+}
+
+.product-gallery-card-hover .overlay {
+    opacity: .6;
+}
+
 /* BLOG SECTION */
 .blog-section {
     width: 100%;
@@ -220,9 +252,11 @@ video::-webkit-media-controls-time-remaining-display {
     height: 30%;
     background: linear-gradient(rgb(0, 0, 0), rgba(0, 0, 0, .8));
 }
-.blog-background .overlay{
+
+.blog-background .overlay {
     z-index: 1;
 }
+
 .blog-background-image {
     width: fit-content;
     object-fit: cover;
@@ -230,7 +264,7 @@ video::-webkit-media-controls-time-remaining-display {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     object-position: top;
 }
 
@@ -335,6 +369,11 @@ video::-webkit-media-controls-time-remaining-display {
     border-right: 1.5px solid #fff;
     padding-right: 1.5%;
     margin-right: 1.5%;
+}
+
+.blog-section-button {
+    bottom: 3%;
+    padding: .5rem 3rem;
 }
 
 /* ABOUT-US */
@@ -557,6 +596,7 @@ video::-webkit-media-controls-time-remaining-display {
     transition: all .3s ease;
     opacity: 0;
     overflow: hidden;
+    border-radius: 1.5rem;
 }
 
 .instagram-card-active {
@@ -650,42 +690,61 @@ video::-webkit-media-controls-time-remaining-display {
     }
 
     /* GALLERYSHOW */
-    .product-gallery-card {
-        /* flex: 1 0 20%; */
-    }
 
     .product-gallery-card:hover {
+        cursor: pointer;
+        opacity: 1;
         width: 10%;
+        object-position: center;
+        filter: contrast(120%);
     }
 
     .gallery-product-name {
         font-size: 1.5rem;
     }
 
+    .product-gallery-button {
+        display: block;
+    }
+
+    .product-gallery-button.individual-button {
+        display: none;
+    }
+
+    .product-gallery-card:hover .overlay {
+        opacity: .6;
+    }
+
     /* BLOG SECTION */
     .blog-section {
         height: 95vh;
     }
+
     .blog-background {
         height: 70%;
     }
-    .blog-background .overlay{
+
+    .blog-background .overlay {
         display: none;
     }
+
     .blog-background-image {
         height: 100%;
         left: 20%;
     }
+
     .blog-section-title {
         font-size: 3rem;
         top: 20%;
     }
+
     .blogs-cards-container {
         width: 80%;
         height: 60%;
         top: 70%;
-        
+
     }
+
     .blog-group {
         flex-direction: row;
     }
@@ -715,7 +774,7 @@ video::-webkit-media-controls-time-remaining-display {
     }
 
 
-    .overlay {
+    .blog-section .overlay {
         background: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .4))
     }
 
@@ -723,7 +782,10 @@ video::-webkit-media-controls-time-remaining-display {
         height: 40%;
     }
 
-
+    .blog-section-button {
+        bottom: 5%;
+        padding: .5rem 3rem;
+    }
     /* ABOUT US */
     .about-us-information-container {
         align-items: center;

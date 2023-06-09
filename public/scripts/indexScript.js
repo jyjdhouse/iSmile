@@ -149,20 +149,31 @@ window.addEventListener('load', () => {
     }
 
 
-    if (!isInDesktop()) {
-        function updateGalleryShow() {
-            slideImagesGroup.forEach((container, index) => {
-                container.classList.remove('slide-image-group-active', 'slide-image-group-next', 'slide-image-group-prev');
-                if (index === slideShowIndex) {
-                    container.classList.add('slide-image-group-active');
-                } else if (index === (slideShowIndex + 1) % slideImagesGroup.length) {
-                    container.classList.add('slide-image-group-next');
-                } else if (index === (slideShowIndex - 1 + slideImagesGroup.length) % slideImagesGroup.length) {
-                    container.classList.add('slide-image-group-prev');
+    if (!isInDesktop()) { //Solo para mobile la logica
+        const productGalleryCards = document.querySelectorAll('.product-gallery-card');
+        let timeoutId = undefined;
+        let time = 4000;
+        let lastCardTouched;
+        // Me fijo cuando toca en un producto de la galeria
+        productGalleryCards.forEach(card => {
+            card.addEventListener("touchend", function (e) {
+                // Si no estaba con la clase hover, no lo mando al link, solamente muestro el hover
+                if (!card.classList.contains("product-gallery-card-hover") && card != lastCardTouched) {
+                    if (lastCardTouched) {
+                        lastCardTouched.classList.remove("product-gallery-card-hover");
+                        clearTimeout(timeoutId);
+                    }
+                    lastCardTouched = card;
+                    e.preventDefault();
+                    card.classList.add("product-gallery-card-hover");
+                    // Este timeout es para que despues de 2 segundos de haber tocado lo vuelva a como estaba
+                    timeoutId = setTimeout(() => {
+                        card.classList.remove("product-gallery-card-hover");
+                    }, time);
                 }
             });
-            slideShowIndex = (slideShowIndex + 1) % slideImagesGroup.length;
-        }
+        });
+
     }
 
     // LOGICA para instagram posts

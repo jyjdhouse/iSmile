@@ -4,9 +4,10 @@ window.addEventListener('load', () => {
     const bookConsultationContainer = document.querySelector('.book-consultation-container')
     const openMenuBtn =  document.querySelector('.open-menu-button')
     const body = document.querySelector('body')
-    const closeMenuBtn = document.querySelector('.close-menu-btn-container i')
+    const closeMenuBtn = document.querySelector('.close-menu-btn')
     const dropdownVisiblePart =document.querySelector('.item-dropdown-visible-part')
     const dropdownContainer = document.querySelector('.dropdown-items-container')
+    const navbar = document.querySelector('.navbar');
 
     openMenuBtn?.addEventListener('click', () => {
         navbarContainer.classList.add('navbar-container-active')
@@ -32,7 +33,8 @@ window.addEventListener('load', () => {
         // Le pongo la clase active al padre nomas, en css afecto a lo que quiero a partir de que este
         // sea active
         dropdownVisiblePart.closest('.item-dropdown').classList.toggle('item-dropdown-active');
-
+        navbarContainer.classList.toggle('overflow-auto');
+        navbar.classList.toggle('dropdown-active')
     })
 
 })

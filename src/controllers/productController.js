@@ -15,11 +15,11 @@ const controller = {
             let errors = req.query.errors && JSON.parse(req.query.errors);
             let oldData = req.query.oldData && JSON.parse(req.query.oldData);
             // Si me llegan errores, renderizo la vista y le llevo los params errores
+            return res.render('productList', {categories: await getCategories(), countryCodes: await getCountryCodes()})
             if (errors) {
                 // return res.send(req.query.errors)
                 return res.render('productList', { errors, oldData, categories: await getCategories(), countryCodes: await getCountryCodes() });
             }
-            return res.render('productList', {categories: await getCategories(), countryCodes: await getCountryCodes()})
         } catch (error) {
             console.log(`Falle en productController.list: ${error}`);
             return res.json(error);
