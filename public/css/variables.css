@@ -28,3 +28,6 @@ li {
 .violet {
     color: var(--violet-color);
 }
+.overflow-auto{
+    overflow: auto;
+}
