@@ -22,6 +22,7 @@
 .navbar-container {
     position: fixed;
     z-index: 10000;
+    top: 0;
     right: 0;
     left: 0;
     height: 50%;
@@ -32,7 +33,9 @@
     border-bottom: 2px solid var(--gold-color);
     /* overflow: hidden; */
 }
-
+.navbar-container-active {
+    margin-top: 0;
+}
 .navbar-container::-webkit-scrollbar {
     width: 0.1em;
 }
@@ -45,9 +48,7 @@
     background-color: transparent;
 }
 
-.navbar-container-active {
-    margin-top: 0;
-}
+
 
 .close-menu-btn {
     font-size: 1.5rem;
@@ -68,7 +69,6 @@
 .navbar>ul {
     height: fit-content;
     width: 80%;
-    overflow-y: scroll;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -91,8 +91,9 @@
 }
 
 .navbar-list-item a,
-a:visited {
-    color: #000;
+.navbar a:visited,
+.navbar-list-item .item-dropdown-visible-part p {
+    color: #4f360c;
 }
 
 .item-dropdown-visible-part {
