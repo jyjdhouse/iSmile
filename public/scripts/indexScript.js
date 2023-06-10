@@ -193,7 +193,6 @@ window.addEventListener('load', () => {
     } else { //Mobile
         function toggleActiveImage() {
             const cards = document.querySelectorAll('.instagram-card');
-            console.log(cards);
             for (let i = 0; i < cards.length; i++) {
                 if (cards[i].classList.contains('instagram-card-active')) {
                     cards[i].classList.remove('instagram-card-active');
