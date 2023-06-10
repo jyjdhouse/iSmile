@@ -11,10 +11,45 @@
 <body>
                 <%- include('./partials/header.ejs') %>
                             <main class="product-detail-main">
-
+                                <section class="product-info-container">
+                                    <div class="main-img-container">
+                                        <img src="/img/products/product1.png" alt=""> 
+                                    </div>
+                                    <div class="other-product-imgs-container">
+                                        <div class="other-img-container">
+                                            <img src="/img/products/product1.png" alt="">
+                                        </div>
+                                        <div class="other-img-container">
+                                            <img src="/img/products/product2.png" alt="">
+                                        </div>
+                                        <div class="other-img-container">
+                                            <img src="/img/products/product3.png" alt="">
+                                        </div>
+                                        <div class="other-img-container">
+                                            <img src="/img/products/product2.png" alt="">
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="product-info-container">
+                                        <div class="product-title-container">
+                                            <h1>Crema antiage</h1>
+                                        </div>
+                                        <div class="product-description-container">
+                                            <p>Description 1</p>
+                                            <p>Description 2</p>
+                                            <p>Description 3</p>
+                                        </div>
+                                    </div>
+                                    <div class="purchase-product-container">
+                                        <div class="product-quantity-container">
+                                            <button class="add-quantity"><i class='bx'></i></button>
+                                            <button class="add-to-cart">Añadir al carrito</button>
+                                        </div>
+                                    </div>
+                                </section>  
                             <main>
                                 
-                            <%- include('./partials/footer.ejs') %>
+                <%- include('./partials/footer.ejs') %>
 </body>
 
 </html>
