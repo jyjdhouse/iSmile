@@ -8,7 +8,7 @@ window.addEventListener('load', () => {
     const copyAddress = document.querySelector('.copy-address');
     const copyNumber = document.querySelector('.copy-number');
     const callNumber = document.querySelector('.call-number');
-
+    const blackScreen = document.querySelector('.black-screen');
     // logica para clickear iconos en footer mobile
     footerIconsContainer.forEach((icon, indexIcon) => {
         icon.addEventListener('click', () => {
@@ -17,33 +17,25 @@ window.addEventListener('load', () => {
             // y agrego clase
             for (let indexData = 0; indexData < footerDataIconsContainer.length; indexData++) {
                 if (indexIcon === indexData) {
-                    footerDataIconsContainer[indexData].classList.add('mobile-footer-data-icon-container-active')
+                    footerDataIconsContainer[indexData].classList.add('mobile-footer-data-icon-container-active');
+                    blackScreen.classList.add('black-screen-active');
                 }
             }
 
         })
     });
 
-    dataXContainer.forEach((item, indexItem) => {
-        item.addEventListener('click', () => {
-            for (let indexData = 0; indexData < footerDataIconsContainer.length; indexData++) {
-                if (indexItem === indexData) {
-                    footerDataIconsContainer[indexData].classList.remove('mobile-footer-data-icon-container-active')
-                }
-            }
-        })
-    })
-
-
-    closeFooterDataBtn.forEach((btn, indexBtn) => {
+    closeFooterDataBtn.forEach(btn => {
         btn.addEventListener('click', () => {
-            for (let indexFooterData = 0; indexFooterData < footerDataIconsContainer.length; indexFooterData++) {
-                if (indexBtn == indexFooterData) {
-                    footerDataIconsContainer[indexBtn].classList.remove('mobile-footer-data-icon-container-active')
-                }
-            }
+            footerDataIconsContainer.forEach(cont => cont.classList.remove('mobile-footer-data-icon-container-active'));
+            blackScreen.classList.remove('black-screen-active');
         })
-    })
+
+    });
+    blackScreen.addEventListener('click', () => {
+        footerDataIconsContainer.forEach(cont => cont.classList.remove('mobile-footer-data-icon-container-active'));
+        blackScreen.classList.remove('black-screen-active');
+    });
 
     //Para llamar cuando toca
     const phoneNumber = '+541159442644'

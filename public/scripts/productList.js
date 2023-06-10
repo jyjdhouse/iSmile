@@ -12,7 +12,6 @@ window.addEventListener('load', () => {
 
         if(images.length==2){ //Si son solo 2 fotos...        
         }
-        console.log(images);
         images.forEach((image, index) => {
             image.classList.remove('product-image-test-active', 'product-image-test-next-slide', 'product-image-test-prev-slide');
             if (index === actualIndex) {
