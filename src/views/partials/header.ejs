@@ -1,8 +1,8 @@
-<header class="header"> <!--TODO: agregar el menu como nos lo pida-->
+<header class="header">
     <nav class="nav-bar-section">
         <div class="nav-start">
             <i class="fa-solid fa-bars open-menu-button"></i><!--  -->
-            
+            <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-mobile"></i>
         </div>
 
         <a href="/" class="brand-name" id="header-name"><img src="/img/logo.png" alt="" class="header-logo"></a>
@@ -31,84 +31,14 @@
                     <i class="fa-regular fa-user login-toggler login-toggler-desktop"></i>
                 <% } %>
                     
-                    <i class="fa-solid fa-magnifying-glass open-search-form-button"></i>
+                    <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-desktop"></i>
                 </div>
     </nav>
 
 </header>
-<div class="side-navbar-container popup">
-    <div class="close-button-container">
-        <i class="fa-solid fa-x burguer-menu-btn close-menu-button"></i>
-    </div>
-    <ul class="burguer-menu-category-list">
-        <% if (locals.isLogged) { %>
-            <li class="burguer-menu-category mobile-category">
-                <a href="#" class="category-link">
-                    <i class="fa-regular fa-user login-toggler logged-logo-mobile"></i>
-                    Hola, <%= locals.userLogged.name %>!
-                </a>
-                <ul class="burguer-menu-option-list">
-                    <li class="burguer-menu-option"><a href="#">Ver Perfil</a></li>
-                    <% if (userLogged.user_categories_id!=1) { %>
-                        <li class="burguer-menu-option"><a href="#">Ver Wishlist</a></li>
-                        <li class="burguer-menu-option"><a href="#">Ir al Carro</a></li>
-                        <% } %>
-                 <li class="burguer-menu-option"><a href="/user/logout">Cerrar sesion</a></li>
-                </ul>
-            </li>
-            <% } else{%>
-                <li class="burguer-menu-category mobile-category">
-                    <a href="#" class="category-link">
-                        <i class="fa-regular fa-user login-toggler logged-logo-mobile"></i>
-                        INGRESAR
-                    </a>
-                    <ul class="burguer-menu-option-list">
-                        <li class="burguer-menu-option login-toggler"><a href="#">Iniciar Sesion</a></li>
-                        <li class="burguer-menu-option open-registration-btn"><a href="#">Crear cuenta</a></li>
-                    </ul>
-                </li>
-                <% } %>
-                    <li class="burguer-menu-category">
-                        <a href="#" class="category-link">PRODUCTOS</a>
-                        <ul class="burguer-menu-option-list">
-                            <li class="burguer-menu-option"><a href="/test/list">Ver Todo</a></li>
-                        </ul>
-                    </li>
-                    <li class="burguer-menu-category">
-                        <a href="#" class="category-link">ALTER EGO</a>
-                        <ul class="burguer-menu-option-list">
-                            <li class="burguer-menu-option"><a href="#">Quienes Somos</a></li>
-                            <li class="burguer-menu-option"><a href="#">Packaging</a></li>
-                            <li class="burguer-menu-option"><a href="#">Delivery</a></li>
-                            <li class="burguer-menu-option"><a href="#">Experiencias ALTER EGO</a></li>
-                            <li class="burguer-menu-option"><a href="#">Gift Cards</a></li>
-                            <li class="burguer-menu-option"><a href="#">Registrate</a></li>
-                            <li class="burguer-menu-option"><a href="#">Preguntas Frecuentes</a></li>
-                            <li class="burguer-menu-option"><a href="#">Citas</a></li>
-                        </ul>
-                    </li>
-    </ul>
-    <div class="burger-menu-info-container">
-
-        <div class="burger-menu-item-container">
-            <a href="#">
-                <i class="fa-solid fa-location-dot"></i>
-                <span>#Direccion del local</span>
-            </a>
-
-        </div>
-
-        <div class="burger-menu-item-container">
-            <a href="#">
-                <i class='bx bx-phone'></i>
-                <span>+(549)11-2222-3333</span>
-            </a>
-        </div>
-
-
-    </div>
-
-</div>
+<%- include('./navbar.ejs') %>
+<%- include('./bookConsultation.ejs') %>
+<%- include('./blackScreen.ejs') %>
 <section class="search-section-container popup">
     <form action="/product/searchResult" method="POST" class="search-input-container">
         <i class="fa-solid fa-magnifying-glass search-logo"></i>

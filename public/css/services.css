@@ -6,6 +6,7 @@
 .services-title {
     margin-left: 10%;
     font-size: 2rem;
+    margin-top: 5vh;
 }
 
 /* Services Cards*/
@@ -15,7 +16,7 @@
     flex-wrap: wrap;
     row-gap: 3rem;
     justify-content: center;
-    margin: 10vh 0;
+    margin: 5vh 0;
 }
 
 .service-card {
