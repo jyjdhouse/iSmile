@@ -140,6 +140,10 @@
     .other-img-container {
         cursor: pointer;
     }
+
+    .add-to-cart {
+        cursor: pointer;
+    }
     
     .item-quantity {
         height: 100%;
