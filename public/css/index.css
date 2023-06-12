@@ -219,6 +219,7 @@ video::-webkit-media-controls-time-remaining-display {
 
 .product-gallery-button.individual-button {
     padding: .5rem 3rem;
+    font-size: .8rem;
 }
 
 .product-gallery-card-hover>.product-gallery-button.individual-button {
