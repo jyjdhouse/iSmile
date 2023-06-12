@@ -15,9 +15,6 @@ body {
     /* pointer-events: none; */
 }
 
-.hidden {
-    display: none;
-}
 
 .lupa-desktop{
     display: none;

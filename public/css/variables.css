@@ -31,3 +31,7 @@ li {
 .overflow-auto{
     overflow: auto;
 }
+
+.hidden {
+    display: none;
+}

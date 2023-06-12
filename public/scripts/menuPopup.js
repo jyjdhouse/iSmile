@@ -9,6 +9,9 @@ window.addEventListener('load', () => {
     const dropdownContainer = document.querySelector('.dropdown-items-container')
     const navbar = document.querySelector('.navbar');
 
+    // Al inicio le meto esta clase para que no aparezca la transicion
+    navbarContainer.classList.remove('hidden');
+    
     openMenuBtn?.addEventListener('click', () => {
         navbarContainer.classList.add('navbar-container-active')
         body.classList.add('noScroll')
