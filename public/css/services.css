@@ -1,12 +1,11 @@
 .main {
     min-height: 70vh;
-    margin-top: 10vh;
+    margin-top: 15vh;
 }
 
 .services-title {
-    margin-left: 10%;
-    font-size: 2rem;
-    margin-top: 5vh;
+    margin-left: 5%;
+    font-size: 1.5rem;
 }
 
 /* Services Cards*/
@@ -79,6 +78,9 @@
     color: #fff;
 }
 @media(min-width:1024px){
+    .services-title {
+        font-size: 2rem;
+    }
     .service-card{
         height: 30vh;
     }
