@@ -1,28 +1,149 @@
+@import 'variables.css';
+
 .product-detail-main {
     margin-top: 11vh;
 }
 
+.first-column {
+    height: 40%;
+}
+
+.second-column {
+    height: 60%;
+}
+
 .main-img-container {
-    width: 80%;
+    display: flex;
+    justify-content: center;
+    width: 70%;
     margin: 0 auto;
+    height: 80%;
 }
 
 .main-img-container img {
     width: 70%;
-    height: 100%;
+    height: 200px;
 }
 
 
 .other-product-imgs-container {
     display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 5%;
+    height: 20%;
 }
 
 .other-img-container {
     width: 20%;
-    height: 100%;
+    margin: 0 1%;
+    border: 1px solid var(--gold-color);
+    border-radius: 10px;
 }
 
 .other-img-container img {
     width: 100%;
     height: 100%;
 }
+
+.other-img-container-active {
+    opacity: 0.5;
+}
+
+.product-info-container {
+    height: 1000%;
+    width: 85%;
+    margin: 0 auto;
+}
+
+.product-title-container {
+    margin: 8% 0;
+}
+
+.product-description-container {
+    margin: 8% 0;
+}
+
+.purchase-product-container {
+    display: flex;
+    width: 85%;
+    margin: 8% auto;
+}
+
+.item-quantity {
+    height: 100%;
+    width: 10%;
+}
+
+.add-to-cart {
+    border: 0;
+    outline: 0;
+    padding: 3% 5%;
+    background-color: var(--violet-color); 
+    color: #fff;
+    margin-left: 2%;
+}
+
+.input-error {
+    border: 1px solid red;
+}
+
+@media(min-width: 768px) {
+    .main-img-container img {
+        width: 70%;
+        height: 300px;
+    }
+
+    .product-title-container h1 {
+        font-size: 2rem;
+    }
+
+    .product-info-container {
+        font-size: 1.2rem;
+    }
+
+    .add-to-cart-form {
+        display: flex;
+        align-items: center;
+    }
+
+    .add-to-cart {
+        font-size: 1.2rem;
+    }
+
+    .item-quantity {
+        height: 95%;
+    }
+}
+
+@media(min-width: 1024px) {
+    .product-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .first-column {
+        width: 60%;
+    }
+
+    .second-column {
+        display: flex;
+        flex-direction: column;
+        width: 40%;
+    }
+
+    .product-info-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .other-img-container {
+        cursor: pointer;
+    }
+    
+    .item-quantity {
+        height: 100%;
+    }
+
+}
+    
