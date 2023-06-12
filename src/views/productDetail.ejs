@@ -4,51 +4,58 @@
 <head>
     <%- include('./partials/head.ejs') %>
         <link rel="stylesheet" href="/css/productDetail.css">
-        <script src="/scripts/productDetail.js" type="module"></script>
+        <script src="/scripts/productDetailScript.js" type="module"></script>
         <title>Producto #1</title>
 </head>
 
 <body>
-                <%- include('./partials/header.ejs') %>
-                            <main class="product-detail-main">
-                                <section class="product-info-container">
-                                    <div class="main-img-container">
-                                        <img src="/img/products/product1.png" alt=""> 
-                                    </div>
-                                    <div class="other-product-imgs-container">
-                                        <div class="other-img-container">
-                                            <img src="/img/products/product1.png" alt="">
-                                        </div>
-                                        <div class="other-img-container">
-                                            <img src="/img/products/product2.png" alt="">
-                                        </div>
-                                        <div class="other-img-container">
-                                            <img src="/img/products/product3.png" alt="">
-                                        </div>
-                                        <div class="other-img-container">
-                                            <img src="/img/products/product2.png" alt="">
-                                        </div>
-                                       
-                                    </div>
-                                    <div class="product-info-container">
-                                        <div class="product-title-container">
-                                            <h1>Crema antiage</h1>
-                                        </div>
-                                        <div class="product-description-container">
-                                            <p>Description 1</p>
-                                            <p>Description 2</p>
-                                            <p>Description 3</p>
-                                        </div>
-                                    </div>
-                                    <div class="purchase-product-container">
-                                        <div class="product-quantity-container">
-                                            <button class="add-quantity"><i class='bx'></i></button>
-                                            <button class="add-to-cart">Añadir al carrito</button>
-                                        </div>
-                                    </div>
-                                </section>  
-                            <main>
-                                
+    <%- include('./partials/header.ejs') %>
+        <main class="product-detail-main">
+            <article class="product-container">
+                <div class="first-column">
+                    <div class="main-img-container">
+                        <img src="/img/products/product1.png" class="main-img" alt="">
+                    </div>
+                    <div class="other-product-imgs-container">
+                        <div class="other-img-container">
+                            <img src="/img/products/product1.png" class="product-img" alt="">
+                        </div>
+                        <div class="other-img-container">
+                            <img src="/img/products/product2.png" class="product-img" alt="">
+                        </div>
+                        <div class="other-img-container">
+                            <img src="/img/products/product3.png" class="product-img" alt="">
+                        </div>
+                        <div class="other-img-container">
+                            <img src="/img/products/product2.png" class="product-img" alt="">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="second-column">
+                    <div class="product-info-container">
+                        <div class="product-title-container">
+                            <h1>Crema antiage</h1>
+                        </div>
+                        <div class="product-description-container">
+                            <p>Description 1</p>
+                            <p>Description 2</p>
+                            <p>Description 3</p>
+                        </div>
+                    </div>
+                    <div class="purchase-product-container">
+                        <form action="" class="add-to-cart-form">
+                            <input type="text" name='item-quantity' class="item-quantity" value="1">
+                            <button class="add-to-cart" type="submit">Añadir al carrito</button>
+                        </form>
+
+                    </div>
+                </div>
+
+
+            </article>
+            <main>
+
                 <%- include('./partials/footer.ejs') %>
 </body>
 
