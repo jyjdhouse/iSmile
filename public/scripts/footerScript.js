@@ -66,7 +66,7 @@ window.addEventListener('load', () => {
     })
 
     const mobilePhone = '+541124852020'
-    copyMobileNumberBtn.addEventListener('click', () => {
+    copyMobileNumberBtn?.addEventListener('click', () => {
         navigator.clipboard.writeText(mobilePhone)
         mobileNumberContainer.innerHTML = '<p class="copy-msg">Número copiado</p>'
         setTimeout(() => {
@@ -74,12 +74,12 @@ window.addEventListener('load', () => {
         }, 2000)
     })
 
-    callMobileNumber.addEventListener('click', () => {
+    callMobileNumber?.addEventListener('click', () => {
         window.location.href = `tel:${mobilePhone}`;
     });
 
     const phone = '+541148245430'
-    copyPhoneNumberBtn.addEventListener('click', () => {
+    copyPhoneNumberBtn?.addEventListener('click', () => {
         navigator.clipboard.writeText(phone)
         phoneNumberContainer.innerHTML = '<p class="copy-msg">Número copiado</p>'
         setTimeout(() => {
@@ -87,7 +87,7 @@ window.addEventListener('load', () => {
         }, 2000)
     })
 
-    callPhoneNumber.addEventListener('click', () => {
+    callPhoneNumber?.addEventListener('click', () => {
         window.location.href = `tel:${phone}`;
     });
  

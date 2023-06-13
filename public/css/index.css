@@ -603,7 +603,11 @@ video::-webkit-media-controls-time-remaining-display {
 .instagram-card-active {
     opacity: 1;
 }
-
+.instagram-card > a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 .instagram-overlay {
     background-color: rgba(0, 0, 0, .5);
     position: absolute;
@@ -617,6 +621,7 @@ video::-webkit-media-controls-time-remaining-display {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    align-content: center;
 }
 
 
@@ -903,7 +908,7 @@ video::-webkit-media-controls-time-remaining-display {
         top: 10%;
     }
 
-    .instagram-card:hover>.instagram-image {
+    .instagram-card:hover .instagram-image {
         width: 120%;
         height: 120%;
     }

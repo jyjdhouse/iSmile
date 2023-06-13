@@ -15,7 +15,7 @@ const controller = {
             let errors = req.query.errors && JSON.parse(req.query.errors);
             let oldData = req.query.oldData && JSON.parse(req.query.oldData);
             // Si me llegan errores, renderizo la vista y le llevo los params errores
-            return res.render('productList', {categories: await getCategories(), countryCodes: await getCountryCodes()})
+            return res.render('productList')
             if (errors) {
                 // return res.send(req.query.errors)
                 return res.render('productList', { errors, oldData, categories: await getCategories(), countryCodes: await getCountryCodes() });
@@ -36,6 +36,7 @@ const controller = {
     },
     detail: async (req, res) => { //Metodo que muestra detalle de producto
         try {
+            return res.render('productDetail')
             let errors = req.query.errors && JSON.parse(req.query.errors);
             let oldData = req.query.oldData && JSON.parse(req.query.oldData);
             // Si me llegan errores, renderizo la vista y le llevo los params errores
@@ -43,7 +44,6 @@ const controller = {
                 // return res.send(req.query.errors)
                 return res.render('productDetail', { errors, oldData, categories: await getCategories(), countryCodes: await getCountryCodes(), countryCodes: await getCountryCodes() });
             }
-            return res.render('productDetail', {categories: await getCategories(), countryCodes: await getCountryCodes(), countryCodes: await getCountryCodes()})
         } catch (error) {
             console.log(`Falle en productController.detail: ${error}`);
             return res.json(error);
