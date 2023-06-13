@@ -28,33 +28,6 @@ window.addEventListener('load', () => {
 
     headerShow();
 
-    // LOGICA DEL POPUP CART
-    const openPopupCartBtn = document.querySelector('.open-popup-cart-btn');
-    const popupCart = 'cart-popup-container';
-    const closePopupCartBtn = document.querySelector('.close-popup-cart-btn');
-    openPopupCartBtn.addEventListener('click', () => {
-        body.classList.add('noScroll');
-        activateClass([blackScreen, popupCart]);
-        changeCartProductDimension();
-    });
-    closePopupCartBtn?.addEventListener('click', () => {
-        body.classList.remove('noScroll');
-        deactivateClass([blackScreen, popupCart]);
-    });
-
-    // LOGICA DEL POPUP WHISLIST
-    const openPopupWishlistBtn = document.querySelector('.open-popup-wishlist-btn');
-    const popupWishlist = 'wishlist-popup-container';
-    const closePopupWishlistBtn = document.querySelector('.close-popup-wishlist-btn');
-    openPopupWishlistBtn?.addEventListener('click', () => {
-        body.classList.add('noScroll');
-        activateClass([blackScreen, popupWishlist]);
-        changeWishlistProductDimension();
-    });
-    closePopupWishlistBtn?.addEventListener('click', () => {
-        body.classList.remove('noScroll');
-        deactivateClass([blackScreen, popupWishlist]);
-    });
 
     
 
