@@ -214,9 +214,13 @@ video::-webkit-media-controls-time-remaining-display {
 .product-gallery-button {
     display: none;
     bottom: 5%;
-
+    padding: 0;
 }
-
+.product-gallery-button a{
+    display: block;
+    width: 100%;
+    padding: 1rem 5rem;
+}
 .product-gallery-button.individual-button {
     padding: .5rem 3rem;
     font-size: .8rem;
@@ -374,9 +378,13 @@ video::-webkit-media-controls-time-remaining-display {
 
 .blog-section-button {
     bottom: 3%;
-    padding: .5rem 3rem;
+    padding: 0;
 }
-
+.blog-section-button a{
+    padding: 0.8rem 3rem;
+    display: block;
+    width: 100%;
+}
 /* ABOUT-US */
 .about-us-container {
     display: flex;
@@ -790,7 +798,6 @@ video::-webkit-media-controls-time-remaining-display {
 
     .blog-section-button {
         bottom: 5%;
-        padding: .5rem 3rem;
     }
     /* ABOUT US */
     .about-us-information-container {

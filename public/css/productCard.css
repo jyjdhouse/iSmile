@@ -131,7 +131,8 @@
         top: 72%;
         height: 12%;
         width: 80%;
-        background: rgba(220,220,220,.95);
+        /* background: #663399bf; Es el var violet con opacity */
+        background-color: rgba(230,230,230,.85);
         z-index: 1;
         display: flex;
         opacity: 0;
@@ -166,9 +167,10 @@
         justify-content: center;
         height: 100%;
         width: 100%;
+        /* color: #fff; */
     }
 
-    .quick-cart-container:hover {
+    /* .quick-cart-container:hover {
         background-color: #eee;
-    }
+    } */
 }

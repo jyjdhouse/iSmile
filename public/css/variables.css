@@ -2,6 +2,11 @@
     --violet-color: #663399;
     --gold-color: #bba059;
 }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .overlay {
     position: absolute;
     top: 0;
