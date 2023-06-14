@@ -131,7 +131,6 @@
         top: 72%;
         height: 12%;
         width: 80%;
-        /* background: #663399bf; Es el var violet con opacity */
         background-color: rgba(230,230,230,.85);
         z-index: 1;
         display: flex;
@@ -150,7 +149,9 @@
     .quick-cart-container {
         position: static;
         width: 100%;
-        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         height: 100%;
         font-size: 24px;
@@ -159,15 +160,6 @@
 
     .quick-cart-container-active{
         transform: translateX(-200%);
-    }
-
-    .logo-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-        /* color: #fff; */
     }
 
     /* .quick-cart-container:hover {
