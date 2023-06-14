@@ -11,11 +11,11 @@
 <body>
     <%- include('./partials/header.ejs') %>
         <main class="main">
-            <div class="landing-video-container">
+            <section class="landing-video-container">
                 <video class="video" src="/video/home2.mp4" playsinline muted autoplay loop></video>
-            </div>
-            <div class="slide-show" id="products">
-                <button class="slide-show-button"><a href="/product">Ver Productos</a></button>
+            </section>
+            <section class="slide-show" id="products">
+                <a href="/product" class="slide-show-button">Ver Productos</a>
                 <div class="slide-images-wraper slide-images-wraper-desktop">
                     <!-- Grupos de 3 (desktop) -->
                     <div class="slide-image-group slide-image-group-active">
@@ -88,9 +88,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="gallery-show" id="services">
+            <section class="gallery-show" id="services">
                 <div class="product-gallery-card">
                     <a href="/servicios">
                         <div class="overlay"></div>
@@ -101,8 +101,8 @@
                             </p>
                         </div>
                     </a>
-                    <button class="product-gallery-button individual-button"><a href="/servicios">Ver
-                            Servicios</a></button>
+                    <a href="/servicios" class="product-gallery-button individual-button">Ver
+                        Servicios</a>
                 </div>
                 <div class="product-gallery-card">
                     <a href="/servicios">
@@ -113,8 +113,8 @@
 
                         </div>
                     </a>
-                    <button class="product-gallery-button individual-button"><a href="/servicios">Ver
-                            Servicios</a></button>
+                    <a href="/servicios" class="product-gallery-button individual-button">Ver
+                        Servicios</a>
                 </div>
                 <div class="product-gallery-card">
                     <a href="/servicios">
@@ -125,8 +125,8 @@
 
                         </div>
                     </a>
-                    <button class="product-gallery-button individual-button"><a href="/servicios">Ver
-                            Servicios</a></button>
+                    <a href="/servicios" class="product-gallery-button individual-button">Ver
+                        Servicios</a>
                 </div>
                 <div class="product-gallery-card">
                     <a href="/servicios">
@@ -137,8 +137,8 @@
 
                         </div>
                     </a>
-                    <button class="product-gallery-button individual-button"><a href="/servicios">Ver
-                            Servicios</a></button>
+                    <a href="/servicios" class="product-gallery-button individual-button">Ver
+                            Servicios</a>
                 </div>
                 <div class="product-gallery-card">
                     <a href="/servicios">
@@ -148,11 +148,11 @@
                             <p class="gallery-product-name">Masculinizacion facial</p>
                         </div>
                     </a>
-                    <button class="product-gallery-button individual-button"><a href="/servicios">Ver
-                            Servicios</a></button>
+                    <a href="/servicios" class="product-gallery-button individual-button">Ver
+                        Servicios</a>
                 </div>
-                <button class="product-gallery-button"><a href="/servicios">Ver Servicios</a></button>
-            </div>
+                <a href="/servicios" class="product-gallery-button">Ver Servicios</a>
+            </section>
             <section class="blog-section">
                 <div class="blog-background">
                     <div class="overlay"></div>
@@ -189,7 +189,7 @@
                                 <p class="blog-date">Apr 21, 2023</p>
                             </div>
                         </div>
-                        <button class="blog-section-button"><a href="/blog">Ver Blogs</a></button>
+                        <a href="/blog" class="blog-section-button">Ver Blogs</a>
                     </div>
                     <div class="blog-group blog-group-next">
                         <div class="blog-card">
@@ -225,7 +225,7 @@
             </section>
 
 
-            <div class="about-us-container" id="us">
+            <section class="about-us-container" id="us">
                 <img src="/img/homePage/rightPattern.png" alt="" class="pattern right-pattern">
                 <img src="/img/homePage/leftPattern.png" alt="" class="pattern left-pattern">
                 <div class="about-us-information-container">
@@ -337,18 +337,26 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-            <div class="instagram-container">
+            </section>
+            <section class="instagram-container">
                 <p class="instagram-label">SIGUENOS</p>
                 <div class="instagram-cards-container">
                     <div class="instagram-card instagram-card-active">
                         <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
                             <div class="instagram-overlay">
-
                                 <i class="fa-brands fa-instagram instagram-logo"></i>
                                 <p class="instagram-page-name">@iSmile</p>
-
                             </div>
+                            <!-- <div class="instagram-overlay">
+                                <div class="change-image-btn-container">
+                                    <i class='bx bx-pencil change-image-btn'></i><br>
+                                </div>
+                                
+                                <p class="cancel-file-action hidden">Cancelar</p>
+                                <label for="instagram-input1" class="instagram-input-file-label hidden">Seleccionar foto</label>
+                                <input type="file" id="instagram-input1" class="instagram-file-input hidden">
+                                <button class="confirm-instagram-file-btn hidden">Confirmar</button>
+                            </div> -->
                             <img src="/img/homePage/home1.png" alt="instagram-image" class="instagram-image">
                         </a>
                     </div>
@@ -358,38 +366,80 @@
                                 <i class="fa-brands fa-instagram instagram-logo"></i>
                                 <p class="instagram-page-name">@iSmile</p>
                             </div>
+                            <!-- <div class="instagram-overlay">
+                                <div class="change-image-btn-container">
+                                    <i class='bx bx-pencil change-image-btn'></i><br>
+                                </div>
+                                <p class="cancel-file-action hidden">Cancelar</p>
+                                <label for="instagram-input2" class="instagram-input-file-label hidden">Seleccionar foto</label>
+                                <input type="file" id="instagram-input2" class="instagram-file-input hidden">
+                                <button class="confirm-instagram-file-btn hidden">Confirmar</button>
+                            </div> -->
                             <img src="/img/homePage/home2.jpeg" alt="instagram-image" class="instagram-image">
                         </a>
                     </div>
                     <div class="instagram-card">
                         <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
-                            <div class="instagram-overlay">
+                            <!-- <div class="instagram-overlay">
                                 <i class="fa-brands fa-instagram instagram-logo"></i>
                                 <p class="instagram-page-name">@iSmile</p>
+                            </div> -->
+                            <div class="instagram-overlay">
+                                <div class="change-image-btn-container">
+                                    <i class='bx bx-pencil change-image-btn'></i><br>
+                                </div>
+
+                                <p class="cancel-file-action hidden">Cancelar</p>
+                                <label for="instagram-input3" class="instagram-input-file-label hidden">Seleccionar
+                                    foto</label>
+                                <input type="file" id="instagram-input3" class="instagram-file-input hidden">
+                                <button class="confirm-instagram-file-btn hidden">Confirmar</button>
                             </div>
                             <img src="/img/homePage/home3.jpeg" alt="instagram-image" class="instagram-image">
                         </a>
                     </div>
                     <div class="instagram-card">
                         <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
-                            <div class="instagram-overlay">
+                            <!-- <div class="instagram-overlay">
                                 <i class="fa-brands fa-instagram instagram-logo"></i>
                                 <p class="instagram-page-name">@iSmile</p>
+                            </div> -->
+                            <div class="instagram-overlay">
+                                <div class="change-image-btn-container">
+                                    <i class='bx bx-pencil change-image-btn'></i><br>
+                                </div>
+
+                                <p class="cancel-file-action hidden">Cancelar</p>
+                                <label for="instagram-input4" class="instagram-input-file-label hidden">Seleccionar
+                                    foto</label>
+                                <input type="file" id="instagram-input4" class="instagram-file-input hidden">
+                                <button class="confirm-instagram-file-btn hidden">Confirmar</button>
                             </div>
                             <img src="/img/homePage/home4.jpeg" alt="instagram-image" class="instagram-image">
                         </a>
                     </div>
                     <div class="instagram-card">
                         <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
-                            <div class="instagram-overlay">
+                            <!-- <div class="instagram-overlay">
                                 <i class="fa-brands fa-instagram instagram-logo"></i>
                                 <p class="instagram-page-name">@iSmile</p>
+                            </div> -->
+                            <div class="instagram-overlay">
+                                <div class="change-image-btn-container">
+                                    <i class='bx bx-pencil change-image-btn'></i><br>
+                                </div>
+
+                                <p class="cancel-file-action hidden">Cancelar</p>
+                                <label for="instagram-input5" class="instagram-input-file-label hidden">Seleccionar
+                                    foto</label>
+                                <input type="file" id="instagram-input5" class="instagram-file-input hidden">
+                                <button class="confirm-instagram-file-btn hidden">Confirmar</button>
                             </div>
                             <img src="/img/homePage/home5.jpeg" alt="instagram-image" class="instagram-image">
                         </a>
                     </div>
                 </div>
-            </div>
+            </section>
         </main>
         <%- include('./partials/footer.ejs') %>
 </body>
