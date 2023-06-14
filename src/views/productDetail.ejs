@@ -4,7 +4,9 @@
 <head>
     <%- include('./partials/head.ejs') %>
         <link rel="stylesheet" href="/css/productDetail.css">
-        <script src="/scripts/productDetailScript.js" type="module"></script>
+        <link rel="stylesheet" href="/css/productCard.css">
+        <script src="/scripts/productList.js" type="module"></script>
+        <script src="/scripts/productCard.js" type="module"></script>
         <title>Producto #1</title>
 </head>
 
@@ -19,6 +21,7 @@
                     <div class="other-product-imgs-container">
                         <div class="other-img-container">
                             <img src="/img/products/product1.png" class="product-img" alt="thumbnail-image">
+                            <!-- TODO: Cuando hagamos forEach meter en alt el id -->
                         </div>
                         <div class="other-img-container">
                             <img src="/img/products/product2.png" class="product-img" alt="thumbnail-image">
@@ -29,11 +32,10 @@
                         <div class="other-img-container">
                             <img src="/img/products/product2.png" class="product-img" alt="thumbnail-image">
                         </div>
-
                     </div>
                 </div>
                 <div class="second-column">
-                    <div class="product-info-container">
+                    <div class="product-detail-info-container">
                         <div class="product-title-container">
                             <h1 class="product-title">Crema antiage</h1>
 
@@ -55,6 +57,138 @@
 
 
             </article>
+            <section class="suggested-product-section">
+
+                <div class="suggested-product-title-container">
+                    <h2>Productos sugeridos</h2>
+                </div>
+
+                <div class="suggested-product-list">
+                    <div class="product-card-container suggested-product-card-detail-container" data-productId=<%=1%>>
+                        <a href="/product/1" class="product-card-link">
+                            <div class="image-container suggested-image-container">
+                                <div class="image-carousel">
+                                    <img src="/img/products/product1.png" alt="product-image"
+                                        class="product-image-test product-image-test-active product-detail-suggested-media" data-productId=<%=1%>>
+                                    <img src="/img/products/product2.png" alt="product-image"
+                                        class="product-image-test product-image-test-next-slide product-detail-suggested-media" data-productId=<%=1%>>
+                                    <video class="video product-image-test product-image-test-prev-slide product-detail-suggested-media" muted
+                                        playsinline loop>
+                                        <source src="/video/product1.MP4" type="video/mp4">
+                                        <source src="/video/product1.MP4" type="video/webm">
+                                        No se puede reproducir el video
+                                    </video>
+                                </div>
+                            </div>
+                            <div class="suggested-product-info-container">
+                                <div class="price-name-container">
+                                    <p class="product-name">
+                                        Crema Restauradora
+                                    </p>
+                                    <p class="product-price">$5000</p>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-quick-actions-container suggested-quick-cart-container" data-productId=<%=1 %>>
+                            <div class="quick-cart-container " data-productid=<%=1 %>>
+                                <div class="logo-container">
+                                    <i class='bx bx-shopping-bag quick-add-cart-btn' data-productId=<%=1%>></i>
+                                </div>
+                            </div>
+                            <div class="loading-container">
+                                <div class="load-wrapp">
+                                    <div class="load-3">
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card-container suggested-product-card-detail-container" data-productId=<%=1%>>
+                        <a href="/product/1" class="product-card-link">
+                            <div class="image-container suggested-image-container">
+                                <div class="image-carousel">
+                                    <img src="/img/products/product1.png" alt="product-image"
+                                        class="product-image-test product-image-test-active product-detail-suggested-media" data-productId=<%=1%>>
+                                    <img src="/img/products/product2.png" alt="product-image"
+                                        class="product-image-test product-image-test-next-slide product-detail-suggested-media" data-productId=<%=1%>>
+                                    <img src="/img/products/product3.png" alt="product-image"
+                                        class="product-image-test product-image-test-prev-slide product-detail-suggested-media" data-productId=<%=1%>>
+                                </div>
+                            </div>
+                            <div class="suggested-product-info-container">
+                                <div class="price-name-container">
+                                    <p class="product-name">
+                                        Crema Restauradora
+                                    </p>
+                                    <p class="product-price">$5000</p>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-quick-actions-container suggested-quick-cart-container" data-productId=<%=1 %>>
+                            <div class="quick-cart-container " data-productid=<%=1 %>>
+                                <div class="logo-container">
+                                    <i class='bx bx-shopping-bag quick-add-cart-btn' data-productId=<%=1%>></i>
+                                </div>
+                            </div>
+                            <div class="loading-container">
+                                <div class="load-wrapp">
+                                    <div class="load-3">
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card-container suggested-product-card-detail-container" data-productId=<%=1%>>
+                        <a href="/product/1" class="product-card-link">
+                            <div class="image-container suggested-image-container">
+                                <div class="image-carousel">
+                                    <img src="/img/products/product1.png" alt="product-image"
+                                        class="product-image-test product-image-test-active product-detail-suggested-media" data-productId=<%=1%>>
+                                    <video class="video product-image-test product-image-test-next-slide product-detail-suggested-media" muted
+                                        playsinline loop>
+                                        <source src="/video/product1.MP4" type="video/mp4">
+                                        <source src="/video/product1.MP4" type="video/webm">
+                                        No se puede reproducir el video
+                                    </video>
+                                </div>
+                            </div>
+                            <div class="suggested-product-info-container">
+                                <div class="price-name-container">
+                                    <p class="product-name">
+                                        Crema Restauradora
+                                    </p>
+                                    <p class="product-price">$5000</p>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-quick-actions-container suggested-quick-cart-container" data-productId=<%=1 %>>
+                            <div class="quick-cart-container " data-productid=<%=1 %>>
+                                <div class="logo-container">
+                                    <i class='bx bx-shopping-bag quick-add-cart-btn' data-productId=<%=1%>></i>
+                                </div>
+                            </div>
+                            <div class="loading-container">
+                                <div class="load-wrapp">
+                                    <div class="load-3">
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </section>
             <main>
 
                 <%- include('./partials/footer.ejs') %>
