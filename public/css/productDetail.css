@@ -50,7 +50,7 @@
     opacity: 0.5;
 }
 
-.product-info-container {
+.product-detail-info-container {
     height: 1000%;
     width: 85%;
     margin: 0 auto;
@@ -97,6 +97,22 @@ h1.product-title {
     border: 1px solid red;
 }
 
+
+.suggested-product-title-container {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.suggested-product-title-container h2 {
+    font-size: 1.2rem;
+}
+
+.suggested-product-card-detail-container {
+    width: 70%!important;
+    margin-bottom: 0!important;
+    margin: 5% auto!important;
+}
+
 @media(min-width: 768px) {
     .main-img-container img {
         width: 70%;
@@ -107,7 +123,7 @@ h1.product-title {
         font-size: 2rem;
     }
 
-    .product-info-container {
+    .product-detail-info-container {
         font-size: 1.2rem;
     }
 
@@ -123,20 +139,43 @@ h1.product-title {
     .item-quantity {
         height: 95%;
     }
+
+    .suggested-product-list {
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between!important;
+    } 
+
+    .suggested-product-card-detail-container {
+        width: 45%!important;
+        height: 275px!important;
+        margin: 5% 0!important;
+    }
+
 }
 
 @media(min-width: 1024px) {
     .product-container {
         display: flex;
         align-items: center;
+        justify-content: center;
+        width: 90%;
+        margin: 0 auto;
     }
 
     .main-img-container {
         width: 90%;
+        height: 100%;
+    }
+
+    .main-img-container img {
+        height: 325px;
     }
 
     .first-column {
-        width: 60%;
+        width: 50%;
     }
 
     .second-column {
@@ -170,6 +209,30 @@ h1.product-title {
 
     .item-quantity {
         height: 100%;
+    }
+
+    .suggested-product-card-detail-container {
+        width: 25%!important;
+        height: 85%!important;
+    }
+
+    .product-detail-suggested-media {
+        height: 70%!important;
+    }
+
+    .suggested-image-container {
+        height: 250px!important;
+    }
+
+    .suggested-logo-container {
+        margin-bottom: 5%;
+    }
+
+    .suggested-quick-cart-container {
+        margin-bottom: 15%!important;
+    }
+    .suggested-product-info-container {
+        padding-top: 20%!important;
     }
 
 }
