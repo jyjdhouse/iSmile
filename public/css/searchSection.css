@@ -1,0 +1,37 @@
+@import 'variables.css';
+
+.search-form-container{
+    position: absolute;
+    top: 24%;
+    right: 2.7%;
+    max-width: 0;
+    overflow: hidden;
+    transition: max-width .5s ease-in-out;
+    
+}
+.search-form-container-active{
+    max-width: 20rem;
+}
+.close-search-form-button{
+    position: absolute;
+    left: 5%;
+    color: #555;
+    font-size: .8rem !important;
+    top: 50%;
+    transform: translateY(-50%);
+    
+}
+.search-form-input{
+    border: 1px solid var(--gold-color);
+    height: 2rem;
+    border-radius: 1rem;
+    background: #eee;
+    padding-left: 15%;
+    width: 100%;
+}
+.send-search-form-button{
+    position: absolute;
+    right: 6%;
+    top: 50%;
+    transform: translateY(-50%);
+}

@@ -30,8 +30,12 @@
                 <% }else{ %> <!-- Si no esta loggeado...-->
                     <i class="fa-regular fa-user login-toggler login-toggler-desktop"></i>
                 <% } %>
-                    
-                    <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-desktop"></i>
+                <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-desktop"></i>
+                <!-- Contenedor con el input que se abre -->
+                <div class="search-form-container">
+                    <i class="fa-solid fa-x close-search-form-button"></i>
+                    <input type="text" class="search-form-input">
+                    <i class="fa-solid fa-magnifying-glass send-search-form-button"></i>
                 </div>
     </nav>
 
@@ -40,12 +44,4 @@
 <%- include('./bookConsultation.ejs') %>
 <%- include('./blackScreen.ejs') %>
 <%- include('./shoppingCartPopup.ejs') %>
-<section class="search-section-container popup">
-    <form action="/product/searchResult" method="POST" class="search-input-container">
-        <i class="fa-solid fa-magnifying-glass search-logo"></i>
-        <input type="text" class="search-input" placeholder="Buscar productos..." name="search" id="search-products-input">
-        <input type="hidden" name="ids" id="ids-input"><!--IDS de los productos encontrados-->
-        <i class="fa-solid fa-x close-search-form-button"></i>
-    </form>
-</section>
-<section class="partial-product-section"></section>
+<%- include('./searchSection.ejs') %>
