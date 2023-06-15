@@ -13,6 +13,15 @@
 <body>
     <%- include('./partials/header.ejs') %>
         <main class="blog-detail-main">
+
+            <div class="blog-admin-actions-container">
+                <i class='bx bx-dots-vertical-rounded admin-toggle'></i>
+                <div class="blog-admin-actions-dropdown">
+                    <a href="#">Editar blog</a>
+                    <a href="#">Eliminar blog</a>
+                </div>
+            </div>
+
             <article class="blog-detail-container">
                 <div class="blog-detail-img-container">
                     <img src="/img/products/product1.png" alt="blog-detail-id" class="blog-detail-img">
@@ -35,14 +44,16 @@
                 </div>
             </article>
             <section class="other-img-list">
-                <div class="other-img-container">
-                    <img src="/img/products/product2.png" alt="img-id">
-                </div>
-                <div class="other-img-container">
-                    <img src="/img/products/product3.png" alt="img-id">
-                </div>
-                <div class="other-img-container">
-                    <img src="/img/products/product2.png" alt="img-id">
+                <div class="mobile-carousel-container">
+                    <div class="other-img-container img-container-active">
+                        <img src="/img/products/product2.png" alt="img-id">
+                    </div>
+                    <div class="other-img-container next-img-container">
+                        <img src="/img/products/product3.png" alt="img-id">
+                    </div>
+                    <div class="other-img-container prev-img-container">
+                        <img src="/img/products/product2.png" alt="img-id">
+                    </div>
                 </div>
             </section>
         </main>
