@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head.ejs') %>
+        <script src="/scripts/userProfile.js" type="module"></script>
+        <link rel="stylesheet" href="/css/userProfile.css">
+        <link rel="stylesheet" href="/css/variables.css">
+        <title>Servicio 1</title>
+</head>
+<body>
+    
+    <%- include('./partials/header.ejs') %>
+
+    <main class="user-profile-main">
+        <div class="user-profile-title-container">
+            <h1 class="page-title">Perfil</h1>
+        </div>
+        
+
+        <div class="profile-content-wrapper">
+            <div class="options-selected-container">
+                <div class="profile-selected-field-container profile-selected-field-container-active user-data">
+                    <p>USER DATA</p>
+                </div>
+                <div class="profile-selected-field-container user-address">
+                    <p>USER ADDRESS</p>
+                </div>
+                <div class="profile-selected-field-container user-preferences">
+                    <p>USER PREFERENCES</p>
+                </div>
+            </div>
+           
+            <div class="profile-options-container">
+                <ul class="profile-options-list">
+                    <li class="profile-option-item profile-option-item-active">Mis datos</li>
+                    <li class="profile-option-item">Dirección</li>
+                    <li class="profile-option-item">Preferencias</li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <%- include('./partials/footer.ejs') %>
+
+</body>
+</html>

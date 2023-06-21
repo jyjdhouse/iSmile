@@ -75,6 +75,17 @@ const controller = {
             return res.json({error})
         }
     },
+    serviceDetail: async(req,res)=>{
+        try {
+            // A FUTURO
+            let service = await db.User.findByPk(req.params.serviceId);
+    
+            return res.render('serviceDetail', /* {service} */)
+        } catch (error) {
+            console.log(`Falle en mainController.serviceDetail: ${error}`);
+            return res.json({error})
+        }
+    },
     blogList: async(req,res)=>{
         try {
             return res.render('blogList')

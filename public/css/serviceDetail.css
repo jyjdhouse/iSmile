@@ -1,0 +1,256 @@
+@import 'variables.css';
+
+.service-detail-main {
+    margin-top: 12vh;
+    width: 100%;
+}
+
+.service-detail-title-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    
+}
+
+.service-detail-title {
+    font-size: 1.2rem;
+}
+
+.service-detail-cards-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.service-detail-card {
+    width: 90%;
+    height: 15vh;
+    
+    border: 1px solid var(--gold-color);
+    transition: height 0.5s;
+    margin: 5% auto;
+}
+
+.service-detail-card-active {
+    height: 40vh;
+}
+
+.close-card-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 5%;
+}
+
+.close-card {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s;
+}
+
+.close-card-active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.service-card-content-wrapper {
+    display: flex;
+    height: 100%;
+}
+
+.service-card-first-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    height: 100%;
+    width: 30%;
+   
+}
+
+.service-card-img-container {
+    height: 100px;
+    width: 90%;
+}
+
+.service-card-img {
+    width: 100%;
+    height: 100%;
+}
+
+.service-card-first-column-dropdown-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s;
+   text-align: center;
+   margin-top: 7%;
+}
+
+
+.service-card-first-column-dropdown-container-active {
+    max-height: 70%;
+
+}
+
+.first-column-item-info {
+    margin: 10% 0;
+}
+
+.first-column-item-info p:first-child {
+    margin-bottom: 10%;
+}
+
+.first-column-item-info p:last-child {
+    width: 70%;
+    margin: 3% auto;
+    padding: 6% 1%;
+    background-color: var(--gold-color);
+    border-radius: 5px;
+}
+
+.service-card-info-container {
+    width: 70%;
+    padding: 0 3%;
+    height: 90%
+}
+
+/* .service-card-info-container-active {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+} */
+
+
+.service-card-info-container h2 {
+    margin-bottom: 3%;
+}
+
+.service-info-p-container {
+    overflow: hidden;
+    max-height: 35%;
+    transition: max-height 0.5s;
+    
+}
+
+.service-info-p-container-active {
+    margin: 5% 0;
+   max-height: 100%;
+}
+
+.see-more-action {
+    margin-top: 2%;
+    color: rgb(0, 60, 255);
+    
+    transition: opacity 0.5s;
+    
+}
+
+.see-more-action-inactive {
+    display: none;
+}
+
+@media (min-width: 768px) {
+
+    .service-card-content-wrapper {
+        justify-content: space-between;
+    }
+
+    .service-detail-card-active {
+        height: 30vh;
+    
+    }
+
+    .service-card-info-container {
+        width:70%;
+        padding: 0 7%;
+    }
+
+    .service-card-info-container h2 {
+        font-size: 1.7rem;
+    }
+
+    .service-info-p-container {
+        max-height: 40%;
+        font-size: 1.1rem;
+    }
+
+    .service-info-p-container-active {
+        max-height: 50%;
+    }
+
+}
+
+@media (min-width: 1024px) {
+
+    .service-detail-card {
+        height: 30vh;
+        width: 80%;
+        transition: width 0.5s;
+        padding: 0 3%;
+    }
+
+    .service-detail-card-active {
+        height: fit-content;
+        width: 95%;
+    }
+
+    .close-card-btn-container {
+        padding: 0;
+    }
+
+    .close-card {
+        cursor: pointer;
+    }
+
+    .service-card-first-column {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .service-card-img-container {
+        width: 230px;
+        height: 170px;
+    }
+
+    .service-card-info-container {
+        width: 65%;
+        padding: 0;
+        padding-left: 0%;
+        padding-right: 12%;
+    }
+
+    .service-info-p-container {
+        max-height: 100%;
+    }
+
+    .service-info-p-container-active {
+        max-height: 55%;
+    }
+
+    .service-card-content-wrapper {
+        position: relative;
+        justify-content: flex-start;
+    }
+
+    .service-card-first-column-dropdown-container {
+        max-height: 100%;
+        position: absolute;
+        right: 0;
+        margin-top: 0;
+        margin-left: 5%;
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+
+    .service-card-first-column-dropdown-container-active {
+        opacity: 1;
+    }
+
+    .see-more-action {
+        cursor: pointer;
+    }
+
+    
+}
+
+

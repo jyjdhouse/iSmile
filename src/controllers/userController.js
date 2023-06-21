@@ -12,6 +12,15 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 
 const controller = {
+
+    userProfile: async(req,res)=>{
+        try {
+            return res.render('userProfile')
+        } catch (error) {
+            console.log(`Falle en mainController.userProfile: ${error}`);
+            return res.json({error})
+        }
+    },
     login: async (req, res) => {
         try {
             let errors;
@@ -107,9 +116,9 @@ const controller = {
             return res.json(error);
         }
     },
-    checkout: async (req, res) => {
+    /* checkout: async (req, res) => {
         return res.render('checkout', {categories: await getCategories(), countryCodes: await getCountryCodes()})
-    },
+    }, */
     logout: async (req, res) => {
         try {
             let relativePath = getRelativePath(req.headers.referer);

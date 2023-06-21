@@ -4,6 +4,7 @@ const mainController = require('../controllers/mainController');
 
 router.get('/',mainController.index);
 router.get('/servicios',mainController.services)
+router.get('/servicios/:servicioId',mainController.serviceDetail)
 router.get('/blog',mainController.blogList)
 router.get('/blog/:blogId',mainController.blog)
 router.get('/preguntas-frecuentes',mainController.frequentQAndA)

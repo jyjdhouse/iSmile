@@ -1,10 +1,8 @@
 const db = require('../database/models');
 module.exports = async function (id) {
-    return await db.File.findAll({
+    return await db.Blog.findAll({
         include: [
-            'color',
-            'fileType',
-            'product',
+            'image',       
         ]
     });
 }
