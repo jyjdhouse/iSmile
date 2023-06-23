@@ -10,16 +10,12 @@ const multer = require('multer'); /* Requerir multer. En el form como atributo v
 
 const storage = multer.diskStorage({
     destination: (req,file,cb) => {
-        if(file.mimetype.startsWith('video/')){//Si es video
-            cb(null,'./public/video');
-            return 
-        }
-        cb(null,'./public/img');
+        cb(null,'./public/img/product');
         return 
     },
     filename: (req,file,cb)=>{
         const randomString = Math.random().toString(36).substring(2, 2 + 10);
-        cb(null, file.fieldname + '-' + randomString + path.extname(file.originalname))
+        cb(null, file.fieldname + '-' + randomString + path.extname(file.path))
     }
 });
 
@@ -27,15 +23,15 @@ let upload = multer({storage})
 
 // RUTEO
 router.get('/',apiProductController.list);
-router.get('/color',apiProductController.getColors);
-router.get('/:id',apiProductController.detail); //Esta va ultima por el :id
+router.get('/:productId',apiProductController.detail); //Esta va ultima por el :id
 
-router.post('/createProduct',upload.any(),apiProductController.create);
-router.post('/createColor',apiProductController.newColor);
+router.post('/createProduct',upload.any('images'),apiProductController.create);
 router.post('/addWishlistProduct',apiProductController.addWishlistProduct);
 router.post('/removeWishlistProduct',apiProductController.removeWishlistProduct);
 router.post('/getWishedProducts',apiProductController.getWishedProducts);
 
-router.put('/updateProduct/:id',upload.any(),apiProductController.update);
+router.put('/updateProduct/:productId',upload.any('images'),apiProductController.update);
+
+router.delete('/updateProduct/:productId', apiProductController.deleteProduct);
 
 module.exports=router;

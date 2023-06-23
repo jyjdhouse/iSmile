@@ -1,6 +1,6 @@
-const db = require('../database/models');
+const User = require('../database/models/User');
 module.exports = async function (id) {
-    return await db.User.findAll({
+    return await User.findAll({
         include: [
             'userCategory',
             {

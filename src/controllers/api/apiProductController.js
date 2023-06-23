@@ -1,4 +1,4 @@
-const db = require('../../database/models');
+const Product = require('../../database/models/Product');
 const Sequelize = require('sequelize');
 
 // From utils

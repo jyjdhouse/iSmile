@@ -1,10 +1,9 @@
 //Database
-const db = require('../database/models');
+const User = require('../database/models/User');
 // Utils
 const getRelativePath = require('../utils/getRelativePath');
 const secret = require('../utils/secret').secret;
-const getCategories = require('../utils/getCategories');
-const getCountryCodes = require('../utils/getCountryCodes');
+
 // Librerias
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -107,7 +106,7 @@ const controller = {
                 phone_number: phone,
                 password: bcrypt.hashSync(password, 10),//encripta la password ingresada ,
                 notifications: notifications ? 1 : 0,
-                user_categories_id: 2 //Siempre 2 (customer)
+                isAdmin: false 
             };
             await db.User.create(userData);
             return res.redirect(relativePath);

@@ -22,5 +22,12 @@ module.exports = (sequelize, dataTypes) => {
 
     const Blog = sequelize.define(alias, cols, config);
 
+    Blog.associate = (models) => {
+        Blog.hasMany(models.BlogImage, {
+            as: 'images',
+            foreignKey: 'blog_id'
+        });
+    };
+
     return Blog;
 }

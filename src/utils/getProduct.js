@@ -1,6 +1,6 @@
-const db = require('../database/models');
+const Product = require('../database/models/Product');
 module.exports = async function (id) {
-    return await db.Product.findByPk(id,{
+    return await Product.findByPk(id,{
         include: [
             'category',       
         ]

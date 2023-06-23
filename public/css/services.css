@@ -134,7 +134,7 @@
 
 .service-card-dropdown-active {
     opacity: 1;
-    max-height: 500px;
+    max-height: fit-content;
     
 }
 
@@ -213,7 +213,7 @@
     }
  */
     .service-card-active {
-        height: 60vh;
+        height: fit-content;
     }
     
 

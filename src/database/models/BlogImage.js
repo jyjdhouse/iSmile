@@ -8,7 +8,7 @@ module.exports = (sequelize, dataTypes) => {
             autoIncrement: true
         },
         image: { type: dataTypes.STRING(255) },
-        product_id: { type: dataTypes.INTEGER }
+        blog_id: { type: dataTypes.INTEGER }
     }
 
     let config = {
@@ -19,7 +19,7 @@ module.exports = (sequelize, dataTypes) => {
     const Blog_Image = sequelize.define(alias, cols, config);
 
     Blog_Image.associate = (models) => {
-        Blog_Image.belongsTo(models.Image, {
+        Blog_Image.belongsTo(models.Blog, {
             as: 'blog',
             foreignKey: 'blog_id'
         });

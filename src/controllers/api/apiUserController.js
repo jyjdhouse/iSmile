@@ -1,8 +1,4 @@
-const path = require('path');
-const fs = require('fs');
-const db = require('../../database/models');
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
+const User = require('../../database/models/User');
 
 // Librerias
 const jwt = require('jsonwebtoken');

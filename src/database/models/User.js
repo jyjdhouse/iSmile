@@ -31,10 +31,6 @@ module.exports = (sequelize, dataTypes) => {
     const User = sequelize.define(alias, cols, config);
 
     User.associate = (models) => {
-        User.belongsTo(models.UserCategory, {
-            as: 'userCategory',
-            foreignKey: 'user_categories_id'
-        })
         User.hasMany(models.Wishlist, {
             as: 'wishlistProducts',
             foreignKey: 'users_id',

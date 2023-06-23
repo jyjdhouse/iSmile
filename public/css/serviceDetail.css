@@ -25,15 +25,16 @@
 
 .service-detail-card {
     width: 90%;
-    height: 15vh;
-    
+    max-height: 20vh;
+    overflow: hidden;
     border: 1px solid var(--gold-color);
-    transition: height 0.5s;
+    transition: max-height 0.5s;
     margin: 5% auto;
+    padding: 1% 0;
 }
 
 .service-detail-card-active {
-    height: 40vh;
+    max-height: 60vh;
 }
 
 .close-card-btn-container {
@@ -62,7 +63,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
     height: 100%;
     width: 30%;
    
@@ -122,31 +122,34 @@
 
 
 .service-card-info-container h2 {
+    font-size: 1.2rem;
     margin-bottom: 3%;
 }
 
 .service-info-p-container {
     overflow: hidden;
-    max-height: 35%;
-    transition: max-height 0.5s;
-    
+    max-height: 50px;
+    transition: max-height 0.3s;
+    margin: 5% 0;
 }
 
 .service-info-p-container-active {
-    margin: 5% 0;
-   max-height: 100%;
+    
+    max-height: 100%;
 }
 
 .see-more-action {
     margin-top: 2%;
     color: rgb(0, 60, 255);
-    
+    opacity: 1;
+    pointer-events: all;
     transition: opacity 0.5s;
-    
 }
 
 .see-more-action-inactive {
-    display: none;
+    opacity: 0;
+    pointer-events: none;
+
 }
 
 @media (min-width: 768px) {

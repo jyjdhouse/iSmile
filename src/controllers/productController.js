@@ -1,10 +1,9 @@
 
-const db = require('../database/models');
+const Product = require('../database/models/Product');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 // utils
-const getCategories = require('../utils/getCategories');
 const getProduct = require('../utils/getProduct');
 const adaptProductsToBeListed = require('../utils/adaptProductsToBeListed');
 const getCountryCodes = require('../utils/getCountryCodes');
