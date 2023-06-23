@@ -30,7 +30,8 @@
     "nodemailer": "^6.9.1",
     "puppeteer": "^20.7.1",
     "sequelize": "^6.21.6",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "showdown": "^2.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

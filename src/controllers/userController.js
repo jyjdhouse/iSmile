@@ -1,6 +1,8 @@
 //Database
-const db = require('../database/models');
+const User = require('../database/models/User');
 // Utils
+const getRelativePath = require('../utils/getRelativePath');
+const secret = require('../utils/secret').secret;
 
 // Librerias
 const bcrypt = require('bcryptjs');
@@ -9,6 +11,15 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 
 const controller = {
+
+    userProfile: async(req,res)=>{
+        try {
+            return res.render('userProfile')
+        } catch (error) {
+            console.log(`Falle en mainController.userProfile: ${error}`);
+            return res.json({error})
+        }
+    },
     login: async (req, res) => {
         try {
             let errors;
@@ -95,7 +106,7 @@ const controller = {
                 phone_number: phone,
                 password: bcrypt.hashSync(password, 10),//encripta la password ingresada ,
                 notifications: notifications ? 1 : 0,
-                user_categories_id: 2 //Siempre 2 (customer)
+                isAdmin: false 
             };
             await db.User.create(userData);
             return res.redirect(relativePath);
@@ -104,9 +115,9 @@ const controller = {
             return res.json(error);
         }
     },
-    checkout: async (req, res) => {
+    /* checkout: async (req, res) => {
         return res.render('checkout', {categories: await getCategories(), countryCodes: await getCountryCodes()})
-    },
+    }, */
     logout: async (req, res) => {
         try {
             let relativePath = getRelativePath(req.headers.referer);

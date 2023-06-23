@@ -8,7 +8,12 @@ const multer = require('multer');
 const upload = multer();
 
 router.get('/',mainController.index);
+<<<<<<< HEAD
 router.get('/servicios',mainController.services);
+=======
+router.get('/servicios',mainController.services)
+router.get('/servicios/:servicioId',mainController.serviceDetail)
+>>>>>>> f62fd67de2ec802ea9a5b36c958edcc5e5e5c7d9
 router.get('/blog',mainController.blogList)
 router.get('/blog/:blogId',mainController.blog)
 router.get('/preguntas-frecuentes',mainController.frequentQAndA);

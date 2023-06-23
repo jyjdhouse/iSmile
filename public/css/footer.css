@@ -62,15 +62,15 @@
 }
 .footer-first-row{
     width: 95%;
-    height: 30%;
+    height: 40%;
     flex-direction: column;
 }
 .footer-second-row{
-    height: 10%;
+    height: 20%;
 }
 .footer-list-item{
     width: 47%;
-    height: 30%;
+    height: 26%;
     /* margin: 2% 0; */
     display: flex;
     align-items: center;

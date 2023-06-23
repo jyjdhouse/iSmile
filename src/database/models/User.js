@@ -19,7 +19,8 @@ module.exports = (sequelize, dataTypes) => {
         last_wishlist_email: { type: dataTypes.DATE },
         last_cart_email: { type: dataTypes.DATE },
         wishlist_period_type: { type: dataTypes.STRING(1) },
-        cart_period_type: { type: dataTypes.STRING(1) }
+        cart_period_type: { type: dataTypes.STRING(1) },
+        isAdmin: false
     }
 
     let config = {
@@ -30,10 +31,6 @@ module.exports = (sequelize, dataTypes) => {
     const User = sequelize.define(alias, cols, config);
 
     User.associate = (models) => {
-        User.belongsTo(models.UserCategory, {
-            as: 'userCategory',
-            foreignKey: 'user_categories_id'
-        })
         User.hasMany(models.Wishlist, {
             as: 'wishlistProducts',
             foreignKey: 'users_id',

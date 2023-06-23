@@ -56,10 +56,16 @@ const response = /*await*/ mercadopago.preferences.create(preference);
 // Rutas
 const mainRouter = require('./routes/mainRouter.js');
 const productRouter = require('./routes/productRouter.js');
-const adminRouter = require('./routes/adminRouter.js');
+
 const userRouter = require('./routes/userRouter.js');
 
 // Rutas API
+<<<<<<< HEAD
+=======
+// const mainRouter = require('./routes/mainRouter.js');
+const apiProductRouter = require('./routes/api/apiProductRouter.js');
+const apiUserRouter = require('./routes/api/apiUserRouter.js');
+>>>>>>> f62fd67de2ec802ea9a5b36c958edcc5e5e5c7d9
 
 // Middlewares
 // const userLogged = require('./middlewares/userLogged.js');
@@ -67,11 +73,17 @@ const userRouter = require('./routes/userRouter.js');
 // app.use(userLogged);
 
 
+<<<<<<< HEAD
+=======
+// Ruteo para api
+app.use('/api/product', apiProductRouter);
+app.use('/api/user', apiUserRouter);
+>>>>>>> f62fd67de2ec802ea9a5b36c958edcc5e5e5c7d9
 
 // Ruteo
 app.use('/', mainRouter);
 app.use('/product', productRouter);
-app.use('/admin', adminRouter);
+
 app.use('/user', userRouter)
 
 

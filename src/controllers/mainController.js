@@ -1,24 +1,11 @@
-const fetch = require('node-fetch');
-const path = require('path')
-const fs = require('fs');
-const db = require('../database/models');
+
+/* const Service = require('../database/models/Service') */
 // Utils
 const staticProducts = require('../utils/staticDB/products');
 
 const controller = {
     index: async (req, res) => {
-        try {
-            // let loginErrors = req.query.loginErrors && JSON.parse(req.query.loginErrors);
-            // let oldData = req.query.oldData && JSON.parse(req.query.oldData);
-            // let productsForGallery = [];
-            // let count = 0;
-            // while (count < 6) { //Dejo 6 productos random
-            //     let random = products[Math.floor(Math.random() * products.length)];
-            //     if (!productsForGallery.includes(random)) {
-            //         productsForGallery.push(random)
-            //         count++;
-            //     }
-            // };
+        try {    
             return res.render('index')
             
         } catch (error) {
@@ -34,6 +21,17 @@ const controller = {
             return res.json({error})
         }
     },
+    serviceDetail: async(req,res)=>{
+        try {
+            // A FUTURO
+           /*  let service = await db.User.findByPk(req.params.serviceId); */
+    
+            return res.render('serviceDetail', /* {service} */)
+        } catch (error) {
+            console.log(`Falle en mainController.serviceDetail: ${error}`);
+            return res.json({error})
+        }
+    },
     blogList: async(req,res)=>{
         try {
             return res.render('blogList')
@@ -44,13 +42,13 @@ const controller = {
     },
     blog: async(req,res)=>{
         try {
-            let blog = await db.Blog.findAll({
+            /* let blog = await db.Blog.findAll({
                 where:{
                     id: req.params.id
                 },
-               /*  include: ['keywords','colors'] */
-            });
-            return res.render('blog', blog)
+               /*  include: ['keywords','colors']
+            }); */
+            return res.render('blog',/*  blog */)
         } catch (error) {
             console.log(`Falle en mainController.blog: ${error}`);
             return res.json({error})

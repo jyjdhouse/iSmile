@@ -1,0 +1,57 @@
+@import 'variables.css';
+
+.user-profile-main {
+    margin-top: 12vh;
+    height: 50vh;
+    padding: 0 3%;
+}
+
+.user-profile-title-container h1 {
+    font-size: 1.2rem;
+}
+
+.options-selected-container{
+    position: relative;
+    height: 200px;
+    border: 1px solid var(--gold-color);
+}
+
+.profile-selected-field-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s
+}
+
+.profile-selected-field-container-active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.profile-options-container {
+    width: 100%;
+    margin-top: 5%;
+}
+
+.profile-options-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.profile-option-item {
+    text-align: center;
+    width: 30%;
+    border: 1px solid var(--gold-color);
+    padding: 3% 0;
+    transition: background-color 0.3s;
+}
+
+.profile-option-item-active {
+    background-color: var(--gold-color);
+}

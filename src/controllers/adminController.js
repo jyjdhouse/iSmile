@@ -1,4 +1,4 @@
-const db = require('../database/models');
+/* const db = require('../database/models');
 const bcrypt = require('bcryptjs');
 
 
@@ -74,3 +74,4 @@ const controller = {
 };
 
 module.exports = controller;
+ */
