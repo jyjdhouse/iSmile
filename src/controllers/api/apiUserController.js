@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const getAllUsers = require('../../utils/getAllUsers');
 
 // From utils
-const secret = require('../../utils/secret').secret;
+// const secret = require('../../utils/secret').secret;
 
 const controller = {
     getLoggedUserId: async (req, res) => {

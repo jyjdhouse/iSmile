@@ -1,10 +1,10 @@
 const Product = require('../../database/models/Product');
 const Sequelize = require('sequelize');
 
-// From utils
-const getProduct = require('../../utils/getProduct.js');
-const getDeepCopy = require('../../utils/getDeepCopy');
-const getAllProducts = require('../../utils/getAllProducts');
+// // From utils
+// const getProduct = require('../../utils/getProduct.js');
+// const getDeepCopy = require('../../utils/getDeepCopy');
+// const getAllProducts = require('../../utils/getAllProducts');
 
 const controller = {
     list: async (req, res) => { //Metodo que devuelve todos los productos

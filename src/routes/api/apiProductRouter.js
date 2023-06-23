@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 const apiProductController = require('../../controllers/api/apiProductController');
 // Middleware
-const checkForToken = require('../../middlewares/checkForToken');
+// const checkForToken = require('../../middlewares/checkForToken');
 // MULTER
 
 const multer = require('multer'); /* Requerir multer. En el form como atributo va --> (enctype = "multipart/form-data") */
