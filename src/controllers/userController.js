@@ -1,10 +1,7 @@
 //Database
 const db = require('../database/models');
 // Utils
-const getRelativePath = require('../utils/getRelativePath');
-const secret = require('../utils/secret').secret;
-const getCategories = require('../utils/getCategories');
-const getCountryCodes = require('../utils/getCountryCodes');
+
 // Librerias
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');

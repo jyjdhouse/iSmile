@@ -2,11 +2,13 @@
     --light-violet-color: #bc75f2;
     --violet-color: #663399;
     --gold-color: #bba059;
+    --red-color: rgb(198, 23, 23);
 }
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
 }
 .overlay {
     position: absolute;
@@ -23,7 +25,9 @@ a {
     color: #000;
     text-decoration: none;
 }
-
+button{
+    color: #000;
+}
 li {
     list-style: none;
 }
@@ -39,5 +43,22 @@ li {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
+.red{
+    color: var(--red-color)  !important;
+}
+
+/* SACAR FLECHAS INPUT TYPE NUMBER */
+/* SACAR FLECHAS INPUT TYPE NUMBER */
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+    -webkit-appearance: none;               
+    margin: 0;                               
+
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+  }

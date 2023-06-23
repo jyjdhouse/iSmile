@@ -1,14 +1,7 @@
 const db = require('../database/models');
 const bcrypt = require('bcryptjs');
 
-// Utils
-const getColors = require('../utils/getColors');
-const getCategories = require('../utils/getCategories');
-const getSizes = require('../utils/getSizes');
-const getProduct = require('../utils/getProduct');
-const getDeepCopy = require('../utils/getDeepCopy');
-const getAllProducts = require('../utils/getAllProducts');
-const adaptProductsToBeListed = require('../utils/adaptProductsToBeListed');
+
 
 const controller = {
     preCheckout: async (req, res) => {

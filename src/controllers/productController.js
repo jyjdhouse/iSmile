@@ -4,10 +4,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 // utils
-const getCategories = require('../utils/getCategories');
-const getProduct = require('../utils/getProduct');
-const adaptProductsToBeListed = require('../utils/adaptProductsToBeListed');
-const getCountryCodes = require('../utils/getCountryCodes');
+
 
 const controller = {
     list: async (req, res) => { //Controlador que renderiza listado de productos

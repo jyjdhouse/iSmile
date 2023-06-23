@@ -1,0 +1,115 @@
+.last-row{
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+}
+.signature-field,
+.date-field{
+    width: 50%;
+    display: flex;
+    column-gap: 1rem;
+    align-items: flex-end;
+    margin-bottom: 0;
+}
+.date-field{
+    justify-content: flex-end;
+}
+.signature-field{
+    /* height: 150px; */
+    justify-content: flex-start;
+}
+.signature-field label,
+.date-field label{
+    width: fit-content;
+    white-space: nowrap;
+}
+.canvas-container{
+    width: 50%;
+    height: 200px;
+    border-bottom: 1px solid #663399;
+    position: relative;
+}
+#signatureCanvas{
+    width: 200%;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%,50%);
+}
+#confirm-signature{
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+#clearButton{
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    padding: .5% 0;
+    border: 1px solid #bba059;
+    border-radius: 1rem;
+    font-size: 1rem;
+    position: relative;
+    z-index: 1;
+}
+button{
+    width: 40%;
+    border: none;
+    background-color: #fff;
+    border: 1px solid #bba059;
+    border-radius: 1rem;
+    color: #000;
+    padding: .8rem 0;
+    margin-top: 5rem;
+    color: #663399;
+}
+.last-row {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.signature-field,
+.date-field {
+    width: 50%;
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+    margin-bottom: 0;
+    /* height: fit-content;*/
+    margin-top: 30px; 
+}
+
+.date-field {
+    justify-content: flex-end;
+    /* align-content: flex-end; */
+}
+.date-field .patient-option-p{
+    height: fit-content;
+}
+.signature-field {
+    /* height: 150px; */
+    justify-content: flex-start;
+    position: relative;
+}
+
+.signature-field label,
+.date-field label {
+    width: fit-content;
+}
+/* Firma en foto */
+.signature-image{
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+    object-position: center;
+    position: absolute;
+    right: 100px;
+    top: 5px;
+}
