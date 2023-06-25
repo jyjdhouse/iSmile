@@ -25,7 +25,6 @@
 
 .service-detail-card {
     width: 90%;
-    max-height: 20vh;
     overflow: hidden;
     border: 1px solid var(--gold-color);
     transition: max-height 0.5s;
@@ -34,7 +33,7 @@
 }
 
 .service-detail-card-active {
-    max-height: 60vh;
+    max-height: fit-content;
 }
 
 .close-card-btn-container {
@@ -81,15 +80,14 @@
 .service-card-first-column-dropdown-container {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s;
+    transition: max-height 0.4s;
    text-align: center;
    margin-top: 7%;
 }
 
 
 .service-card-first-column-dropdown-container-active {
-    max-height: 70%;
-
+    max-height: 300px;
 }
 
 .first-column-item-info {
@@ -128,14 +126,13 @@
 
 .service-info-p-container {
     overflow: hidden;
-    max-height: 50px;
+    max-height: 20px;
     transition: max-height 0.3s;
     margin: 5% 0;
 }
 
-.service-info-p-container-active {
-    
-    max-height: 100%;
+.service-info-p-container-active { 
+    max-height: 300px;
 }
 
 .see-more-action {
@@ -173,12 +170,12 @@
     }
 
     .service-info-p-container {
-        max-height: 40%;
+        max-height: 20px;
         font-size: 1.1rem;
     }
 
     .service-info-p-container-active {
-        max-height: 50%;
+        max-height: 300px;
     }
 
 }
@@ -186,14 +183,14 @@
 @media (min-width: 1024px) {
 
     .service-detail-card {
-        height: 30vh;
+        max-height: fit-content;
         width: 80%;
         transition: width 0.5s;
         padding: 0 3%;
     }
 
     .service-detail-card-active {
-        height: fit-content;
+        max-height: fit-content;
         width: 95%;
     }
 
@@ -220,14 +217,16 @@
         padding: 0;
         padding-left: 0%;
         padding-right: 12%;
+        
+        padding-bottom: 3%;
     }
 
     .service-info-p-container {
-        max-height: 100%;
+        max-height: fit-content;
     }
 
     .service-info-p-container-active {
-        max-height: 55%;
+        max-height: fit-content;
     }
 
     .service-card-content-wrapper {

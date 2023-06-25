@@ -9,7 +9,7 @@
 
 .services-title {
     margin-left: 5%;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 /* Services Cards*/
@@ -20,23 +20,23 @@
     row-gap: 3rem;
     justify-content: center;
     margin: 5vh 0;
+    height: fit-content;
 }
 
 .service-card {
     width: 80%;
-    height: 100%;
     position: relative;
-    height: 15vh;
-    opacity: 0;
+    max-height: 200px;
     transition: all .6s;
     display: flex;
     align-items: center;
+    padding: 10% 0;
 }
 
 .service-card-active {
-  
-    height: 50vh;
-   
+    width: 90%;
+    max-height: fit-content;
+    padding: 5% 0;
 }
 
 
@@ -92,7 +92,7 @@
 }
 
 .toggle-dropdown-icons-container-active {
-    top: 5%;
+    top: 1%;
 }
 
 .toggle-dropdown {
@@ -109,6 +109,12 @@
 .service-label {
     font-size: 1rem;
     color: #fff;
+    text-transform: uppercase;
+    align-self: flex-start;
+}
+
+.service-card-active>.service-label {
+    padding-top: 8%;
 }
 
 .service-card-visible-part {
@@ -140,7 +146,7 @@
 
 .service-card-dropdown-content-container {
     color: white;
-    margin: 5% 0;
+    margin: 8% 0;
     width: 95%;
 }
 
@@ -148,6 +154,11 @@
     text-transform: uppercase;
     font-size: 0.775rem;
     text-decoration: underline;
+    margin-bottom: 2%;
+}
+
+.service-card-dropdown-content-container a, a:visited {
+    color: #fff;
 }
 
 .service-card-dropdown-content-container p {
@@ -161,11 +172,11 @@
         font-size: 2rem;
     }
     .service-card{
-        height: 20vh;
+        max-height: 40vh;
     }
 
     .service-card-active {
-        height: 45vh;
+        max-height: 80vh;
     }
     
 
@@ -213,7 +224,7 @@
     }
  */
     .service-card-active {
-        height: fit-content;
+        max-height: fit-content;
     }
     
 
@@ -224,7 +235,7 @@
     .service-card-visible:hover {
         opacity: 1;
        /*  filter: contrast(120%); */
-        scale: 1.1;
+        
         cursor: pointer;
     }
     
