@@ -1,35 +1,14 @@
-<div class="login-register-container popup">
-    <div class="login-top">
-        <p class="login-top-label">IDENTIFICATE</p>
-        <div class="login-exit-btn-container trigger-user-options-btn">
-            <i class="fa-solid fa-x login-exit-btn"></i>
-        </div>
+<form method="POST" class="login-popup user-options-popup-option">
+    <div class="login-field">
+        <label for="email" class="bold">Email</label>
+        <input type="text" id="email" class="input" placeholder="Ingrese su Email" name="email">
     </div>
-    <div class="login-container">
-        <p class="login-label">YA ESTOY REGISTRADO</p>
-        <form action="/user/login" method="POST" class="login-form">
-            <div class="input-field">
-                <label for="email" class="input-label">Email</label>
-                <input type="text" class="input" name="email" id="email" value=<%= locals.oldData && oldData.email %>>  
-            </div>
-            <div class="input-field">
-                <label for="password" class="input-label">Contraseña</label>
-                <div class="input-container relative-input">
-                    <input type="password" class="input input-password" name="password" id="password" data-place="login">
-                    <i class="fa-solid fa-eye show-password-btn password-btn-toggler" data-place="login"></i>
-                    <i class="fa-solid fa-eye-slash hide-password-btn password-btn-toggler hidden" data-place="login"></i>
-                </div>
-                <% if (locals.loginErrors && loginErrors.credentials) { %>
-                    <p class="error-msg"><%= loginErrors.credentials.msg %></p>
-                <% } %>
-                <a href="#" class="forgot-password-link">¿Olvidaste tu contraseña?</a>
-            </div>
-            <button class="btn">Entrar</button>
-        </form>
+    <div class="login-field">
+        <label for="password" class="bold">Contraseña</label>
+        <input type="text" id="password" class="input" placeholder="Ingrese su Contraseña" name="password">
     </div>
-    <div class="register-container">
-        <p class="login-label">NO ESTOY REGISTRADO</p>
-        <p class="registration-text">Enjoy added benefits and richer experience by creating a personal account.</p>
-        <button class="btn open-registration-btn" id="open-registration-form">Crear Cuenta</button>
+    <div class="button-container">
+        <button class="login-button bold">Iniciar Sesion</button>
+
     </div>
-</div>
+</form>

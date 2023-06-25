@@ -145,7 +145,7 @@ window.addEventListener('load', () => {
             let type = input.type;
             let value = input.value;
             // Creo la etiqueta p  <p class="patient-option bold"></p> con el valor del input
-            const paragraph = document.createElement('p');
+            const paragraph = document.createElement('span');
             paragraph.classList.add('patient-option', 'bold');
             // Si es el textArea le hago en otro renglon
             type == 'textarea' ? paragraph.classList.add('block'):null;

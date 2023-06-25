@@ -32,6 +32,7 @@
 .bx-dots-vertical-rounded {
     font-size: 1.5rem;
     color: grey;
+    cursor: pointer;
 }
 
 .blog-detail-container {
@@ -110,6 +111,7 @@
 .other-img-container img {
     width: 80%;
     height: 90%;
+    object-fit: contain;
 }
 
 
@@ -144,6 +146,9 @@
 
     .other-img-container {
         width: 60%;
+    }
+    .next-img-container{
+        z-index: 0;
     }
 
 

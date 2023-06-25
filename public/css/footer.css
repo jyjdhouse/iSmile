@@ -273,7 +273,7 @@
         }
         
     .footer-background-container {
-        height: 25%;
+        height: 30%;
     }
 
     .footer-logo {
@@ -281,7 +281,7 @@
         height: 100%;
     }
     .footer-first-row{
-        height: 10%;
+        height: 15%;
         flex-direction: row;
     }
     .footer-list{
@@ -295,7 +295,7 @@
         justify-content: center;
         width: 15%;
         margin: 0;
-        height: 100%;
+        height: 80%;
     }
     .footer-link{
         width: 100%;
@@ -308,8 +308,6 @@
         flex-direction: column;
         justify-content: center;
     }
-
-
 
     .desktop-footer-data-icon-container p:first-child {
         margin-bottom: 2%;
@@ -330,7 +328,7 @@
     .footer-second-row {
         display: flex;
         justify-content: center;
-        height: 15%;
+        height: 20%;
         align-items: center;
     }
 

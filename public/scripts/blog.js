@@ -1,21 +1,20 @@
 window.addEventListener('load', () => {
 
 
-    const images = document.querySelectorAll('.other-img-container')
-    if(window.innerWidth < 768){
+    const images = document.querySelectorAll('.other-img-container');
+    const adminActionsToggle = document.querySelector('.admin-toggle')
+    const adminDropdown = document.querySelector('.blog-admin-actions-dropdown')
+   
+
+    adminActionsToggle.addEventListener('click', () => {
+        adminDropdown.classList.toggle('blog-admin-actions-dropdown-active')
+    });
+
+    if(window.innerWidth < 768){ //Resolucion mobile
 
 
-        if(images.length != 1) {
-            const adminActionsToggle = document.querySelector('.admin-toggle')
-            const adminDropdown = document.querySelector('.blog-admin-actions-dropdown')
-           
-        
-            adminActionsToggle.addEventListener('click', () => {
-                adminDropdown.classList.toggle('blog-admin-actions-dropdown-active')
-            })
-        
+        if(images.length != 1) {    
             let activeImg = 0
-            
             const autoSlideCarousel = () => {
                 images.forEach((img, i) => {
                     if (i == activeImg) {
