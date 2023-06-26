@@ -1,3 +1,4 @@
+@import 'variables.css';
 * {
     margin: 0;
     padding: 0;
@@ -259,7 +260,9 @@ body {
     width: fit-content;
     display: flex;
 }
-
+.shopping-cart-desktop{
+    display: none;
+}
 .shopping-cart-container .bx-shopping-bag {
     font-size: 18px;
 }
@@ -276,8 +279,77 @@ body {
     font-size: .8rem;
 }
 
-/* END PARTE DE ARRIBA */
+/* Deslpegable de cuando el usuario este loggeado */
+.user-logged-container{
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 7rem;
+}
+.user-logged-container .bx-chevron-down{
+    font-size: 22px;
+}
+.user-logged-name span{
+    margin-left: 10px;
+}
+.logged-menu-container{
+    scale: 0;
+    opacity: 0;
+    transition: scale 1s ease, opacity .3s ease;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: .5rem;
+    width: 110%;
+    background-color: #fefefe;
+    border: 1px solid var(--gold-color);
+    overflow: hidden;
+}
+.logged-menu-container-active{
+    scale: 1;
+    opacity: 1;
+    transition: scale .01s ease, opacity .8s ease;
+}
+.logged-menu-list{
+    margin: 10% 5%;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+}
+.expandable-list-item{
+    overflow: hidden;
+}
+.create-options-toggler{
+    transition: all .3s ease;
+}
+.create-options-toggler.rotated{
+    transform: rotate(90deg);
+}
+.admin-menu-list{
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 0;
+    overflow: hidden;
+    margin: 0;
+    transition: all .3s linear;
+    row-gap: 5px;
+    padding-left: 10%;
+    margin-top: 6px;
 
+}
+.admin-menu-list-active{
+    max-height: 100%;
+}
+.admin-menu-list li{
+    font-size: 14px;
+    cursor: pointer;
+}
+.logged-menu-list-item{
+    width: 100%;
+}
 /* MEDIAS QUERIES */
 
 /* TABLET */
@@ -329,7 +401,12 @@ body {
         width: 25%;
         column-gap: 1.8rem;
     }
-
+    .shopping-cart-mobile{
+        display: none;
+    }
+    .shopping-cart-desktop{
+        display: flex;
+    }
     .shopping-cart-container .fa-bag-shopping {
         font-size: 20px;
     }

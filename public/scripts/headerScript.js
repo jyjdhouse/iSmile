@@ -28,6 +28,21 @@ window.addEventListener('load', () => {
 
     headerShow();
 
+    // Logica del userLoggedMenu
+    const userLoggedOptions = document.querySelector('.logged-menu-container');
+    const userLoggedOptionsToggler = document.querySelector('.user-logged-menu-toggler');
+    userLoggedOptionsToggler.addEventListener('click',()=>{
+        userLoggedOptions.classList.toggle('logged-menu-container-active');
+    });
+
+    // Logica por si tocan el expandible del menu
+    const createOptionsToggler = document.querySelector('.create-options-toggler');
+    const adminMenuList = document.querySelector('.admin-menu-list');
+    const adminMenuArrow = document.querySelector('.create-options-toggler');
+    createOptionsToggler.addEventListener('click',()=>{
+        adminMenuArrow.classList.toggle('rotated');
+        adminMenuList.classList.toggle('admin-menu-list-active');
+    });
 
     
 
