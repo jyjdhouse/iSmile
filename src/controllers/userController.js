@@ -1,5 +1,6 @@
 //Database
 const User = require('../database/models/User');
+const axios = require('axios')
 // Utils
 // const getRelativePath = require('../utils/getRelativePath');
 // const secret = require('../utils/secret').secret;
@@ -14,9 +15,12 @@ const controller = {
 
     userProfile: async(req,res)=>{
         try {
-            return res.render('userProfile')
+            const data = await axios('http://localhost:4500/api/user/1')
+            const response = data.data.meta
+            const user = response.user
+            return res.render('userProfile', {user})
         } catch (error) {
-            console.log(`Falle en mainController.userProfile: ${error}`);
+            console.log(`Falle en userController.userProfile: ${error}`);
             return res.json({error})
         }
     },

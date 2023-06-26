@@ -1,4 +1,5 @@
 const User = require('../../database/models/User');
+const users = require('../../utils/staticDB/user')
 
 // Librerias
 const jwt = require('jsonwebtoken');
@@ -25,12 +26,8 @@ const controller = {
     },
     getUser: async (req, res) => {
         try {
-            let userId = req.params.userId
-            const user = await db.User.findOne({
-                where: {
-                    id: userId
-                }
-            })
+            let userId = req.params.userId 
+            const user = users.find(user => user.id == userId)
             if(!user) {
                 return res.status(404).json({meta: {status: 404, msg: 'Usuario no encontrado'}})
             } 

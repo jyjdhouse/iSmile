@@ -12,249 +12,50 @@
 <body>
     <%- include('./partials/header.ejs') %>
         <main class="main">
-            <h2 class="services-title page-title">Nuestras Especialidades</h2>
+            <h1 class="services-title page-title">Nuestras Especialidades</h1>
             <div class="service-cards-container">
-                <div class="service-card">
-                    <div class="service-card-wrapper">
-                        <div class="service-card-visible-part">
-                            <div class="overlay"></div>
-                            <img src="/img/servicios1.jpg" alt="service image" class="service-image">
-                            <div class="toggle-dropdown-icons-container">
-                                <i class='bx bx-plus-circle toggle-dropdown'></i>
-                                <i class='bx bx-minus toggle-dropdown'></i>
-                            </div>       
-                            <p class="service-label">ESTÉTICA FACIAL</p>
-                        </div>
-                        <div class="service-card-dropdown">
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Armonización facial</h3>
-                                <p>La percepción de un rostro bello, armónico y natural depende fundamentalmente de las proporciones de una parte de nuestro rostro en relación con otra.</p>
+
+                <% services.forEach(service=> { %>
+
+                    <div class="service-card" data-serviceId=<%=service.id %>>
+                        <div class="service-card-wrapper">
+                            <div class="service-card-visible-part">
+                                <div class="overlay"></div>
+                                <img src=<%=service.src %> alt="service image" class="service-image">
+                                <div class="toggle-dropdown-icons-container">
+                                    <i class='bx bx-plus-circle toggle-dropdown'></i>
+                                    <i class='bx bx-minus toggle-dropdown'></i>
+                                </div>
+                                <h2 class="service-label">
+                                    <%= service.name %>
+                                </h2>
                             </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Botox</h3>
-                                <p>El relleno de ojeras se realiza con un ácido hialurónico especial para esa zona, corrige el surco palpebromalar hundido mejorando el aspecto de un rostro aparentemente cansado.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Pómulos</h3>
-                                <p>Mediante la aplicación de ácido hialurónico podemos crear una estructura de mejillas equilibrada logrando elevación, contorno y definición. Los pómulos en una mujer están asociados con el atractivo facial, un contorno suave y curvo transmite salud y juventud.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Temporales</h3>
-                                <p>La pérdida de volumen en la frente y en las sienes durante el proceso de envejecimiento conduce al descenso de las cejas y tiene un impacto negativo en áreas más distantes como las ojeras. </p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Rinomodelación</h3>
-                                <p>Utilizamos un acido hialuronico de altísima calidad con una densidad específica para este área, permitiéndonos rectificar y definir el dorso de la nariz para una apariencia más suave.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Surco nasogeniano</h3>
-                                <p>Para tratar el surco nasogeniano nos basamos en el estudio de vectores de envejecimiento y reposicionamiento de los tejidos.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Mentón</h3>
-                                <p>Utilizamos Ácido un Hialurónico de alta densidad para lograr un mentón bien definido con la altura y proyección ideal en cada rostro, consiguiendo un perfil armónico y un rostro más proporcionado.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Top Model Look</h3>
-                                <p>La técnica “Top Model Look” tiene como objetivo lograr un rostro más atractivo con un efecto ‘contouring’ mediante la definición de la zona del hueso lateral de las mejillas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Masculinización facial</h3>
-                                <p>Utilizamos Ácido Hialurónico de altísima calidad con una densidad especifica para cada área del rostro; previamente tomamos medidas y proporciones faciales para realizar el diseño correcto.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Full face</h3>
-                                <p>La armonización facial es un procedimiento que se basa en un diagnóstico facial completo tomando medidas y proporciones faciales para el tratamiento de múltiples áreas del rostro utilizando Ácido Hialurónico en combinación con BOTOX®️ y bioestimuladores.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Bichectomia</h3>
-                                <p>La bichectomia es una cirugía mínimamente invasiva que se realiza una sola vez en la vida, se realiza con anestesia local en un tiempo aproximado de 30 minutos.</p>
+
+                            <div class="service-card-dropdown">
+                               
+                                <% specialties_services.forEach(serv=> { %>
+
+                                    <% if(service.id === serv.specialty_id) { %>
+                                        <div class="service-card-dropdown-content-container">
+                                            <h3><a href=<%=serv.treatments ? `/servicios/${serv.id}` : '#'%>><%= serv.name %></a></h3>
+                                            <p>
+                                                <%= serv.description %>
+                                            </p>
+                                        </div>
+                                    <% } %>
+
+                                <% }) %>
+                                
+
                             </div>
                         </div>
                     </div>
+                    <% }) %>
 
-                </div>
-                <div class="service-card">
-                    <div class="service-card-wrapper">
-                        <div class="service-card-visible-part">
-                            <div class="overlay"></div>
-                            <img src="/img/servicios2.jpg" alt="service image" class="service-image">
-                            <div class="toggle-dropdown-icons-container">
-                                <i class='bx bx-plus-circle toggle-dropdown'></i>
-                                <i class='bx bx-minus toggle-dropdown'></i>
-                            </div> 
-                            <p class="service-label">MEDICINA REGENERATIVA</p>
-                        </div>
-                        <div class="service-card-dropdown">
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Armonización facial</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Botox</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Cosmetologia y dermatología</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Tratamiento de papada</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Bioestimuladores</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="service-card">
-                    <div class="service-card-wrapper">
-                        <div class="service-card-visible-part">
-                            <div class="overlay"></div>
-                            <img src="/img/servicios3.jpg" alt="service image" class="service-image">
-                            <div class="toggle-dropdown-icons-container">
-                                <i class='bx bx-plus-circle toggle-dropdown'></i>
-                                <i class='bx bx-minus toggle-dropdown'></i>
-                            </div> 
-                            <p class="service-label">NUTRICIÓN</p>
-                        </div>
-                        <div class="service-card-dropdown">
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Armonización facial</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Botox</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Cosmetologia y dermatología</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Tratamiento de papada</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Bioestimuladores</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="service-card">
-                    <div class="service-card-wrapper">
-                        <div class="service-card-visible-part">
-                            <div class="overlay"></div>
-                            <img src="/img/servicios4.jpg" alt="service image" class="service-image">
-                            <div class="toggle-dropdown-icons-container">
-                                <i class='bx bx-plus-circle toggle-dropdown'></i>
-                                <i class='bx bx-minus toggle-dropdown'></i>
-                            </div> 
-                            <p class="service-label">ESTÉTICA CORPORAL</p>
-                        </div>
-                        <div class="service-card-dropdown">
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Armonización facial</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Botox</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Cosmetologia y dermatología</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Tratamiento de papada</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Bioestimuladores</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="service-card">
-                    <div class="service-card-wrapper">
-                        <div class="service-card-visible-part">
-                            <div class="overlay"></div>
-                            <img src="/img/servicios5.jpg" alt="service image" class="service-image">
-                        
-                            <div class="toggle-dropdown-icons-container">
-                                <i class='bx bx-plus-circle toggle-dropdown'></i>
-                                <i class='bx bx-minus toggle-dropdown'></i>
-                            </div> 
-                            <p class="service-label">ODONTOLOGÍA</p>
-                        </div>
-                        <div class="service-card-dropdown">
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Armonización facial</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Botox</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Cosmetologia y dermatología</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Tratamiento de papada</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                            <div class="service-card-dropdown-content-container">
-                                <h3>Bioestimuladores</h3>
-                                <p>Es una novedosa técnica realizada con acido
-                                    hialuronico que consiste en trabajar sobre áreas.</p>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <!-- <div class="service-card">
-                    <a href="#">
-                        <div class="overlay"></div>
-                        <img src="/img/servicios6.jpg" alt="service image" class="service-image">
-                        <i class='bx bx-plus-circle plus'></i>
-                        <p class="service-label">LASERS & LIGHT</p>
-                    </a>
-                </div>
-                <div class="service-card">
-                    <a href="#">
-                        <div class="overlay"></div>
-                        <img src="/img/servicios7.jpg" alt="service image" class="service-image">
-                        <i class='bx bx-plus-circle plus'></i>
-                        <p class="service-label">MEN'S SURGERY & CARE</p>
-                    </a>
-                </div> -->
             </div>
         </main>
         <%- include('./partials/footer.ejs') %>

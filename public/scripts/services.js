@@ -1,4 +1,5 @@
 import { checkIfIsInScreen } from "./utils.js";
+
 window.addEventListener('load', () => {
     const handleVisibleServiceCard = (card) => {
         card.classList?.add('service-card-visible')
@@ -44,5 +45,8 @@ window.addEventListener('load', () => {
         })
     }
     toggleDropdown()
+
+    const cardsContainer = document.querySelector('.service-cards-container')
+
 
 })

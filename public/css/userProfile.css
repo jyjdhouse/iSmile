@@ -13,7 +13,9 @@
 .options-selected-container{
     position: relative;
     height: 200px;
+    width: 100%;
     border: 1px solid var(--gold-color);
+    margin: 5% 0;
 }
 
 .profile-selected-field-container {
@@ -24,7 +26,32 @@
     left: 0;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s
+    transition: opacity 0.3s;
+    padding: 2%;
+}
+
+.data-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.address-list {
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile-field-container {
+    display: flex;
+}
+
+.profile-field-container p {
+    text-transform: uppercase;
+    margin-right: 3%;
+    font-weight: 700;
 }
 
 .profile-selected-field-container-active {
@@ -32,9 +59,26 @@
     pointer-events: all;
 }
 
+.profile-checkbox-label-container {
+    margin: 3% 0;
+}
+
+.profile-checkbox-label-container:first-child {
+    margin-top: 0;
+}
+
+.profile-checkbox-container {
+    margin-top: 3%;
+}
+
+.profile-checkbox-container label {
+    font-size: 0.875rem;
+}
+
+
+
 .profile-options-container {
     width: 100%;
-    margin-top: 5%;
 }
 
 .profile-options-list {
@@ -50,8 +94,60 @@
     border: 1px solid var(--gold-color);
     padding: 3% 0;
     transition: background-color 0.3s;
+    text-transform: uppercase;
+    font-size: 0.875rem;
 }
 
 .profile-option-item-active {
     background-color: var(--gold-color);
+}
+
+@media (min-width: 768px) {
+
+    .profile-content-wrapper {
+        display: flex;
+        flex-direction: row-reverse;
+        margin: 0 auto;
+        max-width: 1000px;
+    }
+
+    .options-selected-container{   
+        height: 300px;
+        width: 80%;
+    }
+
+    .profile-options-container {
+        width: 20%;
+        margin: 5% 0;
+    }
+
+    .profile-options-list {
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .profile-option-item {
+        width: 95%;
+        padding: 15% 0;
+        font-size: 1rem;
+    }
+
+}
+
+@media (min-width: 1024px) {
+
+
+    .profile-option-item {
+       cursor: pointer;
+    }
+
+    .profile-field-container p {
+      
+        margin-right: 2%;
+   
+    }
+    
+
+
 }
