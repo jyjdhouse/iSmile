@@ -59,7 +59,9 @@
         left: unset;
         top: 51%;
     }
-
+    .search-form-input {
+        height: 2.4rem;
+    }
     .open-search-form-button {
         z-index: 0;
 
