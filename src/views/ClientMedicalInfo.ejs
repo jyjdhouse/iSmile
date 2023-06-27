@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/clientMedicalInfo.css">
+    <link rel="stylesheet" href="/css/spinner.css">
+    <link rel="stylesheet" href="/css/alternativeHeader.css">
+    <link rel="stylesheet" href="/css/lastFormRow.css">
+    <script src="/scripts/clientMedicalInfo.js" type="module"></script>
+    <!-- Para las firmas -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Historia Clinica</title>
+</head>
+
+<body>
+    <%- include('./partials/spinner.ejs') %>
+    <%- include('./partials/alternativeHeader.ejs') %>
+    <form action="/" method="POST" class="form">
+        <div class="form-label-container">
+            <p class="form-label bold">HISTORIA CLINICA</p>
+            <div class="form-border gradient-border"></div>
+        </div>
+        <div class="field name-field clinical-field">
+            <label for="name-lastname">Nombre y Apellido</label>
+            <!-- <p class="patient-option-p bold">Jano Pereira Kent</p> -->
+            <input type="text" id="name-lastname" name="fullName">
+        </div>
+        <div class="field phone-field clinical-field">
+            <label for="phone">Tel. Celular</label>
+            <input type="text" id="phone" name="phone" pattern="[0-9]*">
+            <!-- <p class="patient-option-p bold">11-5881-7312</p> -->
+        </div>
+        <div class="field birth-field clinical-field">
+            <label for="birth-date">Fecha De Nacimiento</label>
+            <input type="date" id="birth-date" name="birthDate">
+            <!-- <p class="patient-option-p bold">12/02/2023</p> -->
+        </div>
+        <div class="field email-field clinical-field">
+            <label for="email">E-Mail</label>
+            <input type="email" id="email" name="email" class="long-input">
+            <!-- <p class="patient-option-p bold">janoo.pereira@gmail.com</p> -->
+        </div>
+        <div class="field gender-field clinical-field">
+            <label for="gender">Sexo</label>
+            <select name="gender" id="gender" class="gender-select">
+                <option value="Femenino">Femenino</option>
+                <option value="Masculino">Masculino</option>
+            </select>
+            <!-- <p class="patient-option-p bold">FEMENINO</p> -->
+
+        </div>
+        
+        <div class="field address-field clinical-field">
+            <label for="address">Direccion</label>
+            <input type="text" id="address" name="address" class="long-input">
+            <!-- <p class="patient-option-p bold">Libertador 2500 (CABA)</p> -->
+        </div>
+        <div class="field treatment-field further-options-field">
+            <label for="previous-treatments">Tratamientos Previos</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="previous-treatments" id="previous-treatments-yes">
+                <label for="">No</label>
+                <input type="radio" value="0" name="previous-treatments">
+            </div>
+            <div class="add-field-container hidden">
+                <i class='bx bx-plus-medical add-treatment'></i>
+                <p class="add-text">Agregar</p>
+            </div>
+            <div class="hidden further-info">
+                <div class="further-info-field-container">
+                    <div class="field">
+                        <label for="previous-treatments-which-1">Cual?</label>
+                        <input type="text" class="previous-treatments-which">
+                        <!-- <p class="patient-option-p bold">Cirugia facial</p> -->
+                    </div>
+                    <div class="field">
+                        <label for="previous-treatments-doctor-1">Realizado por</label>
+                        <input type="text" class="previous-treatments-doctor">
+                        <!-- <p class="patient-option-p bold">Dr. Juan Rosas</p> -->
+                    </div>
+                    <div class="field">
+                        <label for="previous-treatments-date-1">Fecha</label>
+                        <input type="date" class="previous-treatments-date">
+                        <!-- <p class="patient-option-p bold">12/02/2023</p> -->
+                    </div>
+                    <i class='bx bx-trash-alt remove-field-container-btn'></i>
+                </div>
+            </div>
+        </div>
+        <!-- TODO: La clase close va si esta cerrado previousTreatment  -->
+        <div class="form-label-container form-label-container-close" id="unique-label-container">
+            <p class="form-label bold">HISTORIA MEDICA</p>
+            <div class="form-border gradient-border"></div>
+        </div>
+        <p class="form-sublabel bold">PRECAUCIONES</p>
+        <div class="field pregnant-field women-only">
+            <label for="pregnant-posibility">¿Existe la posibilidad de que estuviese embarazada?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="pregnant-posibility">
+                <label for="">No</label>
+                <input type="radio" value="0" name="pregnant-posibility">
+            </div>
+            <label for="">¿Está amamantando actualmente?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="milk">
+                <label for="">No</label>
+                <input type="radio" value="0" name="milk">
+            </div>
+        </div>
+        <div class="field face-treatments-field further-options-field">
+            <label for="">¿Recibió recientemente algún tratamiento de rellenos faciales en su cara?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="face-treatments" id="face-treatments-yes">
+                <label for="">No</label>
+                <input type="radio" value="0" name="face-treatments">
+            </div>
+            <div class="face-treatments-further-info hidden further-info">
+                <p class="face-treatments-further-info-title bold">Seleccione la Zona</p>
+                <div class="checkbox-container">
+                    <input type="checkbox" name="face-treatment-options" value="labios">
+                    <label> Labios </label>
+                    <input type="checkbox" name="face-treatment-options" value="mandibula">
+                    <label> Mandíbula </label>
+                    <input type="checkbox" name="face-treatment-options" value="pomulos">
+                    <label> Pómulos </label>
+                    <input type="checkbox" name="face-treatment-options" value="ojeras">
+                    <label> Ojeras </label>
+                    <input type="checkbox" name="face-treatment-options" value="rinomodelacion">
+                    <label> Rinomodelación </label>
+                    <input type="checkbox" name="face-treatment-options" value="menton">
+                    <label> Mentón </label>
+                </div>
+
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Tiene implantes permanentes en el lugar a tratar?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="permanent-implants">
+                <label for="">No</label>
+                <input type="radio" value="0" name="permanent-implants">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Recibió algún tratamiento facial de laser o peeling en las ultimas 6 semanas?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="laser-peeling-treatment">
+                <label for="">No</label>
+                <input type="radio" value="0" name="laser-peeling-treatment">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Sufre de herpes simple, acné o psoriasis?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="herpes">
+                <label for="">No</label>
+                <input type="radio" value="0" name="herpes">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Padece o padeció algún tipo de cáncer de piel?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="cancer">
+                <label for="">No</label>
+                <input type="radio" value="0" name="cancer">
+            </div>
+        </div>
+        <div class="field text-area-field">
+            <label for="treatment-expectations">¿Cuales son sus expectativas con este tratamiento?</label>
+            <textarea name="treatment-expectations" id="treatment-expectations"
+                class="treatment-expectations"></textarea>
+        </div>
+        <!-- TODO: Esto va si no hay nada abierto  -->
+        <p class="form-sublabel form-sublabel-nothing-open bold" id="unique-form-sublabel">CONSIDERACIONES</p>
+
+        <div class="field">
+            <label for="">¿Ha experimentado previamente algún tipo de hipersensibilidad al Ácido Hialurónico? </label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="acid-hypersensitivity">
+                <label for="">No</label>
+                <input type="radio" value="0" name="acid-hypersensitivity">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Ha experimentado previamente algún tipo de hipersensibilidad a la Toxina Botulínica? </label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="toxin-hypersensitivity">
+                <label for="">No</label>
+                <input type="radio" value="0" name="toxin-hypersensitivity">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Ha experimentado alguna vez reacciones alérgicas a anestésicos locales (lidocaína)?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="local-anesthetics-alergic">
+                <label for="">No</label>
+                <input type="radio" value="0" name="local-anesthetics-alergic">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Recibió tratamiento con “Roacutan” en los últimos 12 meses?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="rocutan">
+                <label for="">No</label>
+                <input type="radio" value="0" name="rocutan">
+            </div>
+        </div>
+        <div class="field specify-field first-row-specify">
+            <label for="">¿Sufre de algún tipo de alergia?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="alergic">
+                <label for="">No</label>
+                <input type="radio" value="0" name="alergic">
+            </div>
+            <div class="alergic-further-info hidden further-info">
+                <label for="alergic-info">Por favor especificar</label>
+                <input type="text" name="alergic-info" id="alergic-info">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Tuvo alguna vez reacciones severas como shock anafiláctico?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="shock">
+                <label for="">No</label>
+                <input type="radio" value="0" name="shock">
+            </div>
+        </div>
+        <div class="field specify-field second-row-specify">
+            <label for="">¿Actualmente está Ud. bajo tratamiento con anticoagulantes o corticoides?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="corticoides">
+                <label for="">No</label>
+                <input type="radio" value="0" name="corticoides">
+            </div>
+            <div class="corticoides-further-info hidden further-info">
+                <label for="corticoides-info">Por favor especificar</label>
+                <input type="text" name="corticoides-info" id="corticoides-info">
+            </div>
+        </div>
+        <div class="field specify-field second-row-specify">
+            <label for="">¿Actualmente está tomando algún otro medicamento?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="other-drug">
+                <label for="">No</label>
+                <input type="radio" value="0" name="other-drug">
+            </div>
+            <div class="other-drug-further-info hidden further-info">
+                <label for="other-drug-info">Por favor especificar</label>
+                <input type="text" name="other-drug-info" id="other-drug-info">
+            </div>
+        </div>
+        <div class="field specify-field third-row-specify">
+            <label for="">¿Padece Ud. alguna enfermedad como: angina de pecho, epilepsia, diabetes, HIV, hepatitis,
+                enfermedades autoinmunes
+                (lupus, artitis reumatoidea), depresión, estrés?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="disease">
+                <label for="">No</label>
+                <input type="radio" value="0" name="disease">
+            </div>
+            <div class="disease-further-info hidden further-info">
+                <label for="disease-info">Por favor especificar</label>
+                <input type="text" name="disease-info" id="disease-info">
+            </div>
+        </div>
+        <div class="field specify-field third-row-specify">
+            <label for="">¿Tuvo Ud. recientemente alguna cirugía mayor?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="surgery">
+                <label for="">No</label>
+                <input type="radio" value="0" name="surgery">
+            </div>
+            <div class="surgery-further-info hidden further-info">
+                <label for="surgery-info">Por favor especificar</label>
+                <input type="text" name="surgery-info" id="surgery-info">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Actualmente se encuentra Ud. en tratamiento odontológico?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="dental">
+                <label for="">No</label>
+                <input type="radio" value="0" name="dental">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Sufre de cicatrices hipertróficas o queloides?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="scars">
+                <label for="">No</label>
+                <input type="radio" value="0" name="scars">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Padece Ud. desmayos, lipotimias o bajas de presión?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="fainting">
+                <label for="">No</label>
+                <input type="radio" value="0" name="fainting">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Tiene Ud. fobia a las agujas?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="phobia">
+                <label for="">No</label>
+                <input type="radio" value="0" name="phobia">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Tiene Ud. propensión a los hematomas?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="hematoma">
+                <label for="">No</label>
+                <input type="radio" value="0" name="hematoma">
+            </div>
+        </div>
+        <div class="field">
+            <label for="">¿Recientemente se expuso al sol o camas solares?</label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="sun">
+                <label for="">No</label>
+                <input type="radio" value="0" name="sun">
+            </div>
+        </div>
+        <div class="consent-field field">
+            <label for="">Consiento la publicación de fotografías en las que yo aparezca en redes sociales pertenecientes a I Smile
+                con el fin de explicar el tratamiento/ los tratamientos mostrando resultados.
+            </label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="consent">
+                <label for="">No</label>
+                <input type="radio" value="0" name="consent">
+            </div>
+        </div>
+        <div class="consent-field field">
+            <label for="">Confirmo que he entendido completamente el contenido de este formulario 
+                y certifico que todos los datos proporcionados en este son verdaderos.
+            </label>
+            <div class="input-radio-container">
+                <label for="">Si</label>
+                <input type="radio" value="1" name="understood">
+                <label for="">No</label>
+                <input type="radio" value="0" name="understood">
+            </div>
+        </div>
+        <%- include('./partials/lastFormRow.ejs') %>
+        
+        <div class="button-container">
+            <button type="submit" class="send-form-button">Enviar Formulario</button>
+        </div>
+    </form>
+</body>
+
+</html>

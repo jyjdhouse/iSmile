@@ -190,6 +190,61 @@ window.addEventListener('load', () => {
                 overlay.classList.remove('instagram-overlay-active');
             });
         });
+
+        // Logica para editar contendio
+        const editBtns = document.querySelectorAll('.change-image-btn');
+        let previousSrc;
+        editBtns.forEach(btn => {
+            
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const card = btn.closest('.instagram-card');
+                const cancelLabel = card.querySelector('.cancel-file-action');
+                const selectFileLabel = card.querySelector('.instagram-input-file-label');
+                const confirmFileBtn = card.querySelector('.confirm-instagram-file-btn');
+                cancelLabel.classList.remove('hidden');
+                selectFileLabel.classList.remove('hidden');
+                confirmFileBtn.classList.remove('hidden');
+                // Pongo el previousSrc
+                previousSrc = card.querySelector('.instagram-image').getAttribute('src');
+            });
+        });
+        // Cuando tocan el boton de cancelar
+        const cancelBtns = document.querySelectorAll('.cancel-file-action');
+        cancelBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const card = btn.closest('.instagram-card');
+                const cancelLabel = card.querySelector('.cancel-file-action');
+                const selectFileLabel = card.querySelector('.instagram-input-file-label');
+                const confirmFileBtn = card.querySelector('.confirm-instagram-file-btn');
+                cancelLabel.classList.add('hidden');
+                selectFileLabel.classList.add('hidden');
+                confirmFileBtn.classList.add('hidden');
+                // Vuelvo la imagen a la foto que tenia
+                card.querySelector('.instagram-image').setAttribute('src', previousSrc);;
+            });
+        });
+
+        // Para mostrar la foto que subieron
+        const hiddenInputsFile = document.querySelectorAll('.instagram-file-input');
+        hiddenInputsFile.forEach(input => {
+            input.addEventListener('change', (e) => { //Subieron un archivo para cambiar la foto
+                // Agarro esa foto
+                const card = input.closest('.instagram-card');
+                console.log(card);
+                const image = card.querySelector('.instagram-image');
+                var file = e.target.files[0];
+                var reader = new FileReader();
+                previousSrc = image.getAttribute('src');
+                reader.onload = function (e) {
+                    image.setAttribute('src', e.target.result);
+                }
+
+                reader.readAsDataURL(file);
+            })
+        });
+
     } else { //Mobile
         function toggleActiveImage() {
             const cards = document.querySelectorAll('.instagram-card');

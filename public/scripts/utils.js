@@ -318,7 +318,7 @@ export function disableAllPopups(exception) {
     })
 }
 
-export function checkIfIsInScreen(percentege, cb,arg) {//Se fija si aparece en pantalla para poder hace algo
+export function checkIfIsInScreen(percentege, cb, arg) {//Se fija si aparece en pantalla para poder hace algo
     return new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.intersectionRatio >= percentege) {
@@ -329,6 +329,27 @@ export function checkIfIsInScreen(percentege, cb,arg) {//Se fija si aparece en p
     }, { threshold: percentege });
 }
 
-export function isInDesktop () {
+export function isInDesktop() {
     return window.innerWidth >= 1024 // Mobile & Tablet
+}
+
+export function dateFormater(date) {
+    // Dividir la fecha en año, mes y día
+    var parts = date.split('-');
+    var year = parts[0];
+    var month = parts[1];
+    var day = parts[2];
+    // Devolver la fecha formateada
+    return day + '-' + month + '-' + year;
+}
+
+export function getTodaysDate() {
+    // Obtener la fecha actual
+    const currentDate = new Date();
+
+    // Obtener el año, mes y día en formato YYYY-MM-DD
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }

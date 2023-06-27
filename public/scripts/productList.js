@@ -8,13 +8,10 @@ window.addEventListener('load', () => {
     let lastCard;
     // Logica para pasar entre foto y foto/video
     const updateProductCardsClasses = (card) => {
-        console.log(`Toy aca`);
         const images = Array.from(card.querySelectorAll('.product-image-test'));
         // Si el actual index es > a la cantidad de imagenes es que vuelve a arrancar
         if (actualIndex >= images.length) actualIndex = 0;
 
-        // if (images.length == 2) { //Si son solo 2 fotos...        
-        // }
         images.forEach((image, index) => {
             image.classList.remove('product-image-test-active', 'product-image-test-next-slide', 'product-image-test-prev-slide');
             if (index === actualIndex) {

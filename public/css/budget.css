@@ -1,0 +1,123 @@
+/* Variables */
+@import 'variables.css';
+
+/* MEDIDAS IPAD 9na Gen width: 1080px aprox*/
+@page {
+    size: A4;
+    /* Puedes utilizar otros valores como "letter", "legal", "A3", etc. */
+    /* Opciones adicionales para controlar los márgenes de la página */
+}
+
+.main {
+    width: 100%;
+    padding: 0 10vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.client-details{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+.field{
+    display: flex;
+    column-gap: 15px;
+    width: 50%;
+    align-items: center;
+}
+.date-field{
+    justify-content: flex-end;
+}
+#client-name{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid var(--light-violet-color);
+}
+#date{
+    border: 1px solid var(--light-violet-color);
+    padding: 5px;
+    border-radius: 10px;
+}
+.add-budget-product-btn{
+    display: block;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    margin: 30px 0;
+    border: 1px solid var(--gold-color);
+}
+.total-prices-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid var(--gold-color);
+    border-bottom: 1px solid var(--gold-color);
+    margin-top: 50px;
+    padding: 10px 0;
+}
+.budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0 20px;
+}
+
+td,
+th {
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px dashed var(--gold-color);
+    padding: 10px;
+}
+
+.row {
+    position: relative;
+    width: 100%;
+    padding-bottom: 20px;
+
+}
+.remove-row-column{
+    border: none;
+}
+.relative-container{
+    position: relative;
+}
+.subtract-quantity-btn,
+.add-quantity-btn{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.subtract-quantity-btn{
+    left: 6%;
+    font-size: 1.3rem;
+}
+.add-quantity-btn{
+    right: 8%;
+}
+.quantity-input{
+    width: 35px;
+    text-align: center;
+    border: 1px solid  var(--gold-color);
+    border-radius: 10px;
+    padding: 10px 0;
+}
+
+.button-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+}
+.generate-pdf-btn{
+    background-color: #fff;
+    border: 1px solid var(--gold-color);
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+

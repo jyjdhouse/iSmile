@@ -214,7 +214,12 @@ video::-webkit-media-controls-time-remaining-display {
 .product-gallery-button {
     display: none;
     bottom: 5%;
+}
 
+.product-gallery-button a {
+    display: block;
+    width: 100%;
+    padding: 1rem 5rem;
 }
 
 .product-gallery-button.individual-button {
@@ -374,7 +379,12 @@ video::-webkit-media-controls-time-remaining-display {
 
 .blog-section-button {
     bottom: 3%;
-    padding: .5rem 3rem;
+}
+
+.blog-section-button a {
+    padding: 0.8rem 3rem;
+    display: block;
+    width: 100%;
 }
 
 /* ABOUT-US */
@@ -603,11 +613,13 @@ video::-webkit-media-controls-time-remaining-display {
 .instagram-card-active {
     opacity: 1;
 }
-.instagram-card > a{
+
+.instagram-card>a {
     display: block;
     width: 100%;
     height: 100%;
 }
+
 .instagram-overlay {
     background-color: rgba(0, 0, 0, .5);
     position: absolute;
@@ -629,14 +641,14 @@ video::-webkit-media-controls-time-remaining-display {
     width: 100%;
     text-align: center;
     font-size: 1.8rem;
-    color: var(--violet-color);
+    color: var(--light-violet-color);
 }
 
 .instagram-page-name {
     width: 100%;
     text-align: center;
     font-size: 1.2rem;
-    color: var(--violet-color);
+    color: var(--light-violet-color);
 }
 
 .instagram-image {
@@ -646,6 +658,40 @@ video::-webkit-media-controls-time-remaining-display {
     transition: all .3s ease;
 }
 
+/* Para verlo del lado del admin */
+.change-image-btn-container{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.change-image-btn{
+    color: #fff;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 50%; 
+}
+.instagram-input-file-label,
+.cancel-file-action,
+.confirm-instagram-file-btn{
+    cursor: pointer;
+    border: 1px solid #eee;
+    border-radius: 1rem;
+    color: #fff;
+    width: 47%;
+    text-align: center;
+    font-size: .9rem;
+}
+.instagram-input-file-label:hover,
+.cancel-file-action:hover,
+.confirm-instagram-file-btn:hover{
+    background-color: #ccc;
+    color: #777;
+}
+.confirm-instagram-file-btn{
+    width: 80%;
+    margin-top: 1rem;
+    background: none;
+}
 @media (min-width: 1024px) {
 
     /* SLIDESHOW */
@@ -789,8 +835,8 @@ video::-webkit-media-controls-time-remaining-display {
 
     .blog-section-button {
         bottom: 5%;
-        padding: .5rem 3rem;
     }
+
     /* ABOUT US */
     .about-us-information-container {
         align-items: center;

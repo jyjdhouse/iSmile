@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+        <script src="/scripts/userProfile.js" type="module"></script>
+        <link rel="stylesheet" href="/css/userProfile.css">
+        <link rel="stylesheet" href="/css/variables.css">
+        <title>Servicio 1</title>
+</head>
+
+<body>
+
+    <%- include('./partials/header.ejs') %>
+
+        <main class="user-profile-main">
+            <div class="user-profile-title-container">
+                <h1 class="page-title">Perfil</h1>
+            </div>
+
+
+            <div class="profile-content-wrapper">
+                <div class="options-selected-container">
+                    <div class="profile-selected-field-container profile-selected-field-container-active user-data">
+                        <ul class="profile-selected-list data-list">
+                            <li class="profile-field-container">
+                                <p>Nombre:</p> <span><%= user.name %></span>
+                                
+                            </li>
+                            <li class="profile-field-container">
+                                <p>Apellido:</p> <span><%= user.last_name %></span>
+                                
+                            </li>
+                            <li class="profile-field-container">
+                                <p>Email:</p> <span><%= user.email %></span>
+                                
+                            </li>
+                            <li class="profile-field-container">
+                                <p>Celular:</p> <span><%= user.phone? user.phone : 'Sin especificar' %></span>
+                                
+                            </li>
+                            <li class="profile-field-container">
+                                <p>DNI:</p> <span><%= user.dni? user.dni : 'Sin especificar' %></span>
+                                
+                            </li>
+                        </ul>                   
+                    </div>
+                    <div class="profile-selected-field-container user-address">
+                        <ul class="profile-selected-list address-list">
+                            <li class="profile-field-container">
+                                <p>Calle:</p> <span><%= user.street? user.street : 'Sin especificar' %></span>
+                                
+                            </li>
+                            <li class="profile-field-container">
+                                <p>Ciudad:</p> <span><%= user.city? user.city : 'Sin especificar' %></span>
+                                
+                            </li>
+                            <li class="profile-field-container">
+                                <p>Provincia:</p> <span><%= user.province? user.province : 'Sin especificar' %></span>
+                                
+                            </li>
+                            <li class="profile-field-container">
+                                <p>CP:</p> <span><%= user.zip_code? user.zip_code : 'Sin especificar' %></span>
+                                
+                            </li>
+                        </ul>
+                        
+                    </div>
+                    <div class="profile-selected-field-container user-preferences">
+                        <div class="profile-checkbox-label-container">
+                            <p>Quiero recibir notificaciones por correo electrónico</p>
+                            <div class="profile-checkbox-container">
+                                <label for="true">SI</label>
+                                <input type="checkbox" name="true">
+                                <label for="false">NO</label>
+                                <input type="checkbox" name="false">
+                            </div>
+                        </div>
+                        <div class="profile-checkbox-label-container">
+                            <p>Quiero recibir notificaciones por WhatsApp.</p>
+                            <div class="profile-checkbox-container">
+                                <label for="true">SI</label>
+                                <input type="checkbox" name="true">
+                                <label for="false">NO</label>
+                                <input type="checkbox" name="false">
+                            </div>
+                        </div>
+                        <div class="profile-checkbox-label-container">
+                            <p>Quiero recibir el newsletter por correo electrónico.</p>
+                            <div class="profile-checkbox-container">
+                                <label for="true">SI</label>
+                                <input type="checkbox" name="true">
+                                <label for="false">NO</label>
+                                <input type="checkbox" name="false">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-options-container">
+                    <ul class="profile-options-list">
+                        <li class="profile-option-item profile-option-item-active">Mis datos</li>
+                        <li class="profile-option-item">Dirección</li>
+                        <li class="profile-option-item">Preferencias</li>
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+
+        <%- include('./partials/footer.ejs') %>
+
+</body>
+
+</html>

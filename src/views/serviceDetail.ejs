@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+        <script src="/scripts/serviceDetail.js" type="module"></script>
+        <link rel="stylesheet" href="/css/serviceDetail.css">
+        <link rel="stylesheet" href="/css/variables.css">
+        <title>Servicio 1</title>
+</head>
+
+<body>
+
+    <!--   include('./partials/header.ejs')  -->
+
+    <main class="service-detail-main">
+        <div class="service-detail-content-container">
+            <div class="service-detail-title-container">
+                <h1 class="service-detail-title page-title">Armonización facial</h1>
+            </div>
+            <div class="service-detail-cards-container">
+                <% service.forEach(serv => { %>
+                    <article class="service-detail-card">
+                        <div class="close-card-btn-container"> <i class='bx bx-minus close-card'></i></div>
+                        <div class="service-card-content-wrapper">
+                            <div class="service-card-first-column">
+                                <div class="service-card-img-container">
+                                    <img src="/img/servicios6.jpg" alt="" class="service-card-img">
+                                </div>
+                                <div class="service-card-first-column-dropdown-container">
+                                    <div class="first-column-item-info">
+                                        <p>Tiempo de aplicación</p>
+                                        <p>30 min</p>
+                                    </div>
+                                    <div class="first-column-item-info">
+                                        <p>Tiempo de duración</p>
+                                        <p>6 meses</p>
+                                    </div>                   
+                                </div>
+                            </div>
+    
+                            <div class="service-card-info-container">
+                                <h2><%= serv.name %></h2>
+                                <div class="service-info-p-container">
+                                    <p class="service-info-p"><%= serv.description %></p>
+                                </div>
+                                <div class="see-more-container"><p class="see-more-action">Ver más</p></div>
+                            </div>
+                        </div>
+    
+                    </article>
+                <% }) %>
+                
+           
+            </div>
+        </div>
+    </main>
+    <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

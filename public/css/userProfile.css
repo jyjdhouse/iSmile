@@ -1,0 +1,153 @@
+@import 'variables.css';
+
+.user-profile-main {
+    margin-top: 12vh;
+    height: 50vh;
+    padding: 0 3%;
+}
+
+.user-profile-title-container h1 {
+    font-size: 1.2rem;
+}
+
+.options-selected-container{
+    position: relative;
+    height: 200px;
+    width: 100%;
+    border: 1px solid var(--gold-color);
+    margin: 5% 0;
+}
+
+.profile-selected-field-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    padding: 2%;
+}
+
+.data-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.address-list {
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile-field-container {
+    display: flex;
+}
+
+.profile-field-container p {
+    text-transform: uppercase;
+    margin-right: 3%;
+    font-weight: 700;
+}
+
+.profile-selected-field-container-active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.profile-checkbox-label-container {
+    margin: 3% 0;
+}
+
+.profile-checkbox-label-container:first-child {
+    margin-top: 0;
+}
+
+.profile-checkbox-container {
+    margin-top: 3%;
+}
+
+.profile-checkbox-container label {
+    font-size: 0.875rem;
+}
+
+
+
+.profile-options-container {
+    width: 100%;
+}
+
+.profile-options-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.profile-option-item {
+    text-align: center;
+    width: 30%;
+    border: 1px solid var(--gold-color);
+    padding: 3% 0;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
+
+.profile-option-item-active {
+    background-color: var(--gold-color);
+}
+
+@media (min-width: 768px) {
+
+    .profile-content-wrapper {
+        display: flex;
+        flex-direction: row-reverse;
+        margin: 0 auto;
+        max-width: 1000px;
+    }
+
+    .options-selected-container{   
+        height: 300px;
+        width: 80%;
+    }
+
+    .profile-options-container {
+        width: 20%;
+        margin: 5% 0;
+    }
+
+    .profile-options-list {
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .profile-option-item {
+        width: 95%;
+        padding: 15% 0;
+        font-size: 1rem;
+    }
+
+}
+
+@media (min-width: 1024px) {
+
+
+    .profile-option-item {
+       cursor: pointer;
+    }
+
+    .profile-field-container p {
+      
+        margin-right: 2%;
+   
+    }
+    
+
+
+}

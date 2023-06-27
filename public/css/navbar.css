@@ -29,7 +29,7 @@
     background-color: white;
     transition: all .35s ease;
     width: 100%;
-    margin-top: -100%;
+    margin-top: -120%;
     border-bottom: 2px solid var(--gold-color);
     /* overflow: hidden; */
 }
@@ -72,7 +72,6 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    
 }
 
 .navbar-list-item {
@@ -97,7 +96,10 @@
 }
 
 .item-dropdown-visible-part {
+    display: flex;
+    align-items: center;
     cursor: pointer;
+    width: 30%;
 }
 
 .dropdown-items-container {
@@ -113,7 +115,7 @@
 }
 .bx-chevron-right{
     transition: all .4s ease;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--gold-color);
 }
 .item-dropdown-active .bx-chevron-right {
