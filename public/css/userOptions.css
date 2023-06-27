@@ -5,8 +5,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 30vw;
-    height: 40vh;
+    width: 75vw;
+    height: 43vh;
     background-color: #fff;
     border: 1px solid var(--gold-color);
     border-radius: 1rem;
@@ -24,7 +24,7 @@
 }
 
 .close-user-options-popup,
-.back-user-option-btn{
+.back-user-option-btn {
     position: absolute;
     top: 2%;
     right: 2%;
@@ -33,16 +33,19 @@
     z-index: 1;
     width: fit-content;
 }
-.back-user-option-btn{
+
+.back-user-option-btn {
     left: 2%;
     scale: 0;
     opacity: 0;
     transition: all .3s ease;
 }
-.back-user-option-btn-active{
+
+.back-user-option-btn-active {
     scale: 1;
     opacity: 1;
 }
+
 /* Clase para que se trasladen ambos */
 .translate-option-left {
     transform: translateX(-100%);
@@ -130,10 +133,12 @@
     justify-content: center;
     align-content: center;
 }
-.pass-field{
+
+.pass-field {
     position: relative;
 }
-.pass-field .fa-eye{
+
+.pass-field .fa-eye {
     position: absolute;
     right: 3%;
     top: 57%;
@@ -185,4 +190,11 @@
 .regist-popup .error-msg {
     width: 100%;
     text-align: center;
+}
+
+@media (min-width:1024px) {
+    .user-options-popup {
+        width: 30vw;
+        height: 40vh;
+    }
 }
