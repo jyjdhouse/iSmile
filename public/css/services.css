@@ -26,16 +26,20 @@
 .service-card {
     width: 80%;
     position: relative;
-    max-height: 200px;
     transition: all .6s;
     display: flex;
     align-items: center;
+    overflow: hidden;
     padding: 10% 0;
+}
+
+.service-card-inactive {
+    max-height: 20vh;
 }
 
 .service-card-active {
     width: 90%;
-    max-height: fit-content;
+    max-height: 1500px;
     padding: 5% 0;
 }
 
@@ -59,6 +63,7 @@
 .service-card:nth-child(3) {
     animation-delay: 1s;
 }
+
 .service-card-visible {
     /* Aplica la animación */
     animation: serviceTranslate 1.3s ease-in-out forwards;
@@ -133,7 +138,7 @@
     overflow: hidden;
     transition: max-height 0.5s, opacity 0.6s;
     width: 100%;
-   /*  display: flex;
+    /*  display: flex;
     flex-wrap: wrap;
     justify-content: space-between; */
 }
@@ -141,7 +146,7 @@
 .service-card-dropdown-active {
     opacity: 1;
     max-height: fit-content;
-    
+
 }
 
 .service-card-dropdown-content-container {
@@ -157,7 +162,8 @@
     margin-bottom: 2%;
 }
 
-.service-card-dropdown-content-container a, a:visited {
+.service-card-dropdown-content-container a,
+a:visited {
     color: #fff;
 }
 
@@ -167,18 +173,22 @@
 
 
 
-@media(min-width:768px){
+@media(min-width:768px) {
     .services-title {
         font-size: 2rem;
     }
-    .service-card{
-        max-height: 40vh;
-    }
 
     .service-card-active {
-        max-height: 80vh;
+        max-height: 2000px;
     }
+
+
+    .service-card-inactive {
+        max-height: 35vh;
+    }
+
     
+
 
     .service-card:nth-child(3) {
         animation-delay: initial;
@@ -191,7 +201,7 @@
     .service-card-visible-part {
         width: 70%;
     }
-    
+
     .service-label {
         font-size: 1.2rem;
     }
@@ -199,7 +209,7 @@
     .service-card-dropdown {
         display: flex;
         flex-direction: column;
-       justify-content: center;
+        justify-content: center;
     }
 
     .service-card-dropdown-content-container h3 {
@@ -207,7 +217,7 @@
         font-size: 1rem;
         text-decoration: underline;
     }
-    
+
     .service-card-dropdown-content-container p {
         font-size: 0.775rem;
     }
@@ -215,18 +225,12 @@
 }
 
 
-@media(min-width:1024px){
+@media(min-width:1024px) {
     .services-title {
         font-size: 2rem;
     }
-  /*   .service-card{
-        height: 50vh;
-    }
- */
-    .service-card-active {
-        max-height: fit-content;
-    }
-    
+
+
 
     .service-card:nth-child(3) {
         animation-delay: initial;
@@ -234,11 +238,11 @@
 
     .service-card-visible:hover {
         opacity: 1;
-       /*  filter: contrast(120%); */
-        
+        /*  filter: contrast(120%); */
+
         cursor: pointer;
     }
-    
+
 
 }
 

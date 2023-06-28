@@ -9,6 +9,9 @@ module.exports = [
         street: 'Calle 123',
         zip_code: '1856',
         city: 'Quilmes',
-        province: 'Buenos Aires'
+        province: 'Buenos Aires',
+        email_notifications: 1,
+        wpp_notifications: 0,
+        email_newsletter: 0
     }
 ]

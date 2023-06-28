@@ -16,7 +16,7 @@ const controller = {
     },
     services: async(req,res)=>{
         try {
-            console.log(specialties)
+            
             return res.render('services', {services: specialties, specialties_services})
         } catch (error) {
             console.log(`Falle en mainController.services: ${error}`);

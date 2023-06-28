@@ -18,95 +18,367 @@
                 <h1 class="page-title">Perfil</h1>
             </div>
 
+            <div class="mobile-profile-content-wrapper">
+                <form action="/user/<%=user.id%>/update">
+                    <div class="options-selected-container">
+                        <div class="profile-selected-field-container profile-selected-field-container-active user-data">
 
-            <div class="profile-content-wrapper">
-                <div class="options-selected-container">
-                    <div class="profile-selected-field-container profile-selected-field-container-active user-data">
-                        <ul class="profile-selected-list data-list">
-                            <li class="profile-field-container">
-                                <p>Nombre:</p> <span><%= user.name %></span>
-                                
-                            </li>
-                            <li class="profile-field-container">
-                                <p>Apellido:</p> <span><%= user.last_name %></span>
-                                
-                            </li>
-                            <li class="profile-field-container">
-                                <p>Email:</p> <span><%= user.email %></span>
-                                
-                            </li>
-                            <li class="profile-field-container">
-                                <p>Celular:</p> <span><%= user.phone? user.phone : 'Sin especificar' %></span>
-                                
-                            </li>
-                            <li class="profile-field-container">
-                                <p>DNI:</p> <span><%= user.dni? user.dni : 'Sin especificar' %></span>
-                                
-                            </li>
-                        </ul>                   
+                            <ul class="profile-selected-list data-list">
+                                <li class="profile-field-container">
+                                    <p>Nombre:</p> <span>
+                                        <%= user.name %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="name" value="<%=user.name%>">
+                                    </div>
+                                </li>
+                                <li class="profile-field-container">
+                                    <p>Apellido:</p> <span>
+                                        <%= user.last_name %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="last_name" value="<%=user.last_name%>">
+                                    </div>
+                                </li>
+                                <li class="profile-field-container">
+                                    <p>Email:</p> <span>
+                                        <%= user.email %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="email" value="<%=user.email%>">
+                                    </div>
+                                </li>
+                                <li class="profile-field-container">
+                                    <p>Celular:</p> <span>
+                                        <%= user.phone? user.phone : 'Sin especificar' %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="phone" value="<%=user.phone%>">
+                                    </div>
+                                </li>
+                                <li class="profile-field-container">
+                                    <p>DNI:</p> <span>
+                                        <%= user.dni? user.dni : 'Sin especificar' %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="dni" value="<%=user.dni%>">
+                                    </div>
+                                </li>
+
+                            </ul>
+
+
+
+
+                        </div>
+
+                        <div class="profile-selected-field-container user-address">
+                            <div class="profile-selected-content-wrapper">
+                                <ul class="profile-selected-list address-list">
+                                    <li class="profile-field-container">
+                                        <p>Calle:</p> <span>
+                                            <%= user.street? user.street : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+
+                                            <input type="text" name="street" value="<%=user.street%>">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Ciudad:</p> <span>
+                                            <%= user.city? user.city : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+
+                                            <input type="text" name="city" value="<%=user.city%>">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Provincia:</p> <span>
+                                            <%= user.province? user.province : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+
+                                            <input type="text" name="province" value="<%=user.province%>">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>CP:</p> <span>
+                                            <%= user.zip_code? user.zip_code : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+
+                                            <input type="text" name="zip_code" value="<%=user.zip_code%>">
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="profile-selected-field-container user-preferences">
+                            <div class="profile-radio-p-containerr">
+                                <p>Quiero recibir notificaciones por correo electrónico</p>
+                                <div class="profile-radio-container">
+
+                                    <div class="radio-label-container">
+                                        <label for="email_notifications_true">SI</label>
+                                        <input id="email_notifications_true" type="radio" name="email_notifications"
+                                            value="1" <%=user.email_notifications==1? 'checked' : '' %>>
+                                    </div>
+                                    <div class="radio-label-container">
+
+                                        <label for="email_notifications_false">NO</label>
+                                        <input id="email_notifications_false" type="radio" name="email_notifications"
+                                            value="0" <%=user.email_notifications==0? 'checked' : '' %>>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-radio-p-container">
+                                <p>Quiero recibir notificaciones por WhatsApp.</p>
+                                <div class="profile-radio-container">
+                                    <div class="radio-label-container">
+                                        <label for="wpp_notifications_true">SI</label>
+                                        <input id="wpp_notifications_true" type="radio" name="wpp_notifications"
+                                            value="1" <%=user.wpp_notifications==1? 'checked' : '' %>>
+                                    </div>
+                                    <div class="radio-label-container">
+
+                                        <label for="wpp_notifications_false">NO</label>
+                                        <input id="wpp_notifications_false" type="radio" name="wpp_notifications"
+                                            value="0" <%=user.wpp_notifications==0? 'checked' : '' %>>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-radio-p-container">
+                                <p>Quiero recibir el newsletter por correo electrónico.</p>
+                                <div class="profile-radio-container">
+                                    <div class="radio-label-container">
+                                        <label for="email_newsletter_true">SI</label>
+                                        <input id="email_newsletter_true" type="radio" name="email_newsletter" value="1"
+                                            <%=user.email_newsletter==1? 'checked' : '' %>>
+                                    </div>
+                                    <div class="radio-label-container">
+
+                                        <label for="email_newsletter_false">NO</label>
+                                        <input id="email_newsletter_false" type="radio" name="email_newsletter"
+                                            value="0" <%=user.email_newsletter==0? 'checked' : '' %>>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
-                    <div class="profile-selected-field-container user-address">
-                        <ul class="profile-selected-list address-list">
-                            <li class="profile-field-container">
-                                <p>Calle:</p> <span><%= user.street? user.street : 'Sin especificar' %></span>
-                                
-                            </li>
-                            <li class="profile-field-container">
-                                <p>Ciudad:</p> <span><%= user.city? user.city : 'Sin especificar' %></span>
-                                
-                            </li>
-                            <li class="profile-field-container">
-                                <p>Provincia:</p> <span><%= user.province? user.province : 'Sin especificar' %></span>
-                                
-                            </li>
-                            <li class="profile-field-container">
-                                <p>CP:</p> <span><%= user.zip_code? user.zip_code : 'Sin especificar' %></span>
-                                
-                            </li>
+
+                    <div class="profile-options-container">
+                        <ul class="profile-options-list">
+                            <li class="profile-option-item profile-option-item-active">Mis datos</li>
+                            <li class="profile-option-item">Dirección</li>
+                            <li class="profile-option-item">Preferencias</li>
                         </ul>
-                        
                     </div>
-                    <div class="profile-selected-field-container user-preferences">
-                        <div class="profile-checkbox-label-container">
-                            <p>Quiero recibir notificaciones por correo electrónico</p>
-                            <div class="profile-checkbox-container">
-                                <label for="true">SI</label>
-                                <input type="checkbox" name="true">
-                                <label for="false">NO</label>
-                                <input type="checkbox" name="false">
-                            </div>
-                        </div>
-                        <div class="profile-checkbox-label-container">
-                            <p>Quiero recibir notificaciones por WhatsApp.</p>
-                            <div class="profile-checkbox-container">
-                                <label for="true">SI</label>
-                                <input type="checkbox" name="true">
-                                <label for="false">NO</label>
-                                <input type="checkbox" name="false">
-                            </div>
-                        </div>
-                        <div class="profile-checkbox-label-container">
-                            <p>Quiero recibir el newsletter por correo electrónico.</p>
-                            <div class="profile-checkbox-container">
-                                <label for="true">SI</label>
-                                <input type="checkbox" name="true">
-                                <label for="false">NO</label>
-                                <input type="checkbox" name="false">
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="profile-options-container">
-                    <ul class="profile-options-list">
-                        <li class="profile-option-item profile-option-item-active">Mis datos</li>
-                        <li class="profile-option-item">Dirección</li>
-                        <li class="profile-option-item">Preferencias</li>
-                    </ul>
-                </div>
+                    <div class="edit-content-container">
+                        <button class="form-btn edit-content">
+                            Editar datos
+                        </button>
+                        <button type="submit" class="form-btn submit-form form-btn-inactive">
+                            Guardar cambios
+                        </button>
+                    </div>
+                </form>
+
             </div>
 
+            <div class="desktop-profile-content-wrapper">
+
+                <form action="/user/<%=user.id%>/update" class="desktop-form">
+                    <div class="options-container">
+
+                        <div class="profile-data-container user-data">
+                            <div class="profile-data-title">
+                                <h2>Mis datos</h2>
+                            </div>
+                            <ul class="profile-selected-list data-list">
+                                <li class="profile-field-container">
+                                    <p>Nombre:</p> <span>
+                                        <%= user.name %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="name" value="<%=user.name%>">
+                                    </div>
+                                </li>
+                                <li class="profile-field-container">
+                                    <p>Apellido:</p> <span>
+                                        <%= user.last_name %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="last_name" value="<%=user.last_name%>">
+                                    </div>
+                                </li>
+                                <li class="profile-field-container">
+                                    <p>Email:</p> <span>
+                                        <%= user.email %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="email" value="<%=user.email%>">
+                                    </div>
+                                </li>
+                                <li class="profile-field-container">
+                                    <p>Celular:</p> <span>
+                                        <%= user.phone? user.phone : 'Sin especificar' %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="phone" value="<%=user.phone%>">
+                                    </div>
+                                </li>
+                                <li class="profile-field-container">
+                                    <p>DNI:</p> <span>
+                                        <%= user.dni? user.dni : 'Sin especificar' %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="dni" value="<%=user.dni%>">
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="profile-data-container user-address">
+                            <div class="profile-data-title">
+                                <h2>Dirección</h2>
+                            </div>
+                            <ul class="profile-selected-list address-list">
+                                <li class="profile-field-container">
+                                    <p>Calle:</p> <span>
+                                        <%= user.street? user.street : 'Sin especificar' %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="street" value="<%=user.street%>">
+                                    </div>
+                                </li>
+                                <li class="profile-field-container">
+                                    <p>Ciudad:</p> <span>
+                                        <%= user.city? user.city : 'Sin especificar' %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="city" value="<%=user.city%>">
+                                    </div>
+                                </li>
+                                <li class="profile-field-container">
+                                    <p>Provincia:</p> <span>
+                                        <%= user.province? user.province : 'Sin especificar' %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="province" value="<%=user.province%>">
+                                    </div>
+                                </li>
+                                <li class="profile-field-container">
+                                    <p>CP:</p> <span>
+                                        <%= user.zip_code? user.zip_code : 'Sin especificar' %>
+                                    </span>
+                                    <div class="profile-input input-container-inactive">
+
+                                        <input type="text" name="zip_code" value="<%=user.zip_code%>">
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="profile-data-container user-preferences">
+                            <div class="profile-data-title">
+                                <h2>Preferencias</h2>
+                            </div>
+                            <div class="profile-radio-p-containerr">
+                                <p>Quiero recibir notificaciones por correo electrónico</p>
+                                <div class="profile-radio-container">
+    
+                                    <div class="radio-label-container">
+                                        <label for="email_notifications_true">SI</label>
+                                        <input id="email_notifications_true" type="radio" name="email_notifications"
+                                            value="1" <%=user.email_notifications==1? 'checked' : '' %>>
+                                    </div>
+                                    <div class="radio-label-container">
+    
+                                        <label for="email_notifications_false">NO</label>
+                                        <input id="email_notifications_false" type="radio" name="email_notifications"
+                                            value="0" <%=user.email_notifications==0? 'checked' : '' %>>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-radio-p-container">
+                                <p>Quiero recibir notificaciones por WhatsApp.</p>
+                                <div class="profile-radio-container">
+                                    <div class="radio-label-container">
+                                        <label for="wpp_notifications_true">SI</label>
+                                        <input id="wpp_notifications_true" type="radio" name="wpp_notifications" value="1"
+                                            <%=user.wpp_notifications==1? 'checked' : '' %>>
+                                    </div>
+                                    <div class="radio-label-container">
+    
+                                        <label for="wpp_notifications_false">NO</label>
+                                        <input id="wpp_notifications_false" type="radio" name="wpp_notifications" value="0"
+                                            <%=user.wpp_notifications==0? 'checked' : '' %>>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-radio-p-container">
+                                <p>Quiero recibir el newsletter por correo electrónico.</p>
+                                <div class="profile-radio-container">
+                                    <div class="radio-label-container">
+                                        <label for="email_newsletter_true">SI</label>
+                                        <input id="email_newsletter_true" type="radio" name="email_newsletter" value="1"
+                                            <%=user.email_newsletter==1? 'checked' : '' %>>
+                                    </div>
+                                    <div class="radio-label-container">
+    
+                                        <label for="email_newsletter_false">NO</label>
+                                        <input id="email_newsletter_false" type="radio" name="email_newsletter" value="0"
+                                            <%=user.email_newsletter==0? 'checked' : '' %>>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
+
+
+            </div>
+
+            <div class="edit-content-container">
+                <button class="form-btn edit-content">
+                    Editar datos
+                </button>
+                <button type="submit" class="form-btn submit-form form-btn-inactive">
+                    Guardar cambios
+                </button>
+            </div>
+            </form>
+            </div>
+
+
+
+
         </main>
+
 
         <%- include('./partials/footer.ejs') %>
 
