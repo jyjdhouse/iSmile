@@ -31,6 +31,7 @@
     align-items: center;
     overflow: hidden;
     padding: 10% 0;
+    opacity: 0;
 }
 
 .service-card-inactive {
@@ -249,6 +250,7 @@ a:visited {
 @keyframes serviceTranslate {
     0% {
         transform: translateX(-100%);
+        opacity: 0;
         /* Comienza desde la izquierda */
     }
 

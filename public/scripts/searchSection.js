@@ -35,7 +35,11 @@ window.addEventListener('load', async () => {
 
         togglerOpenButton.forEach(btn=>{
             btn.addEventListener('click', () => { // Si abre el searchForm
-                let classesToActivate = [/*blackScreen,*/ searchSection];
+                if(window.innerWidth < 768 && btn.classList.contains('lupa-mobile')){//Resolucion mobile
+                    btn.classList.add('open-search-form-button-active');
+                }
+                  
+                let classesToActivate = [searchSection];
                 activateClass(classesToActivate);
     
                 let classesToDeactivate = [sideNavbar];
@@ -53,6 +57,7 @@ window.addEventListener('load', async () => {
 
             let classesToDeactivate = [searchSection/*, blackScreen, partialProductSection*/];
             deactivateClass(classesToDeactivate);
+            document.querySelector('.lupa-mobile').classList.remove('open-search-form-button-active');
         });
         document.querySelector(`.${blackScreen}`).addEventListener('click', () => { //Si toca la pantalla negra
             input.value = ''; //Borro el contenido del input

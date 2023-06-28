@@ -1,48 +1,77 @@
 <header class="header">
     <nav class="nav-bar-section">
         <div class="nav-start">
-            <i class="fa-solid fa-bars open-menu-button"></i><!--  -->
-            <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-mobile"></i>
+            <i class="fa-solid fa-bars open-menu-button"></i>
+            <% if(0==1){ %> <!-- Si esta loggeado-->
+                <div class="shopping-cart-container shopping-cart-mobile"> <!--En mobile solo que ve asi-->
+                    <a href="#"><i class='bx bx-shopping-bag open-popup-cart-btn'></i></a>
+                    <!-- <i class="fa-solid fa-bag-shopping"></i> -->
+                    <p class="products-quantity">5</p>
+                </div>
+                <% } %>
+                    <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-mobile"></i>
         </div>
 
-        <a href="/" class="brand-name" id="header-name"><img src="/img/logo.png" alt="header-logo" class="header-logo"></a>
+        <a href="/" class="brand-name" id="header-name"><img src="/img/logo.png" alt="header-logo"
+                class="header-logo"></a>
         <div class="nav-end">
-            <div class="shopping-cart-container">
-                <a href="#"><i class='bx bx-shopping-bag open-popup-cart-btn'></i></a>
-                <!-- <i class="fa-solid fa-bag-shopping"></i> -->
-                <p class="products-quantity">5</p>
-            </div>
-            <!-- <% if (1==0) { %> Si esta loggeado... -->
-                <div class="user-logged-container">
-                    <p class="user-logged-name login-menu-btn-desktop">Hola, <%= locals.userLogged.name %>
-                    </p>
-                    <div class="logged-menu-container">
-                        <ul class="logged-menu-list">
-                            <% if (userLogged.user_categories_id==1) { %>
-                                <li class="logged-menu-list-item"><a href="/admin/createProduct">Crear Producto</a></li>
-                                <% } %>
-                                    <li class="logged-menu-list-item"><a href="#">Perfil</a></li>
-                                    <li class="logged-menu-list-item"><a href="/user/logout">Cerrar Sesion</a></li>
-                        </ul>
-                    </div>
-                </div>
 
-                <% }else{ %> <!-- Si no esta loggeado...-->
-                    <i class="fa-regular fa-user login-toggler login-toggler-desktop user-options-trigger-btn"></i>
-                <% } %>
-                <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-desktop"></i>
-                <!-- Contenedor con el input que se abre -->
-                <div class="search-form-container">
-                    <i class="fa-solid fa-x close-search-form-button"></i>
-                    <input type="text" class="search-form-input">
-                    <i class="fa-solid fa-magnifying-glass send-search-form-button"></i>
+            <!-- <% if (0==1) { %> Si esta loggeado... -->
+            <div class="user-logged-container">
+                <p class="user-logged-name login-menu-btn-desktop">Hola,<span
+                        class="bold">INES<!--EJS TAG locals.userLogged.name %>--></span></p>
+                <div class="logged-menu-container">
+                    <ul class="logged-menu-list">
+                        <% if (0==1) { %> <!--SI ES ADMIN userLogged.user_categories_id-->
+                            <li class="logged-menu-list-item expandable-list-item">
+                                <p>Crear <i class='bx bx-chevron-right create-options-toggler'></i> </p>
+                                <ul class="admin-menu-list">
+                                    <li>Consentimiento</li>
+                                    <li>Historia Medica</li>
+                                    <li>Presupuesto</li>
+                                </ul>
+                            </li>
+                            <% } %>
+                                <li class="logged-menu-list-item"><a href="#">Perfil</a></li>
+                                <li class="logged-menu-list-item"><a href="/user/logout">Cerrar Sesion</a></li>
+                    </ul>
                 </div>
+                <i class='bx bx-chevron-down user-logged-menu-toggler'></i>
+            </div>
+
+            <% }else{ %> <!-- Si no esta loggeado...-->
+                <i class="fa-regular fa-user login-toggler login-toggler-desktop user-options-trigger-btn"></i>
+                <% } %>
+                <div class="shopping-cart-container shopping-cart-mobile">
+                    <a href="#"><i class='bx bx-shopping-bag open-popup-cart-btn'></i></a>
+                    <!-- <i class="fa-solid fa-bag-shopping"></i> -->
+                    <p class="products-quantity">5</p>
+                </div>
+                    <% if (0==1) { %>
+                        <div class="shopping-cart-container shopping-cart-desktop">
+                            <a href="#"><i class='bx bx-shopping-bag open-popup-cart-btn'></i></a>
+                            <!-- <i class="fa-solid fa-bag-shopping"></i> -->
+                            <p class="products-quantity">5</p>
+                        </div>
+                        <% } %>
+                            <div class="shopping-cart-container shopping-cart-desktop">
+                                <a href="#"><i class='bx bx-shopping-bag open-popup-cart-btn'></i></a>
+                                <!-- <i class="fa-solid fa-bag-shopping"></i> -->
+                                <p class="products-quantity">5</p>
+                            </div>
+                            <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-desktop"></i>
+                            <!-- Contenedor con el input que se abre -->
+                            <div class="search-form-container">
+                                <i class="fa-solid fa-x close-search-form-button"></i>
+                                <input type="text" class="search-form-input">
+                                <i class="fa-solid fa-magnifying-glass send-search-form-button"></i>
+                            </div>
     </nav>
 
 </header>
 <%- include('./navbar.ejs') %>
-<%- include('./bookConsultation.ejs') %>
-<%- include('./blackScreen.ejs') %>
-<%- include('./shoppingCartPopup.ejs') %>
-<%- include('./searchSection.ejs') %>
-<%- include('./userOptionsPopup.ejs') %>
+    <%- include('./bookConsultation.ejs') %>
+        <%- include('./blackScreen.ejs') %>
+            <%- include('./shoppingCartPopup.ejs') %>
+                <%- include('./searchSection.ejs') %>
+                    <%- include('./userOptionsPopup.ejs') %>

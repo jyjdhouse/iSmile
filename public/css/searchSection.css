@@ -1,37 +1,84 @@
 @import 'variables.css';
 
-.search-form-container{
+.search-form-container {
     position: absolute;
-    top: 24%;
-    right: 2.7%;
     max-width: 0;
     overflow: hidden;
     transition: max-width .5s ease-in-out;
-    
+    left: 10%;
+    top: 11vh;
+    transform: translateY(-50%);
+    transition-delay: .2s;
 }
-.search-form-container-active{
+
+.search-form-container-active {
     max-width: 20rem;
 }
-.close-search-form-button{
+
+.close-search-form-button {
     position: absolute;
-    left: 5%;
+    left: 88%;
     color: #555;
     font-size: .8rem !important;
     top: 50%;
     transform: translateY(-50%);
-    
+
 }
-.search-form-input{
+
+.search-form-input {
     border: 1px solid var(--gold-color);
     height: 2rem;
     border-radius: 1rem;
     background: #eee;
-    padding-left: 15%;
+    padding-left: 18%;
     width: 100%;
 }
-.send-search-form-button{
+
+.send-search-form-button {
     position: absolute;
-    right: 6%;
     top: 50%;
     transform: translateY(-50%);
+    right: 85%;
+    display: none;
 }
+
+.open-search-form-button {
+    position: relative;
+    top: 0;
+    left: 0;
+    transition: all .3s ease;
+    z-index: 1;
+}
+.open-search-form-button-active {
+    top: 5.5vh;
+}
+@media(min-width:1024px) {
+    .search-form-container {
+        transition-delay: 0s;
+        right: 2.4%;
+        left: unset;
+        top: 51%;
+    }
+    .search-form-input {
+        height: 2.4rem;
+    }
+    .open-search-form-button {
+        z-index: 0;
+
+    }
+
+    .send-search-form-button {
+        right: 5%;
+    }
+
+    .send-search-form-button {
+        display: inline-block;
+    }
+
+    .close-search-form-button {
+        left: 7%;
+    }
+}
+
+
+

@@ -1,3 +1,6 @@
+.blog-list-main{
+    overflow: hidden;
+}
 .blog-intro-container {
     width: 100%;
     margin: 15vh 0 5vh 0;
@@ -21,8 +24,9 @@
 
 
 .blog-link{
-    width: 22.5%;
-    height: 30rem; 
+    width: 45%;
+    height: 65vh;
+    overflow: hidden; 
 }
 
 .blog-card {
@@ -35,7 +39,7 @@
 
 .blog-img-container {
     width: 100%;
-    height: 50%;
+    height: 40%;
 }
 
 .blog-image {
@@ -58,23 +62,47 @@
 .blog-author-date{
     color: #aaa;
     height: fit-content;
+    font-size: 13px;
 }
 .blog-card-title{
     width: 100%;
     color: #000;
-    font-size: 1.5rem;
-    /* height: 50%; */
-    /* margin-bottom: ; */
-    /* text-align: center; */
+    font-size: 1.15rem;
 }
 .blog-card-description{
     color: #444;
+    font-size: 12px;
 }
 .blog-card-button{
     width: fit-content;
+    font-size: 12px;
     background: none;
     border: 1px solid var(--gold-color);
-    padding: .8rem 2rem;
+    padding: 0.5rem 1.5rem;
     border-radius: 1rem;
     cursor: pointer;
+    margin: 0 auto;
+}
+.arrow-container{
+    position: absolute;
+    
+}
+@media(min-width:1024px){
+    .blog-img-container {
+        height: 50%;
+    }
+    .blog-link{
+        width: 22.5%;
+        height: 30rem; 
+    }
+    .blog-card-title{
+        font-size: 1.5rem;
+    }
+    .blog-card-description{
+        font-size: 15px;
+    }
+    .blog-card-button{  
+        padding: .8rem 2rem;
+        margin: 0;
+    }
 }

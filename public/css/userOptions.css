@@ -1,12 +1,12 @@
 @import 'variables.css';
 
-.user-options-popup{
+.user-options-popup {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
-    width: 30vw;
-    height: 40vh;
+    transform: translate(-50%, -50%);
+    width: 75vw;
+    height: 43vh;
     background-color: #fff;
     border: 1px solid var(--gold-color);
     border-radius: 1rem;
@@ -17,91 +17,136 @@
     opacity: 0;
     transform: all .3s ease;
 }
-.user-options-popup-active{
+
+.user-options-popup-active {
     scale: 1;
     opacity: 1;
 }
-.close-user-options-popup{
+
+.close-user-options-popup,
+.back-user-option-btn {
     position: absolute;
     top: 2%;
     right: 2%;
     color: var(--gold-color);
     cursor: pointer;
     z-index: 1;
+    width: fit-content;
 }
+
+.back-user-option-btn {
+    left: 2%;
+    scale: 0;
+    opacity: 0;
+    transition: all .3s ease;
+}
+
+.back-user-option-btn-active {
+    scale: 1;
+    opacity: 1;
+}
+
 /* Clase para que se trasladen ambos */
-.translate-option-left{
+.translate-option-left {
     transform: translateX(-100%);
 }
+
 .user-options-first-column,
-.login-popup{
+.login-popup,
+.regist-popup {
     width: 100%;
     height: 100%;
     flex: 0 0 auto;
     transition: all .4s ease;
 }
-.user-options-first-column{
+
+.user-options-first-column {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
-.user-options-header{
+
+.user-options-header {
     width: 100%;
     height: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.user-options-logo-container{
+
+.user-options-logo-container {
     width: fit-content;
     height: 100%;
 }
-.user-options-buttons-container{
+
+.user-options-buttons-container {
     width: 100%;
     height: 70%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-.user-options-button-field{
+
+.user-options-button-field {
     width: 100%;
     height: 45%;
     display: flex;
     justify-content: center;
 }
-.user-options-button-field:first-child{
+
+.user-options-button-field:first-child {
     display: flex;
     align-items: center;
 }
-.user-options-buttons-container label{
+
+.user-options-buttons-container label {
     width: 100%;
     text-align: center;
     margin-bottom: .2rem;
 }
-.user-options-button-field button{
+
+.user-options-button-field button {
     height: fit-content;
     width: 80%;
     background-color: #fff;
     border: 1px solid var(--gold-color);
     border-radius: 1rem;
-    padding: .5rem 0 ;
+    padding: .5rem 0;
     cursor: pointer;
 }
 
-/* Parte del login */
-.login-popup{
+/* Parte del login,regist */
+.login-popup,
+.regist-popup {
     display: flex;
     flex-wrap: wrap;
     align-content: space-evenly;
+    position: absolute;
+    right: -100%;
 }
-.login-field{
+
+.login-field,
+.regist-field {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
 }
-.login-field label{
+
+.pass-field {
+    position: relative;
+}
+
+.pass-field .fa-eye {
+    position: absolute;
+    right: 3%;
+    top: 57%;
+    color: #777;
+}
+
+.login-field label,
+.regist-field label {
     width: 100%;
     height: fit-content;
     text-align: center;
@@ -109,7 +154,9 @@
     font-size: 1.2rem;
     color: var(--violet-color);
 }
-.login-field .input{
+
+.login-field .input,
+.regist-field .input {
     width: 80%;
     height: fit-content;
     border: 1px solid var(--gold-color);
@@ -117,13 +164,17 @@
     outline: none;
     padding: .5rem;
 }
-.login-popup .button-container{
+
+.login-popup .button-container,
+.regist-popup .button-container {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-.login-button{
+
+.login-button,
+.regist-button {
     width: fit-content;
     text-align: center;
     padding: .5rem;
@@ -134,7 +185,16 @@
     border-radius: 1rem;
     cursor: pointer;
 }
-.login-popup .error-msg{
+
+.login-popup .error-msg,
+.regist-popup .error-msg {
     width: 100%;
     text-align: center;
+}
+
+@media (min-width:1024px) {
+    .user-options-popup {
+        width: 30vw;
+        height: 40vh;
+    }
 }
