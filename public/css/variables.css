@@ -1,15 +1,17 @@
-:root{
+:root {
     --light-violet-color: #bc75f2;
     --violet-color: #663399;
     --gold-color: #bba059;
     --red-color: rgb(198, 23, 23);
 }
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     user-select: none;
 }
+
 .overlay {
     position: absolute;
     top: 0;
@@ -18,71 +20,90 @@
     height: 100%;
     background: rgba(0, 0, 0, .8);
 }
-input{
+
+input {
     outline: none;
 }
+
 a {
     color: #000;
     text-decoration: none;
 }
-button{
+select,option{
     color: #000;
 }
+button {
+    color: #000;
+}
+
 li {
     list-style: none;
 }
 
 .bold {
     font-weight: 600;
+    color: #580846;
 }
+
 .violet {
     color: var(--violet-color);
 }
-.overflow-auto{
+
+.grey{
+    color: #888;
+}
+.overflow-auto {
     overflow: auto;
 }
 
 .hidden {
     display: none !important;
 }
-.red{
-    color: var(--red-color)  !important;
+
+.red {
+    color: var(--red-color) !important;
 }
 
 /* SACAR FLECHAS INPUT TYPE NUMBER */
 /* SACAR FLECHAS INPUT TYPE NUMBER */
 
 input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button{
-    -webkit-appearance: none;               
-    margin: 0;                               
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 
 }
 
 input[type=number] {
     -moz-appearance: textfield;
-  }
+}
 
 
 .page-title {
     text-transform: uppercase;
 }
 
+@media(min-width:1024px){
+}
 @keyframes rebound {
     0% {
-      transform: translateY(0);
+        transform: translateY(0);
     }
+
     25% {
-      transform: translateY(-10px);
+        transform: translateY(-10px);
     }
+
     50% {
-      transform: translateY(0);
+        transform: translateY(0);
     }
+
     75% {
-      transform: translateY(-5px);
+        transform: translateY(-5px);
     }
+
     100% {
-      transform: translateY(0);
+        transform: translateY(0);
     }
 }
 
@@ -93,6 +114,11 @@ input[type=number] {
     background-color: var(--red-color);
     color: white;
 }
+
 .error-msg {
     color: var(--red-color);
+}
+
+.available {
+    color: #000 !important;
 }
