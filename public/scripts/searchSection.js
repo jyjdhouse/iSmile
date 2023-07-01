@@ -5,8 +5,7 @@ window.addEventListener('load', async () => {
     try {
         const body = document.querySelector('body');
         const togglerOpenButton = document.querySelectorAll('.open-search-form-button');
-        const togglerCloseButton = document.querySelector('.close-search-form-button');
-        const input = document.querySelector('.search-form-input');
+        const togglerCloseButton = document.querySelectorAll('.close-search-form-button');
 
         const partialProductSection = 'partial-product-section';
         const blackScreen = 'black-screen';
@@ -33,43 +32,35 @@ window.addEventListener('load', async () => {
             idsInput.value = JSON.stringify(productsIds);
         }
 
-        togglerOpenButton.forEach(btn=>{
+        togglerOpenButton.forEach(btn => {
             btn.addEventListener('click', () => { // Si abre el searchForm
-                if(window.innerWidth < 768 && btn.classList.contains('lupa-mobile')){//Resolucion mobile
+                if (window.innerWidth < 768 && btn.classList.contains('lupa-mobile')) {//Resolucion mobile
                     btn.classList.add('open-search-form-button-active');
                 }
-                  
-                let classesToActivate = [searchSection];
-                activateClass(classesToActivate);
-    
+
+                document.querySelectorAll(`.${searchSection}`).forEach(cont => cont.classList.add(`${searchSection}-active`))
+
                 let classesToDeactivate = [sideNavbar];
                 deactivateClass(classesToDeactivate);
-    
+                let input = btn.closest('.search-section-container').querySelector('.search-form-input');
                 input.focus(); //Asi el input ya esta para escribir
                 // body.classList.add('noScroll');//Para que no me deje scrollear    
             })
         })
-        
 
-        togglerCloseButton.addEventListener('click', () => { //Si toca la x
-            input.value = ''; //Borro el contenido del input
-            // body.classList.remove('noScroll');//Para que no me deje scrollear
 
-            let classesToDeactivate = [searchSection/*, blackScreen, partialProductSection*/];
-            deactivateClass(classesToDeactivate);
-            document.querySelector('.lupa-mobile').classList.remove('open-search-form-button-active');
-        });
-        document.querySelector(`.${blackScreen}`).addEventListener('click', () => { //Si toca la pantalla negra
-            input.value = ''; //Borro el contenido del input
-            body.classList.remove('noScroll');//Para que no me deje scrollear
+        togglerCloseButton.forEach(btn => {
+            btn.addEventListener('click', () => { //Si toca la x
+                let input = btn.closest('.search-form-container').querySelector('.search-form-input')
+                input.value = ''; //Borro el contenido del input
+                // body.classList.remove('noScroll');//Para que no me deje scrollear
 
-            let classesToDeactivate = [searchSection, blackScreen];
-            deactivateClass(classesToDeactivate);
+                document.querySelectorAll(`.${searchSection}`).forEach(cont => cont.classList.remove(`${searchSection}-active`))
 
+                document.querySelector('.lupa-mobile').classList.remove('open-search-form-button-active');
+            })
         });
 
-
-       
     } catch (error) {
         return console.log(`Falle en searchForm.js: ${error}`);
     }

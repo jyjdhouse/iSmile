@@ -2,17 +2,51 @@
 
 .user-profile-main {
     margin-top: 12vh;
-    height: 50vh;
+    height: fit-content;
     padding: 0 3%;
+    height: 75vh;
+}
+
+.desktop-profile-content-wrapper {
+    display: none;
+}
+
+.mobile-profile-content-wrapper {
+    display: flex;
+    flex-direction: column;
 }
 
 .user-profile-title-container h1 {
     font-size: 1.2rem;
 }
 
+.profile-option-container {
+    width: 90%;
+    margin: 5% auto;
+    border: 1px solid var(--gold-color);
+    height: 300px;
+}
+
+.profile-option-title {
+    background-color: var(--gold-color);
+    text-align: center;
+    text-transform: uppercase;
+    padding: 2% 0;
+}
+
+.profile-selected-list {
+    padding: 3%;
+}
+
+.profile-field-container {
+    margin: 3% 0;
+    display: flex;
+    flex-direction: column;
+}
+
 .options-selected-container{
     position: relative;
-    height: 200px;
+    height: 450px;
     width: 100%;
     border: 1px solid var(--gold-color);
     margin: 5% 0;
@@ -30,11 +64,39 @@
     padding: 2%;
 }
 
+.profile-selected-field-container-active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.profile-input input {
+    padding: 1px 0;
+    width: 70%;
+}
+
+.input-container-inactive {
+    display: none;
+}
+
+.input-container-active {
+    display: flex;
+}
+
+.span-inactive {
+    display: none;
+}
+
+.profile-selected-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
+
 .data-list {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
 }
 
 .address-list {
@@ -46,39 +108,51 @@
 
 .profile-field-container {
     display: flex;
+    margin: 4% 0;
 }
 
 .profile-field-container p {
     text-transform: uppercase;
     margin-right: 3%;
+    margin-bottom: 3% ;
     font-weight: 700;
 }
 
-.profile-selected-field-container-active {
-    opacity: 1;
-    pointer-events: all;
+
+
+.edit-content-container {
+    display: flex;
+    justify-content: center;
+    margin: 5% 0;
+}   
+
+.form-btn {
+    border: 0;
+    outline: 0;
+    border: 1px solid var(--gold-color);
+    width: 70%;
+    padding: 3% 0;
+    text-align: center;
+    text-transform: uppercase;
 }
 
-.profile-checkbox-label-container {
+.form-btn-inactive {
+    display: none;
+    pointer-events: none;
+}
+
+.profile-radio-container {
+    display: flex;
     margin: 3% 0;
 }
 
-.profile-checkbox-label-container:first-child {
-    margin-top: 0;
+.radio-label-container:last-child {
+    margin-left: 3% ;
 }
-
-.profile-checkbox-container {
-    margin-top: 3%;
-}
-
-.profile-checkbox-container label {
-    font-size: 0.875rem;
-}
-
-
 
 .profile-options-container {
     width: 100%;
+    display: flex;
 }
 
 .profile-options-list {
@@ -102,18 +176,66 @@
     background-color: var(--gold-color);
 }
 
+.update-form-inactive {
+    display: none;
+}
+
+.update-form-active {
+    display: flex;
+    flex-direction: column;
+}
+
+
 @media (min-width: 768px) {
 
-    .profile-content-wrapper {
+   
+
+    .desktop-profile-content-wrapper {
         display: flex;
-        flex-direction: row-reverse;
-        margin: 0 auto;
-        max-width: 1000px;
+    }
+
+
+    .mobile-profile-content-wrapper {
+        display: none;
+    }
+
+    .desktop-form {
+        width: 100%;
+    }
+
+    .options-container {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .profile-data-title {
+        background-color: var(--gold-color);
+        text-align: center;
+    }
+
+
+    .profile-data-container {
+        width: 33%;
+
+    }
+
+    .profile-option-container {
+        height: 100%;
+    }
+
+    .profile-field-container p {
+        margin-bottom: 5%;
+    }
+
+    .profile-content-container {
+        width: 33%;
     }
 
     .options-selected-container{   
         height: 300px;
         width: 80%;
+
     }
 
     .profile-options-container {
@@ -136,6 +258,10 @@
 }
 
 @media (min-width: 1024px) {
+
+    .user-profile-main {
+        height: 70vh;
+    }
 
 
     .profile-option-item {

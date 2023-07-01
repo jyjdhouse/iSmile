@@ -1,0 +1,283 @@
+<%- include('./partials/head.ejs') %>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/checkout.css">
+    <!-- SCRIPTS -->
+    <script src="/scripts/checkout.js" type="module"></script>
+    <title>Checkout</title>
+    </head>
+
+    <body>
+        <%- include('./partials/header.ejs') %>
+            <main class="main checkout-main">
+                <section class="first-view view view-active">
+                    <div class="product-list-section">
+                        <div class="product-list-header">
+                            <p class="product-name-label bold">PRODUCTO</p>
+                            <p class="product-price-label bold">PRECIO UNITARIO</p>
+                            <p class="product-quantity-label bold">CANTIDAD</p>
+                            <p class="product-subtotal-label bold">SUBTOTAL</p>
+                        </div>
+                        <div class="product-card-wrapper">
+                            <article class="product-card">
+                                <div class="product-card-image-container">
+                                    <img src="/img/product1.png" alt="product-image" class="product-image">
+                                </div>
+                                <div class="product-name-container">
+                                    <p class="product-name">Crema AntiAge</p>
+                                </div>
+                                <div class="product-price-container">
+                                    <p class="product price">$<span class="product-price-span">5000</span></p>
+                                </div>
+                                <div class="product-quantity-container">
+                                    <i class='bx bx-plus-medical add-quantity-btn'></i>
+                                    <i class='bx bx-minus subtract-quantity-btn'></i>
+                                    <input type="number" name="quantity" id="" class="product-quantity">
+                                </div>
+                                <div class="product-subtotal-container">
+                                    <p class="product-subtotal">$ <span class="product-subtotal-span">5000</span></p>
+                                </div>
+                                <i class='bx bx-trash remove-cart-product'></i>
+                            </article>
+                            <article class="product-card">
+                                <div class="product-card-image-container">
+                                    <img src="/img/product1.png" alt="product-image" class="product-image">
+                                </div>
+                                <div class="product-name-container">
+                                    <p class="product-name">Crema AntiAge</p>
+                                </div>
+                                <div class="product-price-container">
+                                    <p class="product price">$<span class="product-price-span">5000</span></p>
+                                </div>
+                                <div class="product-quantity-container">
+                                    <i class='bx bx-plus-medical add-quantity-btn'></i>
+                                    <i class='bx bx-minus subtract-quantity-btn'></i>
+                                    <input type="number" name="quantity" id="" class="product-quantity">
+                                </div>
+                                <div class="product-subtotal-container">
+                                    <p class="product-subtotal">$ <span class="product-subtotal-span">5000</span></p>
+                                </div>
+                                <i class='bx bx-trash remove-cart-product'></i>
+                            </article>
+                            <article class="product-card">
+                                <div class="product-card-image-container">
+                                    <img src="/img/product1.png" alt="product-image" class="product-image">
+                                </div>
+                                <div class="product-name-container">
+                                    <p class="product-name">Crema AntiAge</p>
+                                </div>
+                                <div class="product-price-container">
+                                    <p class="product price">$<span class="product-price-span">5000</span></p>
+                                </div>
+                                <div class="product-quantity-container">
+                                    <i class='bx bx-plus-medical add-quantity-btn'></i>
+                                    <i class='bx bx-minus subtract-quantity-btn'></i>
+                                    <input type="number" name="quantity" id="" class="product-quantity">
+                                </div>
+                                <div class="product-subtotal-container">
+                                    <p class="product-subtotal">$ <span class="product-subtotal-span">5000</span></p>
+                                </div>
+                                <i class='bx bx-trash remove-cart-product'></i>
+                            </article>
+                            <article class="product-card">
+                                <div class="product-card-image-container">
+                                    <img src="/img/product1.png" alt="product-image" class="product-image">
+                                </div>
+                                <div class="product-name-container">
+                                    <p class="product-name">Crema AntiAge</p>
+                                </div>
+                                <div class="product-price-container">
+                                    <p class="product price">$<span class="product-price-span">5000</span></p>
+                                </div>
+                                <div class="product-quantity-container">
+                                    <i class='bx bx-plus-medical add-quantity-btn'></i>
+                                    <i class='bx bx-minus subtract-quantity-btn'></i>
+                                    <input type="number" name="quantity" id="" class="product-quantity">
+                                </div>
+                                <div class="product-subtotal-container">
+                                    <p class="product-subtotal">$ <span class="product-subtotal-span">5000</span></p>
+                                </div>
+                                <i class='bx bx-trash remove-cart-product'></i>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="checkout-total-section">
+                        <div class="cart-subtotal-container">
+                            <p class="cart-subtotal-label">Subtotal</p>
+                            <p class="cart-subtotal">$<span class="cart-subtotal-span">40000</span></p>
+                        </div>
+                        <div class="cart-total-container">
+                            <p class="cart-total-label">Total</p>
+                            <p class="cart-total">$<span class="cart-total-span">40000</span></p>
+                        </div>
+                        <div class="button-container">
+                            <button class="continue-view-button continue-button">INICIAR COMPRA</button>
+                        </div>
+                        <a href="/product" class="continue-shopping-link grey"><i
+                                class='bx bx-chevron-left continue-shopping-logo'></i> Seguir comprando</a>
+                    </div>
+                </section>
+                <section class="second-view view">
+                    <div class="information-wrapper">
+                        <div class="user-info-container step-container">
+                            <i class='bx bx-edit-alt edit-step-btn hidden'></i>
+                            <div class="info-step-title-container">
+                                <p class="grey info-step-title"><span class="bold">1-</span>DATOS PERSONALES</p>
+                            </div>
+                            <div class="step-form info-step">
+                                <div class="field long-field">
+                                    <label for="email" class="label bold">Correo electronico*</label>
+                                    <input type="email" name="email" id="email" class="input">
+                                </div>
+                                <div class="field">
+                                    <label for="name" class="label bold">Nombre*</label>
+                                    <input type="text" name="name" id="name" class="input">
+                                </div>
+                                <div class="field">
+                                    <label for="last-name" class="label bold">Apellidos*</label>
+                                    <input type="text" name="last-name" id="last-name" class="input">
+                                </div>
+                                <div class="field">
+                                    <label for="dni" class="label bold">DNI*</label>
+                                    <input type="text" name="dni" id="dni" class="input">
+                                </div>
+                                <div class="field">
+                                    <label for="phone" class="label bold">Telefono / Movil*</label>
+                                    <input type="text" name="phone" id="phone" class="input">
+                                </div>
+                                <div class="field long-field newsletter-field">
+                                    <input type="checkbox" name="newsletter" id="newsletter">
+                                    <label for="newsletter">Quiero recibir el newsletter con promociones.</label>
+                                </div>
+                                <div class="button-container">
+                                    <button class="continue-button continue-procedure-button first-step-continue-button">CONTINUAR</button>
+                                </div>
+                            </div>
+                            <div class="step-wrapper step-info-wrapper hidden">
+                                <p class="wrapper-row info-wrapper-mail"></p>
+                                <p class="wrapper-row info-wrapper-name"></p>
+                                <p class="wrapper-row info-wrapper-phone">Telefono: <span class="info-wrapper-phone-span"></span></p>
+                            </div>
+                        </div>
+                        <div class="deliver-info-container step-container">
+                            <i class='bx bx-edit-alt edit-step-btn hidden'></i>
+                            <div class="info-step-title-container">
+                                <p class="grey info-step-title"><span class="bold">2-</span>ENVIO O RETIRO</p>
+                            </div>
+                            <div class="step-form deliver-step hidden">
+                                <div class="field long-field delivery-option-field">
+                                    <div class="delivery-option-box delivery-option-box-active">Enviar a domicilio</div>
+                                    <div class="delivery-option-box">Retirar por el local</div>
+                                </div>
+                                <div class="field zip-code-field">
+                                    <label for="name" class="label bold">Codigo Postal</label>
+                                    <input type="text" name="zip-code" id="zip-code" class="input">
+                                    <button class="calculate-delivery-button">Calcular</button>
+                                </div>
+                                <label class="bold label step-label">Completa tu direccion de entrega</label>
+                                <div class="field">
+                                    <label for="country" class="label bold">Pais*</label>
+                                    <input type="text" name="country" id="country" class="input">
+                                </div>
+                                <div class="field">
+                                    <label for="street" class="label bold">Calle*</label>
+                                    <input type="text" name="street" id="street" class="input">
+                                </div>
+                                <div class="field">
+                                    <label for="street-number" class="label bold">Numero*</label>
+                                    <input type="text" name="street-number" id="street-number" class="input">
+                                </div>
+                                <div class="field">
+                                    <label for="floor" class="label bold">Piso / Departamento</label>
+                                    <input type="text" name="floor" id="floor" class="input">
+                                </div>
+                                <div class="field">
+                                    <label for="floor" class="label bold">Provincia*</label>
+                                    <select name="province" id="province" class="select">
+                                        <option value="CABA">Ciudad Autonoma de Buenos Aires</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <label for="city" class="label bold">Ciudad*</label>
+                                    <input type="text" name="city" id="city" class="input">
+                                </div>
+
+                                <div class="button-container">
+                                    <button class="continue-button continue-procedure-button">CONTINUAR</button>
+                                </div>
+                            </div>
+                            <div class="step-wrapper step-deliver-wrapper hidden">
+                                <p class="wrapper-row deliver-wrapper-charge">Costo: <span class="deliver-wrapper-charge-span">Gratis</span></p>
+                                <p class="wrapper-row deliver-wrapper-zip-code">Codigo Postal: <span class="deliver-wrapper-zip-code-span">1429</span></p>
+                                <p class="wrapper-row deliver-wrapper-name">Jano Pereira</p>
+                                <p class="wrapper-row deliver-wrapper-address">Av. Liberador 2555</p>
+                                <p class="wrapper-row">En hasta 6 dias habiles</p>
+                            </div>
+                        </div>
+                        <div class="payment-info-container step-container">
+                            <div class="info-step-title-container">
+                                <p class="grey info-step-title"><span class="bold">3-</span>PAGO</p>
+                            </div>
+                            <div class="step-form payment-step hidden">
+                                <div class="field long-field payment-logo-container">
+                                    <div class="box-container">
+                                        <div class="img-container">
+                                            <img src="/img/mplogo.png" alt="mercado-pago-img" class="mp-logo">
+                                        </div>
+                                        <p class="payment-logo-label">Mercado Pago</p>
+                                    </div>
+                                </div>
+                                <div class="field payment-field">
+                                    <p class="field-label grey">Finaliza tu compra y paga de forma segura, con o sin
+                                        cuenta de Mercado Pago</p>
+                                    <div class="payment-box">
+                                        <i class='bx bxs-credit-card'></i>
+                                        <p class="payment-box-label">Tarjetas de credito</p>
+                                    </div>
+                                    <div class="payment-box">
+                                        <i class='bx bx-credit-card-front'></i>
+                                        <p class="payment-box-label">Tarjetas de debito</p>
+                                    </div>
+                                    <div class="payment-box">
+                                        <i class='bx bx-money'></i>
+                                        <p class="payment-box-label">Efectivo</p>
+                                    </div>
+                                    <div class="payment-box">
+                                        <div class="payment-box-image-container">
+                                            <img src="/img/mcreditlogo.png" alt="mercado-credito-logo"
+                                                class="payment-box-image">
+                                        </div>
+                                        <p class="payment-box-label">Mercado credito</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-side-cards-wrapper-section">
+                        <div class="product-side-cards-wrapper-title-container">
+                            <p class="product-side-cards-wrapper-title bold">Resumen de la Compra</p>
+                            <p class="product-side-cards-wrapper-quantity grey"><span
+                                    class="product-side-cards-wrapper-quantity-span"></span> PRODUCTOS</p>
+                        </div>
+                        <div class="product-side-cards-wrapper"></div>
+                        <div class="product-side-wrapper-price-container">
+                            <div class="product-side-wrapper-row product-side-wrapper-subtotal-row">
+                                <p class="product-side-wrapper-row-label grey">Subtotal</p>
+                                <p class="product-side-wrapper-row-price grey">$<span
+                                        class="product-side-wrapper-row-subtotal-price-span">15000</span> </p>
+                            </div>
+                            <div class="product-side-wrapper-row product-side-wrapper-total-row">
+                                <p class="product-side-wrapper-row-label bold">Total</p>
+                                <p class="product-side-wrapper-row-price bold">$<span
+                                        class="product-side-wrapper-row-total-price-span">15000</span> </p>
+                            </div>
+                        </div>
+                        <div class="button-container">
+                            <button class="continue-button payment-start-button">INICIAR PAGO</button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <%- include('./partials/footer.ejs') %>
+    </body>
+
+    </html>
