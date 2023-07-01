@@ -34,13 +34,12 @@ window.addEventListener('load', () => {
                 iconsContainer.classList.toggle('toggle-dropdown-icons-container-active')
                 dropdown.classList.toggle('service-card-dropdown-active')
                 wrapper.classList.toggle('service-card-wrapper-active')
-                serviceCard.classList.toggle('service-card-active')
                 minusBtn.classList.toggle('toggle-dropdown-inactive')
                 plusBtn.classList.toggle('toggle-dropdown-inactive')
-                serviceLabel.classList.toggle('service-card-visible-part-active')
+                serviceLabel.classList.toggle('service-card-visible-part-active')       
+                serviceCard.classList.toggle('service-card-inactive')
+                serviceCard.classList.toggle('service-card-active')
                 
-                
-               
             })
         })
     }

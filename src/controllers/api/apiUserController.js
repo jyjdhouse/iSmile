@@ -27,6 +27,7 @@ const controller = {
     getUser: async (req, res) => {
         try {
             let userId = req.params.userId 
+            /* const user = await User.findByPk(userId) */
             const user = users.find(user => user.id == userId)
             if(!user) {
                 return res.status(404).json({meta: {status: 404, msg: 'Usuario no encontrado'}})

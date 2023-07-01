@@ -1,10 +1,10 @@
 const express = require('express');
-
 const app = express();
-
 const cors = require('cors');
-
 const path = require('path');
+const dotenv = require('dotenv')
+dotenv.config()
+
 
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
