@@ -155,6 +155,14 @@ window.addEventListener('load', () => {
                 stepWrapper.querySelector('.info-wrapper-mail').innerHTML = userMail;
                 stepWrapper.querySelector('.info-wrapper-name').innerHTML = userFullName;
                 stepWrapper.querySelector('.info-wrapper-phone-span').innerHTML = userPhone;
+                // Pregunto si ambos deliver-form y deliver-wrapper estan ocultos, si lo estan es porque es la
+                // primera vez que toca en continuar ==> lo hago aparecer. Sino no pasa nada
+                if (document.querySelector('.deliver-step').classList.contains('hidden') &&
+                    document.querySelector('.step-deliver-wrapper').classList.contains('hidden')) {
+                    // Le saco el hidden al delivery
+                    document.querySelector('.deliver-step').classList.remove('hidden');
+                }
+                modifyMainHeight('second-view');
             } else { //wrapper de deliver info
                 let zipCode = stepFormContainer.querySelector('#zip-code').value;
                 let userAddress = {
@@ -170,6 +178,9 @@ window.addEventListener('load', () => {
                 stepWrapper.querySelector('.deliver-wrapper-zip-code-span').innerHTML = zipCode;
                 stepWrapper.querySelector('.deliver-wrapper-name').innerHTML = userFullName;
                 stepWrapper.querySelector('.deliver-wrapper-address').innerHTML = `${userAddress.street} ${userAddress.streetNumber} ${userAddress.apartment}, ${userAddress.province}, ${userAddress.city} `;
+                // Le saco el hidden al de payment
+                document.querySelector('.payment-step').classList.remove('hidden');
+                modifyMainHeight('second-view');
             };
             // Muestro el boton para editar
             stepContainer.querySelector('.edit-step-btn').classList.remove('hidden');
@@ -206,24 +217,8 @@ window.addEventListener('load', () => {
         // Cambio la altura del main
         modifyMainHeight('second-view');
     });
-    function modifyMainHeight (className) {
+    function modifyMainHeight(className) {
         let maxHeight = document.querySelector(`.${className}`).offsetHeight;
         main.style.maxHeight = `${maxHeight}px`
     }
-    // Logica de cuanto toque el continuar en info/deliver step aparezca el siguiente
-    const continueProcedureButtons = document.querySelectorAll('.continue-procedure-button');
-    continueProcedureButtons.forEach(btn => {
-        btn.addEventListener('click',()=>{
-            // Si es el continuar del primer formulario(info)
-            if(btn.classList.contains('first-step-continue-button')){
-                // Le saco el hidden al delivery
-                document.querySelector('.deliver-step').classList.remove('hidden');
-                modifyMainHeight('second-view');
-            }else{
-                // Le saco el hidden al de payment
-                document.querySelector('.payment-step').classList.remove('hidden');
-                modifyMainHeight('second-view');
-            }
-        })
-    });
 });
