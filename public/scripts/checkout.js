@@ -126,6 +126,12 @@ window.addEventListener('load', () => {
         });
         cardsWrapper.innerHTML = inyectedHTML;
         document.querySelector('.product-side-cards-wrapper-quantity-span').innerHTML = productLength;
+        // Para los precios
+        let subtotal = document.querySelector('.cart-subtotal-span').innerHTML;
+        let total = document.querySelector('.cart-total-span').innerHTML
+        document.querySelector('.product-side-wrapper-row-subtotal-price-span').innerHTML = subtotal;
+        document.querySelector('.product-side-wrapper-row-total-price-span').innerHTML = total;
+
     };
     const nextViewButton = document.querySelector('.continue-view-button');
     nextViewButton.addEventListener('click', () => {

@@ -31,7 +31,7 @@ window.addEventListener('load', () => {
     // Logica del userLoggedMenu
     const userLoggedOptions = document.querySelector('.logged-menu-container');
     const userLoggedOptionsToggler = document.querySelector('.user-logged-menu-toggler');
-    userLoggedOptionsToggler.addEventListener('click',()=>{
+    userLoggedOptionsToggler?.addEventListener('click',()=>{
         userLoggedOptions.classList.toggle('logged-menu-container-active');
     });
 
@@ -39,7 +39,7 @@ window.addEventListener('load', () => {
     const createOptionsToggler = document.querySelector('.create-options-toggler');
     const adminMenuList = document.querySelector('.admin-menu-list');
     const adminMenuArrow = document.querySelector('.create-options-toggler');
-    createOptionsToggler.addEventListener('click',()=>{
+    createOptionsToggler?.addEventListener('click',()=>{
         adminMenuArrow.classList.toggle('rotated');
         adminMenuList.classList.toggle('admin-menu-list-active');
     });
