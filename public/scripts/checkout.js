@@ -142,8 +142,18 @@ window.addEventListener('load', () => {
     const continueButtons = document.querySelectorAll('.continue-procedure-button');
     continueButtons.forEach(btn => {
         btn.addEventListener('click', () => {
+            let allSectionComplete = sectionIsComplete(btn);
+            if (!allSectionComplete) {//Si esta incompleto no hago nada
+                return
+            }
             const stepFormContainer = btn.closest('.step-form');
             const stepContainer = stepFormContainer.closest('.step-container')
+            // Si esta completo verifico antes de mandar que este bien tanto dni como email
+            const isValidDNI = stepFormContainer.querySelector('#dni') ? validateUserDNI(stepFormContainer.querySelector('#dni')) : true;
+            const isValidEmail = stepFormContainer.querySelector('#email') ? validateUserEmail(stepFormContainer.querySelector('#email')) : true;
+            if (!isValidDNI || !isValidEmail) {
+                return
+            }
             let stepWrapper = stepContainer.querySelector('.step-wrapper');
             // Pregunto que tipo de step es
             const isInfoStep = stepFormContainer.classList.contains('info-step');
@@ -226,5 +236,188 @@ window.addEventListener('load', () => {
     function modifyMainHeight(className) {
         let maxHeight = document.querySelector(`.${className}`).offsetHeight;
         main.style.maxHeight = `${maxHeight}px`
+    };
+
+    // Funcion que se va a fijar si los campos que tiene que completar el usuario son completados
+    const sectionIsComplete = (btn) => {
+        // Primero capturo el step donde se encuentra
+        const stepForm = btn.closest('.step-form');
+        const requiredInputs = stepForm.querySelectorAll('.required');
+        // Bandera para verificar si todos los campos están completos
+        var allFieldsComplete = true;
+        // Itera sobre los campos requeridos y verifica si están completos
+        for (var i = 0; i < requiredInputs.length; i++) {
+            var input = requiredInputs[i];
+            let field = input.closest('.field');
+            if (input.value === '') {
+                allFieldsComplete = false;
+                field.classList.add('incomplete-field');
+                if (!field.querySelector('.msg')) {//Si no tiene msg
+                    // Crear el mensaje adicional
+                    const additionalMessage = document.createElement('span');
+                    additionalMessage.classList.add('msg');
+                    additionalMessage.innerHTML = 'Debes completar el campo'
+                    // Insertar el mensaje adicional después del label
+                    field.appendChild(additionalMessage);
+                }
+            } else {
+                // Elimina la clase de estilo si el campo está completo
+                field.classList.remove('incomplete-field');
+            }
+        }
+        return allFieldsComplete
+    };
+
+    const checkForInputChange = () => {
+        let requiredInputs = document.querySelectorAll('.required');
+        requiredInputs.forEach(input => {
+            input.addEventListener('input', (e) => {
+                let field = input.closest('.field')
+                if (e.target.value) {
+                    field.classList.remove('incomplete-field');
+                    field.querySelector('.msg')?.remove()
+                }
+            });
+        });
     }
+    checkForInputChange();
+
+    // Logica para que todos los inputs numericos no acepten letras
+    let numericInputs = document.querySelectorAll('.numeric-only-input');
+    numericInputs.forEach(input => {
+        // Tomo el ultimo valor
+        let lastInputValue = input.value;
+        input.addEventListener("input", function (e) {
+            var inputValue = e.target.value;
+            if (!isNumeric(inputValue)) { // Si no es un número, borra el contenido del campo
+                e.target.value = lastInputValue;
+            } else {
+                lastInputValue = inputValue; // Almacenar el último valor válido
+            }
+        });
+    });
+
+    // Logica para que todos los input de solo letras no acepten numeros
+    let letterInputs = document.querySelectorAll('.letter-only-input');
+    letterInputs.forEach(input => {
+        // Tomo el ultimo valor
+        let lastInputValue = input.value;
+        input.addEventListener("input", function (e) {
+            var inputValue = e.target.value;
+            if (!isLetter(inputValue)) { // Si no es letra, borra el contenido del campo
+                e.target.value = lastInputValue;
+            } else {
+                lastInputValue = inputValue; // Almacenar el último valor válido
+            }
+        });
+    });
+
+
+    function isLetter(value) {
+        return /^[A-Za-z\s]+$/.test(value)
+    }
+    function isNumeric(value) {
+        return /^[0-9]*$/.test(value);
+    }
+    const validateUserDNI = (input) => {
+        let booleanValue = /^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/.test(input?.value);
+        let field = input.closest('.field');
+        if (!booleanValue) { //Si esta mal el dni
+            field.classList.add('incomplete-field');
+            if (!field.querySelector('.msg')) {//Si no tiene msg
+                // Crear el mensaje adicional
+                const additionalMessage = document.createElement('span');
+                additionalMessage.classList.add('msg');
+                additionalMessage.innerHTML = 'Debes ingresar un formato correcto de DNI'
+                // Insertar el mensaje adicional después del label
+                field.appendChild(additionalMessage);
+            }
+        } else {
+            field.classList.remove('incomplete-field');
+            field.querySelector('.msg')?.remove();
+        };
+        return booleanValue;
+    }
+    const validateUserEmail = (input) => {
+        let booleanValue = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(input.value)
+        let field = input.closest('.field');
+        if (!booleanValue) { //Si esta mal el email
+            field.classList.add('incomplete-field');
+            if (!field.querySelector('.msg')) {//Si no tiene msg
+                // Crear el mensaje adicional
+                const additionalMessage = document.createElement('span');
+                additionalMessage.classList.add('msg');
+                additionalMessage.innerHTML = 'Debes ingresar un formato correcto de Email'
+                // Insertar el mensaje adicional después del label
+                field.appendChild(additionalMessage);
+            }
+        } else {
+            field.classList.remove('incomplete-field');
+            field.querySelector('.msg')?.remove();
+        }
+        return booleanValue;
+    };
+
+    // LOGICA PARA PAGAR MERCADOPAGO
+    const mercadopago = new MercadoPago('TEST-9f50e49e-6924-4a8c-aa39-b3ecb5b4e4c4', {
+        locale: 'es-AR' // The most common are: 'pt-BR', 'es-AR' and 'en-US'
+    });
+    // Handle call to backend and generate preference.
+    document.getElementById("button-checkout").addEventListener("click", function () {
+        let products = [];
+        // Agarro a las tarjetas de productos
+        let productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card=>{
+            products.push({
+                quantity:card.querySelector('.product-quantity').value,
+                description: card.querySelector('.product-name').innerHTML,
+                price: card.querySelector('.product-price-span').innerHTML
+            })
+        })
+
+        fetch("http://localhost:4500/payment/create_preference", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(products),
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (preference) {
+                createCheckoutButton(preference.id);
+
+            })
+            .catch(function (e) {
+                console.log(e);
+                alert("Unexpected error");
+            });
+    });
+    function createCheckoutButton(preferenceId) {
+        // Initialize the checkout
+        const bricksBuilder = mercadopago.bricks();
+      
+        const renderComponent = async (bricksBuilder) => {
+          if (window.checkoutButton) window.checkoutButton.unmount();
+          await bricksBuilder.create(
+            'wallet',
+            'checkout-button-container', // class/id where the payment button will be displayed
+            {
+              initialization: {
+                preferenceId: preferenceId
+              },
+              callbacks: {
+                onError: (error) => console.error(error),
+                onReady: () => {}
+              }
+            }
+          );
+        };
+        
+        window.checkoutButton =  renderComponent(bricksBuilder);
+        document.querySelector('#button-checkout').remove();
+        // document.querySelector('#button-checkout').innerHTML ='';
+        // document.querySelector('#button-checkout').style.background ='none';
+      }
 });

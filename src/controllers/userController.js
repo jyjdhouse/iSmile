@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const { validationResult } = require('express-validator');
-
+const provinces = require('../utils/staticDB/provinces')
 const controller = {
 
     userProfile: async(req,res)=>{
@@ -25,7 +25,7 @@ const controller = {
         }
     },
     checkout: async(req,res) =>{
-        return res.render('checkout.ejs');
+        return res.render('checkout.ejs',{provinces});
     }
     // processRegist: async (req, res) => {
     //     try {

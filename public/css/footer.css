@@ -5,7 +5,9 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+.footer a:visited{
+    color: #000;
+}
 .copy-msg{
     color: #999;
 }
