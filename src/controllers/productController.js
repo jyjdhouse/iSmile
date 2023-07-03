@@ -54,8 +54,7 @@ const controller = {
         }
     },
     createProduct: async (req, res) => {
-        const categories = await getCategories()
-        return res.render('productCreate.ejs', {categories})
+        return res.render('productCreate.ejs',{ categories: await getCategories()})
     }
     // searchResult: async(req,res) =>{
     //     let productsId = Array.from(JSON.parse(req.body.ids));

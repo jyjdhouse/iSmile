@@ -3,14 +3,15 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: (req, res, cb) => {
-        const folder = path.join(__dirname, "../../public/img/product")
-        cb(null, folder)
+        cb(null, './public/img/product')
+        return
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + ' ' + file.originalname)
+        const randomString = Math.random().toString(36).substring(2, 2 + 10);
+        cb(null, file.fieldname + '-' + randomString + path.extname(file.originalname))
     }
 })
 
-const uploadFile = multer( {storage: storage} ); 
+const uploadFile = multer( {storage} ); 
 
 module.exports = uploadFile;

@@ -12,7 +12,9 @@ module.exports = (sequelize, dataTypes) => {
 
     let config = {
         tableName: 'categories',
-        paranoid: true
+        paranoid: true,
+        timestamps: true,
+        updatedAt: false
     }
 
     const Category = sequelize.define(alias, cols, config);
@@ -23,5 +25,5 @@ module.exports = (sequelize, dataTypes) => {
             foreignKey: 'category_id'
         });
     };
-    return Product;
+    return Category;
 }

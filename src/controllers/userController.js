@@ -142,22 +142,6 @@ const controller = {
     /* checkout: async (req, res) => {
         return res.render('checkout', {categories: await getCategories(), countryCodes: await getCountryCodes()})
     }, */
-<<<<<<< HEAD
-    // logout: async (req, res) => {
-    //     try {
-    //         let relativePath = getRelativePath(req.headers.referer);
-    //         res.clearCookie('userAccessToken');
-    //         // res.clearCookie('token');
-    //         req.session.destroy();
-    //         res.redirect(relativePath);
-    //     } catch (error) {
-    //         console.log(`Falle en userController.logout: ${error}`);
-    //         return res.json(error);
-    //     }
-    // }
-  
-=======
->>>>>>> 013d05bcd376a9cc53c1259808b215c8e13d56d3
 };
 
 module.exports = controller;

@@ -1,4 +1,4 @@
-const Product = require('../../database/models/Product');
+const db = require('../../database/models');
 const Sequelize = require('sequelize');
 
 // // From utils
@@ -99,7 +99,7 @@ const controller = {
         try {
           
             let { name, price, description, category } = req.body;
-            let images = req.file;
+            let images = req.files;
 
             let productObject = {
                 name,
@@ -124,10 +124,10 @@ const controller = {
                     status: 200,
                     msg: 'Producto creado Correctamente!'
                 },
-                product: productCreated,
+                product: newProduct,
             });
         } catch (error) {
-            console.log(`Falle en productController.create: ${error}`);
+            console.log(`Falle en apiProductController.create: ${error}`);
             return res.json(error);
         }
     },
