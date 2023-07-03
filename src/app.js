@@ -45,9 +45,9 @@ const apiProductRouter = require('./routes/api/apiProductRouter.js');
 const apiUserRouter = require('./routes/api/apiUserRouter.js');
 
 // Middlewares
-// const userLogged = require('./middlewares/userLogged.js');
+const userLogged = require('./middlewares/userLogged.js');
 // const getAllUsers = require('./utils/getAllUsers.js');
-// app.use(userLogged);
+app.use(userLogged);
 
 
 // Ruteo para api

@@ -7,22 +7,20 @@ module.exports = (sequelize, dataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        name: { type: dataTypes.STRING(255) },
+        first_name: { type: dataTypes.STRING(255) },
         last_name: { type: dataTypes.STRING(255) },
-        email: { type: dataTypes.STRING(255) },
+        phone: { type: dataTypes.STRING(100) },
+        dni: { type: dataTypes.STRING(8) },
         password: { type: dataTypes.STRING(255) },
-        dni: { type: dataTypes.STRING(45) },
-        phone_number: { type: dataTypes.STRING(255) },
-       /*  notifications: { type: dataTypes.TINYINT },
-        last_wishlist_email: { type: dataTypes.DATE },
-        last_cart_email: { type: dataTypes.DATE },
-        wishlist_period_type: { type: dataTypes.STRING(1) },
-        cart_period_type: { type: dataTypes.STRING(1) }, */
-        isAdmin: {type: dataTypes.INTEGER}
+        email: { type: dataTypes.STRING(255) },
+        wpp_notifications: { type: dataTypes.TINYINT },
+        email_notifications: { type: dataTypes.TINYINT },
+        email_newsletter: { type: dataTypes.TINYINT },
+        user_categories_id: {type: dataTypes.INTEGER}
     }
 
     let config = {
-        tableName: 'USERS',
+        tableName: 'users',
         paranoid: true
     }
 
@@ -36,6 +34,10 @@ module.exports = (sequelize, dataTypes) => {
         User.hasMany(models.Address, {
             as: 'addresses',
             foreignKey: 'user_id',
+        })
+        User.belongsTo(models.UserCategory,{
+            as: 'userCategory',
+            foreignKey: 'user_categories_id'
         })
     };
 

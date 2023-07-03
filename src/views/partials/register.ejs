@@ -1,4 +1,4 @@
-<form method="POST" class="regist-popup user-options-popup-option">
+<form action="/user/regist" method="POST" class="regist-popup user-options-popup-option <%= locals.registErrors && 'translate-option-left' %>">
     <div class="regist-field">
         <label for="email" class="bold">Email</label>
         <input type="text" id="email" class="input" placeholder="Ingrese su Email" name="email">
@@ -15,8 +15,10 @@
         <i class="fa-solid fa-eye show-password-btn password-btn-toggler"></i>
         <i class="fa-solid fa-eye-slash hide-password-btn password-btn-toggler hidden"></i>
     </div>
+    <% if (locals.registErrors) { %>
+        <p class="error-msg"><%= registErrors.msg %></p>
+    <% } %>
     <div class="button-container">
         <button class="regist-button bold">Registrarse</button>
-
     </div>
 </form>

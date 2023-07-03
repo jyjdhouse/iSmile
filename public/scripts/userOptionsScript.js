@@ -49,7 +49,10 @@ window.addEventListener('load', () => {
         blackScreen.classList.remove('black-screen-active');
         userOptionsPopup.classList.remove('user-options-popup-active');
         // Le saco la clase a cada opcion para que se traslade
-        userOptions.forEach(opt => opt.classList.remove('translate-option-left'));
+        userOptions.forEach(opt => {
+            opt.classList.remove('translate-option-left');
+            opt.querySelector('.error-msg')?.remove();
+        });
         // Le saco la clase active a la flecha para atras
         backUserOptionsBtn.classList.remove('back-user-option-btn-active');
     });
@@ -58,14 +61,20 @@ window.addEventListener('load', () => {
         blackScreen.classList.remove('black-screen-active');
         userOptionsPopup.classList.remove('user-options-popup-active');
         // Le saco la clase a cada opcion para que se traslade
-        userOptions.forEach(opt => opt.classList.remove('translate-option-left'));
+        userOptions.forEach(opt => {
+            opt.classList.remove('translate-option-left');
+            opt.querySelector('.error-msg')?.remove();
+        });
         // Le saco la clase active a la flecha para atras
         backUserOptionsBtn.classList.remove('back-user-option-btn-active');
     });
     // Si toca la flecha para atras
-    backUserOptionsBtn.addEventListener('click',()=>{
+    backUserOptionsBtn.addEventListener('click', () => {
         // Le saco la clase a cada opcion para que se traslade
-        userOptions.forEach(opt => opt.classList.remove('translate-option-left'));
+        userOptions.forEach(opt => {
+            opt.classList.remove('translate-option-left');
+            opt.querySelector('.error-msg')?.remove();
+        });
         // Le saco la clase active a la flecha para atras
         backUserOptionsBtn.classList.remove('back-user-option-btn-active');
     })
@@ -92,10 +101,11 @@ window.addEventListener('load', () => {
     }
     const form = document.querySelector('.login-popup');
     form.addEventListener('submit', (e) => {
-        e.preventDefault();
+
         let formIsComplete = checkIfFormIsComplete(form);
         // Si esta incompleto...
         if (!formIsComplete) {
+            e.preventDefault();
             const button = form.querySelector('.login-button')
             button.classList.remove('send-form-button-error');
             void button.offsetWidth; // Fuerza un reflow, lo cual reinicia la animación

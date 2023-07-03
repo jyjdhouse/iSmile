@@ -1,4 +1,4 @@
-const User = require('../database/models/User');
+const db = require('../database/models');
 const jwt = require('jsonwebtoken');
 const secret = require('../utils/secret').secret;
 
@@ -14,7 +14,7 @@ const userLogged = async (req, res, next) => {
         if(token){
             const decodedData = jwt.verify(token, secret);
             if(decodedData){ //Si verifico el token, solo agarro el id
-                userInCookie = await User.findOne({
+                userInCookie = await db.User.findOne({
                     where:{
                         id: decodedData?.id
                     },

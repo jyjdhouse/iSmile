@@ -1,6 +1,6 @@
 <header class="header">
     <nav class="nav-bar-section">
-        <% if (0==1) { %> <!--LOGGEADO-->
+        <% if (locals.isLogged) { %> <!--LOGGEADO-->
             <div class="nav-start">
                 <i class="fa-solid fa-bars open-menu-button"></i>
                 <div class="shopping-cart-container shopping-cart-mobile"> <!--En mobile solo que ve asi-->
@@ -23,7 +23,7 @@
             <div class="nav-end">
                 <div class="user-logged-container">
                     <p class="user-logged-name login-menu-btn-desktop">Hola,<span
-                            class="bold">INES<!--EJS TAG locals.userLogged.name %>--></span></p>
+                            class="bold"><%= locals.userLogged.name || 'user' %></span></p>
                     <div class="logged-menu-container">
                         <ul class="logged-menu-list">
                             <% if (1==1) { %> <!--SI ES ADMIN userLogged.user_categories_id-->

@@ -4,10 +4,12 @@ const mainController = require('../controllers/mainController');
 const PDFGeneratorController = require('../controllers/PDFGenerator/pdfGeneratorController');
 const multer = require('multer');
 
+// Middlewares
+const loginMiddleware = require('../middlewares/loginMiddleware')
 // Configuración básica de multer
 const upload = multer();
 
-router.get('/',mainController.index);
+router.get('/',loginMiddleware,mainController.index);
 router.get('/servicios',mainController.services);
 router.get('/servicios/:servicioId',mainController.serviceDetail)
 router.get('/blog',mainController.blogList)
