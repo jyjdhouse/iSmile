@@ -9,9 +9,6 @@ window.addEventListener('load', () => {
     const urlString = window.location.search;
     const urlParams = new URLSearchParams(urlString);
     const param = urlParams.get('completeForm')
-    console.log(param)
-
-    console.log(urlParams)
     // disableo los radios
     radioButtons.forEach(radio => {
         radio.disabled = true
