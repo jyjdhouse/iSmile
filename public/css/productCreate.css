@@ -1,0 +1,26 @@
+.product-create-main {
+    margin-top: 11vh;
+}
+
+.input-label-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3%;
+}
+
+.input-label-container textarea, .input-label-container input {
+    border: 0;
+    outline: 0;
+    border: 1px solid #818181;
+    width: 70%;
+    margin-top: 3%;
+}
+
+.create-product-form {
+    margin: 5% 0;
+}
+
+.input-error {
+    border: 1px solid red!important;
+}
+

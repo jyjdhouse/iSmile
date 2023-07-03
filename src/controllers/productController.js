@@ -1,7 +1,8 @@
 
-const Product = require('../database/models/Product');
+const db = require('../database/models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const getCategories = require('../utils/getCategories')
 
 // utils
 
@@ -52,6 +53,10 @@ const controller = {
             return res.json(error);
         }
     },
+    createProduct: async (req, res) => {
+        const categories = await getCategories()
+        return res.render('productCreate.ejs', {categories})
+    }
     // searchResult: async(req,res) =>{
     //     let productsId = Array.from(JSON.parse(req.body.ids));
     //     // return console.log(productsId)

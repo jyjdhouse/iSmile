@@ -26,7 +26,7 @@ const controller = {
     },
     checkout: async(req,res) =>{
         return res.render('checkout.ejs');
-    }
+    },
     // processRegist: async (req, res) => {
     //     try {
     //    /*      // Traigo errores
@@ -90,6 +90,7 @@ const controller = {
     //         return res.json(error);
     //     }
     // }
+  
 };
 
 module.exports = controller;
