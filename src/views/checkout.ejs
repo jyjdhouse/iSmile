@@ -3,6 +3,8 @@
     <link rel="stylesheet" href="/css/checkout.css">
     <!-- SCRIPTS -->
     <script src="/scripts/checkout.js" type="module"></script>
+    <!-- SDK MercadoPago.js -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <title>Checkout</title>
     </head>
 
@@ -126,23 +128,23 @@
                             <div class="step-form info-step">
                                 <div class="field long-field">
                                     <label for="email" class="label bold">Correo electronico*</label>
-                                    <input type="email" name="email" id="email" class="input">
+                                    <input type="mail" name="email" id="email" class="input required">
                                 </div>
                                 <div class="field">
                                     <label for="name" class="label bold">Nombre*</label>
-                                    <input type="text" name="name" id="name" class="input">
+                                    <input type="text" name="name" id="name" class="input required letter-only-input">
                                 </div>
                                 <div class="field">
-                                    <label for="last-name" class="label bold">Apellidos*</label>
-                                    <input type="text" name="last-name" id="last-name" class="input">
+                                    <label for="last-name" class="label bold">Apellido/s*</label>
+                                    <input type="text" name="last-name" id="last-name" class="input required letter-only-input">
                                 </div>
                                 <div class="field">
                                     <label for="dni" class="label bold">DNI*</label>
-                                    <input type="text" name="dni" id="dni" class="input">
+                                    <input type="text" name="dni" id="dni" class="input required numeric-only-input">
                                 </div>
                                 <div class="field">
                                     <label for="phone" class="label bold">Telefono / Movil*</label>
-                                    <input type="text" name="phone" id="phone" class="input">
+                                    <input type="text" name="phone" id="phone" class="input required numeric-only-input">
                                 </div>
                                 <div class="field long-field newsletter-field">
                                     <input type="checkbox" name="newsletter" id="newsletter">
@@ -170,21 +172,21 @@
                                 </div>
                                 <div class="field zip-code-field">
                                     <label for="name" class="label bold">Codigo Postal</label>
-                                    <input type="text" name="zip-code" id="zip-code" class="input">
+                                    <input type="text" name="zip-code" id="zip-code" class="input numeric-only-input">
                                     <button class="calculate-delivery-button">Calcular</button>
                                 </div>
                                 <label class="bold label step-label">Completa tu direccion de entrega</label>
                                 <div class="field">
                                     <label for="country" class="label bold">Pais*</label>
-                                    <input type="text" name="country" id="country" class="input">
+                                    <input type="text" name="country" id="country" class="input required letter-only-input">
                                 </div>
                                 <div class="field">
                                     <label for="street" class="label bold">Calle*</label>
-                                    <input type="text" name="street" id="street" class="input">
+                                    <input type="text" name="street" id="street" class="input required">
                                 </div>
                                 <div class="field">
                                     <label for="street-number" class="label bold">Numero*</label>
-                                    <input type="text" name="street-number" id="street-number" class="input">
+                                    <input type="text" name="street-number" id="street-number" class="input required numeric-only-input">
                                 </div>
                                 <div class="field">
                                     <label for="floor" class="label bold">Piso / Departamento</label>
@@ -192,13 +194,15 @@
                                 </div>
                                 <div class="field">
                                     <label for="floor" class="label bold">Provincia*</label>
-                                    <select name="province" id="province" class="select">
-                                        <option value="CABA">Ciudad Autonoma de Buenos Aires</option>
+                                    <select name="province" id="province" class="select required">
+                                        <% provinces.forEach(prov => { %>
+                                            <option value="<%= prov.value %>"><%= prov.name %></option> 
+                                        <% }) %>
                                     </select>
                                 </div>
                                 <div class="field">
                                     <label for="city" class="label bold">Ciudad*</label>
-                                    <input type="text" name="city" id="city" class="input">
+                                    <input type="text" name="city" id="city" class="input required">
                                 </div>
 
                                 <div class="button-container">
@@ -271,8 +275,8 @@
                                         class="product-side-wrapper-row-total-price-span">15000</span> </p>
                             </div>
                         </div>
-                        <div class="button-container">
-                            <button class="continue-button payment-start-button">INICIAR PAGO</button>
+                        <div id="checkout-button-container" class="button-container">
+                            <button id="button-checkout" class="continue-button payment-start-button">INICIAR PAGO</button>
                         </div>
                     </div>
                 </section>

@@ -1,5 +1,5 @@
-<section class="user-options-popup">
-    <div class="user-options-first-column user-options-popup-option">
+<section class="user-options-popup <%= (locals.loginErrors || locals.registErrors) && 'user-options-popup-active'%>">
+    <div class="user-options-first-column user-options-popup-option <%= (locals.loginErrors || locals.registErrors) && 'translate-option-left' %>">
         <div class="user-options-header">
             <div class="user-options-logo-container"><img src="/img/logo.png" alt="header-logo" class="header-logo"></div>
         </div>

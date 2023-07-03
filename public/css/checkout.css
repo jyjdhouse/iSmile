@@ -2,7 +2,12 @@ body {
     background-color: #eee;
 
 }
-
+.incomplete-field span{
+   color: var(--red-color);
+}
+.field.incomplete-field>.input{
+    border: 1px solid var(--red-color);
+}
 .checkout-main .select {
     background-color: #fff;
     border-radius: 1rem;
@@ -532,7 +537,9 @@ body {
 .payment-start-button {
     width: 90%;
     padding: 2% 0;
+    border: 0;
 }
+/* Esto es para que le de el background */
 
 /* STEP DE PAYMENT */
 .payment-logo-container {

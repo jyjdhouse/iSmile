@@ -34,40 +34,20 @@ app.use(cookieParser());
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
-// MERCADO PAGO
-// SDK 
-const mercadopago = require("mercadopago");
-// Agrega credenciales
-mercadopago.configure({//TODO: Cambiar despues por produccion
-    access_token: "TEST-7696079273712463-051509-faaa1a66aa57c2a1be935520fde799ca-389461868",
-});
-// Crea un objeto de preferencia
-let preference = {
-    items: [ //TODO: aca voy pusheando los items del carro que se compran
-        {
-            title: "#NombreProducto",
-            unit_price: 4/*'#precioProducto'*/,
-            quantity: 6/*'#cantidadProducto'*/,
-        },
-    ],
-};
-const response = /*await*/ mercadopago.preferences.create(preference);
-// const preferenceId = response.body.id;
 // Rutas
 const mainRouter = require('./routes/mainRouter.js');
 const productRouter = require('./routes/productRouter.js');
-
 const userRouter = require('./routes/userRouter.js');
-
+const paymentRouter = require('./routes/paymentRouter.js');
 // Rutas API
 // const mainRouter = require('./routes/mainRouter.js');
 const apiProductRouter = require('./routes/api/apiProductRouter.js');
 const apiUserRouter = require('./routes/api/apiUserRouter.js');
 
 // Middlewares
-// const userLogged = require('./middlewares/userLogged.js');
+const userLogged = require('./middlewares/userLogged.js');
 // const getAllUsers = require('./utils/getAllUsers.js');
-// app.use(userLogged);
+app.use(userLogged);
 
 
 // Ruteo para api
@@ -79,7 +59,7 @@ app.use('/', mainRouter);
 app.use('/product', productRouter);
 
 app.use('/user', userRouter)
-
+app.use('/payment',paymentRouter)
 
 // Correr el servidor
 
