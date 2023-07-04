@@ -4,7 +4,7 @@
     margin-top: 12vh;
     height: fit-content;
     padding: 0 3%;
-    height: 75vh;
+    min-height: 75vh;
 }
 
 .desktop-profile-content-wrapper {
@@ -258,11 +258,6 @@
 }
 
 @media (min-width: 1024px) {
-
-    .user-profile-main {
-        height: 70vh;
-    }
-
 
     .profile-option-item {
        cursor: pointer;

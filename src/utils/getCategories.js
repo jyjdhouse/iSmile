@@ -1,0 +1,5 @@
+const db = require('../database/models');
+module.exports = async function () {
+    const categories = await db.Category.findAll();
+    return  categories
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
