@@ -31,14 +31,18 @@ module.exports = (sequelize, dataTypes) => {
             as: 'wishlistProducts',
             foreignKey: 'users_id',
         }) */
-        User.hasMany(models.Address, {
-            as: 'addresses',
+        User.hasOne(models.Address, {
+            as: 'address',
             foreignKey: 'user_id',
-        })
+        });
+        User.hasOne(models.TemporalCart, {
+            as: 'temporalCart',
+            foreignKey: 'user_id',
+        });
         User.belongsTo(models.UserCategory,{
             as: 'userCategory',
             foreignKey: 'user_categories_id'
-        })
+        });
     };
 
     return User;

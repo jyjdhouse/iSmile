@@ -1,7 +1,12 @@
 @import 'variables.css';
 /* PRODUCT CARD */
 
-
+.logo-container{
+    width: 100%;
+}
+.logo-container i{
+    width: 100%;
+}
 .product-card-container {
     position: relative;
     cursor: pointer;

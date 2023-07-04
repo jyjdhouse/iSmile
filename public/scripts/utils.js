@@ -318,7 +318,8 @@ export function disableAllPopups(exception) {
     })
 }
 
-export function checkIfIsInScreen(percentege, cb, arg) {//Se fija si aparece en pantalla para poder hace algo
+//Se fija si aparece en pantalla para poder hace algo
+export function checkIfIsInScreen(percentege, cb, arg) {
     return new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.intersectionRatio >= percentege) {
@@ -329,10 +330,12 @@ export function checkIfIsInScreen(percentege, cb, arg) {//Se fija si aparece en 
     }, { threshold: percentege });
 }
 
+// Se fija si esta en desktop
 export function isInDesktop() {
     return window.innerWidth >= 1024 // Mobile & Tablet
 }
 
+// Formatea la fecha. Retorna dd/mm/yyyy
 export function dateFormater(date) {
     // Dividir la fecha en año, mes y día
     var parts = date.split('-');
@@ -343,6 +346,7 @@ export function dateFormater(date) {
     return day + '-' + month + '-' + year;
 }
 
+// fecha del dia
 export function getTodaysDate() {
     // Obtener la fecha actual
     const currentDate = new Date();
@@ -352,4 +356,25 @@ export function getTodaysDate() {
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const day = String(currentDate.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
+}
+
+// Devuelve true si es todo numerico el valor
+export function isNumeric(value) {
+    return /^[0-9]*$/.test(value);
+}
+
+// Devuelve true si es todo letras el valor
+export function isLetter(value) {
+    return /^[A-Za-z\s]+$/.test(value)
+}
+
+// Devuelve longitud del carro del usuario
+export function getCartTotalProducts(user){
+    let cart;
+    if (user){
+        cart = user.temporalCart?.temporalItems;
+        return cart?.length;
+    }
+    cart = JSON.parse(localStorage.getItem('temporalCart')) || [];
+    return cart?.length
 }

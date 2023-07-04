@@ -47,6 +47,7 @@ const apiUserRouter = require('./routes/api/apiUserRouter.js');
 // Middlewares
 const userLogged = require('./middlewares/userLogged.js');
 const userIsIncomplete = require('./middlewares/userIsIncomplete');
+const guestMiddleware = require('./middlewares/guestMiddleware')
 // const getAllUsers = require('./utils/getAllUsers.js');
 app.use(userLogged);
 app.use(userIsIncomplete);

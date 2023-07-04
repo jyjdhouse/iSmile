@@ -1,3 +1,5 @@
+import { isLetter, isNumeric } from "./utils.js"; 
+
 window.addEventListener('load', () => {
 
     const optionsLi = document.querySelectorAll('.profile-option-item')
@@ -16,14 +18,14 @@ window.addEventListener('load', () => {
 
 
     // si el valor del param es true, pongo para completar formulario
-    if(param){
+    if (param) {
         if (window.innerWidth <= 768) { //Mobile
             const secondParent = document.querySelectorAll('.profile-selected-field-container')
             secondParent.forEach(div => {
                 const firstParent = div.closest('.options-selected-container')
                 const spanParent = div.querySelectorAll('.profile-field-container')
                 spanParent.forEach(span => {
-                   
+
                     span.querySelector('span').classList.add('span-inactive')
                 })
                 const inputContainers = div.querySelectorAll('.profile-input')
@@ -38,7 +40,7 @@ window.addEventListener('load', () => {
                 btn.classList.add('form-btn-inactive')
                 btn.nextElementSibling.classList.remove('form-btn-inactive')
             })
-           
+
             radioButtons.forEach(radio => {
                 radio.disabled = false
             })
@@ -47,18 +49,19 @@ window.addEventListener('load', () => {
             secondParent.forEach(div => {
                 const spanParent = div.querySelectorAll('.profile-field-container')
                 spanParent.forEach(parent => {
-                    parent.querySelector('span').classList.add('span-inactive')
+                    parent.querySelector('span')?.classList.add('span-inactive')
                 })
                 const inputContainers = div.querySelectorAll('.profile-data-container .profile-input')
                 inputContainers.forEach(cont => {
-                    cont.classList.remove('input-container-inactive')
-                    cont.classList.add('input-container-active')
+                    cont?.classList.remove('input-container-inactive')
+                    cont?.classList.add('input-container-active')
                 })
             })
-            btn.classList.add('form-btn-inactive')
-            btn.nextElementSibling.classList.remove('form-btn-inactive')
+            editContentBtn.forEach(btn => {
+                btn?.classList.add('form-btn-inactive')
+                btn?.nextElementSibling.classList.remove('form-btn-inactive')
+            })
             radioButtons.forEach(radio => {
-                console.log('entro')
                 radio.disabled = false
             })
         }
@@ -120,7 +123,7 @@ window.addEventListener('load', () => {
 
                 btn.classList.add('form-btn-inactive')
                 btn.nextElementSibling.classList.remove('form-btn-inactive')
-               
+
                 radioButtons.forEach(radio => {
                     radio.disabled = false
                 })
@@ -129,7 +132,7 @@ window.addEventListener('load', () => {
                 secondParent.forEach(div => {
                     const spanParent = div.querySelectorAll('.profile-field-container')
                     spanParent.forEach(parent => {
-                        parent.querySelector('span').classList.add('span-inactive')
+                        parent.querySelector('span')?.classList.add('span-inactive')
                     })
                     const inputContainers = div.querySelectorAll('.profile-data-container .profile-input')
                     inputContainers.forEach(cont => {
@@ -138,13 +141,70 @@ window.addEventListener('load', () => {
                     })
                 })
                 btn.classList.add('form-btn-inactive')
-                btn.nextElementSibling.classList.remove('form-btn-inactive')
+                btn.nextElementSibling?.classList.remove('form-btn-inactive')
                 radioButtons.forEach(radio => {
                     radio.disabled = false
                 })
             }
         })
-    })
+    });
+    // Logica para que todos los inputs numericos no acepten letras
+    let numericInputs = document.querySelectorAll('.numeric-only-input');
+    numericInputs.forEach(input => {
+        // Tomo el ultimo valor
+        let lastInputValue = input.value;
+        input.addEventListener("input", function (e) {
+            var inputValue = e.target.value;
+            if (!isNumeric(inputValue)) { // Si no es un número, borra el contenido del campo
+                e.target.value = lastInputValue;
+            } else {
+                lastInputValue = inputValue; // Almacenar el último valor válido
+            }
+        });
+    });
+
+    // Logica para que todos los input de solo letras no acepten numeros
+    let letterInputs = document.querySelectorAll('.letter-only-input');
+    letterInputs.forEach(input => {
+        // Tomo el ultimo valor
+        let lastInputValue = input.value;
+        input.addEventListener("input", function (e) {
+            var inputValue = e.target.value;
+            if (!isLetter(inputValue)) { // Si no es letra, borra el contenido del campo
+                e.target.value = lastInputValue;
+            } else {
+                lastInputValue = inputValue; // Almacenar el último valor válido
+            }
+        });
+    });
+
+    // Logica para no permitir envio de formulario si no se completa lo requerido
+    const sendFormBtns = document.querySelectorAll('.send-user-info-form-btn');
+    sendFormBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            // Agarro el formulario que envio
+            const form = btn.closest('.user-info-form');
+            // Bandera para saber si se completo lo necesario
+            let flag = true;
+            //Agarro los inputs requeridos
+            const requiredInputs = form.querySelectorAll('.required');
+            requiredInputs.forEach(input => {
+                if (!input.value) {
+                    flag = false;
+                    // Armo el mensaje de error
+                    // Crear el mensaje adicional
+                    const additionalMessage = document.createElement('span');
+                    additionalMessage.classList.add('error-msg');
+                    additionalMessage.innerHTML = 'Debes completar el campo'
+                    // Insertar el mensaje adicional después del input
+                    input.closest('div').appendChild(additionalMessage);
+                }
+            });
+            if (!flag) {
+                e.preventDefault();
+            }
+        })
+    });
 
 
 

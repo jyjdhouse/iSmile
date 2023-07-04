@@ -27,7 +27,6 @@ window.addEventListener('load', () => {
                 image.currentTime = 0;
                 image.play(); //Arranco el video
                 const duration = image.duration * 1000; //Duracion del video 
-                console.log(`Deberia reproducir video con duracion ${duration} e intervalo ${intervalId}`);
                 clearInterval(intervalId); //Limpio el intervalo de 0s
                 timeout = setTimeout(() => { //Video termina
                     intervalId = setInterval(() => {

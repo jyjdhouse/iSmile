@@ -15,10 +15,11 @@ const controller = {
 
     userProfile: async (req, res) => {
         try {
-            const data = await axios('http://localhost:4500/api/user/1')
-            const response = data.data.meta
-            const user = response.user
-            return res.render('userProfile', { user })
+            const user = await db.User.findByPk(req.session.userLoggedId,{
+                include: ['address']
+            })
+            // return res.send(user);
+            return res.render('userProfile', { user, provinces })
         } catch (error) {
             console.log(`Falle en userController.userProfile: ${error}`);
             return res.json({ error })
@@ -111,7 +112,7 @@ const controller = {
             let userData = req.body;
 
             let userToLog = await db.User.findOne({ where: { email: userData.email } });
-
+            // return res.send(userToLog);
             // Si hay usuario
             if (userToLog) {
                 // Comparo contrasenas
@@ -139,9 +140,66 @@ const controller = {
             return res.json(error);
         }
     },
-    /* checkout: async (req, res) => {
-        return res.render('checkout', {categories: await getCategories(), countryCodes: await getCountryCodes()})
-    }, */
+    update: async(req,res) =>{
+        let userToUpdate = await db.User.findByPk(req.session.userLoggedId,{
+            include: ['address']
+        })
+        let userBodyData = req.body;
+        
+        // Datos para la tabla user
+        let userDataDB = {
+            first_name: userBodyData.first_name,
+            last_name: userBodyData.last_name,
+            phone: userBodyData.phone,
+            dni: userBodyData.dni,
+            wpp_notifications: parseInt(userBodyData.wpp_notifications),
+            email_notifications: parseInt(userBodyData.email_notifications),
+            email_newsletter: parseInt(userBodyData.email_newsletter),
+        };
+        // Actualizo el usuario
+        await db.User.update(userDataDB,{
+            where: {
+                id: userToUpdate.id
+            }
+        })
+        // Datos para la tabla address
+        // Armo el objeto address con los datos que me llegan del form
+        let createdAddress,addressDataDB;
+        let addressBody = {
+            street: userBodyData.street || null,
+            apartment: userBodyData.apartment || null,
+            city: userBodyData.city || null,
+            zip_code: userBodyData.zip_code || null
+        }
+        // Me fijo si son todos los valores nulos, entonces no creo el address
+        const addressAllKeysNull = Object.values(addressBody).every(value => value === null);
+        // return res.send(addressAllKeysNull)
+        if(!userToUpdate.address){//Si no tiene una direccion tengo que crear una
+            // Si completo por lo menos algun address data
+            if(!addressAllKeysNull){
+                addressDataDB = {
+                    ...addressBody,
+                    provinces_id: userBodyData.provinces_id,
+                    user_id: userToUpdate.id
+                };
+                // La creo
+                createdAddress = await db.Address.create(addressDataDB);
+            }  
+        } else{ // Si ya tenia
+            addressDataDB = {
+                ...addressBody,
+                provinces_id: userBodyData.provinces_id,
+                user_id: userToUpdate.id
+            };
+            // La actualizo
+            await db.Address.update(addressDataDB,{
+                where: {
+                    id: userToUpdate.address.id
+                }
+            });
+        }
+        return res.redirect('/user/profile')
+    }
 };
 
 module.exports = controller;

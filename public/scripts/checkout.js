@@ -1,3 +1,5 @@
+import { isLetter, isNumeric } from "./utils.js";
+
 window.addEventListener('load', () => {
     // Logica para hacer a todos los input con valor 1
     document.querySelectorAll('.product-quantity').forEach(inp => {
@@ -313,12 +315,6 @@ window.addEventListener('load', () => {
     });
 
 
-    function isLetter(value) {
-        return /^[A-Za-z\s]+$/.test(value)
-    }
-    function isNumeric(value) {
-        return /^[0-9]*$/.test(value);
-    }
     const validateUserDNI = (input) => {
         let booleanValue = /^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/.test(input?.value);
         let field = input.closest('.field');

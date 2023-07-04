@@ -10,7 +10,7 @@ const userLogged = async (req, res, next) => {
         res.locals.isLogged = false;
         
        //Agarro la cookie del token
-        const token = req.cookies.userAccessToken;
+        const token = req.cookies?.userAccessToken;
         if(token){
             const decodedData = jwt.verify(token, secret);
             if(decodedData){ //Si verifico el token, solo agarro el id

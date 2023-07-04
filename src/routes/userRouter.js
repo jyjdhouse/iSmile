@@ -1,13 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const guestMiddleware = require('../middlewares/guestMiddleware');
 // Validators
 const registValidations = require('../middlewares/registValidations');
+
+// Rutas
+
+// GET
 router.get('/logout',userController.logout);
 router.get('/checkout',userController.checkout); 
-router.get('/profile',userController.userProfile);
+router.get('/profile',guestMiddleware,userController.userProfile);
+
+// POST
 router.post('/login',userController.login);
 router.post('/regist',registValidations,userController.processRegist);
+
+//PUT
+router.put('/profile',userController.update)
 
 
 module.exports=router;

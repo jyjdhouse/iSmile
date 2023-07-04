@@ -6,7 +6,7 @@
                 <div class="shopping-cart-container shopping-cart-mobile"> <!--En mobile solo que ve asi-->
                     <a href="/user/checkout"><i class='bx bx-shopping-bag open-popup-cart-btn'></i></a>
                     <!-- <i class="fa-solid fa-bag-shopping"></i> -->
-                    <p class="products-quantity">5</p>
+                    <p class="products-quantity"></p>
                 </div>
                 <div class="search-section-container mobile-only">
                     <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-mobile"></i>
@@ -23,10 +23,10 @@
             <div class="nav-end">
                 <div class="user-logged-container">
                     <p class="user-logged-name login-menu-btn-desktop">Hola,<span
-                            class="bold"><%= locals.userLogged.name || 'user' %></span></p>
+                            class="bold"><%= locals.userLogged.first_name || 'user' %></span></p>
                     <div class="logged-menu-container">
                         <ul class="logged-menu-list">
-                            <% if (1==1) { %> <!--SI ES ADMIN userLogged.user_categories_id-->
+                            <% if (locals.userLogged.user_categories_id!=3) { %> <!--SI ES ADMIN userLogged.user_categories_id-->
                                 <li class="logged-menu-list-item expandable-list-item">
                                     <p>Crear <i class='bx bx-chevron-right create-options-toggler'></i> </p>
                                     <ul class="admin-menu-list">
@@ -36,7 +36,7 @@
                                     </ul>
                                 </li>
                                 <% } %>
-                                    <li class="logged-menu-list-item"><a href="/user/profile/1">Ir a mi perfil</a>
+                                    <li class="logged-menu-list-item"><a href="/user/profile">Ir a mi perfil</a>
                                     </li>
                                     <li class="logged-menu-list-item"><a href="/user/logout">Cerrar Sesion</a></li>
                         </ul>
@@ -46,7 +46,7 @@
                 <div class="shopping-cart-container shopping-cart-desktop"> <!--En mobile solo que ve asi-->
                     <a href="/user/checkout"><i class='bx bx-shopping-bag open-popup-cart-btn'></i></a>
                     <!-- <i class="fa-solid fa-bag-shopping"></i> -->
-                    <p class="products-quantity">5</p>
+                    <p class="products-quantity"></p>
                 </div>
                 <div class="search-section-container desktop-only">
                     <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-desktop"></i>
@@ -89,7 +89,7 @@
                     <div class="shopping-cart-container">
                         <a href="/user/checkout"><i class='bx bx-shopping-bag open-popup-cart-btn'></i></a>
                         <!-- <i class="fa-solid fa-bag-shopping"></i> -->
-                        <p class="products-quantity">5</p>
+                        <p class="products-quantity"></p>
                     </div>
                 </div>
                 <% } %>

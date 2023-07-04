@@ -18,9 +18,9 @@ const userIsIncomplete = async (req, res, next) => {
                 var pathToCheck = '';
                 if (req.originalUrl) {
                     pathToCheck = getRelativePath(req.originalUrl);
-                    console.log(pathToCheck);
                     // Verificar si el usuario se encuentra en una URL específica
                     if (pathToCheck != '/user/profile') {
+                        console.log(pathToCheck);
                         // Lo redirijo para que complete sus datos
                         return res.redirect(`/user/profile?completeForm=${true}`);
                     }
