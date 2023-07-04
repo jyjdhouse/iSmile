@@ -8,7 +8,7 @@ window.addEventListener('load', () => {
     const radioButtons = document.querySelectorAll('.radio-label-container input')
     const urlString = window.location.search;
     const urlParams = new URLSearchParams(urlString);
-    const param = urlParams.get('completeForm')
+    const param = urlParams.get('completeForm');
     // disableo los radios
     radioButtons.forEach(radio => {
         radio.disabled = true
@@ -17,7 +17,7 @@ window.addEventListener('load', () => {
 
     // si el valor del param es true, pongo para completar formulario
     if(param){
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 768) { //Mobile
             const secondParent = document.querySelectorAll('.profile-selected-field-container')
             secondParent.forEach(div => {
                 const firstParent = div.closest('.options-selected-container')

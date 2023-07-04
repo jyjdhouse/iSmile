@@ -17,7 +17,7 @@ window.addEventListener('load', () => {
     const backUserOptionsBtn = document.querySelector('.back-user-option-btn');
 
     // Si toca en el boton del usuario sale el userOptions
-    userOptionsTriggerBtn.addEventListener('click', () => {
+    userOptionsTriggerBtn?.addEventListener('click', () => {
         // La agrego por si no la tenia
         blackScreen.classList.add('black-screen-active');
         userOptionsPopup.classList.add('user-options-popup-active');
