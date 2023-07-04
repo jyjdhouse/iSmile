@@ -38,7 +38,7 @@
     width: 20%;
     margin: 0 1%;
     border: 1px solid var(--gold-color);
-    border-radius: 10px;
+    /* border-radius: 10px; */
 }
 
 .other-img-container img {
@@ -83,14 +83,18 @@ h1.product-title {
     width: 10%;
     text-align: center;
 }
-
-.add-to-cart {
+.cart-options-btn{
     border: 0;
     outline: 0;
     padding: 3% 5%;
     background-color: var(--violet-color);
     color: #fff;
-    margin-left: 2%;
+    border-radius: 1rem;
+}
+.product-container .remove-cart-product{
+    background: none;
+    border: 1px solid var(--light-violet-color);
+    color: var(--violet-color);
 }
 
 .input-error {
@@ -159,12 +163,12 @@ h1.product-title {
         font-size: 1.2rem;
     }
 
-    .add-to-cart-form {
+    .cart-options-btn-form {
         display: flex;
         align-items: center;
     }
 
-    .add-to-cart {
+    .cart-options-btn {
         font-size: 1.2rem;
     }
 
@@ -175,13 +179,16 @@ h1.product-title {
     .suggested-product-section {
         /* width: 90%; */
     }
-    .suggested-product-title-container{
+
+    .suggested-product-title-container {
         margin-left: 0;
     }
-    .suggested-product-title-container h2{
+
+    .suggested-product-title-container h2 {
         font-size: 1.4rem;
         text-align: start;
     }
+
     .suggested-product-list {
         grid-template-columns: repeat(3, 33.33%);
     }
@@ -223,9 +230,10 @@ h1.product-title {
 
     .other-product-imgs-container {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
+        /* column-gap: 2%; */
         width: 90%;
-        margin: 2% auto 5%;
+        margin: 3% auto;
         height: 20%;
     }
 
@@ -234,22 +242,29 @@ h1.product-title {
         cursor: pointer;
     }
 
-    .add-to-cart {
+    .cart-options-btn {
         cursor: pointer;
+        padding: 2% 4%;
+        margin-left: 0;
+        border-radius: 1rem;
     }
 
     .item-quantity {
         height: 100%;
     }
-    .suggested-product-title-container{
+
+    .suggested-product-title-container {
         margin: 5% 0 2%;
     }
+
     .suggested-product-title-container h2 {
         font-size: 1.7rem;
     }
-    .suggested-product-section{
+
+    .suggested-product-section {
         width: 85%;
     }
+
     .suggested-product-list {
         margin: 0;
     }

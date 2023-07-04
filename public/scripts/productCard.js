@@ -22,7 +22,7 @@ window.addEventListener('load', async () => {
             // Click en agregar al carro
             btn.addEventListener('click', async (e) => {
                 try {
-                    const card = btn.closest('.product-card-container');
+                    const card = btn.closest('.product-card-container') || btn.closest('.add-cart-button-container');
                     //para llegar al id del producto ..
                     const idProd = card.dataset.productid;
                     card.querySelector('.loading-container').classList.add('loading-container-active');
@@ -36,8 +36,8 @@ window.addEventListener('load', async () => {
                     shopingCartQuickPopup.classList.add('add-to-cart-container-active');
                     blackScreen.classList.add('black-screen-active');
                     // Cambio los iconos
-                    card.querySelector('.bx-shopping-bag')?.classList.add('hidden');
-                    card.querySelector('.bx-check-circle')?.classList.remove('hidden');
+                    card.querySelector('.quick-add-cart-btn')?.classList.add('hidden');
+                    card.querySelector('.remove-cart-product')?.classList.remove('hidden');
                     // Le sumo uno al numero del carro
                     totalProducts.forEach(num => num.innerHTML = parseInt(num.innerHTML) ? parseInt(num.innerHTML) + 1 : 1);
                 } catch (error) {
@@ -61,7 +61,7 @@ window.addEventListener('load', async () => {
         // Cuando tocan el boton del tick (sacan el producto del carro)
         removingCartButtons.forEach(btn => {
             btn.addEventListener('click', async (e) => {
-                const card = btn.closest('.product-card-container');
+                const card = btn.closest('.product-card-container') || btn.closest('.add-cart-button-container');
                 //para llegar al id del producto ..
                 const idProd = card.dataset.productid;
                 card.querySelector('.loading-container').classList.add('loading-container-active');
@@ -73,8 +73,8 @@ window.addEventListener('load', async () => {
                 // Remuevo el spinner loading
                 card.querySelector('.loading-container').classList.remove('loading-container-active');
                 // Cambio los iconos
-                card.querySelector('.bx-shopping-bag')?.classList.remove('hidden');
-                card.querySelector('.bx-check-circle')?.classList.add('hidden');
+                card.querySelector('.quick-add-cart-btn')?.classList.remove('hidden');
+                card.querySelector('.remove-cart-product')?.classList.add('hidden');
                 // Le resto uno al numero del carro
                 totalProducts.forEach(num => num.innerHTML = parseInt(num.innerHTML) ? parseInt(num.innerHTML) - 1 : '');
             })
@@ -97,8 +97,8 @@ window.addEventListener('load', async () => {
                     productAlreadyInCart = cart.find(item => item.product_id == productId);
                 }
                 if (productAlreadyInCart) {
-                    card.querySelector('.bx-shopping-bag').classList.add('hidden');
-                    card.querySelector('.bx-check-circle').classList.remove('hidden');
+                    card.querySelector('.quick-add-cart-btn').classList.add('hidden');
+                    card.querySelector('.remove-cart-product').classList.remove('hidden');
                 }
             })
         };
@@ -154,7 +154,7 @@ window.addEventListener('load', async () => {
         }
         function addProductToLocaleCart(prodId) {
             // Obtengo el carrito de sessionStorage
-            const cart = JSON.parse(localStorage.getItem('temporalCart')) || []; 
+            const cart = JSON.parse(localStorage.getItem('temporalCart')) || [];
 
             // Verifico si el producto ya está en el carrito
             const productAlreadyInCart = cart.find(item => item.product_id == prodId);
@@ -171,14 +171,33 @@ window.addEventListener('load', async () => {
 
             localStorage.setItem('temporalCart', JSON.stringify(cart)); // Guardo el carrito actualizado en sessionStorage
         }
-        function removeProductfromLocaleCart(prodId){
+        function removeProductfromLocaleCart(prodId) {
             // Obtengo el carrito de sessionStorage
             let cart = JSON.parse(localStorage.getItem('temporalCart')) || [];
 
-            cart = cart.filter(prod=>prod.product_id != prodId);
+            cart = cart.filter(prod => prod.product_id != prodId);
 
             localStorage.setItem('temporalCart', JSON.stringify(cart)); // Guardo el carrito actualizado en sessionStorage
         }
+        // Logica para pintar el boton que corresponda del carro en product Detail
+        function checkIfPRoductIsInCartDetail() {
+            const productCard = document.querySelector('.product-container');
+            if(!productCard)return
+            const productId = productCard.dataset.productid;
+            // Hace un find ==> encuentra si el producto esta en el carro
+            let productAlreadyInCart;
+            if (userLogged) {
+                productAlreadyInCart = userLogged.temporalCart?.temporalItems.find(item => item.product_id == productId);
+            } else {
+                let cart = JSON.parse(localStorage.getItem('temporalCart')) || [];
+                productAlreadyInCart = cart.find(item => item.product_id == productId);
+            }
+            if (productAlreadyInCart) {
+                productCard.querySelector('.quick-add-cart-btn').classList.add('hidden');
+                productCard.querySelector('.remove-cart-product').classList.remove('hidden');
+            }
+        }
+        checkIfPRoductIsInCartDetail();
 
     } catch (error) {
         console.log("Falle en productCard.js: " + error);
