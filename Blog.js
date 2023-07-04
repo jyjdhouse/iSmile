@@ -16,7 +16,7 @@
 //     }
 
 //     let config = {
-//         tableName: 'Blog',
+//         tableName: 'blogs',
 //         paranoid: true
 //     }
 

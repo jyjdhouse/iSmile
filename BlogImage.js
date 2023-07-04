@@ -12,7 +12,7 @@
 //     }
 
 //     let config = {
-//         tableName: 'product_image',
+//         tableName: 'blog_images',
 //         paranoid: true
 //     }
 
