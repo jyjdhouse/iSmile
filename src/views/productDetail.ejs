@@ -20,31 +20,32 @@
                         <img src="/img/product1.png" class="main-img" alt="main-image">
                     </div>
                     <div class="other-product-imgs-container">
-                        <div class="other-img-container other-img-container-active">
-                            <img src="/img/product1.png" class="product-img" alt="thumbnail-image">
-                            <!-- TODO: Cuando hagamos forEach meter en alt el id -->
-                        </div>
-                        <div class="other-img-container">
-                            <img src="/img/product2.png" class="product-img" alt="thumbnail-image">
-                        </div>
-                        <div class="other-img-container">
-                            <img src="/img/product3.png" class="product-img" alt="thumbnail-image">
-                        </div>
-                        <div class="other-img-container">
-                            <img src="/img/product2.png" class="product-img" alt="thumbnail-image">
-                        </div>
+                        <% images.forEach((img, i) => { %>
+                            <% if(i ==0) { %>
+                                <div class="other-img-container other-img-container-active">
+                                    <img src="/img/product/<%= img.image %>" class="product-img" alt="<%=img.id%>">
+                                   
+                                </div>
+                            <% } else { %>
+                                <div class="other-img-container">
+                                    <img src="/img/product/<%= img.image %>" class="product-img" alt="<%=img.id%>">
+                                    
+                                </div>
+                            <% } %>
+                                
+                        <% }) %>
+                        
                     </div>
                 </div>
                 <div class="second-column">
                     <div class="product-detail-info-container">
                         <div class="product-title-container">
-                            <h1 class="product-title">Crema antiage</h1>
+                            <h1 class="product-title"><%= product.name %></h1>
 
-                            <h3 class="product-title">Precio</h3>
+                            <h3 class="product-title"><%= product.price %></h3>
                         </div>
                         <div class="product-description-container">
-                            <p>Description 1</p>
-                            <p>Description 2</p>
+                            <p><%= product.description %></p>
                         </div>
                     </div>
                     <div class="purchase-product-container">
