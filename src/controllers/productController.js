@@ -13,49 +13,25 @@ const getProduct = require('../utils/getProduct');
 const controller = {
     list: async (req, res) => { //Controlador que renderiza listado de productos
         try {
-            let errors = req.query.errors && JSON.parse(req.query.errors);
-            let oldData = req.query.oldData && JSON.parse(req.query.oldData);
-            // Si me llegan errores, renderizo la vista y le llevo los params errores
-            if (errors) {
-                // return res.send(req.query.errors)
-                return res.render('productList', { errors, oldData });
-            }
-            return res.render('productList')
+            let products = await db.Product.findAll({
+                include: ['files']
+            });
+            // return res.send(products);
+            return res.render('productList',{products})
         } catch (error) {
             console.log(`Falle en productController.list: ${error}`);
             return res.json(error);
         }
     },
-    getOneProduct: async(req,res) =>{
-
-        const productId = req.params.productId
-
-        let product = await db.Product.findAll({
-            where:{
-                id: productId
-            },
-            /* include: ['keywords','colors'] */
-        });
-        return res.send(product)
-    },
     detail: async (req, res) => { //Metodo que muestra detalle de producto
         try {
-            let errors = req.query.errors && JSON.parse(req.query.errors);
-            let oldData = req.query.oldData && JSON.parse(req.query.oldData);
-            // Si me llegan errores, renderizo la vista y le llevo los params errores
-            if (errors) {
-                // return res.send(req.query.errors)
-                return res.render('productDetail', { errors, oldData, categories: await getCategories(), countryCodes: await getCountryCodes(), countryCodes: await getCountryCodes() });
-            }
+            
             const id = req.params.productId
-            let product = await db.Product.findByPk(id);
-            let images = await db.Product_Image.findAll({
-                where: {
-                    product_id: id
-                }
-            })
-        
-            return res.render('productDetail', {product, images})
+            let product = await db.Product.findByPk(id,{
+                include: ['files']
+            });
+            // return res.send(product);
+            return res.render('productDetail', {product})
         } catch (error) {
             console.log(`Falle en productController.detail: ${error}`);
             return res.json(error);

@@ -25,178 +25,188 @@
             </div>
 
             <section class="product-list-section">
-                <article class="product-card-container" data-productId=<%=1%>>
-                    <a href="/product/1" class="product-card-link">
-                        <div class="image-container">
-                            <div class="image-carousel">
-                                <img src="/img/product1.png" alt="product-image"
-                                    class="product-image-test product-image-test-active" data-productId=<%=1%>>
-                                <img src="/img/product2.png" alt="product-image"
-                                    class="product-image-test product-image-test-next-slide" data-productId=<%=1%>>
-                                <video class="video product-image-test product-image-test-prev-slide" muted playsinline
-                                    loop>
-                                    <source src="/video/product1.MP4" type="video/mp4">
-                                    <source src="/video/product1.MP4" type="video/webm">
-                                    No se puede reproducir el video
-                                </video>
+                <% products.forEach(prod=> { %>
+                    <article class="product-card-container" data-productId=<%=prod.id%>>
+                        <a href="/product/<%= prod.id %>" class="product-card-link">
+                            <div class="image-container">
+                                <div class="image-carousel">
+                                    <%prod.files.forEach(file=>{ %>
+                                        <% if (file.file_types_id==1) { %> <!--FOTO-->
+                                            <img src="/img/product/<%= file.filename%>" alt="<%= prod.name%>-<%=file.filenanme %>"
+                                                class="product-image-test product-image-test-active">
+                                            <% }else if(file.file_types_id == 2){ %><!--VIDEO--> %>
+                                                <video
+                                                class="video product-image-test product-image-test-prev-slide"
+                                                muted playsinline loop>
+                                                <source src="/video/product1.MP4" type="video/mp4">
+                                                <source src="/video/product1.MP4" type="video/webm">
+                                                No se puede reproducir el video
+                                            </video>
+                                            <% } %>
+                                    <% })%>                                                   
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-info-container">
-                            <div class="price-name-container">
-                                <p class="product-name">
-                                    Crema Restauradora
-                                </p>
-                                <p class="product-price">$5000</p>
+                            <div class="product-info-container">
+                                <div class="price-name-container">
+                                    <p class="product-name">
+                                        <%= prod.name %>
+                                    </p>
+                                    <p class="product-price">$<%= prod.price %></p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <div class="product-quick-actions-container" data-productId=<%=1 %>>
-                        <div class="quick-cart-container" data-productid=<%=1 %>>
-                            <div class="logo-container">                                                                           
-                                <i class='bx bx-shopping-bag quick-add-cart-btn '></i>
-                                <i class='bx bx-check-circle remove-cart-product hidden'></i>
+                        </a>
+                        <div class="product-quick-actions-container" data-productId=<%= prod.id %>>
+                            <div class="quick-cart-container" data-productid=<%= prod.id %>>
+                                <div class="logo-container">
+                                    <i class='bx bx-shopping-bag quick-add-cart-btn '></i>
+                                    <i class='bx bx-check-circle remove-cart-product hidden'></i>
+                                </div>
                             </div>
-                        </div>
-                        <div class="loading-container">
-                            <div class="load-wrapp">
-                                <div class="load-3">
-                                    <div class="line"></div>
-                                    <div class="line"></div>
-                                    <div class="line"></div>
+                            <div class="loading-container">
+                                <div class="load-wrapp">
+                                    <div class="load-3">
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </article>
-                <article class="product-card-container" data-productId=<%=2%>>
-                    <a href="/product/1" class="product-card-link">
-                        <div class="image-container">
-                            <div class="image-carousel">
-                                <img src="/img/product1.png" alt="product-image"
-                                    class="product-image-test product-image-test-active" data-productId=<%=2%>>
-                                <img src="/img/product2.png" alt="product-image"
-                                    class="product-image-test product-image-test-next-slide" data-productId=<%=2%>>
-                                <video class="video product-image-test product-image-test-prev-slide" muted playsinline
-                                    loop>
-                                    <source src="/video/product1.MP4" type="video/mp4">
-                                    <source src="/video/product1.MP4" type="video/webm">
-                                    No se puede reproducir el video
-                                </video>
-                            </div>
-                        </div>
-                        <div class="product-info-container">
-                            <div class="price-name-container">
-                                <p class="product-name">
-                                    Crema Restauradora
-                                </p>
-                                <p class="product-price">$5000</p>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="product-quick-actions-container" data-productId=<%=2%>>
-                        <div class="quick-cart-container" data-productId=<%=2%>>
-                            <div class="logo-container">                                                                           
-                                <i class='bx bx-shopping-bag quick-add-cart-btn '></i>
-                                <i class='bx bx-check-circle remove-cart-product hidden'></i>
-                            </div>
-                        </div>
-                        <div class="loading-container">
-                            <div class="load-wrapp">
-                                <div class="load-3">
-                                    <div class="line"></div>
-                                    <div class="line"></div>
-                                    <div class="line"></div>
+                    </article>
+                    <% }) %>
+
+                        <article class="product-card-container" data-productId=<%=2%>>
+                            <a href="/product/1" class="product-card-link">
+                                <div class="image-container">
+                                    <div class="image-carousel">
+                                        <img src="/img/product1.png" alt="product-image"
+                                            class="product-image-test product-image-test-active" data-productId=<%=2%>>
+                                        <img src="/img/product2.png" alt="product-image"
+                                            class="product-image-test product-image-test-next-slide"
+                                            data-productId=<%=2%>>
+                                        <video class="video product-image-test product-image-test-prev-slide" muted
+                                            playsinline loop>
+                                            <source src="/video/product1.MP4" type="video/mp4">
+                                            <source src="/video/product1.MP4" type="video/webm">
+                                            No se puede reproducir el video
+                                        </video>
+                                    </div>
+                                </div>
+                                <div class="product-info-container">
+                                    <div class="price-name-container">
+                                        <p class="product-name">
+                                            Crema Restauradora
+                                        </p>
+                                        <p class="product-price">$5000</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="product-quick-actions-container" data-productId=<%=2%>>
+                                <div class="quick-cart-container" data-productId=<%=2%>>
+                                    <div class="logo-container">
+                                        <i class='bx bx-shopping-bag quick-add-cart-btn '></i>
+                                        <i class='bx bx-check-circle remove-cart-product hidden'></i>
+                                    </div>
+                                </div>
+                                <div class="loading-container">
+                                    <div class="load-wrapp">
+                                        <div class="load-3">
+                                            <div class="line"></div>
+                                            <div class="line"></div>
+                                            <div class="line"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </article>
-                <article class="product-card-container" data-productId=<%=3%>>
-                    <a href="/product/1" class="product-card-link">
-                        <div class="image-container">
-                            <div class="image-carousel">
-                                <img src="/img/product1.png" alt="product-image"
-                                    class="product-image-test product-image-test-active" data-productId=<%=3%>>
-                                <img src="/img/product2.png" alt="product-image"
-                                    class="product-image-test product-image-test-next-slide" data-productId=<%=3%>>
-                                <video class="video product-image-test product-image-test-prev-slide" muted playsinline
-                                    loop>
-                                    <source src="/video/product1.MP4" type="video/mp4">
-                                    <source src="/video/product1.MP4" type="video/webm">
-                                    No se puede reproducir el video
-                                </video>
-                            </div>
-                        </div>
-                        <div class="product-info-container">
-                            <div class="price-name-container">
-                                <p class="product-name">
-                                    Crema Restauradora
-                                </p>
-                                <p class="product-price">$5000</p>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="product-quick-actions-container" data-productId=<%=3%>>
-                        <div class="quick-cart-container" data-productId=<%=3%>>
-                            <div class="logo-container">                                                                           
-                                <i class='bx bx-shopping-bag quick-add-cart-btn '></i>
-                                <i class='bx bx-check-circle remove-cart-product hidden'></i>
-                            </div>
-                        </div>
-                        <div class="loading-container">
-                            <div class="load-wrapp">
-                                <div class="load-3">
-                                    <div class="line"></div>
-                                    <div class="line"></div>
-                                    <div class="line"></div>
+                        </article>
+                        <article class="product-card-container" data-productId=<%=3%>>
+                            <a href="/product/1" class="product-card-link">
+                                <div class="image-container">
+                                    <div class="image-carousel">
+                                        <img src="/img/product1.png" alt="product-image"
+                                            class="product-image-test product-image-test-active" data-productId=<%=3%>>
+                                        <img src="/img/product2.png" alt="product-image"
+                                            class="product-image-test product-image-test-next-slide"
+                                            data-productId=<%=3%>>
+                                        <video class="video product-image-test product-image-test-prev-slide" muted
+                                            playsinline loop>
+                                            <source src="/video/product1.MP4" type="video/mp4">
+                                            <source src="/video/product1.MP4" type="video/webm">
+                                            No se puede reproducir el video
+                                        </video>
+                                    </div>
+                                </div>
+                                <div class="product-info-container">
+                                    <div class="price-name-container">
+                                        <p class="product-name">
+                                            Crema Restauradora
+                                        </p>
+                                        <p class="product-price">$5000</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="product-quick-actions-container" data-productId=<%=3%>>
+                                <div class="quick-cart-container" data-productId=<%=3%>>
+                                    <div class="logo-container">
+                                        <i class='bx bx-shopping-bag quick-add-cart-btn '></i>
+                                        <i class='bx bx-check-circle remove-cart-product hidden'></i>
+                                    </div>
+                                </div>
+                                <div class="loading-container">
+                                    <div class="load-wrapp">
+                                        <div class="load-3">
+                                            <div class="line"></div>
+                                            <div class="line"></div>
+                                            <div class="line"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </article>
-                <article class="product-card-container" data-productId=<%=4%>>
-                    <a href="/product/1" class="product-card-link">
-                        <div class="image-container">
-                            <div class="image-carousel">
-                                <img src="/img/product1.png" alt="product-image"
-                                    class="product-image-test product-image-test-active" data-productId=<%=4%>>
-                                <img src="/img/product2.png" alt="product-image"
-                                    class="product-image-test product-image-test-next-slide" data-productId=<%=4%>>
-                                <video class="video product-image-test product-image-test-prev-slide" muted playsinline
-                                    loop>
-                                    <source src="/video/product1.MP4" type="video/mp4">
-                                    <source src="/video/product1.MP4" type="video/webm">
-                                    No se puede reproducir el video
-                                </video>
-                            </div>
-                        </div>
-                        <div class="product-info-container">
-                            <div class="price-name-container">
-                                <p class="product-name">
-                                    Crema Restauradora
-                                </p>
-                                <p class="product-price">$5000</p>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="product-quick-actions-container" data-productId=<%=4%>>
-                        <div class="quick-cart-container" data-productId=<%=4%>>
-                            <div class="logo-container">                                                                           
-                                <i class='bx bx-shopping-bag quick-add-cart-btn '></i>
-                                <i class='bx bx-check-circle remove-cart-product hidden'></i>
-                            </div>
-                        </div>
-                        <div class="loading-container">
-                            <div class="load-wrapp">
-                                <div class="load-3">
-                                    <div class="line"></div>
-                                    <div class="line"></div>
-                                    <div class="line"></div>
+                        </article>
+                        <article class="product-card-container" data-productId=<%=4%>>
+                            <a href="/product/1" class="product-card-link">
+                                <div class="image-container">
+                                    <div class="image-carousel">
+                                        <img src="/img/product1.png" alt="product-image"
+                                            class="product-image-test product-image-test-active" data-productId=<%=4%>>
+                                        <img src="/img/product2.png" alt="product-image"
+                                            class="product-image-test product-image-test-next-slide"
+                                            data-productId=<%=4%>>
+                                        <video class="video product-image-test product-image-test-prev-slide" muted
+                                            playsinline loop>
+                                            <source src="/video/product1.MP4" type="video/mp4">
+                                            <source src="/video/product1.MP4" type="video/webm">
+                                            No se puede reproducir el video
+                                        </video>
+                                    </div>
+                                </div>
+                                <div class="product-info-container">
+                                    <div class="price-name-container">
+                                        <p class="product-name">
+                                            Crema Restauradora
+                                        </p>
+                                        <p class="product-price">$5000</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="product-quick-actions-container" data-productId=<%=4%>>
+                                <div class="quick-cart-container" data-productId=<%=4%>>
+                                    <div class="logo-container">
+                                        <i class='bx bx-shopping-bag quick-add-cart-btn '></i>
+                                        <i class='bx bx-check-circle remove-cart-product hidden'></i>
+                                    </div>
+                                </div>
+                                <div class="loading-container">
+                                    <div class="load-wrapp">
+                                        <div class="load-3">
+                                            <div class="line"></div>
+                                            <div class="line"></div>
+                                            <div class="line"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </article>
+                        </article>
             </section>
         </main>
         <%- include('./partials/footer.ejs') %>

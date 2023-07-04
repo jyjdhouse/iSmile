@@ -206,6 +206,14 @@ window.addEventListener('load', () => {
         })
     });
 
+    // Logica para que los sin especificar en gris
+    let formSpans = document.querySelectorAll('.profile-field-container span');
+    formSpans.forEach(span => {
+        if(span.innerHTML.includes('Sin especificar')){
+            span.classList.add('grey')
+        }
+    });
+
 
 
 })

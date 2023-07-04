@@ -17,18 +17,18 @@
             <article class="product-container">
                 <div class="first-column">
                     <div class="main-img-container">
-                        <img src="/img/product1.png" class="main-img" alt="main-image">
+                        <img src="/img/product/<%= product.files[0]?.filename %>" class="main-img" alt="<%= product.name%>-<%=product.files[0]?.filenanme %>">
                     </div>
                     <div class="other-product-imgs-container">
-                        <% images.forEach((img, i) => { %>
+                        <% product.files.forEach((file, i) => { %>
                             <% if(i ==0) { %>
                                 <div class="other-img-container other-img-container-active">
-                                    <img src="/img/product/<%= img.image %>" class="product-img" alt="<%=img.id%>">
+                                    <img src="/img/product/<%= file?.filename %>" class="product-img" alt="<%= product.name%>-<%=file?.filenanme %>">
                                    
                                 </div>
                             <% } else { %>
                                 <div class="other-img-container">
-                                    <img src="/img/product/<%= img.image %>" class="product-img" alt="<%=img.id%>">
+                                    <img src="/img/product/<%= file?.filename %>" class="product-img" alt="<%= product.name%>-<%=file?.filenanme %>">
                                     
                                 </div>
                             <% } %>
