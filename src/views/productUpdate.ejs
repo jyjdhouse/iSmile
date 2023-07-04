@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+
+
+        <link rel="stylesheet" href="/css/productCreate.css" type="text/css">
+        <script src="/scripts/productUpdate.js" type="module"></script>
+        <title>Cartera #1</title>
+</head>
+
+<body>
+    <%- include('./partials/header.ejs') %>
+
+        <main class="product-create-main">
+            <h2 class="product-create-title">Actualización producto</h2>
+
+
+            <form action="/product/<%=productToUpdate.id %>?_method=PUT" class="create-product-form"
+                enctype="multipart/form-data" method="POST">
+                <div class="input-label-container">
+                    <label for="name">Nombre</label>
+                    <input type="text" name="name" value="<%= productToUpdate.name %>" class="required-input">
+                </div>
+                <div class="input-label-container">
+                    <label for="category">Categoría</label>
+                    <select name="category" id="">
+                        <% categories.forEach(cat=> { %>
+                            <option value="<%= cat.id %>" <%=productToUpdate.category_id==cat.id ? 'selected' : '' %>>
+                                <%=cat.category%>
+                            </option>
+                            <% }) %>
+
+                    </select>
+                </div>
+                <div class="input-label-container">
+                    <label for="description">Descripción</label>
+                    <textarea name="description" id="" cols="30" rows="10" class="required-input"><%= productToUpdate.description %></textarea>
+                </div>
+                <div class="input-label-container">
+                    <label for="price">Precio</label>
+                    <input type="text" name="price" value="<%= productToUpdate.price %>" class="required-input">
+                </div>
+                <div class="input-label-container">
+                    <label id='device-image' class="form-labels" for="images">Agregar imagenes
+                        <input class="form-input" type="file" name="images" multiple>
+                </div>
+                <div class="input-label-container">
+
+                    <label class="form-labels">Imagenes actuales</label>
+                    <% productToUpdate.images.map((img, i)=> { %>
+                        <% console.log(img.image) %>
+                        <div class="current-img-subcontainer">
+                            <input type="checkbox" id="<%= i %>" name="current_imgs" checked value="<%= img.image %>">
+                            <label for="<%= i %>">
+                                <img class="product-to-update-img" src="/img/product/<%= img.image %>"
+                                    alt="<%= img.id %>">
+                            </label>
+                        </div>
+                        <% }) %>
+                </div>
+
+                <button type="submit">Actualizar</button>
+
+            </form>
+
+            </div>
+        </main>
+        <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

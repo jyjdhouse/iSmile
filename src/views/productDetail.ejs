@@ -14,38 +14,57 @@
 <body>
     <%- include('./partials/header.ejs') %>
         <main class="product-detail-main">
+
+           
+            <div class="admins-actions-container">
+                <div class="action-container">
+                    <a href="/product/update/<%= product.id %>">Actualizar producto</a>
+                </div>
+                <div class="action-container">
+                    <form class="update-delete-btn-container"
+                        action="/product/<%= product.id %>?_method=DELETE" method="POST">
+                        <button class="form-device-btn" type="submit">Eliminar producto</button>
+                    </form>
+                </div>
+            </div>
             <article class="product-container">
                 <div class="first-column">
                     <div class="main-img-container">
                         <img src="/img/product1.png" class="main-img" alt="main-image">
                     </div>
                     <div class="other-product-imgs-container">
-                        <% images.forEach((img, i) => { %>
-                            <% if(i ==0) { %>
+                        <% product.images.forEach((img, i)=> { %>
+                            <% if(i==0) { %>
                                 <div class="other-img-container other-img-container-active">
                                     <img src="/img/product/<%= img.image %>" class="product-img" alt="<%=img.id%>">
-                                   
+
                                 </div>
-                            <% } else { %>
-                                <div class="other-img-container">
-                                    <img src="/img/product/<%= img.image %>" class="product-img" alt="<%=img.id%>">
-                                    
-                                </div>
-                            <% } %>
-                                
-                        <% }) %>
-                        
+                                <% } else { %>
+                                    <div class="other-img-container">
+                                        <img src="/img/product/<%= img.image %>" class="product-img" alt="<%=img.id%>">
+
+                                    </div>
+                                    <% } %>
+
+                                        <% }) %>
+
                     </div>
                 </div>
                 <div class="second-column">
                     <div class="product-detail-info-container">
                         <div class="product-title-container">
-                            <h1 class="product-title"><%= product.name %></h1>
+                            <h1 class="product-title">
+                                <%= product.name %>
+                            </h1>
 
-                            <h3 class="product-title"><%= product.price %></h3>
+                            <h3 class="product-title">
+                                <%= product.price %>
+                            </h3>
                         </div>
                         <div class="product-description-container">
-                            <p><%= product.description %></p>
+                            <p>
+                                <%= product.description %>
+                            </p>
                         </div>
                     </div>
                     <div class="purchase-product-container">
@@ -66,7 +85,8 @@
                 </div>
 
                 <div class="suggested-product-list">
-                    <article class="product-card-container suggested-product-card-detail-container" data-productId=<%=1%>>
+                    <article class="product-card-container suggested-product-card-detail-container"
+                        data-productId=<%=1%>>
                         <a href="/product/1" class="product-card-link">
                             <div class="image-container suggested-image-container">
                                 <div class="image-carousel">
@@ -94,7 +114,8 @@
                                 </div>
                             </div>
                         </a>
-                        <div class="product-quick-actions-container suggested-quick-cart-container" data-productId=<%=1%>>
+                        <div class="product-quick-actions-container suggested-quick-cart-container"
+                            data-productId=<%=1%>>
                             <div class="quick-cart-container " data-productid=<%=1 %>>
                                 <i class='bx bx-shopping-bag quick-add-cart-btn' data-productId=<%=1%>></i>
                             </div>
@@ -109,7 +130,8 @@
                             </div>
                         </div>
                     </article>
-                    <article class="product-card-container suggested-product-card-detail-container" data-productId=<%=1%>>
+                    <article class="product-card-container suggested-product-card-detail-container"
+                        data-productId=<%=1%>>
                         <a href="/product/1" class="product-card-link">
                             <div class="image-container suggested-image-container">
                                 <div class="image-carousel">
@@ -137,7 +159,8 @@
                                 </div>
                             </div>
                         </a>
-                        <div class="product-quick-actions-container suggested-quick-cart-container" data-productId=<%=1%>>
+                        <div class="product-quick-actions-container suggested-quick-cart-container"
+                            data-productId=<%=1%>>
                             <div class="quick-cart-container " data-productid=<%=1 %>>
                                 <i class='bx bx-shopping-bag quick-add-cart-btn' data-productId=<%=1%>></i>
                             </div>
@@ -152,7 +175,8 @@
                             </div>
                         </div>
                     </article>
-                    <article class="product-card-container suggested-product-card-detail-container" data-productId=<%=1%>>
+                    <article class="product-card-container suggested-product-card-detail-container"
+                        data-productId=<%=1%>>
                         <a href="/product/1" class="product-card-link">
                             <div class="image-container suggested-image-container">
                                 <div class="image-carousel">
@@ -180,7 +204,8 @@
                                 </div>
                             </div>
                         </a>
-                        <div class="product-quick-actions-container suggested-quick-cart-container" data-productId=<%=1%>>
+                        <div class="product-quick-actions-container suggested-quick-cart-container"
+                            data-productId=<%=1%>>
                             <div class="quick-cart-container " data-productid=<%=1 %>>
                                 <i class='bx bx-shopping-bag quick-add-cart-btn' data-productId=<%=1%>></i>
                             </div>

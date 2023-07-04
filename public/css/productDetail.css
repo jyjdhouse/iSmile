@@ -4,6 +4,32 @@
     margin-top: 11vh;
 }
 
+.admins-actions-container {
+    width: 90%;
+    margin: 5% auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.action-container {
+    width: 48%;
+    padding: 5px 3px;
+    border: 1px solid var(--violet-color);
+    text-align: center;
+}
+
+.admins-actions-container button {
+    border: 0;
+    outline: 0;
+}
+
+.admins-actions-container button, .admins-actions-container a {
+    font-size: 1rem;
+    
+}
+
 .first-column {
     height: 40%;
 }
