@@ -95,73 +95,7 @@ const controller = {
             return res.json(error);
         }
     },
-    create: async (req, res) => {
-        try {
-          
-            let { name, price, description, category } = req.body;
-            let images = req.files;
-
-            let productObject = {
-                name,
-                price,
-                description,
-                categories_id: category
-            };
-
-            const newProduct = await db.Product.create(productObject);
-
-            let imagesObject = images.map(obj => {
-                return {
-                    image: obj.path,
-                    product_id: newProduct.id
-                }
-            });
-            await db.Product_Image.bulkCreate(imagesObject);
-
-
-            return res.status(200).json({
-                meta: {
-                    status: 200,
-                    msg: 'Producto creado Correctamente!'
-                },
-                product: newProduct,
-            });
-        } catch (error) {
-            console.log(`Falle en apiProductController.create: ${error}`);
-            return res.json(error);
-        }
-    },
-    update: async (req, res) => {
-        try {
-         
-            const productId = req.params.productId;
-            const productToUpdate = await db.Device.findByPk(productId, { include: ['category'] })
-            const {name, price, description} = req.body
-
-            const productUpdated = await db.Device.update({
-                name,
-                price,
-                description
-            }, {
-                where: {
-                    id: productToUpdate.id
-                }
-            })
-
-
-            return res.status(200).json({
-                meta: {
-                    status: 200,
-                    msg: 'Producto actualizado Correctamente!'
-                },
-                product: productUpdated
-            });
-
-        } catch (error) {
-            console.log(`Falle en productController.update: ${error}`);
-            return res.json(error);
-        }
-    },
+  
     getWishedProducts: async (req, res) => {
         const { userId } = req.body;
         let userWishlistProducts;
@@ -207,29 +141,7 @@ const controller = {
             userWishlistProducts
         });
     },
-    deleteProduct: async (req, res) => {
-        try {
-            const productId = req.params.productId;
-
-             const accessoryToDelete = await db.Product.findByPk(productId);
- 
-             await db.Accessory.destroy({
-                 where: {
-                     id: accessoryToDelete.id
-                 }
-             }) 
-             return res.status(200).json({
-                meta: {
-                    status: 200,
-                    msg: 'Producto eliminado satisfactoriamente'
-                },
-                id: productId
-            });
-         } catch (error) {
-            console.log(`Falle en productController.delete: ${error}`);
-            return res.json(error);
-         }
-    }
+   
 };
 
 module.exports = controller;

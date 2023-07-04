@@ -40,7 +40,6 @@ const controller = {
     },
     detail: async (req, res) => { //Metodo que muestra detalle de producto
         try {
-            return res.render('productDetail')
             let errors = req.query.errors && JSON.parse(req.query.errors);
             let oldData = req.query.oldData && JSON.parse(req.query.oldData);
             // Si me llegan errores, renderizo la vista y le llevo los params errores
@@ -48,6 +47,15 @@ const controller = {
                 // return res.send(req.query.errors)
                 return res.render('productDetail', { errors, oldData, categories: await getCategories(), countryCodes: await getCountryCodes(), countryCodes: await getCountryCodes() });
             }
+            const id = req.params.productId
+            let product = await db.Product.findByPk(id);
+            let images = await db.Product_Image.findAll({
+                where: {
+                    product_id: id
+                }
+            })
+        
+            return res.render('productDetail', {product, images})
         } catch (error) {
             console.log(`Falle en productController.detail: ${error}`);
             return res.json(error);
@@ -55,6 +63,93 @@ const controller = {
     },
     createProduct: async (req, res) => {
         return res.render('productCreate.ejs',{ categories: await getCategories()})
+    },
+    processProductCreation: async (req, res) => {
+        try {
+          
+            let { name, price, description, category } = req.body;
+            let images = req.files;
+
+            let productObject = {
+                name,
+                price,
+                description,
+                category_id: category
+            };
+
+            const newProduct = await db.Product.create(productObject);
+
+            let imagesObject = images.map(obj => {
+                return {
+                    image: obj.filename,
+                    product_id: newProduct.id
+                }
+            });
+            await db.Product_Image.bulkCreate(imagesObject);
+
+
+            return res.redirect('/')
+        } catch (error) {
+            console.log(`Falle en productController.create: ${error}`);
+            images.forEach(image =>
+                fs.unlinkSync(path.join(__dirname, '../../public/img/product' + image.filename)) // DELETE IMGS IN LOCAL FOLDER    
+            );
+            return res.json(error);
+        }
+    },
+    processProductUpdate: async (req, res) => {
+        try {
+         
+            const productId = req.params.productId;
+            const productToUpdate = await db.Device.findByPk(productId, { include: ['category'] })
+            const {name, price, description} = req.body
+
+            const productUpdated = await db.Device.update({
+                name,
+                price,
+                description
+            }, {
+                where: {
+                    id: productToUpdate.id
+                }
+            })
+
+
+            return res.status(200).json({
+                meta: {
+                    status: 200,
+                    msg: 'Producto actualizado Correctamente!'
+                },
+                product: productUpdated
+            });
+
+        } catch (error) {
+            console.log(`Falle en productController.update: ${error}`);
+            return res.json(error);
+        }
+    },
+    deleteProduct: async (req, res) => {
+        try {
+            const productId = req.params.productId;
+
+             const accessoryToDelete = await db.Product.findByPk(productId);
+ 
+             await db.Accessory.destroy({
+                 where: {
+                     id: accessoryToDelete.id
+                 }
+             }) 
+             return res.status(200).json({
+                meta: {
+                    status: 200,
+                    msg: 'Producto eliminado satisfactoriamente'
+                },
+                id: productId
+            });
+         } catch (error) {
+            console.log(`Falle en productController.delete: ${error}`);
+            return res.json(error);
+         }
     }
     // searchResult: async(req,res) =>{
     //     let productsId = Array.from(JSON.parse(req.body.ids));

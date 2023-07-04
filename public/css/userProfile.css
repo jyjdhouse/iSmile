@@ -131,9 +131,10 @@
     outline: 0;
     border: 1px solid var(--gold-color);
     width: 70%;
-    padding: 3% 0;
+    padding: 3px 0;
     text-align: center;
     text-transform: uppercase;
+    max-width: 300px;
 }
 
 .form-btn-inactive {
@@ -267,6 +268,12 @@
       
         margin-right: 2%;
    
+    }
+
+    .form-btn {
+    
+        padding: 8px 0;
+
     }
     
 
