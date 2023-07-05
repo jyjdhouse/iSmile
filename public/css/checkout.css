@@ -2,6 +2,24 @@ body {
     background-color: #eee;
 
 }
+
+/* Para el loading Animation */
+.loading-container{
+    align-items: center;
+}
+.loading-container-active{
+    display: flex;
+}
+.load-wrapp{
+    height: 50%;
+}
+
+/*  */
+/* Para el spinner "CArgando productos.. */
+.spinner-overlay{
+    position: absolute;
+}
+/*  */
 .incomplete-field span{
    color: var(--red-color);
 }
@@ -64,7 +82,7 @@ body {
     flex-wrap: wrap;
     align-content: flex-start;
     background-color: #fff;
-
+    position: relative;
 }
 
 .product-list-header {
@@ -129,7 +147,7 @@ body {
     color: var(--light-violet-color);
 }
 
-.product-card>div {
+.article-div-child {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -651,11 +669,12 @@ body {
     }
 
     .product-card-image-container {
-        width: 15%;
+        width: 13%;
     }
 
     .product-name-container {
-        width: 20%;
+        width: 22%;
+        font-size: 1.2vw;
     }
 
     .product-card .product-price-container {

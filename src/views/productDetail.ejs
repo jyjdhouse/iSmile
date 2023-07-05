@@ -72,12 +72,13 @@
                         </div>
                     </div>
                     <div class="purchase-product-container add-cart-button-container" data-productid=<%=product.id %>>
-                        <% if (1==1) { %> <!--Condicion si esta en carro-->
-                            <button class="cart-options-btn quick-add-cart-btn" type="submit">Añadir al carro</button>
-                            <button class="cart-options-btn remove-cart-product hidden" type="submit">Añadido al
-                                carro</button>
-                            <% } %>
-                                <%- include('./partials/loadingSpinner.ejs') %>
+                            <button class="cart-options-btn quick-add-cart-btn" type="submit">
+                                Añadir al carro
+                            </button>
+                            <button class="cart-options-btn remove-cart-product hidden" type="submit">
+                                Añadido al carro
+                            </button>
+                            <%- include('./partials/loadingSpinner.ejs') %>
                     </div>
                 </div>
 

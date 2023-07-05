@@ -1,9 +1,8 @@
 <%- include('./partials/head.ejs') %>
     <!-- CSS -->
+    <link rel="stylesheet" href="/css/spinner.css">
     <link rel="stylesheet" href="/css/checkout.css">
     <!-- SCRIPTS -->
-    <script src="/scripts/checkout.js" type="module"></script>
-    <script type="module" src="/scripts/productCard.js"></script>
     <!-- SDK MercadoPago.js -->
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <title>Checkout</title>
@@ -21,96 +20,39 @@
                             <p class="product-subtotal-label bold">SUBTOTAL</p>
                         </div>
                         <div class="product-card-wrapper">
-                            <article class="product-card">
-                                <div class="product-card-image-container">
-                                    <img src="/img/product1.png" alt="product-image" class="product-image">
-                                </div>
-                                <div class="product-name-container">
-                                    <p class="product-name">Crema AntiAge</p>
-                                </div>
-                                <div class="product-price-container">
-                                    <p class="product price">$<span class="product-price-span">5000</span></p>
-                                </div>
-                                <div class="product-quantity-container">
-                                    <i class='bx bx-plus-medical add-quantity-btn'></i>
-                                    <i class='bx bx-minus subtract-quantity-btn'></i>
-                                    <input type="number" name="quantity" id="" class="product-quantity">
-                                </div>
-                                <div class="product-subtotal-container">
-                                    <p class="product-subtotal">$ <span class="product-subtotal-span">5000</span></p>
-                                </div>
-                                <i class='bx bx-trash remove-cart-product'></i>
-                            </article>
-                            <article class="product-card">
-                                <div class="product-card-image-container">
-                                    <img src="/img/product1.png" alt="product-image" class="product-image">
-                                </div>
-                                <div class="product-name-container">
-                                    <p class="product-name">Crema AntiAge</p>
-                                </div>
-                                <div class="product-price-container">
-                                    <p class="product price">$<span class="product-price-span">5000</span></p>
-                                </div>
-                                <div class="product-quantity-container">
-                                    <i class='bx bx-plus-medical add-quantity-btn'></i>
-                                    <i class='bx bx-minus subtract-quantity-btn'></i>
-                                    <input type="number" name="quantity" id="" class="product-quantity">
-                                </div>
-                                <div class="product-subtotal-container">
-                                    <p class="product-subtotal">$ <span class="product-subtotal-span">5000</span></p>
-                                </div>
-                                <i class='bx bx-trash remove-cart-product'></i>
-                            </article>
-                            <article class="product-card">
-                                <div class="product-card-image-container">
-                                    <img src="/img/product1.png" alt="product-image" class="product-image">
-                                </div>
-                                <div class="product-name-container">
-                                    <p class="product-name">Crema AntiAge</p>
-                                </div>
-                                <div class="product-price-container">
-                                    <p class="product price">$<span class="product-price-span">5000</span></p>
-                                </div>
-                                <div class="product-quantity-container">
-                                    <i class='bx bx-plus-medical add-quantity-btn'></i>
-                                    <i class='bx bx-minus subtract-quantity-btn'></i>
-                                    <input type="number" name="quantity" id="" class="product-quantity">
-                                </div>
-                                <div class="product-subtotal-container">
-                                    <p class="product-subtotal">$ <span class="product-subtotal-span">5000</span></p>
-                                </div>
-                                <i class='bx bx-trash remove-cart-product'></i>
-                            </article>
-                            <article class="product-card">
-                                <div class="product-card-image-container">
-                                    <img src="/img/product1.png" alt="product-image" class="product-image">
-                                </div>
-                                <div class="product-name-container">
-                                    <p class="product-name">Crema AntiAge</p>
-                                </div>
-                                <div class="product-price-container">
-                                    <p class="product price">$<span class="product-price-span">5000</span></p>
-                                </div>
-                                <div class="product-quantity-container">
-                                    <i class='bx bx-plus-medical add-quantity-btn'></i>
-                                    <i class='bx bx-minus subtract-quantity-btn'></i>
-                                    <input type="number" name="quantity" id="" class="product-quantity">
-                                </div>
-                                <div class="product-subtotal-container">
-                                    <p class="product-subtotal">$ <span class="product-subtotal-span">5000</span></p>
-                                </div>
-                                <i class='bx bx-trash remove-cart-product'></i>
-                            </article>
+                            <% locals.cart && locals.cart.forEach(product=>{ %>
+                                <article class="product-card" data-productid = <%= product.product_id %>>
+                                    <div class="product-card-image-container article-div-child">
+                                        <img src="/img/product/<%= product.filename || 'default.png' %>" alt="<%= product.name %>-<%= product.filename %>" class="product-image">
+                                    </div>
+                                    <div class="product-name-container article-div-child">
+                                        <p class="product-name"><%= product.name %></p>
+                                    </div>
+                                    <div class="product-price-container article-div-child">
+                                        <p class="product price">$<span class="product-price-span"><%= product.price %></span></p>
+                                    </div>
+                                    <div class="product-quantity-container article-div-child">
+                                        <i class='bx bx-plus-medical add-quantity-btn'></i>
+                                        <i class='bx bx-minus subtract-quantity-btn'></i>
+                                        <input type="number" name="quantity" id="" class="product-quantity">
+                                    </div>
+                                    <div class="product-subtotal-container article-div-child">
+                                        <p class="product-subtotal">$ <span class="product-subtotal-span"><%= product.price %></span></p>
+                                    </div>
+                                    <i class='bx bx-trash remove-cart-product'></i>
+                                    <%- include('./partials/loadingSpinner.ejs') %>
+                                </article>
+                            <% }) %>
                         </div>
                     </div>
                     <div class="checkout-total-section">
                         <div class="cart-subtotal-container">
                             <p class="cart-subtotal-label">Subtotal</p>
-                            <p class="cart-subtotal">$<span class="cart-subtotal-span">40000</span></p>
+                            <p class="cart-subtotal">$<span class="cart-subtotal-span"></span></p>
                         </div>
                         <div class="cart-total-container">
                             <p class="cart-total-label">Total</p>
-                            <p class="cart-total">$<span class="cart-total-span">40000</span></p>
+                            <p class="cart-total">$<span class="cart-total-span"></span></p>
                         </div>
                         <div class="button-container">
                             <button class="continue-view-button continue-button">INICIAR COMPRA</button>
