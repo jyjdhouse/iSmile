@@ -22,6 +22,10 @@ const storage = multer.diskStorage({
 let upload = multer({storage})
 
 // RUTEO
+
+// GET
+router.get('',blogController.list)
+router.get('/:blogId',blogController.detail) 
 router.get('/create', blogController.createBlog)
 
 router.post('/',upload.any('images'),blogController.processBlogCreation);

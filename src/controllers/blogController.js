@@ -1,12 +1,12 @@
-const Blog = require('../database/models/Blog');
-const Blog_Image = require('../database/models/BlogImage');
+const db = require('../database/models/');
+
 const showdown = require('showdown');
 
 
 const controller = {
     list: async (req, res) => { //Metodo que devuelve todos los blogs
         try {
-            let blogs = await Blog.findAll()
+            let blogs = await db.Blog.findAll()
             return res.render('blogList', {blogs})
         } catch (error) {
             console.log(`Falle en blogController.list: ${error}`);
@@ -16,7 +16,7 @@ const controller = {
     detail: async (req, res) => {//Metodo que devuelve blog en especifico
         try {
             const { blogId } = req.params
-            let blog = await Blog.findByPk(blogId, {include: ['images']});
+            let blog = await db.Blog.findByPk(blogId, {include: ['images']});
     
             return res.render('blog', {blog})
         } catch (error) {
@@ -44,7 +44,7 @@ const controller = {
                 description: convertToMarkdown()
             }
             
-            const newBlog = await Blog.create(blogObject);
+            const newBlog = await db.Blog.create(blogObject);
     
             const imagesObject = images.map(obj => {
                 return {
@@ -53,7 +53,7 @@ const controller = {
                 }
             });
     
-            await Blog_Image.bulkCreate(imagesObject);
+            await db.BlogImage.bulkCreate(imagesObject);
             return res.status(200).json({
                 meta: {
                     status: 200,
@@ -70,11 +70,11 @@ const controller = {
         try {
          
             const blogId = req.params.blogId;
-            const blogToUpdate = await Blog.findByPk(blogId, { include: ['image'] });
+            const blogToUpdate = await db.Blog.findByPk(blogId, { include: ['image'] });
             const images = req.file;
             const {name, price, description} = req.body;
     
-            const blogUpdated = await Blog.update({
+            const blogUpdated = await db.Blog.update({
                 name,
                 price,
                 description
@@ -98,7 +98,7 @@ const controller = {
                     fs.unlinkSync(path.join(__dirname, '../../public/img/blog' + image)) // DELETE IMGS IN LOCAL FOLDER    
                 );
     
-                await Blog_Image.destroy({
+                await db.BlogImage.destroy({
                     where: {
                         image: {
                             [Op.in]: imgsToDelete
@@ -116,7 +116,7 @@ const controller = {
                         blog_id: blogId
                     }
                 });
-                await Blog_Image.bulkCreate(imagesObject);
+                await db.BlogImage.bulkCreate(imagesObject);
             }
     
     

@@ -1,5 +1,5 @@
 module.exports = (sequelize, dataTypes) => {
-    let alias = "Blog_Image";
+    let alias = "BlogImage";
 
     let cols = {
         id: {
@@ -16,13 +16,13 @@ module.exports = (sequelize, dataTypes) => {
         timestamps: false
     }
 
-    const Blog_Image = sequelize.define(alias, cols, config);
+    const BlogImage = sequelize.define(alias, cols, config);
 
-    Blog_Image.associate = (models) => {
-        Blog_Image.belongsTo(models.Product, {
+    BlogImage.associate = (models) => {
+        BlogImage.belongsTo(models.Product, {
             as: 'blog',
             foreignKey: 'blog_id'
         });
     };
-    return Blog_Image;
+    return BlogImage;
 }

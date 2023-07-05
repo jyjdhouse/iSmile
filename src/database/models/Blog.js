@@ -17,13 +17,13 @@
 
      let config = {
          tableName: 'blogs',
-         paranoid: true
+         timestamps: false
      }
 
      const Blog = sequelize.define(alias, cols, config);
 
      Blog.associate = (models) => {
-         Blog.hasMany(models.Blog_Image, {
+         Blog.hasMany(models.BlogImage, {
              as: 'images',
              foreignKey: 'blog_id'
          });

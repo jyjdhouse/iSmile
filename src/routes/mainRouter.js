@@ -20,8 +20,7 @@ router.get('/medicalInfo',loginMiddleware,isAdminMiddleware, mainController.show
 router.get('/budget',loginMiddleware,isAdminMiddleware,mainController.budget);
 router.get('/consent',loginMiddleware,isAdminMiddleware,mainController.consent);
 router.get('/getTestProducts',loginMiddleware,mainController.getTestingProducts);
-/* router.get('/blog',loginMiddleware,mainController.blogList)
-router.get('/blog/:blogId',mainController.blog) */
+
 
 // POST
 router.post('/generateMedicalPDF',upload.single('signature'),PDFGeneratorController.medicalPDF);
