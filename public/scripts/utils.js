@@ -494,7 +494,7 @@ export function removeProductfromLocaleCart(prodId) {
     localStorage.setItem('temporalCart', JSON.stringify(cart)); // Guardo el carrito actualizado en sessionStorage
 }
 // Logica para pintar el boton que corresponda del carro en product Detail
-export function checkIfPRoductIsInCartDetail() {
+export function checkIfProductIsInCartDetail() {
     const productCard = document.querySelector('.product-container');
     if (!productCard) return
     const productId = productCard.dataset.productid;

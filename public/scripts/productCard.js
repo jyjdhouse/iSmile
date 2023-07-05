@@ -1,4 +1,4 @@
-import { addProductToLocaleCart, addTempItemToDB, getCartTotalProducts, getLoggedUser, handleRemoveCartBtnClick, checkIfPRoductIsInCartDetail} from "./utils.js";
+import { addProductToLocaleCart, addTempItemToDB, getCartTotalProducts, getLoggedUser, handleRemoveCartBtnClick, checkIfProductIsInCartDetail} from "./utils.js";
 function loadDependentScripts() { //Carga los scripts que usan la variable del fetch
     // Si esta en el checkout
     if (window.location.pathname === '/user/checkout') {
@@ -34,7 +34,7 @@ window.addEventListener('load', async () => {
             // Click en agregar al carro
             btn.addEventListener('click', async (e) => {
                 try {
-                    const card = btn.closest('.product-card-container') || btn.closest('.add-cart-button-container');
+                    const card = btn.closest('.product-card-container') || btn.closest('.product-container');
                     //para llegar al id del producto ..
                     const idProd = card.dataset.productid;
                     card.querySelector('.loading-container').classList.add('loading-container-active');
@@ -47,6 +47,7 @@ window.addEventListener('load', async () => {
                     }
                     // Remuevo el spinner loading, pongo el quickshopping popup
                     card.querySelector('.loading-container').classList.remove('loading-container-active');
+                    paintShoppingCartPopup(card);
                     shopingCartQuickPopup.classList.add('add-to-cart-container-active');
                     blackScreen.classList.add('black-screen-active');
                     // Cambio los iconos
@@ -96,8 +97,30 @@ window.addEventListener('load', async () => {
                 }
             })
         };
-        
-        checkIfPRoductIsInCartDetail();
+
+        function paintShoppingCartPopup(card) {
+            let productSelectedCard = document.querySelector('.product-selected-card');
+            let imagePath = card.querySelector('.product-image-test-active')?.src||
+            card.querySelector('.main-img')?.src || '/img/product/default.png';
+            let productName = card.querySelector('.product-name').innerHTML;
+            let productPrice = card.querySelector('.product-price').innerHTML;
+            let cardHTML = 
+            `
+            <div class="product-selected-img-container">
+                <img src="${imagePath}" alt="product-image" class="product-selected-img">
+            </div>
+            <div class="product-selected-info-qty-container">
+                <div class="product-selected-name-remove-container">
+                    <p class="product-selected-name">${productName}</p>
+                </div>
+                <div class="product-selected-quantity-container">
+                    <p class="item-total">${productPrice}</p>
+                </div>
+            </div>
+            `;
+            productSelectedCard.innerHTML = cardHTML;
+        }
+        checkIfProductIsInCartDetail();
 
     } catch (error) {
         console.log("Falle en productCard.js: " + error);
