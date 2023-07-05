@@ -5,13 +5,14 @@ const uploadFile = require('../middlewares/uploadProductImages')
 
 router.get('/',productController.list);
 router.get('/create', productController.createProduct)
+router.get('/update/:productId', productController.updateProduct)
 router.get('/:productId',productController.detail);
 
 router.post('/create', uploadFile.any('images'),productController.processProductCreation);
 
-router.put('/updateProduct/:productId',uploadFile.any('images'),productController.processProductUpdate);
+router.put('/:productId',uploadFile.any('images'),productController.processProductUpdate);
 
-router.delete('/updateProduct/:productId', productController.deleteProduct);
+router.delete('/delete/:productId', productController.deleteProduct);
 
 // router.get('/getProduct',productController.getOneProduct);
 

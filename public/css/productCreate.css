@@ -15,7 +15,7 @@
 .input-label-container {
     display: flex;
     flex-direction: column;
-    margin-top: 3%;
+    margin-top: 5%;
 }
 
 .input-label-container textarea, .input-label-container input, .input-label-container select {
@@ -34,5 +34,11 @@
     width: 70%;
     margin-top: 5%;
     padding: 5px 0;
+}
+
+.current-img-subcontainer img {
+    width: 30%;
+    height: 100%;
+    margin-left: 1rem;
 }
 

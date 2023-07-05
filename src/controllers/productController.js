@@ -1,5 +1,7 @@
 
 const db = require('../database/models');
+const fs = require('fs')
+const path = require('path')
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const getCategories = require('../utils/getCategories')
@@ -46,13 +48,14 @@ const controller = {
         }
     },
     createProduct: async (req, res) => {
-        return res.render('productCreate.ejs',{ categories: await getCategories()})
+        return res.render('productCreate.ejs', { categories: await getCategories() })
     },
     processProductCreation: async (req, res) => {
         try {
-          
+
             let { name, price, description, category } = req.body;
             let images = req.files;
+           
 
             let productObject = {
                 name,
@@ -64,9 +67,11 @@ const controller = {
             const newProduct = await db.Product.create(productObject);
 
             let imagesObject = images.map(obj => {
+                const fileType = obj.mimetype.startsWith('video/') ? 2 : 1;
                 return {
                     image: obj.filename,
-                    product_id: newProduct.id
+                    product_id: newProduct.id,
+                    file_types_id: fileType
                 }
             });
             await db.Product_Image.bulkCreate(imagesObject);
@@ -76,19 +81,27 @@ const controller = {
         } catch (error) {
             console.log(`Falle en productController.create: ${error}`);
             images.forEach(image =>
-                fs.unlinkSync(path.join(__dirname, '../../public/img/product' + image.filename)) // DELETE IMGS IN LOCAL FOLDER    
+                fs.unlinkSync(path.join(__dirname, `../../public/img/product/${image.filename}` )) // DELETE IMGS IN LOCAL FOLDER    
             );
             return res.json(error);
         }
     },
+    updateProduct: async (req, res) => {
+        const productId = req.params.productId;
+        const productToUpdate = await db.Product.findByPk(productId, { include: ['category', 'images'] })
+        const categories = await getCategories()
+       
+        return res.render('productUpdate.ejs', {productToUpdate, categories})
+    },
     processProductUpdate: async (req, res) => {
         try {
-         
-            const productId = req.params.productId;
-            const productToUpdate = await db.Device.findByPk(productId, { include: ['category'] })
-            const {name, price, description} = req.body
 
-            const productUpdated = await db.Device.update({
+            const productId = req.params.productId;
+            const productToUpdate = await db.Product.findByPk(productId, { include: ['category', 'images'] })
+            const { name, price, description } = req.body
+            let images = req.files
+
+            const productUpdated = await db.Product.update({
                 name,
                 price,
                 description
@@ -98,14 +111,44 @@ const controller = {
                 }
             })
 
-
-            return res.status(200).json({
-                meta: {
-                    status: 200,
-                    msg: 'Producto actualizado Correctamente!'
-                },
-                product: productUpdated
+            let imagesObject = images.map(obj => {
+                return {
+                    image: obj.filename,
+                    product_id: productUpdated.id
+                }
             });
+            await db.Product_Image.bulkCreate(imagesObject);
+
+            let imgsToDelete = []
+
+            const imgsToDeleteFilter = productToUpdate.images.filter(image => { //FILTER TO DELETE IMAGES 
+                
+                if (!req.body.current_imgs.includes(image.image)) {
+                    return imgsToDelete.push(image.image)
+                }
+            })
+
+
+            if (imgsToDelete.length > 0) {
+                
+                imgsToDelete.forEach(image =>
+                   
+                    fs.unlinkSync(path.join(__dirname, `../../public/img/product/${image}`)) // DELETE IMGS IN LOCAL FOLDER    
+                );
+
+
+                await db.Product_Image.destroy({
+                    where: {
+                        image: {
+                            [Op.in]: imgsToDelete
+                        }
+                    }
+                }) // DELETE IMGS IN DATABASE     
+
+            }
+
+
+            return res.redirect('/')
 
         } catch (error) {
             console.log(`Falle en productController.update: ${error}`);
@@ -116,24 +159,18 @@ const controller = {
         try {
             const productId = req.params.productId;
 
-             const accessoryToDelete = await db.Product.findByPk(productId);
- 
-             await db.Accessory.destroy({
-                 where: {
-                     id: accessoryToDelete.id
-                 }
-             }) 
-             return res.status(200).json({
-                meta: {
-                    status: 200,
-                    msg: 'Producto eliminado satisfactoriamente'
-                },
-                id: productId
-            });
-         } catch (error) {
+            const productToDelete = await db.Product.findByPk(productId);
+
+            await db.Product.destroy({
+                where: {
+                    id: productToDelete.id
+                }
+            })
+            return res.redirect('/')
+        } catch (error) {
             console.log(`Falle en productController.delete: ${error}`);
             return res.json(error);
-         }
+        }
     }
     // searchResult: async(req,res) =>{
     //     let productsId = Array.from(JSON.parse(req.body.ids));

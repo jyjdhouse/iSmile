@@ -16,7 +16,18 @@
 <body>
     <%- include('./partials/header.ejs') %>
         <main class="product-detail-main">
-            <article class="product-container" data-productid = <%= product.id %>>
+            <div class="admins-actions-container">
+                <div class="action-container">
+                    <a href="/product/update/<%= product.id %>">Actualizar producto</a>
+                </div>
+                <div class="action-container">
+                    <form class="update-delete-btn-container" action="/product/<%= product.id %>?_method=DELETE"
+                        method="POST">
+                        <button class="form-device-btn" type="submit">Eliminar producto</button>
+                    </form>
+                </div>
+            </div>
+            <article class="product-container" data-productid=<%=product.id %>>
                 <div class="first-column">
                     <div class="main-img-container">
                         <img src="/img/product/<%= product.files[0]?.filename %>" class="main-img"
@@ -24,20 +35,21 @@
                     </div>
                     <div class="other-product-imgs-container">
                         <% product.files.forEach((file, i)=> { %>
-                            <% if(i==0) { %>
-                                <div class="other-img-container other-img-container-active">
-                                    <img src="/img/product/<%= file?.filename %>" class="product-img"
-                                        alt="<%= product.name%>-<%=file?.filenanme %>">
-                                </div>
-                                <% } else { %>
-                                    <div class="other-img-container">
+                                <div class="other-img-container <%= i==0 && 'other-img-container-active' %>">
+                                    <% if (file.file_types_id==1) { %> <!--FOTO-->
                                         <img src="/img/product/<%= file?.filename %>" class="product-img"
                                             alt="<%= product.name%>-<%=file?.filenanme %>">
-                                    </div>
+                                    <% } else if(file.file_types_id==2){ %> <!--VIDEO-->
+                                        <video
+                                        class="video product-img"
+                                        muted playsinline loop>
+                                        <source src="/video/<%= file.filename %>" type="video/mp4">
+                                        <source src="/video/<%= file.filename %>" type="video/webm">
+                                        No se puede reproducir el video
+                                    </video>
                                     <% } %>
-
-                                        <% }) %>
-
+                                </div>
+                        <% }) %>
                     </div>
                 </div>
                 <div class="second-column">
@@ -46,7 +58,8 @@
                             <h1 class="product-title">
                                 <%= product.name %>
                             </h1>
-                            <h3 class="product-title">$<%= product.price %>
+                            <h3 class="product-title">
+                                <%= product.price %>
                             </h3>
                         </div>
                         <div class="product-description-container">
@@ -55,12 +68,13 @@
                             </p>
                         </div>
                     </div>
-                    <div class="purchase-product-container add-cart-button-container" data-productid= <%= product.id %>>
+                    <div class="purchase-product-container add-cart-button-container" data-productid=<%=product.id %>>
                         <% if (1==1) { %> <!--Condicion si esta en carro-->
                             <button class="cart-options-btn quick-add-cart-btn" type="submit">Añadir al carro</button>
-                            <button class="cart-options-btn remove-cart-product hidden" type="submit">Añadido al carro</button>
-                        <% } %>
-                        <%- include('./partials/loadingSpinner.ejs') %>
+                            <button class="cart-options-btn remove-cart-product hidden" type="submit">Añadido al
+                                carro</button>
+                            <% } %>
+                                <%- include('./partials/loadingSpinner.ejs') %>
                     </div>
                 </div>
 
@@ -75,25 +89,26 @@
                 <div class="suggested-product-list">
                     <% suggestedProducts.forEach(sugProd=> { %>
                         <article class="product-card-container suggested-product-card-detail-container"
-                            data-productId=<%= sugProd.id %>>
+                            data-productId=<%=sugProd.id %>>
                             <a href="/product/<%= sugProd.id %>" class="product-card-link">
                                 <div class="image-container suggested-image-container">
                                     <div class="image-carousel">
-                                        <% sugProd.files.forEach(file => { %>
+                                        <% sugProd.files.forEach(file=> { %>
                                             <% if (file.file_types_id==1) { %> <!--FOTO-->
-                                                <img src="/img/product/<%= file.filename %>" alt="<%= sugProd.name %>-<%= file.filename %>"
-                                                class="product-image-test product-image-test-active product-detail-suggested-media"
-                                                data-productId=<%= sugProd.id %> >
-                                            <% }else if(file.file_types_id==2){ %> <!--VIDEO-->
-                                                <video
-                                                class="video product-image-test product-image-test-prev-slide product-detail-suggested-media"
-                                                muted playsinline loop>
-                                                <source src="/video/<%= file.filename %>" type="video/mp4">
-                                                <source src="/video/<%= file.filename %>" type="video/webm">
-                                                No se puede reproducir el video
-                                            </video>
-                                            <% } %>
-                                        <% }) %>
+                                                <img src="/img/product/<%= file.filename %>"
+                                                    alt="<%= sugProd.name %>-<%= file.filename %>"
+                                                    class="product-image-test product-image-test-active product-detail-suggested-media"
+                                                    data-productId=<%=sugProd.id %> >
+                                                <% }else if(file.file_types_id==2){ %> <!--VIDEO-->
+                                                    <video
+                                                        class="video product-image-test product-image-test-prev-slide product-detail-suggested-media"
+                                                        muted playsinline loop>
+                                                        <source src="/video/<%= file.filename %>" type="video/mp4">
+                                                        <source src="/video/<%= file.filename %>" type="video/webm">
+                                                        No se puede reproducir el video
+                                                    </video>
+                                                    <% } %>
+                                                        <% }) %>
                                     </div>
                                 </div>
                                 <div class="product-info-container suggested-product-info-container">
@@ -101,13 +116,14 @@
                                         <p class="product-name">
                                             <%= sugProd.name %>
                                         </p>
-                                        <p class="product-price">$<%= sugProd.price %></p>
+                                        <p class="product-price">$<%= sugProd.price %>
+                                        </p>
                                     </div>
                                 </div>
                             </a>
                             <div class="product-quick-actions-container suggested-quick-cart-container"
-                                data-productId=<%= sugProd.id %> >
-                                <div class="quick-cart-container" data-productid=<%= sugProd.id %>>
+                                data-productId=<%=sugProd.id %> >
+                                <div class="quick-cart-container" data-productid=<%=sugProd.id %>>
                                     <div class="logo-container">
                                         <i class='bx bx-shopping-bag quick-add-cart-btn'></i>
                                         <i class='bx bx-check-circle remove-cart-product hidden'></i>
@@ -117,11 +133,7 @@
                             </div>
                         </article>
                         <% }) %>
-
                 </div>
-
-
-
             </section>
             <main>
 
