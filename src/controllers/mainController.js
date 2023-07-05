@@ -37,7 +37,7 @@ const controller = {
             return res.json({error})
         }
     },
-    blogList: async(req,res)=>{
+    /* blogList: async(req,res)=>{
         try {
             return res.render('blogList')
         } catch (error) {
@@ -47,18 +47,18 @@ const controller = {
     },
     blog: async(req,res)=>{
         try {
-            /* let blog = await db.Blog.findAll({
+            let blog = await db.Blog.findAll({
                 where:{
                     id: req.params.id
                 },
-               /*  include: ['keywords','colors']
-            }); */
-            return res.render('blog',/*  blog */)
+                include: ['keywords','colors']
+            });
+            return res.render('blog',  blog)
         } catch (error) {
             console.log(`Falle en mainController.blog: ${error}`);
             return res.json({error})
         }
-    },
+    }, */
     frequentQAndA: async(req,res)=>{
         try {
             return res.render('frequentQAndA')

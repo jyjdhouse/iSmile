@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 const blogController = require('../controllers/blogController');
 // Middleware
-const checkForToken = require('../../middlewares/checkForToken');
+/* const checkForToken = require('../../middlewares/checkForToken'); */
 
 // MULTER
 const multer = require('multer'); /* Requerir multer. En el form como atributo va --> (enctype = "multipart/form-data") */
@@ -22,8 +22,9 @@ const storage = multer.diskStorage({
 let upload = multer({storage})
 
 // RUTEO
+router.get('/create', blogController.createBlog)
 
-router.post('/createBlog',upload.any('images'),blogController.create);
+router.post('/',upload.any('images'),blogController.processBlogCreation);
 
 router.put('/updateProduct/:blogId',upload.any('images'),blogController.update);
 

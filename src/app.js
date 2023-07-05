@@ -39,6 +39,7 @@ const mainRouter = require('./routes/mainRouter.js');
 const productRouter = require('./routes/productRouter.js');
 const userRouter = require('./routes/userRouter.js');
 const paymentRouter = require('./routes/paymentRouter.js');
+const blogRouter = require('./routes/blogRouter.js')
 // Rutas API
 // const mainRouter = require('./routes/mainRouter.js');
 const apiProductRouter = require('./routes/api/apiProductRouter.js');
@@ -63,6 +64,9 @@ app.use('/product', productRouter);
 
 app.use('/user', userRouter)
 app.use('/payment',paymentRouter)
+
+app.use('/blog', blogRouter);
+
 
 // Correr el servidor
 
