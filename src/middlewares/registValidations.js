@@ -6,7 +6,7 @@ const db = require('../database/models')
 
 const registValidations = [
     body('email')
-    .notEmpty().withMessage('Debes completar el Campo').bail()
+    .notEmpty().withMessage('Debes completar el/los campo/s').bail()
     .isEmail().withMessage('Debe ingresar un email válido').bail()
     .custom(async(value,{req})=>{
         let userEmail = req.body.email.toLowerCase();

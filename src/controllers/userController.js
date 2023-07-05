@@ -69,8 +69,9 @@ const controller = {
 
             if (!errors.isEmpty()) { //Si hay errores en el back...
                 errors = errors.mapped();
+                console.log(errors);
                 let registErrors = {
-                    msg: `${errors.email ? errors.email.msg : errors['re-password'].msg}`//Si viene el del mail le mando primero ese
+                    msg: `${errors.email ? errors.email.msg : errors['password']?.msg || errors['re-password'].msg}`//Si viene el del mail le mando primero ese
                 }
                 return res.redirect(`${relativePath}?errors=${true}&registErrors=${JSON.stringify(registErrors)}`);
             }
