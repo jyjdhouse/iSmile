@@ -12,7 +12,7 @@ router.post('/create', uploadFile.any('images'),productController.processProduct
 
 router.put('/:productId',uploadFile.any('images'),productController.processProductUpdate);
 
-router.delete('/delete/:productId', productController.deleteProduct);
+router.delete('/:productId', productController.deleteProduct);
 
 // router.get('/getProduct',productController.getOneProduct);
 

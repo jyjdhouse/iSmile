@@ -15,7 +15,7 @@
     <%- include('./partials/header.ejs') %>
         <main class="product-detail-main">
 
-           
+           <% if(locals.userLogged && locals.userLogged.user_categories_id != 3) { %>
             <div class="admins-actions-container">
                 <div class="action-container">
                     <a href="/product/update/<%= product.id %>">Actualizar producto</a>
@@ -27,29 +27,13 @@
                     </form>
                 </div>
             </div>
+            <% } %>
             <article class="product-container">
                 <div class="first-column">
                     <div class="main-img-container">
                         <img src="/img/product/<%= product.files[0]?.filename %>" class="main-img" alt="<%= product.name%>-<%=product.files[0]?.filenanme %>">
                     </div>
                     <div class="other-product-imgs-container">
-<<<<<<< HEAD
-                        <% product.images.forEach((img, i)=> { %>
-                            <% if(i==0) { %>
-                                <div class="other-img-container other-img-container-active">
-                                    <img src="/img/product/<%= img.image %>" class="product-img" alt="<%=img.id%>">
-
-                                </div>
-                                <% } else { %>
-                                    <div class="other-img-container">
-                                        <img src="/img/product/<%= img.image %>" class="product-img" alt="<%=img.id%>">
-
-                                    </div>
-                                    <% } %>
-
-                                        <% }) %>
-
-=======
                         <% product.files.forEach((file, i) => { %>
                             <% if(i ==0) { %>
                                 <div class="other-img-container other-img-container-active">
@@ -65,7 +49,6 @@
                                 
                         <% }) %>
                         
->>>>>>> e0ef9daad3bd8e353be01831bc0f97090b7225d8
                     </div>
                 </div>
                 <div class="second-column">

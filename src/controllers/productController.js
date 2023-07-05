@@ -58,8 +58,8 @@ const controller = {
 
             const newProduct = await db.Product.create(productObject);
 
-            let imagesObject = images.map(obj => {
-                const fileType = obj.mimetype.startsWith('video/') ? 2 : 1;
+            const imagesObject = images.map(obj => {
+                let fileType = obj.mimetype.startsWith('video/') ? 2 : 1;
                 return {
                     image: obj.filename,
                     product_id: newProduct.id,
@@ -73,7 +73,7 @@ const controller = {
         } catch (error) {
             console.log(`Falle en productController.create: ${error}`);
             images.forEach(image =>
-                fs.unlinkSync(path.join(__dirname, `../../public/img/product/${image.filename}` )) // DELETE IMGS IN LOCAL FOLDER    
+                fs.unlinkSync(path.join(__dirname, `../../public/img/product/${image.image}` )) // DELETE IMGS IN LOCAL FOLDER    
             );
             return res.json(error);
         }
