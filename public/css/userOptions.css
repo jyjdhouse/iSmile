@@ -138,11 +138,12 @@
     position: relative;
 }
 
-.pass-field .fa-eye {
+.pass-field .password-btn-toggler {
     position: absolute;
     right: 3%;
     top: 57%;
     color: #777;
+    cursor: pointer;
 }
 
 .login-field label,

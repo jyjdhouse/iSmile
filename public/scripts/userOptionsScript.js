@@ -64,6 +64,9 @@ window.addEventListener('load', () => {
         userOptions.forEach(opt => {
             opt.classList.remove('translate-option-left');
             opt.querySelector('.error-msg')?.remove();
+            // Borro el valor de los input
+            opt.querySelectorAll('input').forEach(inp=>inp.value='');
+            opt.querySelector('button').classList.remove('send-form-button-error');
         });
         // Le saco la clase active a la flecha para atras
         backUserOptionsBtn.classList.remove('back-user-option-btn-active');
@@ -74,6 +77,9 @@ window.addEventListener('load', () => {
         userOptions.forEach(opt => {
             opt.classList.remove('translate-option-left');
             opt.querySelector('.error-msg')?.remove();
+            // Borro el valor de los input
+            opt.querySelectorAll('input').forEach(inp=>inp.value='');
+            opt.querySelector('button').classList.remove('send-form-button-error');
         });
         // Le saco la clase active a la flecha para atras
         backUserOptionsBtn.classList.remove('back-user-option-btn-active');
@@ -87,7 +93,6 @@ window.addEventListener('load', () => {
         inputs.forEach(input => {
             // Si esta vacio le devuelvo false
             if (!input.value) {
-                console.log('Esta incompleto');
                 flag = false
             };
         });
@@ -99,21 +104,54 @@ window.addEventListener('load', () => {
         paragraph.textContent = msg;
         return paragraph
     }
-    const form = document.querySelector('.login-popup');
-    form.addEventListener('submit', (e) => {
+    // Logica para mostrar/ocultar contrasena
+    const showPassBtn = document.querySelectorAll('.show-password-btn');
+    const hidePassBtn = document.querySelectorAll('.hide-password-btn')
 
-        let formIsComplete = checkIfFormIsComplete(form);
+    showPassBtn.forEach(btn => { //Para mostrar
+        btn.addEventListener('click', () => {
+            let field = btn.closest('.pass-field');
+            field.querySelector('input').type = 'text';
+            field.querySelector('.hide-password-btn').classList.remove('hidden');
+            btn.classList.add('hidden');
+        });
+    });
+    hidePassBtn.forEach(btn => { //Para ocultar
+        btn.addEventListener('click', () => {
+            let field = btn.closest('.pass-field');
+            field.querySelector('input').type = 'password';
+            field.querySelector('.show-password-btn').classList.remove('hidden');
+            btn.classList.add('hidden');
+        });
+    });
+    loginForm.addEventListener('submit', (e) => {
+        let formIsComplete = checkIfFormIsComplete(loginForm);
         // Si esta incompleto...
         if (!formIsComplete) {
             e.preventDefault();
-            const button = form.querySelector('.login-button')
+            const button = loginForm.querySelector('button')
             button.classList.remove('send-form-button-error');
             void button.offsetWidth; // Fuerza un reflow, lo cual reinicia la animación
             button.classList.add('send-form-button-error');
-            if (!form.querySelector('.error-msg')) {
-                form.querySelector('.button-container').appendChild(createErrorMsg('Debes completar todos los campos'));
+            if (!loginForm.querySelector('.error-msg')) {
+                loginForm.querySelector('.button-container').appendChild(createErrorMsg('Debes completar todos los campos'));
             }
         }
-    })
+    });
+
+    registForm.addEventListener('submit', (e) => {
+        let formIsComplete = checkIfFormIsComplete(registForm);
+        // Si esta incompleto...
+        if (!formIsComplete) {
+            e.preventDefault();
+            const button = registForm.querySelector('button')
+            button.classList.remove('send-form-button-error');
+            void button.offsetWidth; // Fuerza un reflow, lo cual reinicia la animación
+            button.classList.add('send-form-button-error');
+            if (!registForm.querySelector('.error-msg')) {
+                registForm.querySelector('.button-container').appendChild(createErrorMsg('Debes completar todos los campos'));
+            }
+        }
+    });
 
 });
