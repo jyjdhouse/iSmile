@@ -54,14 +54,6 @@ const controller = {
     },
     consent: (req,res) =>{
         return res.render('clientConsent');
-    },
-    getTestingProducts :(req,res) =>{
-        return res.status(200).json({
-            meta: {
-                msg:"productos traidos correctamente"
-            },
-            products: staticProducts
-        })
     }
 };
 

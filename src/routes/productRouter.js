@@ -5,11 +5,12 @@ const uploadFile = require('../middlewares/uploadProductImages')
 
 // MIDDLEWARES
 const loginMiddleware = require('../middlewares/loginMiddleware');
+const isAdminMiddleware = require('../middlewares/isAdminMiddleware');
 
 // GET
 router.get('/',loginMiddleware,productController.list);
-router.get('/create',loginMiddleware, productController.createProduct)
-router.get('/update/:productId',loginMiddleware, productController.updateProduct)
+router.get('/create',loginMiddleware,isAdminMiddleware, productController.createProduct)
+router.get('/update/:productId',loginMiddleware,isAdminMiddleware, productController.updateProduct)
 router.get('/:productId',loginMiddleware,productController.detail);
 
 // POST

@@ -19,7 +19,6 @@ router.get('/preguntas-frecuentes',loginMiddleware,mainController.frequentQAndA)
 router.get('/medicalInfo',loginMiddleware,isAdminMiddleware, mainController.showMedicalForm);
 router.get('/budget',loginMiddleware,isAdminMiddleware,mainController.budget);
 router.get('/consent',loginMiddleware,isAdminMiddleware,mainController.consent);
-router.get('/getTestProducts',loginMiddleware,mainController.getTestingProducts);
 
 
 // POST
