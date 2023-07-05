@@ -423,7 +423,6 @@ function createCheckoutButton(preferenceId) {
 async function checkForUserLogged() {
     try {
         let userLogged = window.userLogged;
-        console.log(userLogged);
         // Si hay usuario en session, se deja como esta
         if (userLogged) return;
         // agarro el contenedor de tarjetas
@@ -446,7 +445,7 @@ async function checkForUserLogged() {
         // Saco el spinner
         document.querySelector('.spinner-overlay').remove()
         productCardWrapper.innerHTML = '';
-        localStorageCart.forEach(item=>{
+        localStorageCart?.forEach(item=>{
             let product = products.find(prod=>prod.id==item.product_id);
             product.filename = product.files.find(file=>file.file_types_id==1)?.filename;
             let cardHTML = 
@@ -483,6 +482,10 @@ async function checkForUserLogged() {
             `;
             productCardWrapper.innerHTML += cardHTML;
         });
+        if(!localStorageCart || localStorageCart.length ==0){
+            productCardWrapper.innerHTML = `<p class="no-products-msg">No tienes productos en el carro</p>`;
+        }
+        
         return
         
     } catch (error) {
