@@ -5,22 +5,27 @@ const PDFGeneratorController = require('../controllers/PDFGenerator/pdfGenerator
 const multer = require('multer');
 
 // Middlewares
-const loginMiddleware = require('../middlewares/loginMiddleware')
+const loginMiddleware = require('../middlewares/loginMiddleware');
+const isAdminMiddleware = require('../middlewares/isAdminMiddleware');
+
 // Configuración básica de multer
 const upload = multer();
 
+// GET
 router.get('/',loginMiddleware,mainController.index);
-router.get('/servicios',mainController.services);
-router.get('/servicios/:servicioId',mainController.serviceDetail)
-/* router.get('/blog',mainController.blogList)
+router.get('/servicios',loginMiddleware,mainController.services);
+router.get('/servicios/:servicioId',loginMiddleware,mainController.serviceDetail)
+router.get('/preguntas-frecuentes',loginMiddleware,mainController.frequentQAndA);
+router.get('/medicalInfo',loginMiddleware,isAdminMiddleware, mainController.showMedicalForm);
+router.get('/budget',loginMiddleware,isAdminMiddleware,mainController.budget);
+router.get('/consent',loginMiddleware,isAdminMiddleware,mainController.consent);
+router.get('/getTestProducts',loginMiddleware,mainController.getTestingProducts);
+/* router.get('/blog',loginMiddleware,mainController.blogList)
 router.get('/blog/:blogId',mainController.blog) */
-router.get('/preguntas-frecuentes',mainController.frequentQAndA);
-router.get('/medicalInfo', mainController.showMedicalForm);
+
+// POST
 router.post('/generateMedicalPDF',upload.single('signature'),PDFGeneratorController.medicalPDF);
-router.get('/budget',mainController.budget);
 router.post('/generateBudgetPDF',PDFGeneratorController.budgetPDF);
-router.get('/consent',mainController.consent);
 router.post('/generateConsentPDF',upload.single('signature'),PDFGeneratorController.consentPDF);
-router.get('/getTestProducts',mainController.getTestingProducts);
 
 module.exports=router;

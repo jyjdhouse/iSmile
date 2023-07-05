@@ -5,11 +5,14 @@ const guestMiddleware = require('../middlewares/guestMiddleware');
 // Validators
 const registValidations = require('../middlewares/registValidations');
 
+// MIDDLEWARES
+const loginMiddleware = require('../middlewares/loginMiddleware');
+
 // Rutas
 
 // GET
 router.get('/logout',userController.logout);
-router.get('/checkout',userController.checkout); 
+router.get('/checkout',loginMiddleware,userController.checkout); 
 router.get('/profile',guestMiddleware,userController.userProfile);
 
 // POST
