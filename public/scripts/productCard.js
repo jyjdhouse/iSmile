@@ -26,6 +26,7 @@ window.addEventListener('load', async () => {
                     //para llegar al id del producto ..
                     const idProd = card.dataset.productid;
                     card.querySelector('.loading-container').classList.add('loading-container-active');
+                    console.log(userLogged)
                     if (userLogged) {
                         await add(idProd, userLogged); //Funcion que agrega al carro el producto 
                     } else {

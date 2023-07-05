@@ -18,8 +18,8 @@ module.exports=(sequelize,dataTypes)=>{
     const FileType = sequelize.define(alias,cols,config);
 
     FileType.associate = (models)=>{
-        FileType.hasMany(models.User,{
-            as:'products',
+        FileType.hasMany(models.ProductFile,{
+            as:'files',
             foreignKey: 'file_types_id'
         })
     };

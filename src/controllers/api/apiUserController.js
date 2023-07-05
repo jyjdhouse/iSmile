@@ -26,7 +26,7 @@ const controller = {
                                     {
                                         association: 'product',
                                         include: [
-                                            'images'
+                                            'files'
                                         ]
                                     }
                                 ]

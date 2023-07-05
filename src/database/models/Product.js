@@ -29,6 +29,7 @@ module.exports = (sequelize, dataTypes) => {
             as: 'files',
             foreignKey: 'product_id'
         });
+       
         Product.hasMany(models.TemporalItem, {
             as: 'temporalItems',
             foreignKey: 'product_id'
