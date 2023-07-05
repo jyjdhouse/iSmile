@@ -2,9 +2,33 @@ const Blog = require('../database/models/Blog');
 const Blog_Image = require('../database/models/BlogImage');
 const showdown = require('showdown');
 
-const controller = {
 
-    create: async (req, res) => {
+const controller = {
+    list: async (req, res) => { //Metodo que devuelve todos los blogs
+        try {
+            let blogs = await Blog.findAll()
+            return res.render('blogList', {blogs})
+        } catch (error) {
+            console.log(`Falle en blogController.list: ${error}`);
+            return res.json(error);
+        }
+    },
+    detail: async (req, res) => {//Metodo que devuelve blog en especifico
+        try {
+            const { blogId } = req.params
+            let blog = await Blog.findByPk(blogId, {include: ['images']});
+    
+            return res.render('blog', {blog})
+        } catch (error) {
+            console.log(`Falle en apiBlogController.detail: ${error}`);
+            return res.json(error);
+        }
+       
+    },
+    createBlog: (req, res) => {
+        return res.render('createBlog')
+    },
+    processBlogCreation: async (req, res) => {
         try {
             const { title, description } = req.body;
             const images = req.file;

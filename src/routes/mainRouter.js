@@ -12,8 +12,8 @@ const upload = multer();
 router.get('/',loginMiddleware,mainController.index);
 router.get('/servicios',mainController.services);
 router.get('/servicios/:servicioId',mainController.serviceDetail)
-router.get('/blog',mainController.blogList)
-router.get('/blog/:blogId',mainController.blog)
+/* router.get('/blog',mainController.blogList)
+router.get('/blog/:blogId',mainController.blog) */
 router.get('/preguntas-frecuentes',mainController.frequentQAndA);
 router.get('/medicalInfo', mainController.showMedicalForm);
 router.post('/generateMedicalPDF',upload.single('signature'),PDFGeneratorController.medicalPDF);

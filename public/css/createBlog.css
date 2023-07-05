@@ -1,0 +1,29 @@
+.blog-creation-main {
+    margin-top: 12vh;
+    margin-bottom: 5vh;
+}
+
+.input-error {
+    border: 1px solid red;
+}
+
+.input-label-container {
+    display: flex;
+    flex-direction: column;
+    margin: 5% 0;
+}
+
+.input-label-container input {
+    margin-top: 3%;
+    width: 60%;
+    border: 1px solid grey;
+}
+
+.input-label-container textarea {
+
+    border: 1px solid grey;
+}
+
+.create-blog-form button {
+    width: 70%;
+}

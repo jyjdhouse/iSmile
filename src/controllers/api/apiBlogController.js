@@ -1,4 +1,4 @@
-
+/* 
 
 // From utils
 const getProduct = require('../../utils/getProduct.js');
@@ -47,3 +47,4 @@ const controller = {
 };
 
 module.exports = controller;
+ */
