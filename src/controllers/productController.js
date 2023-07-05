@@ -7,8 +7,9 @@ const Op = Sequelize.Op;
 const getCategories = require('../utils/getCategories')
 
 // utils
-
+const getRandomItems = require('../utils/getRandomItems');
 const getProduct = require('../utils/getProduct');
+const getDeepCopy = require('../utils/getDeepCopy')
 // const adaptProductsToBeListed = require('../utils/adaptProductsToBeListed');
 // const getCountryCodes = require('../utils/getCountryCodes');
 
@@ -29,11 +30,18 @@ const controller = {
         try {
             
             const id = req.params.productId
-            let product = await db.Product.findByPk(id,{
+            let product = getDeepCopy(await db.Product.findByPk(id,{
                 include: ['files']
-            });
-            // return res.send(product);
-            return res.render('productDetail', {product})
+            }));
+            let suggestedProducts = getDeepCopy(await db.Product.findAll({
+                where: {
+                    id: {[Op.ne]: id} 
+                },
+                include: ['files']
+            }));
+            suggestedProducts = getRandomItems(suggestedProducts);
+            // return res.send(suggestedProducts);
+            return res.render('productDetail', {product,suggestedProducts})
         } catch (error) {
             console.log(`Falle en productController.detail: ${error}`);
             return res.json(error);
