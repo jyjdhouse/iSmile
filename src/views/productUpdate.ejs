@@ -49,13 +49,12 @@
                 <div class="input-label-container">
 
                     <label class="form-labels">Imagenes actuales</label>
-                    <% productToUpdate.images.map((img, i)=> { %>
-                        <% console.log(img.image) %>
+                    <% productToUpdate.files.map((file, i)=> { %>
                         <div class="current-img-subcontainer">
-                            <input type="checkbox" id="<%= i %>" name="current_imgs" checked value="<%= img.image %>">
+                            <input type="checkbox" id="<%= i %>" name="current_imgs" checked value="<%= file.filename %>">
                             <label for="<%= i %>">
-                                <img class="product-to-update-img" src="/img/product/<%= img.image %>"
-                                    alt="<%= img.id %>">
+                                <img class="product-to-update-img" src="/img/product/<%= file.filename %>"
+                                    alt="<%= file.id %>">
                             </label>
                         </div>
                         <% }) %>

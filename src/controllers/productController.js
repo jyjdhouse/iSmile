@@ -20,7 +20,7 @@ const controller = {
                 include: ['files']
             });
             // return res.send(products);
-            return res.render('productList',{products})
+            return res.render('productList', { products })
         } catch (error) {
             console.log(`Falle en productController.list: ${error}`);
             return res.json(error);
@@ -28,20 +28,20 @@ const controller = {
     },
     detail: async (req, res) => { //Metodo que muestra detalle de producto
         try {
-            
+
             const id = req.params.productId
-            let product = getDeepCopy(await db.Product.findByPk(id,{
+            let product = getDeepCopy(await db.Product.findByPk(id, {
                 include: ['files']
             }));
             let suggestedProducts = getDeepCopy(await db.Product.findAll({
                 where: {
-                    id: {[Op.ne]: id} 
+                    id: { [Op.ne]: id }
                 },
                 include: ['files']
             }));
             suggestedProducts = getRandomItems(suggestedProducts);
             // return res.send(suggestedProducts);
-            return res.render('productDetail', {product,suggestedProducts})
+            return res.render('productDetail', { product, suggestedProducts })
         } catch (error) {
             console.log(`Falle en productController.detail: ${error}`);
             return res.json(error);
@@ -55,7 +55,7 @@ const controller = {
 
             let { name, price, description, category } = req.body;
             let images = req.files;
-           
+
 
             let productObject = {
                 name,
@@ -69,38 +69,39 @@ const controller = {
             const imagesObject = images.map(obj => {
                 let fileType = obj.mimetype.startsWith('video/') ? 2 : 1;
                 return {
-                    image: obj.filename,
+                    filename: obj.filename,
                     product_id: newProduct.id,
                     file_types_id: fileType
                 }
             });
-            await db.Product_Image.bulkCreate(imagesObject);
+            await db.ProductFile.bulkCreate(imagesObject);
 
 
             return res.redirect('/')
         } catch (error) {
             console.log(`Falle en productController.create: ${error}`);
             images.forEach(image =>
-                fs.unlinkSync(path.join(__dirname, `../../public/img/product/${image.image}` )) // DELETE IMGS IN LOCAL FOLDER    
+                fs.unlinkSync(path.join(__dirname, `../../public/img/product/${image.image}`)) // DELETE IMGS IN LOCAL FOLDER    
             );
             return res.json(error);
         }
     },
     updateProduct: async (req, res) => {
         const productId = req.params.productId;
-        const productToUpdate = await db.Product.findByPk(productId, { include: ['category', 'images'] })
+        const productToUpdate = await getProduct(productId)
         const categories = await getCategories()
-       
-        return res.render('productUpdate.ejs', {productToUpdate, categories})
+
+        return res.render('productUpdate.ejs', { productToUpdate, categories })
     },
     processProductUpdate: async (req, res) => {
         try {
 
             const productId = req.params.productId;
-            const productToUpdate = await db.Product.findByPk(productId, { include: ['category', 'images'] })
-            const { name, price, description } = req.body
+            const productToUpdate = await getProduct(productId)
+            const { name, price, description, current_imgs } = req.body
+            // Agarro las imagenes del input
             let images = req.files
-
+            // Hago el update del producto en la db
             const productUpdated = await db.Product.update({
                 name,
                 price,
@@ -110,45 +111,44 @@ const controller = {
                     id: productToUpdate.id
                 }
             })
+            // return res.send(productUpdated);
 
-            let imagesObject = images.map(obj => {
+            let imagesObjectDB = images.map(obj => {
+                let fileType = obj.mimetype.startsWith('video/') ? 2 : 1;
                 return {
-                    image: obj.filename,
-                    product_id: productUpdated.id
+                    filename: obj.filename,
+                    product_id: productId,
+                    file_types_id: fileType
                 }
             });
-            await db.Product_Image.bulkCreate(imagesObject);
+            await db.ProductFile.bulkCreate(imagesObjectDB);
 
+            // Array con imagenes para borrar
             let imgsToDelete = []
 
-            const imgsToDeleteFilter = productToUpdate.images.filter(image => { //FILTER TO DELETE IMAGES 
-                
-                if (!req.body.current_imgs.includes(image.image)) {
-                    return imgsToDelete.push(image.image)
+            productToUpdate.files.forEach(file => { //FILTER TO DELETE IMAGES                 
+                if (!current_imgs.includes(file.filename)) {
+                    return imgsToDelete.push(file.filename)
                 }
             })
 
-
+            // me fijo si hay imagenes para borrar
             if (imgsToDelete.length > 0) {
-                
-                imgsToDelete.forEach(image =>
-                   
-                    fs.unlinkSync(path.join(__dirname, `../../public/img/product/${image}`)) // DELETE IMGS IN LOCAL FOLDER    
+                imgsToDelete.forEach(filename =>
+                    // DELETE IMGS IN LOCAL FOLDER    
+                    fs.unlinkSync(path.join(__dirname, `../../public/img/product/${filename}`)) 
                 );
-
-
-                await db.Product_Image.destroy({
+                // DELETE IMGS IN DATABASE     
+                await db.ProductFile.destroy({
                     where: {
-                        image: {
+                        filename: {
                             [Op.in]: imgsToDelete
                         }
                     }
-                }) // DELETE IMGS IN DATABASE     
+                })
+            };
 
-            }
-
-
-            return res.redirect('/')
+            return res.redirect('/product/'+productId)
 
         } catch (error) {
             console.log(`Falle en productController.update: ${error}`);

@@ -3,8 +3,6 @@
 
 <head>
     <%- include('./partials/head.ejs') %>
-
-
         <link rel="stylesheet" href="/css/createBlog.css" type="text/css">
         <script src="/scripts/createBlog.js" type="module"></script>
         <title>Creación blog</title>
@@ -13,34 +11,30 @@
 <body>
 
     <%- include('./partials/header.ejs') %>
-
-    
-
     <main class="blog-creation-main">
-
         <div class="intro-title-container">
             <h1 class="blog-intro-title">Creación de blog</h1>
         </div>
-
-        <form action="" class="create-blog-form">
+        <form action="/blog" method="POST" class="create-blog-form" enctype = "multipart/form-data">
             <div class="input-label-container">
                 <label for="title">Titulo blog</label>
                 <input type="text" name="title">
             </div>
             <div class="input-label-container">
                 <label for="author">Autor</label>
-                <input type="text">
+                <input type="text" name="author">
             </div>
             <div class="input-label-container">
                 <label for="content">Imagenes</label>
                 <input type="file" name="images" class="images" multiple>
             </div>
-            <div class="images-radio-content-container">
+            <div class="images-radio-content-wrapper">
                 <label for="main-img">Seleccionar imagen principal</label>
+                <div class="images-radio-box-wrapper"></div>
             </div>
             <div class="input-label-container">
                 <label for="content">Contenido</label>
-                <textarea name="content" cols="50" rows="20"></textarea>
+                <textarea name="text" cols="50" rows="20"></textarea>
             </div>
             <button type="submit">Crear</button>
         </form>

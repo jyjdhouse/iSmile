@@ -27,3 +27,38 @@
 .create-blog-form button {
     width: 70%;
 }
+
+/* Box de fotos */
+.images-radio-box-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+}
+.image-radio-box{
+    height: 200px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+
+}
+.image-radio-box .image-container{
+    width: 100%;
+    height: 80%;
+}
+.image-container label{
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+.image-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+@media(min-width:1024px){
+    .images-radio-box-wrapper{
+        flex-direction: row;
+    }
+}

@@ -30,37 +30,36 @@ const controller = {
     },
     processBlogCreation: async (req, res) => {
         try {
-            const { title, description } = req.body;
-            const images = req.file;
-    
+            let { title, text, mainImage, author } = req.body;
+            const images = req.files;
+            mainImage = images.find(img=>img.originalname == mainImage)
+            
             const convertToMarkdown = () => { // este showdown es para convertir el html a markdown, y conservar el formato
                 let converter = new showdown.Converter();
-                let convertHtml = converter.makeHtml(description);
+                let convertHtml = converter.makeHtml(text);
                 return convertHtml
             };
     
             const blogObject =  {
                 title,
-                description: convertToMarkdown()
+                text: convertToMarkdown(),
+                author,
+                createdAt: Date.now()
             }
             
             const newBlog = await db.Blog.create(blogObject);
     
-            const imagesObject = images.map(obj => {
+            let imagesObjectDB = images.map(img=>{
+                const isMainImage = img == mainImage ? 1 : 0;
                 return {
-                    image: obj.path,
-                    blog_id: newBlog.id
+                    filename: img.filename,
+                    blog_id: newBlog.id, //CREAR PRIMERO
+                    main_image: isMainImage,
                 }
             });
     
-            await db.BlogImage.bulkCreate(imagesObject);
-            return res.status(200).json({
-                meta: {
-                    status: 200,
-                    msg: 'Producto creado satisfactoriamente'
-                },
-                blog: newBlog
-            });
+            await db.BlogImage.bulkCreate(imagesObjectDB);
+            return res.render(`blog/${newBlog.id}`)
         } catch (error) {
             console.log(`Falle en blogController.creado: ${error}`);
             return res.json(error);

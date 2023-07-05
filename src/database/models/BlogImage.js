@@ -7,8 +7,9 @@ module.exports = (sequelize, dataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        image: { type: dataTypes.STRING(255) },
-        blog_id: { type: dataTypes.INTEGER }
+        filename: { type: dataTypes.STRING(255) },
+        blog_id: { type: dataTypes.INTEGER },
+        main_image: {type: dataTypes.INTEGER}
     }
 
     let config = {

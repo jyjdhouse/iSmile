@@ -9,6 +9,7 @@
          },
          title: { type: dataTypes.STRING(255) },
          text: { type: dataTypes.TEXT },
+         author: { type: dataTypes.STRING(100) },
          createdAt: {
              type: dataTypes.DATE,
              defaultValue: () => Date.now()
