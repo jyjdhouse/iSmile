@@ -17,7 +17,9 @@
 .signature-field{
     /* height: 150px; */
     justify-content: flex-start;
+    width: 70%;
 }
+
 .signature-field label,
 .date-field label{
     width: fit-content;
@@ -44,6 +46,7 @@
     position: relative;
     z-index: 1;
 }
+
 #clearButton{
     width: 2rem;
     height: 2rem;

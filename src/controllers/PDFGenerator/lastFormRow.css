@@ -17,6 +17,11 @@
 .signature-field{
     /* height: 150px; */
     justify-content: flex-start;
+    width: 80%;
+}
+.signature-date{
+    width: fit-content;
+    margin-left: 120px;
 }
 .signature-field label,
 .date-field label{
@@ -25,7 +30,7 @@
 }
 .canvas-container{
     width: 50%;
-    height: 200px;
+    height: 300px;
     border-bottom: 1px solid #663399;
     position: relative;
 }
@@ -33,30 +38,12 @@
     width: 200%;
     height: 100%;
     position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translate(-50%,50%);
+    left: 30%;
+    top: 0;
+    transform: translate(-50%,0);
+    margin-bottom: 30px;
 }
-#confirm-signature{
-    width: 2rem;
-    height: 2rem;
-    padding: 0;
-    position: relative;
-    z-index: 1;
-}
-#clearButton{
-    width: 2rem;
-    height: 2rem;
-    border: none;
-    outline: none;
-    background-color: #fff;
-    padding: .5% 0;
-    border: 1px solid #bba059;
-    border-radius: 1rem;
-    font-size: 1rem;
-    position: relative;
-    z-index: 1;
-}
+
 button{
     width: 40%;
     border: none;
@@ -106,10 +93,13 @@ button{
 /* Firma en foto */
 .signature-image{
     object-fit: cover;
-    width: 100px;
+    width: 130px;
     height: 100px;
     object-position: center;
     position: absolute;
-    right: 100px;
-    top: 5px;
+    right: 90px;
+    top: -10px;
+}
+.signature-date{
+    color: #444;
 }

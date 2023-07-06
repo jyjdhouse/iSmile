@@ -19,20 +19,14 @@ window.addEventListener('load', () => {
     const clearButton = document.getElementById('clearButton');
     const checkButton = document.getElementById('confirm-signature');
     checkButton.classList.add('hidden');
-    const signaturePad = new SignaturePad(canvas, {
-        penColor: '#bba059'//TODO: #bba059
-    });
-
+    const signaturePad = new SignaturePad(canvas);  
     canvas.addEventListener('touchstart', () => {
         checkButton.classList.remove('hidden');
         // canvas.width = canvas.offsetWidth;
         // canvas.height = canvas.offsetHeight;
-    })
-
+    });
     let signatureImage;
     let formData = new FormData();
-    // Establecer el grosor mínimo del trazo
-    signaturePad.maxWidth = 1.9; // Valor en píxeles
     // Returns signature image as data URL (see https://mdn.io/todataurl for the list of possible parameters)
     // Si confirma la firma
     checkButton.addEventListener('click', async (e) => {
@@ -41,12 +35,12 @@ window.addEventListener('load', () => {
         signatureImage = signaturePad.toDataURL(); // save image as PNG
         signatureImage = dataURLtoFile(signatureImage, 'firma.png');
         formData.append('signature', signatureImage);
-        console.log(signatureImage);
     });
     // Por si quieren limpiar firma
     clearButton.addEventListener('click', (e) => {
         e.preventDefault()
         signaturePad.clear();
+        formData.delete('signature')
     });
 
 
@@ -152,9 +146,11 @@ window.addEventListener('load', () => {
             paragraph.textContent = type == 'date' ? dateFormater(value) : value;
             input.parentNode.replaceChild(paragraph, input);
         });
-
+        
         // return document.body.parentNode.replaceChild(bodyClone, document.body);
-        // return console.log(bodyClone.innerHTML);W
+
+
+        // return console.log(bodyClone.innerHTML);
         formData.append('contentHTML', bodyClone.innerHTML); //Mando el html
 
         // Muestro el cargando pdf...
