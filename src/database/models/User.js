@@ -16,7 +16,8 @@ module.exports = (sequelize, dataTypes) => {
         wpp_notifications: { type: dataTypes.TINYINT },
         email_notifications: { type: dataTypes.TINYINT },
         email_newsletter: { type: dataTypes.TINYINT },
-        user_categories_id: {type: dataTypes.INTEGER}
+        user_categories_id: {type: dataTypes.INTEGER},
+        admin_token: { type: dataTypes.TEXT }
     }
 
     let config = {

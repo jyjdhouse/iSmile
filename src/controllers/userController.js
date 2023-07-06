@@ -128,6 +128,7 @@ const controller = {
         try {
             let relativePath = getRelativePath(req.headers.referer);
             res.clearCookie('userAccessToken');
+            res.clearCookie('adminToken')
             // res.clearCookie('token');
             req.session.destroy();
             res.redirect(relativePath);
@@ -150,14 +151,27 @@ const controller = {
                 // Comparo contrasenas
                 if (bcrypt.compareSync(userData.password, userToLog.password)) {
 
-                    const cookieTime = (1000 * 60) * 60 * 24 * 7 //1 Semana
+                    let cookieTime = (1000 * 60) * 60 * 24 * 7 //1 Semana
 
                     req.session.userLoggedId = userToLog.id; //Defino en sessions al usuario loggeado
 
                     // Generar el token de autenticación
                     const token = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1w' }); // genera el token
                     res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
-
+                    // Si es admin armo una cookie con el token de admin
+                    if(userToLog.user_categories_id == 1 || userToLog.user_categories_id == 2){
+                        const adminToken = jwt.sign({ id: userToLog.id  }, secret, { expiresIn: '1d' });
+                        cookieTime = (1000 * 60) * 60 * 24; //1 dia
+                        res.cookie('adminToken', adminToken, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
+                        // Le agrego el token al user en la db
+                        await db.User.update({
+                            admin_token: adminToken
+                        },{
+                            where: {
+                                id: userToLog.id
+                            }
+                        })
+                    }
                     return res.redirect(relativePath);
                 }
                 // Si llego aca es porque esta mal la contrasena
