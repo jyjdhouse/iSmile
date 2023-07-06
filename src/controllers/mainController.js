@@ -1,13 +1,49 @@
-
-/* const Service = require('../database/models/Service') */
+const db = require('../database/models') 
 // Utils
 const staticProducts = require('../utils/staticDB/products');
 const {specialties, specialties_services, service_treatments} = require('../utils/staticDB/services');
 
 const controller = {
     index: async (req, res) => {
-        try {    
-            return res.render('index')
+        try {
+            let homeFiles = await db.HomeFile.findAll({
+                include: ['fileType','homeSection']
+            });
+            // Ahora secciono todo aca asi en el ejs se simplifica
+            // VIDEO
+            let homeVideo = homeFiles.find(file=>file.home_sections_id==1);
+            let videoFile = {
+                homeVideo
+            }
+            // GALLERY IMAGES
+            let galleryFiles = homeFiles.filter(file=>file.home_sections_id==2);
+            // Ordeno el array por posiciones
+            galleryFiles.sort((a,b)=>a.position-b.position);
+            // Le dejo solo el filename
+            galleryFiles = galleryFiles.map(file=>{
+                return {
+                    filename:file.filename,
+                    section_id: file.home_sections_id,
+                    position: file.position
+                }
+            });
+            // IG
+            let igFiles = homeFiles.filter(file=>file.home_sections_id==3);
+            // Ordeno el array por posiciones
+            igFiles.sort((a,b)=>a.position-b.position);
+            // Le dejo solo el filename
+            igFiles = igFiles.map(file=>{
+                return {
+                    filename:file.filename,
+                    section_id: file.home_sections_id,
+                    position: file.position
+                }
+            });
+            return res.send(igFiles)
+            // BLOOG
+            let blogFilename = homeFiles.find(file=>file.home_sections_id==4).filename;
+            // return res.send(igFiles)
+            return res.render('index',{videoFilename: homeVideo, galleryFiles, igFiles, blogFilename})
             
         } catch (error) {
             console.log(`Falle en mainController.list: ${error}`);
@@ -54,6 +90,9 @@ const controller = {
     },
     consent: (req,res) =>{
         return res.render('clientConsent');
+    },
+    updateHomeFile: (req,res)=>{
+        return res.send(req.file);
     }
 };
 

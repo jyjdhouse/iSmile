@@ -207,8 +207,8 @@ window.addEventListener('load', () => {
         let intervalId = setInterval(toggleActiveImage, 3000);
 
         // Capturo edit clicks, si hay freno el intervalo
-        editBtns.forEach(btn=>{
-            btn.addEventListener('click',()=>{
+        editBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
                 // Freno el intervalo
                 clearInterval(intervalId);
             })
@@ -222,54 +222,61 @@ window.addEventListener('load', () => {
     }
 
     // Logica para editar contendio
-    
+
     let previousSrc;
     editBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            const card = btn.closest('.instagram-card') || btn.closest('.landing-video-container');
-            const cancelLabel = card.querySelector('.cancel-file-action');
-            const selectFileLabel = card.querySelector('.instagram-input-file-label');
-            const confirmFileBtn = card.querySelector('.confirm-instagram-file-btn');
+            const form = btn.closest('.edit-file-overlay');
+            const cancelLabel = form.querySelector('.cancel-file-action');
+            const selectFileLabel = form.querySelector('.instagram-input-file-label');
+            const confirmFileBtn = form.querySelector('.confirm-instagram-file-btn');
             cancelLabel.classList.remove('hidden');
             selectFileLabel.classList.remove('hidden');
             confirmFileBtn.classList.remove('hidden');
-            // Pongo el previousSrc
-            previousSrc = card.querySelector('.instagram-image')?.getAttribute('src') ||
-                card.querySelector('.video')?.getAttribute('src');
+            // Pongo el previousSrc - Capturo a cualquier contenedor del home (video,ig,blog,services)
+            previousSrc = form.closest('.instagram-card')?.querySelector('.instagram-image')?.getAttribute('src') ||
+                form.closest('.landing-video-container')?.querySelector('.video')?.getAttribute('src') ||
+                form.closest('.blog-background')?.querySelector('.blog-background-image')?.getAttribute('src');
         });
     });
     // Cuando tocan el boton de cancelar
-    
+
     cancelBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            const card = btn.closest('.instagram-card') || btn.closest('.landing-video-container');
-            const cancelLabel = card.querySelector('.cancel-file-action');
-            const selectFileLabel = card.querySelector('.instagram-input-file-label');
-            const confirmFileBtn = card.querySelector('.confirm-instagram-file-btn');
+            const form = btn.closest('.edit-file-overlay');
+            const cancelLabel = form.querySelector('.cancel-file-action');
+            const selectFileLabel = form.querySelector('.instagram-input-file-label');
+            const confirmFileBtn = form.querySelector('.confirm-instagram-file-btn');
             cancelLabel.classList.add('hidden');
             selectFileLabel.classList.add('hidden');
             confirmFileBtn.classList.add('hidden');
             // Vuelvo la imagen a la foto que tenia
-            card.querySelector('.instagram-image')?.setAttribute('src', previousSrc) ||
-                card.querySelector('.video')?.setAttribute('src', previousSrc);
+            form.closest('.instagram-card')?.querySelector('.instagram-image')?.setAttribute('src', previousSrc) ||
+                form.closest('.landing-video-container')?.querySelector('.video')?.setAttribute('src', previousSrc) ||
+                form.closest('.blog-background')?.querySelector('.blog-background-image')?.setAttribute('src', previousSrc);
 
             // Reiniciar el valor del elemento <input>
-            card.querySelector('input').value = '';
+            form.querySelector('input').value = '';
         });
     });
 
     // Para mostrar la foto que subieron
-    const hiddenInputsFile = document.querySelectorAll('.instagram-file-input, .home-video-file-input');
+    const hiddenInputsFile = document.querySelectorAll('.edit-file-input');
     hiddenInputsFile.forEach(input => {
         input.addEventListener('change', (e) => { //Subieron un archivo para cambiar la foto
             // Agarro esa foto
-            const card = input.closest('.instagram-card') || input.closest('.landing-video-container');
-            const fileElement = card.querySelector('.instagram-image') || card.querySelector('.video');
+            const form = input.closest('.edit-file-overlay');
+            console.log(form);
+            const fileElement = form.closest('.instagram-card')?.querySelector('.instagram-image')||
+            form.closest('.landing-video-container')?.querySelector('.video')||
+            form.closest('.blog-background')?.querySelector('.blog-background-image')||
+            form.closest('.product-gallery-card')?.querySelector('.gallery-image');
+            console.log(fileElement);
             var file = e.target.files[0];
             var reader = new FileReader();
-            previousSrc = fileElement.getAttribute('src');            
+            previousSrc = fileElement.getAttribute('src');
             reader.onload = function (e) {
                 fileElement.setAttribute('src', e.target.result);
             }

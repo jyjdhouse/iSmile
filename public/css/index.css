@@ -49,9 +49,6 @@ video::-webkit-media-controls-time-remaining-display {
 .edit-home-video-container {
     position: absolute;
     z-index: 1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -277,7 +274,9 @@ video::-webkit-media-controls-time-remaining-display {
 .product-gallery-card-hover .overlay {
     opacity: .6;
 }
-
+.gallery-overlay .edit-file-buttons-container{
+    width: 100%;
+}
 /* BLOG SECTION */
 .blog-section {
     width: 100%;
@@ -304,6 +303,7 @@ video::-webkit-media-controls-time-remaining-display {
     width: fit-content;
     object-fit: cover;
     height: 100%;
+    width: 100%;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -428,6 +428,10 @@ video::-webkit-media-controls-time-remaining-display {
     width: 100%;
 }
 
+.blog-overlay .edit-file-buttons-container{
+    top: 35%;
+    left: 15%;
+}
 /* ABOUT-US */
 .about-us-container {
     display: flex;
@@ -663,7 +667,7 @@ video::-webkit-media-controls-time-remaining-display {
     height: 100%;
 }
 
-.instagram-overlay {
+.edit-file-overlay {
     background-color: rgba(0, 0, 0, .5);
     position: absolute;
     top: 0;
@@ -672,13 +676,17 @@ video::-webkit-media-controls-time-remaining-display {
     height: 100%;
     opacity: 1;
     transition: all .3s ease;
+}
+.edit-file-buttons-container{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
+    width: 30%;
+    justify-content: space-evenly;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
-
 
 .instagram-logo {
     width: 100%;
@@ -700,7 +708,9 @@ video::-webkit-media-controls-time-remaining-display {
     height: 100%;
     transition: all .3s ease;
 }
-
+.instagram-overlay .edit-file-buttons-container{
+    width: 100%;
+}
 /* Para verlo del lado del admin */
 .change-image-btn-container {
     width: 100%;
@@ -713,6 +723,7 @@ video::-webkit-media-controls-time-remaining-display {
     padding: 1rem;
     border: 1px solid #eee;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .instagram-input-file-label,
@@ -745,14 +756,32 @@ video::-webkit-media-controls-time-remaining-display {
 
     /* EDITAR HOME VIDEO */
     .edit-home-video-container .change-image-btn {
-        font-size: 10rem;
+        font-size: 6rem;
     }
 
-    .edit-home-video-container>p,
-    .edit-home-video-container>label {
-        font-size: 1.5rem;
+    .edit-file-overlay p,
+    .edit-file-overlay label,
+    .edit-file-overlay .confirm-instagram-file-btn {
+        font-size: 1.2rem;
+        text-transform: uppercase;
     }
-
+    .blog-overlay p,
+    .blog-overlay label,
+    .blog-overlay .confirm-instagram-file-btn {
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+    .instagram-overlay p,
+    .instagram-overlay label,
+    .instagram-overlay .confirm-instagram-file-btn {
+        font-size: .8rem;
+        text-transform: none;
+    }
+    .gallery-overlay p,
+    .gallery-overlay label,
+    .gallery-overlay .confirm-instagram-file-btn {
+        font-size: 1rem;
+    }
     /* SLIDESHOW */
     .slide-images-wraper-mobile {
         display: none;
@@ -837,11 +866,6 @@ video::-webkit-media-controls-time-remaining-display {
 
     .blog-background .overlay {
         display: none;
-    }
-
-    .blog-background-image {
-        height: 100%;
-        left: 20%;
     }
 
     .blog-section-title {
@@ -1007,6 +1031,7 @@ video::-webkit-media-controls-time-remaining-display {
         height: 40%;
         position: relative;
         opacity: 1;
+        scale: 1;
     }
 
     .instagram-card:nth-child(even) {

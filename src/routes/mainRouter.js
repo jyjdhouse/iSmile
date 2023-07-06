@@ -7,6 +7,7 @@ const multer = require('multer');
 // Middlewares
 const loginMiddleware = require('../middlewares/loginMiddleware');
 const isAdminMiddleware = require('../middlewares/isAdminMiddleware');
+const uploadHomeImages = require('../middlewares/uploadHomeImages');
 
 // Configuración básica de multer
 const upload = multer();
@@ -25,5 +26,8 @@ router.get('/consent',/*loginMiddleware,isAdminMiddleware,*/mainController.conse
 router.post('/generateMedicalPDF',upload.single('signature'),PDFGeneratorController.medicalPDF);
 router.post('/generateBudgetPDF',PDFGeneratorController.budgetPDF);
 router.post('/generateConsentPDF',upload.single('signature'),PDFGeneratorController.consentPDF);
+
+// PUT
+router.put('/updateHomeFile',isAdminMiddleware,uploadHomeImages.single('homeFile'),mainController.updateHomeFile)
 
 module.exports=router;
