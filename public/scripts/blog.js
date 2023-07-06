@@ -1,19 +1,23 @@
 window.addEventListener('load', () => {
 
-
+    const converter = new showdown.Converter();
+    
     const images = document.querySelectorAll('.other-img-container');
     const adminActionsToggle = document.querySelector('.admin-toggle')
     const adminDropdown = document.querySelector('.blog-admin-actions-dropdown')
-   
+    const blogTextCont = document.querySelector('.blog-detail-text-container')
+
+    var htmlText = converter.makeHtml(blogTextCont.innerText);
+    blogTextCont.innerHTML = htmlText
+
 
     adminActionsToggle.addEventListener('click', () => {
         adminDropdown.classList.toggle('blog-admin-actions-dropdown-active')
     });
 
-    if(window.innerWidth < 768){ //Resolucion mobile
+    if (window.innerWidth < 768) { //Resolucion mobile
 
-
-        if(images.length != 1) {    
+        if (images.length != 1) {
             let activeImg = 0
             const autoSlideCarousel = () => {
                 images.forEach((img, i) => {
@@ -38,23 +42,23 @@ window.addEventListener('load', () => {
                         img.classList.add('next-img-container');
                     }
                 })
-               
+
             }
-        
-        
+
+
             const autoSlideCondition = () => {
-                if (activeImg < images.length - 1) {           
-                    activeImg++  
+                if (activeImg < images.length - 1) {
+                    activeImg++
                 } else {
                     activeImg = 0
                 }
                 autoSlideCarousel()
             }
-        
+
             setInterval(autoSlideCondition, 3000)
         }
 
-      
+
 
     } else {
         images.forEach(img => {
@@ -62,6 +66,6 @@ window.addEventListener('load', () => {
         })
     }
 
-  
+
 
 })

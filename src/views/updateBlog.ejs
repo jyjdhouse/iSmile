@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+        <link rel="stylesheet" href="/css/createBlog.css" type="text/css">
+        <link rel="stylesheet" href="/css/updateBlog.css" type="text/css">
+        <title>Actualización blog</title>
+</head>
+
+<body>
+
+    <%- include('./partials/header.ejs') %>
+    <main class="blog-creation-main">
+        <div class="intro-title-container">
+            <h1 class="blog-intro-title">Actualización de blog</h1>
+        </div>
+        <form action="/blog/<%=blogToUpdate.dataValues.id %>?_method=PUT" method="POST" class="create-blog-form" enctype = "multipart/form-data">
+            <div class="input-label-container">
+                <label class="main-label" for="title">Titulo blog</label>
+                <input type="text" name="title" value="<%= blogToUpdate.dataValues.title%>" class="text-input">
+
+            </div>
+            <div class="input-label-container">
+                <label class="main-label" for="author">Autor</label>
+                <input type="text" name="author" value="<%= blogToUpdate.dataValues.author%>" class="text-input">
+            </div>
+            <div class="input-label-container">
+                <label for="content">Imagenes</label>
+                <input type="file" name="images" class="images text-input" multiple >
+            </div>
+            <div class="input-label-container images-radio-content-wrapper">
+                <label class="main-label" for="main-img">Seleccionar imagen principal</label>
+                <div class="images-radio-box-wrapper">
+                    <% blogToUpdate.images.map((img, i) => { %>
+                        
+                        <div class="image-radio-box">
+                            <div class="image-container">
+                                <label for="<%= img.filename %>"><img src="/img/blog/<%= img.filename %>" alt="<%= img.filename %>"></label>
+                            </div>
+                            <input type="radio" name="mainImage" id="<%= img.filename %>" value="<%= img.filename %>" <%= img.main_image == 1 ? 'checked' : '' %>>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+            <div class="input-label-container delete-imgs-content">
+                <label class="main-label" for="current_imgs">Fotos a eliminar</label>
+                <% blogToUpdate.images.map((img, i)=> { %>
+                    <div class="current-img-subcontainer">
+                        <input type="checkbox" id="<%= i %>" name="current_imgs" checked value="<%= img.filename %>">
+                        <label for="<%= i %>" class="label-img">
+                            <img class="blog-to-update-img" src="/img/blog/<%= img.filename %>"
+                                alt="<%= img.id %>">
+                        </label>
+                    </div>
+                    <% }) %>
+            </div>
+            <div class="input-label-container">
+                <label for="content" class="main-label">Contenido</label>
+                <textarea name="text" cols="50" rows="20" class="form-update-textarea"><%= blogToUpdate.text%></textarea>
+            </div>
+            <button type="submit">Actualizar</button>
+        </form>
+    </main>
+
+    <%- include('./partials/footer.ejs') %>
+
+</body>
+
+</html>

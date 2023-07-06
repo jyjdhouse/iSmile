@@ -15,12 +15,13 @@ const uploadBlogImage = require('../middlewares/uploadBlogImages');
 // GET
 router.get('',blogController.list)
 router.get('/create', blogController.createBlog);
+router.get('/update/:blogId', blogController.update);
 router.get('/:blogId',blogController.detail) ;
 
 router.post('/',uploadBlogImage.any('images'),blogController.processBlogCreation);
 
-router.put('/updateProduct/:blogId',uploadBlogImage.any('images'),blogController.update);
+router.put('/:blogId',uploadBlogImage.any('images'),blogController.processBlogUpdate);
 
-router.delete('/updateProduct/:blogId', blogController.deleteProduct);
+router.delete('/:blogId', blogController.deleteProduct);
 
 module.exports=router;

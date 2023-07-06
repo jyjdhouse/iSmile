@@ -20,7 +20,7 @@ module.exports = (sequelize, dataTypes) => {
     const BlogImage = sequelize.define(alias, cols, config);
 
     BlogImage.associate = (models) => {
-        BlogImage.belongsTo(models.Product, {
+        BlogImage.belongsTo(models.Blog, {
             as: 'blog',
             foreignKey: 'blog_id'
         });
