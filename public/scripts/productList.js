@@ -13,14 +13,27 @@ window.addEventListener('load', () => {
         if (actualIndex >= images.length) actualIndex = 0;
 
         images.forEach((image, index) => {
-            image.classList.remove('product-image-test-active', 'product-image-test-next-slide', 'product-image-test-prev-slide');
-            if (index === actualIndex) {
-                image.classList.add('product-image-test-active');
-            } else if (index === (actualIndex + 1) % images.length) {
-                image.classList.add('product-image-test-next-slide');
+
+            if (images.length == 2) {
+                
+                image.classList.remove('product-image-test-active', 'carousel-animation');
+                if (index === actualIndex) {
+                    image.classList.add('product-image-test-active');
+                } else {
+                    image.classList.add('carousel-animation');
+                }        
             } else {
-                image.classList.add('product-image-test-prev-slide');
+                image.classList.remove('product-image-test-active', 'product-image-test-next-slide', 'product-image-test-prev-slide');
+                if (index === actualIndex) {
+                    image.classList.add('product-image-test-active');
+                } else if (index === (actualIndex + 1) % images.length) {
+                    image.classList.add('product-image-test-next-slide');
+                } else {
+                    image.classList.add('product-image-test-prev-slide');
+                }
             }
+
+
             // ACA PREGUNTAMOS SI VIENE VIDEO
 
             if (image.classList.contains('video') && index == actualIndex) {

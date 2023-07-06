@@ -55,6 +55,7 @@ const controller = {
                 createdAt: Date.now()
             }
 
+
             const newBlog = await db.Blog.create(blogObject);
 
 
@@ -87,20 +88,41 @@ const controller = {
             const blogId = req.params.blogId;
             const blogToUpdate = await db.Blog.findByPk(blogId, { include: ['images'] });
             const images = req.files;
-            let { name, price, description, mainImage } = req.body;
-            mainImage = images.find(img => img.originalname == mainImage)
+            let { title, text, mainImage, author, current_imgs } = req.body;
 
-            const blogUpdated = await db.Blog.update({
-                name,
-                price,
-                description,
-            }, {
+
+
+            const convertToHtml = () => { // este showdown es para convertir el html a markdown, y conservar el formato
+                var converter = new showdown.Converter();
+                var htmlText = converter.makeHtml(text);
+                return htmlText
+            };
+
+            const blogObject = {
+                title: title,
+                text: convertToHtml(),
+                author: author,
+                createdAt: Date.now()
+            }
+
+            await db.Blog.update(blogObject, {
                 where: {
                     id: blogToUpdate.id
                 }
             });
 
-            let imagesObjectDB = images.map(img => {
+            let imagesObjectToUpdate = blogToUpdate.images.map(img => {
+                let isMainImage = img.filename == mainImage ? 1 : 0;
+                return {
+                    id: img.id,
+                    filename: img.filename,
+                    blog_id: blogToUpdate.id,
+                    main_image: isMainImage,
+                }
+            });
+           
+
+            let imagesObjectToCreate = images.map(img => {
                 let isMainImage = img == mainImage ? 1 : 0;
                 return {
                     filename: img.filename,
@@ -108,18 +130,17 @@ const controller = {
                     main_image: isMainImage,
                 }
             });
-            await db.BlogImage.bulkCreate(imagesObjectDB);
 
-            await db.BlogImage.update(imagesObjectDB, {
-                where: {
-                    blog_id: blogId
-                }
-            })
+            let arrayWithImages = [...imagesObjectToUpdate, ...imagesObjectToCreate]
+            
+            await db.BlogImage.bulkCreate(arrayWithImages, {
+                updateOnDuplicate: ["main_image"] // update on duplicate busca por primary key y en caso de encontrar cambia el campo que se le pasa
+            });
 
             let imgsToDelete = [];
 
             const imgsToDeleteFilter = blogToUpdate.images.filter(image => { //FILTER TO DELETE IMAGES 
-                if (!req.body.current_imgs.includes(image.dataValues.filename)) {
+                if (!current_imgs.includes(image.dataValues.filename)) {
                     return imgsToDelete.push(image.dataValues.filename)
                 }
             });
@@ -127,7 +148,7 @@ const controller = {
             if (imgsToDeleteFilter.length > 0) {
 
                 imgsToDelete.forEach(image => {
-                    console.log(image)
+
                     fs.unlinkSync(path.join(__dirname, '../../public/img/blog/' + image))
                 }
                     // DELETE IMGS IN LOCAL FOLDER    
@@ -161,13 +182,7 @@ const controller = {
                     id: blogId
                 }
             })
-            return res.status(200).json({
-                meta: {
-                    status: 200,
-                    msg: 'Producto eliminado satisfactoriamente'
-                },
-                id: blogId
-            });
+            return res.redirect('/')
         } catch (error) {
             console.log(`Falle en blogController.delete: ${error}`);
             return res.json(error);

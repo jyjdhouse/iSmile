@@ -99,6 +99,7 @@ const controller = {
             const productId = req.params.productId;
             const productToUpdate = await getProduct(productId)
             const { name, price, description, current_imgs } = req.body
+           
             // Agarro las imagenes del input
             let images = req.files
             // Hago el update del producto en la db
