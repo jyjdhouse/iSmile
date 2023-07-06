@@ -7,7 +7,7 @@ module.exports = (sequelize, dataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        filename: { type: dataTypes.STRING(255) },
+        filename: { type: dataTypes.TEXT },
         blog_id: { type: dataTypes.INTEGER },
         main_image: {type: dataTypes.INTEGER}
     }
