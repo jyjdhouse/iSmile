@@ -176,7 +176,6 @@ const controller = {
     deleteProduct: async (req, res) => {
         try {
             const blogId = req.params.blogId;
-
             await db.Blog.destroy({
                 where: {
                     id: blogId

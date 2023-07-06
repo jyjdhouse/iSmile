@@ -12,7 +12,7 @@
     <%- include('./partials/header.ejs') %>
         <main class="main">
             <section class="landing-video-container">
-                <video class="video" src="/video/<%= videoFilename %>" playsinline muted autoplay loop></video>
+                <video class="video" src="/video/<%= videoFile.filename %>" playsinline muted autoplay loop></video>
                 <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
                     locals.userLogged.user_categories_id==2)) { %>
                     <form class="edit-file-overlay edit-home-video-container" method="POST"
@@ -125,9 +125,9 @@
                                         <i class='bx bx-pencil change-image-btn'></i><br>
                                     </div>
                                     <p class="cancel-file-action hidden">Cancelar</p>
-                                    <label for="gallery-image-  1" class="instagram-input-file-label hidden">Seleccionar
+                                    <label for="gallery-image-1" class="instagram-input-file-label hidden">Seleccionar
                                         foto</label>
-                                    <input type="file" name="homeFile" id="gallery-image-   1"
+                                    <input type="file" name="homeFile" id="gallery-image-1"
                                         class="edit-file-input hidden">
                                     <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
                                 </div>
@@ -155,9 +155,9 @@
                                         <i class='bx bx-pencil change-image-btn'></i><br>
                                     </div>
                                     <p class="cancel-file-action hidden">Cancelar</p>
-                                    <label for="gallery-image-  2" class="instagram-input-file-label hidden">Seleccionar
+                                    <label for="gallery-image-2" class="instagram-input-file-label hidden">Seleccionar
                                         foto</label>
-                                    <input type="file" name="homeFile" id="gallery-image-   2"
+                                    <input type="file" name="homeFile" id="gallery-image-2"
                                         class="edit-file-input hidden">
                                     <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
                                 </div>
@@ -186,9 +186,9 @@
                                         <i class='bx bx-pencil change-image-btn'></i><br>
                                     </div>
                                     <p class="cancel-file-action hidden">Cancelar</p>
-                                    <label for="gallery-image-  3" class="instagram-input-file-label hidden">Seleccionar
+                                    <label for="gallery-image-3" class="instagram-input-file-label hidden">Seleccionar
                                         foto</label>
-                                    <input type="file" name="homeFile" id="gallery-image-   3"
+                                    <input type="file" name="homeFile" id="gallery-image-3"
                                         class="edit-file-input hidden">
                                     <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
                                 </div>
@@ -216,9 +216,9 @@
                                         <i class='bx bx-pencil change-image-btn'></i><br>
                                     </div>
                                     <p class="cancel-file-action hidden">Cancelar</p>
-                                    <label for="gallery-image-  4" class="instagram-input-file-label hidden">Seleccionar
+                                    <label for="gallery-image-4" class="instagram-input-file-label hidden">Seleccionar
                                         foto</label>
-                                    <input type="file" name="homeFile" id="gallery-image-   4"
+                                    <input type="file" name="homeFile" id="gallery-image-4"
                                         class="edit-file-input hidden">
                                     <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
                                 </div>
@@ -245,9 +245,9 @@
                                         <i class='bx bx-pencil change-image-btn'></i><br>
                                     </div>
                                     <p class="cancel-file-action hidden">Cancelar</p>
-                                    <label for="gallery-image-  5" class="instagram-input-file-label hidden">Seleccionar
+                                    <label for="gallery-image-5" class="instagram-input-file-label hidden">Seleccionar
                                         foto</label>
-                                    <input type="file" name="homeFile" id="gallery-image-   5"
+                                    <input type="file" name="homeFile" id="gallery-image-5"
                                         class="edit-file-input hidden">
                                     <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
                                 </div>
@@ -267,7 +267,7 @@
                     <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
                         locals.userLogged.user_categories_id==2) ) { %>
                         <form class="edit-file-overlay blog-overlay" method="POST" action='/updateHomeFile?_method=PUT'
-                            enctype="multipart/form-data">
+                            enctype="multipart/form-data" data-section-id="" data-position="" >
                             <div class="edit-file-buttons-container">
                                 <div class="change-image-btn-container">
                                     <i class='bx bx-pencil change-image-btn'></i><br>

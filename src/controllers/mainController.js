@@ -13,7 +13,8 @@ const controller = {
             // VIDEO
             let homeVideo = homeFiles.find(file=>file.home_sections_id==1);
             let videoFile = {
-                homeVideo
+                filename: homeVideo.filename,
+                section_id: homeVideo.home_sections_id
             }
             // GALLERY IMAGES
             let galleryFiles = homeFiles.filter(file=>file.home_sections_id==2);
@@ -39,11 +40,11 @@ const controller = {
                     position: file.position
                 }
             });
-            return res.send(igFiles)
+            // return res.send(igFiles)
             // BLOOG
             let blogFilename = homeFiles.find(file=>file.home_sections_id==4).filename;
             // return res.send(igFiles)
-            return res.render('index',{videoFilename: homeVideo, galleryFiles, igFiles, blogFilename})
+            return res.render('index',{videoFile, galleryFiles, igFiles, blogFilename})
             
         } catch (error) {
             console.log(`Falle en mainController.list: ${error}`);

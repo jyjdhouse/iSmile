@@ -65,7 +65,7 @@
 }
 
 .carousel-animation {
-    animation: carouselAnimation 3s;
+    animation: carouselAnimation 4s;
 }
 
 @keyframes carouselAnimation {
