@@ -101,6 +101,10 @@ const controller = {
         try {
             const { home_sections_id, position, old_filename } = req.body;
             const file = req.file;
+            const fileType = file.mimetype.startsWith('video/') ? 2 : 1;
+            // Basicamente si suben video donde no tienen que los redirije devuelta, mismo con fotos
+            if(fileType == 1 && home_sections_id == 1) return res.redirect('/');
+            if(fileType == 2 && home_sections_id != 1) return res.redirect('/')
             // Actualizo en la db
             await db.HomeFile.update({
                 filename: file.filename
@@ -111,7 +115,7 @@ const controller = {
                 }
             });
             // Tengo que borrar la foto vieja asociada a esa section
-            if(file.mimetype.startsWith('video/')){ //video
+            if(fileType == 2){ //video
                 fs.unlinkSync(path.join(__dirname, `../../public/video/homePage/${old_filename}`))
             }else{
                 fs.unlinkSync(path.join(__dirname, `../../public/img/homePage/${old_filename}`));
