@@ -152,16 +152,13 @@ const controller = {
             return res.json(error);
         }
     },
-
     deleteProduct: async (req, res) => {
         try {
             const blogId = req.params.blogId;
 
-            const blog = await getBlog(blogId);
-
             await db.Blog.destroy({
                 where: {
-                    id: blog.id
+                    id: blogId
                 }
             })
             return res.status(200).json({
