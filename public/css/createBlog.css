@@ -14,12 +14,21 @@
     margin: 7% 0;
 }
 
+main h1 {
+    font-size: 1.5rem;
+}
 
+.input-label-container label {
+    font-size: 1rem;
+}
 
-.input-label-container input {
+.text-input {
     margin-top: 3%;
-    
     border: 1px solid grey;
+}
+
+input[type="checkbox"] {
+    width: 10%;
 }
 
 .text-input {

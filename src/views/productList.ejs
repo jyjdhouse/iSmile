@@ -37,7 +37,7 @@
                                                 class="product-image-test product-image-test-active">
                                             <% } else {  %>
                                                 <img src="/img/product/<%= file.filename%>" alt="<%= prod.name%>-<%=file.filenanme %>"
-                                                class="product-image-test">
+                                                class="product-image-test <%= prod.files.length == 2 ? 'carousel-animation' : ''%>">
                                             <% } %>
                                             
                                             <% }else if(file.file_types_id == 2){ %><!--VIDEO--> %>

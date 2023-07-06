@@ -50,6 +50,7 @@
             </article>
             <section class="other-img-list">
                 <div class="mobile-carousel-container">
+                    <% if(blog.images.length ) %>
                     <% blog.images.forEach((img, i) => { %>
                     
                         <% if(img.main_image == 0) {  %>
@@ -60,7 +61,7 @@
                                 </div>
                             <% } else if (i == blog.images.length - 1) { %>
                                 
-                                <div class="other-img-container prev-img-container">
+                                <div class="other-img-container <%= i == 1 ? 'animation' : 'prev-img-container' %>">
                                     <img src="/img/blog/<%=img.filename %>" alt="<%= img.id %>">
                                 </div>
                             <% } else { %>

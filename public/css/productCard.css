@@ -64,6 +64,20 @@
     z-index: 1;
 }
 
+.carousel-animation {
+    animation: carouselAnimation 3s;
+}
+
+@keyframes carouselAnimation {
+    25% {
+        transform: translateX(-100%);
+    }
+    26% {
+        z-index: -1;
+        transform: translateX(100%);
+    }
+}
+
 .product-image {
     object-fit: cover;
     height: 100%;
