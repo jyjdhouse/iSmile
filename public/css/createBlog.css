@@ -1,6 +1,7 @@
 .blog-creation-main {
     margin-top: 12vh;
     margin-bottom: 5vh;
+    padding: 0 5%;
 }
 
 .input-error {
@@ -10,13 +11,19 @@
 .input-label-container {
     display: flex;
     flex-direction: column;
-    margin: 5% 0;
+    margin: 7% 0;
 }
+
+
 
 .input-label-container input {
     margin-top: 3%;
-    width: 60%;
+    
     border: 1px solid grey;
+}
+
+.text-input {
+    width: 60%;
 }
 
 .input-label-container textarea {
@@ -26,15 +33,14 @@
 
 .create-blog-form button {
     width: 70%;
+    max-width: 250px;
 }
 
 /* Box de fotos */
 .images-radio-box-wrapper{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 80%;
-    margin: 0 auto;
+
 }
 .image-radio-box{
     height: 200px;

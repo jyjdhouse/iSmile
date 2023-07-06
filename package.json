@@ -34,7 +34,8 @@
     "puppeteer": "^20.7.1",
     "sequelize": "^6.21.6",
     "sequelize-cli": "^6.4.1",
-    "showdown": "^2.1.0"
+    "showdown": "^2.1.0",
+    "turndown": "^7.1.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
