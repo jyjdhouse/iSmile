@@ -2,9 +2,14 @@ const path = require("path");
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-    destination: (req, res, cb) => {
+    destination: (req, file, cb) => {
+        if(file.mimetype.startsWith('video/')){//Si es video
+            cb(null,'./public/video/homePage');
+            return 
+        }
         cb(null, './public/img/homePage')
-        return
+        return 
+        
     },
     filename: (req, file, cb) => {
         const randomString = Math.random().toString(36).substring(2, 2 + 10);

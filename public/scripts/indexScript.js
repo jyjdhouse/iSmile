@@ -148,7 +148,7 @@ window.addEventListener('load', () => {
         setInterval(toggleActiveAboutUsInfo, 3000);
     }
 
-
+    // LOGICA gallery show
     if (!isInDesktop()) { //Solo para mobile la logica
         const productGalleryCards = document.querySelectorAll('.product-gallery-card');
         let timeoutId = undefined;
@@ -169,11 +169,31 @@ window.addEventListener('load', () => {
                     // Este timeout es para que despues de 2 segundos de haber tocado lo vuelva a como estaba
                     timeoutId = setTimeout(() => {
                         card.classList.remove("product-gallery-card-hover");
+                        lastCardTouched = undefined;
                     }, time);
                 }
             });
         });
-
+        const galleryEditBtns = document.querySelector('.gallery-show').querySelectorAll('.change-image-btn');
+        const galleryCancelEditBtns = document.querySelector('.gallery-show').querySelectorAll('.cancel-file-action');
+        // Si hace click en el galleryEditBtns saco el timeout
+        galleryEditBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (timeoutId) clearTimeout(timeoutId)
+            });
+        });
+        // Si hace click en el Cancelar pongo el timout
+        galleryCancelEditBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const card = btn.closest('.product-gallery-card')
+                if (!timeoutId) {
+                    timeoutId = setTimeout(() => {
+                        card.classList.remove("product-gallery-card-hover");
+                        lastCardTouched = undefined;
+                    }, time);
+                }
+            });
+        });
     }
 
     // LOGICA para instagram posts
@@ -184,12 +204,12 @@ window.addEventListener('load', () => {
         const igCards = document.querySelectorAll('.instagram-card');
         igCards.forEach(card => {
             card.addEventListener('mouseenter', () => {
-                const overlay = card.querySelector('.instagram-overlay');
-                overlay.classList.add('instagram-overlay-active');
+                const overlay = card.querySelector('.instagram-client-overlay');
+                overlay.classList.add('instagram-client-overlay-active');
             });
             card.addEventListener('mouseleave', () => {
-                const overlay = card.querySelector('.instagram-overlay');
-                overlay.classList.remove('instagram-overlay-active');
+                const overlay = card.querySelector('.instagram-client-overlay');
+                overlay.classList.remove('instagram-client-overlay-active');
             });
         });
     } else { //Mobile
@@ -234,10 +254,6 @@ window.addEventListener('load', () => {
             cancelLabel.classList.remove('hidden');
             selectFileLabel.classList.remove('hidden');
             confirmFileBtn.classList.remove('hidden');
-            // Pongo el previousSrc - Capturo a cualquier contenedor del home (video,ig,blog,services)
-            previousSrc = form.closest('.instagram-card')?.querySelector('.instagram-image')?.getAttribute('src') ||
-                form.closest('.landing-video-container')?.querySelector('.video')?.getAttribute('src') ||
-                form.closest('.blog-background')?.querySelector('.blog-background-image')?.getAttribute('src');
         });
     });
     // Cuando tocan el boton de cancelar
@@ -253,9 +269,11 @@ window.addEventListener('load', () => {
             selectFileLabel.classList.add('hidden');
             confirmFileBtn.classList.add('hidden');
             // Vuelvo la imagen a la foto que tenia
+            console.log(form.closest('.blog-background')?.querySelector('.blog-background-image'));
             form.closest('.instagram-card')?.querySelector('.instagram-image')?.setAttribute('src', previousSrc) ||
                 form.closest('.landing-video-container')?.querySelector('.video')?.setAttribute('src', previousSrc) ||
-                form.closest('.blog-background')?.querySelector('.blog-background-image')?.setAttribute('src', previousSrc);
+                form.closest('.blog-background')?.querySelector('.blog-background-image')?.setAttribute('src', previousSrc) ||
+                form.closest('.product-gallery-card')?.querySelector('.gallery-image')?.setAttribute('src', previousSrc);
 
             // Reiniciar el valor del elemento <input>
             form.querySelector('input').value = '';
@@ -268,19 +286,43 @@ window.addEventListener('load', () => {
         input.addEventListener('change', (e) => { //Subieron un archivo para cambiar la foto
             // Agarro esa foto
             const form = input.closest('.edit-file-overlay');
-            console.log(form);
-            const fileElement = form.closest('.instagram-card')?.querySelector('.instagram-image')||
-            form.closest('.landing-video-container')?.querySelector('.video')||
-            form.closest('.blog-background')?.querySelector('.blog-background-image')||
-            form.closest('.product-gallery-card')?.querySelector('.gallery-image');
-            console.log(fileElement);
+            const fileElement = form.closest('.instagram-card')?.querySelector('.instagram-image') ||
+                form.closest('.landing-video-container')?.querySelector('.video') ||
+                form.closest('.blog-background')?.querySelector('.blog-background-image') ||
+                form.closest('.product-gallery-card')?.querySelector('.gallery-image');
+            previousSrc = fileElement.getAttribute('src');
             var file = e.target.files[0];
             var reader = new FileReader();
-            previousSrc = fileElement.getAttribute('src');
             reader.onload = function (e) {
                 fileElement.setAttribute('src', e.target.result);
             }
             reader.readAsDataURL(file);
+            // Cuando hay un cambio en el input, se agregan 2 input hidden con section_id y position
+            let sectionInput = document.createElement('input');
+            sectionInput.name = 'home_sections_id';
+            sectionInput.setAttribute('hidden', true);
+            const sectionValue = form.dataset.sectionid;
+            sectionInput.value = sectionValue;
+            // Ahora el de position
+            let positionInput = document.createElement('input');
+            positionInput.name = 'position';
+            positionInput.setAttribute('hidden', true);
+            const positionValue = form.dataset.position;
+            positionInput.value = positionValue;
+            // Armo tambien el oldFilename
+            let oldFilenameInput = document.createElement('input');
+            oldFilenameInput.name = 'old_filename';
+            oldFilenameInput.setAttribute('hidden', true);
+            const oldFilenameValue = previousSrc.split('/')[previousSrc.split('/').length-1];
+            oldFilenameInput.value = oldFilenameValue;
+            // Agrego todos al form
+            form.appendChild(sectionInput);
+            form.appendChild(positionInput);
+            form.appendChild(oldFilenameInput);
+
         })
     });
+
+
+
 })
