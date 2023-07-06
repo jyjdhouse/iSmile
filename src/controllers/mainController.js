@@ -1,6 +1,8 @@
 const db = require('../database/models');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
+// Librerias
+const bcrypt = require('bcryptjs');
 // Utils
 const staticProducts = require('../utils/staticDB/products');
 const { specialties, specialties_services, service_treatments } = require('../utils/staticDB/services');
