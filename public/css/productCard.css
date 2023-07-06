@@ -1,7 +1,12 @@
 @import 'variables.css';
 /* PRODUCT CARD */
 
-
+.logo-container{
+    width: 100%;
+}
+.logo-container i{
+    width: 100%;
+}
 .product-card-container {
     position: relative;
     cursor: pointer;
@@ -57,6 +62,20 @@
     opacity: 1;
     transform: translateX(0);
     z-index: 1;
+}
+
+.carousel-animation {
+    animation: carouselAnimation 4s;
+}
+
+@keyframes carouselAnimation {
+    25% {
+        transform: translateX(-100%);
+    }
+    26% {
+        z-index: -1;
+        transform: translateX(100%);
+    }
 }
 
 .product-image {

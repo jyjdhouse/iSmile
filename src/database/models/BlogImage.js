@@ -1,5 +1,5 @@
 module.exports = (sequelize, dataTypes) => {
-    let alias = "Blog_Image";
+    let alias = "BlogImage";
 
     let cols = {
         id: {
@@ -7,22 +7,23 @@ module.exports = (sequelize, dataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        image: { type: dataTypes.STRING(255) },
-        blog_id: { type: dataTypes.INTEGER }
+        filename: { type: dataTypes.TEXT },
+        blog_id: { type: dataTypes.INTEGER },
+        main_image: {type: dataTypes.INTEGER}
     }
 
     let config = {
-        tableName: 'product_image',
-        paranoid: true
+        tableName: 'blogs_images',
+        timestamps: false
     }
 
-    const Blog_Image = sequelize.define(alias, cols, config);
+    const BlogImage = sequelize.define(alias, cols, config);
 
-    Blog_Image.associate = (models) => {
-        Blog_Image.belongsTo(models.Blog, {
+    BlogImage.associate = (models) => {
+        BlogImage.belongsTo(models.Blog, {
             as: 'blog',
             foreignKey: 'blog_id'
         });
     };
-    return Blog_Image;
+    return BlogImage;
 }

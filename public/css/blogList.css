@@ -67,7 +67,7 @@
 .blog-card-title{
     width: 100%;
     color: #000;
-    font-size: 1.15rem;
+    font-size: 1rem;
 }
 .blog-card-description{
     color: #444;
@@ -81,7 +81,7 @@
     padding: 0.5rem 1.5rem;
     border-radius: 1rem;
     cursor: pointer;
-    margin: 0 auto;
+    /* margin: 0 auto; */
 }
 .arrow-container{
     position: absolute;

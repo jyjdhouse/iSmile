@@ -1,8 +1,13 @@
-const Product = require('../database/models/Product');
-module.exports = async function (id) {
-    return await Product.findAll({
+const db = require('../database/models');
+module.exports = async function () {
+    return await db.Product.findAll({
         include: [
-            'category',
+            {
+                association: 'files',
+                include: ['fileType']
+            },
+            'temporalItems',
+            'category'
         ]
     });
 }

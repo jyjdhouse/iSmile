@@ -3,96 +3,52 @@
 
 <head>
     <%- include('./partials/head.ejs') %>
-        <link rel="stylesheet" href="/css/productDetail.css">
-        <link rel="stylesheet" href="/css/productCreate.css">
-        <script src="/scripts/productDetail.js" type="module"></script>
-        <script src="/scripts/createProduct.js" type="module"></script>
-        <title>Cartera #1</title>
+        
+
+        <link rel="stylesheet" href="/css/productCreate.css" type="text/css">
+        <script src="/scripts/productCreate.js" type="module"></script>
+        <title>Creación producto</title>
 </head>
 
 <body>
-    <%- include('./partials/wpp.ejs') %>
-        <%- include('./partials/blackScreen.ejs') %>
-            <%- include('./partials/login.ejs') %>
                 <%- include('./partials/header.ejs') %>
-                        <%- include('partials/shoppingCartPopup.ejs') %>
-                            <main class="product-detail-main main desktop-main">
-                                <h2 class="product-create-title">CRECION PRODUCTO</h2>
-                                <div class="images-info-container">
-                                    <form action="" class="product-info-container" id="create-product-form" method="POST" enctype = "multipart/form-data">
-                                        
-                                        <div class="product-price-name-container">
-                                            <input type="text" class="product-name"
-                                                placeholder="Nombre Producto..." name="name"></input>
-                                            <input type="number" class="product-price"
-                                                placeholder="Precio Producto..." name="price"></input>
-                                        </div>
-                                        <div class="keyword-section-container">
-                                            <h4 class="keywords-section-title">Keywords <span class="keywords-quantity"></span></h4>
-                                            <div class="add-keyword-container">
-                                                <input type="text" class="add-keyword-input" placeholder="Agregar keyword">
-                                                <i class='bx bx-plus-medical add-keyword-btn' ></i>
-                                            </div>
-                                            <div class="keyword-cards-container"> <!--Aca van las tarjetas desde el front-->
-                                            </div>
-                                        </div>
-                                        <div class="product-description-container">
-                                            <textarea placeholder="Descripcion Producto..."
-                                                class="product-description" name="description"></textarea>
-                                        </div>
-                                        <div class="details-section-container">
-                                            <h4 class="details-section-title">Detalles <span class="details-quantity"></span></h4>
-                                            <div class="add-detail-container">
-                                                <input type="text" class="add-detail-input" placeholder="Agregar detalle">
-                                                <i class='bx bx-plus-medical add-detail-btn' ></i>
-                                            </div>
-                                            <div class="detail-cards-container"> <!--Aca van las tarjetas desde el front-->
-                                            </div>
-                                        </div>
-                                        <div class="product-category-container">
-                                            <label class="select-label">Categoria</label>
-                                            <select name="categories_id">
-                                                <% categories.forEach(cat => { %>
-                                                    <option value=<%= cat.id %>><%= cat.name %></option>
-                                                <% }) %>
-                                            </select>
-                                            
-                                        </div>
-                                        <div class="product-color-container">
-                                            <label for="" class="select-label color-select-label">Colores</label>
-                                            <div class="add-color-container">
-                                                <p class="add-color-label">Agregar</p>
-                                                <i class='bx bx-plus-medical add-color-plus-sign' ></i>
-                                            </div>
-                                            <div class="creating-color-container">
-                                                <i class="fa-solid fa-xmark close-creating-color-btn"></i>
-                                                <p class="creating-color-label">SOLO FORMATO HEX</p>
-                                                <input type="text" class="creating-color-name" placeholder="Nombre del color">
-                                                <input type="color" class="input-color">
-                                                <p class="color-code-text"></p>
-                                                <i class='bx bx-plus-medical creating-color-btn'></i>
-                                            </div>
-                                            <div class="color-checkbox-section">
-                                                <% colors.forEach(color=> { %>
-                                                    <div class="checkbox-container color-checkbox-container">
-                                                        <input type="checkbox" name="colors" class="input-colors-checkbox" value=<%= color.id %> id=<%= color.id %> data-colorname="<%= color.name %>">
-                                                        <label class="color-name-label" for=<%= color.id %>><span class="color-circle" style="background-color: <%= color.code %>;"></span> 
-                                                        <%= color.name %></label>
-                                                    </div>
-                                                    
-                                                    <% }) %>
-                                            </div>
-                                            
-                                        </div>
+                        
+                            <main class="product-create-main">
+                                <h2 class="product-create-title">CREACION PRODUCTO</h2>
 
-                                        <div class="product-images-upload-container">
-                                            <p class="no-colors-selected-text">MULTIMEDIA (selecciona algun color para cargar fotos/videos)</p>
-                                        </div>
+                                
+                                    
+                                <form action="http://localhost:4500/product/create" class="create-product-form" enctype="multipart/form-data" method="POST">
+                                    <div class="input-label-container">
+                                        <label for="name">Nombre</label>
+                                        <input type="text" name="name">
+                                    </div>
+                                    <div class="input-label-container">
+                                        <label for="category">Categoría</label>
+                                        <select name="category" id="">
+                                            <% categories.forEach(cat => { %>
+                                                <option value="<%= cat.id %>"><%=cat.category%></option>
+                                            <%  }) %>
+                                           
+                                        </select>
+                                    </div>
+                                    <div class="input-label-container">
+                                        <label for="description">Descripción</label>
+                                        <textarea name="description" id="" cols="30" rows="10"></textarea>
+                                    </div>
+                                    <div class="input-label-container">
+                                        <label for="price">Precio</label>
+                                        <input type="text" name="price">
+                                    </div>
+                                    <div class="input-label-container">
+                                        <label for="images">Imagenes</label>
+                                        <input type="file" name="images" multiple>
+                                    </div>
 
-                                        <div class="cart-button-container">
-                                            <button type="submit" class="cart-add-button submit-form-btn">Crear Producto</button>
-                                        </div>
-                                    </form>
+                                    <button type="submit">Crear</button>
+
+                                </form>
+
                                 </div>
                             </main>
                             <%- include('./partials/footer.ejs') %>

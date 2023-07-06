@@ -8,15 +8,16 @@ module.exports = (sequelize, dataTypes) => {
             autoIncrement: true
         },
         street: { type: dataTypes.STRING(255) },
+        apartment: { type: dataTypes.STRING(45) },
         city: { type: dataTypes.STRING(100) },
-        province: { type: dataTypes.STRING(100) },
+        provinces_id: { type: dataTypes.INTEGER },
         zip_code: { type: dataTypes.STRING(10) },
         user_id: { type: dataTypes.INTEGER },
      
     }
 
     let config = {
-        tableName: 'ADRESSES',
+        tableName: 'addresses',
         paranoid: true
     }
 
@@ -28,7 +29,7 @@ module.exports = (sequelize, dataTypes) => {
             foreignKey: 'Addresss_id',
         }) */
         Address.belongsTo(models.User, {
-            as: 'users',
+            as: 'user',
             foreignKey: 'user_id',
         })
     };

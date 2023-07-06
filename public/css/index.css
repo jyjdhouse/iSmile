@@ -35,12 +35,46 @@ video::-webkit-media-controls-time-remaining-display {
 .landing-video-container {
     height: 100vh;
     width: 100vw;
+    position: relative;
 }
 
 .landing-video-container video {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+
+/* PARA EDITAR HOME VIDEO */
+.edit-home-video-container {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.edit-home-video-container .change-image-btn-container {
+    border-radius: 50%;
+}
+
+.edit-home-video-container .change-image-btn {
+    font-size: 6rem;
+    cursor: pointer;
+    background: rgba(0, 0, 0, .4);
+}
+
+.edit-home-video-container>p,
+.edit-home-video-container>label {
+    width: 45%;
+    background-color: rgba(0, 0, 0, .4);
+    font-size: .8rem;
+}
+
+.edit-home-video-container>button {
+    width: 100%;
+    background-color: rgba(0, 0, 0, .4);
+    font-size: 1.5rem;
 }
 
 /* SLIDESHOW */
@@ -240,7 +274,9 @@ video::-webkit-media-controls-time-remaining-display {
 .product-gallery-card-hover .overlay {
     opacity: .6;
 }
-
+.gallery-overlay .edit-file-buttons-container{
+    width: 100%;
+}
 /* BLOG SECTION */
 .blog-section {
     width: 100%;
@@ -267,6 +303,7 @@ video::-webkit-media-controls-time-remaining-display {
     width: fit-content;
     object-fit: cover;
     height: 100%;
+    width: 100%;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -325,9 +362,11 @@ video::-webkit-media-controls-time-remaining-display {
     overflow: hidden;
     outline: none;
 }
-.blog-card a{
+
+.blog-card a {
     height: 100%;
 }
+
 .blog-img {
     position: absolute;
     width: 100%;
@@ -389,6 +428,12 @@ video::-webkit-media-controls-time-remaining-display {
     width: 100%;
 }
 
+.blog-overlay .edit-file-buttons-container{
+    top: 25%;
+    z-index: 10;
+    background-color: #9999998a;;
+    width: 80%;
+}
 /* ABOUT-US */
 .about-us-container {
     display: flex;
@@ -591,6 +636,16 @@ video::-webkit-media-controls-time-remaining-display {
     height: fit-content;
     margin-bottom: 5vh;
 }
+.instagram-client-overlay{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
 
 .instagram-cards-container {
     width: 100%;
@@ -610,10 +665,12 @@ video::-webkit-media-controls-time-remaining-display {
     opacity: 0;
     overflow: hidden;
     border-radius: 1.5rem;
+    scale: 0;
 }
 
 .instagram-card-active {
     opacity: 1;
+    scale: 1;
 }
 
 .instagram-card>a {
@@ -622,7 +679,7 @@ video::-webkit-media-controls-time-remaining-display {
     height: 100%;
 }
 
-.instagram-overlay {
+.edit-file-overlay {
     background-color: rgba(0, 0, 0, .5);
     position: absolute;
     top: 0;
@@ -631,13 +688,17 @@ video::-webkit-media-controls-time-remaining-display {
     height: 100%;
     opacity: 1;
     transition: all .3s ease;
+}
+.edit-file-buttons-container{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
+    width: 80%;
+    justify-content: space-evenly;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
-
 
 .instagram-logo {
     width: 100%;
@@ -659,22 +720,27 @@ video::-webkit-media-controls-time-remaining-display {
     height: 100%;
     transition: all .3s ease;
 }
-
+.instagram-overlay .edit-file-buttons-container{
+    width: 100%;
+}
 /* Para verlo del lado del admin */
-.change-image-btn-container{
+.change-image-btn-container {
     width: 100%;
     text-align: center;
     margin-bottom: 1rem;
 }
-.change-image-btn{
+
+.change-image-btn {
     color: #fff;
     padding: 1rem;
     border: 1px solid #eee;
-    border-radius: 50%; 
+    border-radius: 50%;
+    cursor: pointer;
 }
+
 .instagram-input-file-label,
 .cancel-file-action,
-.confirm-instagram-file-btn{
+.confirm-instagram-file-btn {
     cursor: pointer;
     border: 1px solid #eee;
     border-radius: 1rem;
@@ -683,19 +749,64 @@ video::-webkit-media-controls-time-remaining-display {
     text-align: center;
     font-size: .9rem;
 }
+
 .instagram-input-file-label:hover,
 .cancel-file-action:hover,
-.confirm-instagram-file-btn:hover{
+.confirm-instagram-file-btn:hover {
     background-color: #ccc;
     color: #777;
 }
-.confirm-instagram-file-btn{
+
+.confirm-instagram-file-btn {
     width: 80%;
     margin-top: 1rem;
     background: none;
 }
+
+
 @media (min-width: 1024px) {
 
+    /* EDITAR HOME VIDEO */
+    .edit-file-buttons-container{
+        width: 30%;
+    }
+    .edit-home-video-container .change-image-btn {
+        font-size: 6rem;
+    }
+
+    .edit-file-overlay p,
+    .edit-file-overlay label,
+    .edit-file-overlay .confirm-instagram-file-btn {
+        font-size: 1.2rem;
+        text-transform: uppercase;
+    }
+    .blog-overlay .edit-file-buttons-container{
+        top: 35%;
+        left: 15%;
+        z-index: unset;
+        background: none;
+        width: 30%;
+    }
+    .blog-overlay p,
+    .blog-overlay label,
+    .blog-overlay .confirm-instagram-file-btn {
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+    .instagram-overlay p,
+    .instagram-overlay label,
+    .instagram-overlay .confirm-instagram-file-btn {
+        font-size: .8rem;
+        text-transform: none;
+    }
+    .instagram-client-overlay>p{
+        font-size: 1.2rem;
+    }
+    .gallery-overlay p,
+    .gallery-overlay label,
+    .gallery-overlay .confirm-instagram-file-btn {
+        font-size: 1rem;
+    }
     /* SLIDESHOW */
     .slide-images-wraper-mobile {
         display: none;
@@ -779,11 +890,6 @@ video::-webkit-media-controls-time-remaining-display {
 
     .blog-background .overlay {
         display: none;
-    }
-
-    .blog-background-image {
-        height: 100%;
-        left: 20%;
     }
 
     .blog-section-title {
@@ -949,6 +1055,7 @@ video::-webkit-media-controls-time-remaining-display {
         height: 40%;
         position: relative;
         opacity: 1;
+        scale: 1;
     }
 
     .instagram-card:nth-child(even) {
@@ -960,12 +1067,12 @@ video::-webkit-media-controls-time-remaining-display {
         height: 120%;
     }
 
-    .instagram-overlay {
+    .instagram-client-overlay {
         background-color: rgba(0, 0, 0, .6);
         opacity: 0;
     }
 
-    .instagram-overlay-active {
+    .instagram-client-overlay-active {
         opacity: 1;
     }
 

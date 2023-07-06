@@ -1,33 +1,34 @@
-module.exports = (sequelize, dataTypes) => {
-    let alias = "Blog";
+ module.exports = (sequelize, dataTypes) => {
+     let alias = "Blog";
 
-    let cols = {
-        id: {
-            type: dataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        title: { type: dataTypes.STRING(255) },
-        text: { type: dataTypes.TEXT },
-        createdAt: {
-            type: dataTypes.DATE,
-            defaultValue: () => Date.now()
-        }
-    }
+     let cols = {
+         id: {
+             type: dataTypes.INTEGER,
+             primaryKey: true,
+             autoIncrement: true
+         },
+         title: { type: dataTypes.STRING(255) },
+         text: { type: dataTypes.TEXT },
+         author: { type: dataTypes.STRING(100) },
+         createdAt: {
+             type: dataTypes.DATE,
+             defaultValue: () => Date.now()
+         }
+     }
 
-    let config = {
-        tableName: 'Blog',
-        paranoid: true
-    }
+     let config = {
+         tableName: 'blogs',
+         timestamps: false
+     }
 
-    const Blog = sequelize.define(alias, cols, config);
+     const Blog = sequelize.define(alias, cols, config);
 
-    Blog.associate = (models) => {
-        Blog.hasMany(models.BlogImage, {
-            as: 'images',
-            foreignKey: 'blog_id'
-        });
-    };
+     Blog.associate = (models) => {
+         Blog.hasMany(models.BlogImage, {
+             as: 'images',
+             foreignKey: 'blog_id'
+         });
+     };
 
-    return Blog;
-}
+     return Blog;
+ }

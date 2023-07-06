@@ -232,12 +232,12 @@ window.addEventListener('load', () => {
         signatureImage = signaturePad.toDataURL(); // save image as PNG
         signatureImage = dataURLtoFile(signatureImage, 'firma.png');
         formData.append('signature', signatureImage);
-        console.log(signatureImage);
     });
     // Por si quieren limpiar firma
     clearButton.addEventListener('click', (e) => {
         e.preventDefault()
         signaturePad.clear();
+        formData.delete('signature')
     });
 
     
@@ -305,6 +305,7 @@ window.addEventListener('load', () => {
                 bodyClone.querySelector('#unique-form-sublabel').classList.add('form-sublabel-more-margin');
             }
         };
+
         // return console.log(bodyClone);
         formData.append('contentHTML', bodyClone.innerHTML); //Mando el html
 

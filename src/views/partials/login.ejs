@@ -1,14 +1,18 @@
-<form method="POST" class="login-popup user-options-popup-option">
+<form action="/user/login" method="POST" class="login-popup user-options-popup-option <%= locals.loginErrors && 'translate-option-left' %>">
     <div class="login-field">
-        <label for="email" class="bold">Email</label>
-        <input type="text" id="email" class="input" placeholder="Ingrese su Email" name="email">
+        <label for="login-email" class="bold">Email</label>
+        <input type="text" id="login-email" class="input" placeholder="Ingrese su Email" name="email">
     </div>
-    <div class="login-field">
-        <label for="password" class="bold">Contraseña</label>
-        <input type="text" id="password" class="input" placeholder="Ingrese su Contraseña" name="password">
+    <div class="login-field pass-field">
+        <label for="login-password" class="bold">Contraseña</label>
+        <input type="password" id="login-password" class="input" placeholder="Ingrese su Contraseña" name="password">
+        <i class="fa-solid fa-eye show-password-btn password-btn-toggler"></i>
+        <i class="fa-solid fa-eye-slash hide-password-btn password-btn-toggler hidden"></i>
     </div>
+    <% if (locals.loginErrors) { %>
+        <p class="error-msg">Los datos ingresados no son válidos.</p>
+    <% } %>
     <div class="button-container">
-        <button class="login-button bold">Iniciar Sesion</button>
-
+        <button type="submit" class="login-button bold">Iniciar Sesion</button>
     </div>
 </form>

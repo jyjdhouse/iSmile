@@ -8,51 +8,77 @@
         <script src="/scripts/productList.js" type="module"></script>
         <script src="/scripts/productDetailScript.js" type="module"></script>
         <script src="/scripts/productCard.js" type="module"></script>
-        <title>Producto #1</title>
+        <title>
+            <%= product.name %>
+        </title>
 </head>
 
 <body>
     <%- include('./partials/header.ejs') %>
         <main class="product-detail-main">
-            <article class="product-container">
+
+           <% if(locals.userLogged && locals.userLogged.user_categories_id != 3) { %>
+            <div class="admins-actions-container">
+                <div class="action-container">
+                    <a href="/product/update/<%= product.id %>">Actualizar producto</a>
+                </div>
+                <div class="action-container">
+                    <form class="update-delete-btn-container" action="/product/<%= product.id %>?_method=DELETE"
+                        method="POST">
+                        <button class="form-device-btn" type="submit">Eliminar producto</button>
+                    </form>
+                </div>
+            </div>
+            <% } %>
+            <article class="product-container" data-productid=<%=product.id %>>
                 <div class="first-column">
                     <div class="main-img-container">
-                        <img src="/img/product1.png" class="main-img" alt="main-image">
+                        <img src="/img/product/<%= product.files[0]?.filename %>" class="main-img"
+                            alt="<%= product.name%>-<%=product.files[0]?.filenanme %>">
                     </div>
                     <div class="other-product-imgs-container">
-                        <div class="other-img-container other-img-container-active">
-                            <img src="/img/product1.png" class="product-img" alt="thumbnail-image">
-                            <!-- TODO: Cuando hagamos forEach meter en alt el id -->
-                        </div>
-                        <div class="other-img-container">
-                            <img src="/img/product2.png" class="product-img" alt="thumbnail-image">
-                        </div>
-                        <div class="other-img-container">
-                            <img src="/img/product3.png" class="product-img" alt="thumbnail-image">
-                        </div>
-                        <div class="other-img-container">
-                            <img src="/img/product2.png" class="product-img" alt="thumbnail-image">
-                        </div>
+                        <% product.files.forEach((file, i)=> { %>
+                                <div class="other-img-container <%= i==0 && 'other-img-container-active' %>">
+                                    <% if (file.file_types_id==1) { %> <!--FOTO-->
+                                        <img src="/img/product/<%= file?.filename %>" class="product-img"
+                                            alt="<%= product.name%>-<%=file?.filenanme %>">
+                                    <% } else if(file.file_types_id==2){ %> <!--VIDEO-->
+                                        <video
+                                        class="video product-img"
+                                        muted playsinline loop>
+                                        <source src="/video/<%= file.filename %>" type="video/mp4">
+                                        <source src="/video/<%= file.filename %>" type="video/webm">
+                                        No se puede reproducir el video
+                                    </video>
+                                    <% } %>
+                                </div>
+                        <% }) %>
                     </div>
                 </div>
                 <div class="second-column">
                     <div class="product-detail-info-container">
                         <div class="product-title-container">
-                            <h1 class="product-title">Crema antiage</h1>
-
-                            <h3 class="product-title">Precio</h3>
+                            <h1 class="product-title product-name">
+                                <%= product.name %>
+                            </h1>
+                            <h3 class="product-title product-price">
+                                $<%= product.price %>
+                            </h3>
                         </div>
                         <div class="product-description-container">
-                            <p>Description 1</p>
-                            <p>Description 2</p>
+                            <p>
+                                <%= product.description %>
+                            </p>
                         </div>
                     </div>
-                    <div class="purchase-product-container">
-                        <form action="" class="add-to-cart-form">
-                            <input type="text" name='item-quantity' class="item-quantity" value="1">
-                            <button class="add-to-cart" type="submit">Añadir al carrito</button>
-                        </form>
-
+                    <div class="purchase-product-container add-cart-button-container" data-productid=<%=product.id %>>
+                            <button class="cart-options-btn quick-add-cart-btn" type="submit">
+                                Añadir al carro
+                            </button>
+                            <button class="cart-options-btn remove-cart-product hidden" type="submit">
+                                Añadido al carro
+                            </button>
+                            <%- include('./partials/loadingSpinner.ejs') %>
                     </div>
                 </div>
 
@@ -65,139 +91,53 @@
                 </div>
 
                 <div class="suggested-product-list">
-                    <article class="product-card-container suggested-product-card-detail-container" data-productId=<%=1%>>
-                        <a href="/product/1" class="product-card-link">
-                            <div class="image-container suggested-image-container">
-                                <div class="image-carousel">
-                                    <img src="/img/product1.png" alt="product-image"
-                                        class="product-image-test product-image-test-active product-detail-suggested-media"
-                                        data-productId=<%=1%>>
-                                    <img src="/img/product2.png" alt="product-image"
-                                        class="product-image-test product-image-test-next-slide product-detail-suggested-media"
-                                        data-productId=<%=1%>>
-                                    <video
-                                        class="video product-image-test product-image-test-prev-slide product-detail-suggested-media"
-                                        muted playsinline loop>
-                                        <source src="/video/product1.MP4" type="video/mp4">
-                                        <source src="/video/product1.MP4" type="video/webm">
-                                        No se puede reproducir el video
-                                    </video>
-                                </div>
-                            </div>
-                            <div class="product-info-container suggested-product-info-container">
-                                <div class="price-name-container">
-                                    <p class="product-name">
-                                        Crema Restauradora
-                                    </p>
-                                    <p class="product-price">$5000</p>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="product-quick-actions-container suggested-quick-cart-container" data-productId=<%=1%>>
-                            <div class="quick-cart-container " data-productid=<%=1 %>>
-                                <i class='bx bx-shopping-bag quick-add-cart-btn' data-productId=<%=1%>></i>
-                            </div>
-                            <div class="loading-container">
-                                <div class="load-wrapp">
-                                    <div class="load-3">
-                                        <div class="line"></div>
-                                        <div class="line"></div>
-                                        <div class="line"></div>
+                    <% suggestedProducts.forEach(sugProd=> { %>
+                        <article class="product-card-container suggested-product-card-detail-container"
+                            data-productId=<%=sugProd.id %>>
+                            <a href="/product/<%= sugProd.id %>" class="product-card-link">
+                                <div class="image-container suggested-image-container">
+                                    <div class="image-carousel">
+                                        <% sugProd.files.forEach(file=> { %>
+                                            <% if (file.file_types_id==1) { %> <!--FOTO-->
+                                                <img src="/img/product/<%= file.filename %>"
+                                                    alt="<%= sugProd.name %>-<%= file.filename %>"
+                                                    class="product-image-test product-image-test-active product-detail-suggested-media"
+                                                    data-productId=<%=sugProd.id %> >
+                                                <% }else if(file.file_types_id==2){ %> <!--VIDEO-->
+                                                    <video
+                                                        class="video product-image-test product-image-test-prev-slide product-detail-suggested-media"
+                                                        muted playsinline loop>
+                                                        <source src="/video/<%= file.filename %>" type="video/mp4">
+                                                        <source src="/video/<%= file.filename %>" type="video/webm">
+                                                        No se puede reproducir el video
+                                                    </video>
+                                                    <% } %>
+                                                        <% }) %>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="product-card-container suggested-product-card-detail-container" data-productId=<%=1%>>
-                        <a href="/product/1" class="product-card-link">
-                            <div class="image-container suggested-image-container">
-                                <div class="image-carousel">
-                                    <img src="/img/product1.png" alt="product-image"
-                                        class="product-image-test product-image-test-active product-detail-suggested-media"
-                                        data-productId=<%=1%>>
-                                    <img src="/img/product2.png" alt="product-image"
-                                        class="product-image-test product-image-test-next-slide product-detail-suggested-media"
-                                        data-productId=<%=1%>>
-                                    <video
-                                        class="video product-image-test product-image-test-prev-slide product-detail-suggested-media"
-                                        muted playsinline loop>
-                                        <source src="/video/product1.MP4" type="video/mp4">
-                                        <source src="/video/product1.MP4" type="video/webm">
-                                        No se puede reproducir el video
-                                    </video>
-                                </div>
-                            </div>
-                            <div class="product-info-container suggested-product-info-container">
-                                <div class="price-name-container">
-                                    <p class="product-name">
-                                        Crema Restauradora
-                                    </p>
-                                    <p class="product-price">$5000</p>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="product-quick-actions-container suggested-quick-cart-container" data-productId=<%=1%>>
-                            <div class="quick-cart-container " data-productid=<%=1 %>>
-                                <i class='bx bx-shopping-bag quick-add-cart-btn' data-productId=<%=1%>></i>
-                            </div>
-                            <div class="loading-container">
-                                <div class="load-wrapp">
-                                    <div class="load-3">
-                                        <div class="line"></div>
-                                        <div class="line"></div>
-                                        <div class="line"></div>
+                                <div class="product-info-container suggested-product-info-container">
+                                    <div class="price-name-container">
+                                        <p class="product-name">
+                                            <%= sugProd.name %>
+                                        </p>
+                                        <p class="product-price">$<%= sugProd.price %>
+                                        </p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="product-card-container suggested-product-card-detail-container" data-productId=<%=1%>>
-                        <a href="/product/1" class="product-card-link">
-                            <div class="image-container suggested-image-container">
-                                <div class="image-carousel">
-                                    <img src="/img/product1.png" alt="product-image"
-                                        class="product-image-test product-image-test-active product-detail-suggested-media"
-                                        data-productId=<%=1%>>
-                                    <img src="/img/product2.png" alt="product-image"
-                                        class="product-image-test product-image-test-next-slide product-detail-suggested-media"
-                                        data-productId=<%=1%>>
-                                    <video
-                                        class="video product-image-test product-image-test-prev-slide product-detail-suggested-media"
-                                        muted playsinline loop>
-                                        <source src="/video/product1.MP4" type="video/mp4">
-                                        <source src="/video/product1.MP4" type="video/webm">
-                                        No se puede reproducir el video
-                                    </video>
-                                </div>
-                            </div>
-                            <div class="product-info-container suggested-product-info-container">
-                                <div class="price-name-container">
-                                    <p class="product-name">
-                                        Crema Restauradora
-                                    </p>
-                                    <p class="product-price">$5000</p>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="product-quick-actions-container suggested-quick-cart-container" data-productId=<%=1%>>
-                            <div class="quick-cart-container " data-productid=<%=1 %>>
-                                <i class='bx bx-shopping-bag quick-add-cart-btn' data-productId=<%=1%>></i>
-                            </div>
-                            <div class="loading-container">
-                                <div class="load-wrapp">
-                                    <div class="load-3">
-                                        <div class="line"></div>
-                                        <div class="line"></div>
-                                        <div class="line"></div>
+                            </a>
+                            <div class="product-quick-actions-container suggested-quick-cart-container"
+                                data-productId=<%=sugProd.id %> >
+                                <div class="quick-cart-container" data-productid=<%=sugProd.id %>>
+                                    <div class="logo-container">
+                                        <i class='bx bx-shopping-bag quick-add-cart-btn'></i>
+                                        <i class='bx bx-check-circle remove-cart-product hidden'></i>
                                     </div>
                                 </div>
+                                <%- include('./partials/loadingSpinner.ejs') %>
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                        <% }) %>
                 </div>
-
-
-
             </section>
             <main>
 

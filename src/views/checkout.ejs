@@ -1,8 +1,10 @@
 <%- include('./partials/head.ejs') %>
     <!-- CSS -->
+    <link rel="stylesheet" href="/css/spinner.css">
     <link rel="stylesheet" href="/css/checkout.css">
     <!-- SCRIPTS -->
-    <script src="/scripts/checkout.js" type="module"></script>
+    <!-- SDK MercadoPago.js -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <title>Checkout</title>
     </head>
 
@@ -18,96 +20,43 @@
                             <p class="product-subtotal-label bold">SUBTOTAL</p>
                         </div>
                         <div class="product-card-wrapper">
-                            <article class="product-card">
-                                <div class="product-card-image-container">
-                                    <img src="/img/product1.png" alt="product-image" class="product-image">
-                                </div>
-                                <div class="product-name-container">
-                                    <p class="product-name">Crema AntiAge</p>
-                                </div>
-                                <div class="product-price-container">
-                                    <p class="product price">$<span class="product-price-span">5000</span></p>
-                                </div>
-                                <div class="product-quantity-container">
-                                    <i class='bx bx-plus-medical add-quantity-btn'></i>
-                                    <i class='bx bx-minus subtract-quantity-btn'></i>
-                                    <input type="number" name="quantity" id="" class="product-quantity">
-                                </div>
-                                <div class="product-subtotal-container">
-                                    <p class="product-subtotal">$ <span class="product-subtotal-span">5000</span></p>
-                                </div>
-                                <i class='bx bx-trash remove-cart-product'></i>
-                            </article>
-                            <article class="product-card">
-                                <div class="product-card-image-container">
-                                    <img src="/img/product1.png" alt="product-image" class="product-image">
-                                </div>
-                                <div class="product-name-container">
-                                    <p class="product-name">Crema AntiAge</p>
-                                </div>
-                                <div class="product-price-container">
-                                    <p class="product price">$<span class="product-price-span">5000</span></p>
-                                </div>
-                                <div class="product-quantity-container">
-                                    <i class='bx bx-plus-medical add-quantity-btn'></i>
-                                    <i class='bx bx-minus subtract-quantity-btn'></i>
-                                    <input type="number" name="quantity" id="" class="product-quantity">
-                                </div>
-                                <div class="product-subtotal-container">
-                                    <p class="product-subtotal">$ <span class="product-subtotal-span">5000</span></p>
-                                </div>
-                                <i class='bx bx-trash remove-cart-product'></i>
-                            </article>
-                            <article class="product-card">
-                                <div class="product-card-image-container">
-                                    <img src="/img/product1.png" alt="product-image" class="product-image">
-                                </div>
-                                <div class="product-name-container">
-                                    <p class="product-name">Crema AntiAge</p>
-                                </div>
-                                <div class="product-price-container">
-                                    <p class="product price">$<span class="product-price-span">5000</span></p>
-                                </div>
-                                <div class="product-quantity-container">
-                                    <i class='bx bx-plus-medical add-quantity-btn'></i>
-                                    <i class='bx bx-minus subtract-quantity-btn'></i>
-                                    <input type="number" name="quantity" id="" class="product-quantity">
-                                </div>
-                                <div class="product-subtotal-container">
-                                    <p class="product-subtotal">$ <span class="product-subtotal-span">5000</span></p>
-                                </div>
-                                <i class='bx bx-trash remove-cart-product'></i>
-                            </article>
-                            <article class="product-card">
-                                <div class="product-card-image-container">
-                                    <img src="/img/product1.png" alt="product-image" class="product-image">
-                                </div>
-                                <div class="product-name-container">
-                                    <p class="product-name">Crema AntiAge</p>
-                                </div>
-                                <div class="product-price-container">
-                                    <p class="product price">$<span class="product-price-span">5000</span></p>
-                                </div>
-                                <div class="product-quantity-container">
-                                    <i class='bx bx-plus-medical add-quantity-btn'></i>
-                                    <i class='bx bx-minus subtract-quantity-btn'></i>
-                                    <input type="number" name="quantity" id="" class="product-quantity">
-                                </div>
-                                <div class="product-subtotal-container">
-                                    <p class="product-subtotal">$ <span class="product-subtotal-span">5000</span></p>
-                                </div>
-                                <i class='bx bx-trash remove-cart-product'></i>
-                            </article>
+                            <% locals.cart && locals.cart.forEach(product=>{ %>
+                                <article class="product-card" data-productid = <%= product.product_id %>>
+                                    <div class="product-card-image-container article-div-child">
+                                        <img src="/img/product/<%= product.filename || 'default.png' %>" alt="<%= product.name %>-<%= product.filename %>" class="product-image">
+                                    </div>
+                                    <div class="product-name-container article-div-child">
+                                        <p class="product-name"><%= product.name %></p>
+                                    </div>
+                                    <div class="product-price-container article-div-child">
+                                        <p class="product price">$<span class="product-price-span"><%= product.price %></span></p>
+                                    </div>
+                                    <div class="product-quantity-container article-div-child">
+                                        <i class='bx bx-plus-medical add-quantity-btn'></i>
+                                        <i class='bx bx-minus subtract-quantity-btn'></i>
+                                        <input type="number" name="quantity" id="" class="product-quantity">
+                                    </div>
+                                    <div class="product-subtotal-container article-div-child">
+                                        <p class="product-subtotal">$ <span class="product-subtotal-span"><%= product.price %></span></p>
+                                    </div>
+                                    <i class='bx bx-trash remove-cart-product'></i>
+                                    <%- include('./partials/loadingSpinner.ejs') %>
+                                </article>
+                            <% }) %>
+                            <!-- Si no hay productos en el carro -->
+                            <% if(locals.cart && locals.cart.length==0) { %>
+                                <p class="no-products-msg">No tienes productos en el carro</p>
+                            <% } %>
                         </div>
                     </div>
                     <div class="checkout-total-section">
                         <div class="cart-subtotal-container">
                             <p class="cart-subtotal-label">Subtotal</p>
-                            <p class="cart-subtotal">$<span class="cart-subtotal-span">40000</span></p>
+                            <p class="cart-subtotal">$<span class="cart-subtotal-span"></span></p>
                         </div>
                         <div class="cart-total-container">
                             <p class="cart-total-label">Total</p>
-                            <p class="cart-total">$<span class="cart-total-span">40000</span></p>
+                            <p class="cart-total">$<span class="cart-total-span"></span></p>
                         </div>
                         <div class="button-container">
                             <button class="continue-view-button continue-button">INICIAR COMPRA</button>
@@ -126,23 +75,23 @@
                             <div class="step-form info-step">
                                 <div class="field long-field">
                                     <label for="email" class="label bold">Correo electronico*</label>
-                                    <input type="email" name="email" id="email" class="input">
+                                    <input type="mail" name="email" id="email" class="input required">
                                 </div>
                                 <div class="field">
                                     <label for="name" class="label bold">Nombre*</label>
-                                    <input type="text" name="name" id="name" class="input">
+                                    <input type="text" name="name" id="name" class="input required letter-only-input">
                                 </div>
                                 <div class="field">
-                                    <label for="last-name" class="label bold">Apellidos*</label>
-                                    <input type="text" name="last-name" id="last-name" class="input">
+                                    <label for="last-name" class="label bold">Apellido/s*</label>
+                                    <input type="text" name="last-name" id="last-name" class="input required letter-only-input">
                                 </div>
                                 <div class="field">
                                     <label for="dni" class="label bold">DNI*</label>
-                                    <input type="text" name="dni" id="dni" class="input">
+                                    <input type="text" name="dni" id="dni" class="input required numeric-only-input">
                                 </div>
                                 <div class="field">
                                     <label for="phone" class="label bold">Telefono / Movil*</label>
-                                    <input type="text" name="phone" id="phone" class="input">
+                                    <input type="text" name="phone" id="phone" class="input required numeric-only-input">
                                 </div>
                                 <div class="field long-field newsletter-field">
                                     <input type="checkbox" name="newsletter" id="newsletter">
@@ -170,21 +119,21 @@
                                 </div>
                                 <div class="field zip-code-field">
                                     <label for="name" class="label bold">Codigo Postal</label>
-                                    <input type="text" name="zip-code" id="zip-code" class="input">
+                                    <input type="text" name="zip-code" id="zip-code" class="input numeric-only-input">
                                     <button class="calculate-delivery-button">Calcular</button>
                                 </div>
                                 <label class="bold label step-label">Completa tu direccion de entrega</label>
                                 <div class="field">
                                     <label for="country" class="label bold">Pais*</label>
-                                    <input type="text" name="country" id="country" class="input">
+                                    <input type="text" name="country" id="country" class="input required letter-only-input">
                                 </div>
                                 <div class="field">
                                     <label for="street" class="label bold">Calle*</label>
-                                    <input type="text" name="street" id="street" class="input">
+                                    <input type="text" name="street" id="street" class="input required">
                                 </div>
                                 <div class="field">
                                     <label for="street-number" class="label bold">Numero*</label>
-                                    <input type="text" name="street-number" id="street-number" class="input">
+                                    <input type="text" name="street-number" id="street-number" class="input required numeric-only-input">
                                 </div>
                                 <div class="field">
                                     <label for="floor" class="label bold">Piso / Departamento</label>
@@ -192,13 +141,15 @@
                                 </div>
                                 <div class="field">
                                     <label for="floor" class="label bold">Provincia*</label>
-                                    <select name="province" id="province" class="select">
-                                        <option value="CABA">Ciudad Autonoma de Buenos Aires</option>
+                                    <select name="province" id="province" class="select required">
+                                        <% provinces.forEach(prov => { %>
+                                            <option value="<%= prov.value %>"><%= prov.name %></option> 
+                                        <% }) %>
                                     </select>
                                 </div>
                                 <div class="field">
                                     <label for="city" class="label bold">Ciudad*</label>
-                                    <input type="text" name="city" id="city" class="input">
+                                    <input type="text" name="city" id="city" class="input required">
                                 </div>
 
                                 <div class="button-container">
@@ -271,8 +222,8 @@
                                         class="product-side-wrapper-row-total-price-span">15000</span> </p>
                             </div>
                         </div>
-                        <div class="button-container">
-                            <button class="continue-button payment-start-button">INICIAR PAGO</button>
+                        <div id="checkout-button-container" class="button-container">
+                            <button id="button-checkout" class="continue-button payment-start-button">INICIAR PAGO</button>
                         </div>
                     </div>
                 </section>

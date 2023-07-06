@@ -3,6 +3,37 @@ body {
 
 }
 
+/* Para el loading Animation */
+.loading-container{
+    align-items: center;
+}
+.loading-container-active{
+    display: flex;
+}
+.load-wrapp{
+    height: 50%;
+}
+
+/*  */
+/* Para el spinner "CArgando productos.. */
+.spinner-overlay{
+    position: absolute;
+}
+/*  */
+
+/* Msg de no hay productos */
+.no-products-msg{
+    width: 100%;
+    text-align: center;
+    margin-top: 5vh ;
+    font-size: 1.4rem;
+}
+.incomplete-field span{
+   color: var(--red-color);
+}
+.field.incomplete-field>.input{
+    border: 1px solid var(--red-color);
+}
 .checkout-main .select {
     background-color: #fff;
     border-radius: 1rem;
@@ -59,7 +90,7 @@ body {
     flex-wrap: wrap;
     align-content: flex-start;
     background-color: #fff;
-
+    position: relative;
 }
 
 .product-list-header {
@@ -124,7 +155,7 @@ body {
     color: var(--light-violet-color);
 }
 
-.product-card>div {
+.article-div-child {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -197,7 +228,7 @@ body {
     background-color: #fff;
     height: fit-content;
     position: sticky;
-    top: 15vh;
+    /* top: 15vh; */
     margin-top: 5vh;
 }
 
@@ -532,7 +563,9 @@ body {
 .payment-start-button {
     width: 90%;
     padding: 2% 0;
+    border: 0;
 }
+/* Esto es para que le de el background */
 
 /* STEP DE PAYMENT */
 .payment-logo-container {
@@ -644,11 +677,12 @@ body {
     }
 
     .product-card-image-container {
-        width: 15%;
+        width: 13%;
     }
 
     .product-name-container {
-        width: 20%;
+        width: 22%;
+        font-size: 1.2vw;
     }
 
     .product-card .product-price-container {
@@ -665,7 +699,7 @@ body {
         padding: 0 2%;
         border-radius: 1rem;
         margin-bottom: 5vh;
-        margin-top: 0;
+        /* margin-top: 0; */
     }
 
     .continue-button {

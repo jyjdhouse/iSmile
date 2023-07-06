@@ -1,10 +1,20 @@
 @import 'variables.css';
 
+.error-msg {
+    width: 100%;
+}
+
+select {
+    width: 70%;
+    padding-left: 2px;
+    cursor: pointer;
+}
+
 .user-profile-main {
     margin-top: 12vh;
     height: fit-content;
     padding: 0 3%;
-    height: 75vh;
+    min-height: 75vh;
 }
 
 .desktop-profile-content-wrapper {
@@ -44,7 +54,7 @@
     flex-direction: column;
 }
 
-.options-selected-container{
+.options-selected-container {
     position: relative;
     height: 450px;
     width: 100%;
@@ -80,6 +90,7 @@
 
 .input-container-active {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .span-inactive {
@@ -114,7 +125,7 @@
 .profile-field-container p {
     text-transform: uppercase;
     margin-right: 3%;
-    margin-bottom: 3% ;
+    margin-bottom: 3%;
     font-weight: 700;
 }
 
@@ -124,16 +135,19 @@
     display: flex;
     justify-content: center;
     margin: 5% 0;
-}   
+}
 
 .form-btn {
     border: 0;
     outline: 0;
     border: 1px solid var(--gold-color);
     width: 70%;
-    padding: 3% 0;
+    padding: 3px 0;
     text-align: center;
     text-transform: uppercase;
+    max-width: 300px;
+    background: none;
+    border-radius: 1rem;
 }
 
 .form-btn-inactive {
@@ -147,7 +161,7 @@
 }
 
 .radio-label-container:last-child {
-    margin-left: 3% ;
+    margin-left: 3%;
 }
 
 .profile-options-container {
@@ -188,7 +202,7 @@
 
 @media (min-width: 768px) {
 
-   
+
 
     .desktop-profile-content-wrapper {
         display: flex;
@@ -232,7 +246,7 @@
         width: 33%;
     }
 
-    .options-selected-container{   
+    .options-selected-container {
         height: 300px;
         width: 80%;
 
@@ -258,22 +272,46 @@
 }
 
 @media (min-width: 1024px) {
-
-    .user-profile-main {
-        height: 70vh;
+    .address-list{
+        height: auto;
+    }
+    .profile-option-item {
+        cursor: pointer;
     }
 
-
-    .profile-option-item {
-       cursor: pointer;
+    .profile-field-container {
+        margin-top: 2%;
+        margin-bottom: 7%;
     }
 
     .profile-field-container p {
-      
-        margin-right: 2%;
-   
+        /* marginb: 0; */
+        width: 100%;
     }
-    
+
+
+    .profile-input input {
+        padding: 1px 0;
+        width: 70%;
+    }
+    .profile-radio-p-container{
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    .profile-radio-p-container p{
+        text-align: center;
+        width: 100%;
+        text-transform: initial;
+        margin-bottom: 0;
+    }
+    .edit-content-container{
+        margin: 3% 0;
+    }
+    .form-btn {
+        padding: 8px 0;
+        cursor: pointer;
+    }
+
 
 
 }

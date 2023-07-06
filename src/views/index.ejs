@@ -12,7 +12,22 @@
     <%- include('./partials/header.ejs') %>
         <main class="main">
             <section class="landing-video-container">
-                <video class="video" src="/video/home2.mp4" playsinline muted autoplay loop></video>
+                <video class="video" src="/video/homePage/<%= videoFile.filename %>" playsinline muted autoplay loop></video>
+                <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                    locals.userLogged.user_categories_id==2)) { %>
+                    <form class="edit-file-overlay edit-home-video-container" method="POST"
+                        action='/updateHomeFile?_method=PUT' enctype="multipart/form-data"  data-sectionid="<%= videoFile?.home_sections_id %>" data-position="<%= videoFile?.position %>">
+                        <div class="edit-file-buttons-container">
+                            <div class="change-image-btn-container">
+                                <i class='bx bx-pencil change-image-btn'></i><br>
+                            </div>
+                            <p class="cancel-file-action hidden">Cancelar</p>
+                            <label for="home-video" class="instagram-input-file-label hidden">Seleccionar video</label>
+                            <input type="file" accept="video/*" name="homeFile" id="home-video" class="edit-file-input hidden">
+                            <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
+                        </div>
+                    </form>
+                    <% } %>
             </section>
             <section class="slide-show" id="products">
                 <a href="/product" class="slide-show-button">Ver Productos</a>
@@ -94,12 +109,30 @@
                 <div class="product-gallery-card">
                     <a href="/servicios">
                         <div class="overlay"></div>
-                        <img src="./img/face.jpg" class="gallery-image" alt="gallery-image">
+                        <img src="/img/homePage/<%= galleryFiles[0].filename %>" class="gallery-image"
+                            alt="<%= galleryFiles[0].filename %>">
                         <div class="gallery-product-detail">
                             <p class="gallery-product-name">Armonizacion
                                 facial
                             </p>
                         </div>
+                        <% if(locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                            locals.userLogged.user_categories_id==2)){ %>
+                            <form class="edit-file-overlay gallery-overlay" method="POST"
+                                action='/updateHomeFile?_method=PUT' enctype="multipart/form-data" data-sectionid="<%= galleryFiles[0]?.home_sections_id %>" data-position="<%= galleryFiles[0]?.position %>">
+                                <div class="edit-file-buttons-container">
+                                    <div class="change-image-btn-container">
+                                        <i class='bx bx-pencil change-image-btn'></i><br>
+                                    </div>
+                                    <p class="cancel-file-action hidden">Cancelar</p>
+                                    <label for="gallery-image-1" class="instagram-input-file-label hidden">Seleccionar
+                                        foto</label>
+                                    <input type="file" accept="image/*" name="homeFile" id="gallery-image-1"
+                                        class="edit-file-input hidden">
+                                    <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
+                                </div>
+                            </form>
+                            <% } %>
                     </a>
                     <a href="/servicios" class="product-gallery-button individual-button">Ver
                         Servicios</a>
@@ -107,23 +140,60 @@
                 <div class="product-gallery-card">
                     <a href="/servicios">
                         <div class="overlay"></div>
-                        <img src="./img/lips.jpg" class="gallery-image" alt="gallery-image">
+                        <img src="/img/homePage/<%= galleryFiles[1].filename %>" class="gallery-image"
+                            alt="<%= galleryFiles[1].filename %>">
                         <div class="gallery-product-detail">
                             <p class="gallery-product-name">Labios</p>
 
                         </div>
+                        <% if(locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                            locals.userLogged.user_categories_id==2)){ %>
+                            <form class="edit-file-overlay gallery-overlay" method="POST"
+                                action='/updateHomeFile?_method=PUT' enctype="multipart/form-data" data-sectionid="<%= galleryFiles[0]?.home_sections_id %>" data-position="<%= galleryFiles[1]?.position %>">
+                                <div class="edit-file-buttons-container">
+                                    <div class="change-image-btn-container">
+                                        <i class='bx bx-pencil change-image-btn'></i><br>
+                                    </div>
+                                    <p class="cancel-file-action hidden">Cancelar</p>
+                                    <label for="gallery-image-2" class="instagram-input-file-label hidden">Seleccionar
+                                        foto</label>
+                                    <input type="file" accept="image/*" name="homeFile" id="gallery-image-2"
+                                        class="edit-file-input hidden">
+                                    <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
+                                </div>
+                            </form>
+                            <% } %>
                     </a>
+
                     <a href="/servicios" class="product-gallery-button individual-button">Ver
                         Servicios</a>
                 </div>
                 <div class="product-gallery-card">
                     <a href="/servicios">
                         <div class="overlay"></div>
-                        <img src="./img/nose.jpg" class="gallery-image" alt="gallery-image">
+                        <img src="/img/homePage/<%= galleryFiles[2].filename %>" class="gallery-image"
+                            alt="<%= galleryFiles[2].filename %>">
                         <div class="gallery-product-detail">
                             <p class="gallery-product-name">Rinomodelacion</p>
 
                         </div>
+                        <% if(locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                            locals.userLogged.user_categories_id==2)){ %>
+                            <form class="edit-file-overlay gallery-overlay" method="POST"
+                                action='/updateHomeFile?_method=PUT' enctype="multipart/form-data" data-sectionid="<%= galleryFiles[0]?.home_sections_id %>" data-position="<%= galleryFiles[2]?.position %>">
+                                <div class="edit-file-buttons-container">
+                                    <div class="change-image-btn-container">
+                                        <i class='bx bx-pencil change-image-btn'></i><br>
+                                    </div>
+                                    <p class="cancel-file-action hidden">Cancelar</p>
+                                    <label for="gallery-image-3" class="instagram-input-file-label hidden">Seleccionar
+                                        foto</label>
+                                    <input type="file" accept="image/*" name="homeFile" id="gallery-image-3"
+                                        class="edit-file-input hidden">
+                                    <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
+                                </div>
+                            </form>
+                            <% } %>
                     </a>
                     <a href="/servicios" class="product-gallery-button individual-button">Ver
                         Servicios</a>
@@ -131,11 +201,29 @@
                 <div class="product-gallery-card">
                     <a href="/servicios">
                         <div class="overlay"></div>
-                        <img src="./img/botox.jpg" class="gallery-image" alt="gallery-image">
+                        <img src="/img/homePage/<%= galleryFiles[3].filename %>" class="gallery-image"
+                            alt="<%= galleryFiles[3].filename %>">
                         <div class="gallery-product-detail">
                             <p class="gallery-product-name">Botox</p>
 
                         </div>
+                        <% if(locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                            locals.userLogged.user_categories_id==2)){ %>
+                            <form class="edit-file-overlay gallery-overlay" method="POST"
+                                action='/updateHomeFile?_method=PUT' enctype="multipart/form-data" data-sectionid="<%= galleryFiles[0]?.home_sections_id %>" data-position="<%= galleryFiles[3]?.position %>">
+                                <div class="edit-file-buttons-container">
+                                    <div class="change-image-btn-container">
+                                        <i class='bx bx-pencil change-image-btn'></i><br>
+                                    </div>
+                                    <p class="cancel-file-action hidden">Cancelar</p>
+                                    <label for="gallery-image-4" class="instagram-input-file-label hidden">Seleccionar
+                                        foto</label>
+                                    <input type="file" accept="image/*" name="homeFile" id="gallery-image-4"
+                                        class="edit-file-input hidden">
+                                    <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
+                                </div>
+                            </form>
+                            <% } %>
                     </a>
                     <a href="/servicios" class="product-gallery-button individual-button">Ver
                         Servicios</a>
@@ -143,10 +231,28 @@
                 <div class="product-gallery-card">
                     <a href="/servicios">
                         <div class="overlay"></div>
-                        <img src="./img/hair.jpg" class="gallery-image" alt="gallery-image">
+                        <img src="/img/homePage/<%= galleryFiles[4].filename %>" class="gallery-image"
+                            alt="<%= galleryFiles[4].filename %>">
                         <div class="gallery-product-detail">
                             <p class="gallery-product-name">Masculinizacion facial</p>
                         </div>
+                        <% if(locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                            locals.userLogged.user_categories_id==2)){ %>
+                            <form class="edit-file-overlay gallery-overlay" method="POST"
+                                action='/updateHomeFile?_method=PUT' enctype="multipart/form-data" data-sectionid="<%= galleryFiles[0]?.home_sections_id %>" data-position="<%= galleryFiles[4]?.position %>">
+                                <div class="edit-file-buttons-container">
+                                    <div class="change-image-btn-container">
+                                        <i class='bx bx-pencil change-image-btn'></i><br>
+                                    </div>
+                                    <p class="cancel-file-action hidden">Cancelar</p>
+                                    <label for="gallery-image-5" class="instagram-input-file-label hidden">Seleccionar
+                                        foto</label>
+                                    <input type="file" accept="image/*" name="homeFile" id="gallery-image-5"
+                                        class="edit-file-input hidden">
+                                    <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
+                                </div>
+                            </form>
+                            <% } %>
                     </a>
                     <a href="/servicios" class="product-gallery-button individual-button">Ver
                         Servicios</a>
@@ -157,7 +263,24 @@
                 <div class="blog-background">
                     <div class="overlay"></div>
                     <p class="blog-section-title">The <span class="bold">I smile</span> Blog</p>
-                    <img src="/img/blogBackground.png" alt="background-image" class="blog-background-image">
+                    <img src="/img/homePage/<%= blogFile.filename %>" alt="background-image" class="blog-background-image">
+                    <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                        locals.userLogged.user_categories_id==2) ) { %>
+                        <form class="edit-file-overlay blog-overlay" method="POST" action='/updateHomeFile?_method=PUT'
+                            enctype="multipart/form-data" data-sectionid="<%= blogFile.home_sections_id %>" data-position="<%= blogFile.position %>" >
+                            <div class="edit-file-buttons-container">
+                                <div class="change-image-btn-container">
+                                    <i class='bx bx-pencil change-image-btn'></i><br>
+                                </div>
+                                <p class="cancel-file-action hidden">Cancelar</p>
+                                <label for="blog-image" class="instagram-input-file-label hidden">Seleccionar
+                                    foto</label>
+                                <input type="file" accept="image/*" name="homeFile" id="blog-image"
+                                    class="edit-file-input hidden">
+                                <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
+                            </div>
+                        </form>
+                        <% } %>
                 </div>
                 <div class="blogs-cards-container">
                     <div class="blog-group blog-group-active">
@@ -351,99 +474,149 @@
                 <div class="instagram-cards-container">
                     <div class="instagram-card instagram-card-active">
                         <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
-                            <div class="instagram-overlay">
-                                <i class="fa-brands fa-instagram instagram-logo"></i>
-                                <p class="instagram-page-name">@iSmile</p>
-                            </div>
-                            <!-- <div class="instagram-overlay">
-                                <div class="change-image-btn-container">
-                                    <i class='bx bx-pencil change-image-btn'></i><br>
-                                </div>
-                                
-                                <p class="cancel-file-action hidden">Cancelar</p>
-                                <label for="instagram-input1" class="instagram-input-file-label hidden">Seleccionar foto</label>
-                                <input type="file" id="instagram-input1" class="instagram-file-input hidden">
-                                <button class="confirm-instagram-file-btn hidden">Confirmar</button>
-                            </div> -->
-                            <img src="/img/homePage/home1.png" alt="instagram-image" class="instagram-image">
-                        </a>
-                    </div>
-                    <div class="instagram-card">
-                        <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
-                            <div class="instagram-overlay">
-                                <i class="fa-brands fa-instagram instagram-logo"></i>
-                                <p class="instagram-page-name">@iSmile</p>
-                            </div>
-                            <!-- <div class="instagram-overlay">
-                                <div class="change-image-btn-container">
-                                    <i class='bx bx-pencil change-image-btn'></i><br>
-                                </div>
-                                <p class="cancel-file-action hidden">Cancelar</p>
-                                <label for="instagram-input2" class="instagram-input-file-label hidden">Seleccionar foto</label>
-                                <input type="file" id="instagram-input2" class="instagram-file-input hidden">
-                                <button class="confirm-instagram-file-btn hidden">Confirmar</button>
-                            </div> -->
-                            <img src="/img/homePage/home2.jpeg" alt="instagram-image" class="instagram-image">
-                        </a>
-                    </div>
-                    <div class="instagram-card">
-                        <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
-                            <!-- <div class="instagram-overlay">
-                                <i class="fa-brands fa-instagram instagram-logo"></i>
-                                <p class="instagram-page-name">@iSmile</p>
-                            </div> -->
-                            <div class="instagram-overlay">
-                                <div class="change-image-btn-container">
-                                    <i class='bx bx-pencil change-image-btn'></i><br>
-                                </div>
+                            <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                                locals.userLogged.user_categories_id==2) ) { %>
+                                <form class="instagram-overlay edit-file-overlay" method="POST"
+                                    action='/updateHomeFile?_method=PUT' enctype="multipart/form-data" data-sectionid="<%= igFiles[0]?.home_sections_id %>" data-position="<%= igFiles[0]?.position %>">
+                                    <div class="edit-file-buttons-container">
+                                        <div class="change-image-btn-container">
+                                            <i class='bx bx-pencil change-image-btn'></i><br>
+                                        </div>
+                                        <p class="cancel-file-action hidden">Cancelar</p>
+                                        <label for="instagram-input1"
+                                            class="instagram-input-file-label hidden">Seleccionar foto</label>
+                                        <input type="file" accept="image/*" name="homeFile" id="instagram-input1"
+                                            class="edit-file-input hidden">
+                                        <button type="submit"
+                                            class="confirm-instagram-file-btn hidden">Confirmar</button>
+                                    </div>
+                                </form>
+                                <% }else{ %>
+                                    <div class="instagram-client-overlay">
+                                        <i class="fa-brands fa-instagram instagram-logo"></i>
+                                        <p class="instagram-page-name">@ismile.estetica</p>
+                                    </div>
+                                    <% } %>
 
-                                <p class="cancel-file-action hidden">Cancelar</p>
-                                <label for="instagram-input3" class="instagram-input-file-label hidden">Seleccionar
-                                    foto</label>
-                                <input type="file" id="instagram-input3" class="instagram-file-input hidden">
-                                <button class="confirm-instagram-file-btn hidden">Confirmar</button>
-                            </div>
-                            <img src="/img/homePage/home3.jpeg" alt="instagram-image" class="instagram-image">
+
+                                        <img src="/img/homePage/<%= igFiles[0].filename %>" alt="instagram-image"
+                                            class="instagram-image">
                         </a>
                     </div>
                     <div class="instagram-card">
                         <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
-                            <!-- <div class="instagram-overlay">
-                                <i class="fa-brands fa-instagram instagram-logo"></i>
-                                <p class="instagram-page-name">@iSmile</p>
-                            </div> -->
-                            <div class="instagram-overlay">
-                                <div class="change-image-btn-container">
-                                    <i class='bx bx-pencil change-image-btn'></i><br>
-                                </div>
-
-                                <p class="cancel-file-action hidden">Cancelar</p>
-                                <label for="instagram-input4" class="instagram-input-file-label hidden">Seleccionar
-                                    foto</label>
-                                <input type="file" id="instagram-input4" class="instagram-file-input hidden">
-                                <button class="confirm-instagram-file-btn hidden">Confirmar</button>
-                            </div>
-                            <img src="/img/homePage/home4.jpeg" alt="instagram-image" class="instagram-image">
+                            <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                                locals.userLogged.user_categories_id==2) ) { %>
+                                <form class="instagram-overlay edit-file-overlay" method="POST"
+                                    action='/updateHomeFile?_method=PUT' enctype="multipart/form-data" data-sectionid="<%= igFiles[0]?.home_sections_id %>" data-position="<%= igFiles[1]?.position %>">
+                                    <div class="edit-file-buttons-container">
+                                        <div class="change-image-btn-container">
+                                            <i class='bx bx-pencil change-image-btn'></i><br>
+                                        </div>
+                                        <p class="cancel-file-action hidden">Cancelar</p>
+                                        <label for="instagram-input2"
+                                            class="instagram-input-file-label hidden">Seleccionar foto</label>
+                                        <input type="file" accept="image/*" name="homeFile" id="instagram-input2"
+                                            class="edit-file-input hidden">
+                                        <button type="submit"
+                                            class="confirm-instagram-file-btn hidden">Confirmar</button>
+                                    </div>
+                                </form>
+                                <% }else{ %>
+                                    <div class="instagram-client-overlay">
+                                        <i class="fa-brands fa-instagram instagram-logo"></i>
+                                        <p class="instagram-page-name">@ismile.estetica</p>
+                                    </div>
+                                    <% } %>
+                                        <img src="/img/homePage/<%= igFiles[1].filename %>" alt="instagram-image"
+                                            class="instagram-image">
                         </a>
                     </div>
                     <div class="instagram-card">
                         <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
-                            <!-- <div class="instagram-overlay">
-                                <i class="fa-brands fa-instagram instagram-logo"></i>
-                                <p class="instagram-page-name">@iSmile</p>
-                            </div> -->
-                            <div class="instagram-overlay">
-                                <div class="change-image-btn-container">
-                                    <i class='bx bx-pencil change-image-btn'></i><br>
-                                </div>
-
-                                <p class="cancel-file-action hidden">Cancelar</p>
-                                <label for="instagram-input5" class="instagram-input-file-label hidden">Seleccionar
-                                    foto</label>
-                                <input type="file" id="instagram-input5" class="instagram-file-input hidden">
-                                <button class="confirm-instagram-file-btn hidden">Confirmar</button>
-                            </div>
-                            <img src="/img/homePage/home5.jpeg" alt="instagram-image" class="instagram-image">
+                            <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                                locals.userLogged.user_categories_id==2) ) { %>
+                                <form class="instagram-overlay edit-file-overlay" method="POST"
+                                    action='/updateHomeFile?_method=PUT' enctype="multipart/form-data" data-sectionid="<%= igFiles[0]?.home_sections_id %>" data-position="<%= igFiles[2]?.position %>">
+                                    <div class="edit-file-buttons-container">
+                                        <div class="change-image-btn-container">
+                                            <i class='bx bx-pencil change-image-btn'></i><br>
+                                        </div>
+                                        <p class="cancel-file-action hidden">Cancelar</p>
+                                        <label for="instagram-input3"
+                                            class="instagram-input-file-label hidden">Seleccionar foto</label>
+                                        <input type="file" accept="image/*" name="homeFile" id="instagram-input3"
+                                            class="edit-file-input hidden">
+                                        <button type="submit"
+                                            class="confirm-instagram-file-btn hidden">Confirmar</button>
+                                    </div>
+                                </form>
+                                <% }else{ %>
+                                    <div class="instagram-client-overlay">
+                                        <i class="fa-brands fa-instagram instagram-logo"></i>
+                                        <p class="instagram-page-name">@ismile.estetica</p>
+                                    </div>
+                                    <% } %>
+                                        <img src="/img/homePage/<%= igFiles[2].filename %>" alt="instagram-image"
+                                            class="instagram-image">
+                        </a>
+                    </div>
+                    <div class="instagram-card">
+                        <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
+                            <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                                locals.userLogged.user_categories_id==2) ) { %>
+                                <form class="instagram-overlay edit-file-overlay" method="POST"
+                                    action='/updateHomeFile?_method=PUT' enctype="multipart/form-data" data-sectionid="<%= igFiles[0]?.home_sections_id %>" data-position="<%= igFiles[3]?.position %>">
+                                    <div class="edit-file-buttons-container">
+                                        <div class="change-image-btn-container">
+                                            <i class='bx bx-pencil change-image-btn'></i><br>
+                                        </div>
+                                        <p class="cancel-file-action hidden">Cancelar</p>
+                                        <label for="instagram-input4"
+                                            class="instagram-input-file-label hidden">Seleccionar foto</label>
+                                        <input type="file" accept="image/*" name="homeFile" id="instagram-input4"
+                                            class="edit-file-input hidden">
+                                        <button type="submit"
+                                            class="confirm-instagram-file-btn hidden">Confirmar</button>
+                                    </div>
+                                </form>
+                                <% }else{ %>
+                                    <div class="instagram-client-overlay">
+                                        <i class="fa-brands fa-instagram instagram-logo"></i>
+                                        <p class="instagram-page-name">@ismile.estetica</p>
+                                    </div>
+                                    <% } %>
+                                        <img src="/img/homePage/<%= igFiles[3].filename %>" alt="instagram-image"
+                                            class="instagram-image">
+                        </a>
+                    </div>
+                    <div class="instagram-card">
+                        <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
+                            <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                                locals.userLogged.user_categories_id==2) ) { %>
+                                <form class="instagram-overlay edit-file-overlay" method="POST"
+                                    action='/updateHomeFile?_method=PUT' enctype="multipart/form-data" data-sectionid="<%= igFiles[0]?.home_sections_id %>" data-position="<%= igFiles[4]?.position %>">
+                                    <div class="edit-file-buttons-container">
+                                        <div class="change-image-btn-container">
+                                            <i class='bx bx-pencil change-image-btn'></i><br>
+                                        </div>
+                                        <p class="cancel-file-action hidden">Cancelar</p>
+                                        <label for="instagram-input5"
+                                            class="instagram-input-file-label hidden">Seleccionar foto</label>
+                                        <input type="file" accept="image/*" name="homeFile" id="instagram-input5"
+                                            class="edit-file-input hidden">
+                                        <button type="submit"
+                                            class="confirm-instagram-file-btn hidden">Confirmar</button>
+                                    </div>
+                                </form>
+                                <% }else{ %>
+                                    <div class="instagram-client-overlay">
+                                        <i class="fa-brands fa-instagram instagram-logo"></i>
+                                        <p class="instagram-page-name">@ismile.estetica</p>
+                                    </div>
+                                    <% } %>
+                                        <img src="/img/homePage/<%= igFiles[4].filename %>" alt="instagram-image"
+                                            class="instagram-image">
                         </a>
                     </div>
                 </div>

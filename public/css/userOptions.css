@@ -5,7 +5,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 75vw;
+    width: 85vw;
     height: 43vh;
     background-color: #fff;
     border: 1px solid var(--gold-color);
@@ -138,11 +138,12 @@
     position: relative;
 }
 
-.pass-field .fa-eye {
+.pass-field .password-btn-toggler {
     position: absolute;
     right: 3%;
     top: 57%;
     color: #777;
+    cursor: pointer;
 }
 
 .login-field label,
