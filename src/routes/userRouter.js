@@ -14,6 +14,7 @@ const loginMiddleware = require('../middlewares/loginMiddleware');
 router.get('/logout',userController.logout);
 router.get('/checkout',loginMiddleware,userController.checkout); 
 router.get('/profile',guestMiddleware,userController.userProfile);
+router.get('/change-password',guestMiddleware,userController.changePassword)
 
 // POST
 router.post('/login',userController.login);

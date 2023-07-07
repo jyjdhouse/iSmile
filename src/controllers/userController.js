@@ -8,6 +8,7 @@ const secret = require('../utils/secret').secret;
 // Librerias
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 
 const { validationResult } = require('express-validator');
 
@@ -41,10 +42,10 @@ const controller = {
             let cart = user.temporalCart?.temporalItems;
             // Ahora voy por cada producto del temporalItem, lo dejo con un precio y la primer imagen
             // de cada producto
-            cart = cart?.map(tempItem=>{
+            cart = cart?.map(tempItem => {
                 // Esto es por si tiene un video como primer archivo, no puedo hacer files [0],
                 // antes era tempItem.product.files[0]?.filename
-                let tempItemFile =tempItem.product.files.find(file=>file.file_types_id==1)?.filename;
+                let tempItemFile = tempItem.product.files.find(file => file.file_types_id == 1)?.filename;
                 return {
                     tempItemId: tempItem.id,
                     product_id: tempItem.product_id,
@@ -54,8 +55,8 @@ const controller = {
                 }
             });
             // Ordeno el carro del tempItemId mas gde a mas chico (Mas nuevo arriba)
-            cart = cart.sort((a,b)=>b.tempItemId-a.tempItemId);
-            return res.render('checkout.ejs',{user, cart, provinces});
+            cart = cart.sort((a, b) => b.tempItemId - a.tempItemId);
+            return res.render('checkout.ejs', { user, cart, provinces });
         }
         return res.render('checkout.ejs', { provinces });
     },
@@ -159,18 +160,19 @@ const controller = {
                     const token = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1w' }); // genera el token
                     res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
                     // Si es admin armo una cookie con el token de admin
-                    if(userToLog.user_categories_id == 1 || userToLog.user_categories_id == 2){
-                        const adminToken = jwt.sign({ id: userToLog.id  }, secret, { expiresIn: '1d' });
+                    if (userToLog.user_categories_id == 1 || userToLog.user_categories_id == 2) {
+                        const adminToken = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1d' });
                         cookieTime = (1000 * 60) * 60 * 24; //1 dia
                         res.cookie('adminToken', adminToken, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
                         // Le agrego el token al user en la db
-                        await db.User.update({
-                            admin_token: adminToken
-                        },{
-                            where: {
-                                id: userToLog.id
-                            }
-                        })
+                        // TODO: Preguntarle a martin para que usar esto
+                        // await db.User.update({
+                        //     admin_token: adminToken
+                        // },{
+                        //     where: {
+                        //         id: userToLog.id
+                        //     }
+                        // })
                     }
                     return res.redirect(relativePath);
                 }
@@ -187,64 +189,81 @@ const controller = {
         }
     },
     update: async (req, res) => {
-        let userToUpdate = await db.User.findByPk(req.session.userLoggedId, {
-            include: ['address']
-        })
-        let userBodyData = req.body;
+        try {
+            let userToUpdate = await db.User.findByPk(req.session.userLoggedId, {
+                include: ['address']
+            })
+            let userBodyData = req.body;
 
-        // Datos para la tabla user
-        let userDataDB = {
-            first_name: userBodyData.first_name,
-            last_name: userBodyData.last_name,
-            phone: userBodyData.phone,
-            dni: userBodyData.dni,
-            wpp_notifications: parseInt(userBodyData.wpp_notifications),
-            email_notifications: parseInt(userBodyData.email_notifications),
-            email_newsletter: parseInt(userBodyData.email_newsletter),
-        };
-        // Actualizo el usuario
-        await db.User.update(userDataDB, {
-            where: {
-                id: userToUpdate.id
+            // Datos para la tabla user
+            let userDataDB = {
+                first_name: userBodyData.first_name,
+                last_name: userBodyData.last_name,
+                phone: userBodyData.phone,
+                dni: userBodyData.dni,
+                wpp_notifications: parseInt(userBodyData.wpp_notifications),
+                email_notifications: parseInt(userBodyData.email_notifications),
+                email_newsletter: parseInt(userBodyData.email_newsletter),
+            };
+            // Actualizo el usuario
+            await db.User.update(userDataDB, {
+                where: {
+                    id: userToUpdate.id
+                }
+            })
+            // Datos para la tabla address
+            // Armo el objeto address con los datos que me llegan del form
+            let createdAddress, addressDataDB;
+            let addressBody = {
+                street: userBodyData.street || null,
+                apartment: userBodyData.apartment || null,
+                city: userBodyData.city || null,
+                zip_code: userBodyData.zip_code || null
             }
-        })
-        // Datos para la tabla address
-        // Armo el objeto address con los datos que me llegan del form
-        let createdAddress, addressDataDB;
-        let addressBody = {
-            street: userBodyData.street || null,
-            apartment: userBodyData.apartment || null,
-            city: userBodyData.city || null,
-            zip_code: userBodyData.zip_code || null
-        }
-        // Me fijo si son todos los valores nulos, entonces no creo el address
-        const addressAllKeysNull = Object.values(addressBody).every(value => value === null);
-        // return res.send(addressAllKeysNull)
-        if (!userToUpdate.address) {//Si no tiene una direccion tengo que crear una
-            // Si completo por lo menos algun address data
-            if (!addressAllKeysNull) {
+            // Me fijo si son todos los valores nulos, entonces no creo el address
+            const addressAllKeysNull = Object.values(addressBody).every(value => value === null);
+            // return res.send(addressAllKeysNull)
+            if (!userToUpdate.address) {//Si no tiene una direccion tengo que crear una
+                // Si completo por lo menos algun address data
+                if (!addressAllKeysNull) {
+                    addressDataDB = {
+                        ...addressBody,
+                        provinces_id: userBodyData.provinces_id,
+                        user_id: userToUpdate.id
+                    };
+                    // La creo
+                    createdAddress = await db.Address.create(addressDataDB);
+                }
+            } else { // Si ya tenia
                 addressDataDB = {
                     ...addressBody,
                     provinces_id: userBodyData.provinces_id,
                     user_id: userToUpdate.id
                 };
-                // La creo
-                createdAddress = await db.Address.create(addressDataDB);
+                // La actualizo
+                await db.Address.update(addressDataDB, {
+                    where: {
+                        id: userToUpdate.address.id
+                    }
+                });
             }
-        } else { // Si ya tenia
-            addressDataDB = {
-                ...addressBody,
-                provinces_id: userBodyData.provinces_id,
-                user_id: userToUpdate.id
-            };
-            // La actualizo
-            await db.Address.update(addressDataDB, {
-                where: {
-                    id: userToUpdate.address.id
-                }
-            });
+            return res.redirect('/user/profile')
+        } catch (error) {
+            console.log(`Falle en userController.login: ${error}`);
+            return res.json(error);
         }
-        return res.redirect('/user/profile')
+    },
+    changePassword: async (req, res) => {
+        try {
+            const user = await getUser(req.session?.userLoggedId);
+            // Si la sesion no tiene el userLoggedId vuelvo a la home
+            if (!user) return res.redirect('/');
+            let userEmail = user.email;
+            const token = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1d' }); // genera el token
+        } catch (error) {
+            console.log(`Falle en userController.changePassword: ${error}`);
+            return res.json(error);
+        }
     }
 };
 
