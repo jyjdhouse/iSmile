@@ -6,6 +6,7 @@ window.addEventListener('load', () => {
     const adminDropdown = document.querySelector('.blog-admin-actions-dropdown')
     const blogTextCont = document.querySelector('.blog-detail-text-container')
     const blogDateCont = document.querySelector('.blog-date')
+    const imgList = document.querySelector('.other-img-list')
     const intervalTime = 3000
     let intervalId;
 
@@ -24,6 +25,7 @@ window.addEventListener('load', () => {
 
     if (window.innerWidth < 768) { //Resolucion mobile
         let activeImg = 0
+       
         const autoSlideCondition = () => {
             if (activeImg < images.length - 1) {
                 activeImg++
@@ -58,7 +60,10 @@ window.addEventListener('load', () => {
                         img.classList.remove('prev-img-container')
                         img.classList.add('next-img-container');
                     }
-                    setInterval(autoSlideCondition(), intervalTime)
+                    clearInterval(intervalId)
+                    intervalId = setInterval(() => {
+                        autoSlideCondition()
+                    }, intervalTime);
                 } else if (images.length === 1) {
 
                 } else {
@@ -81,15 +86,7 @@ window.addEventListener('load', () => {
             autoSlideCondition();
         }, 0);
 
-    } else {
-        images.forEach(img => {
-            img.classList.remove('img-container-active')
-        })
-
-    }
-
-
-
+    } 
 
     const date = new Date(blogDateCont.innerText)
     const day = date.getDate();
