@@ -14,8 +14,7 @@ window.addEventListener('load', () => {
 
         images.forEach((image, index) => {
 
-            if (images.length == 2) {
-                
+            if (images.length == 2) {      
                 image.classList.remove('product-image-test-active', 'carousel-animation');
                 if (index === actualIndex) {
                     image.classList.add('product-image-test-active');
@@ -81,7 +80,7 @@ window.addEventListener('load', () => {
             });
         } else {
             card.addEventListener('touchstart', () => {
-                console.log('toco');
+               
                 // Comparo el ultimo container con el que esta tocando
                 if (card != lastCard) { //Si es distinto
 
