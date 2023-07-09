@@ -8,7 +8,7 @@ const secret = require('../utils/secret').secret;
 // Librerias
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
+
 
 const { validationResult } = require('express-validator');
 
@@ -61,9 +61,9 @@ const controller = {
         return res.render('checkout.ejs', { provinces });
     },
     processRegist: async (req, res) => {
+        // Ultima ruta que estuvo, para luego redirigir
+        let relativePath = getRelativePath(req.headers.referer);
         try {
-            // Ultima ruta que estuvo, para luego redirigir
-            let relativePath = getRelativePath(req.headers.referer);
 
             // Traigo errores
             let errors = validationResult(req);
@@ -153,9 +153,7 @@ const controller = {
                 if (bcrypt.compareSync(userData.password, userToLog.password)) {
 
                     let cookieTime = (1000 * 60) * 60 * 24 * 7 //1 Semana
-
                     req.session.userLoggedId = userToLog.id; //Defino en sessions al usuario loggeado
-
                     // Generar el token de autenticación
                     const token = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1w' }); // genera el token
                     res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
@@ -185,6 +183,10 @@ const controller = {
 
         } catch (error) {
             console.log(`Falle en userController.login: ${error}`);
+            if (isJwtError(error)) { //Si es error de jwt
+                let msg = "Error al cambiar la contraseña"
+                return res.redirect(`${lastPath}?alert=${msg}`);
+            }
             return res.json(error);
         }
     },
@@ -253,18 +255,66 @@ const controller = {
             return res.json(error);
         }
     },
-    changePassword: async (req, res) => {
+    changePasswordView: async (req, res) => {
         try {
-            const user = await getUser(req.session?.userLoggedId);
-            // Si la sesion no tiene el userLoggedId vuelvo a la home
-            if (!user) return res.redirect('/');
-            let userEmail = user.email;
-            const token = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1d' }); // genera el token
+            const { token } = req.params;
+            // Verificar si el token es válido
+            const userWithToken = await db.User.findOne({
+                where: {
+                    password_token: token
+                }
+            });
+            // Si no encuentro usuario redirijo a la home TODO: 404
+            if (!userWithToken) return res.redirect('/');
+            // Ahora me fijo si el token sigue siendo valido
+            const decodedData = jwt.verify(token, secret);
+            // Renderizar la página de cambio de contraseña
+            res.render('userChangePassword', { token });
         } catch (error) {
-            console.log(`Falle en userController.changePassword: ${error}`);
-            return res.json(error);
+            console.log(`Falle en userController.changePasswordView: ${error}`);
+            //Si no verifico el token, redirijo a vista de error
+            return res.redirect('/user/contrasena-error')
+
         }
+    },
+    processNewPassword: async (req, res) => {
+        try {
+            const { token } = req.params;
+            const { password } = req.body;
+            // Verificar si el token es válido
+            const userWithToken = await db.User.findOne({
+                where: {
+                    password_token: token
+                }
+            });
+            // Si no encuentro usuario redirijo a la home TODO: 404
+            if (!userWithToken) return res.redirect('/');
+            // Ahora me fijo si el token sigue siendo valido
+            const decodedData = jwt.verify(token, secret);
+
+            // Si hay, le cambio la contrasena por la nueva
+            await db.User.update({
+                password: bcrypt.hashSync(password, 10),
+                password_token: null //Le saco el token
+            }, {
+                where: {
+                    id: userWithToken.id
+                }
+            })
+            // Renderizar la página de cambio de contraseña
+            res.redirect('/');
+        } catch (error) {
+            console.log(`Falle en userController.changePasswordView: ${error}`);
+            if (isJwtError(error)) { //Si es error de jwt
+                return res.redirect(`/user/contrasena-error`);
+            }
+        }
+    },
+    passwordError: (req, res) => {
+        return res.render('changePasswordError');
+        return res.json(error);
     }
+
 };
 
 module.exports = controller;

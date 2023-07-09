@@ -141,7 +141,7 @@
 .pass-field .password-btn-toggler {
     position: absolute;
     right: 3%;
-    top: 57%;
+    top: 40%;
     color: #777;
     cursor: pointer;
 }
@@ -193,6 +193,55 @@
     text-align: center;
 }
 
+/* Olvide mi contrasena popup */
+.forget-password-btn{
+    color: #333;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.forget-password-section{
+    position: absolute;
+    scale: 0;
+    transition: all .5s ease;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    background: white;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    z-index: 10;
+}
+.forget-password-section-active{
+    scale: 1;
+}
+.forget-password-section-title{
+    width: 100%;
+    font-size: 1.1rem;
+    height: fit-content;
+    text-align: center;
+}
+.forget-password-section button,
+.forget-password-section input{
+    
+    height: 2rem;
+}
+.forget-password-section input{
+    border: 1px solid var(--violet-color);
+    border-radius: 1rem;
+    width: 80%;
+    padding-left: 10px;
+}
+.forget-password-section button{
+    border-radius: 1rem;
+    border: 1px solid var(--violet-color);
+    background: none;
+    width: 35%;
+    cursor: pointer;
+    
+}
 @media (min-width:1024px) {
     .user-options-popup {
         width: 30vw;

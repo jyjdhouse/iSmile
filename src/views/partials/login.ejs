@@ -8,6 +8,7 @@
         <input type="password" id="login-password" class="input" placeholder="Ingrese su Contraseña" name="password">
         <i class="fa-solid fa-eye show-password-btn password-btn-toggler"></i>
         <i class="fa-solid fa-eye-slash hide-password-btn password-btn-toggler hidden"></i>
+        <p class="forget-password-btn">Olvide mi contraseña</p>
     </div>
     <% if (locals.loginErrors) { %>
         <p class="error-msg">Los datos ingresados no son válidos.</p>
@@ -16,3 +17,8 @@
         <button type="submit" class="login-button bold">Iniciar Sesion</button>
     </div>
 </form>
+<section class="forget-password-section">
+    <p class="forget-password-section-title">Por favor, ingrese el mail asociado a su cuenta</p>
+    <input type="email" id="user-forget-password-email">
+    <button class="forget-password-link">Recuperar</button>
+</section>

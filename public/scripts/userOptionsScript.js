@@ -53,8 +53,11 @@ window.addEventListener('load', () => {
             opt.classList.remove('translate-option-left');
             opt.querySelector('.error-msg')?.remove();
         });
+        forgetPassSection.classList.remove('forget-password-section-active');
         // Le saco la clase active a la flecha para atras
         backUserOptionsBtn.classList.remove('back-user-option-btn-active');
+        // Le saco el valor del input
+        document.querySelector('#user-forget-password-email').value= '';
     });
     closeUserOptionsBtn.addEventListener('click', () => {
         // La agrego por si no la tenia
@@ -153,5 +156,35 @@ window.addEventListener('load', () => {
             }
         }
     });
+
+    // LOGICA para "olvide mi contrasena"
+    const forgetPassSection = document.querySelector('.forget-password-section');
+    const forgetPassBtn = document.querySelector('.forget-password-btn');
+    forgetPassBtn.addEventListener('click',()=>{
+        forgetPassSection.classList.add('forget-password-section-active')
+    });
+    // Capturo el "Recuperar que hace el pedido POST"
+    const forgetPasswordLinkBtn = document.querySelector('.forget-password-link');
+    forgetPasswordLinkBtn.addEventListener('click',async()=>{
+        // Capturo el valor del mail
+        const userMail = document.querySelector('#user-forget-password-email')?.value;
+        // Realizo un pedido por POST donde mando la info del user en cuestion con el mail
+        // Hago el fetch
+        let fetchOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Tipo de contenido del cuerpo de la solicitud
+            },
+            body: JSON.stringify({
+                mail: userMail
+            })
+        }
+        let response = await (await fetch('/api/user/forget-password', fetchOptions)).json();
+        console.log(response);
+        if(response.ok){
+            alert(response.msg)
+        }
+        
+    })
 
 });

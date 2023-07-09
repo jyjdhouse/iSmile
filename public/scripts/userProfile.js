@@ -214,6 +214,18 @@ window.addEventListener('load', () => {
         }
     });
 
+    // Logica para boton "Cambiar password"
+    let changePassBtns = document.querySelectorAll('.change-password-btn');
+    changePassBtns.forEach(btn=>{
+        btn.addEventListener('click',async()=>{
+            let response = (await (await fetch('/api/user/change-password')).json());
+            console.log(response);
+            if(response.ok){
+                alert(response.msg)
+            }
+        });
+    })
+
 
 
 })

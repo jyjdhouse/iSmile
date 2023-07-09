@@ -19,12 +19,12 @@
                     <i class='bx bx-dots-vertical-rounded admin-toggle'></i>
                     <div class="blog-admin-actions-dropdown">
                         <div class="action-container">
-                            <a href="/blog/update/<%= product.id %>">Actualizar producto</a>
+                            <a href="/blog/update/<%= blog.id %>">Actualizar Blog</a>
                         </div>
                         <div class="action-container">
-                            <form class="update-delete-btn-container" action="/blog/<%= product.id %>?_method=DELETE"
+                            <form class="update-delete-btn-container" action="/blog/<%= blog.id %>?_method=DELETE"
                                 method="POST">
-                                <button class="form-device-btn" type="submit">Eliminar producto</button>
+                                <button class="form-device-btn" type="submit">Eliminar Blog</button>
                             </form>
                         </div>
                     </div>
