@@ -14,11 +14,10 @@
                     <i class='bx bx-chevron-right'></i>
                 </div>
                 <ul class="dropdown-items-container">
-                    <li class="dropdown-list-item"><a href="#">Estética facial</a></li>
-                    <li class="dropdown-list-item"><a href="#">Estetica corporal</a></li>
-                    <li class="dropdown-list-item"><a href="#">Medicina regenerativa</a></li>
-                    <li class="dropdown-list-item"><a href="#">Nutrición</a></li>
-                    <li class="dropdown-list-item"><a href="#">Odontología</a></li>
+                    <% locals.headerSpecialties && headerSpecialties.forEach(specialty => { %>
+                        <li class="dropdown-list-item"><a href="/servicios"><%= specialty.name %></a></li>
+                    <% }) %>
+                    
                 </ul>
             </li>
             <li class="navbar-list-item"><a href="/product">Productos</a></li>

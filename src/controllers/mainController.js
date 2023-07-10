@@ -3,10 +3,13 @@ const fs = require('fs');
 const path = require('path');
 // Librerias
 const bcrypt = require('bcryptjs');
-const getAllTreatments = require('../utils/getAllTreatments')
+const getAllTreatments = require('../utils/getAllTreatments');
+const getAllSpecialties = require('../utils/getAllSpecialties');
+const getDeepCopy = require('../utils/getDeepCopy');
 // Utils
 const staticProducts = require('../utils/staticDB/products');
 const { specialties, specialties_services, treatments } = require('../utils/staticDB/services');
+const getSpecialtyService = require('../utils/getSpecialtyService');
 
 const controller = {
     index: async (req, res) => {
@@ -62,8 +65,14 @@ const controller = {
     },
     services: async (req, res) => {
         try {
+            let specialties = getDeepCopy(await getAllSpecialties());
 
-            return res.render('services', { services: specialties, specialties_services })
+            // Ordeno los servicios
+            specialties.forEach(specialty => {
+                specialty.services = specialty.services.sort((a, b) => a.id - b.id);
+            });
+            // return res.send(specialties);
+            return res.render('services', { specialties })
         } catch (error) {
             console.log(`Falle en mainController.services: ${error}`);
             return res.json({ error })
@@ -73,11 +82,10 @@ const controller = {
         try {
             const serviceId = req.params.servicioId
             // A FUTURO
-            /*  let service = await db.User.findByPk(req.params.serviceId); */
+            let service = await getSpecialtyService(serviceId);
+            // return res.send(service);
 
-            const selectedServices = service_treatments.filter(serv => serv.specialty_id == serviceId)
-
-            return res.render('serviceDetail', { service: selectedServices })
+            return res.render('serviceDetail', { service })
         } catch (error) {
             console.log(`Falle en mainController.serviceDetail: ${error}`);
             return res.json({ error })

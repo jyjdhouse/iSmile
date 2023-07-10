@@ -50,9 +50,11 @@ const apiUserRouter = require('./routes/api/apiUserRouter.js');
 const userLogged = require('./middlewares/userLogged.js');
 const userIsIncomplete = require('./middlewares/userIsIncomplete');
 const guestMiddleware = require('./middlewares/guestMiddleware')
+const headerMiddleware = require('./middlewares/headerMiddleware')
 // const getAllUsers = require('./utils/getAllUsers.js');
 app.use(userLogged);
 app.use(userIsIncomplete);
+app.use(headerMiddleware);
 
 
 // Ruteo para api
