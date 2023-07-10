@@ -3,13 +3,15 @@ const fs = require('fs');
 const path = require('path');
 // Librerias
 const bcrypt = require('bcryptjs');
+const getAllTreatments = require('../utils/getAllTreatments')
 // Utils
 const staticProducts = require('../utils/staticDB/products');
-const { specialties, specialties_services, service_treatments } = require('../utils/staticDB/services');
+const { specialties, specialties_services, treatments } = require('../utils/staticDB/services');
 
 const controller = {
     index: async (req, res) => {
         try {
+
             let homeFiles = await db.HomeFile.findAll({
                 include: ['fileType', 'homeSection']
             });
@@ -92,9 +94,10 @@ const controller = {
     showMedicalForm: (req, res) => {
         return res.render('ClientMedicalInfo.ejs')
     },
-    budget: (req, res) => {
-        // return res.send(staticProducts);
-        return res.render('budget.ejs', { products: staticProducts })
+    budget: async (req, res) => {
+        let treatments = await getAllTreatments();
+        // return res.send(treatments);
+        return res.render('budget.ejs', { products: treatments })
     },
     consent: (req, res) => {
         return res.render('clientConsent');
@@ -105,8 +108,8 @@ const controller = {
             const file = req.file;
             const fileType = file.mimetype.startsWith('video/') ? 2 : 1;
             // Basicamente si suben video donde no tienen que los redirije devuelta, mismo con fotos
-            if(fileType == 1 && home_sections_id == 1) return res.redirect('/');
-            if(fileType == 2 && home_sections_id != 1) return res.redirect('/')
+            if (fileType == 1 && home_sections_id == 1) return res.redirect('/');
+            if (fileType == 2 && home_sections_id != 1) return res.redirect('/')
             // Actualizo en la db
             await db.HomeFile.update({
                 filename: file.filename
@@ -117,9 +120,9 @@ const controller = {
                 }
             });
             // Tengo que borrar la foto vieja asociada a esa section
-            if(fileType == 2){ //video
+            if (fileType == 2) { //video
                 fs.unlinkSync(path.join(__dirname, `../../public/video/homePage/${old_filename}`))
-            }else{
+            } else {
                 fs.unlinkSync(path.join(__dirname, `../../public/img/homePage/${old_filename}`));
             }
             return res.redirect('/')
