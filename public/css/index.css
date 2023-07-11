@@ -992,7 +992,7 @@ video::-webkit-media-controls-time-remaining-display {
         opacity: .6;
     }
 
-    .blog-card:hover>.blog-img {
+    .blog-card:hover .blog-img {
         width: 110%;
         height: 110%;
     }
