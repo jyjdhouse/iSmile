@@ -23,11 +23,14 @@
                     <a href="/product/update/<%= product.id %>">Actualizar producto</a>
                 </div>
                 <div class="action-container">
-                    <form class="update-delete-btn-container" action="/product/<%= product.id %>?_method=DELETE"
-                        method="POST">
-                        <button class="form-device-btn" type="submit">Eliminar producto</button>
-                    </form>
+                    <button class="form-device-btn start-product-delete"> Eliminar producto </button>
                 </div>
+                <form class="update-delete-btn-container " action="/product/<%= product.id %>?_method=DELETE"
+                    method="POST">
+                    <p class="product-delete-popup-label">Estas seguro que quieres borrar <%= product.name %>?</p>
+                    <button class="cancel-product-delete">Cancelar</button>
+                    <button class="form-device-btn confirm-product-delete" type="submit">Eliminar</button>
+                </form>
             </div>
             <% } %>
             <article class="product-container" data-productid=<%=product.id %>>

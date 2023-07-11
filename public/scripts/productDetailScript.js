@@ -28,4 +28,28 @@ window.addEventListener('load', () => {
         otherImgContainer.style.width = `${widthToSet}px`;
     })
 
+    // LOGICA para tocar boton "ELiminar productop"
+    // Capturo cuando tocan el boton
+    const startDeleteBtn = document.querySelector('.start-product-delete');
+    const deleteProductFormPopup = document.querySelector('.update-delete-btn-container');
+    const blackScreen = document.querySelector('.black-screen');
+    const cancelProductDeleteBtn = document.querySelector('.cancel-product-delete');
+    startDeleteBtn.addEventListener('click',()=>{
+        // Hago aparecer el popup
+        deleteProductFormPopup.classList.add('update-delete-btn-container-active');
+        blackScreen.classList.add('black-screen-active');
+    });
+    // si toca cancelar... 
+    cancelProductDeleteBtn.addEventListener('click',(e)=>{
+        e.preventDefault();
+        // Hago desaparecer el popup
+        deleteProductFormPopup.classList.remove('update-delete-btn-container-active');
+        blackScreen.classList.remove('black-screen-active');
+    });
+    // si toca blackscreen... 
+    blackScreen.addEventListener('click',()=>{
+        // Hago desaparecer el popup
+        deleteProductFormPopup.classList.remove('update-delete-btn-container-active');
+        blackScreen.classList.remove('black-screen-active');
+    });
 })
