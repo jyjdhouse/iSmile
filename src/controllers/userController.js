@@ -9,14 +9,13 @@ const secret = require('../utils/secret').secret;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-
 const { validationResult } = require('express-validator');
 
 // UTILS
 const provinces = require('../utils/staticDB/provinces');
 const getUser = require('../utils/getUser');
 const getDeepCopy = require('../utils/getDeepCopy');
-
+const getGenres = require('../utils/getGenres')
 
 // CONTROLLER
 const controller = {
@@ -26,8 +25,9 @@ const controller = {
             const user = await db.User.findByPk(req.session.userLoggedId, {
                 include: ['address']
             })
-            // return res.send(user);
-            return res.render('userProfile', { user, provinces })
+            const genres = await getGenres()
+          
+            return res.render('userProfile', { user, provinces, genres })
         } catch (error) {
             console.log(`Falle en userController.userProfile: ${error}`);
             return res.json({ error })
