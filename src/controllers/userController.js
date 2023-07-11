@@ -15,17 +15,15 @@ const { validationResult } = require('express-validator');
 const provinces = require('../utils/staticDB/provinces');
 const getUser = require('../utils/getUser');
 const getDeepCopy = require('../utils/getDeepCopy');
-const getGenres = require('../utils/getGenres')
+const getAllGenres = require('../utils/getAllGenres')
 
 // CONTROLLER
 const controller = {
 
     userProfile: async (req, res) => {
         try {
-            const user = await db.User.findByPk(req.session.userLoggedId, {
-                include: ['address']
-            })
-            const genres = await getGenres()
+            const user = await getUser(req.session.userLoggedId);
+            const genres = await getAllGenres()
           
             return res.render('userProfile', { user, provinces, genres })
         } catch (error) {
