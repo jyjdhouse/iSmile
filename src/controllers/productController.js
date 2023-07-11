@@ -9,18 +9,25 @@ const getCategories = require('../utils/getCategories')
 // utils
 const getRandomItems = require('../utils/getRandomItems');
 const getProduct = require('../utils/getProduct');
-const getDeepCopy = require('../utils/getDeepCopy')
+const getDeepCopy = require('../utils/getDeepCopy');
+const getAllProducts = require('../utils/getAllProducts');
 // const adaptProductsToBeListed = require('../utils/adaptProductsToBeListed');
 // const getCountryCodes = require('../utils/getCountryCodes');
 
 const controller = {
     list: async (req, res) => { //Controlador que renderiza listado de productos
         try {
-            let products = await db.Product.findAll({
-                include: ['files']
-            });
+            let products = getDeepCopy(await getAllProducts());
+            let searchQuery = req.query.s;
+            let viewLabel;
+            // Si viene por busqueda
+            if(searchQuery){
+                // Tengo que filtar los productos por el nombre
+                products = products.filter(prod=>prod.name.toLowerCase().includes(searchQuery.toLowerCase()));
+                viewLabel = `"${searchQuery}"`;
+            } 
             // return res.send(products);
-            return res.render('productList', { products })
+            return res.render('productList', { products, viewLabel })
         } catch (error) {
             console.log(`Falle en productController.list: ${error}`);
             return res.json(error);
