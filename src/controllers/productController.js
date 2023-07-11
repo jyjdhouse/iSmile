@@ -6,6 +6,8 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const getCategories = require('../utils/getCategories')
 
+// Librerias
+
 // utils
 const getRandomItems = require('../utils/getRandomItems');
 const getProduct = require('../utils/getProduct');

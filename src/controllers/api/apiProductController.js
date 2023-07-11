@@ -3,8 +3,9 @@ const Sequelize = require('sequelize');
 
 // // From utils
 // const getProduct = require('../../utils/getProduct.js');
-// const getDeepCopy = require('../../utils/getDeepCopy');
+const getDeepCopy = require('../../utils/getDeepCopy');
 const getAllProducts = require('../../utils/getAllProducts');
+const getAllTreatments = require('../../utils/getAllTreatments');
 
 const controller = {
     list: async (req, res) => { //Metodo que devuelve todos los productos
@@ -36,7 +37,19 @@ const controller = {
             },
             product
         });
-    }
+    },
+    getTreatments: async(req,res) => {//Metodo que devuelve producto en especifico
+        let treatments = await getAllTreatments();
+        treatments = getDeepCopy(treatments);
+
+        return res.status(200).json({
+            meta: {
+                status: 200,
+                url: `api/product/getTreatments`
+            },
+            treatments
+        });
+    },
 };
 
 module.exports = controller;

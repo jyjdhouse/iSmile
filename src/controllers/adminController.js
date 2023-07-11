@@ -27,7 +27,7 @@ const controller = {
     processServicesPriceUpdating: async (req, res) => {
         // Array con valores numericos
         let treatmentsToUpdate = req.body.treatments_id;
-        return res.send(treatmentsToUpdate);
+        // return res.send(treatmentsToUpdate); 
         // Si solo viene uno, lo convierto en array
         if (treatmentsToUpdate.length == 1) treatmentsToUpdate = [treatmentsToUpdate]
 
@@ -48,7 +48,18 @@ const controller = {
             updateOnDuplicate: ["price","cash_price"]
         });
         return res.send(treatmentsToUpdate);
-    }
+    },
+    showMedicalForm: (req, res) => {
+        return res.render('ClientMedicalInfo.ejs')
+    },
+    budget: async (req, res) => {
+        let treatments = await getAllTreatments();
+        // return res.send(treatments);
+        return res.render('budget.ejs', { products: treatments })
+    },
+    consent: (req, res) => {
+        return res.render('clientConsent');
+    },
 };
 
 module.exports = controller;
