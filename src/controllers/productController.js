@@ -100,7 +100,7 @@ const controller = {
         const productToUpdate = await getProduct(productId)
         const categories = await getCategories()
 
-        return res.render('productUpdate.ejs', { productToUpdate, categories })
+        return res.render('productUpdate', { productToUpdate, categories })
     },
     processProductUpdate: async (req, res) => {
         try {

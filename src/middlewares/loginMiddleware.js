@@ -9,7 +9,6 @@ const loginErrorsMiddleware = (req,res,next) =>{
             msg: registErrors.msg
         };
         res.locals.errors = true;
-        console.log(res.locals);
     }
     next()
 }

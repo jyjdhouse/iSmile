@@ -16,8 +16,9 @@
 <body>
     <%- include('./partials/header.ejs') %>
         <main class="product-detail-main">
-
+            
            <% if(locals.userLogged && locals.userLogged.user_categories_id != 3) { %>
+                       
             <div class="admins-actions-container">
                 <div class="action-container">
                     <a href="/product/update/<%= product.id %>">Actualizar producto</a>

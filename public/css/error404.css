@@ -1,0 +1,28 @@
+@import 'variables.css';
+
+.error-404-container {
+    margin-top: 12vh;
+    min-height: 70vh;
+    padding: 3%;
+}
+
+.error-404-title-container h1 {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.back-to-home-a-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+    
+}
+
+.back-to-home-a-container a {
+    border: 1px solid var(--gold-color);
+    width: 50%;
+    max-width: 250px;
+    padding: 5px 0;
+    text-align: center;
+    cursor: pointer;
+}
