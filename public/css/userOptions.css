@@ -15,7 +15,7 @@
     z-index: 100;
     scale: 0;
     opacity: 0;
-    transform: all .3s ease;
+    transition: all .3s ease;
 }
 
 .user-options-popup-active {
@@ -241,6 +241,11 @@
     width: 35%;
     cursor: pointer;
     
+}
+@media (min-width:768px){
+    .user-options-popup{
+        width: 50vw;
+    }
 }
 @media (min-width:1024px) {
     .user-options-popup {

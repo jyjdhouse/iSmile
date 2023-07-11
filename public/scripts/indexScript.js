@@ -202,7 +202,8 @@ window.addEventListener('load', () => {
     const cancelBtns = document.querySelectorAll('.cancel-file-action');
     if (isInDesktop()) { //Desktop
         const igCards = document.querySelectorAll('.instagram-card');
-        igCards.forEach(card => {
+        igCards.forEach((card,i) => {
+            if(i==0)card.classList.remove('instagram-card-active')
             card.addEventListener('mouseenter', () => {
                 const overlay = card.querySelector('.instagram-client-overlay');
                 overlay.classList.add('instagram-client-overlay-active');
