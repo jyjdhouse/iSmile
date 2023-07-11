@@ -67,9 +67,13 @@ app.use('/payment',paymentRouter)
 
 app.use('/blog', blogRouter);
 
+//404
+app.use(async (req, res, next) => {
+    res.status(404).render('error404')
+  })
+
 
 // Correr el servidor
-
 const PORT = process.env.PORT || 4500;
 app.listen(PORT, () => {
     console.log(" 🚀 Se levanto proyecto en http://localhost:" + PORT)
