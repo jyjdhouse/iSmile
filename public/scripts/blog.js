@@ -25,7 +25,7 @@ window.addEventListener('load', () => {
 
     if (window.innerWidth < 768) { //Resolucion mobile
         let activeImg = 0
-       
+
         const autoSlideCondition = () => {
             if (activeImg < images.length - 1) {
                 activeImg++
@@ -86,7 +86,7 @@ window.addEventListener('load', () => {
             autoSlideCondition();
         }, 0);
 
-    } 
+    }
 
     const date = new Date(blogDateCont.innerText)
     const day = date.getDate();
@@ -96,4 +96,29 @@ window.addEventListener('load', () => {
     const fullDate = `Creado el ${day} de ${month} del año ${year}`
     blogDateCont.innerHTML = fullDate
 
+
+    // LOGICA para tocar boton "ELiminar productop"
+    // Capturo cuando tocan el boton
+    const startDeleteBtn = document.querySelector('.start-blog-delete');
+    const deleteBlogFormPopup = document.querySelector('.update-delete-btn-container');
+    const blackScreen = document.querySelector('.black-screen');
+    const cancelBlogDeleteBtn = document.querySelector('.cancel-blog-delete');
+    startDeleteBtn.addEventListener('click', () => {
+        // Hago aparecer el popup
+        deleteBlogFormPopup.classList.add('update-delete-btn-container-active');
+        blackScreen.classList.add('black-screen-active');
+    });
+    // si toca cancelar... 
+    cancelBlogDeleteBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Hago desaparecer el popup
+        deleteBlogFormPopup.classList.remove('update-delete-btn-container-active');
+        blackScreen.classList.remove('black-screen-active');
+    });
+    // si toca blackscreen... 
+    blackScreen.addEventListener('click', () => {
+        // Hago desaparecer el popup
+        deleteBlogFormPopup.classList.remove('update-delete-btn-container-active');
+        blackScreen.classList.remove('black-screen-active');
+    });
 })
