@@ -17,9 +17,9 @@ router.get('/',loginMiddleware,mainController.index);
 router.get('/servicios',loginMiddleware,mainController.services);
 router.get('/servicios/:servicioId',loginMiddleware,mainController.serviceDetail)
 router.get('/preguntas-frecuentes',loginMiddleware,mainController.frequentQAndA);
-router.get('/medicalInfo',/*loginMiddleware,isAdminMiddleware,*/ mainController.showMedicalForm);
-router.get('/budget',loginMiddleware,isAdminMiddleware,mainController.budget);
-router.get('/consent',/*loginMiddleware,isAdminMiddleware,*/mainController.consent);
+router.get('/medicalInfo',/*isAdminMiddleware,*/ mainController.showMedicalForm);
+router.get('/budget',isAdminMiddleware,mainController.budget);
+router.get('/consent',/*isAdminMiddleware,*/mainController.consent);
 
 
 // POST

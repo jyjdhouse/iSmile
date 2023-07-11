@@ -9,6 +9,7 @@ const secret = require('../utils/secret').secret;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+
 const { validationResult } = require('express-validator');
 
 // UTILS
@@ -41,10 +42,10 @@ const controller = {
             let cart = user.temporalCart?.temporalItems;
             // Ahora voy por cada producto del temporalItem, lo dejo con un precio y la primer imagen
             // de cada producto
-            cart = cart?.map(tempItem=>{
+            cart = cart?.map(tempItem => {
                 // Esto es por si tiene un video como primer archivo, no puedo hacer files [0],
                 // antes era tempItem.product.files[0]?.filename
-                let tempItemFile =tempItem.product.files.find(file=>file.file_types_id==1)?.filename;
+                let tempItemFile = tempItem.product.files.find(file => file.file_types_id == 1)?.filename;
                 return {
                     tempItemId: tempItem.id,
                     product_id: tempItem.product_id,
@@ -54,15 +55,15 @@ const controller = {
                 }
             });
             // Ordeno el carro del tempItemId mas gde a mas chico (Mas nuevo arriba)
-            cart = cart.sort((a,b)=>b.tempItemId-a.tempItemId);
-            return res.render('checkout.ejs',{user, cart, provinces});
+            cart = cart.sort((a, b) => b.tempItemId - a.tempItemId);
+            return res.render('checkout.ejs', { user, cart, provinces });
         }
         return res.render('checkout.ejs', { provinces });
     },
     processRegist: async (req, res) => {
+        // Ultima ruta que estuvo, para luego redirigir
+        let relativePath = getRelativePath(req.headers.referer);
         try {
-            // Ultima ruta que estuvo, para luego redirigir
-            let relativePath = getRelativePath(req.headers.referer);
 
             // Traigo errores
             let errors = validationResult(req);
@@ -152,25 +153,24 @@ const controller = {
                 if (bcrypt.compareSync(userData.password, userToLog.password)) {
 
                     let cookieTime = (1000 * 60) * 60 * 24 * 7 //1 Semana
-
                     req.session.userLoggedId = userToLog.id; //Defino en sessions al usuario loggeado
-
                     // Generar el token de autenticación
                     const token = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1w' }); // genera el token
                     res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
                     // Si es admin armo una cookie con el token de admin
-                    if(userToLog.user_categories_id == 1 || userToLog.user_categories_id == 2){
-                        const adminToken = jwt.sign({ id: userToLog.id  }, secret, { expiresIn: '1d' });
+                    if (userToLog.user_categories_id == 1 || userToLog.user_categories_id == 2) {
+                        const adminToken = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1d' });
                         cookieTime = (1000 * 60) * 60 * 24; //1 dia
                         res.cookie('adminToken', adminToken, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
                         // Le agrego el token al user en la db
-                        await db.User.update({
-                            admin_token: adminToken
-                        },{
-                            where: {
-                                id: userToLog.id
-                            }
-                        })
+                        // TODO: Preguntarle a martin para que usar esto
+                        // await db.User.update({
+                        //     admin_token: adminToken
+                        // },{
+                        //     where: {
+                        //         id: userToLog.id
+                        //     }
+                        // })
                     }
                     return res.redirect(relativePath);
                 }
@@ -183,69 +183,138 @@ const controller = {
 
         } catch (error) {
             console.log(`Falle en userController.login: ${error}`);
+            if (isJwtError(error)) { //Si es error de jwt
+                let msg = "Error al cambiar la contraseña"
+                return res.redirect(`${lastPath}?alert=${msg}`);
+            }
             return res.json(error);
         }
     },
     update: async (req, res) => {
-        let userToUpdate = await db.User.findByPk(req.session.userLoggedId, {
-            include: ['address']
-        })
-        let userBodyData = req.body;
+        try {
+            let userToUpdate = await db.User.findByPk(req.session.userLoggedId, {
+                include: ['address']
+            })
+            let userBodyData = req.body;
 
-        // Datos para la tabla user
-        let userDataDB = {
-            first_name: userBodyData.first_name,
-            last_name: userBodyData.last_name,
-            phone: userBodyData.phone,
-            dni: userBodyData.dni,
-            wpp_notifications: parseInt(userBodyData.wpp_notifications),
-            email_notifications: parseInt(userBodyData.email_notifications),
-            email_newsletter: parseInt(userBodyData.email_newsletter),
-        };
-        // Actualizo el usuario
-        await db.User.update(userDataDB, {
-            where: {
-                id: userToUpdate.id
+            // Datos para la tabla user
+            let userDataDB = {
+                first_name: userBodyData.first_name,
+                last_name: userBodyData.last_name,
+                phone: userBodyData.phone,
+                dni: userBodyData.dni,
+                wpp_notifications: parseInt(userBodyData.wpp_notifications),
+                email_notifications: parseInt(userBodyData.email_notifications),
+                email_newsletter: parseInt(userBodyData.email_newsletter),
+            };
+            // Actualizo el usuario
+            await db.User.update(userDataDB, {
+                where: {
+                    id: userToUpdate.id
+                }
+            })
+            // Datos para la tabla address
+            // Armo el objeto address con los datos que me llegan del form
+            let createdAddress, addressDataDB;
+            let addressBody = {
+                street: userBodyData.street || null,
+                apartment: userBodyData.apartment || null,
+                city: userBodyData.city || null,
+                zip_code: userBodyData.zip_code || null
             }
-        })
-        // Datos para la tabla address
-        // Armo el objeto address con los datos que me llegan del form
-        let createdAddress, addressDataDB;
-        let addressBody = {
-            street: userBodyData.street || null,
-            apartment: userBodyData.apartment || null,
-            city: userBodyData.city || null,
-            zip_code: userBodyData.zip_code || null
-        }
-        // Me fijo si son todos los valores nulos, entonces no creo el address
-        const addressAllKeysNull = Object.values(addressBody).every(value => value === null);
-        // return res.send(addressAllKeysNull)
-        if (!userToUpdate.address) {//Si no tiene una direccion tengo que crear una
-            // Si completo por lo menos algun address data
-            if (!addressAllKeysNull) {
+            // Me fijo si son todos los valores nulos, entonces no creo el address
+            const addressAllKeysNull = Object.values(addressBody).every(value => value === null);
+            // return res.send(addressAllKeysNull)
+            if (!userToUpdate.address) {//Si no tiene una direccion tengo que crear una
+                // Si completo por lo menos algun address data
+                if (!addressAllKeysNull) {
+                    addressDataDB = {
+                        ...addressBody,
+                        provinces_id: userBodyData.provinces_id,
+                        user_id: userToUpdate.id
+                    };
+                    // La creo
+                    createdAddress = await db.Address.create(addressDataDB);
+                }
+            } else { // Si ya tenia
                 addressDataDB = {
                     ...addressBody,
                     provinces_id: userBodyData.provinces_id,
                     user_id: userToUpdate.id
                 };
-                // La creo
-                createdAddress = await db.Address.create(addressDataDB);
+                // La actualizo
+                await db.Address.update(addressDataDB, {
+                    where: {
+                        id: userToUpdate.address.id
+                    }
+                });
             }
-        } else { // Si ya tenia
-            addressDataDB = {
-                ...addressBody,
-                provinces_id: userBodyData.provinces_id,
-                user_id: userToUpdate.id
-            };
-            // La actualizo
-            await db.Address.update(addressDataDB, {
+            return res.redirect('/user/profile')
+        } catch (error) {
+            console.log(`Falle en userController.login: ${error}`);
+            return res.json(error);
+        }
+    },
+    changePasswordView: async (req, res) => {
+        try {
+            const { token } = req.params;
+            // Verificar si el token es válido
+            const userWithToken = await db.User.findOne({
                 where: {
-                    id: userToUpdate.address.id
+                    password_token: token
                 }
             });
+            // Si no encuentro usuario redirijo a la home TODO: 404
+            if (!userWithToken) return res.redirect('/');
+            // Ahora me fijo si el token sigue siendo valido
+            const decodedData = jwt.verify(token, secret);
+            // Renderizar la página de cambio de contraseña
+            res.render('userChangePassword', { token });
+        } catch (error) {
+            console.log(`Falle en userController.changePasswordView: ${error}`);
+            //Si no verifico el token, redirijo a vista de error
+            return res.redirect('/user/contrasena-error')
+
         }
-        return res.redirect('/user/profile')
+    },
+    processNewPassword: async (req, res) => {
+        try {
+            const { token } = req.params;
+            const { password } = req.body;
+            // Verificar si el token es válido
+            const userWithToken = await db.User.findOne({
+                where: {
+                    password_token: token
+                }
+            });
+            // Si no encuentro usuario redirijo a la home TODO: 404
+            if (!userWithToken) return res.redirect('/');
+            // Ahora me fijo si el token sigue siendo valido
+            const decodedData = jwt.verify(token, secret);
+
+            // Si hay, le cambio la contrasena por la nueva
+            await db.User.update({
+                password: bcrypt.hashSync(password, 10),
+                password_token: null //Le saco el token
+            }, {
+                where: {
+                    id: userWithToken.id
+                }
+            })
+            // Renderizar la página de cambio de contraseña
+            res.redirect('/');
+        } catch (error) {
+            console.log(`Falle en userController.changePasswordView: ${error}`);
+            if (isJwtError(error)) { //Si es error de jwt
+                return res.redirect(`/user/contrasena-error`);
+            }
+        }
+    },
+    passwordError: (req, res) => {
+        return res.render('changePasswordError');
+        return res.json(error);
     }
+
 };
 
 module.exports = controller;

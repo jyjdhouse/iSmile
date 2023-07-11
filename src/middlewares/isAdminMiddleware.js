@@ -1,9 +1,17 @@
-const getUser = require('../utils/getUser');
+const secret = require('../utils/secret').secret;
+const jwt = require('jsonwebtoken');
 
 const isAdmin = async(req,res,next) =>{
-    let userId = req.session.userLoggedId;
-    let user = await getUser(userId);
-    if(!user || (user.user_categories_id!=1 && user.user_categories_id!=2)){ //Si no es admin
+    let userId;
+    //Agarro la cookie del token
+    const token = req.cookies?.adminToken;
+    if(token){
+        const decodedData = jwt.verify(token, secret);
+        if(decodedData){ //Si verifico el token, solo agarro el id
+            userId = decodedData?.id
+        }
+    };
+    if(!userId){ //Si no es admin
         return res.redirect('/'); //Lo devuelvo a home
     }
     next();

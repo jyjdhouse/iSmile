@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head.ejs') %>
+    <link rel="stylesheet" href="/css/serviceUpdatePrice.css">
+    <script type="module" src="/scripts/updateServicePrice.js"></script>
+    <title>Servicios - precio</title>
+</head>
+<body>
+    <%- include('./partials/header.ejs') %>
+    <main class="main">
+        <h1>Servicios</h1>
+        <h6>Modificacion precio</h6>
+        <p class="form-label">Seleccione servicios a modificar</p>
+        <form action="/admin/updateServicesPrice?_method=PUT" method="POST" class="form">
+            <section class="choose-service-section">
+                <div class="search-checkbox-container">
+                    <input type="text" class="search-checkbox" placeholder="Busca por nombre">
+                </div>
+                <div class="choose-service-checkbox-container">
+                    <% treatments.forEach(treat => { %>
+                        <label class="checkbox-label" data-id="<%= treat.id %>"><%= treat.name %></label>
+                <% }) %>
+                </div>
+                
+            </section>
+            <section class="shown-labels-section">
+                <p class="shown-labels-title bold">Tratamientos elegidos (toca para remover)</p>
+                <div class="shown-labels-container">
+
+                </div>
+            </section>
+            <section class="new-price-container">
+                <div class="field">
+                    <label class="new-price-label bold">Nuevo Precio</label>
+                    <input type="text" class="numeric-only-input" name="new_price">
+                </div>
+                <div class="field">
+                    <label class="new-price-label bold">Nuevo Precio en Efectivo</label>
+                    <input type="text" class="numeric-only-input" name="new_cash_price">
+                </div>
+                <button type="submit">Modificar</button>
+            </section>
+            
+        </form>
+        
+    </main>
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>

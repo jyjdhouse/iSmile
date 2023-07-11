@@ -33,7 +33,7 @@
                                     <%prod.files.forEach((file, i)=>{ %>
                                         <% if (file.file_types_id==1) { %> <!--FOTO-->
                                             <% if(i == 0) {  %>
-                                                <img src="/img/product/<%= file.filename%>" alt="<%= prod.name%>-<%=file.filenanme %>"
+                                                <img src="/img/product/<%= file.filename %>" alt="<%= prod.name%>-<%=file.filenanme %>"
                                                 class="product-image-test product-image-test-active">
                                             <% } else {  %>
                                                 <img src="/img/product/<%= file.filename%>" alt="<%= prod.name%>-<%=file.filenanme %>"

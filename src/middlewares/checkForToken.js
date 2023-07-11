@@ -15,14 +15,14 @@ module.exports = (req, res, next) => {
                 req.msg = 'Usuario encontrado';
                 
             }
-            console.log(req.msg);
+            // console.log(req.msg);
             next();
         });
     } else {
         // Si no hay token, continúa con la solicitud
         req.userId = null;
         req.msg = 'Debes iniciar sesion nuevamente'
-        console.log(req.msg);
+        // console.log(req.msg);
         next();
     }
 }

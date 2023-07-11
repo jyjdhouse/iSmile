@@ -16,7 +16,9 @@ window.addEventListener('load', () => {
             paragraphDropdown.classList.add('service-info-p-container-active')
             extraInfoDropdown.classList.add('service-card-first-column-dropdown-container-active')
             parent.classList.add('service-detail-card-active')
+            // Intercambio el "ver mas" por "ver menos"
             seeMoreAct.classList.add('see-more-action-inactive')
+            parent.querySelector('.close-card').classList.remove('see-more-action-inactive')
             closeCardBtn.classList.add('close-card-active')
 
         })
@@ -25,7 +27,6 @@ window.addEventListener('load', () => {
 
     closeCard.forEach(item => {
         item.addEventListener('click', () => {
-
             let parent = item.closest('.service-detail-card')
             let paragraphDropdown = parent.querySelector('.service-info-p-container')
             let extraInfoDropdown = parent.querySelector('.service-card-first-column-dropdown-container')
@@ -35,7 +36,8 @@ window.addEventListener('load', () => {
             paragraphDropdown.classList.remove('service-info-p-container-active')
             extraInfoDropdown.classList.remove('service-card-first-column-dropdown-container-active')
             parent.classList.remove('service-detail-card-active')
-            seeMoreAct.classList.remove('see-more-action-inactive')
+            seeMoreAct.classList.remove('see-more-action-inactive');
+            item.classList.add('see-more-action-inactive')
             closeCardBtn.classList.remove('close-card-active')
 
         })

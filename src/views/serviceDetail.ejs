@@ -6,7 +6,7 @@
         <script src="/scripts/serviceDetail.js" type="module"></script>
         <link rel="stylesheet" href="/css/serviceDetail.css">
         <link rel="stylesheet" href="/css/variables.css">
-        <title>Servicio 1</title>
+        <title><%= service.name %></title>
 </head>
 
 <body>
@@ -16,16 +16,16 @@
     <main class="service-detail-main">
         <div class="service-detail-content-container">
             <div class="service-detail-title-container">
-                <h1 class="service-detail-title page-title">Armonización facial</h1>
+                <h1 class="service-detail-title page-title"><%= service.name %></h1>
             </div>
             <div class="service-detail-cards-container">
-                <% service.forEach(serv => { %>
+                <% service.treatments.forEach((treatment,i) => { %>
                     <article class="service-detail-card">
-                        <div class="close-card-btn-container"> <i class='bx bx-minus close-card'></i></div>
+                        <!-- <i class='bx bx-minus '></i> -->
                         <div class="service-card-content-wrapper">
                             <div class="service-card-first-column">
                                 <div class="service-card-img-container">
-                                    <img src="/img/servicios6.jpg" alt="" class="service-card-img">
+                                    <img src="/img/<%= service.specialty.src %>" alt="<%= service.name %>-<%= i+1 %>" class="service-card-img">
                                 </div>
                                 <div class="service-card-first-column-dropdown-container">
                                     <div class="first-column-item-info">
@@ -40,11 +40,14 @@
                             </div>
     
                             <div class="service-card-info-container">
-                                <h2><%= serv.name %></h2>
+                                <h2 class="bold"><%= treatment.name %></h2>
                                 <div class="service-info-p-container">
-                                    <p class="service-info-p"><%= serv.description %></p>
+                                    <p class="service-info-p"><%= treatment.description %></p>
                                 </div>
-                                <div class="see-more-container"><p class="see-more-action">Ver más</p></div>
+                                <div class="see-more-container">
+                                    <p class="see-more-action">Ver más</p>
+                                    <p class="see-more-action see-more-action-inactive close-card">Ver menos</p>
+                                </div>
                             </div>
                         </div>
     

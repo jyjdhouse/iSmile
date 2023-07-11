@@ -9,7 +9,16 @@ select {
     padding-left: 2px;
     cursor: pointer;
 }
-
+/* Boton cambiar contrasena */
+.change-password-btn{
+    border: 1px solid var(--gold-color);
+    background: none;
+    border-radius: 1rem;
+    padding: 10px;
+    color: var(--violet-color);
+    cursor: pointer;
+}
+/*  */
 .user-profile-main {
     margin-top: 12vh;
     height: fit-content;
