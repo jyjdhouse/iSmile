@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const blogController = require('../controllers/blogController');
+const isAdminMiddleware = require('../middlewares/isAdminMiddleware')
 
 const uploadBlogImage = require('../middlewares/uploadBlogImages');
 
@@ -14,14 +15,14 @@ const uploadBlogImage = require('../middlewares/uploadBlogImages');
 
 // GET
 router.get('',blogController.list)
-router.get('/create', blogController.createBlog);
-router.get('/update/:blogId', blogController.update);
+router.get('/create',isAdminMiddleware, blogController.createBlog);
+router.get('/update/:blogId',isAdminMiddleware, blogController.update);
 router.get('/:blogId',blogController.detail) ;
 
-router.post('/',uploadBlogImage.any('images'),blogController.processBlogCreation);
+router.post('/', isAdminMiddleware, uploadBlogImage.any('images'),blogController.processBlogCreation);
 
-router.put('/:blogId',uploadBlogImage.any('images'),blogController.processBlogUpdate);
+router.put('/:blogId',isAdminMiddleware,uploadBlogImage.any('images'),blogController.processBlogUpdate);
 
-router.delete('/:blogId', blogController.deleteProduct);
+router.delete('/:blogId',isAdminMiddleware, blogController.deleteProduct);
 
 module.exports=router;

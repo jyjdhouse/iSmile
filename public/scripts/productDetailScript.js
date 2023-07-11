@@ -1,5 +1,8 @@
 window.addEventListener('load', () => {
 
+    const user = document.querySelector('.user-logged')
+    console.log(user.innerText)
+
     const mainImg = document.querySelector('.main-img')
     const productImgs = document.querySelectorAll('.product-img')
 

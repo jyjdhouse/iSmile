@@ -18,6 +18,10 @@
     margin-top: 5%;
 }
 
+.input-label-container label {
+    width: 100%;
+}
+
 .input-label-container textarea, .input-label-container input, .input-label-container select {
     border: 0;
     outline: 0;
