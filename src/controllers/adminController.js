@@ -60,6 +60,9 @@ const controller = {
     consent: (req, res) => {
         return res.render('clientConsent');
     },
+    orderList: async(req,res)=>{
+        return res.render('orderList')
+    }
 };
 
 module.exports = controller;

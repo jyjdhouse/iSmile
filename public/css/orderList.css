@@ -1,0 +1,180 @@
+@import 'variables.css';
+
+.order-table{
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 15vh;
+}
+th {
+    border-bottom: 1px solid black;
+    width: 25%;
+    text-align: center;
+}
+
+td {
+    border-bottom: 1px dashed black;
+    width: 25%;
+    text-align: center;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+tbody tr:hover{
+    background-color: #ececec;
+}
+
+/* Para el popup */
+
+.order-detail-popup{
+    display: flex;
+    flex-wrap: wrap;
+    position: fixed;
+    width: 70vw;
+    height: 60vh;
+    background-color: #fff;
+    border: 1px solid var(--gold-color);
+    border-radius: 1rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    scale: 0;
+    opacity: 0;
+    z-index: 40;
+    padding: 15px;
+    overflow-y: auto;
+}
+.order-detail-popup-active{
+    scale: 1;
+    opacity: 1;
+}
+/* La x */
+.close-order-detail-popup{
+    position: absolute;
+    right: 2%;
+    top: 2%;
+    cursor: pointer;
+}
+/*  */
+/* SECTIONS */
+.order-detail-product-list-section{
+    width: 40%;
+    height: fit-content;
+}
+.order-detail-user-data-section{
+    width: 60%;
+    height: fit-content;
+    border-left: 1px solid;
+}
+.order-detail-status-section{
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+}
+.save-changes-btn{
+    width: 40%;
+    border: 1px solid var(--gold-color);
+    border-radius: 1rem;
+    padding: 10px;
+    margin: 0 auto;
+    margin-top: 15px;
+    cursor: pointer;
+}
+/* Los titulos (fecha - productos - facturacion) */
+.order-detail-date{
+    width: 100%;
+    height: fit-content;
+    text-align: center;
+    margin: 8px;
+}
+.order-detail-user-data-title,
+.order-detail-product-list-title{
+    text-align: center;
+    font-size: 1.1rem;
+    margin: 10px 0 5px;
+}
+
+.order-detail-product-list-title{
+    width: 100%;
+}
+.order-detail-user-data-title{
+    width: 100%;
+}
+/*  */
+/* Los datos */
+.order-detail-title{
+    width: 100%;
+    text-align: center;
+    height: fit-content;
+    font-size: 1.4rem;
+}
+.order-detail-product-list{
+    width: 100%;
+    overflow-y: auto;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+}
+.order-detail-product-card{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+.order-detail-product-card>p{
+    width: 100%;
+    text-align: center;
+}
+.order-detail-product-card>.order-detail-product-quantity{
+    width: fit-content;
+}
+.order-detail-user-data-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    margin-bottom: 20px;
+}
+.order-detail-user-data{
+    display: flex;
+    width: 100%;
+}
+.order-detail-user-data>p{
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+.order-detail-product-card-head>p,
+.order-detail-user-data-head>p{
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.order-address-detail{
+    width: 15%;
+}
+
+.status-select{
+    padding: 5px;
+    width: 20%;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+/* Para copiar */
+.copy-msg{
+    position: fixed;
+    top: 1%;
+    left: 1%;
+    opacity: 0;
+    color: #fff;
+    padding: 5px;
+    background-color: #000;
+    transition: all .6s ease;
+}
+.copy-msg-active{
+    opacity: 1;
+}
+.copy-value{
+    cursor: pointer;
+}
+.copy-value:hover{
+    background-color: #efefef;
+}
