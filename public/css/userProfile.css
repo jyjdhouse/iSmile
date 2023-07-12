@@ -9,6 +9,29 @@ select {
     padding-left: 2px;
     cursor: pointer;
 }
+.unique-email-field{
+    flex-direction: row;
+}
+/* ESTILOS PARA PREFERENCES MOBILE */
+.mobile-profile-content-wrapper .user-preferences{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.unique-email-field{
+    flex-direction: row !important;
+}
+.unique-email-field>p{
+    width: fit-content !important;
+}
+.mobile-profile-content-wrapper .user-preferences > *{
+    margin: 0;
+    height: 18%;
+    padding: 3%;
+}
+.mobile-profile-content-wrapper .user-preferences p{
+    margin: 0;
+}
 /* Boton cambiar contrasena */
 .change-password-btn{
     border: 1px solid var(--gold-color);
@@ -16,6 +39,14 @@ select {
     border-radius: 1rem;
     padding: 10px;
     color: var(--violet-color);
+    cursor: pointer;
+}
+/* Boton eliminar cuenta */
+.destroy-account-btn{
+    margin-top: 10px;
+    outline: none;
+    border: 0;
+    color: red;
     cursor: pointer;
 }
 /*  */
@@ -136,6 +167,10 @@ select {
     margin-right: 3%;
     margin-bottom: 3%;
     font-weight: 700;
+    
+}
+.mobile-profile-content-wrapper .profile-field-container p {
+    font-size: .8rem;
 }
 
 
@@ -305,10 +340,8 @@ select {
     }
     .profile-radio-p-container{
         flex-wrap: wrap;
-        align-items: center;
     }
     .profile-radio-p-container p{
-        text-align: center;
         width: 100%;
         text-transform: initial;
         margin-bottom: 0;

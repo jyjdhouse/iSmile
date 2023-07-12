@@ -2,7 +2,7 @@ const User = require('../database/models/User');
 module.exports = async function (id) {
     return await User.findAll({
         include: [
-            'userCategory',
+            'userCategory','genre',
             {
                 association: 'wishlistProducts',
                 include: [{

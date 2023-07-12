@@ -59,9 +59,13 @@
 }
 
 .open-search-form-button-active {
-    top: 6vh;
+    top: 5.5vh;
 }
-
+@media (min-width:768px){
+    .search-form-container{
+        top: 50%;
+    }
+}
 @media(min-width:1024px) {
     .mobile-only{
         display: none;

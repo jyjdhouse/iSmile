@@ -1,3 +1,5 @@
+
+const jwt = require('jsonwebtoken');
 module.exports = function isJwtError(error) {
     // Verificar si es un error de token expirado (TokenExpiredError)
     if (error instanceof jwt.TokenExpiredError) {

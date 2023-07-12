@@ -7,7 +7,7 @@ module.exports = (sequelize, dataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        user_id: { type: dataTypes.INTEGER }
+        users_id: { type: dataTypes.STRING(36) }
     }
 
     let config = {
@@ -20,7 +20,7 @@ module.exports = (sequelize, dataTypes) => {
     TemporalCart.associate = (models) => {
         TemporalCart.belongsTo(models.User, {
             as: 'user',
-            foreignKey: 'user_id'
+            foreignKey: 'users_id'
         });
         TemporalCart.hasMany(models.TemporalItem, {
             as: 'temporalItems',

@@ -1,4 +1,4 @@
-import { isLetter, isNumeric } from "./utils.js"; 
+import { isLetter, isNumeric } from "./utils.js";
 
 window.addEventListener('load', () => {
 
@@ -25,13 +25,13 @@ window.addEventListener('load', () => {
                 const firstParent = div.closest('.options-selected-container')
                 const spanParent = div.querySelectorAll('.profile-field-container')
                 spanParent.forEach(span => {
-
-                    span.querySelector('span').classList.add('span-inactive')
+                    if(span?.classList.contains('unique-email-field'))return
+                    span?.querySelector('span').classList.add('span-inactive')
                 })
                 const inputContainers = div.querySelectorAll('.profile-input')
-                inputContainers.forEach(cont => {
-                    cont.classList.remove('input-container-inactive')
-                    cont.classList.add('input-container-active')
+                inputContainers.forEach(cont => { 
+                    cont?.classList.remove('input-container-inactive')
+                    cont?.classList.add('input-container-active');
                 })
                 firstParent.style.height = `${firstParent.offsetHeight + 10}px`
             })
@@ -48,11 +48,12 @@ window.addEventListener('load', () => {
             const secondParent = document.querySelectorAll('.profile-data-container')
             secondParent.forEach(div => {
                 const spanParent = div.querySelectorAll('.profile-field-container')
-                spanParent.forEach(parent => {
-                    parent.querySelector('span')?.classList.add('span-inactive')
+                spanParent.forEach(span => {
+                    if(span?.classList.contains('unique-email-field'))return
+                    span?.querySelector('span')?.classList.add('span-inactive')
                 })
                 const inputContainers = div.querySelectorAll('.profile-data-container .profile-input')
-                inputContainers.forEach(cont => {
+                inputContainers.forEach(cont => { 
                     cont?.classList.remove('input-container-inactive')
                     cont?.classList.add('input-container-active')
                 })
@@ -110,13 +111,14 @@ window.addEventListener('load', () => {
                     const firstParent = div.closest('.options-selected-container')
                     const spanParent = div.querySelectorAll('.profile-field-container')
                     spanParent.forEach(span => {
-                        span.querySelector('span').classList.add('span-inactive')
+                        if(span?.classList.contains('unique-email-field'))return
+                        span?.querySelector('span').classList.add('span-inactive')
 
                     })
                     const inputContainers = div.querySelectorAll('.profile-input')
-                    inputContainers.forEach(cont => {
-                        cont.classList.remove('input-container-inactive')
-                        cont.classList.add('input-container-active')
+                    inputContainers.forEach(cont => { 
+                        cont?.classList.remove('input-container-inactive')
+                        cont?.classList.add('input-container-active')
                     })
                     firstParent.style.height = `${firstParent.offsetHeight + 10}px`
                 })
@@ -131,13 +133,14 @@ window.addEventListener('load', () => {
                 const secondParent = document.querySelectorAll('.profile-data-container')
                 secondParent.forEach(div => {
                     const spanParent = div.querySelectorAll('.profile-field-container')
-                    spanParent.forEach(parent => {
-                        parent.querySelector('span')?.classList.add('span-inactive')
+                    spanParent.forEach(span => {
+                        if(span?.classList.contains('unique-email-field'))return
+                        span?.querySelector('span')?.classList.add('span-inactive')
                     })
                     const inputContainers = div.querySelectorAll('.profile-data-container .profile-input')
-                    inputContainers.forEach(cont => {
-                        cont.classList.remove('input-container-inactive')
-                        cont.classList.add('input-container-active')
+                    inputContainers.forEach(cont => { 
+                        cont?.classList.remove('input-container-inactive')
+                        cont?.classList.add('input-container-active')
                     })
                 })
                 btn.classList.add('form-btn-inactive')
@@ -209,18 +212,18 @@ window.addEventListener('load', () => {
     // Logica para que los sin especificar en gris
     let formSpans = document.querySelectorAll('.profile-field-container span');
     formSpans.forEach(span => {
-        if(span.innerHTML.includes('Sin especificar')){
+        if (span.innerHTML.includes('Sin especificar')) {
             span.classList.add('grey')
         }
     });
 
     // Logica para boton "Cambiar password"
     let changePassBtns = document.querySelectorAll('.change-password-btn');
-    changePassBtns.forEach(btn=>{
-        btn.addEventListener('click',async()=>{
+    changePassBtns.forEach(btn => {
+        btn.addEventListener('click', async () => {
             let response = (await (await fetch('/api/user/change-password')).json());
             console.log(response);
-            if(response.ok){
+            if (response.ok) {
                 alert(response.msg)
             }
         });

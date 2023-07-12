@@ -99,17 +99,7 @@ const controller = {
             return res.json({ error })
         }
     },
-    showMedicalForm: (req, res) => {
-        return res.render('ClientMedicalInfo.ejs')
-    },
-    budget: async (req, res) => {
-        let treatments = await getAllTreatments();
-        // return res.send(treatments);
-        return res.render('budget.ejs', { products: treatments })
-    },
-    consent: (req, res) => {
-        return res.render('clientConsent');
-    },
+    
     updateHomeFile: async (req, res) => {
         try {
             const { home_sections_id, position, old_filename } = req.body;

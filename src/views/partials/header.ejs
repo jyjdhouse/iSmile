@@ -11,11 +11,11 @@
                 <div class="search-section-container mobile-only">
                     <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-mobile"></i>
                     <!-- Contenedor con el input que se abre -->
-                    <div class="search-form-container bigger-search-form">
+                    <form class="search-form-container bigger-search-form" action="/product" method="GET">
                         <i class="fa-solid fa-x close-search-form-button"></i>
-                        <input type="text" class="search-form-input">
+                        <input type="text" class="search-form-input" placeholder="Busca productos" name="s">
                         <i class="fa-solid fa-magnifying-glass send-search-form-button"></i>
-                    </div>
+                    </form>
                 </div>
             </div>
             <a href="/" class="brand-name" id="header-name"><img src="/img/logo.png" alt="header-logo"
@@ -30,11 +30,14 @@
                                 <li class="logged-menu-list-item expandable-list-item">
                                     <p>Crear <i class='bx bx-chevron-right create-options-toggler'></i> </p>
                                     <ul class="admin-menu-list">
-                                        <li><a href="/consent">Consentimiento</a></li>
-                                        <li><a href="/medicalInfo">Historia Medica</a></li>
-                                        <li><a href="/budget">Presupuesto</a></li>
+                                        <li><a href="/admin/consent" target="_blank">Consentimiento</a></li>
+                                        <li><a href="/admin/medicalInfo" target="_blank">Historia Medica</a></li>
+                                        <li><a href="/admin/budget" target="_blank">Presupuesto</a></li>
+                                        <li><a href="/product/create">Producto</a></li>
+                                        <li><a href="/blog/create">Blog</a></li>
                                     </ul>
                                 </li>
+                                <li class="logged-menu-list-item"><a href="/admin/servicios-modificar-precio">Modificar precio Servicios</a>
                                 <% } %>
                                     <li class="logged-menu-list-item"><a href="/user/profile">Ir a mi perfil</a>
                                     </li>
@@ -51,11 +54,11 @@
                 <div class="search-section-container desktop-only">
                     <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-desktop"></i>
                     <!-- Contenedor con el input que se abre -->
-                    <div class="search-form-container bigger-search-form">
+                    <form class="search-form-container bigger-search-form"  action="/product" method="GET">
                         <i class="fa-solid fa-x close-search-form-button"></i>
-                        <input type="text" class="search-form-input">
+                        <input type="text" class="search-form-input" placeholder="Busca productos" name="s">
                         <i class="fa-solid fa-magnifying-glass send-search-form-button"></i>
-                    </div>
+                    </form>
                 </div>
             </div>
 
@@ -65,11 +68,11 @@
                     <div class="search-section-container mobile-only">
                         <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-mobile"></i>
                         <!-- Contenedor con el input que se abre -->
-                        <div class="search-form-container bigger-search-form">
+                        <form class="search-form-container bigger-search-form"  action="/product" method="GET">
                             <i class="fa-solid fa-x close-search-form-button"></i>
-                            <input type="text" class="search-form-input">
+                            <input type="text" class="search-form-input" placeholder="Busca productos" name="s">
                             <i class="fa-solid fa-magnifying-glass send-search-form-button"></i>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <a href="/" class="brand-name" id="header-name"><img src="/img/logo.png" alt="header-logo"
@@ -79,11 +82,11 @@
                     <div class="search-section-container desktop-only">
                         <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-desktop"></i>
                         <!-- Contenedor con el input que se abre -->
-                        <div class="search-form-container">
+                        <form class="search-form-container"  action="/product" method="GET">
                             <i class="fa-solid fa-x close-search-form-button"></i>
-                            <input type="text" class="search-form-input">
+                            <input type="text" class="search-form-input" placeholder="Busca productos" name="s">
                             <i class="fa-solid fa-magnifying-glass send-search-form-button"></i>
-                        </div>
+                        </form>
                     </div>
 
                     <div class="shopping-cart-container">

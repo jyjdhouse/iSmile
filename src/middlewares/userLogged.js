@@ -5,12 +5,17 @@ const getRelativePath = require('../utils/getRelativePath');
 const secret = require('../utils/secret').secret;
 
 const userLogged = async (req, res, next) => {
-
+    // Ruta de la que proviene
+    console.log(req.headers.referer);
+    let lastPath = getRelativePath(req.headers?.referer);
     try {
         let userInCookie;
-
         res.locals.isLogged = false;
         req.session.userLoggedId = null;
+        // Ruta a la que quiere ir
+        let pathToGo = getRelativePath(req.url);
+        // Si quiere ir a logout no quiero nada de aca
+        if(pathToGo =='/user/logout') return next();
         //Agarro la cookie del token
         const token = req.cookies?.userAccessToken;
         if (token) {
@@ -20,7 +25,7 @@ const userLogged = async (req, res, next) => {
                     where: {
                         id: decodedData?.id
                     },
-                    attributes: ['id']
+                    exclude: ['password']
                 });
             }
         };
@@ -29,18 +34,13 @@ const userLogged = async (req, res, next) => {
         };
 
         if (req.session && req.session.userLoggedId) {
-            let user = await db.User.findByPk(req.session.userLoggedId, {
-                attributes: {
-                    exclude: ['password']
-                }
-            });
             res.locals.isLogged = true;
-            res.locals.userLogged = user;
+            res.locals.userLogged = userInCookie;
         };
         return next();
 
     } catch (error) {
-        let lastPath = getRelativePath(req.headers.referer);
+        
         console.log('Falle en userLoggedMiddleware: ' + error);
         if(isJwtError(error)){ //Si es error de jwt
             let msg = "Ha ocurrido un error, por favor vuelve a iniciar sesion"

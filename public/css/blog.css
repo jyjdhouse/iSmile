@@ -30,7 +30,53 @@
 .blog-admin-actions-dropdown-active {
     max-height: 100px;
 }
+.action-container a{
+    border-bottom: 1px solid;
+}
+.action-container button{
+    background: none;
+    border: none;
+}
+/* PARA CONFIRMAR BORRADO DE PRODUCTO */
+.update-delete-btn-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all .5s ease;
+    width: 80%;
+    height: 30%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    opacity: 0;
+    scale: 0;
+    background-color: #fff;
+    z-index: 40;
+    border-radius: 1rem;
+}
 
+.blog-delete-popup-label {
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.update-delete-btn-container-active {
+    scale: 1;
+    opacity: 1;
+}
+
+.update-delete-btn-container>button {
+    width: 45%;
+    border: 1px solid;
+    padding: 5px;
+    text-align: center;
+}
+
+/*  */
 .bx-dots-vertical-rounded {
     font-size: 1.5rem;
     color: grey;
@@ -52,7 +98,7 @@
 
 .blog-detail-img-container img {
     width: 100%;
- 
+
     object-fit: contain;
 }
 
@@ -71,10 +117,10 @@
 }
 
 .other-img-list {
-  height: 250px;
-  position: relative;
-  background-color: white;
-  z-index: 5;
+    height: 250px;
+    position: relative;
+    background-color: white;
+    z-index: 5;
 }
 
 .mobile-carousel-container {
@@ -99,7 +145,7 @@
     left: 0;
     opacity: 0;
     transition: transform .7s, opacity .7s;
-    background-color: transparent; 
+    background-color: transparent;
 }
 
 .img-container-active {
@@ -107,7 +153,7 @@
     opacity: 1;
     z-index: 1;
 }
- 
+
 .next-img-container {
     transform: translateX(100%);
     z-index: -1;
@@ -115,16 +161,21 @@
 
 .prev-img-container {
     transform: translateX(-100%);
-} 
+}
 
 .carousel-animation {
     animation: carouselAnimation 4s;
 }
 
+/* Para los parrafos */
+.blog-detail-text-container>p{
+    margin-bottom: 10px;
+}
 @keyframes carouselAnimation {
     25% {
         transform: translateX(-100%);
     }
+
     26% {
         z-index: -1;
         transform: translateX(100%);
@@ -140,9 +191,11 @@
 
 
 @media (min-width: 768px) {
- 
 
-    .mobile-carousel-container  {
+    .update-delete-btn-container{
+        width: 40%;
+    }
+    .mobile-carousel-container {
         position: static;
         display: flex;
         flex-wrap: wrap;
@@ -156,13 +209,18 @@
         opacity: 1;
     }
 
+}
+
+@media(min-width: 1024px) {
+    .update-delete-btn-container{
+        width: 30%;
+    }
     .other-img-list {
         height: auto;
         position: relative;
         background-color: white;
         z-index: 5;
-      }
-
+    }
 
 }
 

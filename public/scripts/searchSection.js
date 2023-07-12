@@ -61,6 +61,16 @@ window.addEventListener('load', async () => {
             })
         });
 
+        // Logica para mandar el formulario
+        const sendSearchBtn = document.querySelectorAll('.send-search-form-button');
+        sendSearchBtn.forEach(btn=>{
+            // Envian el buscador
+            btn.addEventListener('click',()=>{
+                // Capturo el form ese para mandarlo (hay varios)
+                const form = btn.closest('form');
+                form.submit();
+            })
+        })
     } catch (error) {
         return console.log(`Falle en searchForm.js: ${error}`);
     }

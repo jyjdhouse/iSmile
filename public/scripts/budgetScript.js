@@ -10,7 +10,7 @@ window.addEventListener('load', async () => {
     };
     iniciateSelect2();
     // Pido los productos 
-    let products = (await (await fetch(`${window.location.origin}/getTestProducts`)).json()).products;
+    let treatments = (await (await fetch(`${window.location.origin}/api/product/getTreatments`)).json()).treatments;
 
     // Obtén la fila original que deseas clonar
     var originalRow = document.querySelector('.row') // Obtén la primera fila original
@@ -33,7 +33,7 @@ window.addEventListener('load', async () => {
         let newSelect = selectColumn.querySelector('select');
 
         // Obetngo los productos pero clonados
-        let clonedProducts = JSON.parse(JSON.stringify(products)); // Copia independiente de los productos
+        let clonedProducts = JSON.parse(JSON.stringify(treatments)); // Copia independiente de los productos
         clonedProducts.forEach((prod) => {
             let html = `<option value=${prod.id} data.price = ${prod.price} data.cash_price = ${prod.cash_price}>
                             ${prod.name}
@@ -104,8 +104,8 @@ window.addEventListener('load', async () => {
                 // Obtiene el elemento <option> seleccionado, con precio y precio en cash
                 const selectedOption = selectElement.find('option:selected')[0];
 
-                const price = selectedOption.attributes['data.price']?.value;
-                const cashPrice = selectedOption.attributes['data.cash_price']?.value;
+                const price = removeNumberSeparators(selectedOption.attributes['data.price']?.value);
+                const cashPrice = removeNumberSeparators(selectedOption.attributes['data.cash_price']?.value);
 
                 // Ahora pinto los precios unitarios
                 row.querySelector('.single-price').innerHTML = price || 0;
@@ -168,7 +168,7 @@ window.addEventListener('load', async () => {
         return number.replace(/\./g, '');
     };
 
-    // Muestro la fecha predeterminada como la del dia
+    // Muestro como fecha predeterminada  la del dia
     const inputDate = document.querySelector('#date');
     // Formar la fecha en formato YYYY-MM-DD
     const formattedDate = getTodaysDate();

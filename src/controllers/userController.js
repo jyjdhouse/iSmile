@@ -8,25 +8,23 @@ const secret = require('../utils/secret').secret;
 // Librerias
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+const { v4: uuidv4 } = require('uuid');
 const { validationResult } = require('express-validator');
 
 // UTILS
 const provinces = require('../utils/staticDB/provinces');
 const getUser = require('../utils/getUser');
 const getDeepCopy = require('../utils/getDeepCopy');
-const getGenres = require('../utils/getGenres')
+const getAllGenres = require('../utils/getAllGenres')
 
 // CONTROLLER
 const controller = {
 
     userProfile: async (req, res) => {
         try {
-            const user = await db.User.findByPk(req.session.userLoggedId, {
-                include: ['address']
-            })
-            const genres = await getGenres()
-          
+            const user = await getUser(req.session.userLoggedId);
+            const genres = await getAllGenres()
+            console.log(`estoy EN USERPROFILE`);
             return res.render('userProfile', { user, provinces, genres })
         } catch (error) {
             console.log(`Falle en userController.userProfile: ${error}`);
@@ -55,7 +53,7 @@ const controller = {
                 }
             });
             // Ordeno el carro del tempItemId mas gde a mas chico (Mas nuevo arriba)
-            cart = cart.sort((a, b) => b.tempItemId - a.tempItemId);
+            cart = cart?.sort((a, b) => b.tempItemId - a.tempItemId);
             return res.render('checkout.ejs', { user, cart, provinces });
         }
         return res.render('checkout.ejs', { provinces });
@@ -98,6 +96,7 @@ const controller = {
             // Datos del body
             let { password } = req.body
             let userData = {
+                id: uuidv4() ,
                 first_name: '',
                 last_name: '',
                 dni: '',
@@ -127,6 +126,7 @@ const controller = {
     },
     logout: async (req, res) => {
         try {
+            console.log(`ESTOY EN LOGOUT`);
             let relativePath = getRelativePath(req.headers.referer);
             res.clearCookie('userAccessToken');
             res.clearCookie('adminToken')
@@ -313,6 +313,9 @@ const controller = {
     passwordError: (req, res) => {
         return res.render('changePasswordError');
         return res.json(error);
+    },
+    bookingView: (req,res)=>{
+        return res.render('userBooking')
     }
 
 };

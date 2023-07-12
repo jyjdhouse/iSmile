@@ -24,11 +24,14 @@
                     <a href="/product/update/<%= product.id %>">Actualizar producto</a>
                 </div>
                 <div class="action-container">
-                    <form class="update-delete-btn-container" action="/product/<%= product.id %>?_method=DELETE"
-                        method="POST">
-                        <button class="form-device-btn" type="submit">Eliminar producto</button>
-                    </form>
+                    <button class="form-device-btn start-product-delete"> Eliminar producto </button>
                 </div>
+                <form class="update-delete-btn-container " action="/product/<%= product.id %>?_method=DELETE"
+                    method="POST">
+                    <p class="product-delete-popup-label">Estas seguro que quieres borrar <%= product.name %>?</p>
+                    <button class="cancel-product-delete">Cancelar</button>
+                    <button class="form-device-btn confirm-product-delete" type="submit">Eliminar</button>
+                </form>
             </div>
             <% } %>
             <article class="product-container" data-productid=<%=product.id %>>
@@ -47,8 +50,8 @@
                                         <video
                                         class="video product-img"
                                         muted playsinline loop>
-                                        <source src="/video/<%= file.filename %>" type="video/mp4">
-                                        <source src="/video/<%= file.filename %>" type="video/webm">
+                                        <source src="/video/product/<%= file.filename %>" type="video/mp4">
+                                        <source src="/video/product/<%= file.filename %>" type="video/webm">
                                         No se puede reproducir el video
                                     </video>
                                     <% } %>
@@ -98,18 +101,18 @@
                             <a href="/product/<%= sugProd.id %>" class="product-card-link">
                                 <div class="image-container suggested-image-container">
                                     <div class="image-carousel">
-                                        <% sugProd.files.forEach(file=> { %>
+                                        <% sugProd.files.forEach((file,i)=> { %>
                                             <% if (file.file_types_id==1) { %> <!--FOTO-->
                                                 <img src="/img/product/<%= file.filename %>"
                                                     alt="<%= sugProd.name %>-<%= file.filename %>"
-                                                    class="product-image-test product-image-test-active product-detail-suggested-media"
+                                                    class="product-image-test <%= i==0 && 'product-image-test-active' %>  product-detail-suggested-media"
                                                     data-productId=<%=sugProd.id %> >
                                                 <% }else if(file.file_types_id==2){ %> <!--VIDEO-->
                                                     <video
-                                                        class="video product-image-test product-image-test-prev-slide product-detail-suggested-media"
+                                                        class="video product-image-test product-detail-suggested-media"
                                                         muted playsinline loop>
-                                                        <source src="/video/<%= file.filename %>" type="video/mp4">
-                                                        <source src="/video/<%= file.filename %>" type="video/webm">
+                                                        <source src="/video/product/<%= file.filename %>" type="video/mp4">
+                                                        <source src="/video/product/<%= file.filename %>" type="video/webm">
                                                         No se puede reproducir el video
                                                     </video>
                                                     <% } %>

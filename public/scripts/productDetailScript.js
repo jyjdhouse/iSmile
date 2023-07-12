@@ -1,8 +1,4 @@
 window.addEventListener('load', () => {
-
-    const user = document.querySelector('.user-logged')
-    console.log(user.innerText)
-
     const mainImg = document.querySelector('.main-img')
     const productImgs = document.querySelectorAll('.product-img')
 
@@ -15,5 +11,44 @@ window.addEventListener('load', () => {
         })
     });
 
-    
+    // Apenas carga me fijo cuantas other-images vienen- en base a eso le doy width
+    const otherImgs = document.querySelectorAll('.other-img-container');
+    const count = otherImgs.length;
+    otherImgs.forEach(cont => cont.style.width = `${100 / count - (count > 2 ? 5 : 15)}%`)
+    // Modifico el tamano de otherImg en funcion de la foto gde
+    const otherImgContainer = document.querySelector('.other-product-imgs-container');
+    // console.log(otherImgContainer);
+    const mainImgContainer = document.querySelector('.main-img-container');
+    let widthToSet = mainImgContainer.offsetWidth;
+    otherImgContainer.style.width = `${widthToSet}px`;
+    // Cuando cambia la resolucion va cambiando con esto
+    window.addEventListener('resize', () => {
+        widthToSet = mainImgContainer.offsetWidth;
+        otherImgContainer.style.width = `${widthToSet}px`;
+    })
+
+    // LOGICA para tocar boton "ELiminar productop"
+    // Capturo cuando tocan el boton
+    const startDeleteBtn = document.querySelector('.start-product-delete');
+    const deleteProductFormPopup = document.querySelector('.update-delete-btn-container');
+    const blackScreen = document.querySelector('.black-screen');
+    const cancelProductDeleteBtn = document.querySelector('.cancel-product-delete');
+    startDeleteBtn.addEventListener('click',()=>{
+        // Hago aparecer el popup
+        deleteProductFormPopup.classList.add('update-delete-btn-container-active');
+        blackScreen.classList.add('black-screen-active');
+    });
+    // si toca cancelar... 
+    cancelProductDeleteBtn.addEventListener('click',(e)=>{
+        e.preventDefault();
+        // Hago desaparecer el popup
+        deleteProductFormPopup.classList.remove('update-delete-btn-container-active');
+        blackScreen.classList.remove('black-screen-active');
+    });
+    // si toca blackscreen... 
+    blackScreen.addEventListener('click',()=>{
+        // Hago desaparecer el popup
+        deleteProductFormPopup.classList.remove('update-delete-btn-container-active');
+        blackScreen.classList.remove('black-screen-active');
+    });
 })

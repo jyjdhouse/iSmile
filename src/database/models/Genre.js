@@ -12,13 +12,13 @@ module.exports = (sequelize, dataTypes) => {
 
     let config = {
         tableName: 'genres',
-        paranoid: true
+        timestamps: false
     }
 
     const Genre = sequelize.define(alias, cols, config);
 
     Genre.associate = (models) => {
-       Genre.belongsTo(models.User, {
+       Genre.hasMany(models.User, {
             as: 'users',
             foreignKey: 'genres_id',
         }) 

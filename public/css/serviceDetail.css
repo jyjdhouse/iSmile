@@ -179,11 +179,15 @@
     .service-info-p-container-active {
         max-height: 300px;
     }
+<<<<<<< HEAD
+    
+=======
 
     .see-more-container {
         height: 20px;
     }
 
+>>>>>>> 359d3c9aa4ef49d4d8657ca653f56f1bc1e8f383
 }
 
 @media (min-width: 1024px) {

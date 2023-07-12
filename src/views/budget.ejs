@@ -17,7 +17,8 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- Box-icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
+    <!-- Para el logo del navegador -->
+    <link rel="icon" type="image/png" href="/img/logo-background.png">
     <title>Budget</title>
 </head>
 
@@ -29,15 +30,16 @@
                     <div class="field">
                         <p class="client-name">Nombre:</p>
                         <input type="text" name="client-name" id="client-name" class="change-element">
-                        
+
                     </div>
                     <div class="field date-field">
                         <p class="date">Fecha:</p>
                         <input type="date" name="date" id="date" class="change-element">
-                        
+
                     </div>
                 </section>
-                <button class="add-budget-product-btn remove-element">Agregar <i class='bx bx-plus-medical'></i></button>
+                <button class="add-budget-product-btn remove-element">Agregar <i
+                        class='bx bx-plus-medical'></i></button>
 
 
                 <table class="budget-table">
@@ -54,7 +56,8 @@
                     </thead>
                     <tbody>
                         <tr class="row">
-                            <td class="remove-row-column remove-element"><i class='bx bx-trash-alt remove-row-btn'></i></td>
+                            <td class="remove-row-column remove-element"><i class='bx bx-trash-alt remove-row-btn'></i>
+                            </td>
                             <td class="select-column">
                                 <select class="js-example-placeholder-single description" name="treatment">
                                     <% products.forEach(prod=> { %>
@@ -79,10 +82,12 @@
                     </tbody>
                 </table>
                 <div class="total-prices-container">
-                    <p class="total-prices-label bold">Total a abonar: $<span class="total-budget price-number"></span></p>
-                    <p class="total-prices-label bold">Total a abonar (Efectivo): $<span class="total-cash-budget price-number"></span></p>
+                    <p class="total-prices-label bold">Total a abonar: $<span class="total-budget price-number"></span>
+                    </p>
+                    <p class="total-prices-label bold">Total a abonar (Efectivo): $<span
+                            class="total-cash-budget price-number"></span></p>
                 </div>
-                
+
                 <div class="button-container remove-element">
                     <button class="generate-pdf-btn">GENERAR PDF</button>
                 </div>

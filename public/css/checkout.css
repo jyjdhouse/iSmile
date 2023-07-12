@@ -4,36 +4,42 @@ body {
 }
 
 /* Para el loading Animation */
-.loading-container{
+.loading-container {
     align-items: center;
 }
-.loading-container-active{
+
+.loading-container-active {
     display: flex;
 }
-.load-wrapp{
+
+.load-wrapp {
     height: 50%;
 }
 
 /*  */
 /* Para el spinner "CArgando productos.. */
-.spinner-overlay{
+.spinner-overlay {
     position: absolute;
 }
+
 /*  */
 
 /* Msg de no hay productos */
-.no-products-msg{
+.no-products-msg {
     width: 100%;
     text-align: center;
-    margin-top: 5vh ;
+    margin-top: 5vh;
     font-size: 1.4rem;
 }
-.incomplete-field span{
-   color: var(--red-color);
+
+.incomplete-field span {
+    color: var(--red-color);
 }
-.field.incomplete-field>.input{
+
+.field.incomplete-field>.input {
     border: 1px solid var(--red-color);
 }
+
 .checkout-main .select {
     background-color: #fff;
     border-radius: 1rem;
@@ -186,7 +192,7 @@ body {
 
 .product-quantity-container,
 .product-subtotal-container {
-    height: 30%;
+    height: 15%;
     width: 40%;
 }
 
@@ -280,7 +286,7 @@ body {
 }
 
 /* Para los pasos */
-.second-view {}
+
 
 .information-wrapper {
     width: 100%;
@@ -565,6 +571,7 @@ body {
     padding: 2% 0;
     border: 0;
 }
+
 /* Esto es para que le de el background */
 
 /* STEP DE PAYMENT */
@@ -647,13 +654,50 @@ body {
     margin-bottom: .5rem;
 }
 
+@media(min-width:768px) {
+    .view {
+        justify-content: space-around;
+    }
+
+    .product-list-section {
+        width: 55%;
+        padding: 0 2%;
+        margin: 5vh 0;
+        border-radius: 1rem;
+    }
+
+    .checkout-total-section {
+        width: 30%;
+        padding: 0 2%;
+        border-radius: 1rem;
+        margin-bottom: 5vh;
+    }
+
+    .second-view {
+        margin-top: 5vh;
+    }
+
+    .product-side-info-container {
+        flex-direction: row;
+        align-items: center;
+    }
+    .product-side-wrapper-price-container{
+        justify-content: center;
+    }
+    .product-side-wrapper-row{
+        width: 88%;
+    }
+}
+
 @media(min-width:1024px) {
-    .view{
+    .view {
         padding: 0 5vw;
     }
-    .second-view{
+
+    .second-view {
         margin-top: 2.5vh;
     }
+
     .product-list-section {
         width: 55%;
         padding: 0 2%;
@@ -705,9 +749,11 @@ body {
     .continue-button {
         font-size: 20px;
     }
+
     .continue-procedure-button {
         padding: 1% 4%;
     }
+
     .information-wrapper {
         width: 65%;
     }
@@ -716,12 +762,15 @@ body {
         width: 50%;
         padding: 0 2.5vw;
     }
-    .payment-field{
+
+    .payment-field {
         width: 100%;
     }
+
     .long-field {
         width: 100%;
     }
+
     .delivery-option-box {
         padding: 1rem 2rem;
         font-size: 18px;
@@ -741,24 +790,37 @@ body {
         text-align: center;
         font-size: 18px;
     }
-    
+
     #zip-code {
         width: 4rem;
         text-align: center;
     }
-    
+
     .calculate-delivery-button {
         font-size: 15px;
     }
-    .step-container .button-container{
+
+    .step-container .button-container {
         text-align: end;
         padding-right: 2.5vw;
     }
-    .payment-box{
+
+    .payment-box {
         width: 40%;
     }
-    .product-side-cards-wrapper-section{
+
+    .product-side-cards-wrapper-section {
         width: 30%;
         border-radius: 1rem;
+    }
+    .product-side-info-container{
+        flex-direction: column;
+        align-items: unset;
+    }
+    .product-side-wrapper-price-container{
+        justify-content: unset;
+    }
+    .product-side-wrapper-row{
+        width: 100%;
     }
 }

@@ -14,6 +14,15 @@ const controller = {
     getLoggedUserId: async (req, res) => {
         try {
             let userId = req.userId;
+            if (!userId) { //Si no viene el userID, no se chekeo el token ==> devuelvo error en la solicitud
+                const error = new Error('Error en la solicitud, debes iniciar sesion nuevamente');
+                // Devolviendo una respuesta de error
+                res.status(400).json({
+                    ok: false,
+                    error: error.message
+                });
+                return
+            }
             let msg = req.msg;
 
             let user = await getUser(userId);
@@ -33,8 +42,9 @@ const controller = {
     },
     createTempCart: async (req, res) => {
         try {
-
+            // TODO: Preguntar a martin y cambiar el body por lo que me llega en el middleware de checkForToken
             const { userId, prodId } = req.body;
+            
             const tempCart = await db.TemporalCart.create({
                 user_id: userId
             });
@@ -62,6 +72,7 @@ const controller = {
     addTempItem: async (req, res) => {
         try {
             let { tempCartId, prodId } = req.body;
+
             let tempItem = await db.TemporalItem.create({
                 temporal_cart_id: parseInt(tempCartId),
                 product_id: parseInt(prodId),
@@ -105,6 +116,15 @@ const controller = {
         try {
 
             const userToChangePassID = req.userId;
+            if (!userToChangePassID) { //Si no viene el userID, no se chekeo el token ==> devuelvo error en la solicitud
+                const error = new Error('Error en la solicitud, debes iniciar sesion nuevamente');
+                // Devolviendo una respuesta de error
+                res.status(400).json({
+                    ok: false,
+                    error: error.message
+                });
+                return
+            }
             // El principio de la url
             const host = req.headers.host;
 

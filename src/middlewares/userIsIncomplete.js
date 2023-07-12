@@ -3,8 +3,13 @@ const jwt = require('jsonwebtoken');
 const getRelativePath = require('../utils/getRelativePath');
 const secret = require('../utils/secret').secret;
 
+// Este middleware chequea si los datos necesarios del cliente estan completos
 const userIsIncomplete = async (req, res, next) => {
     try {
+        // Obtener la URL actual
+        var pathToCheck = getRelativePath(req.url);// Ruta a la que quiere acceder el cliente
+        
+        // Si esta loggeado..
         if (req.session && req.session.userLoggedId) {
             // Agarrar al usuario que está loggeado
             let userLogged = await db.User.findByPk(req.session.userLoggedId, {
@@ -14,13 +19,11 @@ const userIsIncomplete = async (req, res, next) => {
             });
             // Quiere decir que no completó sus datos
             if (!userLogged['first_name'].length || !userLogged['last_name'].length) {
-                // Obtener la URL actual
-                var pathToCheck = '';
+                
                 if (req.originalUrl) {
-                    pathToCheck = getRelativePath(req.originalUrl);
                     // Verificar si el usuario se encuentra en una URL específica
                     if (pathToCheck != '/user/profile') {
-                        console.log(pathToCheck);
+                        // console.log('El path es:' + pathToCheck);
                         // Lo redirijo para que complete sus datos
                         return res.redirect(`/user/profile?completeForm=${true}`);
                     }

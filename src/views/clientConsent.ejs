@@ -13,7 +13,9 @@
     <!-- Para las firmas -->
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Historia Clinica</title>
+    <!-- Para el logo del navegador -->
+    <link rel="icon" type="image/png" href="/img/logo-background.png">
+    <title>Consentimiento</title>
 </head>
 
 <body>
@@ -23,9 +25,15 @@
                 <p class="form-title bold">Consentimiento informado de prótesis</p>
                 <p class="consentment-text">
                     <span class="paragraph">
-                        Yo: <input type="text" id="name" class="input" data-errorClass="name-error"><span class="name-error error-msg red hidden"><i class='bx bx-info-square'></i>Debes completar tu nombre</span>,
-                        DNI: <input type="text" id="dni" class="input" data-errorClass="id-error"><span class="id-error error-msg red hidden"><i class='bx bx-info-square'></i>Debes completar tu DNI</span>
-                        domicilio en: <input type="text" class="input" id="address" data-errorClass="address-error"><span class="address-error error-msg red hidden"><i class='bx bx-info-square'></i>Debes completar tu dirección</span>. Autorizo al centro
+                        Yo: <input type="text" id="name" class="input" data-errorClass="name-error"><span
+                            class="name-error error-msg red hidden"><i class='bx bx-info-square'></i>Debes completar tu
+                            nombre</span>,
+                        DNI: <input type="text" id="dni" class="input" data-errorClass="id-error"><span
+                            class="id-error error-msg red hidden"><i class='bx bx-info-square'></i>Debes completar tu
+                            DNI</span>
+                        domicilio en: <input type="text" class="input" id="address"
+                            data-errorClass="address-error"><span class="address-error error-msg red hidden"><i
+                                class='bx bx-info-square'></i>Debes completar tu dirección</span>. Autorizo al centro
                         odontológico I Smile, y sus profesionales, para la realización e instalación de la prótesis:
                     </span>
                     <span class="paragraph">
@@ -38,7 +46,8 @@
                         <textarea name="procedure" class="textarea"></textarea>
                     </span>
                     <span class="paragraph">
-                        3. Yo he sido informado de posibles métodos alternativos de tratamiento, incluso al respecto de no
+                        3. Yo he sido informado de posibles métodos alternativos de tratamiento, incluso al respecto de
+                        no
                         realizar ningún tratamiento o procedimiento.
                     </span>
                     <span class="paragraph">
@@ -71,12 +80,12 @@
                         Además de los riesgos arriba descriptos por mis circunstancias especiales, hay que esperar
                         también los siguientes riesgos:
                         <textarea name="procedure" class="textarea"></textarea>
-                    </span>                   
+                    </span>
                 </p>
                 <%- include('./partials/lastFormRow.ejs') %>
-                <div class="button-container">
-                    <button type="submit" class="send-form-button">Enviar Formulario</button>
-                </div>
+                    <div class="button-container">
+                        <button type="submit" class="send-form-button">Enviar Formulario</button>
+                    </div>
             </form>
 </body>
 

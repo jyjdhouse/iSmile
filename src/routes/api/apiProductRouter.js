@@ -9,6 +9,7 @@ const apiProductController = require('../../controllers/api/apiProductController
 
 // RUTEO
 router.get('/',apiProductController.list);
+router.get('/getTreatments',apiProductController.getTreatments);
 router.get('/:productId',apiProductController.detail); //Esta va ultima por el :id
 
 
