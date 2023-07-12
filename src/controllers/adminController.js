@@ -1,7 +1,7 @@
 const db = require('../database/models');
-const bcrypt = require('bcryptjs');
 const getAllTreatments = require('../utils/getAllTreatments');
 const getDeepCopy = require('../utils/getDeepCopy');
+
 
 const orderByAlfabet = (array)=>{
     return array.sort((a, b) => {
@@ -19,6 +19,7 @@ const orderByAlfabet = (array)=>{
 }
 
 const controller = {
+    
     updateServicesPrice: async (req, res) => {
         let treatments = getDeepCopy(await getAllTreatments());
         treatments = orderByAlfabet(treatments);

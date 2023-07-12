@@ -24,7 +24,7 @@ const controller = {
         try {
             const user = await getUser(req.session.userLoggedId);
             const genres = await getAllGenres()
-            console.log(`estoy EN USERPROFILE`);
+            console.log(user)
             return res.render('userProfile', { user, provinces, genres })
         } catch (error) {
             console.log(`Falle en userController.userProfile: ${error}`);
@@ -231,7 +231,7 @@ const controller = {
                     addressDataDB = {
                         ...addressBody,
                         provinces_id: userBodyData.provinces_id,
-                        user_id: userToUpdate.id
+                        users_id: userToUpdate.id
                     };
                     // La creo
                     createdAddress = await db.Address.create(addressDataDB);
@@ -240,7 +240,7 @@ const controller = {
                 addressDataDB = {
                     ...addressBody,
                     provinces_id: userBodyData.provinces_id,
-                    user_id: userToUpdate.id
+                    users_id: userToUpdate.id
                 };
                 // La actualizo
                 await db.Address.update(addressDataDB, {

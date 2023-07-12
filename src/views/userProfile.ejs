@@ -288,7 +288,18 @@
                                                         <%=gen.name%>
                                                     </option>
                                                     <% }) %>
-                                            </select>
+                                                </select>
+
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Email:</p> <span>
+                                            <%= user.email %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input class="required" type="text" name="email"
+                                                value="<%=user.email || null%>"
+                                                placeholder="<%= !user.email && 'Ingresar correo'%>">
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
@@ -329,14 +340,7 @@
                                                 placeholder="<%= !user.address?.street && 'Santa Fe'%>">
                                         </div>
                                     </li>
-                                    <li class="profile-field-container">
-                                        <p>Numero:</p> <span>
-                                            1730
-                                        </span>
-                                        <div class="profile-input input-container-inactive">
-                                            <input type="text" name="street" placeholder="<%= !user.address?.street && '2911'%>">
-                                        </div>
-                                    </li>
+
                                     <li class="profile-field-container">
                                         <p>Piso/Departamento:</p> <span>
                                             <%= user.address?.apartment? user.address?.apartment : 'Sin especificar' %>

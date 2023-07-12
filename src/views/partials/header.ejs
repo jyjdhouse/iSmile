@@ -22,23 +22,29 @@
                     class="header-logo"></a>
             <div class="nav-end">
                 <div class="user-logged-container">
-                    <p class="user-logged-name login-menu-btn-desktop">Hola,<span
-                            class="bold"><%= locals.userLogged.first_name || 'user' %></span></p>
+                    <p class="user-logged-name login-menu-btn-desktop">Hola,<span class="bold"></span>
+                            <%= locals.userLogged.first_name || 'user' %>
+                        </span></p>
                     <div class="logged-menu-container">
                         <ul class="logged-menu-list">
-                            <% if (locals.userLogged.user_categories_id!=3) { %> <!--SI ES ADMIN userLogged.user_categories_id-->
+                            <% if (locals.userLogged.user_categories_id!=3) { %>
+                                <!--SI ES ADMIN userLogged.user_categories_id-->
                                 <li class="logged-menu-list-item expandable-list-item">
                                     <p>Crear <i class='bx bx-chevron-right create-options-toggler'></i> </p>
                                     <ul class="admin-menu-list">
                                         <li><a href="/admin/consent" target="_blank">Consentimiento</a></li>
                                         <li><a href="/admin/medicalInfo" target="_blank">Historia Medica</a></li>
                                         <li><a href="/admin/budget" target="_blank">Presupuesto</a></li>
+
                                         <li><a href="/product/create">Producto</a></li>
                                         <li><a href="/blog/create">Blog</a></li>
                                     </ul>
                                 </li>
-                                <li class="logged-menu-list-item"><a href="/admin/servicios-modificar-precio">Modificar precio Servicios</a>
-                                    <li class="logged-menu-list-item"><a href="/admin/ventas">Ver ventas</a>
+                                <li class="logged-menu-list-item"><a href="/admin/servicios-modificar-precio">Modificar
+                                        precio Servicios</a>
+                                <li class="logged-menu-list-item"><a href="/admin/ventas">Ver ventas</a>
+                                <li class="logged-menu-list-item"><a href="/api/admin/get-clients"
+                                        target="_blank">Descargar clientes</a></li>
                                 <% } %>
                                     <li class="logged-menu-list-item"><a href="/user/profile">Ir a mi perfil</a>
                                     </li>
@@ -55,7 +61,7 @@
                 <div class="search-section-container desktop-only">
                     <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-desktop"></i>
                     <!-- Contenedor con el input que se abre -->
-                    <form class="search-form-container bigger-search-form"  action="/product" method="GET">
+                    <form class="search-form-container bigger-search-form" action="/product" method="GET">
                         <i class="fa-solid fa-x close-search-form-button"></i>
                         <input type="text" class="search-form-input" placeholder="Busca productos" name="s">
                         <i class="fa-solid fa-magnifying-glass send-search-form-button"></i>
@@ -69,7 +75,7 @@
                     <div class="search-section-container mobile-only">
                         <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-mobile"></i>
                         <!-- Contenedor con el input que se abre -->
-                        <form class="search-form-container bigger-search-form"  action="/product" method="GET">
+                        <form class="search-form-container bigger-search-form" action="/product" method="GET">
                             <i class="fa-solid fa-x close-search-form-button"></i>
                             <input type="text" class="search-form-input" placeholder="Busca productos" name="s">
                             <i class="fa-solid fa-magnifying-glass send-search-form-button"></i>
@@ -83,7 +89,7 @@
                     <div class="search-section-container desktop-only">
                         <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-desktop"></i>
                         <!-- Contenedor con el input que se abre -->
-                        <form class="search-form-container"  action="/product" method="GET">
+                        <form class="search-form-container" action="/product" method="GET">
                             <i class="fa-solid fa-x close-search-form-button"></i>
                             <input type="text" class="search-form-input" placeholder="Busca productos" name="s">
                             <i class="fa-solid fa-magnifying-glass send-search-form-button"></i>

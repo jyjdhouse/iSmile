@@ -13,6 +13,8 @@ document.querySelectorAll('.product-quantity').forEach(inp => {
         checkInputPrice(card);
     });
 });
+
+
 // Logica para que funcione el mas y el menos
 const reduceProductQuantityBtns = document.querySelectorAll('.subtract-quantity-btn');
 const addProductQuantityBtns = document.querySelectorAll('.add-quantity-btn');
@@ -240,7 +242,7 @@ continueViewBtn.addEventListener('click', () => {
 });
 function modifyMainHeight(className) {
     let maxHeight = document.querySelector(`.${className}`).offsetHeight;
-    main.style.maxHeight = `${maxHeight}px`
+    main.style.maxHeight = `${maxHeight + 500}px`
 };
 
 // Funcion que se va a fijar si los campos que tiene que completar el usuario son completados
@@ -492,3 +494,20 @@ async function checkForUserLogged() {
         return console.log(`Falle en checkForUserLogged: ${error}`);
     }
 }
+
+//logica para pintar forma de pago en el second-view
+const boxes = document.querySelectorAll('.box-container')
+const boxesType = document.querySelectorAll('.payment-field')
+
+boxes.forEach((box, indexBox) => {
+    box.addEventListener('click', () => {
+        for(let indexBoxType = 0; indexBoxType < boxesType.length; indexBoxType++){
+            boxesType[indexBoxType].classList.remove('payment-field-active')
+            boxes[indexBoxType].classList.remove('box-container-active')
+            if(indexBox == indexBoxType){
+                box.classList.add('box-container-active')
+                boxesType[indexBoxType].classList.add('payment-field-active')
+            }
+        }
+    })
+})

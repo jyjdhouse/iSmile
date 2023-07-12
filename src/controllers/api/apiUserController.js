@@ -46,7 +46,7 @@ const controller = {
             const { userId, prodId } = req.body;
             
             const tempCart = await db.TemporalCart.create({
-                user_id: userId
+                users_id: userId
             });
             console.log(tempCart);
             await db.TemporalItem.create({
