@@ -52,14 +52,16 @@ const userIsIncomplete = require('./middlewares/userIsIncomplete');
 const guestMiddleware = require('./middlewares/guestMiddleware')
 const headerMiddleware = require('./middlewares/headerMiddleware')
 // const getAllUsers = require('./utils/getAllUsers.js');
-app.use(userLogged);
-app.use(userIsIncomplete);
-app.use(headerMiddleware);
+
 
 
 // Ruteo para api
 app.use('/api/product', apiProductRouter);
 app.use('/api/user', apiUserRouter);
+
+app.use(userLogged);
+app.use(userIsIncomplete);
+app.use(headerMiddleware);
 
 // Ruteo
 app.use('/', mainRouter);

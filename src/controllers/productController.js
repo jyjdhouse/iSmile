@@ -86,7 +86,8 @@ const controller = {
             await db.ProductFile.bulkCreate(imagesObject);
 
 
-            return res.redirect('/')
+            return res.redirect('/product/'+newProduct.id);
+            
         } catch (error) {
             console.log(`Falle en productController.create: ${error}`);
             images.forEach(image =>
@@ -170,12 +171,18 @@ const controller = {
             const productId = req.params.productId;
 
             const productToDelete = await db.Product.findByPk(productId);
-
+            // Hago el destroy en la tabla productos
             await db.Product.destroy({
                 where: {
                     id: productToDelete.id
                 }
-            })
+            });
+            // Hago el destroy en la tabla TempItems
+            await db.TemporalItem.destroy({
+                where: {
+                    product_id: productToDelete.id
+                }
+            });
             return res.redirect('/')
         } catch (error) {
             console.log(`Falle en productController.delete: ${error}`);

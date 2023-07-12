@@ -38,11 +38,12 @@
                                     </li>
                                     <li class="profile-field-container">
                                         <p>Fecha de nacimiento:</p> <span>
-                                            <%= user.birth_date %>
+                                            <%= user.birth_date || '12/07/2023'%>
                                         </span>
                                         <div class="profile-input input-container-inactive">
-                                            <input class="required" type="date" name="birth_date"
-                                            <%= user.birth_date ? `value = ${user.birth_date}` : null%>    placeholder="<%= !user.birth_date && 'Ingresar fecha de nacimiento'%>">
+                                            <input class="required" type="date" name="birth_date" <%=user.birth_date ?
+                                                `value=${user.birth_date}` : null%> placeholder="<%= !user.birth_date
+                                                && 'Ingresar fecha de nacimiento' %>">
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
@@ -93,9 +94,10 @@
                                             <div class="profile-input input-container-inactive">
                                                 <input type="text" name="street"
                                                     value="<%=user.address?.street || null%>"
-                                                    placeholder="<%= !user.address?.street && 'Santa Fe 2911'%>">
+                                                    placeholder="<%= !user.address?.street && 'Santa Fe'%>">
                                             </div>
                                         </li>
+                                        
                                         <li class="profile-field-container">
                                             <p>Piso/Departamento:</p> <span>
                                                 <%= user.address?.apartment? user.address?.apartment : 'Sin especificar'
@@ -152,13 +154,10 @@
 
                             <div class="profile-selected-field-container user-preferences">
                                 <li class="profile-field-container unique-email-field">
-                                    <p>Email:</p> <span>
+                                    <p>Email:</p> <span class="bold">
                                         <%= user.email %>
                                     </span>
-                                    <div class="profile-input input-container-inactive">
-                                        <input class="required" type="text" name="email" value="<%=user.email || null%>"
-                                            placeholder="<%= !user.email && 'Ingresar correo'%>">
-                                    </div>
+
                                 </li>
                                 <div class="profile-radio-p-container profile-field-container">
                                     <p>Quiero recibir notificaciones por correo electrónico</p>
@@ -212,6 +211,7 @@
                                 </div>
                                 <div class="profile-radio-p-container profile-field-container">
                                     <button class="change-password-btn">Cambiar contraseña</a>
+                                        <button class="destroy-account-btn">Eliminar cuenta</button>
                                 </div>
                             </div>
 
@@ -244,7 +244,7 @@
                         <div class="options-container">
                             <div class="profile-data-container user-data">
                                 <div class="profile-data-title">
-                                    <h2>Mis datoss</h2>
+                                    <h2>Mis datos</h2>
                                 </div>
                                 <ul class="profile-selected-list data-list">
                                     <li class="profile-field-container">
@@ -269,17 +269,17 @@
                                     </li>
                                     <li class="profile-field-container">
                                         <p>Fecha de nacimiento:</p> <span>
-                                            <%= user.birth_date %>
+                                            <%= user.birth_date || '12/07/2023'%>
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <input class="required birth-date-input" type="date" name="birth_date"
-                                            value = "<%= user.birth_date ? '2023-10-10' : null %>"
+                                                value="<%= user.birth_date ? '2023-10-10' : null %>"
                                                 placeholder="<%= !user.birth_date && 'Ingresar fecha de nacimiento'%>">
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
                                         <p>Género:</p> <span>
-                                            <%= user.genre %>
+                                            <%= user.genre || 'Sin Especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <select name="genre" id="">
@@ -326,7 +326,15 @@
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <input type="text" name="street" value="<%=user.address?.street || null%>"
-                                                placeholder="<%= !user.address?.street && 'Santa Fe 2911'%>">
+                                                placeholder="<%= !user.address?.street && 'Santa Fe'%>">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Numero:</p> <span>
+                                            1730
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input type="text" name="street" placeholder="<%= !user.address?.street && '2911'%>">
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
@@ -382,15 +390,10 @@
                                     <h2>Preferencias</h2>
                                 </div>
                                 <ul class="profile-selected-list">
-                                    <li class="profile-field-container">
-                                        <p>Email:</p> <span>
+                                    <li class="profile-field-container unique-email-field">
+                                        <p>Email:</p> <span class="bold">
                                             <%= user.email %>
                                         </span>
-                                        <div class="profile-input input-container-inactive">
-                                            <input class="required" type="text" name="email"
-                                                value="<%=user.email || null%>"
-                                                placeholder="<%= !user.email && 'Ingresar correo'%>">
-                                        </div>
                                     </li>
                                     <div class="profile-radio-p-container profile-field-container">
                                         <p>Quiero recibir notificaciones por correo electrónico</p>
@@ -445,6 +448,7 @@
                                     </div>
                                     <div class="profile-radio-p-container profile-field-container">
                                         <button class="change-password-btn">Cambiar contraseña</a>
+                                            <button class="destroy-account-btn">Eliminar cuenta</button>
                                     </div>
                                 </ul>
 
@@ -461,10 +465,10 @@
                                 Guardar cambios
                             </button>
                         </div>
+                    </form>
                 </div>
 
 
-                </form>
                 </div>
 
 

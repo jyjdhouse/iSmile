@@ -12,7 +12,7 @@ module.exports = (sequelize, dataTypes) => {
         city: { type: dataTypes.STRING(100) },
         provinces_id: { type: dataTypes.INTEGER },
         zip_code: { type: dataTypes.STRING(10) },
-        user_id: { type: dataTypes.INTEGER },
+        users_id: { type: dataTypes.STRING(36) },
      
     }
 
@@ -30,7 +30,7 @@ module.exports = (sequelize, dataTypes) => {
         }) */
         Address.belongsTo(models.User, {
             as: 'user',
-            foreignKey: 'user_id',
+            foreignKey: 'users_id',
         })
     };
 

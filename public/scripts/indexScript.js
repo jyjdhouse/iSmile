@@ -270,11 +270,12 @@ window.addEventListener('load', () => {
             selectFileLabel.classList.add('hidden');
             confirmFileBtn.classList.add('hidden');
             // Vuelvo la imagen a la foto que tenia
-            console.log(form.closest('.blog-background')?.querySelector('.blog-background-image'));
-            form.closest('.instagram-card')?.querySelector('.instagram-image')?.setAttribute('src', previousSrc) ||
-                form.closest('.landing-video-container')?.querySelector('.video')?.setAttribute('src', previousSrc) ||
-                form.closest('.blog-background')?.querySelector('.blog-background-image')?.setAttribute('src', previousSrc) ||
-                form.closest('.product-gallery-card')?.querySelector('.gallery-image')?.setAttribute('src', previousSrc);
+            if(previousSrc){
+                form.closest('.instagram-card')?.querySelector('.instagram-image')?.setAttribute('src', previousSrc) ||
+                    form.closest('.landing-video-container')?.querySelector('.video')?.setAttribute('src', previousSrc) ||
+                    form.closest('.blog-background')?.querySelector('.blog-background-image')?.setAttribute('src', previousSrc) ||
+                    form.closest('.product-gallery-card')?.querySelector('.gallery-image')?.setAttribute('src', previousSrc);
+            }
 
             // Reiniciar el valor del elemento <input>
             form.querySelector('input').value = '';

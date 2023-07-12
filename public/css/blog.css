@@ -167,6 +167,10 @@
     animation: carouselAnimation 4s;
 }
 
+/* Para los parrafos */
+.blog-detail-text-container>p{
+    margin-bottom: 10px;
+}
 @keyframes carouselAnimation {
     25% {
         transform: translateX(-100%);

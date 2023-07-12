@@ -1,4 +1,8 @@
   --------------CONVENTIONS---------------------
+
+    TODO: ORDER MODEL
+
+
     Toda clase que queremos activar ==> "#nombreClase-active";
     Todas las vistas mobileFirst
     Medidas del VP ==>  || >1024px (Desktop) ||  >426px && <1024px (Tablet) || <426px (Mobile) 

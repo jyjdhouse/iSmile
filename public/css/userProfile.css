@@ -19,7 +19,10 @@ select {
     justify-content: space-between;
 }
 .unique-email-field{
-    flex-direction: row;
+    flex-direction: row !important;
+}
+.unique-email-field>p{
+    width: fit-content !important;
 }
 .mobile-profile-content-wrapper .user-preferences > *{
     margin: 0;
@@ -36,6 +39,14 @@ select {
     border-radius: 1rem;
     padding: 10px;
     color: var(--violet-color);
+    cursor: pointer;
+}
+/* Boton eliminar cuenta */
+.destroy-account-btn{
+    margin-top: 10px;
+    outline: none;
+    border: 0;
+    color: red;
     cursor: pointer;
 }
 /*  */

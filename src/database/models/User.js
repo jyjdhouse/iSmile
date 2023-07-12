@@ -3,9 +3,8 @@ module.exports = (sequelize, dataTypes) => {
 
     let cols = {
         id: {
-            type: dataTypes.INTEGER,
+            type: dataTypes.STRING(36),
             primaryKey: true,
-            autoIncrement: true
         },
         first_name: { type: dataTypes.STRING(255) },
         last_name: { type: dataTypes.STRING(255) },
@@ -36,11 +35,11 @@ module.exports = (sequelize, dataTypes) => {
         }) 
         User.hasOne(models.Address, {
             as: 'address',
-            foreignKey: 'user_id',
+            foreignKey: 'users_id',
         });
         User.hasOne(models.TemporalCart, {
             as: 'temporalCart',
-            foreignKey: 'user_id',
+            foreignKey: 'users_id',
         });
         User.belongsTo(models.UserCategory,{
             as: 'userCategory',

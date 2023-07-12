@@ -7,16 +7,15 @@ const registValidations = require('../middlewares/registValidations');
 
 // MIDDLEWARES
 const loginMiddleware = require('../middlewares/loginMiddleware');
-const userLogged = require('../middlewares/userLogged');
 // Rutas
 
 // GET
 router.get('/logout',userController.logout);
 router.get('/checkout',loginMiddleware,userController.checkout); 
-router.get('/profile',userLogged,guestMiddleware,userController.userProfile);
+router.get('/profile',guestMiddleware,userController.userProfile);
 router.get('/cambiar-contrasena/:token',userController.changePasswordView);
 router.get('/contrasena-error',userController.passwordError);
-
+router.get('/booking',userController.bookingView)
 // POST
 router.post('/login',userController.login);
 router.post('/regist',registValidations,userController.processRegist);

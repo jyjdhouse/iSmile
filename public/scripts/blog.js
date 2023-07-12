@@ -86,6 +86,13 @@ window.addEventListener('load', () => {
             autoSlideCondition();
         }, 0);
 
+    } else { //Si es desktop tengo que hacer la logica de la cantidad de imagenes que me vienen
+        const otherImages = document.querySelectorAll('.other-img-container');
+        const otherImagesCount = otherImages?.length;
+        if(otherImagesCount){
+            const widthToSet = 100/otherImagesCount - 5;
+            otherImages?.forEach(img=>img.style.width =`${widthToSet}%`);
+        }
     }
 
     const date = new Date(blogDateCont.innerText)
