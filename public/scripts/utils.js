@@ -425,10 +425,19 @@ export async function addTempItemToDB(prodId,user) {//Agrega producto a la db
                 },
                 body: JSON.stringify(formData)
             })).json());
-            user.temporalCart= [];
-
+            
+            user.temporalCart = {
+                id: createdCart.tempCart.id,
+                temporalItems: []
+            };
+            user.temporalCart.temporalItems.push({
+                temporal_cart_id: createdCart.tempCart.id,
+                product_id: prodId,
+                quantity: 1
+            })
         } else { // Si tenia, tengo que agregarlo al carro que ya esta creado
             let cart = user.temporalCart.temporalItems;
+            console.log(user.temporalCart)
             let prodIndex = cart.findIndex(item => item.product_id == prodId); //busco si esta el prod que seleccionaron en el carro
             // Si el index es 0 o mas, quiere decir que se encuentra => Solo le sumo uno
             if (prodIndex < 0) { //Si NO esta lo agrego, si esta no pasa nada
@@ -442,6 +451,11 @@ export async function addTempItemToDB(prodId,user) {//Agrega producto a la db
                         prodId
                     })
                 })).json());
+                user.temporalCart.temporalItems.push({
+                    temporal_cart_id: user.temporalCart.id,
+                    product_id: prodId,
+                    quantity: 1
+                })
             }
         }
     } catch (error) {
