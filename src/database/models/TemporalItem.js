@@ -8,7 +8,7 @@ module.exports = (sequelize, dataTypes) => {
             autoIncrement: true
         },
         temporal_cart_id: { type: dataTypes.INTEGER },
-        product_id: { type: dataTypes.INTEGER },
+        products_id: { type: dataTypes.STRING(36) },
         quantity: { type: dataTypes.INTEGER }
     }
 
@@ -22,7 +22,7 @@ module.exports = (sequelize, dataTypes) => {
     TemporalItem.associate = (models) => {
         TemporalItem.belongsTo(models.Product, {
             as: 'product',
-            foreignKey: 'product_id'
+            foreignKey: 'products_id'
         });
         TemporalItem.belongsTo(models.TemporalCart, {
             as: 'temporalCart',

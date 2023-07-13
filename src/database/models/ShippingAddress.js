@@ -1,11 +1,10 @@
 module.exports = (sequelize, dataTypes) => {
-    let alias = "Address";
+    let alias = "ShippingAddress";
 
     let cols = {
         id: {
-            type: dataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
+            type: dataTypes.STRING(36),
+            primaryKey: true
         },
         street: { type: dataTypes.STRING(255) },
         apartment: { type: dataTypes.STRING(45) },
@@ -17,22 +16,18 @@ module.exports = (sequelize, dataTypes) => {
     }
 
     let config = {
-        tableName: 'addresses',
+        tableName: 'shipping_addresses',
         paranoid: true
     }
 
-    const Address = sequelize.define(alias, cols, config);
+    const ShippingAddress = sequelize.define(alias, cols, config);
 
-    Address.associate = (models) => {
-       /*  Address.hasMany(models.Wishlist, {
-            as: 'wishlistProducts',
-            foreignKey: 'Addresss_id',
-        }) */
-        Address.belongsTo(models.User, {
+    ShippingAddress.associate = (models) => {
+        ShippingAddress.belongsTo(models.User, {
             as: 'user',
             foreignKey: 'users_id',
         })
     };
 
-    return Address;
+    return ShippingAddress;
 }

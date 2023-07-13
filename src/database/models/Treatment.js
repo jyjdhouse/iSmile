@@ -11,8 +11,8 @@ module.exports = (sequelize, dataTypes) => {
         description: { type: dataTypes.TEXT },
         specialties_id: { type: dataTypes.INTEGER },
         specialties_services_id: { type: dataTypes.INTEGER },
-        price: { type: dataTypes.DECIMAL(10, 2) },
-        cash_price: { type: dataTypes.DECIMAL(10, 2) },
+        price: { type: dataTypes.INTEGER },
+        cash_price: { type: dataTypes.INTEGER },
         
     }
 

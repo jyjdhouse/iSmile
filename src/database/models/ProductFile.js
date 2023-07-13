@@ -8,7 +8,7 @@ module.exports = (sequelize, dataTypes) => {
             autoIncrement: true
         },
         filename: { type: dataTypes.TEXT },
-        product_id: { type: dataTypes.INTEGER },
+        products_id: { type: dataTypes.STRING(36) },
         file_types_id: {type: dataTypes.INTEGER}
     }
 
@@ -22,7 +22,7 @@ module.exports = (sequelize, dataTypes) => {
     ProductFile.associate = (models) => {
         ProductFile.belongsTo(models.Product, {
             as: 'product',
-            foreignKey: 'product_id'
+            foreignKey: 'products_id'
         });
         ProductFile.belongsTo(models.FileType, {
             as: 'fileType',

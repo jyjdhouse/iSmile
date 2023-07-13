@@ -51,7 +51,7 @@ const controller = {
             console.log(tempCart);
             await db.TemporalItem.create({
                 temporal_cart_id: parseInt(tempCart.id),
-                product_id: parseInt(prodId),
+                products_id: parseInt(prodId),
                 quantity: 1
             })
 
@@ -75,7 +75,7 @@ const controller = {
 
             let tempItem = await db.TemporalItem.create({
                 temporal_cart_id: parseInt(tempCartId),
-                product_id: parseInt(prodId),
+                products_id: parseInt(prodId),
                 quantity: 1
             });
             return res.json({
@@ -96,7 +96,7 @@ const controller = {
             let { prodId, user } = req.body;
             let deletedItem = await db.TemporalItem.destroy({
                 where: {
-                    product_id: prodId,
+                    products_id: prodId,
                     temporal_cart_id: user.temporalCart.id
                 }
             })

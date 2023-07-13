@@ -278,37 +278,6 @@ export function clearQuickActions(container) { //Vuelve las quickAction del cont
     removeSizesBtnsListener();//Esta funcion es para sacrle el eventListener
 }
 
-export async function addCartProduct(productId, colorId) {
-    const data = await getLoggedUser();
-    if (!data.userId) { //Si dio error el usuario
-        return data.meta.msg
-    }
-    // Armo el body
-    let body = {
-        userId: data.userId,
-        productId,
-        colorId
-    };
-    return console.log(body);
-    //Armo el fetch
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-    };
-
-    // Enviar la solicitud HTTP utilizando la API Fetch
-    fetch(`/api/product/addWishlistProduct`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-            return
-            // TODO: Con esta data crear un cartelito con el mensaje
-        })
-        .catch(error => console.log(error));
-}
-
 export function disableAllPopups(exception) {
     // desabilita todos los popUps, excepto el que se pasa por argumento
     const popups = document.querySelectorAll('.popup');
@@ -426,19 +395,19 @@ export async function addTempItemToDB(prodId,user) {//Agrega producto a la db
                 body: JSON.stringify(formData)
             })).json());
             
+            // Actualizamos manualmente a user
             user.temporalCart = {
                 id: createdCart.tempCart.id,
                 temporalItems: []
             };
             user.temporalCart.temporalItems.push({
                 temporal_cart_id: createdCart.tempCart.id,
-                product_id: prodId,
+                products_id: prodId,
                 quantity: 1
             })
         } else { // Si tenia, tengo que agregarlo al carro que ya esta creado
             let cart = user.temporalCart.temporalItems;
-            console.log(user.temporalCart)
-            let prodIndex = cart.findIndex(item => item.product_id == prodId); //busco si esta el prod que seleccionaron en el carro
+            let prodIndex = cart.findIndex(item => item.products_id == prodId); //busco si esta el prod que seleccionaron en el carro
             // Si el index es 0 o mas, quiere decir que se encuentra => Solo le sumo uno
             if (prodIndex < 0) { //Si NO esta lo agrego, si esta no pasa nada
                 let response = (await (await fetch(`${window.location.origin}/api/user/addTempItem`, {
@@ -451,9 +420,10 @@ export async function addTempItemToDB(prodId,user) {//Agrega producto a la db
                         prodId
                     })
                 })).json());
+                // Agrego el producto a temporalItems parcial
                 user.temporalCart.temporalItems.push({
                     temporal_cart_id: user.temporalCart.id,
-                    product_id: prodId,
+                    products_id: prodId,
                     quantity: 1
                 })
             }
@@ -475,7 +445,7 @@ export async function removeTempItemFromDB(prodId, user) {
         })
     })).json());
     // Lo borro del userLogged
-    user.temporalCart.temporalItems = user.temporalCart.temporalItems.filter(item=>item.product_id!=prodId);
+    user.temporalCart.temporalItems = user.temporalCart.temporalItems.filter(item=>item.products_id!=prodId);
 
 }
 // Agrega el item en cuestion a localStorage
@@ -484,7 +454,7 @@ export function addProductToLocaleCart(prodId) {
     const cart = JSON.parse(localStorage.getItem('temporalCart')) || [];
 
     // Verifico si el producto ya está en el carrito
-    const productAlreadyInCart = cart.find(item => item.product_id == prodId);
+    const productAlreadyInCart = cart.find(item => item.products_id == prodId);
     if (productAlreadyInCart) {
         // Si el producto ya está en el carrito, no hago nada
         return;
@@ -492,7 +462,7 @@ export function addProductToLocaleCart(prodId) {
 
     // Agrego el producto al carrito
     cart.push({
-        product_id: parseInt(prodId),
+        products_id: parseInt(prodId),
         quantity: 1
     });
 
@@ -503,7 +473,7 @@ export function removeProductfromLocaleCart(prodId) {
     // Obtengo el carrito de sessionStorage
     let cart = JSON.parse(localStorage.getItem('temporalCart')) || [];
 
-    cart = cart.filter(prod => prod.product_id != prodId);
+    cart = cart.filter(prod => prod.products_id != prodId);
 
     localStorage.setItem('temporalCart', JSON.stringify(cart)); // Guardo el carrito actualizado en sessionStorage
 }
@@ -515,10 +485,10 @@ export function checkIfProductIsInCartDetail() {
     // Hace un find ==> encuentra si el producto esta en el carro
     let productAlreadyInCart;
     if (userLogged) {
-        productAlreadyInCart = userLogged.temporalCart?.temporalItems.find(item => item.product_id == productId);
+        productAlreadyInCart = userLogged.temporalCart?.temporalItems.find(item => item.products_id == productId);
     } else {
         let cart = JSON.parse(localStorage.getItem('temporalCart')) || [];
-        productAlreadyInCart = cart.find(item => item.product_id == productId);
+        productAlreadyInCart = cart.find(item => item.products_id == productId);
     }
     if (productAlreadyInCart) {
         productCard.querySelector('.quick-add-cart-btn').classList.add('hidden');

@@ -79,7 +79,7 @@ const controller = {
                 let fileType = obj.mimetype.startsWith('video/') ? 2 : 1;
                 return {
                     filename: obj.filename,
-                    product_id: newProduct.id,
+                    products_id: newProduct.id,
                     file_types_id: fileType
                 }
             });
@@ -128,7 +128,7 @@ const controller = {
                 let fileType = obj.mimetype.startsWith('video/') ? 2 : 1;
                 return {
                     filename: obj.filename,
-                    product_id: productId,
+                    products_id: productId,
                     file_types_id: fileType
                 }
             });
@@ -180,7 +180,7 @@ const controller = {
             // Hago el destroy en la tabla TempItems
             await db.TemporalItem.destroy({
                 where: {
-                    product_id: productToDelete.id
+                    products_id: productToDelete.id
                 }
             });
             return res.redirect('/')

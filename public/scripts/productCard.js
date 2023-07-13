@@ -86,10 +86,10 @@ window.addEventListener('load', async () => {
                 // Hace un find ==> encuentra si el producto esta en el carro
                 let productAlreadyInCart;
                 if (userLogged) {
-                    productAlreadyInCart = userLogged.temporalCart?.temporalItems.find(item => item.product_id == productId);
+                    productAlreadyInCart = userLogged.temporalCart?.temporalItems.find(item => item.products_id == productId);
                 } else {
                     let cart = JSON.parse(localStorage.getItem('temporalCart')) || [];
-                    productAlreadyInCart = cart.find(item => item.product_id == productId);
+                    productAlreadyInCart = cart.find(item => item.products_id == productId);
                 }
                 if (productAlreadyInCart) {
                     card.querySelector('.quick-add-cart-btn').classList.add('hidden');

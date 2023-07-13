@@ -448,7 +448,7 @@ async function checkForUserLogged() {
         document.querySelector('.spinner-overlay').remove()
         productCardWrapper.innerHTML = '';
         localStorageCart?.forEach(item=>{
-            let product = products.find(prod=>prod.id==item.product_id);
+            let product = products.find(prod=>prod.id==item.products_id);
             product.filename = product.files.find(file=>file.file_types_id==1)?.filename;
             let cardHTML = 
             `

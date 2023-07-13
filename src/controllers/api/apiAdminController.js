@@ -16,7 +16,7 @@ const controller = {
         const csvData = json2csv(clients, { fields: ['name', 'last_name', 'email', 'phone'] });
     
         const timestamp = Date.now();
-        const fileName = `archivo_${timestamp}.csv`;
+        const fileName = `CLIENTES_${timestamp}.csv`;
     
         const filePath = `public/csv/${fileName}`;
 
@@ -26,7 +26,7 @@ const controller = {
       
           const headers = {
             'Content-Type': 'text/csv',
-            'Content-Disposition': `attachment; filename=${fileName}.csv`
+            'Content-Disposition': `attachment; filename=${fileName}`
           };
       
           // Envía el archivo al cliente para descarga

@@ -3,12 +3,11 @@ module.exports = (sequelize, dataTypes) => {
 
     let cols = {
         id: {
-            type: dataTypes.INTEGER,
+            type: dataTypes.STRING(36),
             primaryKey: true,
-            autoIncrement: true
         },
         name: { type: dataTypes.STRING(255) },
-        price: { type: dataTypes.DECIMAL(10, 2) },
+        price: { type: dataTypes.INTEGER },
         description: { type: dataTypes.TEXT },
         category_id: { type: dataTypes.INTEGER }
     }
@@ -27,13 +26,18 @@ module.exports = (sequelize, dataTypes) => {
         });
         Product.hasMany(models.ProductFile, {
             as: 'files',
-            foreignKey: 'product_id'
+            foreignKey: 'products_id'
         });
        
         Product.hasMany(models.TemporalItem, {
             as: 'temporalItems',
-            foreignKey: 'product_id'
+            foreignKey: 'products_id'
         });
+
+        Product.hasMany(models.OrderItem,{
+            as: 'orderItems',
+            foreignKey: 'products_id'
+        })
     };
     return Product;
 }

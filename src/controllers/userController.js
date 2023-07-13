@@ -46,7 +46,7 @@ const controller = {
                 let tempItemFile = tempItem.product.files.find(file => file.file_types_id == 1)?.filename;
                 return {
                     tempItemId: tempItem.id,
-                    product_id: tempItem.product_id,
+                    products_id: tempItem.products_id,
                     name: tempItem.product.name,
                     price: tempItem.product.price,
                     filename: tempItemFile
