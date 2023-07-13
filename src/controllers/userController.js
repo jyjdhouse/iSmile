@@ -16,15 +16,17 @@ const provinces = require('../utils/staticDB/provinces');
 const getUser = require('../utils/getUser');
 const getDeepCopy = require('../utils/getDeepCopy');
 const getAllGenres = require('../utils/getAllGenres')
-
+const dateFormater = require('../utils/dateFormater')
 // CONTROLLER
 const controller = {
 
     userProfile: async (req, res) => {
         try {
-            const user = await getUser(req.session.userLoggedId);
+            const user = getDeepCopy(await getUser(req.session.userLoggedId));
+            // Formateo la fecha
+            user.birth_date = dateFormater(user.birth_date);
+            // return res.send(user);
             const genres = await getAllGenres()
-            console.log(user)
             return res.render('userProfile', { user, provinces, genres })
         } catch (error) {
             console.log(`Falle en userController.userProfile: ${error}`);
@@ -96,7 +98,7 @@ const controller = {
             // Datos del body
             let { password } = req.body
             let userData = {
-                id: uuidv4() ,
+                id: uuidv4(),
                 first_name: '',
                 last_name: '',
                 dni: '',
@@ -192,15 +194,15 @@ const controller = {
     },
     update: async (req, res) => {
         try {
-            let userToUpdate = await db.User.findByPk(req.session.userLoggedId, {
-                include: ['address']
-            })
+            let userToUpdate = await getUser(req.session.userLoggedId)
             let userBodyData = req.body;
-
+            // return res.send({userToUpdate,userBodyData});
             // Datos para la tabla user
             let userDataDB = {
                 first_name: userBodyData.first_name,
                 last_name: userBodyData.last_name,
+                birth_date: userBodyData.birth_date,
+                genres_id: userBodyData.genre,
                 phone: userBodyData.phone,
                 dni: userBodyData.dni,
                 wpp_notifications: parseInt(userBodyData.wpp_notifications),
@@ -215,39 +217,34 @@ const controller = {
             })
             // Datos para la tabla address
             // Armo el objeto address con los datos que me llegan del form
-            let createdAddress, addressDataDB;
-            let addressBody = {
+            let createdAddress, shippingAddressDataDB;
+            let shippingAddressBody = {
+                id: uuidv4(),
                 street: userBodyData.street || null,
                 apartment: userBodyData.apartment || null,
                 city: userBodyData.city || null,
                 zip_code: userBodyData.zip_code || null
             }
             // Me fijo si son todos los valores nulos, entonces no creo el address
-            const addressAllKeysNull = Object.values(addressBody).every(value => value === null);
-            // return res.send(addressAllKeysNull)
-            if (!userToUpdate.address) {//Si no tiene una direccion tengo que crear una
-                // Si completo por lo menos algun address data
-                if (!addressAllKeysNull) {
-                    addressDataDB = {
-                        ...addressBody,
-                        provinces_id: userBodyData.provinces_id,
-                        users_id: userToUpdate.id
-                    };
-                    // La creo
-                    createdAddress = await db.Address.create(addressDataDB);
-                }
-            } else { // Si ya tenia
-                addressDataDB = {
-                    ...addressBody,
+            const shippingAddressAllKeysNull = Object.values(shippingAddressBody).every(value => value === null);
+            // Si completo por lo menos algun address data tengo que actualizar/crear
+            if (!shippingAddressAllKeysNull) {
+                shippingAddressDataDB = {
+                    ...shippingAddressBody,
                     provinces_id: userBodyData.provinces_id,
                     users_id: userToUpdate.id
                 };
-                // La actualizo
-                await db.Address.update(addressDataDB, {
-                    where: {
-                        id: userToUpdate.address.id
-                    }
-                });
+                if (!userToUpdate.shippingAddress) {//Si no tiene una direccion tengo que crear una
+                    // Le agrego el campo id 
+                    shippingAddressDataDB.id = uuidv4();
+                    createdAddress = await db.ShippingAddress.create(shippingAddressDataDB);
+                } else { // Si ya tenia tengo que actualizarla
+                    await db.ShippingAddress.update(shippingAddressDataDB, {
+                        where: {
+                            id: userToUpdate.shippingAddress.id
+                        }
+                    });
+                }
             }
             return res.redirect('/user/profile')
         } catch (error) {
@@ -314,7 +311,7 @@ const controller = {
         return res.render('changePasswordError');
         return res.json(error);
     },
-    bookingView: (req,res)=>{
+    bookingView: (req, res) => {
         return res.render('userBooking')
     }
 

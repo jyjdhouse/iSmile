@@ -21,8 +21,9 @@ module.exports = async function(id){
                     }
                 ]
             },
-            'address',
-            'userCategory'
+            'shippingAddress',
+            'userCategory',
+            'genre'
         ]
     });
 }

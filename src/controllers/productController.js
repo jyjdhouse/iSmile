@@ -7,7 +7,7 @@ const Op = Sequelize.Op;
 const getCategories = require('../utils/getCategories')
 
 // Librerias
-
+const { v4: uuidv4 } = require('uuid');
 // utils
 const getRandomItems = require('../utils/getRandomItems');
 const getProduct = require('../utils/getProduct');
@@ -67,6 +67,7 @@ const controller = {
 
 
             let productObject = {
+                id: uuidv4() ,
                 name,
                 price,
                 description,
