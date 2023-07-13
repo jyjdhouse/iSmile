@@ -275,7 +275,8 @@ window.addEventListener('load', () => {
                     form.closest('.landing-video-container')?.querySelector('.video')?.setAttribute('src', previousSrc) ||
                     form.closest('.blog-background')?.querySelector('.blog-background-image')?.setAttribute('src', previousSrc) ||
                     form.closest('.product-gallery-card')?.querySelector('.gallery-image')?.setAttribute('src', previousSrc);
-            }
+                previousSrc = undefined;
+                }
 
             // Reiniciar el valor del elemento <input>
             form.querySelector('input').value = '';

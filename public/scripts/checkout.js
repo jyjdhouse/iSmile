@@ -190,7 +190,7 @@ continueButtons.forEach(btn => {
             let zipCode = stepFormContainer.querySelector('#zip-code').value;
             let userAddress = {
                 street: stepFormContainer.querySelector('#street').value,
-                streetNumber: stepFormContainer.querySelector('#street-number').value,
+                zipCode,
                 apartment: stepFormContainer.querySelector('#floor')?.value || '',
                 province: stepFormContainer.querySelector('#province').value,
                 city: stepFormContainer.querySelector('#city').value
@@ -200,7 +200,7 @@ continueButtons.forEach(btn => {
             stepWrapper.classList.remove('hidden');
             stepWrapper.querySelector('.deliver-wrapper-zip-code-span').innerHTML = zipCode;
             stepWrapper.querySelector('.deliver-wrapper-name').innerHTML = userFullName;
-            stepWrapper.querySelector('.deliver-wrapper-address').innerHTML = `${userAddress.street} ${userAddress.streetNumber} ${userAddress.apartment}, ${userAddress.province}, ${userAddress.city} `;
+            stepWrapper.querySelector('.deliver-wrapper-address').innerHTML = `${userAddress.street} ${userAddress.apartment}, ${userAddress.province}, ${userAddress.city} `;
             // Le saco el hidden al de payment
             document.querySelector('.payment-step').classList.remove('hidden');
             modifyMainHeight('second-view');

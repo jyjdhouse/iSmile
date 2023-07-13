@@ -117,23 +117,19 @@
                                     <div class="delivery-option-box delivery-option-box-active">Enviar a domicilio</div>
                                     <div class="delivery-option-box">Retirar por el local</div>
                                 </div>
-                                <div class="field zip-code-field">
-                                    <label for="name" class="label bold">Codigo Postal</label>
-                                    <input type="text" name="zip-code" id="zip-code" class="input numeric-only-input">
-                                    <button class="calculate-delivery-button">Calcular</button>
-                                </div>
                                 <label class="bold label step-label">Completa tu direccion de entrega</label>
+                                <!-- TODO: checkbox con completar datos de envio -->
                                 <div class="field">
                                     <label for="country" class="label bold">Pais*</label>
                                     <input type="text" name="country" id="country" class="input required letter-only-input">
                                 </div>
                                 <div class="field">
-                                    <label for="street" class="label bold">Calle*</label>
+                                    <label for="street" class="label bold">Calle & Numero*</label>
                                     <input type="text" name="street" id="street" class="input required">
                                 </div>
                                 <div class="field">
-                                    <label for="street-number" class="label bold">Numero*</label>
-                                    <input type="text" name="street-number" id="street-number" class="input required numeric-only-input">
+                                    <label for="street-number" class="label bold">Codigo Postal*</label>
+                                    <input type="text" name="street-number" id="zip-code" class="input required numeric-only-input">
                                 </div>
                                 <div class="field">
                                     <label for="floor" class="label bold">Piso / Departamento</label>
@@ -172,7 +168,6 @@
                                 <div class="field long-field payment-logo-container">
                                     <div class="box-container">
                                         <div class="img-container">
-                                            <!-- TODO: logo getnet -->
                                             <img src="/img/getnet_logo.png" alt="getnet-img" class="mp-logo getnet-logo">
                                         </div>
                                         <p class="payment-logo-label">Tarjeta crédito/débito</p>
@@ -189,7 +184,7 @@
                                         cuenta de Mercado Pago</p>
                                     <div class="payment-box">
                                         <i class='bx bxs-credit-card'></i>
-                                        <p class="payment-box-label">Tarjetas</p>
+                                        <p class="payment-box-label">Tarjeta de credito</p>
                                     </div>
                                     <div class="payment-box">
                                         <i class='bx bx-credit-card-front'></i>
