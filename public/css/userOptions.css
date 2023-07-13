@@ -78,7 +78,11 @@
     width: fit-content;
     height: 100%;
 }
-
+.user-options-header-logo{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 .user-options-buttons-container {
     width: 100%;
     height: 70%;

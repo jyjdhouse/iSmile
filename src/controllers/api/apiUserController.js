@@ -15,9 +15,10 @@ const controller = {
         try {
             let userId = req.userId;
             if (!userId) { //Si no viene el userID, no se chekeo el token ==> devuelvo error en la solicitud
+                console.log("NO HYA USER");
                 const error = new Error('Error en la solicitud, debes iniciar sesion nuevamente');
                 // Devolviendo una respuesta de error
-                res.status(400).json({
+                res.status(404).json({
                     ok: false,
                     error: error.message
                 });

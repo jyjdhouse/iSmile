@@ -143,7 +143,8 @@ export async function removeWishlistProduct(productId, colorId) {
 };
 
 export async function getLoggedUser() {
-    return (await (await fetch(`/api/user/getLoggedUserId`)).json())
+    let response =  (await (await fetch(`/api/user/getLoggedUserId`)).json());
+    return response.ok ? response : undefined;
 };
 
 export async function printWishlistProducts() {

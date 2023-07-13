@@ -19,7 +19,8 @@ window.addEventListener('load', async () => {
         const shopingCartQuickPopup = document.querySelector('.add-to-cart-container');
         const closingCardBtns = document.querySelectorAll('.close-cart-menu');
         var totalProducts = document.querySelectorAll('.products-quantity');
-        var userLogged = (await getLoggedUser()).user;
+        var userLogged = (await getLoggedUser());
+        userLogged = userLogged && userLogged.user;
         // Defino en el window para poder usarla en otros lugares
         window.userLogged = userLogged
         userLogged && localStorage.removeItem('temporalCart');

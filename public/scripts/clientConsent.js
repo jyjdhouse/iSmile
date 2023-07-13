@@ -74,13 +74,12 @@ window.addEventListener('load', () => {
             let inputClass = input.dataset.errorclass;
             let errorMsg = document.querySelector(`.${inputClass}`);
             let value = input.value;
-            console.log(value);
             if (!value) {
                 flag = false;
                 errorMsg.classList.remove('hidden');
             }
             // Me fijo si esta tocando para poner nombre
-            errorMsg.addEventListener('touchstart', () => {
+            input.addEventListener('input', () => {
                 errorMsg.classList.add('hidden');
             });
         });
@@ -122,7 +121,6 @@ window.addEventListener('load', () => {
         e.preventDefault();
         // Chequeo si hay algun campo sin completar
         let allFieldsComplete = checkForAllFieldsComplete();
-        console.log(allFieldsComplete);
         if (!allFieldsComplete) return
         
         
