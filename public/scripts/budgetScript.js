@@ -59,13 +59,13 @@ window.addEventListener('load', async () => {
         // Agarro al input mas cerca
         const input = e.target.closest('td').querySelector('.quantity-input');
         input.value = parseInt(input.value) + 1;
-        checkRowPrices(input.closest('.row'));
+        checkRowPrices();
     }
     const handleSubstractingQuantity = (e) => { //funcion que se encarga de manera el click del +
         // Agarro al input mas cerca
         const input = e.target.closest('td').querySelector('.quantity-input');
         input.value = input.value > 1 ? parseInt(input.value) - 1 : 1;
-        checkRowPrices(input.closest('.row'));
+        checkRowPrices();
     }
 
     function handleInputsQuantity() {
@@ -74,8 +74,7 @@ window.addEventListener('load', async () => {
             !input.value ? input.value = 1 : null;
             input.addEventListener('change', (e) => {
                 (!e.target.value || e.target.value < 1) ? input.value = 1 : null;
-                const row = input.closest('.row');
-                checkRowPrices(row);
+                checkRowPrices();
             });
         });
         // Logica para escuchar los simbolos + - 
@@ -110,21 +109,39 @@ window.addEventListener('load', async () => {
                 // Ahora pinto los precios unitarios
                 row.querySelector('.single-price').innerHTML = price || 0;
                 row.querySelector('.single-cash-price').innerHTML = cashPrice || 0;
-                checkRowPrices(row);
+                checkRowPrices();
             });
         });
     };
     productPrices();
 
     // Logica que va cambiando precios
-    function checkRowPrices(row) {
-        let singlePrice = parseInt(removeNumberSeparators(row.querySelector('.single-price').innerHTML));
-        let singleCashPrice = parseInt(removeNumberSeparators(row.querySelector('.single-cash-price').innerHTML));
-        let quantity = parseInt(row.querySelector('.quantity-input').value);
-        let total = row.querySelector('.total');
-        let totalCash = row.querySelector('.total-cash');
-        total.innerHTML = quantity * singlePrice;
-        totalCash.innerHTML = quantity * singleCashPrice;
+    function checkRowPrices() {
+        let rows = document.querySelectorAll('.row');
+        rows.forEach(row => {
+            
+            let singlePrice = parseInt(removeNumberSeparators(row.querySelector('.single-price').innerHTML));
+            let singleCashPrice = parseInt(removeNumberSeparators(row.querySelector('.single-cash-price').innerHTML));
+            let quantity = parseInt(row.querySelector('.quantity-input').value);
+            let total = row.querySelector('.total');
+            let totalCash = row.querySelector('.total-cash');
+            total.innerHTML = quantity * singlePrice;
+            if (discountInput.value > 0) { //Si hay descuento
+                //Para el total: quantity * singlePrice * descuento
+                totalCash.innerHTML = quantity * singlePrice * (1 - discountInput.value / 100);
+                // Para el single: singlePrice * descuento
+                row.querySelector('.single-cash-price').innerHTML = singlePrice * (1 - discountInput.value / 100);
+            } else {
+                // Tengo que volver a buscar el precio en efectivo para pintarlo
+                let select = row.querySelector('.description');
+                const selectedOption = select.selectedOptions[0];
+                const cashPrice = parseInt(removeNumberSeparators(selectedOption.attributes['data.cash_price']?.value));
+                console.log(cashPrice);
+                row.querySelector('.single-cash-price').innerHTML = cashPrice || 0;
+                singleCashPrice = row.querySelector('.single-cash-price').innerHTML;
+                totalCash.innerHTML = quantity * singleCashPrice;
+            }
+        });
         getTotalPrice();
     }
 
@@ -157,8 +174,8 @@ window.addEventListener('load', async () => {
         });
         totalElement.innerHTML = totalAmount;
 
-        if( discount > 0 ){//Si tiene descuento
-            cashTotalElement.innerHTML = totalAmount *(1-discount / 100); //Aplico el descuento
+        if (discount > 0) {//Si tiene descuento
+            cashTotalElement.innerHTML = totalAmount * (1 - discount / 100); //Aplico el descuento
         } else {
             cashTotals.forEach(cashTotal => {
                 cashTotalamount += parseInt(removeNumberSeparators(cashTotal.innerHTML)) || 0;
@@ -173,7 +190,7 @@ window.addEventListener('load', async () => {
     function formatPriceNumber() {
         let priceNumbers = document.querySelectorAll('.price-number');
         priceNumbers.forEach(num => num.innerHTML = parseInt(removeNumberSeparators(num.innerHTML)).toLocaleString('es'));
-        return 
+        return
     };
     function removeNumberSeparators(number) { //ME los devuelve al formato 60000 para poder sumar
         return number.replace(/\./g, '');
@@ -182,16 +199,18 @@ window.addEventListener('load', async () => {
     // Logica para que todos los inputs numericos no acepten letras
     const applyDiscount = (num) => { //Aplica el descuento, saca las columnas de pago en efectivo
         const cashColumns = document.querySelectorAll('.cash-column');
-        const totalSpan = document.querySelector('.total-budget-type-span');
+        const budgetTypes = document.querySelectorAll('.budget-type');
         // Si el valor es 0, muestro devuelta como estaba antes
         if (num == 0) {
-            cashColumns.forEach(col => col.classList.remove('hidden'));
-            totalSpan.innerHTML = `(Efectivo)`
+            // cashColumns.forEach(col => col.classList.remove('hidden'));
+            budgetTypes.forEach(span => span.innerHTML = `Efectivo`);
+            checkRowPrices();
             return
         }
-        // Sino oculto las columnas y pongo con descuento
-        cashColumns.forEach(col => col.classList.add('hidden'));
-        totalSpan.innerHTML = `(Descuento)`
+        // // Sino oculto las columnas y pongo con descuento
+        // cashColumns.forEach(col => col.classList.add('hidden'));
+        budgetTypes.forEach(span => span.innerHTML = `Descuento`);
+        checkRowPrices();
         return
     }
     let numericInputs = document.querySelectorAll('.numeric-only-input');
@@ -262,10 +281,9 @@ window.addEventListener('load', async () => {
         // Meto el disclaimer msg
         const disclaimerDiv = document.createElement('div');
         // si tiene descuento...
-        if(discountInput.value > 0) { //Agrego esto y borro las columnas cash
-            disclaimerDiv.innerHTML = 
-            `<p class="disclaimer-p">${discountInput.value}% de descuento aplicado</p>   `;
-            bodyClone.querySelectorAll('.cash-column').forEach(element => element.remove());
+        if (discountInput.value > 0) { //Agrego esto y borro las columnas cash
+            disclaimerDiv.innerHTML =
+                `<p class="disclaimer-p">${discountInput.value}% de descuento aplicado</p>   `;
         }
         disclaimerDiv.innerHTML +=
             `
