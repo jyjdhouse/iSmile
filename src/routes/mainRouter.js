@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const mainController = require('../controllers/mainController');
 const PDFGeneratorController = require('../controllers/PDFGenerator/pdfGeneratorController');
-const multer = require('multer');
 
 // Middlewares
 const loginMiddleware = require('../middlewares/loginMiddleware');
@@ -10,6 +9,7 @@ const isAdminMiddleware = require('../middlewares/isAdminMiddleware');
 const uploadHomeImages = require('../middlewares/uploadHomeImages');
 
 // Configuración básica de multer
+const multer = require('multer');
 const upload = multer();
 
 // GET

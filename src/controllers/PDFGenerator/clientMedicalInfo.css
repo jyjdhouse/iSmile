@@ -333,6 +333,7 @@ html {
     width: 40%;
 }
 
+
 /* Preguntas de mujer (100%) */
 .women-only {
     width: 100%;
@@ -407,6 +408,16 @@ html {
     margin-bottom: 0;
 }
 
+.other-treatment-input-container{
+    width: 100%;
+    margin-top: 15px;
+}
+.other-treatment-input{
+    width: 100%;
+    text-align: center;
+}
+
+/*  */
 /* Para los campos que dice por favor especificar */
 .field.specify-field {
     flex-wrap: wrap;

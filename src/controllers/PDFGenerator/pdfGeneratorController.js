@@ -8,7 +8,6 @@ const controller = {
         let contentHTML = req.body.contentHTML;
         // console.log(contentHTML);
         contentHTML = contentHTML;
-
         let signaturePath;
         // TEMA FIRMA
         if (req.file) {
@@ -79,7 +78,7 @@ const controller = {
     budgetPDF: async (req, res) => {
         try {
             let contentHTML = req.body.html;
-
+            
 
             // Crea una instancia de Puppeteer y abre una nueva página
             const browser = await puppeteer.launch({ headless: true });

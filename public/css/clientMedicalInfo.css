@@ -349,6 +349,15 @@
     margin-right: 1rem;
 }
 
+.other-treatment-input-container{
+    width: 100%;
+    margin-top: 15px;
+}
+.other-treatment-input{
+    width: 100%;
+    text-align: center;
+}
+/*  */
 
 .text-area-field {
     width: 100%;

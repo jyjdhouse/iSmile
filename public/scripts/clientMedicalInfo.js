@@ -192,7 +192,13 @@ window.addEventListener('load', () => {
         };
     });
 
-
+    // Logica para mostrar input si tocan 'otro' en face treatments
+    const otherOptionCheckbox = document.querySelector('#face-treatment-other-option');
+    const otherOptionInputContainer = document.querySelector('.other-treatment-input-container');
+    otherOptionCheckbox.addEventListener('click',()=>{
+        otherOptionCheckbox.checked ? otherOptionInputContainer.classList.remove('hidden') :
+        otherOptionInputContainer.classList.add('hidden');
+    })
 
     // LOGICA PARA CAPTURAR FIRMA
     const dataURLtoFile = (dataURL, filename) => {
@@ -317,6 +323,9 @@ window.addEventListener('load', () => {
             body: formData
         });
         if (response.ok) {
+            // Borro el formdata
+            formData.delete('contentHTML');
+            
             document.querySelector('.spinner-overlay').classList.add('hidden');
             // Convierte la respuesta en un Blob (archivo)
             const archivoBlob = await response.blob();

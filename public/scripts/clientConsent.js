@@ -19,7 +19,7 @@ window.addEventListener('load', () => {
     const clearButton = document.getElementById('clearButton');
     const checkButton = document.getElementById('confirm-signature');
     checkButton.classList.add('hidden');
-    const signaturePad = new SignaturePad(canvas);  
+    const signaturePad = new SignaturePad(canvas);
     canvas.addEventListener('touchstart', () => {
         checkButton.classList.remove('hidden');
         // canvas.width = canvas.offsetWidth;
@@ -122,15 +122,15 @@ window.addEventListener('load', () => {
         // Chequeo si hay algun campo sin completar
         let allFieldsComplete = checkForAllFieldsComplete();
         if (!allFieldsComplete) return
-        
-        
+
+
         // Logica para clonar repo
         let bodyClone = document.body.cloneNode(true);
         // Remuevo lo innecesario
         bodyClone.removeChild(bodyClone.querySelector('.spinner-overlay'));
         // Agarro los buttons
         let elementsToRemove = bodyClone.querySelectorAll('.button-container, .button-to-remove, .error-msg');
-        elementsToRemove.forEach(btn=>btn.remove());
+        elementsToRemove.forEach(btn => btn.remove());
         // Agarro todo lo que quiero cambiar
         let inputsToChange = bodyClone.querySelectorAll('input,textarea');
         inputsToChange.forEach(input => {
@@ -140,11 +140,11 @@ window.addEventListener('load', () => {
             const paragraph = document.createElement('span');
             paragraph.classList.add('patient-option', 'bold');
             // Si es el textArea le hago en otro renglon
-            type == 'textarea' ? paragraph.classList.add('block'):null;
+            type == 'textarea' ? paragraph.classList.add('block') : null;
             paragraph.textContent = type == 'date' ? dateFormater(value) : value;
             input.parentNode.replaceChild(paragraph, input);
         });
-        
+
         // return document.body.parentNode.replaceChild(bodyClone, document.body);
 
 
@@ -160,6 +160,9 @@ window.addEventListener('load', () => {
         });
 
         if (response.ok) {
+            // Borro el formdata por si lo quieren mandar devuelta
+            formData.delete('contentHTML');
+
             document.querySelector('.spinner-overlay').classList.add('hidden');
             // Convierte la respuesta en un Blob (archivo)
             const archivoBlob = await response.blob();
