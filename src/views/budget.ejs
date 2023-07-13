@@ -40,7 +40,10 @@
                 </section>
                 <button class="add-budget-product-btn remove-element">Agregar <i
                         class='bx bx-plus-medical'></i></button>
-
+                <section class="discount-section remove-element">
+                    <p class="discount-label">Descuento: </p>
+                    <input type="text" class="numeric-only-input discount-input">
+                </section>
 
                 <table class="budget-table">
                     <thead>
@@ -50,8 +53,8 @@
                             <th>Cantidad</th>
                             <th>Precio Unit.</th>
                             <th>Total</th>
-                            <th>Precio Unit. Efectivo</th>
-                            <th>Total Efectivo</th>
+                            <th class="cash-column">Precio Unit. Efectivo</th>
+                            <th class="cash-column">Total Efectivo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,15 +79,16 @@
                             </td>
                             <td><span class="single-price price-number"></span></td>
                             <td><span class="total price-number"></span></td>
-                            <td><span class="single-cash-price price-number"></span></td>
-                            <td><span class="total-cash price-number"></span></td>
+                            <td class="cash-column"><span class="single-cash-price price-number"></span></td>
+                            <td class="cash-column"><span class="total-cash price-number"></span></td>
                         </tr>
                     </tbody>
                 </table>
+
                 <div class="total-prices-container">
                     <p class="total-prices-label bold">Total a abonar: $<span class="total-budget price-number"></span>
                     </p>
-                    <p class="total-prices-label bold">Total a abonar (Efectivo): $<span
+                    <p class="total-prices-label bold">Total a abonar <span class="total-budget-type-span">(Efectivo)</span>: $<span
                             class="total-cash-budget price-number"></span></p>
                 </div>
 

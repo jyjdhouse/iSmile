@@ -12,6 +12,26 @@
     flex-wrap: wrap;
     justify-content: space-between;
 }
+/* Para el descuento */
+.discount-section{
+    width: fit-content;
+    display: flex;
+    height: fit-content;
+    margin: 30px 0;
+    align-items: center;
+}
+.discount-label{
+    margin-right: 15px;
+    font-size: 17px;
+}
+.discount-input{
+    height: fit-content;
+    padding: 3px 0;
+    border-radius: 1rem;
+    width: 45px;
+    text-align: center;
+}
+/*  */
 .client-details{
     width: 100%;
     display: flex;

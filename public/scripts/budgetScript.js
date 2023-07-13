@@ -1,4 +1,4 @@
-import { dateFormater, getTodaysDate } from "./utils.js";
+import { dateFormater, getTodaysDate, isNumeric } from "./utils.js";
 window.addEventListener('load', async () => {
     // In your Javascript (external .js resource or <script> tag)
 
@@ -148,25 +148,77 @@ window.addEventListener('load', async () => {
         const cashTotals = document.querySelectorAll('.total-cash');
         let totalAmount = 0
         let cashTotalamount = 0;
+        let discount = discountInput.value;
+        let cashTotalElement = document.querySelector('.total-cash-budget');
+        let totalElement = document.querySelector('.total-budget')
+        // Hago la suma del total
         totals.forEach(total => {
             totalAmount += parseInt(removeNumberSeparators(total.innerHTML)) || 0;
         });
-        cashTotals.forEach(cashTotal => {
-            cashTotalamount += parseInt(removeNumberSeparators(cashTotal.innerHTML)) || 0;
-        });
-        document.querySelector('.total-budget').innerHTML = totalAmount;
-        document.querySelector('.total-cash-budget').innerHTML = cashTotalamount;
-        formatPriceNumber()
+        totalElement.innerHTML = totalAmount;
+
+        if( discount > 0 ){//Si tiene descuento
+            cashTotalElement.innerHTML = totalAmount *(1-discount / 100); //Aplico el descuento
+        } else {
+            cashTotals.forEach(cashTotal => {
+                cashTotalamount += parseInt(removeNumberSeparators(cashTotal.innerHTML)) || 0;
+            });
+            cashTotalElement.innerHTML = cashTotalamount;
+        }
+        formatPriceNumber();
+        return
     };
 
     // Logica para mostrar todos los numeros con punto
     function formatPriceNumber() {
         let priceNumbers = document.querySelectorAll('.price-number');
         priceNumbers.forEach(num => num.innerHTML = parseInt(removeNumberSeparators(num.innerHTML)).toLocaleString('es'));
+        return 
     };
     function removeNumberSeparators(number) { //ME los devuelve al formato 60000 para poder sumar
         return number.replace(/\./g, '');
     };
+
+    // Logica para que todos los inputs numericos no acepten letras
+    const applyDiscount = (num) => { //Aplica el descuento, saca las columnas de pago en efectivo
+        const cashColumns = document.querySelectorAll('.cash-column');
+        const totalSpan = document.querySelector('.total-budget-type-span');
+        // Si el valor es 0, muestro devuelta como estaba antes
+        if (num == 0) {
+            cashColumns.forEach(col => col.classList.remove('hidden'));
+            totalSpan.innerHTML = `(Efectivo)`
+            return
+        }
+        // Sino oculto las columnas y pongo con descuento
+        cashColumns.forEach(col => col.classList.add('hidden'));
+        totalSpan.innerHTML = `(Descuento)`
+        return
+    }
+    let numericInputs = document.querySelectorAll('.numeric-only-input');
+    const discountInput = document.querySelector('.discount-input');
+    // Logica para que apenas cargue mostrar descuento en 0
+    discountInput.value = 0;
+    // Logica que para al tocar el input aparezca seleccionado
+    discountInput.addEventListener('focus', () => {
+        discountInput.select();
+    })
+    numericInputs.forEach(input => {
+        // Tomo el ultimo valor
+        let lastInputValue = input.value;
+        input.addEventListener("input", function (e) {
+            var inputValue = e.target.value;
+            if (!isNumeric(inputValue)) { // Si no es un número, borra el contenido del campo
+                e.target.value = lastInputValue;
+            } else {
+                lastInputValue = inputValue; // Almacenar el último valor válido
+                if (input.classList.contains('discount-input')) {//Agarro al discount y le pregunto por el valor
+                    applyDiscount(inputValue);
+                    getTotalPrice();
+                }
+            }
+        });
+    });
+
 
     // Muestro como fecha predeterminada  la del dia
     const inputDate = document.querySelector('#date');
@@ -209,8 +261,15 @@ window.addEventListener('load', async () => {
 
         // Meto el disclaimer msg
         const disclaimerDiv = document.createElement('div');
-        disclaimerDiv.innerHTML = 
-        `
+        // si tiene descuento...
+        if(discountInput.value > 0) { //Agrego esto y borro las columnas cash
+            disclaimerDiv.innerHTML = 
+            `<p class="disclaimer-p">${discountInput.value}% de descuento aplicado</p>   `;
+            bodyClone.querySelectorAll('.cash-column').forEach(element => element.remove());
+        }
+        disclaimerDiv.innerHTML +=
+            `
+                    
                     <p class="disclaimer-p">Presupuesto Valido por 7 días</p>
                     <p class="disclaimer-p">Los precios son con tarjeta de débito, transferencia y tarjeta de crédito hasta 3 cuotas</p>
                     <p class="disclaimer-final-msg">Agradecemos su confianza, Atentamente</p>
