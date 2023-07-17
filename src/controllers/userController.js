@@ -113,8 +113,8 @@ const controller = {
                 // Agarro el producto
                 let itemInDB = productsInDB.find(prod => prod.id == item.products_id);
                 // console.log(itemInDB);
-                let orderItemName = itemInDB && itemInDB.name;
-                let orderItemPrice = itemInDB?.price;
+                let orderItemName = itemInDB.name;
+                let orderItemPrice = item.price ? parseInt(item.price) : itemInDB?.price;
                 let orderItemQuantity = parseInt(item.quantity);
                 // Voy armando el array de orderItems para hacer un bulkcreate
                 orderItemsToDB.push({

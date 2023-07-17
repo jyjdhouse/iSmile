@@ -179,8 +179,8 @@ continueButtons.forEach(btn => {
                 street: stepFormContainer.querySelector('#billing_street').value,
                 zipCode: stepFormContainer.querySelector('#billing_zip-code').value,
                 apartment: stepFormContainer.querySelector('#billing_floor')?.value || '',
-                city: stepFormContainer.querySelector('#billing_city').value,
-                country: stepFormContainer.querySelector('#billing_country').value
+                province: stepFormContainer.querySelector('#billing_province').value,
+                city: stepFormContainer.querySelector('#billing_city').value
             }
 
             // invierto que contendor se ve
@@ -191,7 +191,7 @@ continueButtons.forEach(btn => {
             stepWrapper.querySelector('.info-wrapper-name').innerHTML = userFullName;
             stepWrapper.querySelector('.info-wrapper-phone-span').innerHTML = userPhone;
             stepWrapper.querySelector('.info-wrapper-zip-code-span').innerHTML = billingAddress.zipCode;
-            stepWrapper.querySelector('.info-wrapper-street').innerHTML = `${billingAddress.street} ${billingAddress.apartment}, ${billingAddress.city} , ${billingAddress.country}`;
+            stepWrapper.querySelector('.info-wrapper-street').innerHTML = `${billingAddress.street} ${billingAddress.apartment}, ${billingAddress.city} , ${billingAddress.province}`;
 
             // Pregunto si ambos deliver-form y deliver-wrapper estan ocultos, si lo estan es porque es la
             // primera vez que toca en continuar ==> lo hago aparecer. Sino no pasa nada
@@ -228,7 +228,6 @@ continueButtons.forEach(btn => {
                     apartment: stepFormContainer.querySelector('#shipping-address-apartment-p')?.innerHTML || '',
                     province: stepFormContainer.querySelector('#shipping-address-province-p').innerHTML,
                     city: stepFormContainer.querySelector('#shipping-address-city-p').innerHTML,
-                    country: stepFormContainer.querySelector('#shipping-address-country-p').innerHTML,
                 }
             } else {
                 shippingAddress = {
@@ -237,7 +236,6 @@ continueButtons.forEach(btn => {
                     apartment: stepFormContainer.querySelector('#shipping_floor')?.value || '',
                     province: stepFormContainer.querySelector('#shipping_province').value,
                     city: stepFormContainer.querySelector('#shipping_city').value,
-                    country: stepFormContainer.querySelector('#shipping_country').value,
                 }
             }
 
@@ -266,7 +264,7 @@ continueButtons.forEach(btn => {
                     usingSameAddressWrapper.classList.add('hidden');
                     usingdifferentAddressWrapper.classList.remove('hidden');
                     stepWrapper.querySelector('.deliver-wrapper-zip-code-span').innerHTML = shippingAddress.zipCode;
-                    stepWrapper.querySelector('.deliver-wrapper-address').innerHTML = `${shippingAddress.street} ${shippingAddress.apartment}, ${shippingAddress.city}, ${shippingAddress.country} `;
+                    stepWrapper.querySelector('.deliver-wrapper-address').innerHTML = `${shippingAddress.street} ${shippingAddress.apartment}, ${shippingAddress.city}, ${shippingAddress.province} `;
                 }
             } else { //RETIRO
                 // El wrapper de retiro de base va

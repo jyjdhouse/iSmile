@@ -1,18 +1,22 @@
 const secret = require('../utils/secret').secret;
 const jwt = require('jsonwebtoken');
 
-const isAdmin = async(req,res,next) =>{
+const isAdmin = async (req, res, next) => {
     let userId;
     //Agarro la cookie del token
     const token = req.cookies?.adminToken;
-    if(token){
+    if (token) {
         const decodedData = jwt.verify(token, secret);
-        if(decodedData){ //Si verifico el token, solo agarro el id
+        if (decodedData) { //Si verifico el token, solo agarro el id
             userId = decodedData?.id
         }
     };
-    if(!userId){ //Si no es admin
-        return res.redirect('/user/logout'); //Lo deslogueo
+    if (!userId) { //Si no es admin
+        //Lo deslogueo
+        res.clearCookie('userAccessToken');
+        res.clearCookie('adminToken')
+        req.session.destroy();
+        return res.redirect('/')
     }
     next();
 }

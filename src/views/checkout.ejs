@@ -119,11 +119,6 @@
                                 <section class="billing-address-section step-section">
                                     <label class="bold label step-label">Completa tu dirección de facturación</label>
                                     <div class="field">
-                                        <label for="billing_country" class="label bold">Pais*</label>
-                                        <input type="text" name="billing_country" id="billing_country"
-                                            class="input required letter-only-input" placeholder="Argentina">
-                                    </div>
-                                    <div class="field">
                                         <label for="billing_street" class="label bold">Calle & Numero*</label>
                                         <input type="text" name="billing_street" id="billing_street"
                                             class="input required" placeholder="Av. Santa Fé 2911">
@@ -200,17 +195,6 @@
                                                 usuario</label>
                                         </div>
                                         <% } %>
-
-                                            <div class="field required-field shipping-field">
-                                                <label for="shipping_country" class="label bold">Pais*</label>
-                                                <input type="text" name="shipping_country" id="shipping_country"
-                                                    class="input required letter-only-input">
-                                                <% if (locals.userLogged && userLogged.shippingAddress) { %>
-                                                    <p class="shipping-address-p hidden" id="shipping-address-country-p">
-                                                        <%= userLogged.shippingAddress.country %>
-                                                    </p>
-                                                    <% } %>
-                                            </div>
                                             <div class="field required-field shipping-field">
                                                 <label for="shipping_street" class="label bold">Calle & Numero*</label>
                                                 <input type="text" name="shipping_street" id="shipping_street"

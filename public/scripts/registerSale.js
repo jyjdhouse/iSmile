@@ -1,7 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
-
-
 window.addEventListener('load', () => {
 
     const addedItemsSection = document.querySelector('.added-items-container')
@@ -130,16 +126,16 @@ window.addEventListener('load', () => {
         let time = form.querySelector('input[name="time"]').value;
         let name = form.querySelector('input[name="name"]').value;
         let last_name = form.querySelector('input[name="last_name"]').value;
-        let phone_code = form.querySelector('input[name="phone_code"]').value;
+        let phone_code = form.querySelector('select[name="phone_code"]').value;
         let email = form.querySelector('input[name="email"]').value;
         let phone = form.querySelector('input[name="phone"]').value;
         let dni = form.querySelector('input[name="dni"]').value;
-        let payment_methods_id = form.querySelector('input[name="payment_methods"]').value;
+        let payment_methods_id = form.querySelector('select[name="payment_methods"]').value;
         let billing_street = form.querySelector('input[name="billing_street"]').value;
         let billing_floor = form.querySelector('input[name="billing_floor"]').value;
-        let billing_zip_code = form.querySelector('input[name="zip_code"]').value;
+        let billing_zip_code = form.querySelector('input[name="billing_zip_code"]').value;
         let billing_city = form.querySelector('input[name="billing_city"]').value;
-        let billing_province = form.querySelector('input[name="billing_province"]').value;
+        let billing_province = form.querySelector('select[name="billing_province"]').value;
         
 
         order = {
@@ -176,7 +172,10 @@ window.addEventListener('load', () => {
                 quantity
             }
             order.items.push(objectToPush)
-        })
+        });
+
+        // POST
+        console.log(order);
 
 
 
