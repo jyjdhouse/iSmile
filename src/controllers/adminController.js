@@ -1,6 +1,8 @@
 const db = require('../database/models');
 const getAllTreatments = require('../utils/getAllTreatments');
 const getDeepCopy = require('../utils/getDeepCopy');
+const countryCodes = require('../utils/staticDB/countryCodes');
+const provinces = require('../utils/staticDB/provinces');
 
 
 const orderByAlfabet = (array)=>{
@@ -19,7 +21,11 @@ const orderByAlfabet = (array)=>{
 }
 
 const controller = {
-    
+    registerSale: async (req, res) => {
+        const products = await db.Product.findAll()
+        const paymentForms = await db.PaymentForm.findAll()
+        return res.render('registerSale', {products, paymentForms, countryCodes, provinces})
+    },
     updateServicesPrice: async (req, res) => {
         let treatments = getDeepCopy(await getAllTreatments());
         treatments = orderByAlfabet(treatments);
