@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+        <link rel="stylesheet" href="/css/registerSale.css" type="text/css">
+        <script src="/scripts/registerSale.js" type="module"></script>
+        <title>Registrar venta</title>
+</head>
+
+<body class="register-sale-body">
+
+    <%- include('./partials/header.ejs') %>
+
+        <div class="register-sale-intro-container">
+            <h1>Registrar venta</h1>
+        </div>
+
+        <main class="register-sale-main">
+
+            <form action="/admin/register-sale" class="register-sale-form" method="POST">
+
+                <div class="input-label-container">
+                    <label for="date">Fecha</label>
+                    <input type="date" name="date">
+                </div>
+
+                <div class="input-label-container">
+                    <label for="time">Hora</label>
+                    <input type="time" name="time">
+                </div>
+
+
+                <div class="input-label-container">
+                    <label for="name">Nombre</label>
+                    <input type="text" name="name">
+                </div>
+
+                <div class="input-label-container">
+                    <label for="last_name">Apellido</label>
+                    <input type="text" name="last_name">
+                </div>
+
+                <div class="input-label-container">
+                    <label for="dni">DNI</label>
+                    <input type="text" name="dni">
+                </div>
+
+                <div class="input-label-container">
+                    <label for="email">Email</label>
+                    <input type="email" name="email">
+                </div>
+
+                <div class="input-label-container">
+                    <select name="phone_code" class="prefix-phone">
+                        <% countryCodes.forEach(country=> { %>
+                            <option value="+<%=country.code %>" <%=country.code==54 && 'selected' %>
+                                > (+<%= country.code %>) <%= country.country_name %>
+                            </option>
+                            <% }) %>
+                    </select>
+                    <input type="text" name="phone" id="phone" class="input required numeric-only-input"
+                        placeholder="1124852020">
+
+                </div>
+
+
+                <h3>Dirección de facturación</h3>
+
+                <div class="input-label-container">
+                    <label for="billing_street">Calle y número</label>
+                    <input type="text" name="street">
+                </div>
+
+                <div class="input-label-container">
+                    <label for="billing_floor">Piso y departamento</label>
+                    <input type="text" name="apartment">
+                </div>
+
+
+                <div class="input-label-container">
+                    <label for="billing_zip_code">Código postal</label>
+                    <input type="text" name="zip_code">
+                </div>
+
+                <div class="input-label-container">
+                    <label for="billing_city">Ciudad</label>
+                    <input type="text" name="city">
+                </div>
+
+                <div class="input-label-container">
+                    <label for="billing_province" class="label bold">Provincia*</label>
+                    <select name="billing_province" id="billing_province" class="select required">
+                        <% provinces.forEach(prov=> { %>
+                            <option value="<%= prov.id %>">
+                                <%= prov.name %>
+                            </option>
+                            <% }) %>
+                    </select>
+                </div>
+
+                <section class="choose-item-section">
+                    <div class="input-label-container">
+                        <label for="search-item">Item</label>
+                        <input name="search-item" type="text" class="search-checkbox" placeholder="Busca por nombre">
+                    </div>
+                    <div class="choose-service-checkbox-container">
+                        <% products.forEach(item=> { %>
+                            <label class="checkbox-label" data-id="<%= item.id %>"
+                                data-price="<%= item.price ? item.price : '' %>">
+                                <%= item.name %>
+                            </label>
+                            <% }) %>
+                    </div>
+
+                </section>
+
+                <section class="added-items-container">
+
+                </section>
+
+
+                <div class="input-label-container" id="products-container">
+                    <label for="payment_methods">Forma de pago</label>
+                    <select name="payment_methods">
+                        <% paymentForms.forEach(form=> { %>
+                            <option value="<%= form.id %>">
+                                <%= form.name %>
+                            </option>
+                            <% }) %>
+                    </select>
+                </div>
+
+                <button type="submit" class="register-sale-btn">Registrar</button>
+
+            </form>
+        </main>
+
+
+</body>
+
+</html>

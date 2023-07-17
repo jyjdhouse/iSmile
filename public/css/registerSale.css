@@ -1,0 +1,106 @@
+@import 'variables.css';
+
+.register-sale-body {
+    padding: 3% 5%;
+}
+
+.register-sale-intro-container {
+    margin-top: 12vh;
+}
+
+.input-label-container {
+    margin: 4% 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-label-container input, .input-label-container select {
+    margin-top: 3%;
+
+    width: 50%;
+}
+
+.register-sale-btn {
+    width: 50%;
+    border: 0;
+    outline: 0;
+    border: 1px solid var(--violet-color);
+    padding: 1% 0;
+}
+
+.order-item-container .input-label-container input, .order-item-container .input-label-container select {
+    width: 100%;
+    margin-left: 2%;
+   
+}
+
+.hidden {
+    display: none;
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+.search-checkbox-container {
+    margin-bottom: 3%;
+}
+
+.choose-service-checkbox-container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1.5rem;
+    column-gap: 2%;
+    padding: 15px 0;
+    justify-content: space-evenly;
+    height: 60vh;
+    overflow-y: scroll;
+    border: 1px solid rgba(200,200,200,.4);
+}
+
+.checkbox-label{
+    cursor: pointer;
+    text-align: center;
+    font-size: .8rem;
+    padding: 5px;
+    border: 1px solid var(--light-violet-color);
+    height: fit-content;
+    border-radius: 15px;
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+
+.added-items-container {
+    display: flex;
+    flex-direction: column;
+  
+}
+
+.item-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--violet-color);
+    padding: 2%;
+    margin: 4% 0;
+}
+
+.remove-element-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.item-container label {
+    margin-top: 2%;
+}
+
+.item-container input {
+    width: 30%;
+}
+
+.remove-element {
+    cursor: pointer;
+}
