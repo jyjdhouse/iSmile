@@ -38,7 +38,7 @@ window.addEventListener('load', () => {
             if (image.classList.contains('video') && index == actualIndex) {
                 image.currentTime = 0;
                 image.play(); //Arranco el video
-                const duration = image.duration * 1000; //Duracion del video 
+                const duration = image.duration * 1000; //Duración del video 
                 clearInterval(intervalId); //Limpio el intervalo de 0s
                 timeout = setTimeout(() => { //Video termina
                     intervalId = setInterval(() => {

@@ -4,7 +4,7 @@ window.addEventListener('load', async () => {
 
     const iniciateSelect2 = () => {
         $('.js-example-placeholder-single').select2({
-            placeholder: "Seleccionar Tratamiento",
+            placeholder: "Selecciónar Tratamiento",
             allowClear: true
         });
     };
@@ -15,7 +15,7 @@ window.addEventListener('load', async () => {
     // Obtén la fila original que deseas clonar
     var originalRow = document.querySelector('.row') // Obtén la primera fila original
     // Logica para mostrar otra linea de producto
-    function getRowToCopy() { //Funcion que me va a generar la fila que quiero copiar
+    function getRowToCopy() { //Función que me va a generar la fila que quiero copiar
 
         // Clona la fila 
         var newRow = originalRow.cloneNode(true);
@@ -55,13 +55,13 @@ window.addEventListener('load', async () => {
     });
 
     // Logica para mostrar el valor 1 predeterminado
-    const handleAddingQuantity = (e) => { //funcion que se encarga de manera el click del +
+    const handleAddingQuantity = (e) => { //función que se encarga de manera el click del +
         // Agarro al input mas cerca
         const input = e.target.closest('td').querySelector('.quantity-input');
         input.value = parseInt(input.value) + 1;
         checkRowPrices();
     }
-    const handleSubstractingQuantity = (e) => { //funcion que se encarga de manera el click del +
+    const handleSubstractingQuantity = (e) => { //función que se encarga de manera el click del +
         // Agarro al input mas cerca
         const input = e.target.closest('td').querySelector('.quantity-input');
         input.value = input.value > 1 ? parseInt(input.value) - 1 : 1;
@@ -100,7 +100,7 @@ window.addEventListener('load', async () => {
 
             selectElement.on('change', function () {
                 const row = selectElement.closest('.row')[0]; //El 0 es por jQuery
-                // Obtiene el elemento <option> seleccionado, con precio y precio en cash
+                // Obtiene el elemento <option> selecciónado, con precio y precio en cash
                 const selectedOption = selectElement.find('option:selected')[0];
 
                 const price = removeNumberSeparators(selectedOption.attributes['data.price']?.value);
@@ -217,7 +217,7 @@ window.addEventListener('load', async () => {
     const discountInput = document.querySelector('.discount-input');
     // Logica para que apenas cargue mostrar descuento en 0
     discountInput.value = 0;
-    // Logica que para al tocar el input aparezca seleccionado
+    // Logica que para al tocar el input aparezca selecciónado
     discountInput.addEventListener('focus', () => {
         discountInput.select();
     })

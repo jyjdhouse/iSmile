@@ -12,6 +12,7 @@ module.exports = (sequelize, dataTypes) => {
         provinces_id: { type: dataTypes.INTEGER },
         zip_code: { type: dataTypes.STRING(10) },
         users_id: { type: dataTypes.STRING(36) },
+        country: { type: dataTypes.STRING(255) },
      
     }
 

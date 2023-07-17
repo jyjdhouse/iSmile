@@ -2,7 +2,11 @@ body {
     background-color: #eee;
 
 }
-
+.continue-button.disabled{
+    color: #ccc;
+    background-color: #eee;
+    cursor: unset;
+}
 /* Para el loading Animation */
 .loading-container {
     align-items: center;
@@ -49,6 +53,7 @@ body {
     margin-top: 1vh;
 }
 
+.info-step-title
 .header {
     background-color: #fff;
 }
@@ -305,7 +310,9 @@ body {
 .info-step-title>.bold {
     margin-right: 1rem;
 }
-
+.info-step-title{
+    text-transform: uppercase;
+}
 .step-form {
     width: 100%;
     height: 100%;
@@ -322,7 +329,11 @@ body {
     background-color: #fff;
     position: relative;
 }
-
+.step-section{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
 .edit-step-btn {
     position: absolute;
     right: 2%;
@@ -349,16 +360,28 @@ body {
     width: 100%;
     border-radius: 1rem;
     border: 1px solid var(--gold-color);
-    padding: 5px 2.5px;
+    padding: 5px 10px;
     margin-top: 1vh;
 }
 
 
 
-.newsletter-field {
-    flex-wrap: nowrap;
-    column-gap: 5px;
+/* Para el inputPhone */
+.prefix-phone{
+    width: 30%;
+    font-size: 11px;
+    border-radius: 1rem;
+    border: 1px solid var(--gold-color);
+    outline: none;
+    height: fit-content;
+    padding: 5px 0;
+    margin-top: 1vh;
+    cursor: pointer;
 }
+#phone{
+    width: 70%;
+}
+/*  */
 
 .step-container .button-container {
     text-align: center;
@@ -412,9 +435,21 @@ body {
     width: fit-content;
 }
 
-#zip-code {
+#billing_zip-code,
+#shipping_zip_code {
     width: 4rem;
-    margin-top: 0;
+}
+
+.checkbox-field{
+    flex-wrap: nowrap; 
+}
+.checkbox-field>*{
+    cursor: pointer;
+}
+.shipping-address-p{
+    margin-top: 5px;
+    font-size: 18px;
+    color: #555;
 }
 
 .calculate-delivery-button {
@@ -431,7 +466,13 @@ body {
     padding-left: 2.5vw;
     font-size: 18px;
 }
-
+.use-same-address-field{
+    width: 100% !important;
+    justify-content: center;
+}
+.use-same-address-field>label{
+    width: fit-content;
+}
 /* Sector productos */
 .product-side-cards-wrapper-section {
     width: 100%;
@@ -588,8 +629,10 @@ body {
     cursor: pointer;
 }
 
-.box-container-active {
-    background-color: #a3a3a3;
+.box-container>input{
+    margin: 0 auto;
+    margin-top: 10px;
+    display: block;
 }
 
 .img-container {
@@ -654,11 +697,21 @@ body {
 }
 
 /* STEPS WRAPPER */
+.step-deliver-wrapper>div{
+    display: flex;
+    flex-direction: column;
+}
 .step-wrapper {
     width: 100%;
     padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
 }
-
+.step-wrapper-label{
+    color: #000;
+    margin: 15px 0;
+    font-weight: 600;
+}
 .wrapper-row {
     color: #666;
     margin-bottom: .5rem;
@@ -769,7 +822,6 @@ body {
     }
 
     .field {
-        width: 50%;
         padding: 0 2.5vw;
     }
 
@@ -777,8 +829,12 @@ body {
         width: 100%;
     }
 
-    .long-field {
-        width: 100%;
+    .short-field {
+        width: 50%;
+        padding: 0;
+    }
+    .field>.short-field{
+        margin-bottom: 0;
     }
 
     .delivery-option-box {

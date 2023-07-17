@@ -1,5 +1,4 @@
 const db = require('../../database/models');
-
 // Librerias
 const jwt = require('jsonwebtoken');
 const getAllUsers = require('../../utils/getAllUsers');
@@ -9,13 +8,13 @@ const nodemailer = require('nodemailer');
 const secret = require('../../utils/secret').secret;
 const isJwtError = require('../../utils/isJwtError');
 const getRelativePath = require('../../utils/getRelativePath');
+const getDeepCopy = require('../../utils/getDeepCopy');
 
 const controller = {
     getLoggedUserId: async (req, res) => {
         try {
             let userId = req.userId;
             if (!userId) { //Si no viene el userID, no se chekeo el token ==> devuelvo error en la solicitud
-                console.log("NO HYA USER");
                 const error = new Error('Error en la solicitud, debes iniciar sesion nuevamente');
                 // Devolviendo una respuesta de error
                 res.status(404).json({
@@ -26,13 +25,24 @@ const controller = {
             }
             let msg = req.msg;
 
-            let user = await getUser(userId);
-            delete user?.password; // Para no llevar la password session 
+            let user = getDeepCopy(await getUser(userId));
+            // Esto es para no mandar al front estos datos
+            delete user?.password;  
+            delete user?.dni;  
+            delete user?.shippingAddress;  
+            delete user?.userCategory;  
+            delete user?.password_token; 
+            delete user?.email; 
+            delete user?.phone; 
+            delete user?.birth_date; 
+
+            // Mando la respuesta
             return res.status(200).json({
                 meta: {
                     status: 200,
                     msg
                 },
+                ok:true,
                 user
             })
 

@@ -17,7 +17,7 @@ const controller = {
             items.push(product);
         });
         // Agrega credenciales
-        mercadopago.configure({//TODO: Cambiar despues por produccion
+        mercadopago.configure({//TODO: Cambiar despues por producción
             access_token: "TEST-396512776617745-070214-41a3804e491dda397991f960c90b8140-389461868",
         });
         // Crea un objeto de preferencia

@@ -13,7 +13,7 @@ window.addEventListener('load', () => {
     function detectarElementoEnPantalla(e, element) {
         // console.log(e);
         const rect = element.getBoundingClientRect();
-        const elementPosition = rect.y //posicion que esta con respecto al total
+        const elementPosition = rect.y //posición que esta con respecto al total
         // if (window.pageYOffset >= elementPosition) {
         //     console.log('Se llego al elemento');
         // }
@@ -29,11 +29,11 @@ window.addEventListener('load', () => {
         if (rect.top < windowBottom && rect.bottom > windowTop) {
             // El elemento está visible en la pantalla
             // console.log('Se llego al elemento');
-            // video.play(); //Arranca la reproduccion
+            // video.play(); //Arranca la reproducción
         } else {
             // El elemento no está visible en la pantalla
             console.log('Se FUE del elemento');
-            // video.pause(); //Pausa la reproduccion
+            // video.pause(); //Pausa la reproducción
         }
     }
 
@@ -78,7 +78,7 @@ window.addEventListener('load', () => {
 
     // LOGICA para slideShow
     let slideImagesGroup;
-    // Depende que resolucion agarro los diferentes grupos
+    // Depende que resolución agarro los diferentes grupos
     if (isInDesktop()) {
         slideImagesGroup = document.querySelector('.slide-images-wraper-desktop').querySelectorAll('.slide-image-group')
     } else {
@@ -106,7 +106,7 @@ window.addEventListener('load', () => {
     // LOGICA para aboutUS
     const detailsContainer = document.querySelector('.about-us-details-container');
     const lists = document.querySelectorAll('.about-us-details-list');
-    // Funcion que maneja cuando el contenedor esta visible
+    // Función que maneja cuando el contenedor esta visible
     const handleVisibleLists = () => {
         lists.forEach((element, i) => {
             element.style.transitionDelay = `${i * 1}s`
@@ -197,7 +197,7 @@ window.addEventListener('load', () => {
     }
 
     // LOGICA para instagram posts
-    // Lo defino aca porque en mobile tiene repercucion
+    // Lo defino aca porque en mobile tiene repercución
     const editBtns = document.querySelectorAll('.change-image-btn');
     const cancelBtns = document.querySelectorAll('.cancel-file-action');
     if (isInDesktop()) { //Desktop

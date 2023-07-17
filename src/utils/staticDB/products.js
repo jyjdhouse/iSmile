@@ -91,7 +91,7 @@ module.exports = [
     },
     {
         id: 16,
-        name: "Masculinizacion Facial 1",
+        name: "Masculinización Facial 1",
         price: 90000,
         cash_price: 85000
     },
@@ -181,7 +181,7 @@ module.exports = [
     },
     {
         id: 31,
-        name: "Placa de Relajacion",
+        name: "Placa de Relajación",
         price: 50000,
         cash_price: 45000
     },

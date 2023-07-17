@@ -6,7 +6,7 @@ html {
 @page {
     size: A4;
     /* Puedes utilizar otros valores como "letter", "legal", "A3", etc. */
-    /* Opciones adicionales para controlar los márgenes de la página */
+    /* Opciónes adiciónales para controlar los márgenes de la página */
 }
 
 .hidden{

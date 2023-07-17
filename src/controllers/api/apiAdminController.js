@@ -1,6 +1,14 @@
 const db = require('../../database/models');
-const fs = require('fs')
+const fs = require('fs');
+// Librerias
+const secret = require('../../utils/secret').secret;
+const jwt = require('jsonwebtoken');
 const json2csv = require('json2csv').parse;
+// Utils
+const getDeepCopy = require('../../utils/getDeepCopy');
+const getAllOrders = require('../../utils/getAllOrders');
+const dateFormater = require('../../utils/dateFormater');
+const provinces = require('../../utils/staticDB/provinces');
 
 const controller = {
 
@@ -59,6 +67,42 @@ const controller = {
       return res.send(error)
     }
 
+  },
+  getOrders: async (req, res) => {
+    try {
+      //Agarro la cookie del token
+      const token = req.cookies?.adminToken;
+      if (token) {
+        const decodedData = jwt.verify(token, secret);
+        if (decodedData) { //Si verifico el token, solo agarro el id
+          userId = decodedData?.id
+        }
+      };
+      if(!userId){
+        return res.status(401).json({error,true:false})
+      }
+      let orders = getDeepCopy(await getAllOrders());
+      let statuses = await db.OrderStatus.findAll();
+      orders.forEach(ord => {
+        ord.createdAt = dateFormater(ord.createdAt)
+      });
+      return res.status(200).json({
+        meta: {
+            status: 200,
+            url: `api/admin/order`
+        },
+        ok: true,
+        orders,
+        provinces,
+        statuses
+    });
+    } catch (error) {
+      console.log(`Falle en adminApiController.getOrders: ${error}`);
+      return res.status(500).json({
+        true: false,
+        error
+      })
+    }
   }
 }
 

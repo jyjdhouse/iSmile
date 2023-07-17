@@ -21,15 +21,20 @@
                         </div>
                         <div class="product-card-wrapper">
                             <% locals.cart && locals.cart.forEach(product=>{ %>
-                                <article class="product-card" data-productid = <%= product.products_id %>>
+                                <article class="product-card" data-productid=<%=product.products_id %>>
                                     <div class="product-card-image-container article-div-child">
-                                        <img src="/img/product/<%= product.filename || 'default.png' %>" alt="<%= product.name %>-<%= product.filename %>" class="product-image">
+                                        <img src="/img/product/<%= product.filename || 'default.png' %>"
+                                            alt="<%= product.name %>-<%= product.filename %>" class="product-image">
                                     </div>
                                     <div class="product-name-container article-div-child">
-                                        <p class="product-name"><%= product.name %></p>
+                                        <p class="product-name">
+                                            <%= product.name %>
+                                        </p>
                                     </div>
                                     <div class="product-price-container article-div-child">
-                                        <p class="product price">$<span class="product-price-span"><%= product.price %></span></p>
+                                        <p class="product price">$<span class="product-price-span">
+                                                <%= product.price %>
+                                            </span></p>
                                     </div>
                                     <div class="product-quantity-container article-div-child">
                                         <i class='bx bx-plus-medical add-quantity-btn'></i>
@@ -37,16 +42,18 @@
                                         <input type="number" name="quantity" id="" class="product-quantity">
                                     </div>
                                     <div class="product-subtotal-container article-div-child">
-                                        <p class="product-subtotal">$ <span class="product-subtotal-span"><%= product.price %></span></p>
+                                        <p class="product-subtotal">$ <span class="product-subtotal-span">
+                                                <%= product.price %>
+                                            </span></p>
                                     </div>
                                     <i class='bx bx-trash remove-cart-product'></i>
                                     <%- include('./partials/loadingSpinner.ejs') %>
                                 </article>
-                            <% }) %>
-                            <!-- Si no hay productos en el carro -->
-                            <% if(locals.cart && locals.cart.length==0) { %>
-                                <p class="no-products-msg">No tienes productos en el carro</p>
-                            <% } %>
+                                <% }) %>
+                                    <!-- Si no hay productos en el carro -->
+                                    <% if(locals.cart && locals.cart.length==0) { %>
+                                        <p class="no-products-msg">No tienes productos en el carro</p>
+                                        <% } %>
                         </div>
                     </div>
                     <div class="checkout-total-section">
@@ -65,46 +72,106 @@
                                 class='bx bx-chevron-left continue-shopping-logo'></i> Seguir comprando</a>
                     </div>
                 </section>
-                <section class="second-view view">
+                <form class="second-view view" id="checkout-form" action="/user/checkout" method="POST">
                     <div class="information-wrapper">
                         <div class="user-info-container step-container">
                             <i class='bx bx-edit-alt edit-step-btn hidden'></i>
                             <div class="info-step-title-container">
-                                <p class="grey info-step-title"><span class="bold">1-</span>DATOS PERSONALES</p>
+                                <p class="grey info-step-title"><span class="bold">1-</span>FACTURAción - DATOS</p>
                             </div>
                             <div class="step-form info-step">
-                                <div class="field long-field">
-                                    <label for="email" class="label bold">Correo electronico*</label>
-                                    <input type="mail" name="email" id="email" class="input required">
-                                </div>
-                                <div class="field">
-                                    <label for="name" class="label bold">Nombre*</label>
-                                    <input type="text" name="name" id="name" class="input required letter-only-input">
-                                </div>
-                                <div class="field">
-                                    <label for="last-name" class="label bold">Apellido/s*</label>
-                                    <input type="text" name="last-name" id="last-name" class="input required letter-only-input">
-                                </div>
-                                <div class="field">
-                                    <label for="dni" class="label bold">DNI*</label>
-                                    <input type="text" name="dni" id="dni" class="input required numeric-only-input">
-                                </div>
-                                <div class="field">
-                                    <label for="phone" class="label bold">Telefono / Movil*</label>
-                                    <input type="text" name="phone" id="phone" class="input required numeric-only-input">
-                                </div>
-                                <div class="field long-field newsletter-field">
-                                    <input type="checkbox" name="newsletter" id="newsletter">
-                                    <label for="newsletter">Quiero recibir el newsletter con promociones.</label>
-                                </div>
+                                <section class="user-data-section step-section">
+                                    <label class="bold label step-label">Completa tu datos de facturación</label>
+                                    <div class="field long-field">
+                                        <label for="email" class="label bold">Correo electronico*</label>
+                                        <input type="mail" name="email" id="email" class="input required"
+                                            placeholder="marialopez@gmail.com">
+                                    </div>
+                                    <div class="field">
+                                        <label for="name" class="label bold">Nombres*</label>
+                                        <input type="text" name="name" id="name"
+                                            class="input required letter-only-input" placeholder="Maria">
+                                    </div>
+                                    <div class="field">
+                                        <label for="last-name" class="label bold">Apellidos*</label>
+                                        <input type="text" name="last_name" id="last-name"
+                                            class="input required letter-only-input" placeholder="Lopez">
+                                    </div>
+                                    <div class="field">
+                                        <label for="dni" class="label bold">DNI*</label>
+                                        <input type="text" name="dni" id="dni" class="input required numeric-only-input"
+                                            placeholder="23101602">
+                                    </div>
+                                    <div class="field">
+                                        <label for="phone" class="label bold">Telefono / Movil*</label>
+                                        <select name="phone_code" class="prefix-phone">
+                                            <% countryCodes.forEach(country=> { %>
+                                                <option value="+<%=country.code %>" <%=country.code==54 && 'selected' %>
+                                                    > (+<%= country.code %>) <%= country.country_name %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                        <input type="text" name="phone" id="phone"
+                                            class="input required numeric-only-input" placeholder="1124852020">
+                                    </div>
+                                </section>
+
+                                <section class="billing-address-section step-section">
+                                    <label class="bold label step-label">Completa tu dirección de facturación</label>
+                                    <div class="field">
+                                        <label for="billing_country" class="label bold">Pais*</label>
+                                        <input type="text" name="billing_country" id="billing_country"
+                                            class="input required letter-only-input" placeholder="Argentina">
+                                    </div>
+                                    <div class="field">
+                                        <label for="billing_street" class="label bold">Calle & Numero*</label>
+                                        <input type="text" name="billing_street" id="billing_street"
+                                            class="input required" placeholder="Av. Santa Fé 2911">
+                                    </div>
+                                    <div class="field">
+                                        <div class="field short-field">
+                                            <label for="billing_zip-code" class="label bold">Codigo Postal*</label>
+                                            <input type="text" name="billing_zip_code" id="billing_zip-code"
+                                                class="input required numeric-only-input" placeholder="1111">
+                                        </div>
+                                        <div class="field short-field">
+                                            <label for="billing_floor" class="label bold">Piso / Departamento</label>
+                                            <input type="text" name="billing_floor" id="billing_floor" class="input"
+                                                placeholder="1A">
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label for="billing_province" class="label bold">Provincia*</label>
+                                        <select name="billing_province" id="billing_province" class="select required">
+                                            <% provinces.forEach(prov=> { %>
+                                                <option value="<%= prov.id %>">
+                                                    <%= prov.name %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                    </div>
+                                    <div class="field">
+                                        <label for="billing_city" class="label bold">Ciudad*</label>
+                                        <input type="text" name="billing_city" id="billing_city" class="input required"
+                                            placeholder="CABA">
+                                    </div>
+                                </section>
                                 <div class="button-container">
-                                    <button class="continue-button continue-procedure-button first-step-continue-button">CONTINUAR</button>
+                                    <button class="continue-button continue-procedure-button first-step-continue-button"
+                                        type="button">CONTINUAR</button>
                                 </div>
                             </div>
                             <div class="step-wrapper step-info-wrapper hidden">
+                                <label class="step-wrapper-label">Datos facturación</label>
                                 <p class="wrapper-row info-wrapper-mail"></p>
                                 <p class="wrapper-row info-wrapper-name"></p>
-                                <p class="wrapper-row info-wrapper-phone">Telefono: <span class="info-wrapper-phone-span"></span></p>
+                                <p class="wrapper-row info-wrapper-phone">Telefono: <span
+                                        class="info-wrapper-phone-span"></span></p>
+                                <label class="step-wrapper-label">Dirección facturación</label>
+                                <p class="wrapper-row info-wrapper-zip-code">Codigo Postal: <span
+                                        class="info-wrapper-zip-code-span"></span></p>
+                                <p class="wrapper-row info-wrapper-street"></p>
                             </div>
                         </div>
                         <div class="deliver-info-container step-container">
@@ -114,50 +181,129 @@
                             </div>
                             <div class="step-form deliver-step hidden">
                                 <div class="field long-field delivery-option-field">
-                                    <div class="delivery-option-box delivery-option-box-active">Enviar a domicilio</div>
-                                    <div class="delivery-option-box">Retirar por el local</div>
+                                    <div class="delivery-option-box delivery-option-box-active" data-typeid='1'>Enviar a
+                                        domicilio</div>
+                                    <div class="delivery-option-box" data-typeid='2'>Retirar por el local</div>
+                                    <input type="hidden" id="order_types_id" name="order_types_id" value="1">
                                 </div>
-                                <label class="bold label step-label">Completa tu direccion de entrega</label>
-                                <!-- TODO: checkbox con completar datos de envio -->
-                                <div class="field">
-                                    <label for="country" class="label bold">Pais*</label>
-                                    <input type="text" name="country" id="country" class="input required letter-only-input">
+                                <div class="field use-same-address-field">
+                                    <input type="checkbox" id="use-same-address" name="use_same_address">
+                                    <label for="use-same-address">Usar misma Dirección de entrega &
+                                        facturación</label>
                                 </div>
-                                <div class="field">
-                                    <label for="street" class="label bold">Calle & Numero*</label>
-                                    <input type="text" name="street" id="street" class="input required">
-                                </div>
-                                <div class="field">
-                                    <label for="street-number" class="label bold">Codigo Postal*</label>
-                                    <input type="text" name="street-number" id="zip-code" class="input required numeric-only-input">
-                                </div>
-                                <div class="field">
-                                    <label for="floor" class="label bold">Piso / Departamento</label>
-                                    <input type="text" name="floor" id="floor" class="input">
-                                </div>
-                                <div class="field">
-                                    <label for="floor" class="label bold">Provincia*</label>
-                                    <select name="province" id="province" class="select required">
-                                        <% provinces.forEach(prov => { %>
-                                            <option value="<%= prov.value %>"><%= prov.name %></option> 
-                                        <% }) %>
-                                    </select>
-                                </div>
-                                <div class="field">
-                                    <label for="city" class="label bold">Ciudad*</label>
-                                    <input type="text" name="city" id="city" class="input required">
-                                </div>
+                                <section class="shipping-address-section step-section">
+                                    <label class="bold label step-label">Completa tu dirección de entrega</label>
+                                    <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                        <div class="field checkbox-field">
+                                            <input type="checkbox" id="use-user-address" name="use_user_address">
+                                            <label for="use-user-address">Utilizar dirección asociada a este
+                                                usuario</label>
+                                        </div>
+                                        <% } %>
+
+                                            <div class="field required-field shipping-field">
+                                                <label for="shipping_country" class="label bold">Pais*</label>
+                                                <input type="text" name="shipping_country" id="shipping_country"
+                                                    class="input required letter-only-input">
+                                                <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                                    <p class="shipping-address-p hidden" id="shipping-address-country-p">
+                                                        <%= userLogged.shippingAddress.country %>
+                                                    </p>
+                                                    <% } %>
+                                            </div>
+                                            <div class="field required-field shipping-field">
+                                                <label for="shipping_street" class="label bold">Calle & Numero*</label>
+                                                <input type="text" name="shipping_street" id="shipping_street"
+                                                    class="input required">
+                                                <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                                    <p class="shipping-address-p hidden" id="shipping-address-street-p">
+                                                        <%= userLogged.shippingAddress.street %>
+                                                    </p>
+                                                    <% } %>
+                                            </div>
+                                            <div class="field required-field shipping-field">
+                                                <label for="shipping_zip_code" class="label bold">Codigo Postal*</label>
+                                                <input type="text" name="shipping_zip_code" id="shipping_zip_code"
+                                                    class="input required numeric-only-input">
+                                                <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                                    <p class="shipping-address-p hidden" id="shipping-address-zip-code-p">
+                                                        <%= userLogged.shippingAddress.zip_code %>
+                                                    </p>
+                                                    <% } %>
+                                            </div>
+                                            <div class="field shipping-field">
+                                                <label for="shipping_floor" class="label bold">Piso /
+                                                    Departamento</label>
+                                                <input type="text" name="shipping_floor" id="shipping_floor"
+                                                    class="input">
+                                                <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                                    <p class="shipping-address-p hidden" id="shipping-address-apartment-p">
+                                                        <%= userLogged.shippingAddress.apartment %>
+                                                    </p>
+                                                    <% } %>
+                                            </div>
+                                            <div class="field required-field shipping-field">
+                                                <label for="shipping_province" class="label bold">Provincia*</label>
+                                                <select name="shipping_province" id="shipping_province"
+                                                    class="select required">
+                                                    <% provinces.forEach(prov=> { %>
+                                                        <option value="<%= prov.id %>">
+                                                            <%= prov.name %>
+                                                        </option>
+                                                        <% }) %>
+                                                </select>
+                                                <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                                    <p class="shipping-address-p hidden" id="shipping-address-province-p">
+                                                        <%= provinces.find(prov=>prov.id ==
+                                                            userLogged.shippingAddress.provinces_id).name %>
+                                                    </p>
+                                                    <% } %>
+                                            </div>
+                                            <div class="field required-field shipping-field">
+                                                <label for="shipping_city" class="label bold">Ciudad*</label>
+                                                <input type="text" name="shipping_city" id="shipping_city"
+                                                    class="input required">
+                                                <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                                    <p class="shipping-address-p hidden" id="shipping-address-city-p">
+                                                        <%= userLogged.shippingAddress.city %>
+                                                    </p>
+                                                    <% } %>
+                                            </div>
+                                            <% if (locals.userLogged) { %>
+                                                <div class="field checkbox-field save-user-address-field">
+                                                    <input type="checkbox" id="save-user-address"
+                                                        name="save_user_address">
+                                                    <label for="save-user-address">Guardar dirección</label>
+                                                </div>
+                                                <% } %>
+                                </section>
+                                <section class="retire-section step-section hidden">
+
+                                </section>
 
                                 <div class="button-container">
-                                    <button class="continue-button continue-procedure-button">CONTINUAR</button>
+                                    <button class="continue-button continue-procedure-button"
+                                        type="button">CONTINUAR</button>
                                 </div>
                             </div>
                             <div class="step-wrapper step-deliver-wrapper hidden">
-                                <p class="wrapper-row deliver-wrapper-charge">Costo: <span class="deliver-wrapper-charge-span">Gratis</span></p>
-                                <p class="wrapper-row deliver-wrapper-zip-code">Codigo Postal: <span class="deliver-wrapper-zip-code-span">1429</span></p>
-                                <p class="wrapper-row deliver-wrapper-name">Jano Pereira</p>
-                                <p class="wrapper-row deliver-wrapper-address">Av. Liberador 2555</p>
-                                <p class="wrapper-row">En hasta 6 dias habiles</p>
+
+                                <div class="using-same-address hidden deliver-option-wrapper">
+                                    <label class="step-wrapper-label">Dirección facturación</label>
+                                    <p class="wrapper-row"> Misma que dirección de entrega</p>
+                                </div>
+                                <div class="using-different-address deliver-option-wrapper">
+                                    <label class="step-wrapper-label">Dirección entrega</label>
+                                    <p class="wrapper-row deliver-wrapper-charge">Costo: <span
+                                            class="deliver-wrapper-charge-span">Gratis</span></p>
+                                    <p class="wrapper-row deliver-wrapper-zip-code">Codigo Postal: <span
+                                            class="deliver-wrapper-zip-code-span"></span></p>
+                                    <p class="wrapper-row deliver-wrapper-address"></p>
+                                    <p class="wrapper-row">En hasta 6 dias habiles</p>
+                                </div>
+                                <div class="retire-wrapper hidden">
+                                    <label class="step-wrapper-label">Retirar por el Local</label>
+                                </div>
                             </div>
                         </div>
                         <div class="payment-info-container step-container">
@@ -168,15 +314,20 @@
                                 <div class="field long-field payment-logo-container">
                                     <div class="box-container">
                                         <div class="img-container">
-                                            <img src="/img/getnet_logo.png" alt="getnet-img" class="mp-logo getnet-logo">
+                                            <img src="/img/getnet_logo.png" alt="getnet-img"
+                                                class="mp-logo getnet-logo">
                                         </div>
                                         <p class="payment-logo-label">Tarjeta crédito/débito</p>
+                                        <input type="radio" name="payment_methods_id" class="payment-method-input"
+                                            value="2">
                                     </div>
-                                    <div class="box-container box-container-active">
+                                    <div class="box-container">
                                         <div class="img-container">
                                             <img src="/img/bank_logo.png" alt="mercado-pago-img" class="mp-logo">
                                         </div>
                                         <p class="payment-logo-label">Transferencia bancaria</p>
+                                        <input type="radio" name="payment_methods_id" class="payment-method-input"
+                                            value="1">
                                     </div>
                                 </div>
                                 <div class="field payment-field">
@@ -188,7 +339,7 @@
                                     </div>
                                     <div class="payment-box">
                                         <i class='bx bx-credit-card-front'></i>
-                                        <p class="payment-box-label">Tarjetas de debito</p>
+                                        <p class="payment-box-label">Tarjeta de debito</p>
                                     </div>
                                 </div>
                                 <div class="field payment-field payment-field-active">
@@ -226,10 +377,12 @@
                             </div>
                         </div>
                         <div id="checkout-button-container" class="button-container">
-                            <button id="button-checkout" class="continue-button payment-start-button">INICIAR PAGO</button>
+                            <button id="button-checkout" class="disabled continue-button payment-start-button">INICIAR
+                                PAGO</button>
                         </div>
                     </div>
-                </section>
+                </form>
+                <p class="error-card hidden"></p>
             </main>
             <%- include('./partials/footer.ejs') %>
     </body>

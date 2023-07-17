@@ -6,7 +6,7 @@ window.addEventListener('load',()=>{
           counter--;
           msg.innerHTML= `Seras redirigido al inicio en ${counter}s`;
       
-          // Si han transcurrido los 5 segundos, realiza el redireccionamiento
+          // Si han transcurrido los 5 segundos, realiza el redirecciónamiento
           if (counter === 1) {
             clearInterval(countdownInterval);
             window.location.href = '/';

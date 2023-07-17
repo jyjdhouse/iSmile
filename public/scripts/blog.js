@@ -10,7 +10,7 @@ window.addEventListener('load', () => {
     const intervalTime = 3000
     let intervalId;
 
-    // funcion para convertir a html el contenido
+    // función para convertir a html el contenido
     const htmlText = converter.makeHtml(blogTextCont.innerText);
     blogTextCont.innerHTML = htmlText
 
@@ -23,7 +23,7 @@ window.addEventListener('load', () => {
 
 
 
-    if (window.innerWidth < 768) { //Resolucion mobile
+    if (window.innerWidth < 768) { //Resolución mobile
         let activeImg = 0
 
         const autoSlideCondition = () => {

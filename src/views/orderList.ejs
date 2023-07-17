@@ -3,172 +3,36 @@
 
 <head>
     <%- include('./partials/head.ejs') %>
-    <link rel="stylesheet" href="/css/orderList.css">
-    <script src="/scripts/orderList.js" type="module"></script>
-    <title>Ventas</title>
+        <link rel="stylesheet" href="/css/orderList.css">
+        <script src="/scripts/orderList.js" type="module"></script>
+        <title>Ventas</title>
 </head>
 
 <body>
     <%- include('./partials/header.ejs') %>
-    <main class="main">
-        <table class="order-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Total</th>
-                    <th>Items</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Aquí se agregarán las filas con los datos de las ventas -->
-                <tr>
-                    <td>2e703d70-fbaf-4674-9c76-238d5ec4f44e</td>
-                    <td>Nombre de venta 1</td>
-                    <td>100</td>
-                    <td>5</td>
-                    <td>Pendiente</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Nombre de venta 2</td>
-                    <td>200</td>
-                    <td>3</td>
-                    <td>Completada</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Nombre de venta 3</td>
-                    <td>150</td>
-                    <td>2</td>
-                    <td>Pendiente</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>Nombre de venta 4</td>
-                    <td>300</td>
-                    <td>4</td>
-                    <td>En proceso</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td>Nombre de venta 5</td>
-                    <td>250</td>
-                    <td>1</td>
-                    <td>Completada</td>
-                  </tr>
-                  <tr>
-                    <td>6</td>
-                    <td>Nombre de venta 6</td>
-                    <td>180</td>
-                    <td>3</td>
-                    <td>Pendiente</td>
-                  </tr>
-                  <tr>
-                    <td>7</td>
-                    <td>Nombre de venta 7</td>
-                    <td>120</td>
-                    <td>2</td>
-                    <td>Completada</td>
-                  </tr>
-                  <tr>
-                    <td>8</td>
-                    <td>Nombre de venta 8</td>
-                    <td>210</td>
-                    <td>4</td>
-                    <td>En proceso</td>
-                  </tr>
-                  <tr>
-                    <td>9</td>
-                    <td>Nombre de venta 9</td>
-                    <td>175</td>
-                    <td>3</td>
-                    <td>Pendiente</td>
-                  </tr>
-                  <tr>
-                    <td>10</td>
-                    <td>Nombre de venta 10</td>
-                    <td>220</td>
-                    <td>2</td>
-                    <td>Completada</td>
-                  </tr>
-                <!-- Agrega más filas según sea necesario -->
-            </tbody>
-        </table>
-        <div class="order-detail-popup">
-            <i class="fa-regular fa-x close-order-detail-popup"></i>
-            <p class="copy-msg">Valor copiado al portapapeles</p>
-            <p class="order-detail-title bold">Venta - 2e703d70-fbaf-4674-9c76-238d5ec4f44e</p>
-            <p class="order-detail-date grey">Fecha de creación: 10/7/2023</p>
-            <section class="order-detail-product-list-section">
-                <p class="order-detail-product-list-title bold">Items</p>
-                <div class="order-detail-product-list">
-                    <div class="order-detail-product-card order-detail-product-card-head">
-                        <p class="order-detail-product-name">Nombre</p>
-                        <p class="order-detail-product-quantity">Cantidad</p>
-                        <p class="order-detail-product-total">Precio (Ttal)</p>
-                    </div>
-                    <div class="order-detail-product-card">
-                        <p class="order-detail-product-name">Crema AntiAge</p>
-                        <p class="order-detail-product-quantity">3</p>
-                        <p class="order-detail-product-total">15000</p>
-                    </div>
-                    <div class="order-detail-product-card">
-                        <p class="order-detail-product-name">Crema AntiArrugas</p>
-                        <p class="order-detail-product-quantity">1</p>
-                        <p class="order-detail-product-total">4000</p>
-                    </div>
-                </div>
-            </section>
-            <section class="order-detail-user-data-section">
-                <p class="order-detail-user-data-title bold">Datos Facturación (usuario)</p>
-                <div class="order-detail-user-data-container">
-                    <div class="order-detail-user-data order-detail-user-data-head">
-                        <p>Nombre Completo</p>
-                        <p>E-Mail</p>
-                        <p>Teléfono</p>
-                        <p>DNI</p>
-                    </div>
-                    <div class="order-detail-user-data">
-                        <p class="copy-value">Jano Pereira</p>
-                        <p class="copy-value">janoo.pereira@gmail.com</p>
-                        <p class="copy-value">1158817312</p>
-                        <p class="copy-value">43083507</p>
-                    </div>
-                </div>
-                <p class="order-detail-user-data-title bold">Datos Facturación (dirección)</p>
-                <div class="order-detail-user-data-container">
-                    <div class="order-detail-user-data order-detail-user-data-head">
-                        <p>País</p>
-                        <p>Provincia</p>
-                        <p>Ciudad</p>
-                        <p>Calle & Número</p>
-                        <p class="order-address-detail">Detalle</p>
-                    </div>
-                    <div class="order-detail-user-data">
-                        <p class="copy-value">Argentina</p>
-                        <p class="copy-value">Ciudad Autonoma de Buenos Aires</p>
-                        <p class="copy-value">CABA</p>
-                        <p class="copy-value">Av.Libertador 2555</p>
-                        <p class="order-address-detail copy-value">-</p>
-                    </div>
-                </div>
-            </section>
-            <section class="order-detail-status-section">
-                <select name="order_status" class="status-select">
-                    <option value="1">Aprobada</option>
-                    <option value="2">Pendiente</option>
-                    <option value="3">En proceso</option>
-                    <option value="4">Anulada</option>
-                </select>
-            </section>
-            <button class="save-changes-btn hidden">Guardar cambios</button>
-            
-        </div>
-    </main>
-    
-    <%- include('./partials/footer.ejs') %>
+        <main class="main">
+            <div class="loading-spinner">
+                <p>Cargando Ventas...</p>
+                <%- include('./partials/loadingSpinner.ejs') %>
+            </div>
+            <table class="order-table"> 
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Total</th>
+                        <th>Items</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se agregarán las filas con los datos de las ventas -->
+                </tbody>
+            </table>
+            <div class="order-detail-popup"></div>
+        </main>
+
+        <%- include('./partials/footer.ejs') %>
 </body>
 
 </html>

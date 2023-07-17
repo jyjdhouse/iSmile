@@ -18,7 +18,7 @@ const controller = {
             let homeFiles = await db.HomeFile.findAll({
                 include: ['fileType', 'homeSection']
             });
-            // Ahora secciono todo aca asi en el ejs se simplifica
+            // Ahora seccióno todo aca asi en el ejs se simplifica
             // VIDEO
             let homeVideo = homeFiles.find(file => file.home_sections_id == 1);
             let videoFile = {
@@ -27,7 +27,7 @@ const controller = {
             }
             // GALLERY IMAGES
             let galleryFiles = homeFiles.filter(file => file.home_sections_id == 2);
-            // Ordeno el array por posiciones
+            // Ordeno el array por posiciónes
             galleryFiles.sort((a, b) => a.position - b.position);
             // Le dejo solo el filename
             galleryFiles = galleryFiles.map(file => {
@@ -39,7 +39,7 @@ const controller = {
             });
             // IG
             let igFiles = homeFiles.filter(file => file.home_sections_id == 3);
-            // Ordeno el array por posiciones
+            // Ordeno el array por posiciónes
             igFiles.sort((a, b) => a.position - b.position);
             // Le dejo solo el filename
             igFiles = igFiles.map(file => {

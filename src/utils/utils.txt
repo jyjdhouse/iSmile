@@ -62,7 +62,7 @@
                 </div>
                 <div class="profile-selected-field-container user-preferences">
                     <div class="profile-checkbox-label-container">
-                        <p>Quiero recibir notificaciones por correo electrónico</p>
+                        <p>Quiero recibir notificaciónes por correo electrónico</p>
                         <div class="profile-checkbox-container">
                             <label for="true">SI</label>
                             <input type="checkbox" name="true">
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="profile-checkbox-label-container">
-                        <p>Quiero recibir notificaciones por WhatsApp.</p>
+                        <p>Quiero recibir notificaciónes por WhatsApp.</p>
                         <div class="profile-checkbox-container">
                             <label for="true">SI</label>
                             <input type="checkbox" name="true">
@@ -460,7 +460,7 @@ MEDIAS
 
 
 
-FUNCION DOTS PARA CAMBIO IMAGEN
+FUNción DOTS PARA CAMBIO IMAGEN
 function dotsNextSlide() { //Se invoca cuando una imagen cambia a la siguiente
         const activeDot = document.querySelector('.active-dot')
         activeDot.classList.remove('active-dot')
@@ -542,7 +542,7 @@ RUTA PARA PRODUCTOS ==> http://localhost:3500/product/10/2
  
             <!-- <section class="checkout-info-section">
             <div class="user-info-container">
-                <p class="info-label checkout-label">Direccion de facturacion</p>
+                <p class="info-label checkout-label">Dirección de facturación</p>
                 <form action="" class="user-info-form">
                     <div class="input-field must-field">
                         <label>Nombre <span class="must-sign">*</span></label>
@@ -557,7 +557,7 @@ RUTA PARA PRODUCTOS ==> http://localhost:3500/product/10/2
                         <input type="text" class="input" name="email">
                     </div>
                     <div class="input-field must-field">
-                        <label>Direccion de Envío<span class="must-sign">*</span></label>
+                        <label>Dirección de Envío<span class="must-sign">*</span></label>
                         <input type="text" class="input" name="address">
                     </div>
                     <div class="input-field must-field">
@@ -579,7 +579,7 @@ RUTA PARA PRODUCTOS ==> http://localhost:3500/product/10/2
                 <form action="" class="deliver-method-form">
                     <div class="input-field">
                         <input type="radio" name="deliver-method">
-                        <label>Envio a domicilio (direccion de facturacion)</label>
+                        <label>Envio a domicilio (dirección de facturación)</label>
                     </div>
                     <div class="input-field">
                         <input type="radio" name="deliver-method">
@@ -605,7 +605,7 @@ RUTA PARA PRODUCTOS ==> http://localhost:3500/product/10/2
                     <p class="billing-total-order-price-label">Total del pedido</p>
                     <p class="billing-total-order-price billing-resume-field-number"> 105500,00</p>
                 </div>
-                <p class="billing-resume-description">El importe de tu pedido incluye todas las tasas, impuestos y aranceles aplicables. No tendrás que realizar ningún pago adicional al recibirlo.</p>
+                <p class="billing-resume-description">El importe de tu pedido incluye todas las tasas, impuestos y aranceles aplicables. No tendrás que realizar ningún pago adiciónal al recibirlo.</p>
             </div>
         </section> 
         </main> --->

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const apiAdminRouter = require('../../controllers/api/apiAdminController')
+const apiAdminController = require('../../controllers/api/apiAdminController')
 
-router.get('/get-clients', apiAdminRouter.downloadClients)
-
+router.get('/get-clients', apiAdminController.downloadClients)
+router.get('/order',apiAdminController.getOrders)
 module.exports = router

@@ -1,9 +1,10 @@
 import { handleRemoveCartBtnClick, isLetter, isNumeric } from "./utils.js";
-
+window.scrollTo(0, 0)
 // Si no hay usuario, tengo que pintar desde el LocalStorage
 await checkForUserLogged();
-// Si no hay usuario, se pinto devuelta la vista => llamo a la funcion
-if(!window.userLogged)handleRemoveCartBtnClick(window.userLogged);
+// Si no hay usuario, se pinto devuelta la vista => llamo a la función
+if (!window.userLogged) handleRemoveCartBtnClick(window.userLogged);
+
 // Logica para hacer a todos los input con valor 1
 document.querySelectorAll('.product-quantity').forEach(inp => {
     inp.value = 1;
@@ -15,10 +16,10 @@ document.querySelectorAll('.product-quantity').forEach(inp => {
 });
 
 
-// Logica para que funcione el mas y el menos
+// Logica para que funcióne el mas y el menos
 const reduceProductQuantityBtns = document.querySelectorAll('.subtract-quantity-btn');
 const addProductQuantityBtns = document.querySelectorAll('.add-quantity-btn');
-const handleAddingQuantity = (e) => { //funcion que se encarga de manera el click del +
+const handleAddingQuantity = (e) => { //función que se encarga de manera el click del +
     const parentDiv = e.target.closest('div');
     // Agarro al input mas cerca
     const input = parentDiv.querySelector('.product-quantity');
@@ -31,7 +32,7 @@ const handleAddingQuantity = (e) => { //funcion que se encarga de manera el clic
     // checkRowPrices(input.closest('.row'));
 
 }
-const handleSubstractingQuantity = (e) => { //funcion que se encarga de manera el click del +
+const handleSubstractingQuantity = (e) => { //función que se encarga de manera el click del +
     // Agarro al input mas cerca
     const parentDiv = e.target.closest('div')
     const input = parentDiv.querySelector('.product-quantity');
@@ -119,7 +120,7 @@ const paintSideCards = () => {
         let productPrice = card.querySelector('.product-subtotal-span').innerHTML;
         inyectedHTML +=
             `
-            <article class="product-side-card">
+            <article class="product-side-card" data-productid="${card.dataset.productid}">
                 <div class="image-container">
                     <img src="${imgPath}" alt="product-side-image" class="product-side-image">
                 </div>
@@ -164,46 +165,134 @@ continueButtons.forEach(btn => {
         let stepWrapper = stepContainer.querySelector('.step-wrapper');
         // Pregunto que tipo de step es
         const isInfoStep = stepFormContainer.classList.contains('info-step');
-        // Esto lo usan ambos
-        let userName = document.querySelector('#name').value;
-        let userLastName = document.querySelector('#last-name').value;
-        let userFullName = `${userName} ${userLastName}`
+
+
         // Si es true, es el de info
         if (isInfoStep) {
+            let userName = document.querySelector('#name').value;
+            let userLastName = document.querySelector('#last-name').value;
+            let userFullName = `${userName} ${userLastName}`
             let userMail = stepFormContainer.querySelector('#email').value;
             let userPhone = stepFormContainer.querySelector('#phone').value;
+
+            let billingAddress = {
+                street: stepFormContainer.querySelector('#billing_street').value,
+                zipCode: stepFormContainer.querySelector('#billing_zip-code').value,
+                apartment: stepFormContainer.querySelector('#billing_floor')?.value || '',
+                city: stepFormContainer.querySelector('#billing_city').value,
+                country: stepFormContainer.querySelector('#billing_country').value
+            }
+
             // invierto que contendor se ve
             stepFormContainer.classList.add('hidden');
             stepWrapper.classList.remove('hidden');
+            // Inyecto los datos
             stepWrapper.querySelector('.info-wrapper-mail').innerHTML = userMail;
             stepWrapper.querySelector('.info-wrapper-name').innerHTML = userFullName;
             stepWrapper.querySelector('.info-wrapper-phone-span').innerHTML = userPhone;
+            stepWrapper.querySelector('.info-wrapper-zip-code-span').innerHTML = billingAddress.zipCode;
+            stepWrapper.querySelector('.info-wrapper-street').innerHTML = `${billingAddress.street} ${billingAddress.apartment}, ${billingAddress.city} , ${billingAddress.country}`;
+
             // Pregunto si ambos deliver-form y deliver-wrapper estan ocultos, si lo estan es porque es la
             // primera vez que toca en continuar ==> lo hago aparecer. Sino no pasa nada
             if (document.querySelector('.deliver-step').classList.contains('hidden') &&
                 document.querySelector('.step-deliver-wrapper').classList.contains('hidden')) {
                 // Le saco el hidden al delivery
                 document.querySelector('.deliver-step').classList.remove('hidden');
+            } else {
+                // Aca quiere decir que toco continuar despues de editar. Pregunto si el otro contenedor
+                // esta armado ya y si esta elegida la opcion de pago.
+                let paymentMethodIsChosen = false;
+                paymentMethodInputs.forEach(inp => {
+                    if (inp.checked) {
+                        paymentMethodIsChosen = true;
+                        return
+                    }
+                })
+
+                if (!document.querySelector('.step-deliver-wrapper').classList.contains('hidden') &&
+                    paymentMethodIsChosen) {
+                    startPaymentButton.classList.remove('disabled')
+                }
             }
             modifyMainHeight('second-view');
         } else { //wrapper de deliver info
-            let zipCode = stepFormContainer.querySelector('#zip-code').value;
-            let userAddress = {
-                street: stepFormContainer.querySelector('#street').value,
-                zipCode,
-                apartment: stepFormContainer.querySelector('#floor')?.value || '',
-                province: stepFormContainer.querySelector('#province').value,
-                city: stepFormContainer.querySelector('#city').value
+
+            let shippingAddress;
+            // Aca pregunto si uso el check de "Usar direccion asociada al usuario"
+            let useSameAddressCheckbox = document.querySelector('#use-user-address');
+            if (useSameAddressCheckbox && useSameAddressCheckbox.checked) {
+                shippingAddress = {
+                    street: stepFormContainer.querySelector('#shipping-address-street-p').innerHTML,
+                    zipCode: stepFormContainer.querySelector('#shipping-address-zip-code-p').innerHTML,
+                    apartment: stepFormContainer.querySelector('#shipping-address-apartment-p')?.innerHTML || '',
+                    province: stepFormContainer.querySelector('#shipping-address-province-p').innerHTML,
+                    city: stepFormContainer.querySelector('#shipping-address-city-p').innerHTML,
+                    country: stepFormContainer.querySelector('#shipping-address-country-p').innerHTML,
+                }
+            } else {
+                shippingAddress = {
+                    street: stepFormContainer.querySelector('#shipping_street').value,
+                    zipCode: stepFormContainer.querySelector('#shipping_zip_code').value,
+                    apartment: stepFormContainer.querySelector('#shipping_floor')?.value || '',
+                    province: stepFormContainer.querySelector('#shipping_province').value,
+                    city: stepFormContainer.querySelector('#shipping_city').value,
+                    country: stepFormContainer.querySelector('#shipping_country').value,
+                }
             }
+
             // invierto que contendor se ve
             stepFormContainer.classList.add('hidden');
             stepWrapper.classList.remove('hidden');
-            stepWrapper.querySelector('.deliver-wrapper-zip-code-span').innerHTML = zipCode;
-            stepWrapper.querySelector('.deliver-wrapper-name').innerHTML = userFullName;
-            stepWrapper.querySelector('.deliver-wrapper-address').innerHTML = `${userAddress.street} ${userAddress.apartment}, ${userAddress.province}, ${userAddress.city} `;
+            // Aca pregunto si el checkbox de usar misma dirección esta chequeado
+            const useSameAddress = document.querySelector('#use-same-address').checked;
+            const usingSameAddressWrapper = document.querySelector('.using-same-address');
+            const usingdifferentAddressWrapper = document.querySelector('.using-different-address');
+
+            // Agarro y pregunto que tipo de envio eligio (DOMICILIO - RETIRO)
+            const deliverType = document.querySelector('#order_types_id').value;
+            const retireWrapper = document.querySelector('.retire-wrapper');
+
+            if (deliverType == 1) {//ENVIO
+                // El wrapper de retiro de base que no va
+                retireWrapper.classList.add('hidden');
+                // Me fijo cual de los otros wrappers van
+                if (useSameAddress) {
+                    // Le cambio las clases a los wrappers
+                    usingSameAddressWrapper.classList.remove('hidden');
+                    usingdifferentAddressWrapper.classList.add('hidden');
+                } else {
+                    // Le cambio las clases a los wrappers
+                    usingSameAddressWrapper.classList.add('hidden');
+                    usingdifferentAddressWrapper.classList.remove('hidden');
+                    stepWrapper.querySelector('.deliver-wrapper-zip-code-span').innerHTML = shippingAddress.zipCode;
+                    stepWrapper.querySelector('.deliver-wrapper-address').innerHTML = `${shippingAddress.street} ${shippingAddress.apartment}, ${shippingAddress.city}, ${shippingAddress.country} `;
+                }
+            } else { //RETIRO
+                // El wrapper de retiro de base va
+                retireWrapper.classList.remove('hidden');
+                // Agarro los otros dos y le pinto hidden
+                const deliverOptionsWrapper = document.querySelectorAll('.deliver-option-wrapper');
+                deliverOptionsWrapper.forEach(cont => cont.classList.add('hidden'));
+            }
+
+
             // Le saco el hidden al de payment
             document.querySelector('.payment-step').classList.remove('hidden');
             modifyMainHeight('second-view');
+
+            // Pregunto si esta elegido el payment method y si el wrapper de info esta activo
+            let paymentMethodIsChosen = false;
+            paymentMethodInputs.forEach(inp => {
+                if (inp.checked) {
+                    paymentMethodIsChosen = true;
+                    return
+                }
+            })
+            if (!document.querySelector('.step-info-wrapper').classList.contains('hidden') &&
+                paymentMethodIsChosen) {
+                startPaymentButton.classList.remove('disabled')
+            }
         };
         // Muestro el boton para editar
         stepContainer.querySelector('.edit-step-btn').classList.remove('hidden');
@@ -213,6 +302,8 @@ continueButtons.forEach(btn => {
     const editStepBtns = document.querySelectorAll('.edit-step-btn');
     editStepBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            // No pueden iniciar compra si esta abierto el edit
+            startPaymentButton.classList.add('disabled');
             modifyMainHeight('second-view');
             const stepContainer = btn.closest('.step-container');
             // Le saco el hidden al form
@@ -223,9 +314,8 @@ continueButtons.forEach(btn => {
             btn.classList.add('hidden');
         });
     });
-
-
 });
+
 // Logica de si toca INICIAR COMPRA cambie de view
 const continueViewBtn = document.querySelector('.continue-view-button');
 const stepViews = document.querySelectorAll('.view');
@@ -240,12 +330,13 @@ continueViewBtn.addEventListener('click', () => {
     // Cambio la altura del main
     modifyMainHeight('second-view');
 });
+
 function modifyMainHeight(className) {
     let maxHeight = document.querySelector(`.${className}`).offsetHeight;
     main.style.maxHeight = `${maxHeight + 500}px`
 };
 
-// Funcion que se va a fijar si los campos que tiene que completar el usuario son completados
+// Función que se va a fijar si los campos que tiene que completar el usuario son completados
 const sectionIsComplete = (btn) => {
     // Primero capturo el step donde se encuentra
     const stepForm = btn.closest('.step-form');
@@ -260,11 +351,11 @@ const sectionIsComplete = (btn) => {
             allFieldsComplete = false;
             field.classList.add('incomplete-field');
             if (!field.querySelector('.msg')) {//Si no tiene msg
-                // Crear el mensaje adicional
+                // Crear el mensaje adiciónal
                 const additionalMessage = document.createElement('span');
                 additionalMessage.classList.add('msg');
                 additionalMessage.innerHTML = 'Debes completar el campo'
-                // Insertar el mensaje adicional después del label
+                // Insertar el mensaje adiciónal después del label
                 field.appendChild(additionalMessage);
             }
         } else {
@@ -311,10 +402,10 @@ letterInputs.forEach(input => {
     let lastInputValue = input.value;
     input.addEventListener("input", function (e) {
         var inputValue = e.target.value;
-        if (!isLetter(inputValue)) { // Si no es letra, borra el contenido del campo
-            e.target.value = lastInputValue;
-        } else {
+        if (isLetter(inputValue) || inputValue == '') { // Si no es letra, borra el contenido del campo
             lastInputValue = inputValue; // Almacenar el último valor válido
+        } else {
+            e.target.value = lastInputValue;
         }
     });
 });
@@ -326,11 +417,11 @@ const validateUserDNI = (input) => {
     if (!booleanValue) { //Si esta mal el dni
         field.classList.add('incomplete-field');
         if (!field.querySelector('.msg')) {//Si no tiene msg
-            // Crear el mensaje adicional
+            // Crear el mensaje adiciónal
             const additionalMessage = document.createElement('span');
             additionalMessage.classList.add('msg');
             additionalMessage.innerHTML = 'Debes ingresar un formato correcto de DNI'
-            // Insertar el mensaje adicional después del label
+            // Insertar el mensaje adiciónal después del label
             field.appendChild(additionalMessage);
         }
     } else {
@@ -345,11 +436,11 @@ const validateUserEmail = (input) => {
     if (!booleanValue) { //Si esta mal el email
         field.classList.add('incomplete-field');
         if (!field.querySelector('.msg')) {//Si no tiene msg
-            // Crear el mensaje adicional
+            // Crear el mensaje adiciónal
             const additionalMessage = document.createElement('span');
             additionalMessage.classList.add('msg');
             additionalMessage.innerHTML = 'Debes ingresar un formato correcto de Email'
-            // Insertar el mensaje adicional después del label
+            // Insertar el mensaje adiciónal después del label
             field.appendChild(additionalMessage);
         }
     } else {
@@ -359,68 +450,132 @@ const validateUserEmail = (input) => {
     return booleanValue;
 };
 
-// LOGICA PARA PAGAR MERCADOPAGO
-const mercadopago = new MercadoPago('TEST-9f50e49e-6924-4a8c-aa39-b3ecb5b4e4c4', {
-    locale: 'es-AR' // The most common are: 'pt-BR', 'es-AR' and 'en-US'
+// Logica de si tocan "Usar misma direccion"
+const useSameAddress = document.querySelector('#use-same-address');
+const shippingAddressSection = document.querySelector('.shipping-address-section');
+useSameAddress.addEventListener('click', (e) => {
+    let requiredInputs = shippingAddressSection.querySelectorAll('.required-field input');
+    if (e.target.checked) {
+        shippingAddressSection.classList.add('hidden');
+        // Le saco el required a todos los campos del shipping address
+        requiredInputs.forEach(inp => inp.classList.remove('required'));
+        return
+    }
+    shippingAddressSection.classList.remove('hidden');
+    // Le meto el required a todos los campos del shipping address
+    requiredInputs.forEach(inp => inp.classList.add('required'));
 });
-// Handle call to backend and generate preference.
-document.getElementById("button-checkout").addEventListener("click", function () {
-    let products = [];
-    // Agarro a las tarjetas de productos
-    let productCards = document.querySelectorAll('.product-card');
-    productCards.forEach(card => {
-        products.push({
-            quantity: card.querySelector('.product-quantity').value,
-            description: card.querySelector('.product-name').innerHTML,
-            price: card.querySelector('.product-price-span').innerHTML
-        })
-    })
 
-    fetch("http://localhost:4500/payment/create_preference", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(products),
-    })
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (preference) {
-            createCheckoutButton(preference.id);
+// Logica para tipo de orden (ENVIO/RETIRAR)
+const deliverOptionBoxes = document.querySelectorAll('.delivery-option-box');
+const deliverTypeInput = document.querySelector('#order_types_id');
+const retireSection = document.querySelector('.retire-section');
+deliverOptionBoxes.forEach(opt => {
+    opt.addEventListener('click', () => {
+        let typeId = opt.dataset.typeid;
+        let requiredInputs = shippingAddressSection.querySelectorAll('.required-field input');
 
-        })
-        .catch(function (e) {
-            console.log(e);
-            alert("Unexpected error");
-        });
-});
-function createCheckoutButton(preferenceId) {
-    // Initialize the checkout
-    const bricksBuilder = mercadopago.bricks();
+        // Le meto el valor ese al input
+        deliverTypeInput.value = typeId;
+        // Pregunto si es retirar por el local se muestra el section de RETIRO, sino el otro
+        if (typeId == 1) { //ENVIO
+            // Muestro y oculto los section que corresponden
+            retireSection.classList.add('hidden');
+            shippingAddressSection.classList.remove('hidden');
+            document.querySelector('.use-same-address-field').classList.remove('hidden');
 
-    const renderComponent = async (bricksBuilder) => {
-        if (window.checkoutButton) window.checkoutButton.unmount();
-        await bricksBuilder.create(
-            'wallet',
-            'checkout-button-container', // class/id where the payment button will be displayed
-            {
-                initialization: {
-                    preferenceId: preferenceId
-                },
-                callbacks: {
-                    onError: (error) => console.error(error),
-                    onReady: () => { }
-                }
+            // Me fijo si ya estaba chequeado el usar misma direc
+            if (useSameAddress.checked) {
+                shippingAddressSection.classList.add('hidden');
+                // Si esta chequeado,les saco el required 
+                requiredInputs.forEach(inp => inp.classList.remove('required'));
+                return
             }
-        );
-    };
+            // Si no esta chequeado, le agrego devuelta el required
+            requiredInputs.forEach(inp => inp.classList.add('required'));
+            return
+        }
+        // Si es retiro por el local, tengo que sacar el require de los input
+        requiredInputs.forEach(inp => inp.classList.remove('required'));
 
-    window.checkoutButton = renderComponent(bricksBuilder);
-    document.querySelector('#button-checkout').remove();
-    // document.querySelector('#button-checkout').innerHTML ='';
-    // document.querySelector('#button-checkout').style.background ='none';
-}
+        // Muestro y oculto los section que corresponden
+        retireSection.classList.remove('hidden');
+        shippingAddressSection.classList.add('hidden');
+        document.querySelector('.use-same-address-field').classList.add('hidden');
+        return
+    })
+});
+
+// Logica de cuando tocan iniciar pago
+const startPaymentButton = document.getElementById("button-checkout");
+startPaymentButton.addEventListener('click', (e) => {
+    // si esta deshabilitado no lo dejo mandar
+    if (e.target.classList.contains('disabled')) e.preventDefault();
+
+})
+
+// // LOGICA PARA PAGAR MERCADOPAGO
+// const mercadopago = new MercadoPago('TEST-9f50e49e-6924-4a8c-aa39-b3ecb5b4e4c4', {
+//     locale: 'es-AR' // The most common are: 'pt-BR', 'es-AR' and 'en-US'
+// });
+// // Handle call to backend and generate preference.
+// document.getElementById("button-checkout").addEventListener("click", function () {
+//     let products = [];
+//     // Agarro a las tarjetas de productos
+//     let productCards = document.querySelectorAll('.product-card');
+//     productCards.forEach(card => {
+//         products.push({
+//             quantity: card.querySelector('.product-quantity').value,
+//             description: card.querySelector('.product-name').innerHTML,
+//             price: card.querySelector('.product-price-span').innerHTML
+//         })
+//     })
+
+//     fetch("http://localhost:4500/payment/create_preference", {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(products),
+//     })
+//         .then(function (response) {
+//             return response.json();
+//         })
+//         .then(function (preference) {
+//             createCheckoutButton(preference.id);
+
+//         })
+//         .catch(function (e) {
+//             console.log(e);
+//             alert("Unexpected error");
+//         });
+// });
+// function createCheckoutButton(preferenceId) {
+//     // Initialize the checkout
+//     const bricksBuilder = mercadopago.bricks();
+
+//     const renderComponent = async (bricksBuilder) => {
+//         if (window.checkoutButton) window.checkoutButton.unmount();
+//         await bricksBuilder.create(
+//             'wallet',
+//             'checkout-button-container', // class/id where the payment button will be displayed
+//             {
+//                 initialization: {
+//                     preferenceId: preferenceId
+//                 },
+//                 callbacks: {
+//                     onError: (error) => console.error(error),
+//                     onReady: () => { }
+//                 }
+//             }
+//         );
+//     };
+
+//     window.checkoutButton = renderComponent(bricksBuilder);
+//     document.querySelector('#button-checkout').remove();
+//     // document.querySelector('#button-checkout').innerHTML ='';
+//     // document.querySelector('#button-checkout').style.background ='none';
+// }
 
 async function checkForUserLogged() {
     try {
@@ -432,7 +587,7 @@ async function checkForUserLogged() {
         // Si no hay, tengo que pintar el carro con el localStorage
         let localStorageCart = JSON.parse(localStorage.getItem('temporalCart'));
         // Ordeno el carro de ultimo a primero (antiguedad mas reciente)
-        localStorageCart?.reverse(); 
+        localStorageCart?.reverse();
         productCardWrapper.innerHTML =
             `
         <div class="spinner-overlay">
@@ -447,20 +602,20 @@ async function checkForUserLogged() {
         // Saco el spinner
         document.querySelector('.spinner-overlay').remove()
         productCardWrapper.innerHTML = '';
-        localStorageCart?.forEach(item=>{
-            let product = products.find(prod=>prod.id==item.products_id);
-            product.filename = product.files.find(file=>file.file_types_id==1)?.filename;
-            let cardHTML = 
-            `
-            <article class="product-card" data-productid = ${ product.id }>
+        localStorageCart?.forEach(item => {
+            let product = products.find(prod => prod.id == item.products_id);
+            product.filename = product.files.find(file => file.file_types_id == 1)?.filename;
+            let cardHTML =
+                `
+            <article class="product-card" data-productid = ${product.id}>
                 <div class="product-card-image-container article-div-child">
-                    <img src="/img/product/${ product.filename || 'default.png' }" alt="${ product.name }-${ product.filename }" class="product-image">
+                    <img src="/img/product/${product.filename || 'default.png'}" alt="${product.name}-${product.filename}" class="product-image">
                 </div>
                 <div class="product-name-container article-div-child">
-                    <p class="product-name">${ product.name }</p>
+                    <p class="product-name">${product.name}</p>
                 </div>
                 <div class="product-price-container article-div-child">
-                    <p class="product price">$<span class="product-price-span">${ product.price }</span></p>
+                    <p class="product price">$<span class="product-price-span">${product.price}</span></p>
                 </div>
                 <div class="product-quantity-container article-div-child">
                     <i class='bx bx-plus-medical add-quantity-btn'></i>
@@ -468,7 +623,7 @@ async function checkForUserLogged() {
                     <input type="number" name="quantity" id="" class="product-quantity">
                 </div>
                 <div class="product-subtotal-container article-div-child">
-                    <p class="product-subtotal">$ <span class="product-subtotal-span">${ product.price }</span></p>
+                    <p class="product-subtotal">$ <span class="product-subtotal-span">${product.price}</span></p>
                 </div>
                 <i class='bx bx-trash remove-cart-product'></i>
                 <div class="loading-container">
@@ -484,12 +639,12 @@ async function checkForUserLogged() {
             `;
             productCardWrapper.innerHTML += cardHTML;
         });
-        if(!localStorageCart || localStorageCart.length ==0){
+        if (!localStorageCart || localStorageCart.length == 0) {
             productCardWrapper.innerHTML = `<p class="no-products-msg">No tienes productos en el carro</p>`;
         }
-        
+
         return
-        
+
     } catch (error) {
         return console.log(`Falle en checkForUserLogged: ${error}`);
     }
@@ -498,16 +653,105 @@ async function checkForUserLogged() {
 //logica para pintar forma de pago en el second-view
 const boxes = document.querySelectorAll('.box-container')
 const boxesType = document.querySelectorAll('.payment-field')
+const paymentMethodInputs = document.querySelectorAll('.payment-method-input');
+const stepWrappers = document.querySelectorAll('.step-wrapper');
+
+// Logica de si me viene con errores pinto un mensaje 3 segundos tarjeta de "ERROR"
+const urlString = window.location.search;
+const urlParams = new URLSearchParams(urlString);
+const param = urlParams.get('checkoutErrors');
+if (param) {
+    const msg = urlParams.get('msg');
+    const errorCard = document.querySelector('.error-card');
+    errorCard.innerHTML = msg;
+    errorCard.classList.remove('hidden');
+    setTimeout(() => {
+        errorCard.classList.add('error-card-inactive');
+        setTimeout(() => {
+            errorCard.classList.add('hidden');
+        }, 2000)
+    }, 4000);
+}
+
 
 boxes.forEach((box, indexBox) => {
     box.addEventListener('click', () => {
-        for(let indexBoxType = 0; indexBoxType < boxesType.length; indexBoxType++){
+        // Si todos los stepWrappers estan mostrandose es que se completo todo ==> habilito el boton
+        let allWrappersAreShown = true;
+        stepWrappers.forEach(wrap => wrap.classList.contains('hidden') ? allWrappersAreShown = false : null);
+        // Le saco la clase disabled al button
+        allWrappersAreShown && startPaymentButton.classList.remove('disabled');
+
+        for (let indexBoxType = 0; indexBoxType < boxesType.length; indexBoxType++) {
             boxesType[indexBoxType].classList.remove('payment-field-active')
             boxes[indexBoxType].classList.remove('box-container-active')
-            if(indexBox == indexBoxType){
-                box.classList.add('box-container-active')
-                boxesType[indexBoxType].classList.add('payment-field-active')
-            }
+            if (indexBox == indexBoxType) {
+                // box.classList.add('box-container-active')
+                box.querySelector('input').checked = true;
+                boxesType[indexBoxType].classList.add('payment-field-active');
+
+            };
+        };
+    });
+});
+
+// Logica de si chekea "Utilizar direccion asociada a usuario"
+const useUserAddress = document.querySelector('#use-user-address');
+const saveUserAddressField = document.querySelector('.save-user-address-field');
+const shippingAddressFields = document.querySelectorAll('.shipping-field');
+useUserAddress?.addEventListener('input', (e) => {
+    // Voy por todos los campos del shipping address
+    shippingAddressFields.forEach(field => {
+        const input = field.querySelector('input, select');
+        const addressP = field.querySelector('.shipping-address-p');
+        if (e.target.checked) {//Si esta checkeado voy por cada input y lo armo un p
+            // Le saco el required al input
+            input.classList.remove('required')
+            // Intercambio las clases
+            input?.classList.add('hidden');
+            addressP?.classList.remove('hidden');
+            // si esta usando la direccion del usuario al pedo pintar le checkbox de 'Guardar direccion'
+            saveUserAddressField?.classList.add('hidden');
+            return;
         }
-    })
+        // Le agrego el required al input
+        field.classList.contains('required-field') && input.classList.add('required');
+        // Intercambio las clases
+        input?.classList.remove('hidden');
+        addressP?.classList.add('hidden');
+        saveUserAddressField?.classList.remove('hidden');
+        return;
+    });
 })
+
+
+const form = document.getElementById('checkout-form');
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // si esta loggeado 
+    if (window.userLogged) { // Logica para enviar form con users_id
+        let userIdInput = document.createElement('input');
+        userIdInput.type = 'hidden';
+        userIdInput.value = window.userLogged.id;
+        userIdInput.name = 'users_id';
+        form.appendChild(userIdInput)
+    };
+    // Tengo que armar el objeto items
+    let itemsInput = document.createElement('input');
+    itemsInput.type = 'hidden';
+    itemsInput.name = 'items';
+    let itemsArray = [];
+    // ahora voy por cada item que el usuario compro y lo meto en este array
+    const itemsConfirmed = document.querySelectorAll('.product-side-card');
+    itemsConfirmed.forEach(item => {
+        const products_id = item.dataset.productid;
+        const quantity = item.querySelector('.product-side-quantity-span').innerHTML;
+        itemsArray.push({
+            products_id,
+            quantity
+        });
+    });
+    itemsInput.value = JSON.stringify(itemsArray);
+    form.appendChild(itemsInput);
+    form.submit();
+});

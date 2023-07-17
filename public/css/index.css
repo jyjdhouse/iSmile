@@ -1154,7 +1154,7 @@ video::-webkit-media-controls-time-remaining-display {
     }
 }
 
-/* ANIMACIONES */
+/* ANIMAciónES */
 @keyframes paragraphTranslation {
     0% {
         transform: translateX(-100%);

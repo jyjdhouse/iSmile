@@ -53,7 +53,7 @@ window.addEventListener('load', () => {
                 cont.closest('.field').querySelector('label').classList.add('red');
             }
         });
-        // Logica para cambiar el red en cuanto se selecciona alguna opcion
+        // Logica para cambiar el red en cuanto se seleccióna alguna opción
         let inputsRadio = document.querySelectorAll('input[type="radio"]');
         inputsRadio.forEach(radio => {
             // voy por cada uno
@@ -295,7 +295,7 @@ window.addEventListener('load', () => {
             };
         });
 
-        // Me fijo si esta chequeado en si el input que abre opciones, si
+        // Me fijo si esta chequeado en si el input que abre opciónes, si
         // no esta chequeado le agrego una clase al label para que quede bien en el PDF
         let specifyFields = Array.from(document.querySelectorAll('.specify-field'));
         if (document.querySelector('#previous-treatments-yes').checked) {

@@ -11,7 +11,7 @@ module.exports = (sequelize, dataTypes) => {
         city: { type: dataTypes.STRING(100) },
         provinces_id: { type: dataTypes.INTEGER },
         zip_code: { type: dataTypes.STRING(10) },
-        orders_id: {type: dataTypes.STRING(36)}
+        country: { type: dataTypes.STRING(255) },
     }
 
     let config = {
@@ -22,9 +22,9 @@ module.exports = (sequelize, dataTypes) => {
     const BillingAddress = sequelize.define(alias, cols, config);
 
     BillingAddress.associate = (models) => {
-        BillingAddress.belongsTo(models.Order, {
+        BillingAddress.hasOne(models.Order, {
             as: 'order',
-            foreignKey: 'orders_id',
+            foreignKey: 'billing_addresses_id',
         })
     };
 

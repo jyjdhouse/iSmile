@@ -9,11 +9,11 @@ window.addEventListener('load', async () => {
 
         const partialProductSection = 'partial-product-section';
         const blackScreen = 'black-screen';
-        const searchSection = 'search-form-container'; //Es la seccion donde se encuentran el buscador
+        const searchSection = 'search-form-container'; //Es la sección donde se encuentran el buscador
         const sideNavbar = 'side-navbar-container';
         const header = 'header';
 
-        const listenSearchResult = () => { //Funcion que escucha el <a> de mostrar todos los resultados de busqueda
+        const listenSearchResult = () => { //Función que escucha el <a> de mostrar todos los resultados de busqueda
             const searchResultButton = document.querySelector('.more-results-msg');
             // Agarro el form para hacer un submit
             const form = document.querySelector('.search-input-container');
@@ -34,7 +34,7 @@ window.addEventListener('load', async () => {
 
         togglerOpenButton.forEach(btn => {
             btn.addEventListener('click', () => { // Si abre el searchForm
-                if (window.innerWidth < 768 && btn.classList.contains('lupa-mobile')) {//Resolucion mobile
+                if (window.innerWidth < 768 && btn.classList.contains('lupa-mobile')) {//Resolución mobile
                     btn.classList.add('open-search-form-button-active');
                 }
 

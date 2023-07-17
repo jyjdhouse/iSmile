@@ -23,7 +23,7 @@ const specialties_services = [
     {
         specialties_id: 1,
         name: 'Armonización facial',
-        description: 'La percepción de un rostro bello, armónico y natural depende fundamentalmente de las proporciones de una parte de nuestro rostro en relación con otra.',
+        description: 'La percepción de un rostro bello, armónico y natural depende fundamentalmente de las proporciónes de una parte de nuestro rostro en relación con otra.',
     },
     {
         specialties_id: 1,
@@ -58,7 +58,7 @@ const specialties_services = [
     {
         name: 'DISEÑO DE SONRISA',
         specialties_id: 4,
-        description: 'Para comenzar realizamos un estudio completo del rostro del paciente tomando medidas dentarias y faciales, escaneo digital de la boca y fotografías. Mediante esta información podremos definir el largo, ancho y anatomía ideal de cada uno de sus dientes en perfecta relación a al rostro y a sus labios. Toda esta información es enviada al laboratorio quien confeccionará una impresión digital del modelo de la boca con la forma exacta del diseño realizado, que será probado en el paciente mediante un material provisorio para visualizar el agrado del diseño. Y en base al mismo proceder a confeccionar las carillas.  '
+        description: 'Para comenzar realizamos un estudio completo del rostro del paciente tomando medidas dentarias y faciales, escaneo digital de la boca y fotografías. Mediante esta información podremos definir el largo, ancho y anatomía ideal de cada uno de sus dientes en perfecta relación a al rostro y a sus labios. Toda esta información es enviada al laboratorio quien confecciónará una impresión digital del modelo de la boca con la forma exacta del diseño realizado, que será probado en el paciente mediante un material provisorio para visualizar el agrado del diseño. Y en base al mismo proceder a confecciónar las carillas.  '
     }
 ]
 
@@ -66,80 +66,80 @@ const treatments = [
     {
         name: 'B-UP',
         specialties_id: 1, //ESTETICA FACIAL
-        specialties_services_id: 1, //ARMONIZACION FACIAL
-        description: 'Es una novedosa técnica realizada con acido hialuronico que consiste en trabajar sobre áreas específicas de la región temporal a nivel del cuero cabelludo, con el objetivo de lograr un reposicionamiento de los tejidos elevándolos  en contra de los vectores de envejecimiento logrando una notable mejoría del rostro, sin cambiar las facciones del mismo.'
+        specialties_services_id: 1, //ARMONIZAción FACIAL
+        description: 'Es una novedosa técnica realizada con acido hialuronico que consiste en trabajar sobre áreas específicas de la región temporal a nivel del cuero cabelludo, con el objetivo de lograr un reposiciónamiento de los tejidos elevándolos  en contra de los vectores de envejecimiento logrando una notable mejoría del rostro, sin cambiar las facciónes del mismo.'
     },
     {
         name: 'OJERAS',
         specialties_id: 1, //ESTETICA FACIAL
-        specialties_services_id: 1, //ARMONIZACION FACIAL
+        specialties_services_id: 1, //ARMONIZAción FACIAL
         description: 'El relleno de ojeras se realiza con un ácido hialurónico especial para esa zona, corrige el surco palpebromalar hundido mejorando el aspecto de un rostro aparentemente cansado. Se realiza en una sola sesión y tiene una duración entre 12 a 18 meses. El procedimiento es  prácticamente indoloro y el resultado es inmediato.'
     },
     {
         name: 'POMULOS',
         specialties_id: 1, //ESTETICA FACIAL
-        specialties_services_id: 1, //ARMONIZACION FACIAL
-        description: 'Mediante la aplicación de ácido hialurónico podemos crear una estructura de mejillas equilibrada logrando elevación, contorno y definición. Los pómulos en una mujer están asociados con el atractivo facial, un contorno suave y curvo transmite salud y juventud. La estructura fuerte y definida de las mejillas en un hombre se asocia con la masculinidad y el atractivo. La técnica que utilizamos al trabajar sobre pómulos también tiene como objetivo generar puntos de tensión que ayudan a reposicionar tejidos y así reducir los surcos nasogenianos y a suavizar indirectamente ojeras. logrando un rostro más definido, estilizado y atractivo.'
+        specialties_services_id: 1, //ARMONIZAción FACIAL
+        description: 'Mediante la aplicación de ácido hialurónico podemos crear una estructura de mejillas equilibrada logrando elevación, contorno y definición. Los pómulos en una mujer están asociados con el atractivo facial, un contorno suave y curvo transmite salud y juventud. La estructura fuerte y definida de las mejillas en un hombre se asocia con la masculinidad y el atractivo. La técnica que utilizamos al trabajar sobre pómulos también tiene como objetivo generar puntos de tensión que ayudan a reposiciónar tejidos y así reducir los surcos nasogenianos y a suavizar indirectamente ojeras. logrando un rostro más definido, estilizado y atractivo.'
     },
     {
         name: 'TEMPORALES',
         specialties_id: 1, //ESTETICA FACIAL
-        specialties_services_id: 1, //ARMONIZACION FACIAL
-        description: 'La pérdida de volumen en la frente y en las sienes durante el proceso de envejecimiento conduce al descenso de las cejas y tiene un impacto negativo en áreas más distantes como las ojeras. Mediante los rellenos de AH devolvemos el volumen perdido en las sienes y la frente logrando un contorno más juvenil y proporcionando apoyo para levantar las cejas naturalmente. Es ideal combinar este tratamiento con BOTOX®️ para reducir sustancialmente la aparición de arrugas y terminar de dar una elevación natural a las cejas.'
+        specialties_services_id: 1, //ARMONIZAción FACIAL
+        description: 'La pérdida de volumen en la frente y en las sienes durante el proceso de envejecimiento conduce al descenso de las cejas y tiene un impacto negativo en áreas más distantes como las ojeras. Mediante los rellenos de AH devolvemos el volumen perdido en las sienes y la frente logrando un contorno más juvenil y proporciónando apoyo para levantar las cejas naturalmente. Es ideal combinar este tratamiento con BOTOX®️ para reducir sustancialmente la aparición de arrugas y terminar de dar una elevación natural a las cejas.'
 
     },
     {
-        name: 'RINOMODELACION',
+        name: 'RINOMODELAción',
         specialties_id: 1, //ESTETICA FACIAL
-        specialties_services_id: 1, //ARMONIZACION FACIAL
+        specialties_services_id: 1, //ARMONIZAción FACIAL
         description: 'Utilizamos un acido hialuronico de altísima calidad con una densidad específica para este área, permitiéndonos rectificar y definir el dorso de la nariz para una apariencia más suave, así como para levantar la punta nasal, con resultados potencialmente transformadores. El tratamiento se realiza en una sola sesión y es totalmente ambulatorio, los resultados se ven en el momento, sin hematomas postoperatorios o molestias.'
     },
     {
         name: 'SURCO NASOGENIANO',
         specialties_id: 1, //ESTETICA FACIAL
-        specialties_services_id: 1, //ARMONIZACION FACIAL
-        description: 'Para tratar el surco nasogeniano nos basamos en el estudio de vectores de envejecimiento y reposicionamiento de los tejidos. Para mejorar el surco nasogeniano colocamos ácido hialurónico en áreas específicas de pomulos, no para aportar volumen sino para producir el repocisionamiento facial logrando la mejoría del surco indirectamente y obteniendo como resultado un rostro fresco, natural y armónico.'
+        specialties_services_id: 1, //ARMONIZAción FACIAL
+        description: 'Para tratar el surco nasogeniano nos basamos en el estudio de vectores de envejecimiento y reposiciónamiento de los tejidos. Para mejorar el surco nasogeniano colocamos ácido hialurónico en áreas específicas de pomulos, no para aportar volumen sino para producir el repocisionamiento facial logrando la mejoría del surco indirectamente y obteniendo como resultado un rostro fresco, natural y armónico.'
     },
     {
         name: 'LABIOS',
         specialties_id: 1, //ESTETICA FACIAL
-        specialties_services_id: 1, //ARMONIZACION FACIAL
+        specialties_services_id: 1, //ARMONIZAción FACIAL
         description: 'Previo al tratamiento realizaremos un diseño donde vamos a evaluar tu anatomía, edad, y expectativas para lograr resultados que se ajusten perfectamente a tus necesidades y a tu rostro. Utilizamos un ácido hialurónico con una densidad ideal para este área que nos permitirá optimizar la forma, proporción, estructura y volumen de los labios, como también elevar comisuras y corregir posibles asimetrías. También podemos tratar las "líneas de fumador" y mejorar la calidad de la piel ya que genera hidratación, aportando un resultado de labios cuidados y tersos.'
     },
     {
-        name: 'DEFINICION MANDIBULAR',
+        name: 'DEFINIción MANDIBULAR',
         specialties_id: 1, //ESTETICA FACIAL
-        specialties_services_id: 1, //ARMONIZACION FACIAL
-        description: 'Utilizamos un Ácido Hialurónico de altísima calidad con una densidad específica para tratar este área. Previamente tomamos medidas y proporciones faciales para realizar el diseño correcto para cada rostro. Cabe destacar que tenemos en cuenta ángulos y proporciones muy diferentes en hombres y en mujeres. Los resultados se ven de inmediato, es un procedimiento prácticamente indoloro, y la duración es de 2 años aproximadamente. El resultado es un rostro más definido y estilizado en perfecta proporción con el resto del rostro.'
+        specialties_services_id: 1, //ARMONIZAción FACIAL
+        description: 'Utilizamos un Ácido Hialurónico de altísima calidad con una densidad específica para tratar este área. Previamente tomamos medidas y proporciónes faciales para realizar el diseño correcto para cada rostro. Cabe destacar que tenemos en cuenta ángulos y proporciónes muy diferentes en hombres y en mujeres. Los resultados se ven de inmediato, es un procedimiento prácticamente indoloro, y la duración es de 2 años aproximadamente. El resultado es un rostro más definido y estilizado en perfecta proporción con el resto del rostro.'
     },
     {
         name: 'MENTON',
         specialties_id: 1, //ESTETICA FACIAL
-        specialties_services_id: 1, //ARMONIZACION FACIAL
-        description: 'Utilizamos Ácido un Hialurónico de alta densidad para lograr un mentón bien definido con la altura y proyección ideal en cada rostro, consiguiendo un perfil armónico y un rostro más proporcionado; además nos permite mejorar la papada por tensión indirecta de la piel de la zona. Los resultados son instantáneos, es un procedimiento prácticamente indoloro, y la duración es de 2 años aproximadamente.'
+        specialties_services_id: 1, //ARMONIZAción FACIAL
+        description: 'Utilizamos Ácido un Hialurónico de alta densidad para lograr un mentón bien definido con la altura y proyección ideal en cada rostro, consiguiendo un perfil armónico y un rostro más proporciónado; además nos permite mejorar la papada por tensión indirecta de la piel de la zona. Los resultados son instantáneos, es un procedimiento prácticamente indoloro, y la duración es de 2 años aproximadamente.'
     },
     {
         name: 'TOP MODEL LOOK',
         specialties_id: 1,
-        specialties_services_id: 1, //ARMONIZACION FACIAL
+        specialties_services_id: 1, //ARMONIZAción FACIAL
         description: 'La técnica “Top Model Look” tiene como objetivo lograr un rostro más atractivo con un efecto ‘contouring’ mediante la definición de la zona del hueso lateral de las mejillas. Trabajamos con acido hialuronico de alta y baja densidad, consiguiendo además generar un efecto tensor.'
     },
     {
-        name: 'MASCULINIZACION FACIAL',
+        name: 'MASCULINIZAción FACIAL',
         specialties_id: 1,
-        specialties_services_id: 1, //ARMONIZACION FACIAL
-        description: 'Utilizamos Ácido Hialurónico de altísima calidad con una densidad especifica para cada área del rostro; previamente tomamos medidas y proporciones faciales para realizar el diseño correcto. Trabajamos fundamentalmente en áreas claves de mejillas, mandíbula y mentón otorgando definición,  proporción y ángulos en base a una anatomía masculina ideal. Los resultados son siempre naturales y armónicos y se ven de inmediato. El procedimiento es prácticamente indoloro, y la duración es de 2 años aproximadamente.'
+        specialties_services_id: 1, //ARMONIZAción FACIAL
+        description: 'Utilizamos Ácido Hialurónico de altísima calidad con una densidad especifica para cada área del rostro; previamente tomamos medidas y proporciónes faciales para realizar el diseño correcto. Trabajamos fundamentalmente en áreas claves de mejillas, mandíbula y mentón otorgando definición,  proporción y ángulos en base a una anatomía masculina ideal. Los resultados son siempre naturales y armónicos y se ven de inmediato. El procedimiento es prácticamente indoloro, y la duración es de 2 años aproximadamente.'
     },
     {
         name: 'FULL FACE',
         specialties_id: 1, //ESTETICA FACIAL
-        specialties_services_id: 1, //ARMONIZACION FACIAL
-        description: 'La armonización facial es un procedimiento que se basa en un diagnóstico facial completo tomando medidas y proporciones faciales para el tratamiento de múltiples áreas del rostro utilizando Ácido Hialurónico en combinación con BOTOX®️ y bioestimuladores. El principal objetivo es reequilibrar las proporciones faciales, mejorar la definición y contornos, corregir irregularidades, reducir la apariencia de arrugas y ojeras; y reactivar la producción de colageno por parte de nuestras propias células. Los tratamientos se adaptan a cada paciente para lograr la mejor version de sí mismos, con resultados SIEMPRE naturales. La armonización facial puede ser realmente transformadora, proporcionando una mejora estética sustancial de la parte media del rostro (mejillas, área de los ojos, nariz), la parte inferior (mentón, línea de la mandíbula, labios) y la parte superior (frente, sienes y cejas). Este tratamiento requiere técnicas y conceptos avanzados, con un profundo conocimiento de la anatomía facial, vectores de envejecimiento y tecnologías de productos.'
+        specialties_services_id: 1, //ARMONIZAción FACIAL
+        description: 'La armonización facial es un procedimiento que se basa en un diagnóstico facial completo tomando medidas y proporciónes faciales para el tratamiento de múltiples áreas del rostro utilizando Ácido Hialurónico en combinación con BOTOX®️ y bioestimuladores. El principal objetivo es reequilibrar las proporciónes faciales, mejorar la definición y contornos, corregir irregularidades, reducir la apariencia de arrugas y ojeras; y reactivar la producción de colageno por parte de nuestras propias células. Los tratamientos se adaptan a cada paciente para lograr la mejor version de sí mismos, con resultados SIEMPRE naturales. La armonización facial puede ser realmente transformadora, proporciónando una mejora estética sustancial de la parte media del rostro (mejillas, área de los ojos, nariz), la parte inferior (mentón, línea de la mandíbula, labios) y la parte superior (frente, sienes y cejas). Este tratamiento requiere técnicas y conceptos avanzados, con un profundo conocimiento de la anatomía facial, vectores de envejecimiento y tecnologías de productos.'
     },
     {
         name: 'BICHECTOMIA',
         specialties_id: 1, //ESTETICA FACIAL
-        specialties_services_id: 1, //ARMONIZACION FACIAL
+        specialties_services_id: 1, //ARMONIZAción FACIAL
         description: 'La bichectomia es una cirugía mínimamente invasiva que se realiza una sola vez en la vida, se realiza con anestesia local en un tiempo aproximado de 30 minutos; consiste en extraer las bolsas de Bichat que son unas bolsitas de grasa encapsulada que tenemos naturalmente a cada lado de nuestras mejillas. Se realiza mediante una pequeña incisión por dentro de la mejillas y luego se cierra con un solo punto de cada lado. El resultado es un afinamiento del rostro resaltando pómulos y dejando una cara más angulosa y estética. Al ser un tipo de grasa encapsulada, no se vuelve a regenerar, manteniendo los resultados al margen de un aumento de peso.'
     },
     {
@@ -152,13 +152,13 @@ const treatments = [
         name: 'BOTOX®️ PUNTA NARIZ',
         specialties_id: 1, //ESTETICA FACIAL
         specialties_services_id: 2,
-        description: 'En algunos pacientes podemos observar que al hablar o sonreír la punta de la nariz es traccionada hacia abajo. Esto surge por la presencia de un pequeño músculo que es inconstante  (no todos los pacientes lo tienen) que se encuentra situado en la base de la nariz y es el responsable del movimiento de la punta nasal durante la expresión y el habla del paciente. En estos casos tenemos la posibilidad de inactivar este musculo mediante la aplicación de BOTOX®️ para evitar la caída de la punta de la nariz a causa de esta tracción constante, permitiendo que la punta quede elevada durante cualquier expresión.'
+        description: 'En algunos pacientes podemos observar que al hablar o sonreír la punta de la nariz es tracciónada hacia abajo. Esto surge por la presencia de un pequeño músculo que es inconstante  (no todos los pacientes lo tienen) que se encuentra situado en la base de la nariz y es el responsable del movimiento de la punta nasal durante la expresión y el habla del paciente. En estos casos tenemos la posibilidad de inactivar este musculo mediante la aplicación de BOTOX®️ para evitar la caída de la punta de la nariz a causa de esta tracción constante, permitiendo que la punta quede elevada durante cualquier expresión.'
     },
     {
         name: 'BOTOX®️ MENTON EMPEDRADO',
         specialties_id: 1, //ESTETICA FACIAL
         specialties_services_id: 2,
-        description: 'En muchos pacientes podemos observar que al hablar o expresarse se produce un puntillado o empedrado en la zona de la barbilla que se debe a una hiperactividad muscular en esa área. Esto podemos solucionarlo de una manera muy sencilla aplicando una dosis adecuada de BOTOX®️ para relajar estos músculos  hiperactivos y lograr un mentón liso y agradable ante cualquier expresión.'
+        description: 'En muchos pacientes podemos observar que al hablar o expresarse se produce un puntillado o empedrado en la zona de la barbilla que se debe a una hiperactividad muscular en esa área. Esto podemos soluciónarlo de una manera muy sencilla aplicando una dosis adecuada de BOTOX®️ para relajar estos músculos  hiperactivos y lograr un mentón liso y agradable ante cualquier expresión.'
     },
     {
         name: 'BOTOX®️ PARA TRATAMIENTO DE CICATRICES',
@@ -182,7 +182,7 @@ const treatments = [
         name: 'BOTOX®️ BRUXISMO',
         specialties_id: 1, //ESTETICA FACIAL
         specialties_services_id: 2,
-        description: 'El tratamiento de Bruxismo con Botox es hoy en día el tratamiento más efectivo que soluciona esta afección. Consiste en la colocación de Botox en los músculos que lo provocan haciendo que se relajen y se produzca indefectiblemente un gran alivio, de esta forma evitamos desgastes y roturas dentarias, dolores articulares, de cabeza, oído, y contracturas cervicales asociadas al Bruxismo. La aplicación se lleva a cabo en tan solo unos minutos, y el efecto de relajación comienza a sentirse a las 48 hs luego de la aplicación.'
+        description: 'El tratamiento de Bruxismo con Botox es hoy en día el tratamiento más efectivo que solucióna esta afección. Consiste en la colocación de Botox en los músculos que lo provocan haciendo que se relajen y se produzca indefectiblemente un gran alivio, de esta forma evitamos desgastes y roturas dentarias, dolores articulares, de cabeza, oído, y contracturas cervicales asociadas al Bruxismo. La aplicación se lleva a cabo en tan solo unos minutos, y el efecto de relajación comienza a sentirse a las 48 hs luego de la aplicación.'
     },
     {
         name: 'LIMPIEZA FACIAL PROFUNDA',
@@ -203,7 +203,7 @@ const treatments = [
         description: 'El ozono estimula el colágeno, la elastina, es antioxidante y restablece la circulación sanguínea, tiene efecto desinfectante, neutraliza las bacterias de la piel. Gracias a este tratamiento facial cerramos los poros de la piel y mejoramos las manchas.'
     },
     {
-        name: 'EXTRACCION DE COMEDONES',
+        name: 'EXTRACción DE COMEDONES',
         specialties_id: 1, //ESTETICA FACIAL
         specialties_services_id: 3,
         description: 'Procedimiento no agresivo ni invasivo, destinado a mejorar el aspecto de la piel, corregir la dilatación de los poros, eliminar las células más superficiales y extraer los famosos "puntos o negros” o “barritos" (en dermatología denominados "comedones") y microquistes que se van acumulando con el tiempo.'
@@ -218,7 +218,7 @@ const treatments = [
         name: 'JELLY MASK',
         specialties_id: 1, //ESTETICA FACIAL
         specialties_services_id: 3,
-        description: 'Mascarillas faciales para el cuidado de la piel que se proporcionan en forma de polvo que toma su forma de mascarilla al agregar agua purificada. Crea una capa oclusiva, lo que fuerza la hidratación y empuja todos los nutrientes beneficiosos profundamente en la piel, lo que aumenta la efectividad del procedimiento.'
+        description: 'Mascarillas faciales para el cuidado de la piel que se proporciónan en forma de polvo que toma su forma de mascarilla al agregar agua purificada. Crea una capa oclusiva, lo que fuerza la hidratación y empuja todos los nutrientes beneficiosos profundamente en la piel, lo que aumenta la efectividad del procedimiento.'
     },
     {
         name: 'DERMAPLANING',
@@ -230,7 +230,7 @@ const treatments = [
         name: 'MASAJE FACIAL',
         specialties_id: 1, //ESTETICA FACIAL
         specialties_services_id: 3,
-        description: 'Tratamiento de belleza que abarca un conjunto de técnicas basadas en manipulaciones manuales sobre el cutis. Por lo general, se realizan pequeños movimientos sobre el rostro, aplicando diferentes grados de intensidad, superficial o profunda.'
+        description: 'Tratamiento de belleza que abarca un conjunto de técnicas basadas en manipulaciónes manuales sobre el cutis. Por lo general, se realizan pequeños movimientos sobre el rostro, aplicando diferentes grados de intensidad, superficial o profunda.'
     },
     {
         name: 'LASER NORDLYS',
@@ -242,7 +242,7 @@ const treatments = [
         name: 'LIPOLISIS ENZIMATICA DE PAPADA',
         specialties_id: 1, //ESTETICA FACIAL
         specialties_services_id: 4,
-        description: 'Tratamiento donde aplicamos enzimas lipolíticas especiales para esta zona en forma de micro inyecciones.Eliminan el tejido adiposo disolviendo las células de grasa en forma segura, rápida y altamente efectiva. Los resultados se ven a los 15 días de la primera sesión evaluando en esa etapa si son necesarias más sesiones.'
+        description: 'Tratamiento donde aplicamos enzimas lipolíticas especiales para esta zona en forma de micro inyecciónes.Eliminan el tejido adiposo disolviendo las células de grasa en forma segura, rápida y altamente efectiva. Los resultados se ven a los 15 días de la primera sesión evaluando en esa etapa si son necesarias más sesiones.'
     },
     {
         name: 'HIFU PAPADA',
@@ -278,7 +278,7 @@ const treatments = [
         name: 'HARMONYCA',
         specialties_id: 1, //ESTETICA FACIAL
         specialties_services_id: 5,
-        description: 'Es el último bioestimulador que ingresó a nuestro país. Compuesto por partículas de hidroxiapatita cálcica mezcladas tecnológicamente con ácido hialurónico reticulado. Esta perfecta combinación permite tensar los tejidos del rostro de manera inmediata como también continuar con una estimulación a largo plazo. Mejora notablemente la densidad y el estado de la piel, logrando un rostro más reposicionado y definido.'
+        description: 'Es el último bioestimulador que ingresó a nuestro país. Compuesto por partículas de hidroxiapatita cálcica mezcladas tecnológicamente con ácido hialurónico reticulado. Esta perfecta combinación permite tensar los tejidos del rostro de manera inmediata como también continuar con una estimulación a largo plazo. Mejora notablemente la densidad y el estado de la piel, logrando un rostro más reposiciónado y definido.'
     },
     {
         name: 'SUERO TERAPIA',
@@ -291,7 +291,7 @@ const treatments = [
         description: 'La vacuna anti age es uno de los más novedosos avances de la medicina ortomolecular, compuesta a base de un hidrolizado de células rejuvenecedoras. Tiene un poderoso efecto Anti age, Revitalizante, Antioxidante celular y Preventivo de enfermedades degenerativas. El tratamiento consiste en la aplicación de 1 dosis por semana durante 5 semanas, obteniendo resultados increíbles no solo a nivel de piel, pelo y uñas sino que también genera un gran impacto en el bienestar físico y energético.'
     },
     {
-        name: 'SUPLEMENTACION',
+        name: 'SUPLEMENTAción',
         specialties_id: 2,
         description: 'Si bien podemos seguir una dieta muy saludable, nunca llegamos a incorporar la cantidad de nutrientes, vitaminas y minerales que idealmente nuestro cuerpo necesita; es por eso que la suplementación juega un papel importantísimo en nuestro bienestar. Para esto debemos realizar un buen diagnóstico, con análisis correspondientes definiendo qué tipo de suplementación es la ideal para cada paciente.  '
     },
@@ -318,12 +318,12 @@ const treatments = [
     {
         name: 'ANTROPOMETRIA',
         specialties_id: 2,
-        description: 'Es un estudio de composición corporal que consiste en la medición de partes específicas del cuerpo con el fin de evaluar el estado nutricional de un paciente y así poder crear programas de nutrición personalizados.'
+        description: 'Es un estudio de composición corporal que consiste en la medición de partes específicas del cuerpo con el fin de evaluar el estado nutriciónal de un paciente y así poder crear programas de nutrición personalizados.'
     },
     {
-        name: 'NUTRICION DEPORTIVA',
+        name: 'NUTRIción DEPORTIVA',
         specialties_id: 2,
-        description: 'Se especializa en elaborar planes de alimentación adaptados al ejercicio. Es decir, nos enfocamos en crear programas nutricionales acorde al desgaste físico al que se somete cada paciente, logrando optimizar la composición corporal. '
+        description: 'Se especializa en elaborar planes de alimentación adaptados al ejercicio. Es decir, nos enfocamos en crear programas nutriciónales acorde al desgaste físico al que se somete cada paciente, logrando optimizar la composición corporal. '
     },
     {
         name: 'NUTRICIÓN ESTÉTICA',
@@ -343,7 +343,7 @@ const treatments = [
     {
         name: 'TRATAMIENTOS LIPOLITICOS',
         specialties_id: 3,
-        description: 'Tratamiento que sirve para reducir la adiposidad localizada en áreas del cuerpo como abdomen, piernas y glúteos. Aplicamos enzimas lipolíticas en forma de micro inyecciones que actúan disolviendo las células de grasa en forma segura, rápida y efectiva. Los resultados se ven a los 15 días de la primera sesión evaluando en esa etapa si son necesarias más sesiones.'
+        description: 'Tratamiento que sirve para reducir la adiposidad localizada en áreas del cuerpo como abdomen, piernas y glúteos. Aplicamos enzimas lipolíticas en forma de micro inyecciónes que actúan disolviendo las células de grasa en forma segura, rápida y efectiva. Los resultados se ven a los 15 días de la primera sesión evaluando en esa etapa si son necesarias más sesiones.'
     },
     {
         name: 'LIMPIEZA DENTAL',
@@ -355,7 +355,7 @@ const treatments = [
         name: 'BLANQUEAMIENTO DENTAL',
         specialties_id: 4,
         specialties_services_id: 6,
-        description: 'Lo realizamos mediante una técnica combinada. Consiste en una sesión en nuestra clinica en la que colocamos un gel blanqueador sobre las piezas dentarias que es activado por una luz láser durante el periodo de 1 hora; al finalizar te entregamos unas cubetas confeccionadas a medida, junto a otro producto blanqueador para continuar el tratamiento en tu hogar 1 semana 2 horas al día. Este sistema de blanqueamiento de última generación no causa sensibilidad y protege la integridad del esmalte en su totalidad. Al ser progresivo nos permite llegar al color ideal y tener una larga duración en el tiempo.'
+        description: 'Lo realizamos mediante una técnica combinada. Consiste en una sesión en nuestra clinica en la que colocamos un gel blanqueador sobre las piezas dentarias que es activado por una luz láser durante el periodo de 1 hora; al finalizar te entregamos unas cubetas confecciónadas a medida, junto a otro producto blanqueador para continuar el tratamiento en tu hogar 1 semana 2 horas al día. Este sistema de blanqueamiento de última generación no causa sensibilidad y protege la integridad del esmalte en su totalidad. Al ser progresivo nos permite llegar al color ideal y tener una larga duración en el tiempo.'
     },
     {
         name: 'ORTODONCIA',
@@ -382,22 +382,22 @@ const treatments = [
         description: 'Un Implante dental es un tornillo de titanio que se coloca dentro del hueso para reemplazar la raíz de una pieza dentaria perdida. Se realiza mediante una cirugía simple y generalmente se espera un periodo de 3 meses para la colocación de la corona de porcelana o prótesis. Es el tiempo biológico en que tarda en calcificarse el hueso alrededor del implante. Durante ese periodo el paciente estará estéticamente disimulado con un provisorio. La cirugía es totalmente ambulatoria y permite devolver de una manera rápida y simple tanto la estética como la función masticatoria.'
     },
     {
-        name: 'PLACA DE RELAJACION',
+        name: 'PLACA DE RELAJAción',
         specialties_id: 4,
         specialties_services_id: 7,
-        description: 'Es un dispositivo removible de acrílico que confeccionamos a medida del paciente y tiene ciertas características que ayudan a atenuar el Bruxismo protegiendo las piezas dentarias y la articulación temporomandibular.'
+        description: 'Es un dispositivo removible de acrílico que confecciónamos a medida del paciente y tiene ciertas características que ayudan a atenuar el Bruxismo protegiendo las piezas dentarias y la articulación temporomandibular.'
     },
     {
         name: 'BOTOX®️ BRUXISMO',
         specialties_id: 4,
         specialties_services_id: 7,
-        description: 'El tratamiento de Bruxismo con Botox®️ es hoy en día el tratamiento más efectivo que lo soluciona. Consiste en la colocación de Botox®️ en los músculos que lo provocan haciendo que se relajen y se produzca indefectiblemente un gran alivio, de esta forma evitamos desgastes y roturas dentarias, dolores articulares, de cabeza, oido, y contracturas cervicales asociadas al Bruxismo. La aplicación se lleva a cabo en tan solo unos minutos, y el efecto de relajación comienza a sentirse de 24 a 48 hs de la aplicación.'
+        description: 'El tratamiento de Bruxismo con Botox®️ es hoy en día el tratamiento más efectivo que lo solucióna. Consiste en la colocación de Botox®️ en los músculos que lo provocan haciendo que se relajen y se produzca indefectiblemente un gran alivio, de esta forma evitamos desgastes y roturas dentarias, dolores articulares, de cabeza, oido, y contracturas cervicales asociadas al Bruxismo. La aplicación se lleva a cabo en tan solo unos minutos, y el efecto de relajación comienza a sentirse de 24 a 48 hs de la aplicación.'
     },
     {
         name: 'CARILLAS DE RESINA',
         specialties_id: 4,
         specialties_services_id: 8,
-        description: 'Se realizan en una sola sesión en el consultorio, siempre recomendamos una limpieza y blanqueamiento previo para unificar colores. No requieren desgaste dentario y nos permiten corregir color, forma y textura de los dientes en el acto. También sirven para corregir fracturas y mal posiciones dentarias leves. Requieren de un mantenimiento de pulido cada 6 meses para mantener su color.'
+        description: 'Se realizan en una sola sesión en el consultorio, siempre recomendamos una limpieza y blanqueamiento previo para unificar colores. No requieren desgaste dentario y nos permiten corregir color, forma y textura de los dientes en el acto. También sirven para corregir fracturas y mal posiciónes dentarias leves. Requieren de un mantenimiento de pulido cada 6 meses para mantener su color.'
     },
     {
         name: 'CARILLAS DE PORCELANA',
@@ -406,10 +406,10 @@ const treatments = [
         description: 'Las carillas de porcelana que realizamos son unas carillas del tipo “lente de contacto”, muy delgadas que nos permiten evitar desgastes dentarios. Para realizarlas hacemos siempre un diseño de sonrisa previo planificando la anatomía dentaria ideal en cada caso. El  resultado es una sonrisa en perfecta armonía con el rostro que denota total naturalidad.   Una de sus grandes ventajas es que no se pigmentan y se ven como dientes naturales.'
     },
     {
-        name: 'REHABILITACION ORAL',
+        name: 'REHABILITAción ORAL',
         specialties_id: 4,
         specialties_services_id: 8,
-        description: 'Consiste en un tratamiento bucal integral mediante prótesis fijas, removibles, implantes dentales y ajustes de oclusión. Todo el proceso comienza con un diagnóstico completo de la boca del paciente con la finalidad de devolver salud, estética y funcionalidad.'
+        description: 'Consiste en un tratamiento bucal integral mediante prótesis fijas, removibles, implantes dentales y ajustes de oclusión. Todo el proceso comienza con un diagnóstico completo de la boca del paciente con la finalidad de devolver salud, estética y funciónalidad.'
     },
 ]
 

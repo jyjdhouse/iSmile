@@ -1,5 +1,5 @@
 module.exports = [
-    { id: 1, name: 'Ciudad Autonoma de Buenos Aires', value: 'CABA'},
+    { id: 1, name: 'Ciudad Autonoma de Buenos Aires', value: 'Ciudad Autonoma de Buenos Aires'},
     { id: 2, name: 'Buenos Aires', value: 'Buenos Aires' },
     { id: 3, name: 'Catamarca', value: 'Catamarca'},
     { id: 4, name: 'Chaco', value: 'Chaco'},

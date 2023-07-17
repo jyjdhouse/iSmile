@@ -51,7 +51,7 @@ const controller = {
         await page.addStyleTag({ path: headerCssFilePath });
         await page.addStyleTag({ path: lastRowCssFilePath });
 
-        // Establecer las opciones de generación del PDF
+        // Establecer las opciónes de generación del PDF
         const options = {
             format: 'A4', // Formato de página, por ejemplo: A4, Letter, etc.
             printBackground: true, // Incluir contenido de fondo
@@ -109,7 +109,7 @@ const controller = {
             await page.addStyleTag({ path: cssFilePath })
             await page.addStyleTag({ path: headerCssFilePath })
 
-            // Establecer las opciones de generación del PDF
+            // Establecer las opciónes de generación del PDF
             const options = {
                 format: 'A4', // Formato de página, por ejemplo: A4, Letter, etc.
                 printBackground: true, // Incluir contenido de fondo
@@ -183,7 +183,7 @@ const controller = {
             await page.addStyleTag({ path: headerCssFilePath });
             await page.addStyleTag({ path: lastRowCssFilePath });
 
-            // Establecer las opciones de generación del PDF
+            // Establecer las opciónes de generación del PDF
             const options = {
                 format: 'A4', // Formato de página, por ejemplo: A4, Letter, etc.
                 printBackground: true, // Incluir contenido de fondo

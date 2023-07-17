@@ -173,10 +173,10 @@ window.addEventListener('load', () => {
         let lastInputValue = input.value;
         input.addEventListener("input", function (e) {
             var inputValue = e.target.value;
-            if (!isLetter(inputValue)) { // Si no es letra, borra el contenido del campo
-                e.target.value = lastInputValue;
-            } else {
+            if (isLetter(inputValue) || inputValue == '') { 
                 lastInputValue = inputValue; // Almacenar el último valor válido
+            } else {// Si no es letra, borra el contenido del campo
+                e.target.value = lastInputValue;
             }
         });
     });
@@ -195,11 +195,11 @@ window.addEventListener('load', () => {
                 if (!input.value) {
                     flag = false;
                     // Armo el mensaje de error
-                    // Crear el mensaje adicional
+                    // Crear el mensaje adiciónal
                     const additionalMessage = document.createElement('span');
                     additionalMessage.classList.add('error-msg');
                     additionalMessage.innerHTML = 'Debes completar el campo'
-                    // Insertar el mensaje adicional después del input
+                    // Insertar el mensaje adiciónal después del input
                     input.closest('div').appendChild(additionalMessage);
                 }
             });

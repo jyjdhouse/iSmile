@@ -3,10 +3,10 @@ const jwt = require('jsonwebtoken');
 const isJwtError = require('../utils/isJwtError');
 const getRelativePath = require('../utils/getRelativePath');
 const secret = require('../utils/secret').secret;
+const getUser = require('../utils/getUser');
 
 const userLogged = async (req, res, next) => {
     // Ruta de la que proviene
-    console.log(req.headers.referer);
     let lastPath = getRelativePath(req.headers?.referer);
     try {
         let userInCookie;
@@ -21,12 +21,8 @@ const userLogged = async (req, res, next) => {
         if (token) {
             const decodedData = jwt.verify(token, secret);
             if (decodedData) { //Si verifico el token, solo agarro el id
-                userInCookie = await db.User.findOne({
-                    where: {
-                        id: decodedData?.id
-                    },
-                    exclude: ['password']
-                });
+                userInCookie = await getUser(decodedData?.id);
+                delete userInCookie.password; // Para no llevar la password session
             }
         };
         if (userInCookie) { //Si encontro el usuario en la cookie

@@ -9,7 +9,8 @@ module.exports = (sequelize, dataTypes) => {
         name: { type: dataTypes.STRING(255) },
         price: { type: dataTypes.INTEGER },
         description: { type: dataTypes.TEXT },
-        category_id: { type: dataTypes.INTEGER }
+        category_id: { type: dataTypes.INTEGER },
+        stock: { type: dataTypes.INTEGER },
     }
 
     let config = {

@@ -2,7 +2,6 @@ import { addProductToLocaleCart, addTempItemToDB, getCartTotalProducts, getLogge
 function loadDependentScripts() { //Carga los scripts que usan la variable del fetch
     // Si esta en el checkout
     if (window.location.pathname === '/user/checkout') {
-        console.log('Tiene que cargar el checkout');
         // Aquí puedes cargar los scripts externos después de obtener los datos del usuario
         var checkoutScript = document.createElement('script');
         checkoutScript.src = '/scripts/checkout.js';
@@ -19,8 +18,7 @@ window.addEventListener('load', async () => {
         const shopingCartQuickPopup = document.querySelector('.add-to-cart-container');
         const closingCardBtns = document.querySelectorAll('.close-cart-menu');
         var totalProducts = document.querySelectorAll('.products-quantity');
-        var userLogged = (await getLoggedUser());
-        userLogged = userLogged && userLogged.user;
+        var userLogged = (await getLoggedUser())?.user;
         // Defino en el window para poder usarla en otros lugares
         window.userLogged = userLogged
         userLogged && localStorage.removeItem('temporalCart');
@@ -40,9 +38,7 @@ window.addEventListener('load', async () => {
                     const idProd = card.dataset.productid;
                     card.querySelector('.loading-container').classList.add('loading-container-active');
                     if (userLogged) {
-                        console.log('Entra aca');
-                        await addTempItemToDB(idProd,userLogged); //Funcion que agrega al carro el producto 
-                        console.log(userLogged);
+                        await addTempItemToDB(idProd,userLogged); //Función que agrega al carro el producto 
                     } else {
                         addProductToLocaleCart(idProd);
                     }
@@ -77,7 +73,7 @@ window.addEventListener('load', async () => {
 
         // Actualiza numero arriba del carro con cantidad de productos
         function updateCartTotalProductsNumber() {
-            const cartLength = getCartTotalProducts(userLogged); //Funcion que retorna el total de productos
+            const cartLength = getCartTotalProducts(userLogged); //Función que retorna el total de productos
             totalProducts.forEach(num => cartLength ? num.innerHTML = cartLength : num.innerHTML = '');
         };
         function checkForProductsInCart() {//Se fija si el usuario ya tiene el producto en el carro para poner tick

@@ -12,7 +12,7 @@ const isAdmin = async(req,res,next) =>{
         }
     };
     if(!userId){ //Si no es admin
-        return res.redirect('/'); //Lo devuelvo a home
+        return res.redirect('/user/logout'); //Lo deslogueo
     }
     next();
 }

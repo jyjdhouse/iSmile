@@ -25,7 +25,7 @@ window.addEventListener('load', () => {
     loginTriggerBtns.forEach(btn => {
         // Toca en el "iniciar sesion"
         btn.addEventListener('click', () => {
-            // Le agrego la clase a cada opcion para que se traslade
+            // Le agrego la clase a cada opción para que se traslade
             userOptionsFirstColumn.classList.add('translate-option-left');
             loginForm.classList.add('translate-option-left');
             // Le agrego la clase active para que se vea la flechita de volver
@@ -35,7 +35,7 @@ window.addEventListener('load', () => {
     registerTriggerBtns.forEach(btn => {
         // Toca en el "Registrarse"
         btn.addEventListener('click', () => {
-            // Le agrego la clase a cada opcion para que se traslade
+            // Le agrego la clase a cada opción para que se traslade
             userOptionsFirstColumn.classList.add('translate-option-left');
             registForm.classList.add('translate-option-left');
             // Le agrego la clase active para que se vea la flechita de volver
@@ -48,7 +48,7 @@ window.addEventListener('load', () => {
         // La agrego por si no la tenia
         blackScreen.classList.remove('black-screen-active');
         userOptionsPopup.classList.remove('user-options-popup-active');
-        // Le saco la clase a cada opcion para que se traslade
+        // Le saco la clase a cada opción para que se traslade
         userOptions.forEach(opt => {
             opt.classList.remove('translate-option-left');
             opt.querySelector('.error-msg')?.remove();
@@ -63,7 +63,7 @@ window.addEventListener('load', () => {
         // La agrego por si no la tenia
         blackScreen.classList.remove('black-screen-active');
         userOptionsPopup.classList.remove('user-options-popup-active');
-        // Le saco la clase a cada opcion para que se traslade
+        // Le saco la clase a cada opción para que se traslade
         userOptions.forEach(opt => {
             opt.classList.remove('translate-option-left');
             opt.querySelector('.error-msg')?.remove();
@@ -76,7 +76,7 @@ window.addEventListener('load', () => {
     });
     // Si toca la flecha para atras
     backUserOptionsBtn.addEventListener('click', () => {
-        // Le saco la clase a cada opcion para que se traslade
+        // Le saco la clase a cada opción para que se traslade
         userOptions.forEach(opt => {
             opt.classList.remove('translate-option-left');
             opt.querySelector('.error-msg')?.remove();

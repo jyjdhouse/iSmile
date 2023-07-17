@@ -33,7 +33,7 @@ window.addEventListener('load', () => {
     //     }
 
     // })
-    // LOGICA de mostrar fotos y seleccionar ppal
+    // LOGICA de mostrar fotos y selecciónar ppal
     // Capturo cuando se cargan fotos
     images.addEventListener('change', (e) => {
         // Contenedor donde van a ir las fotos

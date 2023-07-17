@@ -1,12 +1,12 @@
 export function activateClass(array) {
-    //El array que llegan son los nombres de las clases de las funciones
+    //El array que llegan son los nombres de las clases de las funciónes
     // a las cuales quiero agregar el '#nombreClase-active'
     array.forEach(element => {
         document.querySelector(`.${element}`).classList.add(`${element}-active`);
     });
 }
 export function deactivateClass(array) {
-    //El array que llegan son los nombres de las clases de las funciones
+    //El array que llegan son los nombres de las clases de las funciónes
     // a las cuales quiero agregar el '#nombreClase-active'
     array.forEach(element => {
         document.querySelector(`.${element}`)?.classList.remove(`${element}-active`);
@@ -237,7 +237,7 @@ export async function listenSizesBtns(condition) {//Escucha a todos los quick-si
     };
 };
 
-export function removeSizesBtnsListener() { //Funcion que va por todos los quick-sizes y le saca el evento
+export function removeSizesBtnsListener() { //Función que va por todos los quick-sizes y le saca el evento
     const quickSizes = document.querySelectorAll('.quick-size');
     for (let i = 0; i < quickSizes.length; i++) {
         const btn = quickSizes[i];
@@ -251,7 +251,7 @@ const handeClickInSizeBtn = async (e) => {//Para manejar el evento 'click'
     const btn = e.target;
     // Capturo al producto
     const productCard = btn.closest('.product-quick-actions-container');
-    // Activo la animacion de loading
+    // Activo la animación de loading
     productCard.querySelector('.loading-container').classList.add('loading-container-active');
     // Agarro id y colorid
     const productId = productCard.dataset.productid;
@@ -261,7 +261,7 @@ const handeClickInSizeBtn = async (e) => {//Para manejar el evento 'click'
         // Activo las clases para el popup "Agregaste al carro..."
         body.classList.add('noScroll');
         activateClass([blackScreen, quickAddCartContainer]);
-        // Desactivo la animacion de loading una vez complete el pedido a la api
+        // Desactivo la animación de loading una vez complete el pedido a la api
         productCard.querySelector('.loading-container').classList.remove('loading-container-active');
         // Desactivo la clase active del card
         clearQuickActions(productCard);
@@ -276,7 +276,7 @@ export function clearQuickActions(container) { //Vuelve las quickAction del cont
     container?.querySelector('.quick-cart-container')?.classList.remove('quick-cart-container-active');
     container?.querySelector('.quick-fav-container')?.classList.remove('quick-fav-container-active');
     container?.querySelector('.quick-sizes-container')?.classList.remove('quick-sizes-container-active');
-    removeSizesBtnsListener();//Esta funcion es para sacrle el eventListener
+    removeSizesBtnsListener();//Esta función es para sacrle el eventListener
 }
 
 export function disableAllPopups(exception) {
@@ -353,7 +353,7 @@ export function getCartTotalProducts(user) {
 // LOGICA DE CARRO
 
 // Cuando tocan el boton del tick (sacan el producto del carro)
-// Lo hago funcion porque lo uso tambien cuando se carga despues
+// Lo hago función porque lo uso tambien cuando se carga despues
 export function handleRemoveCartBtnClick(userLogged){
     const removingCartButtons = document.querySelectorAll('.remove-cart-product');
     let totalProducts = document.querySelectorAll('.products-quantity');
@@ -364,7 +364,7 @@ export function handleRemoveCartBtnClick(userLogged){
             const idProd = card.dataset.productid;
             card.querySelector('.loading-container').classList.add('loading-container-active');
             if (userLogged) {//Si hay usuario le pego a la api
-                await removeTempItemFromDB(idProd, userLogged); //Funcion que elimina el producto del carro 
+                await removeTempItemFromDB(idProd, userLogged); //Función que elimina el producto del carro 
             } else {
                 console.log('aca',idProd);
                 removeProductfromLocaleCart(idProd)
@@ -408,7 +408,7 @@ export async function addTempItemToDB(prodId,user) {//Agrega producto a la db
             })
         } else { // Si tenia, tengo que agregarlo al carro que ya esta creado
             let cart = user.temporalCart.temporalItems;
-            let prodIndex = cart.findIndex(item => item.products_id == prodId); //busco si esta el prod que seleccionaron en el carro
+            let prodIndex = cart.findIndex(item => item.products_id == prodId); //busco si esta el prod que selecciónaron en el carro
             // Si el index es 0 o mas, quiere decir que se encuentra => Solo le sumo uno
             if (prodIndex < 0) { //Si NO esta lo agrego, si esta no pasa nada
                 let response = (await (await fetch(`${window.location.origin}/api/user/addTempItem`, {
