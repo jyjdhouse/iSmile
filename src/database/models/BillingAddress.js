@@ -10,8 +10,7 @@ module.exports = (sequelize, dataTypes) => {
         apartment: { type: dataTypes.STRING(45) },
         city: { type: dataTypes.STRING(100) },
         provinces_id: { type: dataTypes.INTEGER },
-        zip_code: { type: dataTypes.STRING(10) },
-        country: { type: dataTypes.STRING(255) },
+        zip_code: { type: dataTypes.STRING(10) }
     }
 
     let config = {

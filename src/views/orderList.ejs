@@ -15,6 +15,16 @@
                 <p>Cargando Ventas...</p>
                 <%- include('./partials/loadingSpinner.ejs') %>
             </div>
+            <section class="filter-search-section">
+                <p class="filter-section-title">Filtar ventas por</p>
+                <input type="text" class="filter-order-input" placeholder="Busqueda por ID de venta">
+                <select id="filter-order-select">
+                    <option>Seleccione estado</option>
+                    <% orderStatus.forEach(status => { %>
+                        <option value="<%= status.id %>"><%= status.status %></option>
+                    <% }) %>
+                </select>
+            </section>
             <table class="order-table"> 
                 <thead>
                     <tr>

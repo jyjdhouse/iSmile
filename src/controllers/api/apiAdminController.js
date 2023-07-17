@@ -83,9 +83,9 @@ const controller = {
       }
       let orders = getDeepCopy(await getAllOrders());
       let statuses = await db.OrderStatus.findAll();
-      orders.forEach(ord => {
-        ord.createdAt = dateFormater(ord.createdAt)
-      });
+      // orders.forEach(ord => {
+      //   ord.createdAt = dateFormater(ord.createdAt)
+      // });
       return res.status(200).json({
         meta: {
             status: 200,

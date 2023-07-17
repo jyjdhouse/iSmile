@@ -4,7 +4,6 @@
     border-collapse: collapse;
     width: 80%;
     margin: 0 auto;
-    margin-top: 15vh;
     position: relative;
 }
 
@@ -28,6 +27,7 @@ tbody tr:hover {
 
 .main {
     position: relative;
+    margin-top: 15vh;
 }
 /* Loading-spinner */
 .loading-spinner{
@@ -41,9 +41,11 @@ tbody tr:hover {
     align-items: center;
     justify-content: center;
     opacity: 0;
+    z-index: -1;
 }
 .loading-spinner-active{
     opacity: 1;
+    z-index: unset;
 }
 .loading-spinner .load-3{
     position: absolute;
@@ -60,6 +62,33 @@ tbody tr:hover {
 .order-deliver-method-p{
     text-align: center;
 }
+
+/* Para los filtros */
+.filter-search-section{
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+.filter-section-title{
+    width: 100%;
+    font-size: 22px;
+    color: #444;
+    margin-bottom: 5px;
+}
+.filter-order-input{
+    border: 1px solid var(--gold-color);
+    border-radius: 1rem;
+    padding: 15px;
+    margin-right: 10px;
+}
+#filter-order-select{
+    border: 1px solid var(--gold-color);
+    border-radius: 1rem;
+    cursor: pointer;
+}
+/*  */
 /* Para el popup */
 
 .order-detail-popup {

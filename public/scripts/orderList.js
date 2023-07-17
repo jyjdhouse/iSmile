@@ -1,3 +1,5 @@
+import { getDeepCopy } from "./utils.js";
+
 window.addEventListener('load', async () => {
     // Apenas carga hago el fetch de las ventas
     // Primero pongo el spiner "Cargando ventas"
@@ -5,10 +7,11 @@ window.addEventListener('load', async () => {
     const loadingAnimation = document.querySelector('.loading-container');
     loadingSpinner.classList.add('loading-spinner-active');
     loadingAnimation.classList.add('loading-container-active');
-    let response = (await (await fetch(`${window.location.origin}/api/admin/order`)).json());
+    let response = getDeepCopy(await (await fetch(`${window.location.origin}/api/admin/order`)).json());
     let orders, status, provinces;
-    if (response) {
-        orders = response.orders;
+    
+    if (response.ok) {
+        orders = response.orders.sort((a,b)=>b.createdAt - a.createdAt);
         status = response.statuses;
         provinces = response.provinces
     }

@@ -62,7 +62,8 @@ const controller = {
         return res.render('clientConsent');
     },
     orderList: async(req,res)=>{
-        return res.render('orderList')
+        let orderStatus = await db.OrderStatus.findAll();
+        return res.render('orderList',{orderStatus})
     }
 };
 

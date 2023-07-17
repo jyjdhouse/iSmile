@@ -66,7 +66,7 @@ const controller = {
     },
     processCheckout: async (req, res) => {
         try {
-            let { items, users_id, name, email, last_name, dni, phone_code, phone, billing_country, billing_street, billing_zip_code,
+            let { items, users_id, name, email, last_name, dni, phone_code, phone, billing_street, billing_zip_code,
                 billing_floor, billing_province, billing_city, order_types_id, use_same_address, payment_methods_id,
                 save_user_address, use_user_address } = req.body
 
@@ -91,8 +91,7 @@ const controller = {
                 apartment: billing_floor || '',
                 city: billing_city,
                 provinces_id: billing_province,
-                zip_code: billing_zip_code,
-                country: billing_country
+                zip_code: billing_zip_code
             };
             // Armo el objeto del pedido
             let orderDataToDB = {
@@ -153,7 +152,6 @@ const controller = {
                             provinces_id: req.body.shipping_province,
                             zip_code: req.body.shipping_zip_code,
                             users_id: null,//Es nulo porque si el usuario no lo quiere guardar en su perfil queda para la compra nada mas
-                            country: req.body.shipping_country
                         }
                         // Aca pregunto si vino 'Guardar direccion'.
                         if (save_user_address) {
