@@ -88,6 +88,39 @@ tbody tr:hover {
     border-radius: 1rem;
     cursor: pointer;
 }
+.clean-filters{
+    color: var(--violet-color);
+    font-size: 14px;
+    margin-left: 30px;
+    cursor: pointer;
+}
+/*  */
+/* Para la paginacion */
+.pagination-section{
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: flex-start;
+    column-gap: 10px;
+    margin-bottom: 20px;
+}
+.pagination-section>*{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--gold-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--violet-color);
+    cursor: pointer;
+}
+.pagination-section>*.active{
+    background-color: #ddd;
+}
+.pagination-section>*:hover{
+    background-color: #efefef;
+}
 /*  */
 /* Para el popup */
 

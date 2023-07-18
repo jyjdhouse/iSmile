@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <%- include('./partials/head.ejs') %>
+        <%- include('./partials/head.ejs') %>
         <link rel="stylesheet" href="/css/orderList.css">
         <script src="/scripts/orderList.js" type="module"></script>
         <title>Ventas</title>
@@ -16,19 +16,20 @@
                 <%- include('./partials/loadingSpinner.ejs') %>
             </div>
             <section class="filter-search-section">
-                <p class="filter-section-title">Filtar ventas por</p>
+                <p class="filter-section-title">Filtar ventas por <span class="clean-filters">Limpiar filtros</span></p>
                 <input type="text" class="filter-order-input" placeholder="Busqueda por ID de venta">
                 <select id="filter-order-select">
-                    <option>Seleccione estado</option>
+                    <option value="0">Seleccione estado</option>
                     <% orderStatus.forEach(status => { %>
                         <option value="<%= status.id %>"><%= status.status %></option>
                     <% }) %>
                 </select>
             </section>
+            <section class="pagination-section"></section>
             <table class="order-table"> 
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>ID venta</th>
                         <th>Nombre</th>
                         <th>Total</th>
                         <th>Items</th>

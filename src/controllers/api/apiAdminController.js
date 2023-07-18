@@ -4,12 +4,13 @@ const fs = require('fs');
 const secret = require('../../utils/secret').secret;
 const jwt = require('jsonwebtoken');
 const json2csv = require('json2csv').parse;
+const Sequelize = require('sequelize');
 // Utils
 const getDeepCopy = require('../../utils/getDeepCopy');
 const getAllOrders = require('../../utils/getAllOrders');
 const dateFormater = require('../../utils/dateFormater');
 const provinces = require('../../utils/staticDB/provinces');
-
+const orderStatuses = require('../../utils/staticDB/orderStatus');
 const controller = {
 
   downloadClients: async (req, res) => {
@@ -70,32 +71,33 @@ const controller = {
   },
   getOrders: async (req, res) => {
     try {
-      //Agarro la cookie del token
-      const token = req.cookies?.adminToken;
-      if (token) {
-        const decodedData = jwt.verify(token, secret);
-        if (decodedData) { //Si verifico el token, solo agarro el id
-          userId = decodedData?.id
-        }
-      };
-      if(!userId){
-        return res.status(401).json({error,true:false})
-      }
-      let orders = getDeepCopy(await getAllOrders());
-      let statuses = await db.OrderStatus.findAll();
-      // orders.forEach(ord => {
-      //   ord.createdAt = dateFormater(ord.createdAt)
-      // });
+      const limit = req.query.limit || undefined;
+      const offset = req.query.offset || undefined;
+      let orders = getDeepCopy(await db.Order.findAll({
+        order: [
+          [
+            Sequelize.literal("cast(substring_index(tra_id, '-', 1) as unsigned)"),
+            'DESC'
+          ]
+        ],
+        include: ['paymentMethod','orderStatus','orderType','billingAddress','shippingAddress','orderItems']
+      }));
+      let statuses = orderStatuses;
+      orders.forEach(ord => {
+        ord.createdAt = dateFormater(ord.createdAt)
+      });
+      
       return res.status(200).json({
         meta: {
-            status: 200,
-            url: `api/admin/order`
+          status: 200,
+          url: `api/admin/order`
         },
         ok: true,
+        amount: orders.length,
         orders,
         provinces,
         statuses
-    });
+      });
     } catch (error) {
       console.log(`Falle en adminApiController.getOrders: ${error}`);
       return res.status(500).json({

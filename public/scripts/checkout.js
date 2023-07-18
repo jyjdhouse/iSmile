@@ -1,9 +1,12 @@
-import { handleRemoveCartBtnClick, isLetter, isNumeric } from "./utils.js";
+import { getDeepCopy, handleRemoveCartBtnClick, isLetter, isNumeric } from "./utils.js";
 window.scrollTo(0, 0)
 // Si no hay usuario, tengo que pintar desde el LocalStorage
 await checkForUserLogged();
 // Si no hay usuario, se pinto devuelta la vista => llamo a la función
 if (!window.userLogged) handleRemoveCartBtnClick(window.userLogged);
+
+//Agarro las provincias
+const provinces = Array.from(document.querySelectorAll('#billing_province option'));
 
 // Logica para hacer a todos los input con valor 1
 document.querySelectorAll('.product-quantity').forEach(inp => {
@@ -179,7 +182,7 @@ continueButtons.forEach(btn => {
                 street: stepFormContainer.querySelector('#billing_street').value,
                 zipCode: stepFormContainer.querySelector('#billing_zip-code').value,
                 apartment: stepFormContainer.querySelector('#billing_floor')?.value || '',
-                province: stepFormContainer.querySelector('#billing_province').value,
+                province: provinces.find(prov=>prov.value == stepFormContainer.querySelector('#billing_province').value).innerHTML ,
                 city: stepFormContainer.querySelector('#billing_city').value
             }
 
@@ -234,7 +237,7 @@ continueButtons.forEach(btn => {
                     street: stepFormContainer.querySelector('#shipping_street').value,
                     zipCode: stepFormContainer.querySelector('#shipping_zip_code').value,
                     apartment: stepFormContainer.querySelector('#shipping_floor')?.value || '',
-                    province: stepFormContainer.querySelector('#shipping_province').value,
+                    province: provinces.find(prov=>prov.value == stepFormContainer.querySelector('#shipping_province').value).innerHTML,
                     city: stepFormContainer.querySelector('#shipping_city').value,
                 }
             }

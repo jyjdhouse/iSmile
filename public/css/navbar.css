@@ -121,7 +121,7 @@
     margin: 1.5% 0;
 }
 
-.bx-chevron-right {
+.navbar .bx-chevron-right {
     transition: all .4s ease;
     font-size: 1.2rem;
     color: var(--gold-color);
@@ -213,7 +213,7 @@
     }
 
     /* Cambio la flecha */
-    .bx-chevron-right {
+    .navbar .bx-chevron-right {
         transform: rotate(90deg);
     }
 
@@ -277,7 +277,7 @@
         width: unset;
     }
 
-    .bx-chevron-right {
+    .navbar .bx-chevron-right {
         transition: all .3s ease;
         font-size: 1.8rem;
         color: var(--gold-color);

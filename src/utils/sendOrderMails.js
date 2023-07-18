@@ -66,7 +66,7 @@ async function sendOrderMails(order) {
     <main style="width:60%;margin: 0 auto;">
     <h2 style="font-weight:600;">Resumen de tu compra</h2>
     <p style="font-weight:600;">Id de venta</p>
-    <p style="color: #666;">${order.id}</p>
+    <p style="color: #666;">${order.tra_id}</p>
     <p style="font-weight:600;">Fecha</p>
     <p style="color: #666;">${dateFormater(order.createdAt)}</p>
     <p style="font-weight:600;">Datos de facturación</p>
@@ -91,7 +91,7 @@ async function sendOrderMails(order) {
     <main style="width:60%;margin: 0 auto;">
     <h2 style="font-weight:600;">Se ha registrado una venta</h2>
     <p style="font-weight:600;">Id de venta</p>
-    <p style="color: #666;">${order.id}</p>
+    <p style="color: #666;">${order.tra_id}</p>
     <p style="font-weight:600;">Fecha</p>
     <p style="color: #666;">${dateFormater(order.createdAt)}</p>
     <p style="font-weight:600;">Datos de facturación</p>
@@ -120,7 +120,7 @@ async function sendOrderMails(order) {
     const operatorMailOptions = {
         from: 'janoo.pereira@gmail.com',
         to: 'janoo.pereira@gmail.com',
-        subject: `Venta online - ${order.id}`,
+        subject: `Venta online - ${order.tra_id}`,
         html: operatorMailContent
     }
     try {

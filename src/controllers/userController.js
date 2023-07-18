@@ -69,7 +69,7 @@ const controller = {
             let { items, users_id, name, email, last_name, dni, phone_code, phone, billing_street, billing_zip_code,
                 billing_floor, billing_province, billing_city, order_types_id, use_same_address, payment_methods_id,
                 save_user_address, use_user_address } = req.body
-
+            // return res.send(req.body);
             items = JSON.parse(items);
 
             // Traigo los errores de formulario (si alguno vino vacio de los que no debia)
@@ -78,6 +78,7 @@ const controller = {
             if (!errors.isEmpty()) { //Si hay errores...
                 // No importa de que fue error, fue porque algo hicieron en el front ==> Repinto la vista
                 // con mensaje de que hubo error
+                // return res.send(errors);
                 return res.redirect(`/user/checkout?checkoutErrors=${true}&msg=${errors.errors[0].msg}`)
             }
 
@@ -94,8 +95,10 @@ const controller = {
                 zip_code: billing_zip_code
             };
             // Armo el objeto del pedido
+            const randomString = Math.random().toString(36).substring(2, 2 + 10);
             let orderDataToDB = {
                 id: uuidv4(),
+                tra_id: `${Date.now().toString()}-${randomString}`,
                 billing_name: `${name} ${last_name}`,
                 billing_email: email,
                 billing_id: dni,
@@ -209,9 +212,10 @@ const controller = {
                 payment_methods_id: orderDataToDB.payment_methods_id,
                 total: orderTotalPrice,
                 order_status_id: orderDataToDB.order_status_id,
+                tra_id: orderDataToDB.tra_id,
                 // Esto es para hacer un create dircetamente
                 billingAddress: billingAddressToDB,
-                orderItems: orderItemsToDB
+                orderItems: orderItemsToDB,
             }, {
                 include: ['orderItems', 'billingAddress']
             });
@@ -331,14 +335,14 @@ const controller = {
                 // Comparo contrasenas
                 if (bcrypt.compareSync(userData.password, userToLog.password)) {
 
-                    let cookieTime = (1000 * 60) * 60 * 24 * 7 //1 Semana
+                    let cookieTime = (1000 * 60) * 60 * 24  //1 Dia
                     // Generar el token de autenticación
-                    const token = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1w' }); // genera el token
+                    const token = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1d' }); // genera el token
                     res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
                     // Si es admin armo una cookie con el token de admin
                     if (userToLog.user_categories_id == 1 || userToLog.user_categories_id == 2) {
-                        const adminToken = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1d' });
-                        cookieTime = (1000 * 60) * 60 * 24; //1 dia
+                        const adminToken = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '4h' });
+                        cookieTime = (1000 * 60) * 60 * 4; //4 horas
                         res.cookie('adminToken', adminToken, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
                         // Le agrego el token al user en la db
                         // TODO: Preguntarle a martin para que usar esto

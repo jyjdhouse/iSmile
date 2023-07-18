@@ -38,8 +38,6 @@ const orderIsCompleteValidations = [
         .notEmpty().withMessage(msg),
     body('dni')
         .notEmpty().withMessage(msg),
-    body('billing_country')
-        .notEmpty().withMessage(msg),
     body('billing_street')
         .notEmpty().withMessage(msg),
     body('billing_zip_code')
@@ -52,18 +50,6 @@ const orderIsCompleteValidations = [
         .custom((value, { req }) => {
             let type = req.body.order_types_id;
             if (type != 1 && type != 2) {//Quiere decir que no es ningun type aceptado en la db
-                throw new Error(msg);
-            }
-            return true;
-        }),
-    body('shipping_country')
-        .custom((value, { req }) => {
-            let useSameAddress = req.body.use_same_address;
-            let bodyValue = req.body.shipping_country;
-            let orderType = req.body.order_types_id;
-            let useUserAddress = req.body.use_user_address;
-            //Si es envio, no usan misma direccion y esta vacio doy error
-            if (orderType == 1 && !useUserAddress && !useSameAddress && !bodyValue) {
                 throw new Error(msg);
             }
             return true;

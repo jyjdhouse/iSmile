@@ -7,8 +7,7 @@ const getAllTreatments = require('../utils/getAllTreatments');
 const getAllSpecialties = require('../utils/getAllSpecialties');
 const getDeepCopy = require('../utils/getDeepCopy');
 // Utils
-const staticProducts = require('../utils/staticDB/products');
-const { specialties, specialties_services, treatments } = require('../utils/staticDB/services');
+
 const getSpecialtyService = require('../utils/getSpecialtyService');
 
 const controller = {
