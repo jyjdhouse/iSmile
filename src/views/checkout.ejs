@@ -2,6 +2,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/css/spinner.css">
     <link rel="stylesheet" href="/css/checkout.css">
+    <link rel="stylesheet" href="/css/orderOverlay.css" type="text/css">
     <!-- SCRIPTS -->
     <!-- SDK MercadoPago.js -->
     <script src="https://sdk.mercadopago.com/js/v2"></script>
@@ -11,6 +12,7 @@
     <body>
         <%- include('./partials/header.ejs') %>
             <main class="main checkout-main">
+                <%- include('./partials/orderOverlay.ejs') %>
                 <section class="first-view view view-active">
                     <div class="product-list-section">
                         <div class="product-list-header">

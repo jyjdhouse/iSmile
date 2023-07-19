@@ -1,0 +1,60 @@
+/* Overlay */
+.overlay{
+    position: fixed;
+    z-index: 100;
+    background: rgba(140, 140, 140, .6);
+    transition: all 1s ease;
+    
+}
+.container{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.overlay .loading-container{
+    background: none;
+}
+.overlay .load-3{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+}
+.overlay-correct{
+    background-color: rgba(39, 158, 55, 0.6); 
+}
+.overlay-incorrect{
+    background-color: rgba(236, 27, 27, 0.6);   
+}
+.overlay-correct-text,
+.overlay-incorrect-text{
+    transition: all 1s ease;
+    scale: 0;
+    opacity: 0;
+    color: #fff;
+}
+.overlay-correct .overlay-correct-text{
+    scale: 1;
+    opacity: 1;
+}
+.overlay-incorrect .overlay-incorrect-text{
+    scale: 1;
+    opacity: 1;
+}
+.overlay-icon{
+    font-size: 8rem;
+}
+.overlay-label{
+    font-size: 2rem;
+}
+.overlay-correct-description{
+    font-size: 1.5rem;
+    margin-top: 30px;
+}
+/*  */

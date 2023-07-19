@@ -2,7 +2,7 @@ import { getTodaysDate } from "./utils.js";
 
 window.addEventListener('load', () => {
 
-    const addedItemsSection = document.querySelector('.added-items-container')
+    const addedItemsSection = document.querySelector('.added-items-container-single')
     let form = document.querySelector('.register-sale-form')
     let removeItemElements = [];
 
@@ -30,7 +30,7 @@ window.addEventListener('load', () => {
                 listenToRemoveElements(removeItemElements)
 
                 let productIdInput = document.createElement('input');
-                productIdInput.name = 'products_id[]';
+                productIdInput.name = 'products_id';
                 productIdInput.setAttribute('hidden', true);
                 productIdInput.setAttribute('class', 'product-id');
                 productIdInput.value = id;
@@ -45,12 +45,7 @@ window.addEventListener('load', () => {
 
                 itemContainer.appendChild(itemName);
 
-                let priceLabel = document.createElement('label');
-                priceLabel.setAttribute('for', 'item_price');
-                priceLabel.innerText = 'Precio';
-
-                itemContainer.appendChild(priceLabel)
-                    ;
+                
                 let itemPrice = document.createElement('input');
                 itemPrice.value = price != 0 ? price : 0;
                 /*    itemPrice.addEventListener('change', (e) => {
@@ -61,12 +56,6 @@ window.addEventListener('load', () => {
                 itemPrice.name = 'item_price[]';
 
                 itemContainer.appendChild(itemPrice);
-
-                let quantityLabel = document.createElement('label');
-                quantityLabel.setAttribute('for', 'item_quantity');
-                quantityLabel.innerText = 'Cantidad';
-
-                itemContainer.appendChild(quantityLabel);
 
                 let itemQuantity = document.createElement('input');
                 itemQuantity.value = 1;
@@ -195,12 +184,20 @@ window.addEventListener('load', () => {
                 body: JSON.stringify(order)
             });
             if (!fetchResponse.ok) {
-                // window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${fetchResponse.msg}`;
+                // Aca quiere decir que respondio mal, pinto rojo el overlay
+                loadingSpinner.classList.remove('loading-container-active');
+                overlay.classList.add('overlay-incorrect');
+                setTimeout(() => {
+                    window.location.href = '/admin/registrar-venta'
+                }, 2000);
                 return console.log(`Error: ${fetchResponse.msg}`);
             };
             // Aca quiere decir que respondio bien, pinto verde el overlay
             loadingSpinner.classList.remove('loading-container-active');
             overlay.classList.add('overlay-correct');
+            setTimeout(() => {
+                window.location.href = '/admin/ventas'
+            }, 2000);
         } catch (error) {
             return console.log(`Error en el procesamiento del formulario: ${error}`)
         }
