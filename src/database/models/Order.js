@@ -35,18 +35,6 @@ module.exports = (sequelize, dataTypes) => {
             as: 'user',
             foreignKey: 'users_id'
         });
-        Order.belongsTo(models.PaymentMethod, {
-            as: 'paymentMethod',
-            foreignKey: 'payment_methods_id'
-        });
-        Order.belongsTo(models.OrderStatus, {
-            as: 'orderStatus',
-            foreignKey: 'order_status_id'
-        });
-        Order.belongsTo(models.OrderType, {
-            as: 'orderType',
-            foreignKey: 'order_types_id'
-        });
         Order.belongsTo(models.BillingAddress, {
             as: 'billingAddress',
             foreignKey: 'billing_addresses_id',

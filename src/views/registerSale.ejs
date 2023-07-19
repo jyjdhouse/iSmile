@@ -116,7 +116,7 @@
                     <div class="input-label-container" id="products-container">
                         <label for="payment_methods">Forma de pago</label>
                         <select name="payment_methods">
-                            <% paymentForms.forEach(form=> { %>
+                            <% paymentMethods.forEach(form=> { %>
                                 <option value="<%= form.id %>">
                                     <%= form.name %>
                                 </option>

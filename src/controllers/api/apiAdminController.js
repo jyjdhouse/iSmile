@@ -10,6 +10,8 @@ const getDeepCopy = require('../../utils/getDeepCopy');
 const getAllOrders = require('../../utils/getAllOrders');
 const dateFormater = require('../../utils/dateFormater');
 const provinces = require('../../utils/staticDB/provinces');
+const paymentMethods = require('../../utils/staticDB/paymentMethods');
+const orderTypes = require('../../utils/staticDB/orderTypes');
 const orderStatuses = require('../../utils/staticDB/orderStatus');
 const controller = {
 
@@ -80,11 +82,11 @@ const controller = {
             'DESC'
           ]
         ],
-        include: ['paymentMethod','orderStatus','orderType','billingAddress','shippingAddress','orderItems']
+        include: ['billingAddress','shippingAddress','orderItems']
       }));
       let statuses = orderStatuses;
       orders.forEach(ord => {
-        ord.createdAt = dateFormater(ord.createdAt)
+        ord.date = dateFormater(ord.date)
       });
       
       return res.status(200).json({
@@ -96,6 +98,8 @@ const controller = {
         amount: orders.length,
         orders,
         provinces,
+        paymentMethods,
+        orderTypes,
         statuses
       });
     } catch (error) {
