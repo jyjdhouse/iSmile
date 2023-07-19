@@ -330,7 +330,7 @@ body {
     position: relative;
 }
 .step-section{
-    width: 50%;
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -472,6 +472,16 @@ body {
 }
 .use-same-address-field>label{
     width: fit-content;
+    font-size: 14px;
+}
+
+/* Short fields */
+.short-field {
+    width: 50%;
+    padding: 0;
+}
+.field>.short-field{
+    margin-bottom: 0;
 }
 /* Sector productos */
 .product-side-cards-wrapper-section {
@@ -616,9 +626,14 @@ body {
 /* Esto es para que le de el background */
 
 /* STEP DE PAYMENT */
+.payment-step{
+    margin-bottom: 22vh;
+}
 .payment-logo-container {
     width: 100%;
-    margin-bottom: 25vh;
+    margin: 0;
+    justify-content: space-between;
+    height: fit-content;
 }
 
 .box-container {
@@ -627,6 +642,7 @@ body {
     padding: 2%;
     transition: background-color .5s;
     cursor: pointer;
+    width: 45%;
 }
 
 .box-container>input{
@@ -638,8 +654,15 @@ body {
 .img-container {
     width: 100%;
     height: 60px;
+    display: flex;
 }
-
+.img-container>i{
+    display: block;
+    width: fit-content;
+    margin: auto;
+    font-size: 40px;
+    color: #666;
+}
 .mp-logo {
     width: 100%;
     height: 100%;
@@ -647,7 +670,8 @@ body {
 }
 
 .payment-logo-label {
-    font-size: 20px;
+    font-size: 17px;
+    text-align: center;
 }
 
 .payment-field {
@@ -656,7 +680,7 @@ body {
     position: absolute;
     opacity: 0;
     transition: opacity .5s;
-    bottom: 0;
+    bottom: -4%;
 }
 
 .payment-field-active {
@@ -666,8 +690,8 @@ body {
 .field-label {
     width: 100%;
     text-align: center;
-    font-size: 18px;
-    margin-bottom: 5vh;
+    font-size: 16px;
+    margin-bottom: 1vh;
 }
 
 .payment-box {
@@ -739,7 +763,9 @@ body {
     .second-view {
         margin-top: 5vh;
     }
-
+    .step-section{
+        width: 50%;
+    }
     .product-side-info-container {
         flex-direction: row;
         align-items: center;
@@ -749,6 +775,25 @@ body {
     }
     .product-side-wrapper-row{
         width: 88%;
+    }
+    .use-same-address-field>label{
+        font-size: 17px;
+    }
+    .box-container {
+        width: unset;
+    }
+    .payment-logo-container {
+        margin-bottom: 25vh;
+    }
+    .field-label {
+        margin-bottom: 5vh;
+        font-size: 18px;
+    }
+    .payment-step{
+        margin-bottom: 0;
+    }
+    .payment-logo-label {
+        font-size: 20px;
     }
 }
 
@@ -829,13 +874,7 @@ body {
         width: 100%;
     }
 
-    .short-field {
-        width: 50%;
-        padding: 0;
-    }
-    .field>.short-field{
-        margin-bottom: 0;
-    }
+   
 
     .delivery-option-box {
         padding: 1rem 2rem;

@@ -49,7 +49,7 @@ const orderIsCompleteValidations = [
     body('order_types_id')
         .custom((value, { req }) => {
             let type = req.body.order_types_id;
-            if (type != 1 && type != 2) {//Quiere decir que no es ningun type aceptado en la db
+            if (type != 1 && type != 2 && type != 3) {//Quiere decir que no es ningun type aceptado en la db
                 throw new Error(msg);
             }
             return true;
@@ -106,7 +106,7 @@ const orderIsCompleteValidations = [
         .custom((value, { req }) => {
             let methodId = req.body.payment_methods_id;
             // Si es distinto a transferencia o cualquier tarjeta arrojo error
-            if (methodId != 1 && methodId != 2 && methodId != 3) {
+            if (methodId != 1 && methodId != 2 && methodId != 3 && methodId != 4 && methodId != 5 ) {
                 throw new Error(msg);
             }
             return true;

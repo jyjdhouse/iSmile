@@ -1,9 +1,8 @@
 import { getDeepCopy } from "./utils.js";
-
 window.addEventListener('load', async () => {
     let orders, status, provinces, totalPageNumber, ordersResponse, ordersToDisplay;
     let pageNumber = 1; //Primera pagina
-    let limit = 3; //Aca controlo cuantas se muestran
+    let limit = 5; //Aca controlo cuantas se muestran
     // Apenas carga hago el fetch de las ventas
     // Primero pongo el spiner "Cargando ventas"
     handleSpinnerBehave(true);

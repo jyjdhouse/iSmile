@@ -19,7 +19,8 @@ module.exports = (sequelize, dataTypes) => {
         billing_email: {type: dataTypes.STRING(255)},
         billing_phone: {type: dataTypes.STRING(45)},
         billing_id: {type: dataTypes.STRING(45)},
-        tra_id: {type: dataTypes.TEXT}
+        tra_id: {type: dataTypes.TEXT},
+        date: { type: dataTypes.DATE},
     }
 
     let config = {

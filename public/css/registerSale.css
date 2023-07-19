@@ -1,9 +1,60 @@
 @import 'variables.css';
-
-.register-sale-body {
+/* Overlay */
+.overlay{
+    position: fixed;
+    z-index: 100;
+    background: rgba(140, 140, 140, .6);
+    transition: all 1s ease;
+}
+.overlay .loading-container{
+    background: none;
+}
+.overlay .load-3{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+}
+.overlay-correct{
+    background-color: rgba(39, 158, 55, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.overlay-correct-text{
+    transition: all 1s ease;
+    scale: 0;
+    opacity: 0;
+    color: #fff;
+}
+.overlay-correct .overlay-correct-text{
+    scale: 1;
+    opacity: 1;
+}
+.overlay-correct-icon{
+    font-size: 8rem;
+}
+.overlay-correct-label{
+    font-size: 2rem;
+}
+.overlay-correct-description{
+    font-size: 1.5rem;
+    margin-top: 30px;
+}
+/*  */
+.register-sale-main{
     padding: 3% 5%;
 }
-
+.register-sale-form{
+    display: flex;
+    flex-direction: column;
+}
+.form-label{
+    font-size: 18px;
+    margin-top: 20px;
+}
 .register-sale-intro-container {
     margin-top: 12vh;
 }
@@ -13,16 +64,26 @@
     display: flex;
     flex-direction: column;
 }
-
+.input-label-container>label{
+    font-weight: 600;
+}
 .input-label-container input, .input-label-container select {
     margin-top: 3%;
 
     width: 50%;
 }
-
+.phone-input-container{
+    flex-direction: row;
+}
+.phone-input-container>select{
+    width: 40%;
+}
+.phone-input-container>input{
+    width: 60%;
+}
 .register-sale-btn {
-    width: 50%;
-    border: 0;
+    width: 100%;
+    border-radius: 1rem;
     outline: 0;
     border: 1px solid var(--violet-color);
     padding: 1% 0;

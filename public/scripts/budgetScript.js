@@ -308,7 +308,7 @@ window.addEventListener('load', async () => {
 
         // Muestro el cargando pdf...
         document.querySelector('.spinner-overlay').classList.remove('hidden');
-        // HAgo el fetch
+        // Hago el fetch
         let response = await fetch('/generateBudgetPDF', {
             method: 'POST',
             headers: {

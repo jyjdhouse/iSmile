@@ -39,7 +39,7 @@ async function sendOrderMails(order) {
                 <p style="color: #666;">${order.shippingAddress.street} - C.P. ${order.shippingAddress.zip_code} - ${order.shippingAddress.city}, ${province}</p>
                 `
         }
-    } else { //Retiro por local
+    } else if(order.order_types_id == 2) { //Retiro por local
         userMailContentDeliveryMethod =
             `
         <p style="font-weight:600;">Retiro por el local</p>

@@ -11,13 +11,17 @@
 <body class="register-sale-body">
 
     <%- include('./partials/header.ejs') %>
-
-        <div class="register-sale-intro-container">
-            <h1>Registrar venta</h1>
-        </div>
-
         <main class="register-sale-main">
-
+            <p class="error-card">Error al procesar el formulario</p>
+            <div class="overlay hidden">
+                <i class='bx bx-check-square overlay-correct-icon overlay-correct-text'></i>
+                <p class="overlay-correct-label overlay-correct-text">Venta registrada correctamente</p>
+                <p class="overlay-description overlay-correct-text">Redirigiendo a la home...</p>
+                <%- include('./partials/loadingSpinner.ejs') %>
+            </div>
+            <div class="register-sale-intro-container">
+                <h1>Registrar venta</h1>
+            </div>
             <form action="/admin/register-sale" class="register-sale-form" method="POST">
 
                 <div class="input-label-container">
@@ -25,12 +29,7 @@
                     <input type="date" name="date">
                 </div>
 
-                <div class="input-label-container">
-                    <label for="time">Hora</label>
-                    <input type="time" name="time">
-                </div>
-
-
+                <label class="bold form-label">Datos Facturacion</label>
                 <div class="input-label-container">
                     <label for="name">Nombre</label>
                     <input type="text" name="name">
@@ -51,7 +50,7 @@
                     <input type="email" name="email">
                 </div>
 
-                <div class="input-label-container">
+                <div class="input-label-container phone-input-container">
                     <select name="phone_code" class="prefix-phone">
                         <% countryCodes.forEach(country=> { %>
                             <option value="+<%=country.code %>" <%=country.code==54 && 'selected' %>
@@ -65,23 +64,23 @@
                 </div>
 
 
-                <h3>Dirección de facturación</h3>
+                <label class="bold form-label">Direccion Facturacion</label>
 
                 <div class="input-label-container">
                     <label for="billing_street">Calle y número</label>
                     <input type="text" name="billing_street">
                 </div>
-
-                <div class="input-label-container">
+                <div class="input-label-container short-field">
+                    <label for="billing_zip_code">Código postal</label>
+                    <input type="text" name="billing_zip_code">
+                </div>
+                <div class="input-label-container short-field">
                     <label for="billing_floor">Piso y departamento</label>
                     <input type="text" name="billing_floor">
                 </div>
 
 
-                <div class="input-label-container">
-                    <label for="billing_zip_code">Código postal</label>
-                    <input type="text" name="billing_zip_code">
-                </div>
+                
 
                 <div class="input-label-container">
                     <label for="billing_city">Ciudad</label>

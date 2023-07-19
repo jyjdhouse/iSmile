@@ -21,7 +21,7 @@ router.get('/booking',userController.bookingView)
 router.post('/login',userController.login);
 router.post('/regist',registValidations,userController.processRegist);
 router.post('/change-password/:token',userController.processNewPassword)
-router.post('/checkout',orderIsCompleteValidations,userController.processCheckout); 
+// router.post('/checkout',orderIsCompleteValidations,userController.processCheckout); 
 //PUT
 router.put('/profile',userController.update)
 

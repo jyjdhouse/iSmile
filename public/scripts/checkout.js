@@ -1,4 +1,4 @@
-import { getDeepCopy, handleRemoveCartBtnClick, isLetter, isNumeric } from "./utils.js";
+import { getDeepCopy, handleRemoveCartBtnClick, isInDesktop, isLetter, isNumeric } from "./utils.js";
 window.scrollTo(0, 0)
 // Si no hay usuario, tengo que pintar desde el LocalStorage
 await checkForUserLogged();
@@ -182,7 +182,7 @@ continueButtons.forEach(btn => {
                 street: stepFormContainer.querySelector('#billing_street').value,
                 zipCode: stepFormContainer.querySelector('#billing_zip-code').value,
                 apartment: stepFormContainer.querySelector('#billing_floor')?.value || '',
-                province: provinces.find(prov=>prov.value == stepFormContainer.querySelector('#billing_province').value).innerHTML ,
+                province: provinces.find(prov => prov.value == stepFormContainer.querySelector('#billing_province').value).innerHTML,
                 city: stepFormContainer.querySelector('#billing_city').value
             }
 
@@ -237,7 +237,7 @@ continueButtons.forEach(btn => {
                     street: stepFormContainer.querySelector('#shipping_street').value,
                     zipCode: stepFormContainer.querySelector('#shipping_zip_code').value,
                     apartment: stepFormContainer.querySelector('#shipping_floor')?.value || '',
-                    province: provinces.find(prov=>prov.value == stepFormContainer.querySelector('#shipping_province').value).innerHTML,
+                    province: provinces.find(prov => prov.value == stepFormContainer.querySelector('#shipping_province').value).innerHTML,
                     city: stepFormContainer.querySelector('#shipping_city').value,
                 }
             }
@@ -334,7 +334,11 @@ continueViewBtn.addEventListener('click', () => {
 
 function modifyMainHeight(className) {
     let maxHeight = document.querySelector(`.${className}`).offsetHeight;
-    main.style.maxHeight = `${maxHeight + 500}px`
+    if (isInDesktop()) {
+        main.style.maxHeight = `${maxHeight + 300}px`;
+    } else {
+        main.style.maxHeight = `${maxHeight + 100}px`;
+    }
 };
 
 // Función que se va a fijar si los campos que tiene que completar el usuario son completados
@@ -727,32 +731,101 @@ useUserAddress?.addEventListener('input', (e) => {
 
 
 const form = document.getElementById('checkout-form');
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    // si esta loggeado 
-    if (window.userLogged) { // Logica para enviar form con users_id
-        let userIdInput = document.createElement('input');
-        userIdInput.type = 'hidden';
-        userIdInput.value = window.userLogged.id;
-        userIdInput.name = 'users_id';
-        form.appendChild(userIdInput)
-    };
-    // Tengo que armar el objeto items
-    let itemsInput = document.createElement('input');
-    itemsInput.type = 'hidden';
-    itemsInput.name = 'items';
-    let itemsArray = [];
-    // ahora voy por cada item que el usuario compro y lo meto en este array
-    const itemsConfirmed = document.querySelectorAll('.product-side-card');
-    itemsConfirmed.forEach(item => {
-        const products_id = item.dataset.productid;
-        const quantity = item.querySelector('.product-side-quantity-span').innerHTML;
-        itemsArray.push({
-            products_id,
-            quantity
+form.addEventListener('submit', async (e) => {
+    try {
+        e.preventDefault();
+        // si esta loggeado 
+        if (window.userLogged) { // Logica para enviar form con users_id
+            let userIdInput = document.createElement('input');
+            userIdInput.type = 'hidden';
+            userIdInput.value = window.userLogged.id;
+            userIdInput.name = 'users_id';
+            form.appendChild(userIdInput)
+        };
+        // Tengo que armar el objeto items
+        let itemsInput = document.createElement('input');
+        itemsInput.type = 'hidden';
+        itemsInput.name = 'items';
+        let itemsArray = [];
+        // ahora voy por cada item que el usuario compro y lo meto en este array
+        const itemsConfirmed = document.querySelectorAll('.product-side-card');
+        itemsConfirmed.forEach(item => {
+            const products_id = item.dataset.productid;
+            const quantity = item.querySelector('.product-side-quantity-span').innerHTML;
+            itemsArray.push({
+                products_id,
+                quantity
+            });
         });
-    });
-    itemsInput.value = JSON.stringify(itemsArray);
-    form.appendChild(itemsInput);
-    form.submit();
+        itemsInput.value = JSON.stringify(itemsArray);
+        form.appendChild(itemsInput);
+        // Armo el body
+        let items = form.querySelector('input[name="items"]').value;
+        let users_id = window.userLogged.id || null;
+        let name = form.querySelector('input[name="name"]').value;
+        let last_name = form.querySelector('input[name="last_name"]').value;
+        let email = form.querySelector('input[name="email"]').value;
+        let dni = form.querySelector('input[name="dni"]').value;
+        let phone_code = form.querySelector('select[name="phone_code"]').value;
+        let phone = form.querySelector('input[name="phone"]').value;
+        let billing_street = form.querySelector('input[name="billing_street"]').value;
+        let billing_zip_code = form.querySelector('input[name="billing_zip_code"]').value;
+        let billing_floor = form.querySelector('input[name="billing_floor"]').value;
+        let billing_province = form.querySelector('select[name="billing_province"]').value;
+        let billing_city = form.querySelector('input[name="billing_city"]').value;
+        let order_types_id = form.querySelector('input[name="order_types_id"]').value;
+        let payment_methods_id = form.querySelector('input[name="payment_methods_id"]:checked').value;
+        let shipping_street = form.querySelector('input[name="shipping_street"]').value;
+        let shipping_floor = form.querySelector('input[name="shipping_floor"]').value;
+        let shipping_city = form.querySelector('input[name="shipping_city"]').value;
+        let shipping_province = form.querySelector('select[name="shipping_province"]').value;
+        let shipping_zip_code = form.querySelector('input[name="shipping_zip_code"]').value;
+        // Estas 3 son los radio, entonces pregunto asi
+        let use_same_address = form.querySelector('input[name="use_same_address"]').checked ? 
+        form.querySelector('input[name="use_same_address"]').value : null;
+        let save_user_address = form.querySelector('input[name="save_user_address"]').checked ? 
+        form.querySelector('input[name="save_user_address"]').value : null;
+        let use_user_address = form.querySelector('input[name="use_user_address"]').checked ? 
+        form.querySelector('input[name="use_user_address"]').value : null;
+        const bodyForm = {
+            items,
+            users_id,
+            name,
+            last_name,
+            email,
+            dni,
+            phone_code,
+            phone,
+            billing_street,
+            billing_zip_code,
+            billing_floor,
+            billing_province,
+            billing_city,
+            order_types_id,
+            use_same_address,
+            payment_methods_id,
+            save_user_address,
+            use_user_address,
+            shipping_street,
+            shipping_floor,
+            shipping_city,
+            shipping_province,
+            shipping_zip_code,
+        }
+        // Hago el fetch
+        let fetchResponse = await fetch('/api/user/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Tipo de contenido del cuerpo de la solicitud
+            },
+            body: JSON.stringify(bodyForm)
+        });
+        if (!fetchResponse.ok) {
+            window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${fetchResponse.msg}`;
+            return
+        };
+        console.log(fetchResponse);
+    } catch (error) {
+        return console.log(`Error en el envio del formulario: ${error}`);
+    }
 });

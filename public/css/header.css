@@ -293,7 +293,7 @@ body {
     font-size: 22px;
 }
 .user-logged-name span{
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
 .logged-menu-container{
     scale: 0;
