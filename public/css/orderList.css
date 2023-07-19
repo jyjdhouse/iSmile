@@ -94,6 +94,11 @@ tbody tr:hover {
     margin-left: 30px;
     cursor: pointer;
 }
+.filter-section-disclaimer{
+    width: 100%;
+    margin: 20px 0;
+    color: #444;
+}
 /*  */
 /* Para la paginacion */
 .pagination-section{

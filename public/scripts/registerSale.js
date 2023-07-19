@@ -1,4 +1,4 @@
-import { getTodaysDate } from "./utils.js";
+import { getTodaysDate, isLetter, isNumeric } from "./utils.js";
 
 window.addEventListener('load', () => {
 
@@ -6,11 +6,45 @@ window.addEventListener('load', () => {
     let form = document.querySelector('.register-sale-form')
     let removeItemElements = [];
 
+    // LOGICA PARA DEJAR SOLO NUMEROS/LETRAS
+    // Logica para que todos los inputs numericos no acepten letras
+    let numericInputs = document.querySelectorAll('.numeric-only-input');
+    numericInputs.forEach(input => {
+        // Tomo el ultimo valor
+        let lastInputValue = input.value;
+        input.addEventListener("input", function (e) {
+            var inputValue = e.target.value;
+            if (!isNumeric(inputValue)) { // Si no es un número, borra el contenido del campo
+                e.target.value = lastInputValue;
+            } else {
+                lastInputValue = inputValue; // Almacenar el último valor válido
+            }
+        });
+    });
+
+    // Logica para que todos los input de solo letras no acepten numeros
+    let letterInputs = document.querySelectorAll('.letter-only-input');
+    letterInputs.forEach(input => {
+        // Tomo el ultimo valor
+        let lastInputValue = input.value;
+        input.addEventListener("input", function (e) {
+            var inputValue = e.target.value;
+            if (isLetter(inputValue) || inputValue == '') { // Si no es letra, borra el contenido del campo
+                lastInputValue = inputValue; // Almacenar el último valor válido
+            } else {
+                e.target.value = lastInputValue;
+            }
+        });
+    });
     // LOGICA PARA MOSTRAR LABELS
     const listenCheckboxLabels = () => {
         let checkboxLabels = Array.from(document.querySelectorAll('.checkbox-label'));
         checkboxLabels.forEach(lab => {
             lab.addEventListener('click', () => {
+                const labelsPainted = Array.from(document.querySelectorAll('.item-container .item-name'));
+                let labAlreadyDisplayed = labelsPainted.find(contLabel=>contLabel.innerText == lab.innerText);
+                if(labAlreadyDisplayed)return;
+                
                 let id = lab.dataset.id;
                 let price = lab.dataset.price;
 
@@ -22,7 +56,7 @@ window.addEventListener('load', () => {
 
                 let removeElementContainer = document.createElement('div');
                 removeElementContainer.setAttribute('class', 'remove-element-container');
-                removeElementContainer.innerHTML = "<i class='bx bx-minus remove-element'></i>";
+                removeElementContainer.innerHTML = "<i class='bx bx-x-circle remove-element'></i>";
 
                 itemContainer.appendChild(removeElementContainer);
 
@@ -45,28 +79,45 @@ window.addEventListener('load', () => {
 
                 itemContainer.appendChild(itemName);
 
-                
+
                 let itemPrice = document.createElement('input');
                 itemPrice.value = price != 0 ? price : 0;
                 /*    itemPrice.addEventListener('change', (e) => {
                        itemPrice.value = e.target.value
                    }); */
-                itemPrice.setAttribute('class', 'item-price');
+                itemPrice.setAttribute('class', 'item-price numeric-only-input');
                 itemPrice.setAttribute('data-product_id', id);
-                itemPrice.name = 'item_price[]';
+                itemPrice.name = 'item_price';
 
                 itemContainer.appendChild(itemPrice);
 
-                let itemQuantity = document.createElement('input');
-                itemQuantity.value = 1;
-                itemQuantity.addEventListener('change', (e) => {
-                    itemQuantity.value = e.target.value
-                });
-                itemQuantity.setAttribute('class', 'item-quantity');
-                itemQuantity.setAttribute('data-product_id', id);
-                itemQuantity.name = 'item_quantity[]';
+                let itemQuantityDiv = document.createElement('div');
+                itemQuantityDiv.setAttribute('class', 'item-quantity-container');
 
-                itemContainer.appendChild(itemQuantity);
+                itemQuantityDiv.innerHTML =
+                    `
+                <i class='bx bx-minus reduce-item-quantity-btn'></i>
+                <input class="item-quantity numeric-only-input" data-product_id="${id}" name="item_quantity">
+                <i class='bx bx-plus add-item-quantity-btn'></i>
+                `
+                let reduceIcon = itemQuantityDiv.querySelector('.reduce-item-quantity-btn');
+                let addIcon = itemQuantityDiv.querySelector('.add-item-quantity-btn');
+                let itemQuantityInput = itemQuantityDiv.querySelector('.item-quantity');
+                itemQuantityInput.value = 1;
+                reduceIcon.addEventListener('click',(e)=>{
+                    itemQuantityInput.value == 1 ? null : 
+                    itemQuantityInput.value--;
+                });
+                addIcon.addEventListener('click',(e)=>{
+                    itemQuantityInput.value++;
+                });
+                itemQuantityInput.addEventListener('change',(e)=>{
+                    itemQuantityInput.value = e.target.value;
+                })
+
+                
+
+                itemContainer.appendChild(itemQuantityDiv);
 
                 // Lo agrego al section
                 addedItemsSection.appendChild(itemContainer);
@@ -119,19 +170,19 @@ window.addEventListener('load', () => {
         try {
             e.preventDefault()
             let order;
-            let date = form.querySelector('input[name="date"]').value;
-            let name = form.querySelector('input[name="name"]').value;
-            let last_name = form.querySelector('input[name="last_name"]').value;
-            let phone_code = form.querySelector('select[name="phone_code"]').value;
-            let email = form.querySelector('input[name="email"]').value;
-            let phone = form.querySelector('input[name="phone"]').value;
-            let dni = form.querySelector('input[name="dni"]').value;
-            let payment_methods_id = form.querySelector('select[name="payment_methods"]').value;
-            let billing_street = form.querySelector('input[name="billing_street"]').value;
-            let billing_floor = form.querySelector('input[name="billing_floor"]').value;
-            let billing_zip_code = form.querySelector('input[name="billing_zip_code"]').value;
-            let billing_city = form.querySelector('input[name="billing_city"]').value;
-            let billing_province = form.querySelector('select[name="billing_province"]').value;
+            let date = form.querySelector('input[name="date"]')?.value;
+            let name = form.querySelector('input[name="name"]')?.value;
+            let last_name = form.querySelector('input[name="last_name"]')?.value;
+            let phone_code = form.querySelector('select[name="phone_code"]')?.value;
+            let email = form.querySelector('input[name="email"]')?.value;
+            let phone = form.querySelector('input[name="phone"]')?.value;
+            let dni = form.querySelector('input[name="dni"]')?.value;
+            let payment_methods_id = form.querySelector('select[name="payment_methods"]')?.value;
+            let billing_street = form.querySelector('input[name="billing_street"]')?.value;
+            let billing_floor = form.querySelector('input[name="billing_floor"]')?.value;
+            let billing_zip_code = form.querySelector('input[name="billing_zip_code"]')?.value;
+            let billing_city = form.querySelector('input[name="billing_city"]')?.value;
+            let billing_province = form.querySelector('select[name="billing_province"]')?.value;
 
 
             order = {
@@ -157,9 +208,9 @@ window.addEventListener('load', () => {
             let items = [];
             let itemsContainer = document.querySelectorAll('.item-container')
             itemsContainer.forEach(cont => {
-                let product = cont.querySelector('.product-id').value
-                let quantity = cont.querySelector('.item-quantity').value
-                let price = cont.querySelector('.item-price').value
+                let product = cont.querySelector('.product-id')?.value
+                let quantity = cont.querySelector('.item-quantity')?.value
+                let price = cont.querySelector('.item-price')?.value
                 let objectToPush = {
                     products_id: product,
                     quantity,
@@ -174,7 +225,6 @@ window.addEventListener('load', () => {
             const loadingSpinner = document.querySelector('.overlay .loading-container');
             overlay.classList.remove('hidden');
             loadingSpinner.classList.add('loading-container-active');
-
             // Hago el fetch
             let fetchResponse = await fetch('/api/user/checkout', {
                 method: 'POST',

@@ -1,9 +1,11 @@
 import { getDeepCopy } from "./utils.js";
 window.addEventListener('load', async () => {
-    let orders, status, provinces, totalPageNumber, ordersResponse, ordersToDisplay,orderTypes,paymentMethods;
+    let orders, status, provinces, totalPageNumber, ordersResponse, ordersToDisplay, orderTypes, paymentMethods;
     let pageNumber = 1; //Primera pagina
     let limit = 5; //Aca controlo cuantas se muestran
     // Apenas carga hago el fetch de las ventas
+
+    document.querySelector('.filter-section-disclaimer').innerHTML+=` (hasta el${getTwoWeeksAgo()})`
     // Primero pongo el spiner "Cargando ventas"
     handleSpinnerBehave(true);
     let response = getDeepCopy(await (await fetch(`${window.location.origin}/api/admin/order`)).json());
@@ -42,17 +44,15 @@ window.addEventListener('load', async () => {
 
     // FUNCIONES
     function generateOrderPopup(order) {
-        console.log(order);
-        console.log(orderTypes);
-        let orderType = orderTypes.find(type=>type.id==order.order_types_id).type;
-        let orderPaymentMethod = paymentMethods.find(payMeth=>payMeth.id==order.payment_methods_id).name;
+        let orderType = orderTypes.find(type => type.id == order.order_types_id).type;
+        let orderPaymentMethod = paymentMethods.find(payMeth => payMeth.id == order.payment_methods_id).name;
         // Le agrego el id
         orderDetailPopup.innerHTML =
             `
         <i class="fa-regular fa-x close-order-detail-popup"></i>
         <p class="copy-msg">Valor copiado al portapapeles</p>
         <p class="order-detail-title bold">Venta - ${order.tra_id}</p>
-        <p class="order-detail-date grey">Fecha de creación: ${order.date}</p>
+        <p class="order-detail-date grey">${order.date}</p>
         <p class="order-detail">${orderType} - Metodo de pago: ${orderPaymentMethod}</p>
         <section class="order-detail-product-list-section">
             <p class="order-detail-product-list-title bold order-label">Items</p>
@@ -208,7 +208,7 @@ window.addEventListener('load', async () => {
         let tableBody = ``;
         // Voy por cada orden y pinto la tabla
         ordersToDisplay.forEach(order => {
-            const orderStatus = status.find(stat=>stat.id == order.order_status_id).status;
+            const orderStatus = status.find(stat => stat.id == order.order_status_id).status;
             tableBody +=
                 `
             <tr>
@@ -315,22 +315,22 @@ window.addEventListener('load', async () => {
         const inputFilter = document.querySelector('.filter-order-input');
         inputFilter.addEventListener('input', (e) => {
             let value = e.target.value;
-            if(!value){
+            if (!value) {
                 //Si el select tiene value entonces quiere decir que hay otro filtro
-                if(selectStatusFilter.value != 0){
+                if (selectStatusFilter.value != 0) {
                     console.log(selectStatusFilter.value);
                     //Vuelvo a realziar el filtro con las ordenes totales (Hay 1 solo filtro)
-                    orders = ordersResponse.filter(ord => ord.order_status_id==selectStatusFilter.value);
+                    orders = ordersResponse.filter(ord => ord.order_status_id == selectStatusFilter.value);
                 } else { //Aca ningun filtro esta aplicado ==> Vuelvo a mostrar todas
                     orders = ordersResponse;
                 }
-            } else{
+            } else {
                 let ordersInValue;
                 // Tengo que preguntar si el otro filtro esta activo, porque si esta entonces busco a partir
                 // de lo que encontro ese filtro
-                if(selectStatusFilter.value != 0){
-                    ordersInValue =  orders.filter(ord => ord.tra_id.toLowerCase().includes(value.toLowerCase()));
-                }else{ //Aca busco solo del input
+                if (selectStatusFilter.value != 0) {
+                    ordersInValue = orders.filter(ord => ord.tra_id.toLowerCase().includes(value.toLowerCase()));
+                } else { //Aca busco solo del input
                     ordersInValue = ordersResponse.filter(ord => ord.tra_id.toLowerCase().includes(value.toLowerCase()));
                 }
                 orders = ordersInValue;
@@ -349,23 +349,23 @@ window.addEventListener('load', async () => {
         });
         // Filtro de estado de venta
         const selectStatusFilter = document.querySelector('#filter-order-select');
-        selectStatusFilter.addEventListener('input',(e)=>{
+        selectStatusFilter.addEventListener('input', (e) => {
             let value = e.target.value;
-            if(value==0){
-                if(inputFilter.value){//Si el input tiene value entonces quiere decir que hay otro filtro
+            if (value == 0) {
+                if (inputFilter.value) {//Si el input tiene value entonces quiere decir que hay otro filtro
                     //Vuelvo a realizar el filtro con las ordenes totales (Hay 1 solo filtro)
-                    orders =  ordersResponse.filter(ord => ord.tra_id.toLowerCase().includes(inputFilter.value.toLowerCase()));
-                } else{
+                    orders = ordersResponse.filter(ord => ord.tra_id.toLowerCase().includes(inputFilter.value.toLowerCase()));
+                } else {
                     orders = ordersResponse;
                 }
-            } else{ //Aca se aplica el filtro del select
+            } else { //Aca se aplica el filtro del select
                 let ordersInValue;
                 // Tengo que preguntar si el otro filtro esta activo, porque si esta entonces busco a partir
                 // de lo que encontro ese filtro
-                if(inputFilter.value){
-                    ordersInValue = orders.filter(ord => ord.order_status_id==value);
-                } else{
-                    ordersInValue = ordersResponse.filter(ord => ord.order_status_id==value);
+                if (inputFilter.value) {
+                    ordersInValue = orders.filter(ord => ord.order_status_id == value);
+                } else {
+                    ordersInValue = ordersResponse.filter(ord => ord.order_status_id == value);
                 }
                 orders = ordersInValue;
             };
@@ -383,7 +383,7 @@ window.addEventListener('load', async () => {
         });
         // Para limpiar los filtros
         const cleanFilters = document.querySelector('.clean-filters');
-        cleanFilters.addEventListener('click',()=>{
+        cleanFilters.addEventListener('click', () => {
             inputFilter.value = '';
             selectStatusFilter.value = 0;
             orders = ordersResponse;
@@ -400,5 +400,21 @@ window.addEventListener('load', async () => {
             listenRowsDisplayed();
         })
     };
-    listenFilterMethods()
+    listenFilterMethods();
+
+    function getTwoWeeksAgo() {
+        // Obtén la fecha actual
+        const actualDate = new Date();
+
+        // Resta 14 días a la fecha actual
+        actualDate.setDate(actualDate.getDate() - 14);
+
+        // Obtiene el día, mes y año
+        const day = actualDate.getDate().toString().padStart(2, '0');
+        const month = (actualDate.getMonth() + 1).toString().padStart(2, '0'); // Sumamos 1 porque los meses en JavaScript van de 0 a 11
+        const year = actualDate.getFullYear();
+
+        // Retorna la fecha en formato "dd-mm-yyyy"
+        return `${day}-${month}-${year}`;
+    }
 })

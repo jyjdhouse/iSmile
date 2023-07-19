@@ -23,17 +23,17 @@
                         <label class="bold form-label">Datos Facturacion</label>
                         <div class="input-label-container">
                             <label for="name">Nombre</label>
-                            <input type="text" name="name">
+                            <input type="text" name="name" class="letter-only-input">
                         </div>
 
                         <div class="input-label-container">
                             <label for="last_name">Apellido</label>
-                            <input type="text" name="last_name">
+                            <input type="text" name="last_name" class="letter-only-input">
                         </div>
 
                         <div class="input-label-container">
                             <label for="dni">DNI</label>
-                            <input type="text" name="dni">
+                            <input type="text" name="dni" class="numeric-only-input">
                         </div>
 
                         <div class="input-label-container">
@@ -63,7 +63,7 @@
                         </div>
                         <div class="input-label-container short-field">
                             <label for="billing_zip_code">Código postal</label>
-                            <input type="text" name="billing_zip_code">
+                            <input type="text" name="billing_zip_code" class="numeric-only-input">
                         </div>
                         <div class="input-label-container short-field">
                             <label for="billing_floor">Piso y departamento</label>
@@ -113,7 +113,7 @@
                     </section>
 
 
-                    <div class="input-label-container" id="products-container">
+                    <div class="input-label-container payment-method-field" id="products-container">
                         <label for="payment_methods">Forma de pago</label>
                         <select name="payment_methods">
                             <% paymentMethods.forEach(form=> { %>
@@ -123,7 +123,7 @@
                                 <% }) %>
                         </select>
                     </div>
-                    <div class="input-label-container date-container">
+                    <div class="input-label-container date-field">
                         <label for="date">Fecha</label>
                         <input type="date" name="date">
                     </div>
