@@ -14,8 +14,8 @@ window.addEventListener('load', () => {
     const callPhoneNumber = document.querySelector('.call-phone-number');
     const blackScreen = document.querySelector('.black-screen');
     // logica para clickear iconos en footer mobile
-    footerIconsContainer.forEach((icon, indexIcon) => {
-        icon.addEventListener('click', () => {
+    footerIconsContainer?.forEach((icon, indexIcon) => {
+        icon?.addEventListener('click', () => {
             // como estan separados los iconos de la data de cada uno
             // pregunto si el index del icon es igual al index de la data
             // y agrego clase
@@ -29,14 +29,14 @@ window.addEventListener('load', () => {
         })
     });
 
-    closeFooterDataBtn.forEach(btn => {
-        btn.addEventListener('click', () => {
+    closeFooterDataBtn?.forEach(btn => {
+        btn?.addEventListener('click', () => {
             footerDataIconsContainer.forEach(cont => cont.classList.remove('mobile-footer-data-icon-container-active'));
             blackScreen.classList.remove('black-screen-active');
         })
 
     });
-    blackScreen.addEventListener('click', () => {
+    blackScreen?.addEventListener('click', () => {
         footerDataIconsContainer.forEach(cont => cont.classList.remove('mobile-footer-data-icon-container-active'));
         blackScreen.classList.remove('black-screen-active');
     });
@@ -57,7 +57,7 @@ window.addEventListener('load', () => {
 
     // Para copiar al portapapeles
     const address = 'Avenida Santa Fé 2911 3 F, C1425 Buenos Aires'
-    copyAddress.addEventListener('click', () => {
+    copyAddress?.addEventListener('click', () => {
         navigator.clipboard.writeText(address)
         copyAddress.innerHTML = '<p class="copy-msg">Dirección copiada</p>'
         setTimeout(() => {
