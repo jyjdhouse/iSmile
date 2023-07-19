@@ -824,7 +824,10 @@ form.addEventListener('submit', async (e) => {
             window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${fetchResponse.msg}`;
             return
         };
-        console.log(fetchResponse);
+        // Una vez que se compra, si no hay usuario se borra el carro del locale
+        if(!window.userLogged){
+            localStorage.removeItem('temporalCart');
+        };
     } catch (error) {
         return console.log(`Error en el envio del formulario: ${error}`);
     }

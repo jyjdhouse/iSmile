@@ -438,6 +438,14 @@ const controller = {
             orderCreated = await getOrder(orderCreated.id);
             // Tengo que armar 2 mails: 1 al que compro y otro a las chicas
             await sendOrderMails(orderCreated);
+            // Si se creo la orden entonces limpio el carro del usuario 
+            if(users_id){
+                await db.temporalCart.destroy({
+                    where: {
+                        users_id
+                    }
+                })
+            }
             // Mando la respuesta
             return res.status(200).json({
                 meta: {
@@ -446,14 +454,7 @@ const controller = {
                 ok:true,
                 msg: `Compra registrada exitosamente`
             });
-            // Si se creo la orden entonces limpio el carro del usuario TODO:
-            if(users_id){
-                await db.temporalCart.destroy({
-                    where: {
-                        users_id
-                    }
-                })
-            }
+            
             
             return res.render('orderSuccess.ejs', { Order });
             return res.send({
