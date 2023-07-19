@@ -272,11 +272,7 @@ const controller = {
             let { date,items, users_id, name, last_name, email, dni, phone_code, phone, billing_street, billing_zip_code,
                 billing_floor, billing_province, billing_city, order_types_id, use_same_address, payment_methods_id,
                 save_user_address, use_user_address } = req.body;
-            // return console.log(new Date(date));
-            // console.log(JSON.parse(items));
-            // return res.json({
-            //     bodyy:req.body
-            // });
+            
             items = JSON.parse(items);
 
             // Traigo los errores de formulario (si alguno vino vacio de los que no debia)

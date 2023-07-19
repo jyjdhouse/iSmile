@@ -3,7 +3,8 @@ const getAllTreatments = require('../utils/getAllTreatments');
 const getDeepCopy = require('../utils/getDeepCopy');
 const countryCodes = require('../utils/staticDB/countryCodes');
 const provinces = require('../utils/staticDB/provinces');
-
+const paymentMethods = require('../utils/staticDB/paymentMethods');
+const orderStatus = require('../utils/staticDB/orderStatus');
 
 const orderByAlfabet = (array)=>{
     return array.sort((a, b) => {
@@ -23,8 +24,7 @@ const orderByAlfabet = (array)=>{
 const controller = {
     registerSale: async (req, res) => {
         const products = await db.Product.findAll()
-        const paymentForms = await db.PaymentForm.findAll()
-        return res.render('registerSale', {products, paymentForms, countryCodes, provinces})
+        return res.render('registerSale', {products, paymentMethods, countryCodes, provinces})
     },
     updateServicesPrice: async (req, res) => {
         let treatments = getDeepCopy(await getAllTreatments());
@@ -68,7 +68,6 @@ const controller = {
         return res.render('clientConsent');
     },
     orderList: async(req,res)=>{
-        let orderStatus = await db.OrderStatus.findAll();
         return res.render('orderList',{orderStatus})
     }
 };

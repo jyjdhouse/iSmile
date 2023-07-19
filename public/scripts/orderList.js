@@ -1,6 +1,6 @@
 import { getDeepCopy } from "./utils.js";
 window.addEventListener('load', async () => {
-    let orders, status, provinces, totalPageNumber, ordersResponse, ordersToDisplay;
+    let orders, status, provinces, totalPageNumber, ordersResponse, ordersToDisplay,orderTypes,paymentMethods;
     let pageNumber = 1; //Primera pagina
     let limit = 5; //Aca controlo cuantas se muestran
     // Apenas carga hago el fetch de las ventas
@@ -12,6 +12,8 @@ window.addEventListener('load', async () => {
         ordersResponse = response.orders;
         status = response.statuses;
         provinces = response.provinces;
+        paymentMethods = response.paymentMethods;
+        orderTypes = response.orderTypes
     };
     orders = ordersResponse;
     // Desactivo el spinner
@@ -40,14 +42,18 @@ window.addEventListener('load', async () => {
 
     // FUNCIONES
     function generateOrderPopup(order) {
+        console.log(order);
+        console.log(orderTypes);
+        let orderType = orderTypes.find(type=>type.id==order.order_types_id).type;
+        let orderPaymentMethod = paymentMethods.find(payMeth=>payMeth.id==order.payment_methods_id).name;
         // Le agrego el id
         orderDetailPopup.innerHTML =
             `
         <i class="fa-regular fa-x close-order-detail-popup"></i>
         <p class="copy-msg">Valor copiado al portapapeles</p>
         <p class="order-detail-title bold">Venta - ${order.tra_id}</p>
-        <p class="order-detail-date grey">Fecha de creación: ${order.createdAt}</p>
-        <p class="order-detail">${order.orderType.type} - Metodo de pago: ${order.paymentMethod.name}</p>
+        <p class="order-detail-date grey">Fecha de creación: ${order.date}</p>
+        <p class="order-detail">${orderType} - Metodo de pago: ${orderPaymentMethod}</p>
         <section class="order-detail-product-list-section">
             <p class="order-detail-product-list-title bold order-label">Items</p>
             <div class="order-detail-product-list">
@@ -202,6 +208,7 @@ window.addEventListener('load', async () => {
         let tableBody = ``;
         // Voy por cada orden y pinto la tabla
         ordersToDisplay.forEach(order => {
+            const orderStatus = status.find(stat=>stat.id == order.order_status_id).status;
             tableBody +=
                 `
             <tr>
@@ -209,7 +216,7 @@ window.addEventListener('load', async () => {
                 <td>${order.billing_name}</td>
                 <td>$${order.total}</td>
                 <td>${order.orderItems.length}</td>
-                <td>${order.orderStatus.status}</td>
+                <td>${orderStatus}</td>
             </tr>
             `
         });
