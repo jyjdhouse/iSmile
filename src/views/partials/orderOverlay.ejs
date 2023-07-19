@@ -1,0 +1,13 @@
+<div class="overlay hidden">
+    <div class="container">
+        <i class='bx bx-check-square overlay-icon overlay-correct-text'></i>
+        <p class="overlay-label overlay-correct-text">Venta registrada correctamente</p>
+        <p class="overlay-description overlay-correct-text">Redirigiendo a ventas...</p>
+    </div>
+    <div class="container">
+        <i class='bx bx-x-circle overlay-icon overlay-incorrect-text'></i>
+        <p class="overlay-label overlay-incorrect-text">Error al procesar la venta</p>
+        <p class="overlay-description overlay-incorrect-text">Recargando formulario...</p>
+    </div>
+    <%- include('./loadingSpinner.ejs') %>
+</div>

@@ -1,55 +1,18 @@
 @import 'variables.css';
-/* Overlay */
-.overlay{
-    position: fixed;
-    z-index: 100;
-    background: rgba(140, 140, 140, .6);
-    transition: all 1s ease;
-}
-.overlay .loading-container{
-    background: none;
-}
-.overlay .load-3{
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 10px;
-}
-.overlay-correct{
-    background-color: rgba(39, 158, 55, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-.overlay-correct-text{
-    transition: all 1s ease;
-    scale: 0;
-    opacity: 0;
-    color: #fff;
-}
-.overlay-correct .overlay-correct-text{
-    scale: 1;
-    opacity: 1;
-}
-.overlay-correct-icon{
-    font-size: 8rem;
-}
-.overlay-correct-label{
-    font-size: 2rem;
-}
-.overlay-correct-description{
-    font-size: 1.5rem;
-    margin-top: 30px;
-}
-/*  */
+
 .register-sale-main{
     padding: 3% 5%;
 }
 .register-sale-form{
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.billing-section{
+    width: 45%;
+    margin-top: 5vh;
 }
 .form-label{
     font-size: 18px;
@@ -58,7 +21,9 @@
 .register-sale-intro-container {
     margin-top: 12vh;
 }
-
+.date-container.input-label-container>input{
+    width: fit-content;
+}
 .input-label-container {
     margin: 4% 0;
     display: flex;
@@ -69,11 +34,19 @@
 }
 .input-label-container input, .input-label-container select {
     margin-top: 3%;
-
-    width: 50%;
+    width: 100%;
+}
+.input-label-container input,
+.input-label-container select{
+    border: 1px solid var(--gold-color);
+    border-radius: 1rem;
 }
 .phone-input-container{
     flex-direction: row;
+    flex-wrap: wrap;
+}
+.phone-input-container>label{
+    width: 100%;
 }
 .phone-input-container>select{
     width: 40%;
@@ -87,6 +60,7 @@
     outline: 0;
     border: 1px solid var(--violet-color);
     padding: 1% 0;
+    cursor: pointer;
 }
 
 .order-item-container .input-label-container input, .order-item-container .input-label-container select {
@@ -94,15 +68,16 @@
     margin-left: 2%;
    
 }
-
-.hidden {
-    display: none;
-}
-
 .disabled {
     pointer-events: none;
 }
 
+.choose-item-section{
+    width: 35%;
+}
+.added-items-container{
+    width: 60%;
+}
 .search-checkbox-container {
     margin-bottom: 3%;
 }
@@ -115,7 +90,8 @@
     column-gap: 2%;
     padding: 15px 0;
     justify-content: space-evenly;
-    height: 60vh;
+    align-content: flex-start;
+    height: 40vh;
     overflow-y: scroll;
     border: 1px solid rgba(200,200,200,.4);
 }
@@ -123,12 +99,12 @@
 .checkbox-label{
     cursor: pointer;
     text-align: center;
-    font-size: .8rem;
+    font-size: 11px;
     padding: 5px;
     border: 1px solid var(--light-violet-color);
     height: fit-content;
     border-radius: 15px;
-    width: 25%;
+    width: 32%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -137,30 +113,50 @@
 
 .added-items-container {
     display: flex;
-    flex-direction: column;
-  
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 70px;
+    height: fit-content;
 }
-
-.item-container {
+.added-items-container-header{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.added-items-container-single{
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--violet-color);
+    width: 100%;
+}
+.added-items-container-header>*,
+.item-container>*{
+    width: 30%;
+    text-align: center;
+}
+.item-container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(200,200,200,.4);
     padding: 2%;
-    margin: 4% 0;
 }
 
 .remove-element-container {
     display: flex;
     justify-content: flex-end;
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: fit-content;
 }
 
 .item-container label {
     margin-top: 2%;
 }
 
-.item-container input {
-    width: 30%;
-}
 
 .remove-element {
     cursor: pointer;
