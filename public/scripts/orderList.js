@@ -5,7 +5,7 @@ window.addEventListener('load', async () => {
     let limit = 5; //Aca controlo cuantas se muestran
     // Apenas carga hago el fetch de las ventas
 
-    document.querySelector('.filter-section-disclaimer').innerHTML+=` (hasta el${getTwoWeeksAgo()})`
+    document.querySelector('.filter-section-disclaimer').innerHTML += ` (hasta el ${getTwoWeeksAgo()})`
     // Primero pongo el spiner "Cargando ventas"
     handleSpinnerBehave(true);
     let response = getDeepCopy(await (await fetch(`${window.location.origin}/api/admin/order`)).json());
@@ -213,14 +213,17 @@ window.addEventListener('load', async () => {
                 `
             <tr>
                 <td class='order-id'>${order.tra_id}</td>
+                <td class='order-date'>${order.date}</td>
                 <td>${order.billing_name}</td>
                 <td>$${order.total}</td>
-                <td>${order.orderItems.length}</td>
+                <td class="item-quantity-column">${order.orderItems.length}</td>
                 <td>${orderStatus}</td>
+                ${order.order_types_id == 3 ? '<td class="remove-transaction-btn-container"><i class="bx bx-x-circle"></i></td>' : ''}
             </tr>
             `
         });
-        document.querySelector('tbody').innerHTML = tableBody
+        document.querySelector('tbody').innerHTML = tableBody;
+        listenRemoveOrderbtns();
     }
     // Muestro o saco el spinner de 'cargando'
     function handleSpinnerBehave(boolean) {
@@ -398,7 +401,63 @@ window.addEventListener('load', async () => {
             listenPaginationButtons();
             // Logica para capturar el click en una transferencia
             listenRowsDisplayed();
-        })
+        });
+
+        // Para los filtros de fecha
+        const fromInputDate = document.querySelector('.input-date[name="input_from"]');
+        const toInputDate = document.querySelector('.input-date[name="input_to"]');
+        const filterDatesButtonContainer = document.querySelector('.filter-button-container');
+        fromInputDate.addEventListener('change', (e) => {
+            // Si el otro input tiene valor y este tambien pongo el boton de buscar
+            if (toInputDate.value && e.target.value) {
+                filterDatesButtonContainer.classList.remove('hidden');
+                return
+            };
+            // sino lo saco
+            filterDatesButtonContainer.classList.add('hidden');
+            return
+        });
+        toInputDate.addEventListener('change', (e) => {
+            // Si el otro input tiene valor y este tambien pongo el boton de buscar
+            if (fromInputDate.value && e.target.value) {
+                filterDatesButtonContainer.classList.remove('hidden');
+                return
+            };
+            // sino lo saco
+            filterDatesButtonContainer.classList.add('hidden');
+            return
+
+        });
+        // Para limpiar los filtros de fecha
+        const cleanDateFilters = document.querySelectorAll('.filter-field .fa-arrows-rotate');
+        cleanDateFilters.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.closest('.filter-field').querySelector('input').value = '';
+                filterDatesButtonContainer.classList.add('hidden');
+            })
+        });
+        // Escucho boton de buscar por fechas
+        const filterDatesButton = document.querySelector('.filter-date-button');
+        filterDatesButton.addEventListener('click', async () => {
+            // Agarro el valor de ambos input
+            let fromValue = fromInputDate.value;
+            let toValue = toInputDate.value;
+            handleSpinnerBehave(true);
+            let filteredOrders = (await ((await fetch(`/api/admin/order?from=${fromValue}&to=${toValue}`)).json())).orders;
+            handleSpinnerBehave(false);
+            orders = filteredOrders;
+            // Obtengo las ordenes para pintar (Apenas carga la pagina son 5(TODO:10))
+            pageNumber = 1;
+            ordersToDisplay = getDisplayedOrders();
+            // Pinto la tabla con esas ordenes
+            paintTable(ordersToDisplay);
+            // Pinto las paginacion con todas las ordenes
+            generatePaginateNumbers();
+            // Escucho la paginacion
+            listenPaginationButtons();
+            // Logica para capturar el click en una transferencia
+            listenRowsDisplayed();
+        });
     };
     listenFilterMethods();
 
@@ -416,5 +475,89 @@ window.addEventListener('load', async () => {
 
         // Retorna la fecha en formato "dd-mm-yyyy"
         return `${day}-${month}-${year}`;
+    };
+
+    function listenRemoveOrderbtns() {
+        const removeOrderBtns = document.querySelectorAll('.remove-transaction-btn-container');
+        removeOrderBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                const row = btn.closest('tbody tr');
+                // Pinto el popup de la transaccion
+                const orderToRemove = orders.find(ord => ord.tra_id == row.querySelector('.order-id').innerHTML);
+                paintRemoveTransactionPopup(orderToRemove);
+            })
+        });
+    };
+
+    function paintRemoveTransactionPopup(order) {
+        let orderType = orderTypes.find(type => type.id == order.order_types_id).type;
+        let orderPaymentMethod = paymentMethods.find(payMeth => payMeth.id == order.payment_methods_id).name;
+        // Le agrego el id
+        orderDetailPopup.innerHTML =
+            `
+        <i class="fa-regular fa-x close-order-detail-popup"></i>
+        <p class="order-detail-title bold">Estas por borrar una venta</p>
+        <p class="order-detail">ID: ${order.tra_id}</p>
+        <p class="order-detail">Nombre: ${order.billing_name} - E-Mail:${order.billing_email} </p>
+        <div class="remove-order-button-container">
+            <a class="remove-order-button" href></a>
+        </div>
+        
+        `; TODO: terminar
+        // Aca voy pusheando los orderItems
+        let orderDetailProductList = document.querySelector('.order-detail-product-list');
+        order.orderItems.forEach(item => {
+            orderDetailProductList.innerHTML +=
+                `
+            <div class="order-detail-product-card order-detail-product-card-body">
+                <p class="order-detail-product-name">${item.name}</p>
+                <p class="order-detail-product-quantity">${item.quantity}</p>
+                <p class="order-detail-product-total">$${item.price}</p>
+                <p class="order-detail-product-total">$${item.quantity * item.price}</p>
+            </div>
+            `;
+        });
+        orderDetailProductList.innerHTML += `<p class="total-order-price">Total de compra: $${order.total}</p>`
+        // Ahora tengo que modificar la parte de direccion de entrega
+        let orderDetailProductListSection = document.querySelector('.order-detail-product-list-section');
+        // Pregunto si vino direccion de entrega distinta a facturacion
+        if (order.order_types_id == 1) { //Entrega a domicilio
+            if (!order.is_same_address) { //Distintas direcciones
+                orderDetailProductListSection.innerHTML +=
+                    `
+        <div class="order-detail-shipping-data-container">
+            <div class="order-detail-shipping-data order-detail-shipping-data-head">
+                <p>Provincia</p>
+                <p>Ciudad</p>
+                <p>Calle & Número</p>
+                <p class="order-address-detail">Detalle</p>
+                <p class="order-address-detail">Codigo Postal</p>
+            </div>
+            <div class="order-detail-shipping-data">
+                <p class="copy-value">${provinces.find(prov => prov.id == order.shippingAddress.provinces_id).name}</p>
+                <p class="copy-value">${order.shippingAddress.city}</p>
+                <p class="copy-value">${order.shippingAddress.street}</p>
+                <p class="order-address-detail copy-value">${order.shippingAddress.apartment || '-'}</p>
+                <p class="order-address-detail copy-value">${order.shippingAddress.zip_code}</p>
+            </div>
+        </div>
+        `
+            } else { //Misma direcciones
+                orderDetailProductListSection.innerHTML +=
+                    `<p class="order-deliver-method-p">Misma que direccion de facturación</p>`
+            }
+        } else { //Retiro local o Venta Presencial
+            orderDetailProductListSection.innerHTML +=
+                `<p class="order-deliver-method-p">No corresponde</p>`
+        };
+
+        // Ahora modifico la parte del estado
+        const selectOrderStatus = document.querySelector('.status-select');
+        status.forEach(stat => {
+            selectOrderStatus.innerHTML += `<option ${stat.id == order.order_status_id && 'selected'} value="${stat.id}">${stat.status}</option>`
+        })
     }
+
 })

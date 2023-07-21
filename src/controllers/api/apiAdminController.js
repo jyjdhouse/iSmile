@@ -5,6 +5,7 @@ const secret = require('../../utils/secret').secret;
 const jwt = require('jsonwebtoken');
 const json2csv = require('json2csv').parse;
 const Sequelize = require('sequelize');
+const { Op } = require('sequelize');
 // Utils
 const getDeepCopy = require('../../utils/getDeepCopy');
 const getAllOrders = require('../../utils/getAllOrders');
@@ -73,22 +74,39 @@ const controller = {
   },
   getOrders: async (req, res) => {
     try {
-      const limit = req.query.limit || undefined;
-      const offset = req.query.offset || undefined;
-      let orders = getDeepCopy(await db.Order.findAll({
+      // Obtengo las fechas del query si hay
+      let fromValue = req.query?.from || undefined;
+      // Le resto 1 dia para que lo incluya la busqueda
+      fromValue = fromValue && new Date(fromValue);
+      fromValue && fromValue.setDate(fromValue.getDate() - 1);
+      const toValue = req.query?.to || undefined;
+      // Obtengo las ordenes de las ultimas 2 semanas
+      const todaysDate = new Date()
+      const twoWeeksAgoDate = new Date(todaysDate)
+      twoWeeksAgoDate.setDate(twoWeeksAgoDate.getDate() - 15);
+      let orders;
+      orders = getDeepCopy(await db.Order.findAll({
+        where: {
+          date: {
+            // Aca pregunto si vienen los filtros de busqueda, sino traigo las ultimas 2 semanas
+            [Op.gte]: fromValue && toValue ? fromValue : twoWeeksAgoDate,
+            [Op.lte]: fromValue && toValue ? toValue : todaysDate
+          }
+        },
         order: [
           [
             Sequelize.literal("cast(substring_index(tra_id, '-', 1) as unsigned)"),
             'DESC'
           ]
         ],
-        include: ['billingAddress','shippingAddress','orderItems']
+        include: ['billingAddress', 'shippingAddress', 'orderItems']
       }));
+
       let statuses = orderStatuses;
       orders.forEach(ord => {
-        ord.date = dateFormater(ord.date)
+        ord.date = dateFormater(ord.date);
       });
-      
+
       return res.status(200).json({
         meta: {
           status: 200,

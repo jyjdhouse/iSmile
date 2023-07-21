@@ -9,22 +9,34 @@
 
 th {
     border-bottom: 1px solid black;
-    width: 25%;
+    width: 20%;
     text-align: center;
 }
 
 td {
     border-bottom: 1px dashed black;
-    width: 25%;
+    width: 20%;
     text-align: center;
     padding: 10px 0;
     cursor: pointer;
 }
-
+.item-quantity-column{
+    width: 80px;
+}
 tbody tr:hover {
     background-color: #ececec;
 }
-
+tbody tr{
+    position: relative;
+}
+.remove-transaction-btn-container{
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: fit-content;
+    border: none;
+}
 .main {
     position: relative;
     margin-top: 15vh;
@@ -71,6 +83,63 @@ tbody tr:hover {
     margin: 0 auto;
     margin-bottom: 30px;
 }
+.left-side-filter-section{
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.right-side-filter-section{
+    width: 40%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.right-side-filter-section>p{
+    width: 100%;
+    text-align: center;
+    
+}
+.right-side-filter-section>p:first-child{
+    font-size: 18px;
+}
+.filter-field{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+.filter-field .fa-arrows-rotate{
+    position: absolute;
+    bottom: 10%;
+    cursor: pointer;
+}
+.filter-field .restart-input-from{
+    left: 7%;
+}
+.filter-field .restart-input-to{
+    right: 7%;
+}
+.filter-button-container{
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+}
+.filter-date-button{
+    padding: 5px 10px;
+    border: 1px solid var(--gold-color);
+    border-radius: 1rem;
+    cursor: pointer;
+}
+.filter-field>input{
+    width: 60%;
+    margin-top: 10px;
+    border: 1px solid var(--gold-color);
+    padding: 5px 0;
+    border-radius: 1rem;
+    text-align: center;
+    padding-right: 5px;
+    cursor: pointer;
+}
 .filter-section-title{
     width: 100%;
     font-size: 22px;
@@ -80,7 +149,7 @@ tbody tr:hover {
 .filter-order-input{
     border: 1px solid var(--gold-color);
     border-radius: 1rem;
-    padding: 15px;
+    padding: 10px;
     margin-right: 10px;
 }
 #filter-order-select{
