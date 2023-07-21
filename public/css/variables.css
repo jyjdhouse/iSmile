@@ -1,8 +1,9 @@
 :root {
     --light-violet-color: #bc75f2;
-    --violet-color: #663399;
+    --violet-color: #431d69;
     --gold-color: #bba059;
     --red-color: rgb(198, 23, 23);
+    --bold-color: #580846;
 }
 
 * {
@@ -12,13 +13,16 @@
     user-select: none;
 }
 
+.icon{
+    font-size: 26px !important;
+}
 .overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, .8);
+    background: #fff
 }
 
 input {
@@ -42,8 +46,8 @@ li {
 }
 
 .bold {
-    font-weight: 600;
-    color: #580846;
+    font-weight: 700;
+    color: var(--bold-color);
 }
 
 .violet {
@@ -99,6 +103,9 @@ input[type=number] {
     text-transform: uppercase;
 }
 @media(min-width:1024px){
+    .icon{
+        font-size: 35px !important;
+    }
 }
 @keyframes rebound {
     0% {

@@ -56,10 +56,10 @@
 
 
 .close-menu-btn {
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: var(--gold-color);
     position: absolute;
-    right: 0;
+    right: 5%;
     top: 0;
 }
 
@@ -81,11 +81,11 @@
 }
 
 .navbar-list-item {
-    color: #000;
+    color: var(--violet-color);
     text-transform: uppercase;
-    margin: 5% 0;
+    margin: 10% 0;
     font-weight: 700;
-    font-size: .8rem;
+    font-size: 17px;
     transition: all .4s;
     transition-delay: .6s;
     /* list-style: disc; */
@@ -99,7 +99,7 @@
 .navbar-list-item a,
 .navbar a:visited,
 .navbar-list-item .item-dropdown-visible-part p {
-    color: #580846;
+    color: var(--violet-color);
 }
 
 .item-dropdown-visible-part {
@@ -132,7 +132,7 @@
 }
 
 .dropdown-active .navbar-list-item {
-    margin: 0;
+    margin: 1% 0;
     transition-delay: 0s;
 }
 
@@ -141,7 +141,9 @@
     font-size: .6rem;
     cursor: pointer;
 }
-
+.dropdown-list-item a{
+    font-size: 14px;
+}
 .checkbox-container {
     display: flex;
     align-items: center;
