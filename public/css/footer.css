@@ -5,9 +5,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-.footer a:visited{
-    color: #000;
-}
+
 .copy-msg{
     color: #999;
 }
@@ -83,7 +81,7 @@
 }
 
 .footer-link{
-    color: black;
+    color: var(--violet-color);
     display: flex;
     align-items: center;
     width: 100%;
@@ -93,7 +91,10 @@
     /* border: 1px solid #bba059; */
     border-radius: 5px;
     padding: 2% 0;
-    
+}
+
+.footer a:visited{
+    color: var(--violet-color);
 }
 
 .item-dropdown-visible-part {

@@ -54,8 +54,13 @@ const controller = {
                 filename: blogImage.filename,
                 home_sections_id: blogImage.home_sections_id
             }
+            const products = await db.Product.findAll({
+                // de más nuevo a más viejo
+                order: [['createdAt', 'DESC']],
+                limit: 6
+            });
 
-            return res.render('index', { videoFile, galleryFiles, igFiles, blogFile })
+            return res.render('index', { videoFile, galleryFiles, igFiles, blogFile, products })
 
         } catch (error) {
             console.log(`Falle en mainController.list: ${error}`);
@@ -98,7 +103,7 @@ const controller = {
             return res.json({ error })
         }
     },
-    
+
     updateHomeFile: async (req, res) => {
         try {
             const { home_sections_id, position, old_filename } = req.body;

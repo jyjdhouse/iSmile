@@ -1,6 +1,6 @@
 :root {
     --light-violet-color: #bc75f2;
-    --violet-color: #663399;
+    --violet-color: #431d69;
     --gold-color: #bba059;
     --red-color: rgb(198, 23, 23);
 }
@@ -18,7 +18,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, .8);
+    background: #fff
 }
 
 input {
