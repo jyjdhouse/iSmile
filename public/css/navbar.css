@@ -81,7 +81,7 @@
 }
 
 .navbar-list-item {
-    color: #000;
+    color: var(--violet-color);
     text-transform: uppercase;
     margin: 5% 0;
     font-weight: 700;
@@ -99,7 +99,7 @@
 .navbar-list-item a,
 .navbar a:visited,
 .navbar-list-item .item-dropdown-visible-part p {
-    color: #580846;
+    color: var(--violet-color);
 }
 
 .item-dropdown-visible-part {
