@@ -6,6 +6,7 @@
     box-sizing: border-box;
 }
 
+
 .copy-msg{
     color: #999;
 }
@@ -199,13 +200,29 @@
     border: 1px solid var(--gold-color);
     background: none;
     border-radius: 1rem;
-
+    
 }
+
+.mobile-footer-btn {
+    color: var(--violet-color);
+}
+
+.mobile-footer-data-content {
+    color: var(--violet-color);
+    font-weight: 700;
+}
+
 .mobile-footer-btn a{
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--violet-color);
 }
+
+.mobile-footer-btn .bx-map {
+    color: var(--gold-color);
+}
+
 .footer-data-x-container {
     position: absolute;
     right: 2%;
@@ -229,6 +246,11 @@
     font-size: 1.3rem;
     font-weight: 600;
     padding-bottom: 1rem;
+    color: var(--violet-color);
+}
+
+.footer-popup-detail-row  {
+    color: var(--violet-color);
 }
 .footer-popup-detail-row .phone{
     width: 40%;
@@ -246,8 +268,7 @@
     top: 0;
 }
 .mobile-footer-data-icon-container .bold{
-    width: 15%;
-    text-align: end;
+    text-align: center;
 }
 .mobile-footer-data-icon-container .bxl-whatsapp{
     font-size: 1.6rem;
@@ -255,6 +276,11 @@
 .bx-map{
     font-size: 1.2rem;
 }
+
+.footer-popup-detail-row i {
+    color: var(--gold-color);
+}
+
 @media(min-width:768px){
     
     .footer-logo {
