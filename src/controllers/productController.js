@@ -74,16 +74,15 @@ const controller = {
             };
 
             const newProduct = await db.Product.create(productObject);
-
-            const imagesObject = images?.map(obj => {
-                let fileType = obj.mimetype.startsWith('video/') ? 2 : 1;
-                return {
-                    filename: obj.filename,
-                    products_id: newProduct.id,
-                    file_types_id: fileType
-                }
-            });
-            if(imagesObject.length){
+            if(images){
+                const imagesObject = images?.map(obj => {
+                    let fileType = obj.mimetype.startsWith('video/') ? 2 : 1;
+                    return {
+                        filename: obj.filename,
+                        products_id: newProduct.id,
+                        file_types_id: fileType
+                    }
+                });
                 await db.ProductFile.bulkCreate(imagesObject);
             }
 
