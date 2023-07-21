@@ -206,11 +206,11 @@ window.addEventListener('load', () => {
             if(i==0)card.classList.remove('instagram-card-active')
             card.addEventListener('mouseenter', () => {
                 const overlay = card.querySelector('.instagram-client-overlay');
-                overlay.classList.add('instagram-client-overlay-active');
+                overlay?.classList.add('instagram-client-overlay-active');
             });
             card.addEventListener('mouseleave', () => {
                 const overlay = card.querySelector('.instagram-client-overlay');
-                overlay.classList.remove('instagram-client-overlay-active');
+                overlay?.classList.remove('instagram-client-overlay-active');
             });
         });
     } else { //Mobile
