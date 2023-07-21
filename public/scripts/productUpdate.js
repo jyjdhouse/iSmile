@@ -35,6 +35,10 @@ window.addEventListener('load', () => {
             form.submit()
         }
 
-    })
+    });
+
+    // Logica para reproducir los videos que esten
+    const videosInView = document.querySelectorAll('.video');
+    videosInView.forEach(video=>video.play());
 
 })

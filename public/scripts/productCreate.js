@@ -7,10 +7,10 @@ window.addEventListener('load', () => {
 
 
     form.addEventListener('submit', (e) => {
-
         e.preventDefault()
-        formErrors = false
-        inputs.forEach(inp => {
+        formErrors = false;
+        const requiredInputs = document.querySelectorAll('.required');
+        requiredInputs.forEach(inp => {
             inp.classList.remove('input-error')
             if(!inp.value){
                 inp.classList.add('input-error')
