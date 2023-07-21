@@ -95,7 +95,9 @@ input[type=number] {
 .page-title {
     text-transform: uppercase;
 }
-
+.uppercase{
+    text-transform: uppercase;
+}
 @media(min-width:1024px){
 }
 @keyframes rebound {

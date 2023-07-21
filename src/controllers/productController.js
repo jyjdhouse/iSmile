@@ -23,11 +23,11 @@ const controller = {
             let searchQuery = req.query.s;
             let viewLabel;
             // Si viene por busqueda
-            if(searchQuery){
+            if (searchQuery) {
                 // Tengo que filtar los productos por el nombre
-                products = products.filter(prod=>prod.name.toLowerCase().includes(searchQuery.toLowerCase()));
+                products = products.filter(prod => prod.name.toLowerCase().includes(searchQuery.toLowerCase()));
                 viewLabel = `"${searchQuery}"`;
-            } 
+            }
             // return res.send(products);
             return res.render('productList', { products, viewLabel })
         } catch (error) {
@@ -67,7 +67,7 @@ const controller = {
 
 
             let productObject = {
-                id: uuidv4() ,
+                id: uuidv4(),
                 name,
                 price,
                 description,
@@ -87,8 +87,8 @@ const controller = {
             await db.ProductFile.bulkCreate(imagesObject);
 
 
-            return res.redirect('/product/'+newProduct.id);
-            
+            return res.redirect('/product/' + newProduct.id);
+
         } catch (error) {
             console.log(`Falle en productController.create: ${error}`);
             images.forEach(image =>
@@ -110,7 +110,7 @@ const controller = {
             const productId = req.params.productId;
             const productToUpdate = await getProduct(productId)
             const { name, price, description, current_imgs } = req.body
-           
+
             // Agarro las imagenes del input
             let images = req.files
             // Hago el update del producto en la db
@@ -136,31 +136,42 @@ const controller = {
             await db.ProductFile.bulkCreate(imagesObjectDB);
 
             // Array con imagenes para borrar
-            let imgsToDelete = []
+            let filesToDelete = []
 
             productToUpdate.files.forEach(file => { //FILTER TO DELETE IMAGES                 
                 if (!current_imgs.includes(file.filename)) {
-                    return imgsToDelete.push(file.filename)
+                    return filesToDelete.push(file)
                 }
             })
 
             // me fijo si hay imagenes para borrar
-            if (imgsToDelete.length > 0) {
-                imgsToDelete.forEach(filename =>
-                    // DELETE IMGS IN LOCAL FOLDER    
-                    fs.unlinkSync(path.join(__dirname, `../../public/img/product/${filename}`)) 
-                );
+            if (filesToDelete.length > 0) {
+                filesToDelete.forEach(file => {
+                    if (file.file_types_id == 1) { //Imagen
+                        // DELETE IMGS IN LOCAL FOLDER    
+                        fs.unlinkSync(path.join(__dirname, `../../public/img/product/${file.filename}`));
+                        return
+                    };
+                    // video 
+                    fs.unlinkSync(path.join(__dirname, `../../public/video/product/${file.filename}`));
+                    return
+
+                });
+                filesToDelete = filesToDelete.map(file=>{
+                    return file.filename
+                });
+                
                 // DELETE IMGS IN DATABASE     
                 await db.ProductFile.destroy({
                     where: {
                         filename: {
-                            [Op.in]: imgsToDelete
+                            [Op.in]: filesToDelete
                         }
                     }
                 })
             };
 
-            return res.redirect('/product/'+productId)
+            return res.redirect('/product/' + productId)
 
         } catch (error) {
             console.log(`Falle en productController.update: ${error}`);

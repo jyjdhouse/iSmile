@@ -41,8 +41,43 @@
 }
 
 .current-img-subcontainer img {
-    width: 30%;
+    width: 100%;
     height: 100%;
-    margin-left: 1rem;
+    object-fit: contain;
 }
 
+
+/* Para la parte de edit */
+.files-displayed-wrapper{
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.files-displayed-wrapper-title{
+    font-size: 20px;
+}
+.files-displayed-wrapper-title span{
+    font-size: 14px;
+}
+.files-displayed-wrapper>label{
+    width: 100%;
+}
+.files-displayed-wrapper>div{
+    width: 20%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.files-displayed-wrapper .file-container{
+    width: 90%;
+    height: 90%;
+}
+.files-displayed-wrapper .input-checkbox{
+    width: fit-content;
+}
+.product-to-update-img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

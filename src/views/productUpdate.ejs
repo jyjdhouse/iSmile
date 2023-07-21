@@ -36,7 +36,8 @@
                 </div>
                 <div class="input-label-container">
                     <label for="description">Descripción</label>
-                    <textarea name="description" id="" cols="30" rows="10" class="required-input"><%= productToUpdate.description %></textarea>
+                    <textarea name="description" id="" cols="30" rows="10"
+                        class="required-input"><%= productToUpdate.description %></textarea>
                 </div>
                 <div class="input-label-container">
                     <label for="price">Precio</label>
@@ -46,16 +47,25 @@
                     <label id='device-image' class="form-labels" for="images">Agregar imagenes</label>
                     <input class="form-input" type="file" name="images" multiple>
                 </div>
-                <div class="input-label-container">
+                <div class="input-label-container files-displayed-wrapper">
 
-                    <label class="form-labels">Imagenes actuales</label>
+                    <label class="form-labels files-displayed-wrapper-title">Imagenes actuales <span class="grey">(toca el tick para destildar la que quieres sacar)</span></label>
                     <% productToUpdate.files.map((file, i)=> { %>
                         <div class="current-img-subcontainer">
-                            <input type="checkbox" id="<%= i %>" name="current_imgs" checked value="<%= file.filename %>">
-                            <label for="<%= i %>">
-                                <img class="product-to-update-img" src="/img/product/<%= file.filename %>"
-                                    alt="<%= file.id %>">
-                            </label>
+                            <div class="file-container">
+                                <% if (file.file_types_id==1) { %>
+                                    <img class="product-to-update-img" src="/img/product/<%= file.filename %>"
+                                        alt="<%= file.id %>">
+                                    <% } else if(file.file_types_id==2){ %>
+                                        <video class="video product-to-update-img" muted playsinline loop>
+                                            <source src="/video/product/<%= file.filename %>" type="video/mp4">
+                                            <source src="/video/product/<%= file.filename %>" type="video/webm">
+                                            No se puede reproducir el video
+                                        </video>
+                                        <% } %>
+                            </div>
+                            <input type="checkbox" id="<%= i %>" name="current_imgs" checked
+                                value="<%= file.filename %>" class="input-checkbox">
                         </div>
                         <% }) %>
                 </div>
