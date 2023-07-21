@@ -61,7 +61,6 @@ const controller = {
     },
     processProductCreation: async (req, res) => {
         try {
-
             let { name, price, description, category } = req.body;
             let images = req.files;
 
@@ -76,7 +75,7 @@ const controller = {
 
             const newProduct = await db.Product.create(productObject);
 
-            const imagesObject = images.map(obj => {
+            const imagesObject = images?.map(obj => {
                 let fileType = obj.mimetype.startsWith('video/') ? 2 : 1;
                 return {
                     filename: obj.filename,
@@ -84,14 +83,14 @@ const controller = {
                     file_types_id: fileType
                 }
             });
-            await db.ProductFile.bulkCreate(imagesObject);
-
+            if(imagesObject.length){
+                await db.ProductFile.bulkCreate(imagesObject);
+            }
 
             return res.redirect('/product/' + newProduct.id);
-
         } catch (error) {
             console.log(`Falle en productController.create: ${error}`);
-            images.forEach(image =>
+            images?.forEach(image =>
                 fs.unlinkSync(path.join(__dirname, `../../public/img/product/${image.image}`)) // DELETE IMGS IN LOCAL FOLDER    
             );
             return res.json(error);

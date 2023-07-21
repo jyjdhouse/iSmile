@@ -14,11 +14,11 @@
                 <%- include('./partials/header.ejs') %>
                         
                             <main class="product-create-main">
-                                <h2 class="product-create-title">CREAción PRODUCTO</h2>
+                                <h2 class="product-create-title uppercase">CREAción PRODUCTO</h2>
 
                                 
                                     
-                                <form action="http://localhost:4500/product/create" class="create-product-form" enctype="multipart/form-data" method="POST">
+                                <form action="/product/create" class="create-product-form" enctype="multipart/form-data" method="POST">
                                     <div class="input-label-container">
                                         <label for="name">Nombre</label>
                                         <input type="text" name="name">
