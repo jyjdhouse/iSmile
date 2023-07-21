@@ -13,7 +13,13 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const randomString = Math.random().toString(36).substring(2, 2 + 10);
+        if(file.mimetype.startsWith('video/')){//Si es video
+            cb(null, 'video-' + randomString + path.extname(file.originalname))
+            return 
+        }
         cb(null, file.fieldname + '-' + randomString + path.extname(file.originalname))
+        return
+        
     }
 })
 
