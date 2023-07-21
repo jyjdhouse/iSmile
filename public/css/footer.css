@@ -5,7 +5,9 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+.footer a:visited{
+    color: var(--bold-color);
+}
 .copy-msg{
     color: #999;
 }
@@ -66,9 +68,16 @@
     flex-direction: column;
 }
 .footer-social-row{
-    width: 100%;
+    width: 70%;
     height: 10%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    /* border-top: 1px solid rgba(150, 150, 150, .4); */
+    border-bottom: 1px solid rgba(150, 150, 150, .4);
+    margin: 0 15%;
 }
+
 .footer-second-row{
     height: 30%;
 }
@@ -97,9 +106,7 @@
     padding: 2% 0;
 }
 
-.footer a:visited{
-    color: var(--violet-color);
-}
+
 
 .item-dropdown-visible-part {
     display: flex;
@@ -131,21 +138,27 @@
     width: 33.3333%;
     height: 100%;
     display: flex;
-    justify-content: center;
-
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
-
+.footer-data-icon-container>*{
+    font-size: 14px;
+    text-align: center;
+}
 .footer-icon-container {
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    height: 40%;
 }
-
-.desktop-footer-data-icon-container {
-    display: none;
+.footer-data-icon-container{
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
-
 
 .fa-sharp, .fa-solid, .fa-location-dot, .bx-phone {
     margin: 0;
@@ -305,7 +318,7 @@
         }
         
     .footer-background-container {
-        height: 30%;
+        height: 20%;
     }
 
     .footer-logo {
@@ -327,7 +340,7 @@
         justify-content: center;
         width: 15%;
         margin: 0;
-        height: 80%;
+        height: 50%;
     }
     .footer-link{
         width: 100%;
@@ -360,7 +373,7 @@
     .footer-second-row {
         display: flex;
         justify-content: center;
-        height: 20%;
+        height: 30%;
         align-items: center;
     }
 
@@ -379,6 +392,17 @@
         width: 30%;
     }
 
-
+    /* Para parte social */
+    .footer-social-row{
+        padding-bottom: 2vh;
+    }
+    .footer-social-row>a{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer-social-row .desktop-only{
+        font-size: 13px;
+    }
 
 }

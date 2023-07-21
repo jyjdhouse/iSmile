@@ -104,19 +104,19 @@ window.addEventListener('load', () => {
     let slideIntervalId = setInterval(updateSlideShow, 5000);
 
     // LOGICA para aboutUS
-    const detailsContainer = document.querySelector('.about-us-details-container');
-    const lists = document.querySelectorAll('.about-us-details-list');
-    // Función que maneja cuando el contenedor esta visible
-    const handleVisibleLists = () => {
-        lists.forEach((element, i) => {
-            element.style.transitionDelay = `${i * 1}s`
-            element.classList.add('about-us-details-list-visible')
-        });
-        detailsContainer.classList.add('about-us-details-container-active');
-    }
-    // Crear una instancia del Intersection Observer
-    const detailsObserver = checkIfIsInScreen(.4, handleVisibleLists, true);
-    detailsObserver.observe(detailsContainer);
+    // const detailsContainer = document.querySelector('.about-us-details-container');
+    // const lists = document.querySelectorAll('.about-us-details-list');
+    // // Función que maneja cuando el contenedor esta visible
+    // const handleVisibleLists = () => {
+    //     lists.forEach((element, i) => {
+    //         element.style.transitionDelay = `${i * 1}s`
+    //         element.classList.add('about-us-details-list-visible')
+    //     });
+    //     detailsContainer.classList.add('about-us-details-container-active');
+    // }
+    // // Crear una instancia del Intersection Observer
+    // const detailsObserver = checkIfIsInScreen(.4, handleVisibleLists, true);
+    // detailsObserver.observe(detailsContainer);
     if (!isInDesktop()) { //Mobile
         let aboutUsIndex = 1
         function toggleActiveAboutUsInfo() {
