@@ -63,7 +63,7 @@ const controller = {
         try {
             let { name, price, description, category } = req.body;
             let images = req.files;
-
+            //PRobando
 
             let productObject = {
                 id: uuidv4(),
