@@ -21,11 +21,11 @@
                                 <form action="/product/create" class="create-product-form" enctype="multipart/form-data" method="POST">
                                     <div class="input-label-container">
                                         <label for="name">Nombre</label>
-                                        <input type="text" name="name">
+                                        <input type="text" name="name" class="required">
                                     </div>
                                     <div class="input-label-container">
                                         <label for="category">Categoría</label>
-                                        <select name="category" id="">
+                                        <select name="category" id="" class="required">
                                             <% categories.forEach(cat => { %>
                                                 <option value="<%= cat.id %>"><%=cat.category%></option>
                                             <%  }) %>
@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="input-label-container">
                                         <label for="price">Precio</label>
-                                        <input type="text" name="price">
+                                        <input type="text" name="price" class="required">
                                     </div>
                                     <div class="input-label-container">
                                         <label for="images">Imagenes</label>

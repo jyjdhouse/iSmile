@@ -36,9 +36,27 @@
             <% } %>
             <article class="product-container" data-productid=<%=product.id %>>
                 <div class="first-column">
+                    
                     <div class="main-img-container">
-                        <img src="/img/product/<%= product.files[0]?.filename %>" class="main-img"
-                            alt="<%= product.name%>-<%=product.files[0]?.filenanme %>">
+                        <% if (product.files[0]) { %>
+                            <% if (product.files[0].file_types_id==1) /*FOTO*/ { %>
+                                <img src="/img/product/<%= product.files[0]?.filename %>" class="main-img"
+                                alt="<%= product.name%>-<%=product.files[0]?.filenanme %>">
+                            <% } else if(product.files[0].file_types_id==2) { /*VIDEO*/ %>
+                            <video
+                                class="video main-img"
+                                muted playsinline loop>
+                                <source src="/video/product/<%= product.files[0]?.filename %>" type="video/mp4">
+                                <source src="/video/product/<%= product.files[0]?.filename %>" type="video/webm">
+                                No se puede reproducir el video
+                            </video>
+                            <% } %>
+                        <% }else{ %>
+                            <img src="/img/product/default.png" class="main-img"
+                            alt="main-image">
+                        <% } %>
+                        
+                        
                     </div>
                     <div class="other-product-imgs-container">
                         <% product.files.forEach((file, i)=> { %>
