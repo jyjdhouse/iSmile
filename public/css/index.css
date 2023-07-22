@@ -314,7 +314,7 @@ video::-webkit-media-controls-time-remaining-display {
 }
 
 .blog-section-title {
-    color: #fff;
+    /* color: #fff; */
     margin: auto;
     width: fit-content;
     font-size: 2rem;
@@ -1017,7 +1017,7 @@ video::-webkit-media-controls-time-remaining-display {
     .blogs-cards-container {
         width: 80%;
         height: 60%;
-        top: 70%;
+        top: 60%;
 
     }
 
