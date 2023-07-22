@@ -11,6 +11,11 @@ iframe{
     margin-top: 15vh;
 }
 
+/* IFRAME */
+p.iJTsjl{
+    color: var(--violet-color);
+}
+
 
 @media(min-width:1024px){
     iframe{

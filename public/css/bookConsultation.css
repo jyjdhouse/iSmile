@@ -23,7 +23,7 @@ h3 {
     right: 0;
     left: 0;
     top: 100%;
-    height: 50%;
+    height: 40%;
     transition: all .35s ease;
     width: 100%;
     padding: 5% 2%;
@@ -37,7 +37,7 @@ h3 {
 
 
 .book-consultation-container-active {
-    top: 50%;
+    top: 60%;
 }
 
 .h2-booking-title-container {

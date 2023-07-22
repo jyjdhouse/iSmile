@@ -13,21 +13,13 @@ window.addEventListener('load', () => {
     const callMobileNumber = document.querySelector('.call-mobile-number');
     const callPhoneNumber = document.querySelector('.call-phone-number');
     const blackScreen = document.querySelector('.black-screen');
-    // logica para clickear iconos en footer mobile
-    // footerIconsContainer?.forEach((icon, indexIcon) => {
-    //     icon?.addEventListener('click', () => {
-    //         // como estan separados los iconos de la data de cada uno
-    //         // pregunto si el index del icon es igual al index de la data
-    //         // y agrego clase
-    //         for (let indexData = 0; indexData < footerDataIconsContainer.length; indexData++) {
-    //             if (indexIcon === indexData) {
-    //                 footerDataIconsContainer[indexData].classList.add('mobile-footer-data-icon-container-active');
-    //                 blackScreen.classList.add('black-screen-active');
-    //             }
-    //         }
-
-    //     })
-    // });
+    // Para abrir maps
+    const mapIcons = document.querySelectorAll('.bx-map');
+    mapIcons.forEach(icon => {
+        icon.addEventListener('click',()=>{
+            window.open('https://goo.gl/maps/UShCan3csFTSceQP9','_blank')
+        })
+    });
 
     closeFooterDataBtn?.forEach(btn => {
         btn?.addEventListener('click', () => {
