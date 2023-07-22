@@ -169,28 +169,30 @@ body {
 /* END MENU HAMBURGUESA */
 
 .header {
-    position: fixed;
     width: 100%;
     /* background-color: rgba(255, 255, 255, .1); */
     height: 10vh;
-    transition: all .5s ease-out;
+    transition: visibility .2s ease-out;
+    position: fixed;
     z-index: 11;
     top: 0;
     padding-top: 1vh;
+    background-color: #fff;
+    border-bottom: 1px solid var(--gold-color);
 }
 
 .header-hidden {
-    /* animation: fadeOutUp .2s ease-in-out; */
-    background: none;
-    /* visibility: hidden; */
+    animation: fadeOutUp .4s ease;
+    visibility: hidden;
 
 }
-
+.header-hidden .open-search-form-button{
+    transition: none;
+}
 .header-active {
     /* Para cuando scrollean para arriba */
-    /* animation: fadeInDown .4s ease-in-out; */
-    background-color: #fff;
-    /* visibility: visible; */
+    animation: fadeInDown .4s ease;
+    visibility: visible;
 }
 
 .header i {
