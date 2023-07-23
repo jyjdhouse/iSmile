@@ -26,7 +26,7 @@
                 <div class="action-container">
                     <button class="form-device-btn start-product-delete"> Eliminar producto </button>
                 </div>
-                <form class="update-delete-btn-container " action="/product/<%= product.id %>?_method=DELETE"
+                <form class="update-delete-btn-container popup" action="/product/<%= product.id %>?_method=DELETE"
                     method="POST">
                     <p class="product-delete-popup-label">Estas seguro que quieres borrar <%= product.name %>?</p>
                     <button class="cancel-product-delete">Cancelar</button>

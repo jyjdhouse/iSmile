@@ -20,7 +20,7 @@ video::-webkit-media-controls-time-remaining-display {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    padding: 1rem 5rem;
+    padding: .5rem 5rem;
     border: 1px solid var(--gold-color);
     background: rgba(250, 250, 250, .5);
     outline: none;
@@ -741,18 +741,29 @@ video::-webkit-media-controls-time-remaining-display {
     transform: translate(-50%, -50%);
 }
 
+
+
+.photo-label-container{
+    border-radius: 15px;
+    border: 1px solid var(--gold-color);
+    padding: 10px;
+    width: fit-content;
+    margin: 0 auto;
+    background-color: rgba(230, 230, 230, .85);
+}
+
 .instagram-logo {
     width: 100%;
     text-align: center;
     font-size: 1.8rem;
-    color: var(--light-violet-color);
+    color: var(--violet-color);
 }
 
 .instagram-page-name {
     width: 100%;
     text-align: center;
-    font-size: 1.2rem;
-    color: var(--light-violet-color);
+    font-size: .7rem;
+    color: var(--violet-color);
 }
 
 .instagram-image {
@@ -1197,9 +1208,11 @@ video::-webkit-media-controls-time-remaining-display {
     }
 
     .instagram-logo {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
-
+    .instagram-page-name{
+        font-size: 1.1rem;
+    }
     .instagram-image {
         object-fit: cover;
         width: 100%;

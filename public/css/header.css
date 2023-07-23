@@ -178,7 +178,7 @@ body {
     top: 0;
     padding-top: 1vh;
     background-color: #fff;
-    border-bottom: 1px solid var(--gold-color);
+    border-bottom: 2px solid var(--gold-color);
 }
 
 .header-hidden {

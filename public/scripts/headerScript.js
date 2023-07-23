@@ -1,7 +1,7 @@
 import { activateClass, changeCartProductDimension, changeWishlistProductDimension, deactivateClass } from './utils.js';
 window.addEventListener('load', () => {
     
-    window.scrollTo(0,0);
+    // window.scrollTo(0,0);
     // LOGICA DEL HEADER AL SCROLLEAR
     const header = document.querySelector('.header');
 
