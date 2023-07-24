@@ -1,25 +1,22 @@
 window.addEventListener('load', () => {
 
     const paragraphs = document.querySelectorAll('service-info-p')
-    const seeMoreAction = document.querySelectorAll('.see-more-action')
-    const closeCard = document.querySelectorAll('.close-card')
+    const openDropdown = document.querySelectorAll('.open-dropdown')
+    const closeCard = document.querySelectorAll('.close-dropdown')
 
-    seeMoreAction.forEach(act => {
+    openDropdown.forEach(act => {
         act.addEventListener('click', () => {
 
             let parent = act.closest('.service-detail-card')
-            let paragraphDropdown = parent.querySelector('.service-info-p-container')
-            let extraInfoDropdown = parent.querySelector('.service-card-first-column-dropdown-container')
-            let seeMoreAct = parent.querySelector('.see-more-action')
-            let closeCardBtn = parent.querySelector('.close-card')
+            let dropdown = parent.querySelector('.servicio-dropdown')
+            let minusBtn = parent.querySelector('.close-dropdown')
 
-            paragraphDropdown.classList.add('service-info-p-container-active')
-            extraInfoDropdown.classList.add('service-card-first-column-dropdown-container-active')
+            dropdown.classList.add('servicio-dropdown-active')
             parent.classList.add('service-detail-card-active')
-            // Intercambio el "ver mas" por "ver menos"
-            seeMoreAct.classList.add('see-more-action-inactive')
-            parent.querySelector('.close-card').classList.remove('see-more-action-inactive')
-            closeCardBtn.classList.add('close-card-active')
+            minusBtn.classList.remove('icon-inactive')
+            minusBtn.classList.add('icon-active')
+            act.classList.add('icon-inactive')
+            act.classList.remove('icon-active')
 
         })
 
@@ -28,17 +25,15 @@ window.addEventListener('load', () => {
     closeCard.forEach(item => {
         item.addEventListener('click', () => {
             let parent = item.closest('.service-detail-card')
-            let paragraphDropdown = parent.querySelector('.service-info-p-container')
-            let extraInfoDropdown = parent.querySelector('.service-card-first-column-dropdown-container')
-            let seeMoreAct = parent.querySelector('.see-more-action')
-            let closeCardBtn = parent.querySelector('.close-card')
+            let dropdown = parent.querySelector('.servicio-dropdown')
+            let plusBtn = parent.querySelector('.open-dropdown')
 
-            paragraphDropdown.classList.remove('service-info-p-container-active')
-            extraInfoDropdown.classList.remove('service-card-first-column-dropdown-container-active')
+            dropdown.classList.remove('servicio-dropdown-active')
             parent.classList.remove('service-detail-card-active')
-            seeMoreAct.classList.remove('see-more-action-inactive');
-            item.classList.add('see-more-action-inactive')
-            closeCardBtn.classList.remove('close-card-active')
+            plusBtn.classList.add('icon-active')
+            plusBtn.classList.remove('icon-inactive')
+            item.classList.add('icon-inactive')
+            item.classList.remove('icon-active')
 
         })
     })
