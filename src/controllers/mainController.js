@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const getAllTreatments = require('../utils/getAllTreatments');
 const getAllSpecialties = require('../utils/getAllSpecialties');
 const getDeepCopy = require('../utils/getDeepCopy');
+const {treatments} = require('../utils/staticDB/services')
 // Utils
 
 const getSpecialtyService = require('../utils/getSpecialtyService');
@@ -85,11 +86,10 @@ const controller = {
     serviceDetail: async (req, res) => {
         try {
             const serviceId = req.params.servicioId
-            // A FUTURO
-            let service = await getSpecialtyService(serviceId);
-            // return res.send(service);
+       
+            let services = treatments.filter(treatment => treatment.specialties_services_id == serviceId )
 
-            return res.render('serviceDetail', { service })
+            return res.render('serviceDetail',{ services })
         } catch (error) {
             console.log(`Falle en mainController.serviceDetail: ${error}`);
             return res.json({ error })
