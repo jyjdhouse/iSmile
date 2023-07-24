@@ -15,7 +15,7 @@
         <main class="blog-detail-main">
 
             <% if(locals.userLogged && locals.userLogged.user_categories_id !=3) { %>
-                <form class="update-delete-btn-container" action="/blog/<%= blog.id %>?_method=DELETE"
+                <form class="update-delete-btn-container popup" action="/blog/<%= blog.id %>?_method=DELETE"
                     method="POST">
                     <p class="blog-delete-popup-label">Estas seguro que quieres borrar <%= blog.title %>?</p>
                     <button class="cancel-blog-delete">Cancelar</button>

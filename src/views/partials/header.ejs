@@ -1,13 +1,8 @@
 <header class="header">
+    <!-- <img src="/img/goldBackground.png" alt=""> -->
     <nav class="nav-bar-section">
-        <% if (locals.isLogged) { %> <!--LOGGEADO-->
             <div class="nav-start">
                 <i class="fa-solid fa-bars open-menu-button"></i>
-                <div class="shopping-cart-container shopping-cart-mobile"> <!--En mobile solo que ve asi-->
-                    <a href="/user/checkout"><i class='bx bx-shopping-bag open-popup-cart-btn'></i></a>
-                    <!-- <i class="fa-solid fa-bag-shopping"></i> -->
-                    <p class="products-quantity"></p>
-                </div>
                 <div class="search-section-container mobile-only">
                     <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-mobile"></i>
                     <!-- Contenedor con el input que se abre -->
@@ -21,11 +16,12 @@
             <a href="/" class="brand-name" id="header-name"><img src="/img/logo.png" alt="header-logo"
                     class="header-logo"></a>
             <div class="nav-end">
-                <div class="user-logged-container">
-                    <p class="user-logged-name login-menu-btn-desktop">Hola,<span class="bold"> 
-                            <%= locals.userLogged.first_name || 'user' %>
-                        </span></p>
-                    <div class="logged-menu-container">
+                <% if (locals.isLogged) { %> <!--LOGGEADO-->
+                    <div class="user-logged-container">
+                        <p class="user-logged-name login-menu-btn-desktop bold"> 
+                               <%= locals.userLogged.first_name || 'user' %>
+                        </p>
+                        <div class="logged-menu-container">
                         <ul class="logged-menu-list">
                             <% if (locals.userLogged.user_categories_id!=3) { %>
                                 <!--SI ES ADMIN userLogged.user_categories_id-->
@@ -50,12 +46,14 @@
                                     </li>
                                     <li class="logged-menu-list-item"><a href="/user/logout">Cerrar Sesion</a></li>
                         </ul>
+                        </div>
+                        <i class='bx bx-chevron-down user-logged-menu-toggler'></i>
                     </div>
-                    <i class='bx bx-chevron-down user-logged-menu-toggler'></i>
-                </div>
-                <div class="shopping-cart-container shopping-cart-desktop"> <!--En mobile solo que ve asi-->
+                <% }else{ %> <!-- Si no esta loggeado...-->
+                    <i class="fa-regular fa-user login-toggler login-toggler-desktop user-options-trigger-btn"></i>
+                <% } %>
+                <div class="shopping-cart-container "> <!--En mobile solo que ve asi-->
                     <a href="/user/checkout"><i class='bx bx-shopping-bag open-popup-cart-btn'></i></a>
-                    <!-- <i class="fa-solid fa-bag-shopping"></i> -->
                     <p class="products-quantity"></p>
                 </div>
                 <div class="search-section-container desktop-only">
@@ -68,41 +66,6 @@
                     </form>
                 </div>
             </div>
-
-            <% }else{ %> <!-- Si no esta loggeado...-->
-                <div class="nav-start">
-                    <i class="fa-solid fa-bars open-menu-button"></i>
-                    <div class="search-section-container mobile-only">
-                        <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-mobile"></i>
-                        <!-- Contenedor con el input que se abre -->
-                        <form class="search-form-container bigger-search-form" action="/product" method="GET">
-                            <i class="fa-solid fa-x close-search-form-button"></i>
-                            <input type="text" class="search-form-input" placeholder="Busca productos" name="s">
-                            <i class="fa-solid fa-magnifying-glass send-search-form-button"></i>
-                        </form>
-                    </div>
-                </div>
-                <a href="/" class="brand-name" id="header-name"><img src="/img/logo.png" alt="header-logo"
-                        class="header-logo"></a>
-                <div class="nav-end">
-                    <i class="fa-regular fa-user login-toggler login-toggler-desktop user-options-trigger-btn"></i>
-                    <div class="search-section-container desktop-only">
-                        <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-desktop"></i>
-                        <!-- Contenedor con el input que se abre -->
-                        <form class="search-form-container" action="/product" method="GET">
-                            <i class="fa-solid fa-x close-search-form-button"></i>
-                            <input type="text" class="search-form-input" placeholder="Busca productos" name="s">
-                            <i class="fa-solid fa-magnifying-glass send-search-form-button"></i>
-                        </form>
-                    </div>
-
-                    <div class="shopping-cart-container">
-                        <a href="/user/checkout"><i class='bx bx-shopping-bag open-popup-cart-btn'></i></a>
-                        <!-- <i class="fa-solid fa-bag-shopping"></i> -->
-                        <p class="products-quantity"></p>
-                    </div>
-                </div>
-                <% } %>
 
     </nav>
 

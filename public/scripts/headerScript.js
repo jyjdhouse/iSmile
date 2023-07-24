@@ -1,7 +1,7 @@
 import { activateClass, changeCartProductDimension, changeWishlistProductDimension, deactivateClass } from './utils.js';
 window.addEventListener('load', () => {
     
-    window.scrollTo(0,0);
+    // window.scrollTo(0,0);
     // LOGICA DEL HEADER AL SCROLLEAR
     const header = document.querySelector('.header');
 
@@ -11,15 +11,21 @@ window.addEventListener('load', () => {
     const headerShow = () => { //Para hacer el header aparezca/desaparezca
         let prevScrollPos = window.pageYOffset;
         window.onscroll = function () {
-
+            
             let minScroll = window.scrollY >= window.innerHeight * 0.1; //Mayor a 10vh
             let currentScrollPos = window.pageYOffset;
-            if (minScroll) {
-                header.classList.add('header-active');
-                header.classList.remove('header-hidden');
-            }
+            if(minScroll){
+                if (prevScrollPos > currentScrollPos) { //Scroll Up
+                    header.classList.add('header-active');
+                    header.classList.remove('header-hidden');
+    
+                } else { //Scroll Down
+                    header.classList.remove('header-active');
+                    header.classList.add('header-hidden');
+                }
+            }    
             if (isAtTop()) {
-                header.classList.add('header-hidden');
+                header.classList.remove('header-hidden');
                 header.classList.remove('header-active');
             }
             prevScrollPos = currentScrollPos;

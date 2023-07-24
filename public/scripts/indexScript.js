@@ -104,48 +104,66 @@ window.addEventListener('load', () => {
     let slideIntervalId = setInterval(updateSlideShow, 5000);
 
     // LOGICA para aboutUS
-    const detailsContainer = document.querySelector('.about-us-details-container');
-    const lists = document.querySelectorAll('.about-us-details-list');
-    // Función que maneja cuando el contenedor esta visible
-    const handleVisibleLists = () => {
-        lists.forEach((element, i) => {
-            element.style.transitionDelay = `${i * 1}s`
-            element.classList.add('about-us-details-list-visible')
-        });
-        detailsContainer.classList.add('about-us-details-container-active');
-    }
-    // Crear una instancia del Intersection Observer
-    const detailsObserver = checkIfIsInScreen(.4, handleVisibleLists, true);
-    detailsObserver.observe(detailsContainer);
     if (!isInDesktop()) { //Mobile
-        let aboutUsIndex = 1
-        function toggleActiveAboutUsInfo() {
-            const frames = document.querySelectorAll('.about-us-frame');
-            const details = document.querySelectorAll('.about-us-details-container-mobile .about-us-details-list')
-            frames.forEach((frame, index) => {
-                frame.classList.remove('about-us-frame-active', 'about-us-frame-next', 'about-us-frame-prev');
-                if (index === aboutUsIndex) {
-                    frame.classList.add('about-us-frame-active');
-                } else if (index === (aboutUsIndex + 1) % frames.length) {
-                    frame.classList.add('about-us-frame-next');
-                } else {
-                    frame.classList.add('about-us-frame-prev');
+        let startX = 0;
+        let deltaX = 0;
+        let currentIndex = 0;
+
+        const aboutUsFixedFramesWrapper = document.querySelector('.about-us-frames-space');
+        const aboutUsCarousel = document.querySelector('.about-us-frames-container')
+        const amountToScroll = window.innerWidth * 1.2; //Popr el column gap
+        aboutUsFixedFramesWrapper?.addEventListener('touchstart', (e) => { //Capturo donde arranca el touch
+            startX = e.touches[0].clientX;
+            aboutUsCarousel.classList.add('about-us-frames-container-moving');
+        });
+        aboutUsFixedFramesWrapper?.addEventListener('touchmove', (e) => {
+
+            deltaX = e.touches[0].clientX - startX; //Si es positivo desplaza para derecha, sino para izq
+
+            // Para que si llega a la ultima, no me mueva la foto
+            if (currentIndex <= 3 && currentIndex >= 0) {
+                // Traslado el carousel mientras scrollea
+                if (deltaX < 0) {//scrollLeft
+                    // Si no esta en la ultima...
+                    if (currentIndex < 2) {
+                        e.preventDefault();
+
+                        aboutUsCarousel.style.transform = `translateX(-${(currentIndex) * amountToScroll - deltaX * 1}px)`
+                    }
+
+                } else if (deltaX > 0 && currentIndex > 0) {//Mueve hacia la derecha
+                    e.preventDefault();
+                    aboutUsCarousel.style.transform = `translateX(${-(currentIndex) * amountToScroll + deltaX * 1}px)`;
+                };
+            };
+
+        }, { passive: false });
+        aboutUsFixedFramesWrapper?.addEventListener('touchend', (e) => {
+            aboutUsCarousel.classList.remove('about-us-frames-container-moving')
+            if (deltaX < 0 && currentIndex < 2) { //Si scrollLeft...
+                aboutUsCarousel.style.transform = `translateX(-${deltaX}px)`;
+                aboutUsCarousel.style.transform = `translateX(-${currentIndex * amountToScroll + amountToScroll}px)`;
+                currentIndex++
+            }
+            if (deltaX > 0 && currentIndex > 0) { //Si scrollRight...
+                aboutUsCarousel.style.transform = `translateX(${deltaX}px)`;
+                aboutUsCarousel.style.transform = `translateX(${-currentIndex * amountToScroll + amountToScroll}px)`;
+                currentIndex--
+            }
+            //LOGICA DE DOTS cuando hace un touch end
+            getActiveDot(currentIndex)
+        });
+
+        function getActiveDot(currentIndex){
+            const dots = document.querySelectorAll('.about-us-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.remove('about-us-dot-active')
+                if (i === currentIndex) {
+                    dot.classList.add('about-us-dot-active')
                 }
-            });
-            details.forEach((det, index) => {
-                det.classList.remove('about-us-details-list-active', 'about-us-details-list-next', 'about-us-details-list-prev');
-                if (index === aboutUsIndex) {
-                    det.classList.add('about-us-details-list-active');
-                } else if (index === (aboutUsIndex + 1) % details.length) {
-                    det.classList.add('about-us-details-list-next');
-                } else {
-                    det.classList.add('about-us-details-list-prev');
-                }
-            });
-            aboutUsIndex = (aboutUsIndex + 1) % frames.length;
+            })
         }
-        // Ejecutar la función cada 3 segundos
-        setInterval(toggleActiveAboutUsInfo, 3000);
+
     }
 
     // LOGICA gallery show
@@ -202,15 +220,15 @@ window.addEventListener('load', () => {
     const cancelBtns = document.querySelectorAll('.cancel-file-action');
     if (isInDesktop()) { //Desktop
         const igCards = document.querySelectorAll('.instagram-card');
-        igCards.forEach((card,i) => {
-            if(i==0)card.classList.remove('instagram-card-active')
+        igCards.forEach((card, i) => {
+            if (i == 0) card.classList.remove('instagram-card-active')
             card.addEventListener('mouseenter', () => {
                 const overlay = card.querySelector('.instagram-client-overlay');
-                overlay.classList.add('instagram-client-overlay-active');
+                overlay?.classList.add('instagram-client-overlay-active');
             });
             card.addEventListener('mouseleave', () => {
                 const overlay = card.querySelector('.instagram-client-overlay');
-                overlay.classList.remove('instagram-client-overlay-active');
+                overlay?.classList.remove('instagram-client-overlay-active');
             });
         });
     } else { //Mobile
@@ -270,13 +288,13 @@ window.addEventListener('load', () => {
             selectFileLabel.classList.add('hidden');
             confirmFileBtn.classList.add('hidden');
             // Vuelvo la imagen a la foto que tenia
-            if(previousSrc){
+            if (previousSrc) {
                 form.closest('.instagram-card')?.querySelector('.instagram-image')?.setAttribute('src', previousSrc) ||
                     form.closest('.landing-video-container')?.querySelector('.video')?.setAttribute('src', previousSrc) ||
                     form.closest('.blog-background')?.querySelector('.blog-background-image')?.setAttribute('src', previousSrc) ||
                     form.closest('.product-gallery-card')?.querySelector('.gallery-image')?.setAttribute('src', previousSrc);
                 previousSrc = undefined;
-                }
+            }
 
             // Reiniciar el valor del elemento <input>
             form.querySelector('input').value = '';
@@ -316,7 +334,7 @@ window.addEventListener('load', () => {
             let oldFilenameInput = document.createElement('input');
             oldFilenameInput.name = 'old_filename';
             oldFilenameInput.setAttribute('hidden', true);
-            const oldFilenameValue = previousSrc.split('/')[previousSrc.split('/').length-1];
+            const oldFilenameValue = previousSrc.split('/')[previousSrc.split('/').length - 1];
             oldFilenameInput.value = oldFilenameValue;
             // Agrego todos al form
             form.appendChild(sectionInput);
