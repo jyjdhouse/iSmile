@@ -28,10 +28,10 @@
     width: 80%;
     border: 1px solid var(--gold-color);
     transition: max-height 0.5s;
-    margin: 8% auto;
+    margin: 12% auto;
    padding: 3% 0;
    border-radius: 10px;
-    max-height: 350px;
+    max-height: 315px;
 }
 
 .service-detail-card-active {
@@ -62,6 +62,8 @@
 }
 
 .service-info-title h2 {
+    color: var(--violet-color);
+    text-transform: uppercase;
     font-size: 1.2rem;
 }
 
@@ -71,6 +73,7 @@
     border: 2px solid var(--gold-color);
     color: var(--violet-color);
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .service-card-img-container {
@@ -185,6 +188,7 @@
     .service-detail-card {    
         width: 45%;
         padding: 2% 0;
+        margin: 10% auto;
     }
 
     .service-card-content-wrapper {
@@ -205,15 +209,11 @@
     .service-detail-card {    
         width: 29%;
         padding: 2% 0;
-        margin: 3% 2%;
-    }
-
-    .close-card, .open-dropdown {
-        cursor: pointer;
+        margin: 5% auto;
     }
     
     .service-info-title h2 {
-        font-size: 1.7rem;
+        font-size: 1.5rem;
     }
 
    
