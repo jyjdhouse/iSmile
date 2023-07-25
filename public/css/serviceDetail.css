@@ -9,35 +9,40 @@
     display: flex;
     width: 100%;
     justify-content: center;
-    
+    margin-bottom: 15vh;
+
 }
 
 .service-detail-title {
     font-size: 1.2rem;
 }
 
+
 .service-detail-cards-container {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 1650px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    justify-items: center;
+    row-gap: 100px;
+    margin-top: 10vh;
 }
 
 .service-detail-card {
-
     width: 80%;
     border: 1px solid var(--gold-color);
-    transition: max-height 0.5s;
-    margin: 12% auto;
-   padding: 3% 0;
-   border-radius: 10px;
-    max-height: 315px;
-    max-width: 465px;
+    transition: all 0.5s;
+    padding: 3% 0;
+    border-radius: 10px;
+    max-width: 200px;
+    position: relative;
+    height: fit-content;
 }
+
 
 .service-detail-card-active {
     max-height: 1500px;
+    width: 95%;
+    max-width: 1000px;
 }
 
 .icon-active {
@@ -55,21 +60,28 @@
 }
 
 .service-info-title {
-    width: 80%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 auto;
-    margin-top: 4%;
+    margin-top: 110px;
 }
 
 .service-info-title h2 {
     color: var(--violet-color);
     text-transform: uppercase;
     font-size: 1.2rem;
+    text-align: center;
+    width: 100%;
 }
 
-.bx-plus, .bx-minus {
+.bx-plus,
+.bx-minus {
+    position: absolute;
+    left: 50%;
+    top: 70px;
+    transform: translateX(-50%);
+    transition: all .5s ease;
     font-size: 1.5rem;
     font-weight: 700;
     border: 2px solid var(--gold-color);
@@ -79,28 +91,29 @@
 }
 
 .service-card-img-container {
-    height: 160px;
-    width: 80%;
-    margin: 0 auto;
-    position: relative;
-}
-
-.service-card-img {
-    height: 200px;
+    height: 120px;
+    width: 120px;
     position: absolute;
-    top: -35%;
+    top: -60px;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 50%;
+    overflow: hidden;
+}
+
+.service-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .servicio-dropdown {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.4s;
-   text-align: center;
-   margin-top: 7%;
-   padding: 0 8%;
+    text-align: center;
+    margin-top: 7%;
+    padding: 0 8%;
 }
 
 .service-time {
@@ -163,12 +176,12 @@
     margin: 5% 0;
 }
 
-.service-info-p-container-active { 
+.service-info-p-container-active {
     max-height: 300px;
 }
 
 .see-more-action {
- 
+
     color: var(--light-violet-color);
     opacity: 1;
     pointer-events: all;
@@ -181,16 +194,26 @@
 }
 
 @media (min-width: 768px) {
-
-    .service-detail-cards-container {
-        flex-direction: row;
-        flex-wrap: wrap;
+    .service-detail-title{
+        font-size: 23px;
+    }
+    .service-detail-title-container {
+        margin-bottom: 17vh;
+    }
+    .service-card-img-container {
+        height: 140px;
+        width: 140px;
+        top: -80px;
     }
 
-    .service-detail-card {    
-        width: 45%;
-        padding: 2% 0;
-        margin: 10% auto;
+    .service-detail-card {
+        max-width: 220px;
+    }
+
+    .service-detail-card-active {
+        max-height: 1500px;
+        width: 95%;
+        max-width: 1000px;
     }
 
     .service-card-content-wrapper {
@@ -203,24 +226,42 @@
 
 @media (min-width: 1024px) {
 
+    .service-detail-title-container {
+        margin-bottom: 20vh;
+    }
+    .service-detail-title{
+        font-size: 25px;
+    }
     .service-detail-cards-container {
-        justify-content: space-between;
+        grid-template-columns: repeat(auto-fit, minmax(341px, 1fr));
+        row-gap: 140px;
+    }
+
+    .service-detail-card {
+        max-width: 294px;
         margin: 0 auto;
+        width: 80%;
+        position: relative;
     }
 
-    .service-detail-card {    
-        width: 29%;
-        padding: 2% 0;
-        margin: 5% auto;
+    .service-detail-card-active {
+        width: 100%;
+        max-width: 100%;
     }
-    
+
     .service-info-title h2 {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
+
     }
 
-   
+    .bx-minus,
+    .bx-plus {
+        font-size: 1.35rem;
+    }
 
-    
+    .service-card-img-container {
+        height: 160px;
+        width: 160px;
+        top: -100px;
+    }
 }
-
-

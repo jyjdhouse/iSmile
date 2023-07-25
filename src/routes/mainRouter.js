@@ -15,7 +15,7 @@ const upload = multer();
 // GET
 router.get('/',loginMiddleware,mainController.index);
 router.get('/servicios',loginMiddleware,mainController.services);
-router.get('/servicios/:servicioId',loginMiddleware,mainController.serviceDetail)
+router.get('/servicios/:specialtyId/:specialtyServiceId?',loginMiddleware,mainController.serviceDetail)
 router.get('/preguntas-frecuentes',loginMiddleware,mainController.frequentQAndA);
 
 

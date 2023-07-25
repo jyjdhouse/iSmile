@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const getAllTreatments = require('../utils/getAllTreatments');
 const getAllSpecialties = require('../utils/getAllSpecialties');
 const getDeepCopy = require('../utils/getDeepCopy');
-const {treatments} = require('../utils/staticDB/services')
+const {specialties_services,specialties} = require('../utils/staticDB/services')
 // Utils
 
 const getSpecialtyService = require('../utils/getSpecialtyService');
@@ -85,11 +85,22 @@ const controller = {
     },
     serviceDetail: async (req, res) => {
         try {
-            const serviceId = req.params.servicioId
-       
-            let services = treatments.filter(treatment => treatment.specialties_services_id == serviceId )
+            const specialtyId = req.params.specialtyId;
+            
+            const serviceSpecialtyId = req.params.specialtyServiceId;
+            let title; 
+            let treatments = await db.Treatment.findAll();
+            treatments = treatments.filter(treatment => {
+                if(serviceSpecialtyId){
+                    title = specialties_services.find(serv=>serv.id == serviceSpecialtyId).name;
+                    return treatment.specialties_id == specialtyId && treatment.specialties_services_id == serviceSpecialtyId;
+                }
+                title = specialties.find(spec=>spec.id == specialtyId).name;
+                // Sino son los que no tienen subcategoria
+                return treatment.specialties_id == specialtyId
+            })
 
-            return res.render('serviceDetail',{ services })
+            return res.render('serviceDetail',{ services: treatments, title })
         } catch (error) {
             console.log(`Falle en mainController.serviceDetail: ${error}`);
             return res.json({ error })
