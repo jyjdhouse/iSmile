@@ -127,6 +127,46 @@ const controller = {
         error
       })
     }
+  },
+  updateOrders: async (req, res) => {
+    try {
+      const orderId = req.params.orderId
+
+      const categoryId = req.body.categoryId
+
+      console.log(categoryId)
+  
+      await db.Order.update(
+        { order_status_id: categoryId },
+        { where: { tra_id: orderId } } 
+      );
+
+      return res.status(200).json({msg: 'Orden actualizada correctamente'})
+  
+    } catch (error) {
+        console.log(error, req.body)
+        return res.status(400).send(req.body);
+    }
+   
+  },
+  deleteOrders: async (req, res) => {
+    try {
+      const orderId = req.params.orderId
+
+      await db.Order.destroy({
+        where: {
+            id: orderId
+        }
+    });
+
+    return res.status(200).json({msg: 'Orden eliminada exitosamente'});
+
+
+    } catch (error) {
+      console.log('Fallé en admin controller.downloadClientes' + ' ' + error)
+      return res.status(400).json({msg: 'Problema al eliminar una orden'});
+    }
+
   }
 }
 

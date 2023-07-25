@@ -5,6 +5,7 @@ window.addEventListener('load', async () => {
     let limit = 5; //Aca controlo cuantas se muestran
     // Apenas carga hago el fetch de las ventas
 
+
     document.querySelector('.filter-section-disclaimer').innerHTML += ` (hasta el ${getTwoWeeksAgo()})`
     // Primero pongo el spiner "Cargando ventas"
     handleSpinnerBehave(true);
@@ -43,6 +44,67 @@ window.addEventListener('load', async () => {
 
 
     // FUNCIONES
+    async function updateOrders(category, formParent, orderId) {
+      
+            
+            formParent.innerHTML = `
+            <div class="update-transaction-loading-spinner">
+            <div class="loading-container">
+    <div class="load-wrapp">
+        <div class="load-3">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+</div>
+</div>`
+            let loadingContainer = document.querySelector('.update-transaction-loading-spinner')
+           
+            let loadingAnimation = document.querySelector('.update-transaction-loading-spinner .loading-container');
+
+            loadingContainer.classList.add('update-transaction-loading-spinner-active')
+           
+            loadingAnimation.classList.add('loading-container-active')
+            let requestOptions = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({categoryId : category}),
+            };
+            let response = await fetch(`/api/admin/update-order/${orderId}`, requestOptions)
+            if (response.ok) {
+                window.location.href = '/admin/ventas'
+            } else {
+                console.log(response)
+             /*    formParent.innerHTML = `
+                    <p>Error al actualizar la orden, redirigiendo...</p>
+                `
+                let timeout = setTimeout(() => {
+                    window.location.href = '/admin/ventas'
+                }, 2000)
+                return () => {
+                    clearTimeout(timeout)
+                } */
+            }
+        
+    }
+
+
+    // TODO - HANDLE WHEN FORM SUBMITTED
+    function listenToUpdateStatus(select, form, btn, orderId) {
+        select.addEventListener('change', () => {
+            btn.classList.remove('save-btn-inactive')
+        })
+        form.addEventListener('submit', (e) => {
+            e.preventDefault()
+            let categoryValue = select.value
+            let formParent = form.closest('.order-detail-status-section')
+            updateOrders(categoryValue, formParent, orderId)
+        })
+    }
+
     function generateOrderPopup(order) {
         let orderType = orderTypes.find(type => type.id == order.order_types_id).type;
         let orderPaymentMethod = paymentMethods.find(payMeth => payMeth.id == order.payment_methods_id).name;
@@ -101,10 +163,14 @@ window.addEventListener('load', async () => {
             </div>
         </section>
         <section class="order-detail-status-section">
+            <form class="update-order-status" action="">
             <select name="order_status" class="status-select">
             </select>
-        </section>
-        <button class="save-changes-btn hidden">Guardar cambios</button>
+            <button type="submit" class="save-changes-btn save-btn-inactive">Modificar</button>
+            </form>
+            </section>
+           
+        
         `;
         // Aca voy pusheando los orderItems
         let orderDetailProductList = document.querySelector('.order-detail-product-list');
@@ -158,6 +224,9 @@ window.addEventListener('load', async () => {
         status.forEach(stat => {
             selectOrderStatus.innerHTML += `<option ${stat.id == order.order_status_id && 'selected'} value="${stat.id}">${stat.status}</option>`
         })
+        let form = document.querySelector('.update-order-status')
+        let btn = document.querySelector('.save-changes-btn')
+        listenToUpdateStatus(selectOrderStatus, form, btn, order.tra_id)
     }
 
     // Esucha los botones dentro del popup
@@ -218,12 +287,11 @@ window.addEventListener('load', async () => {
                 <td>$${order.total}</td>
                 <td class="item-quantity-column">${order.orderItems.length}</td>
                 <td>${orderStatus}</td>
-                ${order.order_types_id == 3 ? '<td class="remove-transaction-btn-container"><i class="bx bx-x-circle"></i></td>' : ''}
+                ${order.order_types_id == 3 ? `<td class="remove-transaction-btn-container"><i class="bx bx-x-circle"></i></td>` : ''}
             </tr>
             `
         });
         document.querySelector('tbody').innerHTML = tableBody;
-        listenRemoveOrderbtns();
     }
     // Muestro o saco el spinner de 'cargando'
     function handleSpinnerBehave(boolean) {
@@ -478,9 +546,10 @@ window.addEventListener('load', async () => {
     };
 
     function listenRemoveOrderbtns() {
-        const removeOrderBtns = document.querySelectorAll('.remove-transaction-btn-container');
+        let removeOrderBtns = document.querySelectorAll('.remove-transaction-btn-container');
         removeOrderBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
+                console.log('entro al primer')
                 e.stopPropagation();
                 e.preventDefault();
                 const row = btn.closest('tbody tr');
@@ -490,74 +559,127 @@ window.addEventListener('load', async () => {
             })
         });
     };
+    listenRemoveOrderbtns()
 
-    function paintRemoveTransactionPopup(order) {
-        let orderType = orderTypes.find(type => type.id == order.order_types_id).type;
-        let orderPaymentMethod = paymentMethods.find(payMeth => payMeth.id == order.payment_methods_id).name;
-        // Le agrego el id
-        orderDetailPopup.innerHTML =
-            `
-        <i class="fa-regular fa-x close-order-detail-popup"></i>
-        <p class="order-detail-title bold">Estas por borrar una venta</p>
-        <p class="order-detail">ID: ${order.tra_id}</p>
-        <p class="order-detail">Nombre: ${order.billing_name} - E-Mail:${order.billing_email} </p>
-        <div class="remove-order-button-container">
-            <a class="remove-order-button" href></a>
-        </div>
-        
-        `; TODO: terminar
-        // Aca voy pusheando los orderItems
-        let orderDetailProductList = document.querySelector('.order-detail-product-list');
-        order.orderItems.forEach(item => {
-            orderDetailProductList.innerHTML +=
-                `
-            <div class="order-detail-product-card order-detail-product-card-body">
-                <p class="order-detail-product-name">${item.name}</p>
-                <p class="order-detail-product-quantity">${item.quantity}</p>
-                <p class="order-detail-product-total">$${item.price}</p>
-                <p class="order-detail-product-total">$${item.quantity * item.price}</p>
-            </div>
-            `;
-        });
-        orderDetailProductList.innerHTML += `<p class="total-order-price">Total de compra: $${order.total}</p>`
-        // Ahora tengo que modificar la parte de direccion de entrega
-        let orderDetailProductListSection = document.querySelector('.order-detail-product-list-section');
-        // Pregunto si vino direccion de entrega distinta a facturacion
-        if (order.order_types_id == 1) { //Entrega a domicilio
-            if (!order.is_same_address) { //Distintas direcciones
-                orderDetailProductListSection.innerHTML +=
-                    `
-        <div class="order-detail-shipping-data-container">
-            <div class="order-detail-shipping-data order-detail-shipping-data-head">
-                <p>Provincia</p>
-                <p>Ciudad</p>
-                <p>Calle & Número</p>
-                <p class="order-address-detail">Detalle</p>
-                <p class="order-address-detail">Codigo Postal</p>
-            </div>
-            <div class="order-detail-shipping-data">
-                <p class="copy-value">${provinces.find(prov => prov.id == order.shippingAddress.provinces_id).name}</p>
-                <p class="copy-value">${order.shippingAddress.city}</p>
-                <p class="copy-value">${order.shippingAddress.street}</p>
-                <p class="order-address-detail copy-value">${order.shippingAddress.apartment || '-'}</p>
-                <p class="order-address-detail copy-value">${order.shippingAddress.zip_code}</p>
-            </div>
-        </div>
-        `
-            } else { //Misma direcciones
-                orderDetailProductListSection.innerHTML +=
-                    `<p class="order-deliver-method-p">Misma que direccion de facturación</p>`
+    // funcion para el fetch
+    async function deleteOrder(order, loadingContainer, loadingSpinner, loadingAnimation, popup, overlay) {
+        try {
+            const deleteResponse = await fetch(`/api/admin/delete-order/${order.id}`, { method: 'DELETE' });
+            if (deleteResponse.ok) {
+                window.location.href = '/admin/ventas'
+            } else {
+                loadingContainer.classList.remove('remove-transaction-loading-spinner-active');
+                loadingSpinner.classList.remove('loading-spinner-active');
+                loadingAnimation.classList.remove('loading-container-active');
+                overlay.classList.remove('remove-popup-overlay-active')
+                popup.classList.remove('remove-transaction-popup-active')
+
             }
-        } else { //Retiro local o Venta Presencial
-            orderDetailProductListSection.innerHTML +=
-                `<p class="order-deliver-method-p">No corresponde</p>`
-        };
 
-        // Ahora modifico la parte del estado
-        const selectOrderStatus = document.querySelector('.status-select');
-        status.forEach(stat => {
-            selectOrderStatus.innerHTML += `<option ${stat.id == order.order_status_id && 'selected'} value="${stat.id}">${stat.status}</option>`
-        })
+        } catch (error) {
+            console.log('Fallé en listenToRemoveBtns mientras hacia una solicitud: ' + error)
+        }
     }
+
+    // veo cual toca en base a valores 0 y 1
+    function listenToRemoveOrderBtns(btns, order, overlay, popup, trs, controls) {
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.value == 1) {
+                    controls.classList.remove('controls-remove-transaction-active')
+                    const loadingContainer = document.querySelector('.remove-transaction-loading-spinner ')
+                    const loadingSpinner = document.querySelector('.remove-transaction-loading-spinner .loading-spinner');
+                    const loadingAnimation = document.querySelector('.remove-transaction-loading-spinner .loading-container');
+
+                    loadingContainer.classList.add('remove-transaction-loading-spinner-active')
+                    loadingSpinner.classList.add('loading-spinner-active');
+                    loadingAnimation.classList.add('loading-container-active');
+
+                    deleteOrder(order, loadingContainer, loadingSpinner, loadingAnimation, popup, overlay)
+
+                } else {
+                    trs.forEach(tr => tr.classList.remove('trs-inactive'))
+                    overlay.classList.remove('remove-popup-overlay-active')
+                    popup.classList.remove('remove-transaction-popup-active')
+                }
+            })
+        })
+
+
+    }
+
+    // variables para pintar popup cuando tocan remover orden
+    const orderTable = document.querySelector('tbody')
+    const removeOverlay = document.querySelector('.remove-popup-overlay')
+    const removeTransactionPopup = document.querySelector('.remove-transaction-popup')
+    const btns = document.querySelectorAll('.btn-container button')
+    const controls = document.querySelector('.controls-remove-transaction')
+
+    // funcion para agregarle clases
+    function paintRemoveTransactionPopup(order) {
+        let trs = document.querySelectorAll('tbody tr')
+        trs.forEach(tr => tr.classList.add('trs-inactive'))
+        removeOverlay.classList.add('remove-popup-overlay-active')
+        removeTransactionPopup.classList.add('remove-transaction-popup-active')
+        controls.classList.add('controls-remove-transaction-active')
+        listenToRemoveOrderBtns(btns, order, removeOverlay, removeTransactionPopup, trs, controls)
+    }
+
+    /*  function paintRemoveTransactionPopup(order) {
+         
+         // Aca voy pusheando los orderItems
+         let orderDetailProductList = document.querySelector('.order-detail-product-list');
+         order.orderItems.forEach(item => {
+             orderDetailProductList.innerHTML +=
+                 `
+             <div class="order-detail-product-card order-detail-product-card-body">
+                 <p class="order-detail-product-name">${item.name}</p>
+                 <p class="order-detail-product-quantity">${item.quantity}</p>
+                 <p class="order-detail-product-total">$${item.price}</p>
+                 <p class="order-detail-product-total">$${item.quantity * item.price}</p>
+             </div>
+             `;
+         });
+         orderDetailProductList.innerHTML += `<p class="total-order-price">Total de compra: $${order.total}</p>`
+         // Ahora tengo que modificar la parte de direccion de entrega
+         let orderDetailProductListSection = document.querySelector('.order-detail-product-list-section');
+         // Pregunto si vino direccion de entrega distinta a facturacion
+         if (order.order_types_id == 1) { //Entrega a domicilio
+             if (!order.is_same_address) { //Distintas direcciones
+                 orderDetailProductListSection.innerHTML +=
+                     `
+         <div class="order-detail-shipping-data-container">
+             <div class="order-detail-shipping-data order-detail-shipping-data-head">
+                 <p>Provincia</p>
+                 <p>Ciudad</p>
+                 <p>Calle & Número</p>
+                 <p class="order-address-detail">Detalle</p>
+                 <p class="order-address-detail">Codigo Postal</p>
+             </div>
+             <div class="order-detail-shipping-data">
+                 <p class="copy-value">${provinces.find(prov => prov.id == order.shippingAddress.provinces_id).name}</p>
+                 <p class="copy-value">${order.shippingAddress.city}</p>
+                 <p class="copy-value">${order.shippingAddress.street}</p>
+                 <p class="order-address-detail copy-value">${order.shippingAddress.apartment || '-'}</p>
+                 <p class="order-address-detail copy-value">${order.shippingAddress.zip_code}</p>
+             </div>
+         </div>
+         `
+             } else { //Misma direcciones
+                 orderDetailProductListSection.innerHTML +=
+                     `<p class="order-deliver-method-p">Misma que direccion de facturación</p>`
+             }
+         } else { //Retiro local o Venta Presencial
+             orderDetailProductListSection.innerHTML +=
+                 `<p class="order-deliver-method-p">No corresponde</p>`
+         };
+ 
+         // Ahora modifico la parte del estado
+         const selectOrderStatus = document.querySelector('.status-select');
+         status.forEach(stat => {
+             selectOrderStatus.innerHTML += `<option ${stat.id == order.order_status_id && 'selected'} value="${stat.id}">${stat.status}</option>`
+         })
+     } */
 
 })

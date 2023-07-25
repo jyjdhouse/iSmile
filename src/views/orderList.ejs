@@ -49,21 +49,42 @@
                 </div>
             </section>
             <section class="pagination-section"></section>
-            <table class="order-table">
-                <thead>
-                    <tr>
-                        <th>ID venta</th>
-                        <th>Fecha</th>
-                        <th>Nombre</th>
-                        <th>Total</th>
-                        <th class="item-quantity-column">Items</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Aquí se agregarán las filas con los datos de las ventas -->
-                </tbody>
-            </table>
+            <div class="popup-table-container">
+                <div class='remove-popup-overlay'></div>
+                <div class='remove-transaction-popup'>
+                    <div class="controls-remove-transaction">
+                        <h3> ¿Seguro queres eliminar esta venta? </h3>
+                        <div class='btn-container'>
+                            <button value='1' type='button'>Si</button>
+                            <button value='0' type='button'>No</button>
+                        </div>
+                    </div>
+
+                   
+                </div>
+                <div class="remove-transaction-loading-spinner">
+                    <div class="loading-spinner">
+                        <%- include('./partials/loadingSpinner.ejs') %>
+                    </div>
+
+                </div>
+                <table class="order-table">
+                    <thead>
+                        <tr>
+                            <th>ID venta</th>
+                            <th>Fecha</th>
+                            <th>Nombre</th>
+                            <th>Total</th>
+                            <th class="item-quantity-column">Items</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <!-- Aquí se agregarán las filas con los datos de las ventas -->
+                    </tbody>
+                </table>
+            </div>
             <div class="order-detail-popup popup"></div>
             <div class="remove-order-popup popup"></div>
         </main>

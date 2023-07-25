@@ -5,6 +5,8 @@ const adminCredentialsMiddleware = require('../../middlewares/adminCredentialsMi
 
 router.get('/get-clients', apiAdminController.downloadClients);
 router.get('/order',adminCredentialsMiddleware,apiAdminController.getOrders);
+router.put('/update-order/:orderId',adminCredentialsMiddleware,apiAdminController.updateOrders);
+router.delete('/delete-order/:orderId',adminCredentialsMiddleware,apiAdminController.deleteOrders);
 
 
 module.exports = router
