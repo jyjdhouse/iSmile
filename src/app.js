@@ -55,7 +55,6 @@ const headerMiddleware = require('./middlewares/headerMiddleware')
 // const getAllUsers = require('./utils/getAllUsers.js');
 
 
-
 // Ruteo para api
 app.use('/api/product', apiProductRouter);
 app.use('/api/user', apiUserRouter);
