@@ -3,20 +3,17 @@
 .desktop-only{
     display: none;
 }
-.search-section-container{
-    position: relative;
-}
 .search-form-container {
     position: absolute;
     max-width: 0;
     overflow: hidden;
     transition: max-width .5s ease-in-out;
-    left: -61%;
-    top: 7vh;
+    left: 1%;
+    top: 50%;
     transform: translateY(-50%);
     transition-delay: .2s;
-    width: fit-content;
-
+    width: 170%;
+    z-index: 5;
 }
 
 .search-form-container-active {
@@ -27,7 +24,7 @@
     position: absolute;
     left: 88%;
     color: #555;
-    font-size: .8rem !important;
+    font-size: 1.2rem !important;
     top: 50%;
     transform: translateY(-50%);
 
@@ -35,11 +32,11 @@
 
 .search-form-input {
     border: 1px solid var(--gold-color);
-    height: 2rem;
+    height: 8vh;
     border-radius: 1rem;
     background: #eee;
-    padding-left: 20%;
-    width: 10rem;
+    padding-left: 30px;
+    width: 100%;
 }
 
 .send-search-form-button {
@@ -52,19 +49,18 @@
 
 .open-search-form-button {
     position: relative;
-    top: 0;
+    top: 50%;
     left: 0;
-    transition: all .3s ease;
-    z-index: 1;
+    transition: all .9s ease;
+    z-index: 10;
 }
 
 .open-search-form-button-active {
-    top: 5.5vh;
+    transform: translateX(-227%);
+    /* transition-delay: .3s; */
 }
 @media (min-width:768px){
-    .search-form-container{
-        top: 50%;
-    }
+
 }
 @media(min-width:1024px) {
     .mobile-only{
@@ -77,26 +73,21 @@
         transition-delay: 0s;
         right: 1.7%;
         left: unset;
-        top: 51%;
         z-index: 1;
-
+        width: 80%;
     }
 
     .bigger-search-form {
-        right: 3%;
+        right: 9%;
     }
 
 
     .search-form-input {
-        height: 2.4rem;
+        height: 2.8rem;
         width: 10rem;
     }
     .bigger-search-form .search-form-input{
-        width: 13rem;
-    }
-    .open-search-form-button {
-        z-index: 0;
-
+        width: 100%;
     }
 
     .send-search-form-button {
@@ -108,6 +99,6 @@
     }
 
     .close-search-form-button {
-        left: 7%;
+        left: 4%;
     }
 }

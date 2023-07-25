@@ -32,10 +32,12 @@ window.addEventListener('load', async () => {
             idsInput.value = JSON.stringify(productsIds);
         }
 
+        const headerLogo = document.querySelector('.brand-name')
         togglerOpenButton.forEach(btn => {
             btn.addEventListener('click', () => { // Si abre el searchForm
-                if (window.innerWidth < 768 && btn.classList.contains('lupa-mobile')) {//Resolución mobile
+                if (window.innerWidth < 1024 && btn.classList.contains('lupa-mobile')) {//Resolución mobile
                     btn.classList.add('open-search-form-button-active');
+                    if(window.innerWidth < 768)headerLogo.classList.add('brand-name-active');
                 }
 
                 document.querySelectorAll(`.${searchSection}`).forEach(cont => cont.classList.add(`${searchSection}-active`))
@@ -54,7 +56,7 @@ window.addEventListener('load', async () => {
                 let input = btn.closest('.search-form-container').querySelector('.search-form-input')
                 input.value = ''; //Borro el contenido del input
                 // body.classList.remove('noScroll');//Para que no me deje scrollear
-
+                headerLogo.classList.remove('brand-name-active');
                 document.querySelectorAll(`.${searchSection}`).forEach(cont => cont.classList.remove(`${searchSection}-active`))
 
                 document.querySelector('.lupa-mobile').classList.remove('open-search-form-button-active');

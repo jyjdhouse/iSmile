@@ -54,7 +54,7 @@ const controller = {
         await db.Treatment.bulkCreate(treatmentsToUpdate, {
             updateOnDuplicate: ["price","cash_price"]
         });
-        return res.send(treatmentsToUpdate);
+        return res.redirect('/');
     },
     showMedicalForm: (req, res) => {
         return res.render('ClientMedicalInfo.ejs')

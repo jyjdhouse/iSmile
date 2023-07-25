@@ -35,7 +35,7 @@
                                     <% specialty.services.forEach(serv=> { %>
                                         <div class="service-card-dropdown-content-container">
                                             <h3>
-                                                <a href="/servicios/<%= serv.id %>">
+                                                <a href="/servicios/<%= specialty.id%>/<%= serv.id %>">
                                                     <%= serv.name %>
                                                 </a>
                                             </h3>
@@ -49,7 +49,7 @@
                                         <% if (i<5) { %>
                                             <div class="service-card-dropdown-content-container">
                                                 <h3>
-                                                    <a href="#">
+                                                    <a href="/servicios/<%= specialty.id %>">
                                                         <%= treat.name %>
                                                     </a>
                                                 </h3>

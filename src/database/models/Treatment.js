@@ -13,7 +13,7 @@ module.exports = (sequelize, dataTypes) => {
         specialties_services_id: { type: dataTypes.INTEGER },
         price: { type: dataTypes.INTEGER },
         cash_price: { type: dataTypes.INTEGER },
-        
+        application_time: { type: dataTypes.INTEGER },
     }
 
     let config = {
