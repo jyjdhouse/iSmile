@@ -5,7 +5,7 @@ window.addEventListener('load', async () => {
     let limit = 5; //Aca controlo cuantas se muestran
     // Apenas carga hago el fetch de las ventas
 
-    document.querySelector('.filter-section-disclaimer').innerHTML += ` (hasta el ${getTwoWeeksAgo()})`
+    document.querySelector('.order-disclaimer').innerHTML += ` (hasta el ${getTwoWeeksAgo()})`
     // Primero pongo el spiner "Cargando ventas"
     handleSpinnerBehave(true);
     let response = getDeepCopy(await (await fetch(`${window.location.origin}/api/admin/order`)).json());
@@ -30,6 +30,9 @@ window.addEventListener('load', async () => {
     listenPaginationButtons();
     // Logica para capturar el click en una transferencia
     listenRowsDisplayed();
+
+    // Logica para escuchar los botones de filtro
+    listenFilterTogglers()
 
     const orderDetailPopup = document.querySelector('.order-detail-popup');
     const blackScreen = document.querySelector('.black-screen');
@@ -183,6 +186,7 @@ window.addEventListener('load', async () => {
         const copyValues = document.querySelectorAll('.copy-value');
         const copyMsg = document.querySelector('.copy-msg')
         copyValues.forEach(value => {
+            console.log(value);
             let valueToCopy = value.innerHTML;
             value.addEventListener('click', () => {
                 navigator.clipboard.writeText(valueToCopy);
@@ -212,10 +216,10 @@ window.addEventListener('load', async () => {
             tableBody +=
                 `
             <tr>
-                <td class='order-id'>${order.tra_id}</td>
+                <td class='order-id'>${order.tra_id.split('-')[1] /*Solo la parte alfanumerica */}</td>
                 <td class='order-date'>${order.date}</td>
                 <td>${order.billing_name}</td>
-                <td>$${order.total}</td>
+                <td class="order-total-column">$${order.total}</td>
                 <td class="item-quantity-column">${order.orderItems.length}</td>
                 <td>${orderStatus}</td>
                 ${order.order_types_id == 3 ? '<td class="remove-transaction-btn-container"><i class="bx bx-x-circle"></i></td>' : ''}
@@ -245,7 +249,7 @@ window.addEventListener('load', async () => {
         rows.forEach(order => {
 
             order.addEventListener('click', () => {
-                let orderToShow = orders.find(ord => ord.tra_id == order.querySelector('.order-id').innerHTML);
+                let orderToShow = orders.find(ord => ord.tra_id.split('-')[1] == order.querySelector('.order-id').innerHTML);
                 // Abro el popup
                 generateOrderPopup(orderToShow);
                 listenPopupBtns();
@@ -485,7 +489,7 @@ window.addEventListener('load', async () => {
                 e.preventDefault();
                 const row = btn.closest('tbody tr');
                 // Pinto el popup de la transaccion
-                const orderToRemove = orders.find(ord => ord.tra_id == row.querySelector('.order-id').innerHTML);
+                const orderToRemove = orders.find(ord => ord.tra_id.split('-')[1] == row.querySelector('.order-id').innerHTML);
                 paintRemoveTransactionPopup(orderToRemove);
             })
         });
@@ -505,7 +509,7 @@ window.addEventListener('load', async () => {
             <a class="remove-order-button" href></a>
         </div>
         
-        `; TODO: terminar
+        `; 
         // Aca voy pusheando los orderItems
         let orderDetailProductList = document.querySelector('.order-detail-product-list');
         order.orderItems.forEach(item => {
@@ -557,6 +561,19 @@ window.addEventListener('load', async () => {
         const selectOrderStatus = document.querySelector('.status-select');
         status.forEach(stat => {
             selectOrderStatus.innerHTML += `<option ${stat.id == order.order_status_id && 'selected'} value="${stat.id}">${stat.status}</option>`
+        })
+    };
+
+    function listenFilterTogglers () {
+        const filterTogglers = document.querySelectorAll('.filter-section-toggler');
+        const filterDivs = document.querySelectorAll('.filter-div-section');
+        filterTogglers.forEach(btn=>{
+            btn.addEventListener('click',()=>{
+                filterTogglers.forEach(btn=>btn.classList.remove('hidden'));
+                btn.classList.add('hidden')
+                filterDivs.forEach(div=>div.classList.toggle('filter-div-section-active'))
+
+            })
         })
     }
 
