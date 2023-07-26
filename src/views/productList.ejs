@@ -19,7 +19,7 @@
             <div class="product-list-intro">
                 <div class="product-title">
                     <h2 class="bold">
-                        <%= viewLabel ? viewLabel : 'PRODUCTOS' %>
+                        <%= viewLabel ? viewLabel : 'PRODUCTOS DE BELLEZA Y BIENESTAR' %>
                     </h2>
                 </div>
             </div>
@@ -33,10 +33,10 @@
                                     <%prod.files.forEach((file, i)=>{ %>
                                         <% if (file.file_types_id==1) { %> <!--FOTO-->
                                             <% if(i == 0) {  %>
-                                                <img src="/img/product/<%= file.filename %>" alt="<%= prod.name%>-<%=file.filenanme %>"
+                                                <img src="<%= file.file_url %>" alt="<%= prod.name%>-<%=file.filenanme %>"
                                                 class="product-image-test product-image-test-active">
                                             <% } else {  %>
-                                                <img src="/img/product/<%= file.filename%>" alt="<%= prod.name%>-<%=file.filenanme %>"
+                                                <img src="<%= file.file_url %>" alt="<%= prod.name%>-<%=file.filenanme %>"
                                                 class="product-image-test <%= prod.files.length == 2 ? 'carousel-animation' : ''%>">
                                             <% } %>
                                             
@@ -44,8 +44,8 @@
                                                 <video
                                                 class="video product-image-test"
                                                 muted playsinline loop>
-                                                <source src="/video/product/<%= file.filename%>" type="video/mp4">
-                                                <source src="/video/product/<%= file.filename%>" type="video/webm">
+                                                <source src="<%= file.file_url %>" type="video/mp4">
+                                                <source src="<%= file.file_url %>" type="video/webm">
                                                 No se puede reproducir el video
                                             </video>
                                             <% } %>

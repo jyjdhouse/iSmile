@@ -54,12 +54,12 @@
                         <div class="current-img-subcontainer">
                             <div class="file-container">
                                 <% if (file.file_types_id==1) { %>
-                                    <img class="product-to-update-img" src="/img/product/<%= file.filename %>"
+                                    <img class="product-to-update-img" src="<%= file.file_url %>"
                                         alt="<%= file.id %>">
                                     <% } else if(file.file_types_id==2){ %>
                                         <video class="video product-to-update-img" muted playsinline loop>
-                                            <source src="/video/product/<%= file.filename %>" type="video/mp4">
-                                            <source src="/video/product/<%= file.filename %>" type="video/webm">
+                                            <source src="<%= file.file_url %>" type="video/mp4">
+                                            <source src="<%= file.file_url %>" type="video/webm">
                                             No se puede reproducir el video
                                         </video>
                                         <% } %>

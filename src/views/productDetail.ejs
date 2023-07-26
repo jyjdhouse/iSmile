@@ -40,14 +40,14 @@
                     <div class="main-img-container">
                         <% if (product.files[0]) { %>
                             <% if (product.files[0].file_types_id==1) /*FOTO*/ { %>
-                                <img src="/img/product/<%= product.files[0]?.filename %>" class="main-img"
+                                <img src="<%= product.files[0]?.file_url %>" class="main-img"
                                 alt="<%= product.name%>-<%=product.files[0]?.filenanme %>">
                             <% } else if(product.files[0].file_types_id==2) { /*VIDEO*/ %>
                             <video
                                 class="video main-img"
                                 muted playsinline loop>
-                                <source src="/video/product/<%= product.files[0]?.filename %>" type="video/mp4">
-                                <source src="/video/product/<%= product.files[0]?.filename %>" type="video/webm">
+                                <source src="<%= product.files[0]?.file_url %>" type="video/mp4">
+                                <source src="<%= product.files[0]?.file_url %>" type="video/webm">
                                 No se puede reproducir el video
                             </video>
                             <% } %>
@@ -62,14 +62,14 @@
                         <% product.files.forEach((file, i)=> { %>
                                 <div class="other-img-container <%= i==0 && 'other-img-container-active' %>">
                                     <% if (file.file_types_id==1) { %> <!--FOTO-->
-                                        <img src="/img/product/<%= file?.filename %>" class="product-img"
+                                        <img src="<%= file?.file_url %>" class="product-img"
                                             alt="<%= product.name%>-<%=file?.filenanme %>">
                                     <% } else if(file.file_types_id==2){ %> <!--VIDEO-->
                                         <video
                                         class="video product-img"
                                         muted playsinline loop>
-                                        <source src="/video/product/<%= file.filename %>" type="video/mp4">
-                                        <source src="/video/product/<%= file.filename %>" type="video/webm">
+                                        <source src="<%= file?.file_url %>" type="video/mp4">
+                                        <source src="<%= file?.file_url %>" type="video/webm">
                                         No se puede reproducir el video
                                     </video>
                                     <% } %>
@@ -119,22 +119,29 @@
                             <a href="/product/<%= sugProd.id %>" class="product-card-link">
                                 <div class="image-container suggested-image-container">
                                     <div class="image-carousel">
-                                        <% sugProd.files.forEach((file,i)=> { %>
-                                            <% if (file.file_types_id==1) { %> <!--FOTO-->
-                                                <img src="/img/product/<%= file.filename %>"
-                                                    alt="<%= sugProd.name %>-<%= file.filename %>"
-                                                    class="product-image-test <%= i==0 && 'product-image-test-active' %>  product-detail-suggested-media"
-                                                    data-productId=<%=sugProd.id %> >
-                                                <% }else if(file.file_types_id==2){ %> <!--VIDEO-->
-                                                    <video
-                                                        class="video product-image-test product-detail-suggested-media"
-                                                        muted playsinline loop>
-                                                        <source src="/video/product/<%= file.filename %>" type="video/mp4">
-                                                        <source src="/video/product/<%= file.filename %>" type="video/webm">
-                                                        No se puede reproducir el video
-                                                    </video>
-                                                    <% } %>
-                                                        <% }) %>
+                                        <% if (sugProd.files.length) { %>
+                                            <% sugProd.files.forEach((file,i)=> { %>
+                                                <% if (file.file_types_id==1) { %> <!--FOTO-->
+                                                    <img src="<%= file?.file_url || 'img/product/default.png'%>"
+                                                        alt="<%= sugProd.name %>-<%= file.filename %>"
+                                                        class="product-image-test <%= i==0 && 'product-image-test-active' %>  product-detail-suggested-media"
+                                                        data-productId=<%=sugProd.id %> >
+                                                    <% }else if(file.file_types_id==2){ %> <!--VIDEO-->
+                                                        <video
+                                                            class="video product-image-test product-detail-suggested-media"
+                                                            muted playsinline loop>
+                                                            <source src=<%= file?.file_url %> type="video/mp4">
+                                                            <source src=<%= file?.file_url %> type="video/webm">
+                                                            No se puede reproducir el video
+                                                        </video>
+                                                        <% } %>
+                                                            <% }) %>
+                                        <% } else{ %>
+                                            <img src="/img/product/default.png" alt="default-img"
+                                                        class="product-image-test product-image-test-active product-detail-suggested-media"
+                                                        data-productId=<%=sugProd.id %> >
+                                        <% } %>
+                                        
                                     </div>
                                 </div>
                                 <div class="product-info-container suggested-product-info-container">

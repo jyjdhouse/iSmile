@@ -10,7 +10,21 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 const { validationResult } = require('express-validator');
-
+const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+// AWS S3
+const bucketName = process.env.BUCKET_NAME;
+const bucketRegion = process.env.BUCKET_REGION;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+// Creo el objeto
+const s3 = new S3Client({
+    credentials: {
+        accessKeyId: accessKey,
+        secretAccessKey: secretAccessKey
+    },
+    region: bucketRegion
+});
 // UTILS
 const provinces = require('../utils/staticDB/provinces');
 const countryCodes = require('../utils/staticDB/countryCodes');
@@ -58,6 +72,19 @@ const controller = {
                     filename: tempItemFile
                 }
             });
+            // Para obtener url de las fotos
+            for (let i = 0; i < cart.length; i++) {
+                const product = cart[i];
+                const filename = product.filename;
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key: `product/${filename}`
+                }
+                const command = new GetObjectCommand(getObjectParams);
+                const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+                product.file_url = url; //en el href product.files[x].file_url
+            };
+            // return res.send(cart);
             // Ordeno el carro del tempItemId mas gde a mas chico (Mas nuevo arriba)
             cart = cart?.sort((a, b) => b.tempItemId - a.tempItemId);
             return res.render('checkout.ejs', { user, cart, provinces, countryCodes });

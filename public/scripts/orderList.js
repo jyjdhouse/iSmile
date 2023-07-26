@@ -630,60 +630,17 @@ window.addEventListener('load', async () => {
         listenToRemoveOrderBtns(btns, order, removeOverlay, removeTransactionPopup, trs, controls)
     }
 
-    /*  function paintRemoveTransactionPopup(order) {
-         
-         // Aca voy pusheando los orderItems
-         let orderDetailProductList = document.querySelector('.order-detail-product-list');
-         order.orderItems.forEach(item => {
-             orderDetailProductList.innerHTML +=
-                 `
-             <div class="order-detail-product-card order-detail-product-card-body">
-                 <p class="order-detail-product-name">${item.name}</p>
-                 <p class="order-detail-product-quantity">${item.quantity}</p>
-                 <p class="order-detail-product-total">$${item.price}</p>
-                 <p class="order-detail-product-total">$${item.quantity * item.price}</p>
-             </div>
-             `;
-         });
-         orderDetailProductList.innerHTML += `<p class="total-order-price">Total de compra: $${order.total}</p>`
-         // Ahora tengo que modificar la parte de direccion de entrega
-         let orderDetailProductListSection = document.querySelector('.order-detail-product-list-section');
-         // Pregunto si vino direccion de entrega distinta a facturacion
-         if (order.order_types_id == 1) { //Entrega a domicilio
-             if (!order.is_same_address) { //Distintas direcciones
-                 orderDetailProductListSection.innerHTML +=
-                     `
-         <div class="order-detail-shipping-data-container">
-             <div class="order-detail-shipping-data order-detail-shipping-data-head">
-                 <p>Provincia</p>
-                 <p>Ciudad</p>
-                 <p>Calle & Número</p>
-                 <p class="order-address-detail">Detalle</p>
-                 <p class="order-address-detail">Codigo Postal</p>
-             </div>
-             <div class="order-detail-shipping-data">
-                 <p class="copy-value">${provinces.find(prov => prov.id == order.shippingAddress.provinces_id).name}</p>
-                 <p class="copy-value">${order.shippingAddress.city}</p>
-                 <p class="copy-value">${order.shippingAddress.street}</p>
-                 <p class="order-address-detail copy-value">${order.shippingAddress.apartment || '-'}</p>
-                 <p class="order-address-detail copy-value">${order.shippingAddress.zip_code}</p>
-             </div>
-         </div>
-         `
-             } else { //Misma direcciones
-                 orderDetailProductListSection.innerHTML +=
-                     `<p class="order-deliver-method-p">Misma que direccion de facturación</p>`
-             }
-         } else { //Retiro local o Venta Presencial
-             orderDetailProductListSection.innerHTML +=
-                 `<p class="order-deliver-method-p">No corresponde</p>`
-         };
- 
-         // Ahora modifico la parte del estado
-         const selectOrderStatus = document.querySelector('.status-select');
-         status.forEach(stat => {
-             selectOrderStatus.innerHTML += `<option ${stat.id == order.order_status_id && 'selected'} value="${stat.id}">${stat.status}</option>`
-         })
-     } */
+    function listenFilterTogglers () {
+        const filterTogglers = document.querySelectorAll('.filter-section-toggler');
+        const filterDivs = document.querySelectorAll('.filter-div-section');
+        filterTogglers.forEach(btn=>{
+            btn.addEventListener('click',()=>{
+                filterTogglers.forEach(btn=>btn.classList.remove('hidden'));
+                btn.classList.add('hidden')
+                filterDivs.forEach(div=>div.classList.toggle('filter-div-section-active'))
 
+            })
+        })
+    }
+         
 })

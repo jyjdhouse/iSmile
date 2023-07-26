@@ -37,8 +37,7 @@ app.use(methodOverride('_method'));
 // Rutas
 const mainRouter = require('./routes/mainRouter.js');
 const productRouter = require('./routes/productRouter.js');
-const userRouter = require('./routes/userRouter.js');
-const paymentRouter = require('./routes/paymentRouter.js');
+const userRouter = require('./routes/userRouter.js');;
 const blogRouter = require('./routes/blogRouter.js');
 const adminRouter = require('./routes/adminRouter.js');
 // Rutas API
@@ -68,8 +67,7 @@ app.use(headerMiddleware);
 app.use('/', mainRouter);
 app.use('/product', productRouter);
 
-app.use('/user', userRouter)
-app.use('/payment',paymentRouter)
+app.use('/user', userRouter);
 app.use('/blog', blogRouter);
 
 app.use('/admin',adminRouter)
