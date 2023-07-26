@@ -11,6 +11,10 @@ const turndownService = new TurndownService();
 
 // Librerias
 const { v4: uuidv4 } = require('uuid');
+const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+
+const sharp = require('sharp')
 // utils
 const getRandomItems = require('../utils/getRandomItems');
 const getProduct = require('../utils/getProduct');
@@ -18,11 +22,40 @@ const getDeepCopy = require('../utils/getDeepCopy');
 const getAllProducts = require('../utils/getAllProducts');
 // const adaptProductsToBeListed = require('../utils/adaptProductsToBeListed');
 // const getCountryCodes = require('../utils/getCountryCodes');
-
+const bucketName = process.env.BUCKET_NAME;
+const bucketRegion = process.env.BUCKET_REGION;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+// Creo el objeto
+const s3 = new S3Client({
+    credentials: {
+        accessKeyId: accessKey,
+        secretAccessKey: secretAccessKey
+    },
+    region: bucketRegion
+});
 const controller = {
     list: async (req, res) => { //Controlador que renderiza listado de productos
         try {
             let products = getDeepCopy(await getAllProducts());
+            // return res.send(products)
+            // Para traer los archivos, primero voy por cada producto y despues a las imagenes de ese producto
+            for (let i = 0; i < products.length; i++) {
+                const product = products[i];
+                if (product.files?.length && product.files) {
+                    for (let j = 0; j < product.files.length; j++) {
+                        const file = product.files[j];
+                        const getObjectParams = {
+                            Bucket: bucketName,
+                            Key: `product/${file.filename}`
+                        }
+                        const command = new GetObjectCommand(getObjectParams);
+                        const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+                        file.file_url = url; //en el href product.files[x].file_url
+                    }
+                }
+            }
+            // return res.send(products)
             let searchQuery = req.query.s;
             let viewLabel;
             // Si viene por busqueda
@@ -52,6 +85,43 @@ const controller = {
                 include: ['files']
             }));
             suggestedProducts = getRandomItems(suggestedProducts);
+            if (product.files) {
+                for (let i = 0; i < product.files.length; i++) {
+                    const file = product.files[i];
+                    const getObjectParams = {
+                        Bucket: bucketName,
+                        Key: `product/${file.filename}`
+                    }
+                    const command = new GetObjectCommand(getObjectParams);
+                    const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+                    file.file_url = url; //en el href product.files[x].file_url
+                }
+            };
+            // Lo ordeno video ultimo
+            product.files.forEach(file => {
+                if (file.file_types_id == 2) {
+                    const indexToRemove = product.files.indexOf(file);
+                    product.files.splice(indexToRemove, 1);//Lo elimino
+                    product.files.splice(product.files.length, 0, file); //Lo pongo ultimo
+                }
+            });
+            for (let i = 0; i < suggestedProducts.length; i++) {
+                const suggesteProd = suggestedProducts[i];
+                if (suggesteProd.files) {
+                    for (let j = 0; j < suggesteProd.files.length; j++) {
+                        const file = suggesteProd.files[j];
+                        const getObjectParams = {
+                            Bucket: bucketName,
+                            Key: `product/${file.filename}`
+                        }
+                        const command = new GetObjectCommand(getObjectParams);
+                        const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+                        file.file_url = url; //en el href product.files[x].file_url
+                    }
+                }
+
+            }
+
             // return res.send(suggestedProducts);
             return res.render('productDetail', { product, suggestedProducts })
         } catch (error) {
@@ -73,6 +143,9 @@ const controller = {
                 return htmlText
             };
 
+
+
+            //PRobando
             let productObject = {
                 id: uuidv4(),
                 name,
@@ -82,33 +155,70 @@ const controller = {
             };
 
             const newProduct = await db.Product.create(productObject);
-            if(images){
-                const imagesObject = images?.map(obj => {
-                    let fileType = obj.mimetype.startsWith('video/') ? 2 : 1;
-                    return {
-                        filename: obj.filename,
+            if (images) {
+                let filesToCreate = [];
+                for (let i = 0; i < images.length; i++) {
+                    const file = images[i];
+                    let fileType = file.mimetype.startsWith('video/') ? 2 : 1;
+                    let randomName, buffer;
+                    if (fileType == 1) {//FOTO
+                        // Creo el nombre unico para la foto (dentro del forEach)
+                        randomName = Math.random().toString(36).substring(2, 2 + 10) + '.webp';
+                        // Cambio el formato a webp y redimensiono la imagen, total la de los productos 
+                        //  no se necesita tan gde      .resize({ height: 1920, width: 1080, fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
+                        buffer = await sharp(file.buffer).toFormat('webp').toBuffer();
+
+                    } else {//VIDEO
+                        // Creo el nombre unico para el video
+                        randomName = Math.random().toString(36).substring(2, 2 + 10) + path.extname(file.originalname);
+                        buffer = file.buffer;
+                    }
+                    // El objeto de la imagen que voy a subir
+                    const params = {
+                        Bucket: bucketName,
+                        Key: `product/${randomName}`,//Esto hace que se guarde en la carpeta product
+                        Body: buffer,
+                        ContentType: file.mimetype
+                    };
+                    const command = new PutObjectCommand(params);
+                    await s3.send(command);
+                    // Armo el objeto para la db
+                    filesToCreate.push({
+                        filename: randomName,
                         products_id: newProduct.id,
                         file_types_id: fileType
-                    }
-                });
-                await db.ProductFile.bulkCreate(imagesObject);
-            }
+                    })
+                };
+                // Hago el bulkcreate de las imagenes
+                await db.ProductFile.bulkCreate(filesToCreate);
+            };
 
             return res.redirect('/product/' + newProduct.id);
         } catch (error) {
             console.log(`Falle en productController.create: ${error}`);
-            images?.forEach(image =>
-                fs.unlinkSync(path.join(__dirname, `../../public/img/product/${image.image}`)) // DELETE IMGS IN LOCAL FOLDER    
-            );
+            // images?.forEach(image =>
+            //     fs.unlinkSync(path.join(__dirname, `../../public/img/product/${image.image}`)) // DELETE IMGS IN LOCAL FOLDER    
+            // );
             return res.json(error);
         }
     },
     updateProduct: async (req, res) => {
         const productId = req.params.productId;
-        const product = await getProduct(productId)
-        const markdown = turndownService.turndown(product.description)
+        const product =  getDeepCopy(await getProduct(productId));
+        const markdown = turndownService.turndown(product.description);
+        const productToUpdate = {...product, description: markdown};
+        for (let i = 0; i < productToUpdate.files.length; i++) {
+            const file = productToUpdate.files[i];
+            const getObjectParams = {
+                Bucket: bucketName,
+                Key: `product/${file.filename}`
+            }
+            const command = new GetObjectCommand(getObjectParams);
+            const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+            file.file_url = url; //en el href product.files[x].file_url
+        }
         const categories = await getCategories()
-        const productToUpdate = {...product, description: markdown}
+        // return res.send(productToUpdate);
         return res.render('productUpdate', { productToUpdate, categories })
     },
     processProductUpdate: async (req, res) => {
@@ -119,7 +229,7 @@ const controller = {
             const { name, price, description, current_imgs } = req.body
 
             // Agarro las imagenes del input
-            let images = req.files
+            let files = req.files
             // Hago el update del producto en la db
             const productUpdated = await db.Product.update({
                 name,
@@ -132,51 +242,85 @@ const controller = {
             })
             // return res.send(productUpdated);
 
-            let imagesObjectDB = images.map(obj => {
-                let fileType = obj.mimetype.startsWith('video/') ? 2 : 1;
-                return {
-                    filename: obj.filename,
-                    products_id: productId,
-                    file_types_id: fileType
+            // Aca voy por cada imagen que llego, y la creo en AWS 
+            let filesObjectDB = [];
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                let fileType = file.mimetype.startsWith('video/') ? 2 : 1;
+                let randomName, buffer;
+                if (fileType == 1) {//FOTO
+                    // Creo el nombre unico para la foto (dentro del forEach)
+                    randomName = Math.random().toString(36).substring(2, 2 + 10) + '.webp';
+                    // Cambio el formato a webp y redimensiono la imagen, total la de los productos 
+                    //  no se necesita tan gde      .resize({ height: 1920, width: 1080, fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
+                    buffer = await sharp(file.buffer).toFormat('webp').toBuffer();
+
+                } else {//VIDEO
+                    // Creo el nombre unico para el video
+                    randomName = Math.random().toString(36).substring(2, 2 + 10) + path.extname(file.originalname);
+                    buffer = file.buffer;
                 }
-            });
-            await db.ProductFile.bulkCreate(imagesObjectDB);
+                // El objeto de la imagen que voy a subir
+                const params = {
+                    Bucket: bucketName,
+                    Key: `product/${randomName}`,//Esto hace que se guarde en la carpeta product
+                    Body: buffer,
+                    ContentType: file.mimetype
+                };
+                const command = new PutObjectCommand(params);
+                await s3.send(command);
+                // Armo el objeto para la db
+                filesObjectDB.push({
+                    filename: randomName,
+                    products_id: productToUpdate.id,
+                    file_types_id: fileType
+                })
+            };
+            // Hago el bulkcreate de las imagenes
+            await db.ProductFile.bulkCreate(filesObjectDB);
+
 
             // Array con imagenes para borrar
             let filesToDelete = []
-
-            productToUpdate.files.forEach(file => { //FILTER TO DELETE IMAGES                 
-                if (!current_imgs.includes(file.filename)) {
-                    return filesToDelete.push(file)
-                }
-            })
+            if(!current_imgs){ //Si no vinieron quiere decir que borro todas las que habia
+                filesToDelete = [...productToUpdate.files]
+            }else{
+                productToUpdate.files.forEach(file => { //FILTER TO DELETE IMAGES    
+                           
+                    if (!current_imgs.includes(file.filename)) {
+                        return filesToDelete.push(file)
+                    }
+                })
+            } 
+            
 
             // me fijo si hay imagenes para borrar
             if (filesToDelete.length > 0) {
-                filesToDelete.forEach(file => {
-                    if (file.file_types_id == 1) { //Imagen
-                        // DELETE IMGS IN LOCAL FOLDER    
-                        fs.unlinkSync(path.join(__dirname, `../../public/img/product/${file.filename}`));
-                        return
+                for (let i = 0; i < filesToDelete.length; i++) {
+                    const file = filesToDelete[i];
+                    const params = {
+                        Bucket: bucketName,
+                        Key: `product/${file.filename}`
                     };
-                    // video 
-                    fs.unlinkSync(path.join(__dirname, `../../public/video/product/${file.filename}`));
-                    return
+                    const command = new DeleteObjectCommand(params);
+                    // Hago el delete de la base de datos
+                    await s3.send(command);
+                }
+            }
+            // Aca le dejo solo el filename
+            filesToDelete = filesToDelete.map(file => {
+                return file.filename
+            });
 
-                });
-                filesToDelete = filesToDelete.map(file=>{
-                    return file.filename
-                });
-                
-                // DELETE IMGS IN DATABASE     
-                await db.ProductFile.destroy({
-                    where: {
-                        filename: {
-                            [Op.in]: filesToDelete
-                        }
+            // DELETE IMGS IN DATABASE     
+            await db.ProductFile.destroy({
+                where: {
+                    filename: {
+                        [Op.in]: filesToDelete
                     }
-                })
-            };
+                }
+            })
+
 
             return res.redirect('/product/' + productId)
 
@@ -208,20 +352,6 @@ const controller = {
             return res.json(error);
         }
     }
-    // searchResult: async(req,res) =>{
-    //     let productsId = Array.from(JSON.parse(req.body.ids));
-    //     // return console.log(productsId)
-    //     let searchProducts = []; //Array de productos
-    //     const searchTitle = req.body.search; //Titulo de la busqueda
-    //     for (let i = 0; i < productsId.length; i++) {
-    //         const id = productsId[i];
-    //         const product = await getProduct(id);
-    //         searchProducts.push(product)
-    //     }
-    //     let products = adaptProductsToBeListed(searchProducts);
-    //     // return res.send(products);
-    //     return res.render('productListTest',{searchTitle, products, categories: await getCategories(), countryCodes: await getCountryCodes()})
-    // }
 };
 
 module.exports = controller;

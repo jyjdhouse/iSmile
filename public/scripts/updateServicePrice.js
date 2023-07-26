@@ -1,5 +1,6 @@
 import { isNumeric } from "./utils.js";
 window.addEventListener('load', () => {
+    let selectedTreatments = [];
     // Logica para que todos los inputs numericos no acepten letras
     let numericInputs = document.querySelectorAll('.numeric-only-input');
     numericInputs.forEach(input => {
@@ -21,21 +22,34 @@ window.addEventListener('load', () => {
         let checkboxLabels = Array.from(document.querySelectorAll('.checkbox-label'));
         checkboxLabels.forEach(lab => {
             lab.addEventListener('click', () => {
-                let name = lab.innerHTML;
-                let id = lab.dataset.id;
-                let treatmentIdInput = document.createElement('input');
-                treatmentIdInput.name = 'treatments_id';
-                treatmentIdInput.setAttribute('hidden', true);
-                treatmentIdInput.value = id;
-                // Lo agrego al form
-                document.querySelector('.form').appendChild(treatmentIdInput);
                 // lugar donde van a ir los shown. (lo agarro aca para que este actualziado)
                 let shownSectionContainer = document.querySelector('.shown-labels-container');
+                let name = lab.innerHTML;
+                let id = lab.dataset.id;
                 // Me fijo que ya no este
                 let oldShownLabels = Array.from(shownSectionContainer.querySelectorAll('.shown-label'));
                 const isAlreadyShown = oldShownLabels.filter(lab => lab.innerHTML == name);
-                !isAlreadyShown.length ? shownSectionContainer.innerHTML += `<p class="shown-label" data-id="${id}">${name}</p>` : null;
+                if (isAlreadyShown.length) return;
+
+                selectedTreatments.push({
+                    id
+                })
+                // let treatmentIdInput = document.createElement('input');
+                // treatmentIdInput.name = 'treatments_id';
+                // treatmentIdInput.setAttribute('hidden', true);
+                // treatmentIdInput.value = id;
+                // Lo agrego al form
+                // document.querySelector('.form').appendChild(treatmentIdInput);
+
+
+                !isAlreadyShown.length ? shownSectionContainer.innerHTML +=
+                    `<div class="shown-label-container" data-id="${id}">
+                    <p class="shown-label">${name}</p>
+                    <input type="file" class="label-file-input">
+                ` : null
+                    ;
                 listenRemoveLabelsBtns();
+                listenFileInputs();
 
             });
         });
@@ -74,5 +88,46 @@ window.addEventListener('load', () => {
         });
     }
     listenToSearchInput();
+    // LOGICA para las fotos de los input
+    function listenFileInputs() {
+        const fileInputs = document.querySelectorAll("input[type='file'");
+        fileInputs.forEach(inp => {
+            inp.addEventListener('change', async (e) => {
+                const base64Img = await getBase64(e.target.files[0])
+                const container = inp.closest('.shown-label-container');
+                // Busco si ya esta en la lista que voy a mandar
+                let treatmentToAppendFileIndex = selectedTreatments.findIndex(treat => treat.id == container.dataset.id);
+                selectedTreatments[treatmentToAppendFileIndex].file = base64Img;
+                return
 
+            })
+        })
+    }
+    function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const imageInBase64 = event.target.result.split(',')[1];
+                    resolve(imageInBase64);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                reject(new Error('No se seleccionó ninguna imagen.'));
+            }
+        });
+    }
+
+    // Logica de cuando manda el formulario mandarle las imagenes
+    const form = document.querySelector('.form');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const selectedTreatmentsToBody = document.createElement('input');
+        selectedTreatmentsToBody.type = 'hidden';
+        selectedTreatmentsToBody.name = 'treatments_id';
+        selectedTreatmentsToBody.value = JSON.stringify(selectedTreatments);
+        form.appendChild(selectedTreatmentsToBody);
+        console.log(form);
+        form.submit();
+    })
 });

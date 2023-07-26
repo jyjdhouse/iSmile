@@ -91,7 +91,7 @@ const controller = {
 
             let tempItem = await db.TemporalItem.create({
                 temporal_cart_id: parseInt(tempCartId),
-                products_id: parseInt(prodId),
+                products_id: prodId,
                 quantity: 1
             });
             return res.json({
@@ -103,7 +103,7 @@ const controller = {
                 tempItem
             });
         } catch (error) {
-            console.log('El error fue en productApiController.addTempItem: ' + error);
+            console.log('El error fue en apiUserController.addTempItem: ' + error);
             return res.json(error);
         }
     },

@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const path = require('path')
 const puppeteer = require('puppeteer');
 const fs = require('fs')

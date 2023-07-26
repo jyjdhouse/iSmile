@@ -19,7 +19,7 @@
             <div class="product-list-intro">
                 <div class="product-title">
                     <h2 class="bold">
-                        <%= viewLabel ? viewLabel : 'PRODUCTOS' %>
+                        <%= viewLabel ? viewLabel : 'PRODUCTOS DE BELLEZA Y BIENESTAR' %>
                     </h2>
                 </div>
             </div>
@@ -30,26 +30,31 @@
                         <a href="/product/<%= prod.id %>" class="product-card-link">
                             <div class="image-container">
                                 <div class="image-carousel">
-                                    <%prod.files.forEach((file, i)=>{ %>
-                                        <% if (file.file_types_id==1) { %> <!--FOTO-->
-                                            <% if(i == 0) {  %>
-                                                <img src="/img/product/<%= file.filename %>" alt="<%= prod.name%>-<%=file.filenanme %>"
-                                                class="product-image-test product-image-test-active">
-                                            <% } else {  %>
-                                                <img src="/img/product/<%= file.filename%>" alt="<%= prod.name%>-<%=file.filenanme %>"
-                                                class="product-image-test <%= prod.files.length == 2 ? 'carousel-animation' : ''%>">
-                                            <% } %>
-                                            
-                                            <% }else if(file.file_types_id == 2){ %><!--VIDEO--> %>
-                                                <video
-                                                class="video product-image-test"
-                                                muted playsinline loop>
-                                                <source src="/video/product/<%= file.filename%>" type="video/mp4">
-                                                <source src="/video/product/<%= file.filename%>" type="video/webm">
-                                                No se puede reproducir el video
-                                            </video>
-                                            <% } %>
-                                    <% })%>                                                   
+                                    <% if (prod.files.length) { %>
+                                        <%prod.files.forEach((file, i)=>{ %>
+                                            <% if (file.file_types_id==1) { %> <!--FOTO-->
+                                                <% if(i == 0) {  %>
+                                                    <img src="<%= file.file_url %>" alt="<%= prod.name%>-<%=file.filenanme %>"
+                                                    class="product-image-test product-image-test-active">
+                                                <% } else {  %>
+                                                    <img src="<%= file.file_url %>" alt="<%= prod.name%>-<%=file.filenanme %>"
+                                                    class="product-image-test <%= prod.files.length == 2 ? 'carousel-animation' : ''%>">
+                                                <% } %>
+                                                
+                                                <% }else if(file.file_types_id == 2){ %><!--VIDEO--> %>
+                                                    <video
+                                                    class="video product-image-test"
+                                                    muted playsinline loop>
+                                                    <source src="<%= file.file_url %>" type="video/mp4">
+                                                    <source src="<%= file.file_url %>" type="video/webm">
+                                                    No se puede reproducir el video
+                                                </video>
+                                                <% } %>
+                                        <% })%>     
+                                    <% } else{ %>
+                                        <img src="/img/product/default.png" alt="<%= prod.name%>" class="product-image-test product-image-test-active">
+                                    <% } %>
+                                                                                  
                                 </div>
                             </div>
                             <div class="product-info-container">
