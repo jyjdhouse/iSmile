@@ -14,7 +14,8 @@
                 </div>
                 <ul class="dropdown-items-container">
                     <% locals.headerSpecialties && headerSpecialties.forEach(specialty => { %>
-                        <li class="dropdown-list-item"><a href="/servicios"><%= specialty.name %></a></li>
+                        <% console.log(specialty.id) %>
+                        <li class="dropdown-list-item"><a href="/servicios/<%= specialty.id %>"><%= specialty.name %></a></li>
                     <% }) %>
                     
                 </ul>

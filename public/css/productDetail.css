@@ -389,9 +389,7 @@ h1.product-title {
         top: 65%;
     }
 
-    .product-info-container.suggested-product-info-container {
-        /* padding-top: 20%; */
-    }
+  
 }
 
 @keyframes loadingC {
