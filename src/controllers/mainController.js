@@ -6,9 +6,24 @@ const bcrypt = require('bcryptjs');
 const getAllTreatments = require('../utils/getAllTreatments');
 const getAllSpecialties = require('../utils/getAllSpecialties');
 const getDeepCopy = require('../utils/getDeepCopy');
-const {specialties_services,specialties} = require('../utils/staticDB/services')
+const {specialties_services,specialties} = require('../utils/staticDB/services');
+const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+// AWS 
+const bucketName = process.env.BUCKET_NAME;
+const bucketRegion = process.env.BUCKET_REGION;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+// Creo el objeto
+const s3 = new S3Client({
+    credentials: {
+        accessKeyId: accessKey,
+        secretAccessKey: secretAccessKey
+    },
+    region: bucketRegion
+});
 // Utils
-
+const homePageLabels = require('../utils/staticDB/homePageLabels');
 const getSpecialtyService = require('../utils/getSpecialtyService');
 
 const controller = {
@@ -21,47 +36,82 @@ const controller = {
             // Ahora seccióno todo aca asi en el ejs se simplifica
             // VIDEO
             let homeVideo = homeFiles.find(file => file.home_sections_id == 1);
+            // Hago la busqueda del archivo en db
+            const getHomeVideoObjectParams = {
+                Bucket: bucketName,
+                Key: `homePage/${homeVideo.filename}`
+            }
+            const homeVideoCommand = new GetObjectCommand(getHomeVideoObjectParams);
+            const homeVideoUrl = await getSignedUrl(s3, homeVideoCommand, { expiresIn: 1800 }); //30 min
             let videoFile = {
                 filename: homeVideo.filename,
-                home_sections_id: homeVideo.home_sections_id
+                home_sections_id: homeVideo.home_sections_id,
+                file_url: homeVideoUrl
             }
             // GALLERY IMAGES
             let galleryFiles = homeFiles.filter(file => file.home_sections_id == 2);
             // Ordeno el array por posiciónes
             galleryFiles.sort((a, b) => a.position - b.position);
-            // Le dejo solo el filename
-            galleryFiles = galleryFiles.map(file => {
-                return {
+            let galleryFilesToRender = [];
+            for (let i = 0; i < galleryFiles.length; i++) {
+                const file = galleryFiles[i];
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key: `homePage/${file.filename}`
+                }
+                const command = new GetObjectCommand(getObjectParams);
+                url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min;
+                galleryFilesToRender.push({
                     filename: file.filename,
                     home_sections_id: file.home_sections_id,
-                    position: file.position
-                }
-            });
+                    position: file.position,
+                    file_url: url
+                })
+            }
+            // return res.send({galleryFilesToRender, homePageLabels})
             // IG
             let igFiles = homeFiles.filter(file => file.home_sections_id == 3);
             // Ordeno el array por posiciónes
             igFiles.sort((a, b) => a.position - b.position);
-            // Le dejo solo el filename
-            igFiles = igFiles.map(file => {
-                return {
+            let igFilesToRender = [];
+            for (let i = 0; i < igFiles.length; i++) {
+                const file = igFiles[i];
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key: `homePage/${file.filename}`
+                }
+                const command = new GetObjectCommand(getObjectParams);
+                const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min;
+                igFilesToRender.push({
                     filename: file.filename,
                     home_sections_id: file.home_sections_id,
-                    position: file.position
-                }
-            });
+                    position: file.position,
+                    file_url: url
+                })
+            }
+            
             // BLOOG
             let blogImage = homeFiles.find(file => file.home_sections_id == 4);
+            // Hago la busqueda del archivo en db
+            const getBlogObjectParams = {
+                Bucket: bucketName,
+                Key: `homePage/${blogImage.filename}`
+            }
+            const blogCommand = new GetObjectCommand(getBlogObjectParams);
+            const blogUrl = await getSignedUrl(s3, blogCommand, { expiresIn: 1800 }); //30 min
             let blogFile = {
                 filename: blogImage.filename,
-                home_sections_id: blogImage.home_sections_id
+                home_sections_id: blogImage.home_sections_id,
+                file_url: blogUrl
             }
+            
             const products = await db.Product.findAll({
                 // de más nuevo a más viejo
                 order: [['createdAt', 'DESC']],
                 limit: 6
             });
 
-            return res.render('index', { videoFile, galleryFiles, igFiles, blogFile, products })
+            return res.render('index', { videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, products, homePageLabels })
 
         } catch (error) {
             console.log(`Falle en mainController.list: ${error}`);
