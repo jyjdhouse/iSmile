@@ -1,22 +1,8 @@
-const path = require("path");
 const multer = require('multer');
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        if(file.mimetype.startsWith('video/')){//Si es video
-            cb(null,'./public/video/homePage');
-            return 
-        }
-        cb(null, './public/img/homePage')
-        return 
-        
-    },
-    filename: (req, file, cb) => {
-        const randomString = Math.random().toString(36).substring(2, 2 + 10);
-        cb(null, file.fieldname + '-' + randomString + path.extname(file.originalname))
-    }
-})
+// Esto es para usar la memoria, se valida, modifica la foto en memoria y despues se lleva
+// a S3 sin pasar for fs
+const storage = multer.memoryStorage();
+const upload= multer({ storage:storage });
 
-const uploadFile = multer( {storage} ); 
-
-module.exports = uploadFile;
+module.exports = upload;

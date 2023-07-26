@@ -1,14 +1,15 @@
 const db = require('../database/models');
 const fs = require('fs');
-const path = require('path');
+const path = require('path')
 // Librerias
 const bcrypt = require('bcryptjs');
 const getAllTreatments = require('../utils/getAllTreatments');
 const getAllSpecialties = require('../utils/getAllSpecialties');
 const getDeepCopy = require('../utils/getDeepCopy');
-const {specialties_services,specialties} = require('../utils/staticDB/services');
+const { specialties_services, specialties } = require('../utils/staticDB/services');
 const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const sharp = require('sharp');
 // AWS 
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
@@ -89,7 +90,7 @@ const controller = {
                     file_url: url
                 })
             }
-            
+
             // BLOOG
             let blogImage = homeFiles.find(file => file.home_sections_id == 4);
             // Hago la busqueda del archivo en db
@@ -104,7 +105,7 @@ const controller = {
                 home_sections_id: blogImage.home_sections_id,
                 file_url: blogUrl
             }
-            
+
             const products = await db.Product.findAll({
                 // de más nuevo a más viejo
                 order: [['createdAt', 'DESC']],
@@ -136,21 +137,21 @@ const controller = {
     serviceDetail: async (req, res) => {
         try {
             const specialtyId = req.params.specialtyId;
-            
+
             const serviceSpecialtyId = req.params.specialtyServiceId;
-            let title; 
+            let title;
             let treatments = await db.Treatment.findAll();
             treatments = treatments.filter(treatment => {
-                if(serviceSpecialtyId){
-                    title = specialties_services.find(serv=>serv.id == serviceSpecialtyId).name;
+                if (serviceSpecialtyId) {
+                    title = specialties_services.find(serv => serv.id == serviceSpecialtyId).name;
                     return treatment.specialties_id == specialtyId && treatment.specialties_services_id == serviceSpecialtyId;
                 }
-                title = specialties.find(spec=>spec.id == specialtyId).name;
+                title = specialties.find(spec => spec.id == specialtyId).name;
                 // Sino son los que no tienen subcategoria
                 return treatment.specialties_id == specialtyId
             })
 
-            return res.render('serviceDetail',{ services: treatments, title })
+            return res.render('serviceDetail', { services: treatments, title })
         } catch (error) {
             console.log(`Falle en mainController.serviceDetail: ${error}`);
             return res.json({ error })
@@ -164,31 +165,64 @@ const controller = {
             return res.json({ error })
         }
     },
-
     updateHomeFile: async (req, res) => {
         try {
             const { home_sections_id, position, old_filename } = req.body;
+            
             const file = req.file;
             const fileType = file.mimetype.startsWith('video/') ? 2 : 1;
             // Basicamente si suben video donde no tienen que los redirije devuelta, mismo con fotos
             if (fileType == 1 && home_sections_id == 1) return res.redirect('/');
             if (fileType == 2 && home_sections_id != 1) return res.redirect('/')
             // Actualizo en la db
+            let randomName, buffer;
+            // PARA AWS
+            if (fileType == 1) {//FOTO
+                // Creo el nombre unico para la foto (dentro del forEach)
+                randomName = 'homeFile' + Math.random().toString(36).substring(2, 2 + 10) + '.webp';
+                // Cambio el formato a webp y redimensiono la imagen, total la de los productos 
+                //  no se necesita tan gde      .resize({ height: 1920, width: 1080, fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
+                buffer = await sharp(file.buffer).toFormat('webp').toBuffer();
+
+            } else {//VIDEO
+                // Creo el nombre unico para el video
+                randomName = 'homeFile' + Math.random().toString(36).substring(2, 2 + 10) + path.extname(file.originalname);
+                // Creo el nombre unico para el video
+                buffer = file.buffer;
+            }
+            // Lo unico que hago es rescribir la imagen que ya estaba   
+            let params = {
+                Bucket: bucketName,
+                Key: `homePage/${randomName}`,//Esto hace que se guarde en la carpeta homePage, y que sobreEscriba a la foto vieja
+                Body: buffer,
+                ContentType: file.mimetype
+            };
+            let command = new PutObjectCommand(params);
+            await s3.send(command);
+            // Ahora tengo que borrar lo viejo en AWS
+            let fileToRemove = await db.HomeFile.findOne({
+                where: {
+                    home_sections_id,
+                    position: position || null
+                }
+            });
+            params = {
+                Bucket: bucketName,
+                Key: `homePage/${fileToRemove.filename}`,
+            };
+            command = new DeleteObjectCommand(params);
+            await s3.send(command);
+            // Actualizo en la db
             await db.HomeFile.update({
-                filename: file.filename
+                filename: randomName
             }, {
                 where: {
                     home_sections_id,
                     position: position || null
                 }
             });
-            // Tengo que borrar la foto vieja asociada a esa section
-            if (fileType == 2) { //video
-                fs.unlinkSync(path.join(__dirname, `../../public/video/homePage/${old_filename}`))
-            } else {
-                fs.unlinkSync(path.join(__dirname, `../../public/img/homePage/${old_filename}`));
-            }
-            return res.redirect('/')
+
+            return res.redirect('/');
         } catch (error) {
             console.log(`Falle en mainController.updateHomeFile: ${error}`);
             return res.json({ error })
