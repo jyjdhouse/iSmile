@@ -1,39 +1,57 @@
 window.addEventListener('load', () => {
 
-    const paragraphs = document.querySelectorAll('service-info-p')
-    const openDropdown = document.querySelectorAll('.open-dropdown')
-    const closeCard = document.querySelectorAll('.close-dropdown')
+    const paragraphs = document.querySelectorAll('service-info-p');
+    const openDropdown = document.querySelectorAll('.open-dropdown');
+    const closeCard = document.querySelectorAll('.close-dropdown');
+
+
+    // hago la función de los que se remueven generales
+    function removeClasses(item) {
+        let dropdown = item.querySelector('.servicio-dropdown');
+        let plusBtn = item.querySelector('.open-dropdown');
+        dropdown.classList.remove('servicio-dropdown-active');
+        item.classList.remove('service-detail-card-active');
+        plusBtn.classList.add('icon-active');
+        plusBtn.classList.remove('icon-inactive');
+    }
+
+    function addClasses(item) {
+        let dropdown = item.querySelector('.servicio-dropdown');
+        let minusBtn = item.querySelector('.close-dropdown');
+        let plusBtn = item.querySelector('.open-dropdown');
+
+        dropdown.classList.add('servicio-dropdown-active');
+        item.classList.add('service-detail-card-active');
+        minusBtn.classList.remove('icon-inactive');
+        minusBtn.classList.add('icon-active');
+        plusBtn.classList.add('icon-inactive');
+        plusBtn.classList.remove('icon-active');
+    }
 
     openDropdown.forEach(act => {
         act.addEventListener('click', () => {
 
-            let parent = act.closest('.service-detail-card')
-            let dropdown = parent.querySelector('.servicio-dropdown')
-            let minusBtn = parent.querySelector('.close-dropdown')
+            let activeCard = document.querySelector('.service-detail-card-active');
+            if (activeCard !== null) {
+                activeCard.classList.remove('service-detail-card-active');
+                removeClasses(activeCard);
+                let minusBtn = activeCard.querySelector('.close-dropdown');
+                minusBtn.classList.add('icon-inactive');
+                minusBtn.classList.remove('icon-active');
+            } else {
 
-            dropdown.classList.add('servicio-dropdown-active')
-            parent.classList.add('service-detail-card-active')
-            minusBtn.classList.remove('icon-inactive')
-            minusBtn.classList.add('icon-active')
-            act.classList.add('icon-inactive')
-            act.classList.remove('icon-active')
-
+            }
+            let parent = act.closest('.service-detail-card');
+            addClasses(parent);
+            
         })
 
     })
 
-    closeCard.forEach(item => {
-        item.addEventListener('click', () => {
-            let parent = item.closest('.service-detail-card')
-            let dropdown = parent.querySelector('.servicio-dropdown')
-            let plusBtn = parent.querySelector('.open-dropdown')
-
-            dropdown.classList.remove('servicio-dropdown-active')
-            parent.classList.remove('service-detail-card-active')
-            plusBtn.classList.add('icon-active')
-            plusBtn.classList.remove('icon-inactive')
-            item.classList.add('icon-inactive')
-            item.classList.remove('icon-active')
+    closeCard.forEach(btn => {
+        btn.addEventListener('click', () => {
+            let parent = btn.closest('.service-detail-card');
+            removeClasses(parent);
 
         })
     })

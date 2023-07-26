@@ -133,8 +133,6 @@ const controller = {
       const orderId = req.params.orderId
 
       const categoryId = req.body.categoryId
-
-      console.log(categoryId)
   
       await db.Order.update(
         { order_status_id: categoryId },
@@ -144,8 +142,7 @@ const controller = {
       return res.status(200).json({msg: 'Orden actualizada correctamente'})
   
     } catch (error) {
-        console.log(error, req.body)
-        return res.status(400).send(req.body);
+        return res.status(400).json({msg: error});
     }
    
   },
