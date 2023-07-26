@@ -94,6 +94,14 @@ const controller = {
                     file.file_url = url; //en el href product.files[x].file_url
                 }
             };
+            // Lo ordeno video ultimo
+            product.files.forEach(file => {
+                if (file.file_types_id == 2) {
+                    const indexToRemove = product.files.indexOf(file);
+                    product.files.splice(indexToRemove, 1);//Lo elimino
+                    product.files.splice(product.files.length, 0, file); //Lo pongo ultimo
+                }
+            });
             for (let i = 0; i < suggestedProducts.length; i++) {
                 const suggesteProd = suggestedProducts[i];
                 if (suggesteProd.files) {

@@ -76,12 +76,16 @@ const controller = {
             for (let i = 0; i < cart.length; i++) {
                 const product = cart[i];
                 const filename = product.filename;
-                const getObjectParams = {
-                    Bucket: bucketName,
-                    Key: `product/${filename}`
+                let url;
+                if(filename){
+                    const getObjectParams = {
+                        Bucket: bucketName,
+                        Key: `product/${filename}`
+                    }
+                    const command = new GetObjectCommand(getObjectParams);
+                    url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                 }
-                const command = new GetObjectCommand(getObjectParams);
-                const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+                
                 product.file_url = url; //en el href product.files[x].file_url
             };
             // return res.send(cart);
