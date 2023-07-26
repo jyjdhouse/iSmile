@@ -35,8 +35,14 @@
                     <div class="servicio-dropdown">
                         <p><%= treatment.description %></p>
                         <div class="service-time">
-                            <p>Tiempo de aplicación</p>
-                            <p>30 min</p>
+                            <div class="service-time-container">
+                                <p>Tiempo de aplicación</p>
+                                <p><%= treatment.duration %></p>
+                            </div>
+                            <div class="service-time-container">
+                                <p>Tiempo de duración</p>
+                                <p><%= treatment.application_time %></p>
+                            </div>
                         </div>
                     </div>
 

@@ -15,7 +15,7 @@ module.exports = (sequelize, dataTypes) => {
         cash_price: { type: dataTypes.INTEGER },
         application_time: { type: dataTypes.TEXT },
         duration: { type: dataTypes.TEXT },
-        file_url: {type: dataTypes.TEXT}
+        filename: {type: dataTypes.TEXT}
     }
 
     let config = {
