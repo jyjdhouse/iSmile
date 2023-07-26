@@ -5,6 +5,9 @@ const path = require('path')
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const getCategories = require('../utils/getCategories')
+const showdown = require('showdown');
+const TurndownService = require('turndown');
+const turndownService = new TurndownService();
 
 // Librerias
 const { v4: uuidv4 } = require('uuid');
@@ -63,13 +66,18 @@ const controller = {
         try {
             let { name, price, description, category } = req.body;
             let images = req.files;
-            //PRobando
+           
+            const convertToHtml = () => { // este showdown es para convertir el html a markdown, y conservar el formato
+                var converter = new showdown.Converter();
+                var htmlText = converter.makeHtml(description);
+                return htmlText
+            };
 
             let productObject = {
                 id: uuidv4(),
                 name,
                 price,
-                description,
+                description: convertToHtml(),
                 category_id: category
             };
 
@@ -97,9 +105,10 @@ const controller = {
     },
     updateProduct: async (req, res) => {
         const productId = req.params.productId;
-        const productToUpdate = await getProduct(productId)
+        const product = await getProduct(productId)
+        const markdown = turndownService.turndown(product.description)
         const categories = await getCategories()
-
+        const productToUpdate = {...product, description: markdown}
         return res.render('productUpdate', { productToUpdate, categories })
     },
     processProductUpdate: async (req, res) => {

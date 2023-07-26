@@ -2,6 +2,13 @@ window.addEventListener('load', () => {
 
     const mainImg = document.querySelector('.main-img')
     const productFiles = document.querySelectorAll('.product-img')
+    const converter = new showdown.Converter();
+    const productText = document.querySelector('.product-description-container p')
+    
+    
+    // función para convertir a html el contenido
+    const htmlText = converter.makeHtml(productText.innerText);
+    productText.innerHTML = htmlText
 
     productFiles.forEach(file => {
         // cuando tocan la foto/video
