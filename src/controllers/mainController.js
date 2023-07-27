@@ -139,6 +139,8 @@ const controller = {
             const specialtyId = req.params.specialtyId;
 
             const serviceSpecialtyId = req.params.specialtyServiceId;
+            const specialtyService = await db.SpecialtyService.findByPk(serviceSpecialtyId)
+            
             let title;
             let treatments = await db.Treatment.findAll();
             treatments = treatments.filter(treatment => {
@@ -151,7 +153,7 @@ const controller = {
                 return treatment.specialties_id == specialtyId
             })
 
-            return res.render('serviceDetail', { services: treatments, title })
+            return res.render('serviceDetail', { services: treatments, title, specialtyService })
         } catch (error) {
             console.log(`Falle en mainController.serviceDetail: ${error}`);
             return res.json({ error })

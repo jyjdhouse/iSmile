@@ -116,7 +116,7 @@
 
 
 .service-label {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: var(--violet-color);
     text-transform: uppercase;
     align-self: flex-start;
@@ -210,13 +210,19 @@
     }
 
     .service-label {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
 
     .service-card-dropdown {
         display: flex;
         flex-direction: column;
         justify-content: center;
+    }
+
+    .service-card-dropdown-content-container {
+        
+        margin: 5% 0;
+       
     }
 
     .service-card-dropdown-content-container h3 {
@@ -228,6 +234,8 @@
     .service-card-dropdown-content-container p {
         font-size: 0.95rem;
     }
+
+
 
 }
 
@@ -242,9 +250,11 @@
     }
 
 
-    /* .service-card:nth-child(4) {
-        animation-delay: initial;
-    } */
+    .service-card-dropdown-content-container {
+        color: var(--violet-color);
+        margin: 3% 0;
+        width: 95%;
+    }
 
     .service-card-visible:hover {
         opacity: 1;

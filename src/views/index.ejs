@@ -149,6 +149,10 @@
             <section class="blog-section" id="blog">
                 <div class="blog-background">
                     <p class="blog-section-title">The <span class="bold">I smile</span> Blog</p>
+                    <div class="see-all-blogs-container">
+                        <a href="/blog" class="see-all-blogs">Ver Blogs</a>
+                    </div>
+                    
                     <img src="<%= blogFile.file_url %>" alt="background-image"
                         class="blog-background-image">
                     <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
@@ -174,7 +178,7 @@
                     <div class="blog-group blog-group-active">
                         <article class="blog-card">
                             <a href="./blog/1">
-                                <div class="overlay"></div>
+                                <div class="card-overlay"></div>
                                 <img src="/img/estheticblog1.jpg" alt="blog-image" class="blog-img">
                                 <div class="blog-info">
                                     <p class="blog-title">La Verdadera Belleza Es Cuando Te Pones A Quien Realmente
@@ -188,18 +192,18 @@
                         </article>
                         <article class="blog-card">
                             <a href="./blog/1">
-                                <div class="overlay"></div>
+                                <div class="card-overlay"></div>
                                 <img src="/img/estheticblog2.jpg" alt="blog-image" class="blog-img">
                                 <div class="blog-info">
                                     <p class="blog-title">Lifting Líquido _ RADIESSE 🤩</p>
-                                    <p class="blog-author">by <span class="bold">Ines Añó</span></p>
+                                    <p class="blog-author">by <span class="bold blog-name">Ines Añó</span></p>
                                     <p class="blog-date">Apr 21, 2023</p>
                                 </div>
                             </a>
                         </article>
                         <article class="blog-card">
                             <a href="./blog/1">
-                                <div class="overlay"></div>
+                                <div class="card-overlay"></div>
                                 <img src="/img/estheticblog3.jpg" alt="blog-image" class="blog-img">
                                 <div class="blog-info">
                                     <p class="blog-title">DEFINICIÓN MANDIBULAR</p>
@@ -208,11 +212,11 @@
                                 </div>
                             </a>
                         </article>
-                        <a href="/blog" class="blog-section-button">Ver Blogs</a>
+                        
                     </div>
                     <div class="blog-group blog-group-next">
                         <article class="blog-card">
-                            <div class="overlay"></div>
+                            <div class="card-overlay"></div>
                             <img src="/img/estheticblog4.jpg" alt="blog-image" class="blog-img">
                             <div class="blog-info">
                                 <p class="blog-title">MASCULINIZACIÓN FACIAL</p>
@@ -221,7 +225,7 @@
                             </div>
                         </article>
                         <article class="blog-card">
-                            <div class="overlay"></div>
+                            <div class="card-overlay"></div>
                             <img src="/img/estheticblog5.jpg" alt="blog-image" class="blog-img">
                             <div class="blog-info">
                                 <p class="blog-title">MASCULINIZACIÓN FACIAL</p>
@@ -230,7 +234,7 @@
                             </div>
                         </article>
                         <article class="blog-card">
-                            <div class="overlay"></div>
+                            <div class="card-overlay"></div>
                             <img src="/img/estheticblog6.jpg" alt="blog-image" class="blog-img">
                             <div class="blog-info">
                                 <p class="blog-title">Ácido Hialurónico Para #Ojeras</p>
