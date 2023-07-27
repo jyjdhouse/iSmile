@@ -7,14 +7,33 @@
 
 .service-detail-title-container {
     display: flex;
+    flex-direction: column;
     width: 100%;
+    align-items: center;
     justify-content: center;
     margin-bottom: 15vh;
+    text-align: center;
+    background-image: url('/img/servicesdetailbackground.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 350px;
+}
 
+.service-title-info-container {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(230, 230, 230, .85);
+    border-radius: 10px;
+    padding: 2% 0;
+    max-width: 750px;
 }
 
 .service-detail-title {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    margin-bottom: 3%;
 }
 
 
