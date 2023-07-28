@@ -2,6 +2,12 @@
 const dotenv = require('dotenv')
 dotenv.config()
 
+/* "username": process.env.DEV_USER,
+"password": process.env.DEV_PASSWORD || null,
+"database": process.env.DEV_DB,
+"host": process.env.DEV_HOST,
+"port": process.env.DEV_PORT,
+ */
 module.exports = {
   "development": {
     "username": process.env.MYSQLUSER,
