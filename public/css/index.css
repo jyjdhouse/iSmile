@@ -536,9 +536,9 @@ video::-webkit-media-controls-time-remaining-display {
 }
 
 .about-us-information-subtitle {
-    width: 100%;
-    font-size: 1.2rem;
-    margin-bottom: 2%;
+    width: 95%;
+    font-size: 1rem;
+    /* margin-bottom: 2%; */
     text-align: center;
 }
 
@@ -901,6 +901,10 @@ video::-webkit-media-controls-time-remaining-display {
     }
 
     /* ABOUTUS */
+    .about-us-information-subtitle {
+        margin-bottom: 2%;
+        width: 60%;
+    }
     .about-us-frames-container {
         background: none;
         width: 90%;
