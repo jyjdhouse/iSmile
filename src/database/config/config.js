@@ -1,23 +1,30 @@
+
+const dotenv = require('dotenv')
+dotenv.config()
+
 module.exports = {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "ecommerce_cherly",
-    "host": "127.0.0.1",
+    "username": process.env.MYSQLUSER,
+    "password": process.env.MYSQLPASSWORD,
+    "database": process.env.MYSQLDATABASE,
+    "host": process.env.MYSQLHOST,
+    "port": process.env.MYSQLPORT,
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "ecommerce_cherly",
-    "host": "127.0.0.1",
+    "username": process.env.MYSQLUSER,
+    "password": process.env.MYSQLPASSWORD,
+    "database": process.env.MYSQLDATABASE,
+    "host": process.env.MYSQLHOST,
+    "port": process.env.MYSQLPORT,
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "ecommerce_cherly",
-    "host": "127.0.0.1",
+    "username": process.env.MYSQLUSER,
+    "password": process.env.MYSQLPASSWORD,
+    "database": process.env.MYSQLDATABASE,
+    "host": process.env.MYSQLHOST,
+    "port": process.env.MYSQLPORT,
     "dialect": "mysql"
   }
 }

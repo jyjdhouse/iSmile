@@ -1,0 +1,260 @@
+@import 'variables.css';
+
+select{
+    cursor: pointer;
+}
+.search-checkbox{
+    padding: 10px 0;
+    padding-left: 7px;
+}
+.register-sale-main {
+    padding: 3% 5%;
+}
+
+.register-sale-form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.billing-section {
+    width: 45%;
+    margin-top: 5vh;
+}
+
+.form-label {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.register-sale-intro-container {
+    margin-top: 12vh;
+}
+
+
+
+.input-label-container {
+    margin: 4% 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-label-container>label {
+    font-weight: 600;
+}
+
+.input-label-container input {
+    padding-left: 10px;
+}
+
+.input-label-container input,
+.input-label-container select {
+    border: 1px solid var(--gold-color);
+    border-radius: 1rem;
+    margin-top: 3%;
+    width: 100%;
+}
+
+.phone-input-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.phone-input-container>label {
+    width: 100%;
+}
+
+.phone-input-container>select {
+    width: 40%;
+}
+
+.phone-input-container>input {
+    width: 60%;
+}
+
+.register-sale-btn {
+    width: 100%;
+    border-radius: 1rem;
+    outline: 0;
+    border: 1px solid var(--violet-color);
+    padding: 1% 0;
+    cursor: pointer;
+}
+
+.order-item-container .input-label-container input,
+.order-item-container .input-label-container select {
+    width: 100%;
+    margin-left: 2%;
+
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+.choose-item-section {
+    width: 35%;
+}
+
+.added-items-container {
+    width: 60%;
+}
+
+.search-checkbox-container {
+    margin-bottom: 3%;
+}
+
+.choose-service-checkbox-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1.5rem;
+    column-gap: 2%;
+    padding: 15px 0;
+    justify-content: space-evenly;
+    align-content: flex-start;
+    height: 40vh;
+    overflow-y: scroll;
+    border: 1px solid rgba(200, 200, 200, .4);
+}
+
+.checkbox-label {
+    cursor: pointer;
+    text-align: center;
+    font-size: 11px;
+    padding: 5px;
+    border: 1px solid var(--light-violet-color);
+    height: fit-content;
+    border-radius: 15px;
+    width: 32%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+
+.added-items-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 70px;
+    height: fit-content;
+}
+
+.added-items-container-header {
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.added-items-container-single {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.added-items-container-header>*,
+.item-container>* {
+    width: 30%;
+    text-align: center;
+}
+.item-container input{
+    border: 1px solid var(--gold-color);
+    border-radius: 1rem;
+    padding: 5px 0;
+}
+
+.item-container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(200, 200, 200, .4);
+    margin-top: 2%;
+    align-items: center;
+    padding-bottom: 1%;
+}
+
+.remove-element-container {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: fit-content;
+}
+
+.item-container label {
+    margin-top: 2%;
+}
+
+.item-quantity-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.item-quantity-container>i{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.item-quantity-container .bx-minus{
+    left: 20%;
+}
+.item-quantity-container .bx-plus{
+    right: 20%;
+}
+.item-quantity{
+    width: 30%;
+    text-align: center;
+}
+
+.remove-element {
+    cursor: pointer;
+}
+
+/* Payment method & date */
+.payment-method-field,
+.date-field{
+    width: 30%;
+    text-align: center;
+}
+.date-container.input-label-container>input {
+    width: fit-content;
+}
+
+@media(min-width:1024px) {
+    .billing-section {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 1px solid rgba(200,200,200,.4);
+    }
+
+    .billing-section>label {
+        width: 100%;
+        text-align: center;
+    }
+
+    .billing-section>.input-label-container {
+        width: 19%;
+        align-items: center;
+    }
+
+    .billing-section>.input-label-container>input {
+        width: 80%;
+    }
+    .billing-section>.phone-input-container>input {
+        width: 60%;
+    }
+    .checkbox-label {
+        font-size: 14px;
+    }
+}

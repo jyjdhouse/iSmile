@@ -1,0 +1,79 @@
+.blog-creation-main {
+    margin-top: 12vh;
+    margin-bottom: 5vh;
+    padding: 0 5%;
+}
+
+.input-error {
+    border: 1px solid red;
+}
+
+.input-label-container {
+    display: flex;
+    flex-direction: column;
+    margin: 7% 0;
+}
+
+main h1 {
+    font-size: 1.5rem;
+}
+
+.input-label-container label {
+    font-size: 1rem;
+}
+
+.text-input {
+    margin-top: 3%;
+    border: 1px solid grey;
+}
+
+input[type="checkbox"] {
+    width: 10%;
+}
+
+.text-input {
+    width: 60%;
+}
+
+.input-label-container textarea {
+
+    border: 1px solid grey;
+}
+
+.create-blog-form button {
+    width: 70%;
+    max-width: 250px;
+}
+
+/* Box de fotos */
+.images-radio-box-wrapper{
+    display: flex;
+    flex-direction: column;
+
+}
+.image-radio-box{
+    height: 200px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+
+}
+.image-radio-box .image-container{
+    width: 100%;
+    height: 80%;
+}
+.image-container label{
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+.image-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+@media(min-width:1024px){
+    .images-radio-box-wrapper{
+        flex-direction: row;
+    }
+}

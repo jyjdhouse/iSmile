@@ -2,12 +2,15 @@ window.addEventListener('load', () => {
 
     const navbarContainer = document.querySelector('.navbar-container')
     const bookConsultationContainer = document.querySelector('.book-consultation-container')
-    const openMenuBtn =  document.querySelector('.open-menu-button')
+    const openMenuBtn = document.querySelector('.open-menu-button')
     const body = document.querySelector('body')
     const closeMenuBtn = document.querySelector('.close-menu-btn')
-    const dropdownVisiblePart =document.querySelector('.item-dropdown-visible-part')
+    const dropdownVisiblePart = document.querySelector('.item-dropdown-visible-part')
     const dropdownContainer = document.querySelector('.dropdown-items-container')
     const navbar = document.querySelector('.navbar');
+
+    // Al inicio le meto esta clase para que no aparezca la transición
+    navbarContainer.classList.remove('hidden');
 
     openMenuBtn?.addEventListener('click', () => {
         navbarContainer.classList.add('navbar-container-active')
@@ -33,6 +36,21 @@ window.addEventListener('load', () => {
         // Le pongo la clase active al padre nomas, en css afecto a lo que quiero a partir de que este
         // sea active
         dropdownVisiblePart.closest('.item-dropdown').classList.toggle('item-dropdown-active');
+        // Cambio el p por el a
+        // Crear un nuevo elemento <a>
+        const parragraph = dropdownVisiblePart.querySelector('p')
+        const link = document.createElement('a');
+
+        // Establecer el atributo href del link
+        link.setAttribute('href', '/servicios');
+
+        // Copiar el contenido del párrafo al link
+        link.textContent = dropdownVisiblePart.textContent;
+
+        // Reemplazar el párrafo con el link
+        parragraph.parentNode.replaceChild(link, parragraph);
+
+
         navbarContainer.classList.toggle('overflow-auto');
         navbar.classList.toggle('dropdown-active')
     })

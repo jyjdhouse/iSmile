@@ -13,30 +13,22 @@ window.addEventListener('load', () => {
     const callMobileNumber = document.querySelector('.call-mobile-number');
     const callPhoneNumber = document.querySelector('.call-phone-number');
     const blackScreen = document.querySelector('.black-screen');
-    // logica para clickear iconos en footer mobile
-    footerIconsContainer.forEach((icon, indexIcon) => {
-        icon.addEventListener('click', () => {
-            // como estan separados los iconos de la data de cada uno
-            // pregunto si el index del icon es igual al index de la data
-            // y agrego clase
-            for (let indexData = 0; indexData < footerDataIconsContainer.length; indexData++) {
-                if (indexIcon === indexData) {
-                    footerDataIconsContainer[indexData].classList.add('mobile-footer-data-icon-container-active');
-                    blackScreen.classList.add('black-screen-active');
-                }
-            }
-
+    // Para abrir maps
+    const mapIcons = document.querySelectorAll('.bx-map');
+    mapIcons.forEach(icon => {
+        icon.addEventListener('click',()=>{
+            window.open('https://goo.gl/maps/UShCan3csFTSceQP9','_blank')
         })
     });
 
-    closeFooterDataBtn.forEach(btn => {
-        btn.addEventListener('click', () => {
+    closeFooterDataBtn?.forEach(btn => {
+        btn?.addEventListener('click', () => {
             footerDataIconsContainer.forEach(cont => cont.classList.remove('mobile-footer-data-icon-container-active'));
             blackScreen.classList.remove('black-screen-active');
         })
 
     });
-    blackScreen.addEventListener('click', () => {
+    blackScreen?.addEventListener('click', () => {
         footerDataIconsContainer.forEach(cont => cont.classList.remove('mobile-footer-data-icon-container-active'));
         blackScreen.classList.remove('black-screen-active');
     });
@@ -57,37 +49,37 @@ window.addEventListener('load', () => {
 
     // Para copiar al portapapeles
     const address = 'Avenida Santa Fé 2911 3 F, C1425 Buenos Aires'
-    copyAddress.addEventListener('click', () => {
+    copyAddress?.addEventListener('click', () => {
         navigator.clipboard.writeText(address)
-        copyAddress.innerHTML = 'Dirección copiada'
+        copyAddress.innerHTML = '<p class="copy-msg">Dirección copiada</p>'
         setTimeout(() => {
             copyAddress.innerHTML = `Av. Santa Fé 2911 3ºF<i class='bx bx-copy'></i>`
         }, 2000)
     })
 
     const mobilePhone = '+541124852020'
-    copyMobileNumberBtn.addEventListener('click', () => {
+    copyMobileNumberBtn?.addEventListener('click', () => {
         navigator.clipboard.writeText(mobilePhone)
-        mobileNumberContainer.innerHTML = 'Número copiado'
+        mobileNumberContainer.innerHTML = '<p class="copy-msg">Número copiado</p>'
         setTimeout(() => {
             mobileNumberContainer.innerHTML = `Cel: 11 2485 2020<i class='bx bx-copy copy-mobile-number'></i><i class='bx bx-phone call-mobile-number' ></i>`
         }, 2000)
     })
 
-    callMobileNumber.addEventListener('click', () => {
+    callMobileNumber?.addEventListener('click', () => {
         window.location.href = `tel:${mobilePhone}`;
     });
 
     const phone = '+541148245430'
-    copyPhoneNumberBtn.addEventListener('click', () => {
+    copyPhoneNumberBtn?.addEventListener('click', () => {
         navigator.clipboard.writeText(phone)
-        phoneNumberContainer.innerHTML = 'Número copiado'
+        phoneNumberContainer.innerHTML = '<p class="copy-msg">Número copiado</p>'
         setTimeout(() => {
             phoneNumberContainer.innerHTML = `Tel: 4824 5430<i class='bx bx-copy copy-phone-number'></i><i class='bx bx-phone call-phone-number' ></i>`
         }, 2000)
     })
 
-    callPhoneNumber.addEventListener('click', () => {
+    callPhoneNumber?.addEventListener('click', () => {
         window.location.href = `tel:${phone}`;
     });
  

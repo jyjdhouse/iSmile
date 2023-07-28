@@ -1,27 +1,13 @@
 const db = require('../database/models');
-module.exports = async function (id) {
+module.exports = async function () {
     return await db.Product.findAll({
         include: [
-            'keywords',
-            'colors',
-            'details',
-            'category',
-            'stocks',
             {
                 association: 'files',
-                include: ['color', 'fileType']
+                include: ['fileType']
             },
-            {
-                association: 'wishedUsers',
-                attributes: ['id'],
-                include: ['wishlistProducts']
-            },
-            {
-                association: 'outfitProducts',
-                // include: ['color']
-            },
-            
-
+            'temporalItems',
+            'category'
         ]
     });
 }

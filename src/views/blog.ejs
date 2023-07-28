@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <%- include('./partials/head.ejs') %>
+        <title>Blog <%= blog.id %>
+        </title>
+        <link rel="stylesheet" href="/css/blog.css">
+        <script src="/scripts/blog.js" type="module"></script>
+</head>
+
+<body>
+    <%- include('./partials/header.ejs') %>
+        <main class="blog-detail-main">
+
+            <% if(locals.userLogged && locals.userLogged.user_categories_id !=3) { %>
+                <form class="update-delete-btn-container popup" action="/blog/<%= blog.id %>?_method=DELETE"
+                    method="POST">
+                    <p class="blog-delete-popup-label">Estas seguro que quieres borrar <%= blog.title %>?</p>
+                    <button class="cancel-blog-delete">Cancelar</button>
+                    <button class="form-device-btn confirm-blog-delete" type="submit">Eliminar</button>
+                </form>
+                <div class="blog-admin-actions-container">
+                    <i class='bx bx-dots-vertical-rounded admin-toggle'></i>
+                    <div class="blog-admin-actions-dropdown">
+                        <div class="action-container">
+                            <a href="/blog/update/<%= blog.id %>">Actualizar Blog</a>
+                        </div>
+                        <div class="action-container">
+                            <button class="form-device-btn start-blog-delete"> Eliminar Blog </button>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+                    <article class="blog-detail-container">
+                        <div class="blog-detail-img-container">
+                            <% blog.files.forEach(file=> { %>
+                                <% if(file.main_image==1) { %>
+                                    <img src="<%=file.file_url %>" alt="<%=file.id %>" class="blog-detail-img">
+                                    <% } %>
+                                        <% }) %>
+
+                        </div>
+                        <div class="blog-detail-info-container">
+                            <div class="blog-detail-intro-container">
+                                <p class="blog-date">
+                                    <%= blog.createdAt %>
+                                </p>
+                                <h1>
+                                    <%= blog.title %>
+                                </h1>
+                            </div>
+                            <div class="blog-detail-text-container">
+                                <%= blog.text %>
+                            </div>
+                        </div>
+                    </article>
+                    <section class="other-img-list">
+                        <div class="mobile-carousel-container">
+                            <% if(blog.files.length ) %>
+                                <% blog.files.forEach((file, i)=> { %>
+
+                                    <% if(file.main_image==0) { %>
+
+                                        <div class="other-img-container">
+                                            <img src="<%= file.file_url %>" alt="<%= file.id %>">
+                                        </div>
+
+                                        <% } %>
+                                            <% }) %>
+
+                        </div>
+                    </section>
+        </main>
+        <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

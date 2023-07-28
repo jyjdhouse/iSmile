@@ -1,5 +1,5 @@
-<% if (locals.isLogged && userLogged['user_categories_id']!=1 || !locals.isLogged) { %> <!--Si NO es admin le meto el wpp-->
-  <a href="https://api.whatsapp.com/send?phone=+19412675656&text=Hola!&nbsp;Esto es una prueba%0AMe llamo Jano" target="_blank" class="whatsapp-link">
+<% if (locals.isLogged && (userLogged['user_categories_id']!=1 && userLogged['user_categories_id']!=2) || !locals.isLogged) { %> <!--Si NO es admin le meto el wpp-->
+  <a href="https://api.whatsapp.com/send?phone=+5491124852020&text=Hola!&nbsp;Esto es una prueba%0AMe llamo Jano" target="_blank" class="whatsapp-link">
     <img src="/img/WhatsApp-Logo.png" alt="WhatsApp">
   </a>
 <% } %>

@@ -7,7 +7,7 @@ module.exports=(sequelize,dataTypes)=>{
             primaryKey: true,
             autoIncrement:true
         },
-        name: {type: dataTypes.STRING(255)}
+        type: {type: dataTypes.STRING(45)}
     }
 
     let config = {
@@ -18,8 +18,12 @@ module.exports=(sequelize,dataTypes)=>{
     const FileType = sequelize.define(alias,cols,config);
 
     FileType.associate = (models)=>{
-        FileType.hasMany(models.File,{
-            as:'files',
+        FileType.hasMany(models.ProductFile,{
+            as:'productFiles',
+            foreignKey: 'file_types_id'
+        });
+        FileType.hasMany(models.BlogImage,{
+            as:'blogFiles',
             foreignKey: 'file_types_id'
         })
     };

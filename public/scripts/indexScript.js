@@ -6,14 +6,14 @@ window.addEventListener('unload', () => {
 window.addEventListener('load', () => {
     window.scrollTo(0, 0);
     let video = document.querySelector('.video');
-    // video.muted = true
-    // video.play();
+    video.muted = true
+    video.play();
 
     // Función que se ejecutará cuando se haga scroll
     function detectarElementoEnPantalla(e, element) {
         // console.log(e);
         const rect = element.getBoundingClientRect();
-        const elementPosition = rect.y //posicion que esta con respecto al total
+        const elementPosition = rect.y //posición que esta con respecto al total
         // if (window.pageYOffset >= elementPosition) {
         //     console.log('Se llego al elemento');
         // }
@@ -28,12 +28,12 @@ window.addEventListener('load', () => {
         // Verificar si el elemento está visible en la pantalla
         if (rect.top < windowBottom && rect.bottom > windowTop) {
             // El elemento está visible en la pantalla
-            console.log('Se llego al elemento');
-            // video.play(); //Arranca la reproduccion
+            // console.log('Se llego al elemento');
+            // video.play(); //Arranca la reproducción
         } else {
             // El elemento no está visible en la pantalla
             console.log('Se FUE del elemento');
-            // video.pause(); //Pausa la reproduccion
+            // video.pause(); //Pausa la reproducción
         }
     }
 
@@ -78,7 +78,7 @@ window.addEventListener('load', () => {
 
     // LOGICA para slideShow
     let slideImagesGroup;
-    // Depende que resolucion agarro los diferentes grupos
+    // Depende que resolución agarro los diferentes grupos
     if (isInDesktop()) {
         slideImagesGroup = document.querySelector('.slide-images-wraper-desktop').querySelectorAll('.slide-image-group')
     } else {
@@ -104,51 +104,69 @@ window.addEventListener('load', () => {
     let slideIntervalId = setInterval(updateSlideShow, 5000);
 
     // LOGICA para aboutUS
-    const detailsContainer = document.querySelector('.about-us-details-container');
-    const lists = document.querySelectorAll('.about-us-details-list');
-    // Funcion que maneja cuando el contenedor esta visible
-    const handleVisibleLists = () => {
-        lists.forEach((element, i) => {
-            element.style.transitionDelay = `${i * 1}s`
-            element.classList.add('about-us-details-list-visible')
-        });
-        detailsContainer.classList.add('about-us-details-container-active');
-    }
-    // Crear una instancia del Intersection Observer
-    const detailsObserver = checkIfIsInScreen(.4, handleVisibleLists, true);
-    detailsObserver.observe(detailsContainer);
     if (!isInDesktop()) { //Mobile
-        let aboutUsIndex = 1
-        function toggleActiveAboutUsInfo() {
-            const frames = document.querySelectorAll('.about-us-frame');
-            const details = document.querySelectorAll('.about-us-details-container-mobile .about-us-details-list')
-            frames.forEach((frame, index) => {
-                frame.classList.remove('about-us-frame-active', 'about-us-frame-next', 'about-us-frame-prev');
-                if (index === aboutUsIndex) {
-                    frame.classList.add('about-us-frame-active');
-                } else if (index === (aboutUsIndex + 1) % frames.length) {
-                    frame.classList.add('about-us-frame-next');
-                } else {
-                    frame.classList.add('about-us-frame-prev');
+        let startX = 0;
+        let deltaX = 0;
+        let currentIndex = 0;
+
+        const aboutUsFixedFramesWrapper = document.querySelector('.about-us-frames-space');
+        const aboutUsCarousel = document.querySelector('.about-us-frames-container')
+        const amountToScroll = window.innerWidth * 1.2; //Popr el column gap
+        aboutUsFixedFramesWrapper?.addEventListener('touchstart', (e) => { //Capturo donde arranca el touch
+            startX = e.touches[0].clientX;
+            aboutUsCarousel.classList.add('about-us-frames-container-moving');
+        });
+        aboutUsFixedFramesWrapper?.addEventListener('touchmove', (e) => {
+
+            deltaX = e.touches[0].clientX - startX; //Si es positivo desplaza para derecha, sino para izq
+
+            // Para que si llega a la ultima, no me mueva la foto
+            if (currentIndex <= 3 && currentIndex >= 0) {
+                // Traslado el carousel mientras scrollea
+                if (deltaX < 0) {//scrollLeft
+                    // Si no esta en la ultima...
+                    if (currentIndex < 2) {
+                        e.preventDefault();
+
+                        aboutUsCarousel.style.transform = `translateX(-${(currentIndex) * amountToScroll - deltaX * 1}px)`
+                    }
+
+                } else if (deltaX > 0 && currentIndex > 0) {//Mueve hacia la derecha
+                    e.preventDefault();
+                    aboutUsCarousel.style.transform = `translateX(${-(currentIndex) * amountToScroll + deltaX * 1}px)`;
+                };
+            };
+
+        }, { passive: false });
+        aboutUsFixedFramesWrapper?.addEventListener('touchend', (e) => {
+            aboutUsCarousel.classList.remove('about-us-frames-container-moving')
+            if (deltaX < 0 && currentIndex < 2) { //Si scrollLeft...
+                aboutUsCarousel.style.transform = `translateX(-${deltaX}px)`;
+                aboutUsCarousel.style.transform = `translateX(-${currentIndex * amountToScroll + amountToScroll}px)`;
+                currentIndex++
+            }
+            if (deltaX > 0 && currentIndex > 0) { //Si scrollRight...
+                aboutUsCarousel.style.transform = `translateX(${deltaX}px)`;
+                aboutUsCarousel.style.transform = `translateX(${-currentIndex * amountToScroll + amountToScroll}px)`;
+                currentIndex--
+            }
+            //LOGICA DE DOTS cuando hace un touch end
+            getActiveDot(currentIndex)
+        });
+
+        function getActiveDot(currentIndex){
+            const dots = document.querySelectorAll('.about-us-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.remove('about-us-dot-active')
+                if (i === currentIndex) {
+                    dot.classList.add('about-us-dot-active')
                 }
-            });
-            details.forEach((det, index) => {
-                det.classList.remove('about-us-details-list-active', 'about-us-details-list-next', 'about-us-details-list-prev');
-                if (index === aboutUsIndex) {
-                    det.classList.add('about-us-details-list-active');
-                } else if (index === (aboutUsIndex + 1) % details.length) {
-                    det.classList.add('about-us-details-list-next');
-                } else {
-                    det.classList.add('about-us-details-list-prev');
-                }
-            });
-            aboutUsIndex = (aboutUsIndex + 1) % frames.length;
+            })
         }
-        // Ejecutar la función cada 3 segundos
-        setInterval(toggleActiveAboutUsInfo, 3000);
+
     }
 
-
+    // LOGICA gallery show
     if (!isInDesktop()) { //Solo para mobile la logica
         const productGalleryCards = document.querySelectorAll('.product-gallery-card');
         let timeoutId = undefined;
@@ -169,25 +187,48 @@ window.addEventListener('load', () => {
                     // Este timeout es para que despues de 2 segundos de haber tocado lo vuelva a como estaba
                     timeoutId = setTimeout(() => {
                         card.classList.remove("product-gallery-card-hover");
+                        lastCardTouched = undefined;
                     }, time);
                 }
             });
         });
-
+        const galleryEditBtns = document.querySelector('.gallery-show').querySelectorAll('.change-image-btn');
+        const galleryCancelEditBtns = document.querySelector('.gallery-show').querySelectorAll('.cancel-file-action');
+        // Si hace click en el galleryEditBtns saco el timeout
+        galleryEditBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (timeoutId) clearTimeout(timeoutId)
+            });
+        });
+        // Si hace click en el Cancelar pongo el timout
+        galleryCancelEditBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const card = btn.closest('.product-gallery-card')
+                if (!timeoutId) {
+                    timeoutId = setTimeout(() => {
+                        card.classList.remove("product-gallery-card-hover");
+                        lastCardTouched = undefined;
+                    }, time);
+                }
+            });
+        });
     }
 
     // LOGICA para instagram posts
-
-    if (isInDesktop()) {
+    // Lo defino aca porque en mobile tiene repercución
+    const editBtns = document.querySelectorAll('.change-image-btn');
+    const cancelBtns = document.querySelectorAll('.cancel-file-action');
+    if (isInDesktop()) { //Desktop
         const igCards = document.querySelectorAll('.instagram-card');
-        igCards.forEach(card => {
+        igCards.forEach((card, i) => {
+            if (i == 0) card.classList.remove('instagram-card-active')
             card.addEventListener('mouseenter', () => {
-                const overlay = card.querySelector('.instagram-overlay');
-                overlay.classList.add('instagram-overlay-active');
+                const overlay = card.querySelector('.instagram-client-overlay');
+                overlay?.classList.add('instagram-client-overlay-active');
             });
             card.addEventListener('mouseleave', () => {
-                const overlay = card.querySelector('.instagram-overlay');
-                overlay.classList.remove('instagram-overlay-active');
+                const overlay = card.querySelector('.instagram-client-overlay');
+                overlay?.classList.remove('instagram-client-overlay-active');
             });
         });
     } else { //Mobile
@@ -202,6 +243,107 @@ window.addEventListener('load', () => {
             }
         }
         // Ejecutar la función cada 3 segundos
-        setInterval(toggleActiveImage, 3000);
+        let intervalId = setInterval(toggleActiveImage, 3000);
+
+        // Capturo edit clicks, si hay freno el intervalo
+        editBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Freno el intervalo
+                clearInterval(intervalId);
+            })
+        });
+        // Si cancelan vuelve el intervalo
+        cancelBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                intervalId = setInterval(toggleActiveImage, 3000);
+            });
+        });
     }
+
+    // Logica para editar contendio
+
+    let previousSrc;
+    editBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const form = btn.closest('.edit-file-overlay');
+            const cancelLabel = form.querySelector('.cancel-file-action');
+            const selectFileLabel = form.querySelector('.instagram-input-file-label');
+            const confirmFileBtn = form.querySelector('.confirm-instagram-file-btn');
+            cancelLabel.classList.remove('hidden');
+            selectFileLabel.classList.remove('hidden');
+            confirmFileBtn.classList.remove('hidden');
+        });
+    });
+    // Cuando tocan el boton de cancelar
+
+    cancelBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const form = btn.closest('.edit-file-overlay');
+            const cancelLabel = form.querySelector('.cancel-file-action');
+            const selectFileLabel = form.querySelector('.instagram-input-file-label');
+            const confirmFileBtn = form.querySelector('.confirm-instagram-file-btn');
+            cancelLabel.classList.add('hidden');
+            selectFileLabel.classList.add('hidden');
+            confirmFileBtn.classList.add('hidden');
+            // Vuelvo la imagen a la foto que tenia
+            if (previousSrc) {
+                form.closest('.instagram-card')?.querySelector('.instagram-image')?.setAttribute('src', previousSrc) ||
+                    form.closest('.landing-video-container')?.querySelector('.video')?.setAttribute('src', previousSrc) ||
+                    form.closest('.blog-background')?.querySelector('.blog-background-image')?.setAttribute('src', previousSrc) ||
+                    form.closest('.product-gallery-card')?.querySelector('.gallery-image')?.setAttribute('src', previousSrc);
+                previousSrc = undefined;
+            }
+
+            // Reiniciar el valor del elemento <input>
+            form.querySelector('input').value = '';
+        });
+    });
+
+    // Para mostrar la foto que subieron
+    const hiddenInputsFile = document.querySelectorAll('.edit-file-input');
+    hiddenInputsFile.forEach(input => {
+        input.addEventListener('change', (e) => { //Subieron un archivo para cambiar la foto
+            // Agarro esa foto
+            const form = input.closest('.edit-file-overlay');
+            const fileElement = form.closest('.instagram-card')?.querySelector('.instagram-image') ||
+                form.closest('.landing-video-container')?.querySelector('.video') ||
+                form.closest('.blog-background')?.querySelector('.blog-background-image') ||
+                form.closest('.product-gallery-card')?.querySelector('.gallery-image');
+            previousSrc = fileElement.getAttribute('src');
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                fileElement.setAttribute('src', e.target.result);
+            }
+            reader.readAsDataURL(file);
+            // Cuando hay un cambio en el input, se agregan 2 input hidden con section_id y position
+            let sectionInput = document.createElement('input');
+            sectionInput.name = 'home_sections_id';
+            sectionInput.setAttribute('hidden', true);
+            const sectionValue = form.dataset.sectionid;
+            sectionInput.value = sectionValue;
+            // Ahora el de position
+            let positionInput = document.createElement('input');
+            positionInput.name = 'position';
+            positionInput.setAttribute('hidden', true);
+            const positionValue = form.dataset.position;
+            positionInput.value = positionValue;
+            // Armo tambien el oldFilename
+            let oldFilenameInput = document.createElement('input');
+            oldFilenameInput.name = 'old_filename';
+            oldFilenameInput.setAttribute('hidden', true);
+            const oldFilenameValue = previousSrc.split('/')[previousSrc.split('/').length - 1];
+            oldFilenameInput.value = oldFilenameValue;
+            // Agrego todos al form
+            form.appendChild(sectionInput);
+            form.appendChild(positionInput);
+            form.appendChild(oldFilenameInput);
+
+        })
+    });
+
+
+
 })

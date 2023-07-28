@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+
+
+        <link rel="stylesheet" href="/css/productCreate.css" type="text/css">
+        <script src="/scripts/productUpdate.js" type="module"></script>
+        <title>Actualización producto</title>
+</head>
+
+<body>
+    <%- include('./partials/header.ejs') %>
+
+        <main class="product-create-main">
+            <h2 class="product-create-title">Actualización producto</h2>
+
+
+            <form action="/product/<%=productToUpdate.id %>?_method=PUT" class="create-product-form"
+                enctype="multipart/form-data" method="POST">
+                <div class="input-label-container">
+                    <label for="name">Nombre</label>
+                    <input type="text" name="name" value="<%= productToUpdate.name %>" class="required-input">
+                </div>
+                <div class="input-label-container">
+                    <label for="category">Categoría</label>
+                    <select name="category" id="">
+                        <% categories.forEach(cat=> { %>
+                            <option value="<%= cat.id %>" <%=productToUpdate.category_id==cat.id ? 'selected' : '' %>>
+                                <%=cat.category%>
+                            </option>
+                            <% }) %>
+
+                    </select>
+                </div>
+                <div class="input-label-container">
+                    <label for="description">Descripción</label>
+                    <textarea name="description" id="" cols="30" rows="10"
+                        class="required-input"><%= productToUpdate.description %></textarea>
+                </div>
+                <div class="input-label-container">
+                    <label for="price">Precio</label>
+                    <input type="text" name="price" value="<%= productToUpdate.price %>" class="required-input">
+                </div>
+                <div class="input-label-container">
+                    <label id='device-image' class="form-labels" for="images">Agregar imagenes</label>
+                    <input class="form-input" type="file" name="images" multiple>
+                </div>
+                <div class="input-label-container files-displayed-wrapper">
+
+                    <label class="form-labels files-displayed-wrapper-title">Imagenes actuales <span class="grey">(toca el tick para destildar la que quieres sacar)</span></label>
+                    <% productToUpdate.files.map((file, i)=> { %>
+                        <div class="current-img-subcontainer">
+                            <div class="file-container">
+                                <% if (file.file_types_id==1) { %>
+                                    <img class="product-to-update-img" src="<%= file.file_url %>"
+                                        alt="<%= file.id %>">
+                                    <% } else if(file.file_types_id==2){ %>
+                                        <video class="video product-to-update-img" muted playsinline loop>
+                                            <source src="<%= file.file_url %>" type="video/mp4">
+                                            <source src="<%= file.file_url %>" type="video/webm">
+                                            No se puede reproducir el video
+                                        </video>
+                                        <% } %>
+                            </div>
+                            <input type="checkbox" id="<%= i %>" name="current_imgs" checked
+                                value="<%= file.filename %>" class="input-checkbox">
+                        </div>
+                        <% }) %>
+                </div>
+
+                <button type="submit">Actualizar</button>
+
+            </form>
+
+            </div>
+        </main>
+        <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

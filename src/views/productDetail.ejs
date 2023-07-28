@@ -4,51 +4,172 @@
 <head>
     <%- include('./partials/head.ejs') %>
         <link rel="stylesheet" href="/css/productDetail.css">
-        <script src="/scripts/productDetail.js" type="module"></script>
-        <title>Producto #1</title>
+        <link rel="stylesheet" href="/css/productCard.css">
+        <script src="/scripts/productList.js" type="module"></script>
+        <script src="/scripts/productDetailScript.js" type="module"></script>
+        <script src="/scripts/productCard.js" type="module"></script>
+        <title>
+            <%= product.name %>
+        </title>
 </head>
 
 <body>
-                <%- include('./partials/header.ejs') %>
-                            <main class="product-detail-main">
-                                <section class="product-info-container">
-                                    <div class="main-img-container">
-                                        <img src="/img/products/product1.png" alt=""> 
+    <%- include('./partials/header.ejs') %>
+        <main class="product-detail-main">
+            
+           <% if(locals.userLogged && locals.userLogged.user_categories_id != 3) { %>
+                       
+            <div class="admins-actions-container">
+                <div class="action-container">
+                    <a href="/product/update/<%= product.id %>">Actualizar producto</a>
+                </div>
+                <div class="action-container">
+                    <button class="form-device-btn start-product-delete"> Eliminar producto </button>
+                </div>
+                <form class="update-delete-btn-container popup" action="/product/<%= product.id %>?_method=DELETE"
+                    method="POST">
+                    <p class="product-delete-popup-label">Estas seguro que quieres borrar <%= product.name %>?</p>
+                    <button class="cancel-product-delete">Cancelar</button>
+                    <button class="form-device-btn confirm-product-delete" type="submit">Eliminar</button>
+                </form>
+            </div>
+            <% } %>
+            <article class="product-container" data-productid=<%=product.id %>>
+                <div class="first-column">
+                    
+                    <div class="main-img-container">
+                        <% if (product.files[0]) { %>
+                            <% if (product.files[0].file_types_id==1) /*FOTO*/ { %>
+                                <img src="<%= product.files[0]?.file_url %>" class="main-img"
+                                alt="<%= product.name%>-<%=product.files[0]?.filenanme %>">
+                            <% } else if(product.files[0].file_types_id==2) { /*VIDEO*/ %>
+                            <video
+                                class="video main-img"
+                                muted playsinline loop>
+                                <source src="<%= product.files[0]?.file_url %>" type="video/mp4">
+                                <source src="<%= product.files[0]?.file_url %>" type="video/webm">
+                                No se puede reproducir el video
+                            </video>
+                            <% } %>
+                        <% }else{ %>
+                            <img src="/img/product/default.png" class="main-img"
+                            alt="main-image">
+                        <% } %>
+                        
+                        
+                    </div>
+                    <div class="other-product-imgs-container">
+                        <% product.files.forEach((file, i)=> { %>
+                                <div class="other-img-container <%= i==0 && 'other-img-container-active' %>">
+                                    <% if (file.file_types_id==1) { %> <!--FOTO-->
+                                        <img src="<%= file?.file_url %>" class="product-img"
+                                            alt="<%= product.name%>-<%=file?.filenanme %>">
+                                    <% } else if(file.file_types_id==2){ %> <!--VIDEO-->
+                                        <video
+                                        class="video product-img"
+                                        muted playsinline loop>
+                                        <source src="<%= file?.file_url %>" type="video/mp4">
+                                        <source src="<%= file?.file_url %>" type="video/webm">
+                                        No se puede reproducir el video
+                                    </video>
+                                    <% } %>
+                                </div>
+                        <% }) %>
+                    </div>
+                </div>
+                <div class="second-column">
+                    <div class="product-detail-info-container">
+                        <div class="product-title-container">
+                            <h1 class="product-title product-name">
+                                <%= product.name %>
+                            </h1>
+                            <h3 class="product-title product-price">
+                                $<%= product.price %>
+                            </h3>
+                        </div>
+                        <div class="product-description-container">
+                            <p>
+                                <%= product.description %>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="purchase-product-container add-cart-button-container" data-productid=<%=product.id %>>
+                            <button class="cart-options-btn quick-add-cart-btn" type="submit">
+                                Añadir al carro
+                            </button>
+                            <button class="cart-options-btn remove-cart-product hidden" type="submit">
+                                Añadido al carro
+                            </button>
+                            <%- include('./partials/loadingSpinner.ejs') %>
+                    </div>
+                </div>
+
+
+            </article>
+            <section class="suggested-product-section">
+
+                <div class="suggested-product-title-container">
+                    <h2>Productos sugeridos</h2>
+                </div>
+
+                <div class="suggested-product-list">
+                    <% suggestedProducts.forEach(sugProd=> { %>
+                        <article class="product-card-container suggested-product-card-detail-container"
+                            data-productId=<%=sugProd.id %>>
+                            <a href="/product/<%= sugProd.id %>" class="product-card-link">
+                                <div class="image-container suggested-image-container">
+                                    <div class="image-carousel">
+                                        <% if (sugProd.files.length) { %>
+                                            <% sugProd.files.forEach((file,i)=> { %>
+                                                <% if (file.file_types_id==1) { %> <!--FOTO-->
+                                                    <img src="<%= file?.file_url || 'img/product/default.png'%>"
+                                                        alt="<%= sugProd.name %>-<%= file.filename %>"
+                                                        class="product-image-test <%= i==0 && 'product-image-test-active' %>  product-detail-suggested-media"
+                                                        data-productId=<%=sugProd.id %> >
+                                                    <% }else if(file.file_types_id==2){ %> <!--VIDEO-->
+                                                        <video
+                                                            class="video product-image-test product-detail-suggested-media"
+                                                            muted playsinline loop>
+                                                            <source src=<%= file?.file_url %> type="video/mp4">
+                                                            <source src=<%= file?.file_url %> type="video/webm">
+                                                            No se puede reproducir el video
+                                                        </video>
+                                                        <% } %>
+                                                            <% }) %>
+                                        <% } else{ %>
+                                            <img src="/img/product/default.png" alt="default-img"
+                                                        class="product-image-test product-image-test-active product-detail-suggested-media"
+                                                        data-productId=<%=sugProd.id %> >
+                                        <% } %>
+                                        
                                     </div>
-                                    <div class="other-product-imgs-container">
-                                        <div class="other-img-container">
-                                            <img src="/img/products/product1.png" alt="">
-                                        </div>
-                                        <div class="other-img-container">
-                                            <img src="/img/products/product2.png" alt="">
-                                        </div>
-                                        <div class="other-img-container">
-                                            <img src="/img/products/product3.png" alt="">
-                                        </div>
-                                        <div class="other-img-container">
-                                            <img src="/img/products/product2.png" alt="">
-                                        </div>
-                                       
+                                </div>
+                                <div class="product-info-container suggested-product-info-container">
+                                    <div class="price-name-container">
+                                        <p class="product-name">
+                                            <%= sugProd.name %>
+                                        </p>
+                                        <p class="product-price">$<%= sugProd.price %>
+                                        </p>
                                     </div>
-                                    <div class="product-info-container">
-                                        <div class="product-title-container">
-                                            <h1>Crema antiage</h1>
-                                        </div>
-                                        <div class="product-description-container">
-                                            <p>Description 1</p>
-                                            <p>Description 2</p>
-                                            <p>Description 3</p>
-                                        </div>
+                                </div>
+                            </a>
+                            <div class="product-quick-actions-container suggested-quick-cart-container"
+                                data-productId=<%=sugProd.id %> >
+                                <div class="quick-cart-container" data-productid=<%=sugProd.id %>>
+                                    <div class="logo-container">
+                                        <i class='bx bx-shopping-bag quick-add-cart-btn'></i>
+                                        <i class='bx bx-check-circle remove-cart-product hidden'></i>
                                     </div>
-                                    <div class="purchase-product-container">
-                                        <div class="product-quantity-container">
-                                            <button class="add-quantity"><i class='bx'></i></button>
-                                            <button class="add-to-cart">Añadir al carrito</button>
-                                        </div>
-                                    </div>
-                                </section>  
-                            <main>
-                                
+                                </div>
+                                <%- include('./partials/loadingSpinner.ejs') %>
+                            </div>
+                        </article>
+                        <% }) %>
+                </div>
+            </section>
+            <main>
+
                 <%- include('./partials/footer.ejs') %>
 </body>
 

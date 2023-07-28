@@ -1,1 +1,1 @@
-# i-smile
+# iSmile

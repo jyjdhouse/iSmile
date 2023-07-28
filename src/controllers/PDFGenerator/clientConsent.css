@@ -1,0 +1,134 @@
+/* MEDIDAS IPAD 9na Gen width: 1080px aprox*/
+@page {
+  size: A4;
+  /* Puedes utilizar otros valores como "letter", "legal", "A3", etc. */
+  /* Opciónes adiciónales para controlar los márgenes de la página */
+}
+
+/* .patient-option {
+  width: fit-content;
+} */
+
+.block {
+  display: block;
+}
+.bold{
+  font-weight: 600;
+}
+.form {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-title {
+  width: 100%;
+  text-align: center;
+  margin: 15px 0;
+  font-size: 18px;
+}
+
+.consentment-text {
+  /* letter-spacing: 1px; */
+}
+
+input {
+  border: 0;
+  border-bottom: 1px solid #bc75f2;
+  margin: 0 5px;
+}
+
+.paragraph {
+  display: block;
+  margin: 10px 0;
+  position: relative;
+}
+
+.paragraph textarea {
+  display: block;
+  width: 100%;
+  resize: none;
+  min-height: 50px;
+  /* margin-top: 5px; */
+  border: 1px solid #bc75f2;
+}
+
+.button-container {
+  width: 100%;
+  display: flex;
+  /* justify-content: center; */
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+button {
+  width: 40%;
+  border: none;
+  background-color: #fff;
+  border: 1px solid #bba059;
+  border-radius: 1rem;
+  color: #000;
+  padding: .8rem 0;
+  margin-top: 5rem;
+}
+
+.error-msg {
+  position: absolute;
+  font-size: 11px;
+}
+
+.error-msg .bx {
+  transform: rotate(180deg);
+  position: absolute;
+  left: -12%;
+  top: -5%;
+  font-size: 13px;
+}
+
+.name-error {
+  left: 6%;
+}
+
+.id-error {
+  left: 33%;
+}
+
+.address-error {
+  left: 63.4%;
+}
+
+@keyframes rebound {
+  0% {
+    transform: translateY(0);
+  }
+
+  25% {
+    transform: translateY(-10px);
+  }
+
+  50% {
+    transform: translateY(0);
+  }
+
+  75% {
+    transform: translateY(-5px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.form-error-msg {
+  color: rgb(198, 23, 23);
+}
+
+.send-form-button-error {
+  animation: rebound 0.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+  background-color: rgb(198, 23, 23);
+  color: white;
+}

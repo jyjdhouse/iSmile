@@ -1,7 +1,7 @@
 import { activateClass, changeCartProductDimension, changeWishlistProductDimension, deactivateClass } from './utils.js';
 window.addEventListener('load', () => {
     
-
+    // window.scrollTo(0,0);
     // LOGICA DEL HEADER AL SCROLLEAR
     const header = document.querySelector('.header');
 
@@ -11,15 +11,21 @@ window.addEventListener('load', () => {
     const headerShow = () => { //Para hacer el header aparezca/desaparezca
         let prevScrollPos = window.pageYOffset;
         window.onscroll = function () {
-
+            
             let minScroll = window.scrollY >= window.innerHeight * 0.1; //Mayor a 10vh
             let currentScrollPos = window.pageYOffset;
-            if (minScroll) {
-                header.classList.add('header-active');
-                header.classList.remove('header-hidden');
-            }
+            if(minScroll){
+                if (prevScrollPos > currentScrollPos) { //Scroll Up
+                    header.classList.add('header-active');
+                    header.classList.remove('header-hidden');
+    
+                } else { //Scroll Down
+                    header.classList.remove('header-active');
+                    header.classList.add('header-hidden');
+                }
+            }    
             if (isAtTop()) {
-                header.classList.add('header-hidden');
+                header.classList.remove('header-hidden');
                 header.classList.remove('header-active');
             }
             prevScrollPos = currentScrollPos;
@@ -28,32 +34,20 @@ window.addEventListener('load', () => {
 
     headerShow();
 
-    // LOGICA DEL POPUP CART
-    const openPopupCartBtn = document.querySelector('.open-popup-cart-btn');
-    const popupCart = 'cart-popup-container';
-    const closePopupCartBtn = document.querySelector('.close-popup-cart-btn');
-    openPopupCartBtn.addEventListener('click', () => {
-        body.classList.add('noScroll');
-        activateClass([blackScreen, popupCart]);
-        changeCartProductDimension();
-    });
-    closePopupCartBtn?.addEventListener('click', () => {
-        body.classList.remove('noScroll');
-        deactivateClass([blackScreen, popupCart]);
+    // Logica del userLoggedMenu
+    const userLoggedOptions = document.querySelector('.logged-menu-container');
+    const userLoggedOptionsToggler = document.querySelector('.user-logged-menu-toggler');
+    userLoggedOptionsToggler?.addEventListener('click',()=>{
+        userLoggedOptions.classList.toggle('logged-menu-container-active');
     });
 
-    // LOGICA DEL POPUP WHISLIST
-    const openPopupWishlistBtn = document.querySelector('.open-popup-wishlist-btn');
-    const popupWishlist = 'wishlist-popup-container';
-    const closePopupWishlistBtn = document.querySelector('.close-popup-wishlist-btn');
-    openPopupWishlistBtn?.addEventListener('click', () => {
-        body.classList.add('noScroll');
-        activateClass([blackScreen, popupWishlist]);
-        changeWishlistProductDimension();
-    });
-    closePopupWishlistBtn?.addEventListener('click', () => {
-        body.classList.remove('noScroll');
-        deactivateClass([blackScreen, popupWishlist]);
+    // Logica por si tocan el expandible del menu
+    const createOptionsToggler = document.querySelector('.create-options-toggler');
+    const adminMenuList = document.querySelector('.admin-menu-list');
+    const adminMenuArrow = document.querySelector('.create-options-toggler');
+    createOptionsToggler?.addEventListener('click',()=>{
+        adminMenuArrow.classList.toggle('rotated');
+        adminMenuList.classList.toggle('admin-menu-list-active');
     });
 
     

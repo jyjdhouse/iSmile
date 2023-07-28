@@ -1,6 +1,20 @@
-:root{
-    --violet-color: #bc75f2;
+:root {
+    --light-violet-color: #bc75f2;
+    --violet-color: #431d69;
     --gold-color: #bba059;
+    --red-color: rgb(198, 23, 23);
+    --bold-color: #580846;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.icon{
+    font-size: 26px !important;
 }
 .overlay {
     position: absolute;
@@ -8,14 +22,23 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, .3);
+    background: #fff
 }
-input{
+
+input {
     outline: none;
 }
+
 a {
     color: #000;
     text-decoration: none;
+}
+select,option{
+    color: #000;
+}
+button {
+    color: #000;
+    background: none;
 }
 
 li {
@@ -23,11 +46,101 @@ li {
 }
 
 .bold {
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--bold-color);
 }
+
 .violet {
     color: var(--violet-color);
 }
-.overflow-auto{
+
+.grey{
+    color: #888;
+}
+.overflow-auto {
     overflow: auto;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.red {
+    color: var(--red-color) !important;
+}
+
+/* SACAR FLECHAS INPUT TYPE NUMBER */
+/* SACAR FLECHAS INPUT TYPE NUMBER */
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.error-card{
+    padding: 10px;
+    position: absolute;
+    background: var(--red-color);
+    color: #ccc;
+    border-radius: 0.5rem;
+    right: 0;
+    bottom: 5vh;
+    transition: all 2s ease;
+}
+.error-card-inactive{
+    opacity: 0;
+}
+.page-title {
+    text-transform: uppercase;
+}
+.uppercase{
+    text-transform: uppercase;
+}
+@media(min-width:1024px){
+    .icon{
+        font-size: 35px !important;
+    }
+}
+@keyframes rebound {
+    0% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(-10px);
+    }
+
+    50% {
+        transform: translateY(0);
+    }
+
+    75% {
+        transform: translateY(-5px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.send-form-button-error {
+    animation: rebound 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+    background-color: var(--red-color);
+    color: white;
+}
+
+.error-msg {
+    color: var(--red-color);
+}
+
+.available {
+    color: #000 !important;
 }

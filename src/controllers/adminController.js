@@ -1,82 +1,57 @@
 const db = require('../database/models');
-const bcrypt = require('bcryptjs');
 
 // Utils
-const getColors = require('../utils/getColors');
-const getCategories = require('../utils/getCategories');
-const getSizes = require('../utils/getSizes');
-const getProduct = require('../utils/getProduct');
+const getAllTreatments = require('../utils/getAllTreatments');
 const getDeepCopy = require('../utils/getDeepCopy');
-const getAllProducts = require('../utils/getAllProducts');
-const adaptProductsToBeListed = require('../utils/adaptProductsToBeListed');
+const countryCodes = require('../utils/staticDB/countryCodes');
+const provinces = require('../utils/staticDB/provinces');
+const paymentMethods = require('../utils/staticDB/paymentMethods');
+const orderStatus = require('../utils/staticDB/orderStatus');
+
+// Libreries
+const fs = require('fs')
+
+// Utils
+
+
+const orderByAlfabet = (array) => {
+    return array.sort((a, b) => {
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+
+        if (nameA < nameB) {
+            return -1; // a debe estar antes que b
+        }
+        if (nameA > nameB) {
+            return 1; // a debe estar después que b
+        }
+        return 0; // a y b son iguales
+    });
+}
 
 const controller = {
-    preCheckout: async (req, res) => {
-        try {
-            return res.render('checkout', { categories: await getCategories() })
-        } catch (error) {
-            console.log(`Falle en adminController.preCheckout: ${error}`);
-            return res.json(error);
-        }
+    registerSale: async (req, res) => {
+        const products = await db.Product.findAll()
+        return res.render('registerSale', { products, paymentMethods, countryCodes, provinces })
     },
-    changeAdminPass: async (req, res) => {
-        try {
-            let user = await db.User.findByPk(2);
-            let newPassword = '123456';
-            await db.User.update({
-                password: bcrypt.hashSync(newPassword, 10)
-            }, {
-                where: {
-                    id: 2
-                }
-            })
-            return res.send('listo!')
-        } catch (error) {
-            console.log(`Falle en adminController.list: ${error}`);
-            return res.json(error);
-        }
+    updateServicesPrice: async (req, res) => {
+        let treatments = getDeepCopy(await getAllTreatments());
+        treatments = orderByAlfabet(treatments);
+        return res.render('updateServicePrice', { treatments });
     },
-    createProduct: async (req, res) => {
-        try {
-            let products = await getAllProducts();
-            products = adaptProductsToBeListed(products);
-            products.forEach(product => { //Dejo a cada color con 1 foto
-                product.colors.forEach(color => {
-                    color.files = color.files[0];
-                });
-            });
-            // return res.send(products)
-            return res.render('productCreate', { colors: await getColors(), categories: await getCategories(), sizes: await getSizes(), products});
-        } catch (error) {
-            console.log(`Falle en adminController.createProduct: ${error}`);
-            return res.json(error);
-        }
+    showMedicalForm: (req, res) => {
+        return res.render('ClientMedicalInfo.ejs')
     },
-    editProduct: async (req, res) => {
-        try {
-            const { id } = req.params
-            let product = await getProduct(id);
-            // // Hacer una copia profunda de product
-            product = getDeepCopy(product);
-            
-            // Actualizar la propiedad "colors" para que sea [1,2,3] con los ids
-            product.colors = product.colors.map(col => col.id);
-            
-            // return res.send(product);
-            return res.render('productEdit', { product, colors: await getColors(), categories: await getCategories(), sizes: await getSizes() })
-        } catch (error) {
-            console.log(`Falle en adminController.editProduct: ${error}`);
-            return res.json(error);
-        }
+    budget: async (req, res) => {
+        let treatments = await getAllTreatments();
+        // return res.send(treatments);
+        return res.render('budget.ejs', { products: treatments })
     },
-    destroyProduct: async(req,res) => {
-        const {id} = req.params;
-        await db.Product.destroy({
-            where: {
-                id
-            }
-        });
-        return res.redirect('/test/list');
+    consent: (req, res) => {
+        return res.render('clientConsent');
+    },
+    orderList: async (req, res) => {
+        return res.render('orderList', { orderStatus })
     }
 };
 

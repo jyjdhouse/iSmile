@@ -27,6 +27,11 @@
 .frequent-a-q-list-item p {
     margin-top: 5%;
 }
+.frequent-a-q-list-item p a{
+    color: var(--violet-color);
+    text-decoration: underline 1px var(--violet-color);
+    cursor: pointer;
+}
 
 .form-content-container {
     width: 100%;

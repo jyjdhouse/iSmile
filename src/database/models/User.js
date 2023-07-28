@@ -3,23 +3,22 @@ module.exports = (sequelize, dataTypes) => {
 
     let cols = {
         id: {
-            type: dataTypes.INTEGER,
+            type: dataTypes.STRING(36),
             primaryKey: true,
-            autoIncrement: true
         },
-        name: { type: dataTypes.STRING(255) },
+        first_name: { type: dataTypes.STRING(255) },
         last_name: { type: dataTypes.STRING(255) },
-        email: { type: dataTypes.STRING(255) },
+        birth_date: {type: dataTypes.DATE},
+        genres_id: {type: dataTypes.INTEGER},
+        phone: { type: dataTypes.STRING(100) },
+        dni: { type: dataTypes.STRING(8) },
         password: { type: dataTypes.STRING(255) },
-        address: { type: dataTypes.TEXT },
-        dni: { type: dataTypes.STRING(45) },
-        phone_number: { type: dataTypes.STRING(255) },
-        notifications: { type: dataTypes.TINYINT },
-        user_categories_id: { type: dataTypes.INTEGER },
-        last_wishlist_email: { type: dataTypes.DATE },
-        last_cart_email: { type: dataTypes.DATE },
-        wishlist_period_type: { type: dataTypes.STRING(1) },
-        cart_period_type: { type: dataTypes.STRING(1) }
+        email: { type: dataTypes.STRING(255) },
+        wpp_notifications: { type: dataTypes.TINYINT },
+        email_notifications: { type: dataTypes.TINYINT },
+        email_newsletter: { type: dataTypes.TINYINT },
+        user_categories_id: {type: dataTypes.INTEGER},
+        password_token: { type: dataTypes.TEXT }
     }
 
     let config = {
@@ -30,14 +29,22 @@ module.exports = (sequelize, dataTypes) => {
     const User = sequelize.define(alias, cols, config);
 
     User.associate = (models) => {
-        User.belongsTo(models.UserCategory, {
+       User.belongsTo(models.Genre, {
+            as: 'genre',
+            foreignKey: 'genres_id',
+        }) 
+        User.hasOne(models.ShippingAddress, {
+            as: 'shippingAddress',
+            foreignKey: 'users_id',
+        });
+        User.hasOne(models.TemporalCart, {
+            as: 'temporalCart',
+            foreignKey: 'users_id',
+        });
+        User.belongsTo(models.UserCategory,{
             as: 'userCategory',
             foreignKey: 'user_categories_id'
-        })
-        User.hasMany(models.Wishlist, {
-            as: 'wishlistProducts',
-            foreignKey: 'users_id',
-        })
+        });
     };
 
     return User;
