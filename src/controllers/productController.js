@@ -15,13 +15,7 @@ const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = re
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 const sharp = require('sharp')
-// utils
-const getRandomItems = require('../utils/getRandomItems');
-const getProduct = require('../utils/getProduct');
-const getDeepCopy = require('../utils/getDeepCopy');
-const getAllProducts = require('../utils/getAllProducts');
-// const adaptProductsToBeListed = require('../utils/adaptProductsToBeListed');
-// const getCountryCodes = require('../utils/getCountryCodes');
+
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
 const accessKey = process.env.ACCESS_KEY;
@@ -34,6 +28,14 @@ const s3 = new S3Client({
     },
     region: bucketRegion
 });
+
+// utils
+const getRandomItems = require('../utils/getRandomItems');
+const getProduct = require('../utils/getProduct');
+const getDeepCopy = require('../utils/getDeepCopy');
+const getAllProducts = require('../utils/getAllProducts');
+// const adaptProductsToBeListed = require('../utils/adaptProductsToBeListed');
+// const getCountryCodes = require('../utils/getCountryCodes');
 const controller = {
     list: async (req, res) => { //Controlador que renderiza listado de productos
         try {

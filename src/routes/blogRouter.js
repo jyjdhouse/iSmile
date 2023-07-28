@@ -23,6 +23,6 @@ router.post('/', isAdminMiddleware, uploadBlogImage.any('images'),blogController
 
 router.put('/:blogId',isAdminMiddleware,uploadBlogImage.any('images'),blogController.processBlogUpdate);
 
-router.delete('/:blogId',isAdminMiddleware, blogController.deleteProduct);
+router.delete('/:blogId',isAdminMiddleware, blogController.deleteBlog);
 
 module.exports=router;

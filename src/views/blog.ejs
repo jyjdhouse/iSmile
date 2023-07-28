@@ -35,9 +35,9 @@
                 <% } %>
                     <article class="blog-detail-container">
                         <div class="blog-detail-img-container">
-                            <% blog.images.forEach(img=> { %>
-                                <% if(img.main_image==1) { %>
-                                    <img src="/img/blog/<%=img.filename %>" alt="<%=img.id %>" class="blog-detail-img">
+                            <% blog.files.forEach(file=> { %>
+                                <% if(file.main_image==1) { %>
+                                    <img src="<%=file.file_url %>" alt="<%=file.id %>" class="blog-detail-img">
                                     <% } %>
                                         <% }) %>
 
@@ -58,13 +58,13 @@
                     </article>
                     <section class="other-img-list">
                         <div class="mobile-carousel-container">
-                            <% if(blog.images.length ) %>
-                                <% blog.images.forEach((img, i)=> { %>
+                            <% if(blog.files.length ) %>
+                                <% blog.files.forEach((file, i)=> { %>
 
-                                    <% if(img.main_image==0) { %>
+                                    <% if(file.main_image==0) { %>
 
                                         <div class="other-img-container">
-                                            <img src="/img/blog/<%=img.filename %>" alt="<%= img.id %>">
+                                            <img src="<%= file.file_url %>" alt="<%= file.id %>">
                                         </div>
 
                                         <% } %>

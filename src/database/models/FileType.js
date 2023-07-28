@@ -19,7 +19,11 @@ module.exports=(sequelize,dataTypes)=>{
 
     FileType.associate = (models)=>{
         FileType.hasMany(models.ProductFile,{
-            as:'files',
+            as:'productFiles',
+            foreignKey: 'file_types_id'
+        });
+        FileType.hasMany(models.BlogImage,{
+            as:'blogFiles',
             foreignKey: 'file_types_id'
         })
     };

@@ -25,7 +25,7 @@
 
      Blog.associate = (models) => {
          Blog.hasMany(models.BlogImage, {
-             as: 'images',
+             as: 'files',
              foreignKey: 'blog_id'
          });
      };

@@ -1,19 +1,9 @@
 // MULTER
 const multer = require('multer'); /* Requerir multer. En el form como atributo va --> (enctype = "multipart/form-data") */
-const path = require('path');
 
-const storage = multer.diskStorage({
-    destination: (req,file,cb) => {
-        cb(null,'./public/img/blog');
-        return 
-    },
-    filename: (req,file,cb)=>{
-        const randomString = Math.random().toString(36).substring(2, 2 + 10);
-        console.log(file);
-        cb(null, file.fieldname + '-' + randomString + path.extname(file.originalname))
-    }
-});
-
-let upload = multer({storage});
+// Esto es para usar la memoria, se valida, modifica la foto en memoria y despues se lleva
+// a S3 sin pasar for fs
+const storage = multer.memoryStorage();
+const upload= multer({ storage:storage });
 
 module.exports = upload;
