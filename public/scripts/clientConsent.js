@@ -176,7 +176,7 @@ window.addEventListener('load', () => {
 
             // Limpia los recursos del enlace
             URL.revokeObjectURL(linkToDownload.href);
-            console.log(response);
+            // console.log(response);
         };
     });
 });

@@ -49,7 +49,6 @@ window.addEventListener('load', () => {
                 ` : null
                     ;
                 listenRemoveLabelsBtns();
-                listenFileInputs();
 
             });
         });
@@ -59,11 +58,7 @@ window.addEventListener('load', () => {
         const btns = document.querySelectorAll('.shown-label');
         btns.forEach(btn => {
             btn.addEventListener('click', () => {
-                btn.remove();
-                const id = btn.dataset.id;
-                // Ahora tengo que borrar el input del form
-                const treatmentInputs = Array.from(document.querySelectorAll('input[name="treatments_id"'));
-                treatmentInputs.find(inp => inp.value == id).remove();
+                btn.closest('.shown-label-container').remove();
             })
         })
     };
@@ -88,46 +83,69 @@ window.addEventListener('load', () => {
         });
     }
     listenToSearchInput();
-    // LOGICA para las fotos de los input
-    function listenFileInputs() {
-        const fileInputs = document.querySelectorAll("input[type='file'");
-        fileInputs.forEach(inp => {
-            inp.addEventListener('change', async (e) => {
-                const base64Img = await getBase64(e.target.files[0])
-                const container = inp.closest('.shown-label-container');
-                // Busco si ya esta en la lista que voy a mandar
-                let treatmentToAppendFileIndex = selectedTreatments.findIndex(treat => treat.id == container.dataset.id);
-                selectedTreatments[treatmentToAppendFileIndex].file = base64Img;
-                return
 
-            })
-        })
+    // Muestro o saco el spinner de 'cargando'
+    function handleSpinnerBehave(boolean) {
+        const loadingContainer = document.querySelector('.button-loading-spinner');
+        const loadingAnimation = document.querySelector('.button-loading-spinner .loading-container');
+        if (boolean) { //Muestro
+            loadingContainer.classList.add('button-loading-spinner-active');
+            loadingAnimation.classList.add('loading-container-active');
+            return
+        }
+        loadingContainer.classList.remove('button-loading-spinner-active')
+        loadingAnimation.classList.remove('loading-container-active');
+        return
     }
-    function getBase64(file) {
-        return new Promise((resolve, reject) => {
+
+    // Funcion que va por cada campo y creo el formData para enviar por post
+    function loadFormData(formData) {
+        const shownLabelsContainer = document.querySelectorAll('.shown-label-container');
+        let ids = [];
+        // Voy por cada uno para agregar id, file
+        shownLabelsContainer.forEach(cont => {
+            const id = cont.dataset.id;
+            const file = cont.querySelector('.label-file-input').files[0];
+            ids.push(id);
             if (file) {
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    const imageInBase64 = event.target.result.split(',')[1];
-                    resolve(imageInBase64);
-                };
-                reader.readAsDataURL(file);
+                formData.append('files', file); // Agregar el archivo al FormData
             } else {
-                reject(new Error('No se seleccionó ninguna imagen.'));
+                const emptyFile = new File([], 'empty_file.txt', { type: 'text/plain' });
+                formData.append('files', emptyFile); // Agregar null al FormData si no hay archivo
             }
         });
-    }
+        // Ahora lo pusheo al FormData
+        formData.append('ids', JSON.stringify(ids));
 
+        // Ahora con los prices
+        const newPrice = document.querySelector('input[name="new_price"]').value;
+        const newCashPrice = document.querySelector('input[name="new_cash_price"]').value;
+        //Los sumo al formData
+        formData.append('newPrice', newPrice);
+        formData.append('newCashPrice', newCashPrice);
+    }
     // Logica de cuando manda el formulario mandarle las imagenes
     const form = document.querySelector('.form');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const selectedTreatmentsToBody = document.createElement('input');
-        selectedTreatmentsToBody.type = 'hidden';
-        selectedTreatmentsToBody.name = 'treatments_id';
-        selectedTreatmentsToBody.value = JSON.stringify(selectedTreatments);
-        form.appendChild(selectedTreatmentsToBody);
-        console.log(form);
-        form.submit();
+    form.addEventListener('submit', async (e) => {
+        try {
+            e.preventDefault();
+            let formData = new FormData();
+            loadFormData(formData);
+            handleSpinnerBehave(true);
+            // Hago el fetch
+            let response = await fetch('/api/admin/updateServicesPrice', {
+                method: 'PUT',
+                body: formData
+            });
+            if(response.ok){
+                // Dejo de mostrar el spinner
+                handleSpinnerBehave(false);
+                // Limpio todas las tarjetas
+                document.querySelectorAll('.shown-label-container').forEach(cont=>cont.remove());
+            }
+        } catch (error) {
+            return console.log(`Error al mandar el formulario: ${error}`);
+        }
+
     })
 });

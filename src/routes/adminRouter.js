@@ -10,13 +10,13 @@ const isAdminMiddleware = require('../middlewares/isAdminMiddleware');
 // RUTEO
 
 // GET
-router.get('/servicios-modificar-precio', adminController.updateServicesPrice);
+router.get('/servicios-modificar-precio',isAdminMiddleware, adminController.updateServicesPrice);
 router.get('/ventas',isAdminMiddleware,adminController.orderList)
 router.get('/registrar-venta',isAdminMiddleware, adminController.registerSale)
 router.get('/medicalInfo',isAdminMiddleware, adminController.showMedicalForm);
 router.get('/budget',isAdminMiddleware,adminController.budget);
 router.get('/consent',isAdminMiddleware,adminController.consent);
 // PUT
-router.put('/updateServicesPrice',adminController.processServicesPriceUpdating)
+
 
 module.exports=router;

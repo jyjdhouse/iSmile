@@ -6,6 +6,25 @@ const jwt = require('jsonwebtoken');
 const json2csv = require('json2csv').parse;
 const Sequelize = require('sequelize');
 const { Op } = require('sequelize');
+
+const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const sharp = require('sharp');
+
+// AWS 
+const bucketName = process.env.BUCKET_NAME;
+const bucketRegion = process.env.BUCKET_REGION;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+// Creo el objeto
+const s3 = new S3Client({
+  credentials: {
+    accessKeyId: accessKey,
+    secretAccessKey: secretAccessKey
+  },
+  region: bucketRegion
+});
+
 // Utils
 const getDeepCopy = require('../../utils/getDeepCopy');
 const getAllOrders = require('../../utils/getAllOrders');
@@ -133,18 +152,18 @@ const controller = {
       const orderId = req.params.orderId
 
       const categoryId = req.body.categoryId
-  
+
       await db.Order.update(
         { order_status_id: categoryId },
-        { where: { tra_id: orderId } } 
+        { where: { tra_id: orderId } }
       );
 
-      return res.status(200).json({msg: 'Orden actualizada correctamente'})
-  
+      return res.status(200).json({ msg: 'Orden actualizada correctamente' })
+
     } catch (error) {
-        return res.status(400).json({msg: error});
+      return res.status(400).json({ msg: error });
     }
-   
+
   },
   deleteOrders: async (req, res) => {
     try {
@@ -152,19 +171,110 @@ const controller = {
 
       await db.Order.destroy({
         where: {
-            id: orderId
+          id: orderId
         }
-    });
+      });
 
-    return res.status(200).json({msg: 'Orden eliminada exitosamente'});
+      return res.status(200).json({ msg: 'Orden eliminada exitosamente' });
 
 
     } catch (error) {
       console.log('Fallé en admin controller.downloadClientes' + ' ' + error)
-      return res.status(400).json({msg: 'Problema al eliminar una orden'});
+      return res.status(400).json({ msg: 'Problema al eliminar una orden' });
     }
 
-  }
+  },
+  processServicesPriceUpdating: async (req, res) => {
+    const ids = JSON.parse(req.body.ids);
+    const files = req.files;
+    const { newPrice, newCashPrice } = req.body;
+    const treatmentsInDb = await db.Treatment.findAll();
+    let treatmentsToModify = [];
+    // Voy por cada id que me llego (tratamiento a editar)
+    for (let index = 0; index < ids.length; index++) {
+      const id = ids[index];
+      // Pusheo el id para hacer el bulkUpdate
+      treatmentsToModify.push({
+        id
+      });
+      const file = files[index];
+      if (file.size > 0) { //Entonce este id tiene file
+        // Tengo que hacer la logica para crear esta imagen en AWS y guardar en el campo filename en la db
+        // Creo el nombre unico para la foto (dentro del forEach)
+        randomName = 'treatment-' + Math.random().toString(36).substring(2, 2 + 10) + '.webp';
+        // Cambio el formato a webp y redimensiono la imagen, total la de los productos 
+        //  no se necesita tan gde      
+        buffer = await sharp(file.buffer).toFormat('webp').toBuffer();
+        // Armo el objeto para subir a AWS   
+        let params = {
+          Bucket: bucketName,
+          Key: `treatment/${randomName}`,//Esto hace que se guarde en la carpeta treatment, y que sobreEscriba a la foto vieja
+          Body: buffer,
+          ContentType: file.mimetype
+        };
+        let command = new PutObjectCommand(params);
+        await s3.send(command);
+
+        // Ahora pusheo el filename para hacer el bulkUpdate
+        treatmentsToModify[index].filename = randomName;
+        // Pregunto si el item tenia filename, si tenia entonces elimino en AWS
+        if (treatmentsInDb.find(treat => treat.id == id).filename) {
+          params = {
+            Bucket: bucketName,
+            Key: `treatment/${treatmentsInDb.find(treat => treat.id == id).filename}`
+          };
+          command = new DeleteObjectCommand(params);
+          // Hago el delete de la base de datos
+          await s3.send(command);
+        }
+      } else { //Esto es si no me vino file para ese item
+        // Aca le tengo que dejar el que ya estaba
+        treatmentsToModify[index].filename = treatmentsInDb.find(treat => treat.id == id).filename;
+      };
+      // Le termino de agregar lo otro, si hay nuevo precio le pongo el nuevo sino el que estaba
+      treatmentsToModify[index].price = newPrice ? parseInt(newPrice) : treatmentsInDb.find(treat => treat.id == id).price;
+      treatmentsToModify[index].cash_price = newCashPrice ? parseInt(newCashPrice) : treatmentsInDb.find(treat => treat.id == id).cash_price;
+
+    };
+
+    // Una vez que hago esto con todos los servicios a modificar, hago el bulkUpdate
+    await db.Treatment.bulkCreate(treatmentsToModify, {
+      updateOnDuplicate: ["price", "cash_price", "filename"]
+    });
+    // console.log(req.body, req.files);
+    return res.status(200).json({});
+
+    // Array con valores numericos
+    let treatmentsToUpdate = JSON.parse(req.body.treatments_id);
+    // return res.send(treatmentsToUpdate); 
+    // Me fijo cuales tienen foto para guardar la imagen
+    let treatmentsWithFile = treatmentsToUpdate.filter(treat => treat.file);
+    let filenamesToPush = [];
+    // Guardo las imagenes en AWS
+    for (let i = 0; i < treatmentsWithFile.length; i++) {
+      const treat = treatmentsWithFile[i];
+      // Si hay archvio lo armo para subir AWS
+      if (treat.file) {
+        file = Buffer.from(treat.file, 'base64');
+
+      }
+    }
+
+
+
+    return res.send(treatmentsWithFile);
+    let price = req.body.new_price;
+    let cashPrice = req.body.new_cash_price;
+
+
+
+
+
+    // return res.send(treatmentsToUpdate)
+
+
+    return res.redirect('/');
+  },
 }
 
 module.exports = controller

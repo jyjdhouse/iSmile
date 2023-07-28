@@ -49,7 +49,7 @@ window.addEventListener('load', () => {
             // console.log(completedRadioField);
             if (!completedRadioField) {//Si no se completo
                 flag = false;
-                console.log(`Estoy en radios`);
+                // console.log(`Estoy en radios`);
                 cont.closest('.field').querySelector('label').classList.add('red');
             }
         });
@@ -70,7 +70,7 @@ window.addEventListener('load', () => {
             // Capturo todos los checkbox, hago un find y si ninguno aparece es que no se completo
             let completedCheckboxInputs = checkboxInputs.find(check => check.checked);
             if (!completedCheckboxInputs) {
-                console.log(`Estoy en checkbox`);
+                // console.log(`Estoy en checkbox`);
                 flag = false;
                 checkboxLabel.classList.add('red')
             }
@@ -86,7 +86,7 @@ window.addEventListener('load', () => {
         // Tema Firma
         let signatureLabel = document.getElementById('signature-label');
         if (signaturePad.isEmpty()) {
-            console.log(`Estoy en firma`);
+            // console.log(`Estoy en firma`);
             signatureLabel.classList.add('red');
             flag = false;
         }
@@ -339,7 +339,7 @@ window.addEventListener('load', () => {
 
             // Limpia los recursos del enlace
             URL.revokeObjectURL(linkToDownload.href);
-            console.log(response);
+            // console.log(response);
         };
     });
 });

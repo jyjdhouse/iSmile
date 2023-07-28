@@ -29,7 +29,7 @@
           <% services.forEach((treatment,i) => { %>
             <article class="service-detail-card">
                     <div class="service-card-img-container">
-                        <img src="/img/blog2.png" alt="Servicios" class="service-card-img">
+                        <img src="<%= treatment.file_url ? treatment.file_url : '/img/default.png'%>" alt="<%= treatment.filename %>" class="service-card-img">
                     </div>
                     <div class="service-info-title">
                         <h2> <%= treatment.name %> </h2>

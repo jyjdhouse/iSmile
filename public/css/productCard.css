@@ -98,7 +98,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-end;
 }
 
 .product-card-container .product-name,

@@ -12,7 +12,7 @@
         <h1>Servicios</h1>
         <h6>Modificación precio</h6>
         <p class="form-label">Seleccióne servicios a modificar</p>
-        <form action="/admin/updateServicesPrice?_method=PUT" method="POST" class="form">
+        <form action="/admin/updateServicesPrice?_method=PUT" method="POST" class="form" enctype="multipart/form-data">
             <section class="choose-service-section">
                 <div class="search-checkbox-container">
                     <input type="text" class="search-checkbox" placeholder="Busca por nombre">
@@ -39,7 +39,13 @@
                     <label class="new-price-label bold">Nuevo Precio en Efectivo</label>
                     <input type="text" class="numeric-only-input" name="new_cash_price">
                 </div>
-                <button type="submit">Modificar</button>
+                <div class="send-form-button-container">
+                    <div class="button-loading-spinner">
+                        <%- include('./partials/loadingSpinner.ejs') %>
+                    </div>
+                    <button type="submit">Modificar</button>
+                </div>
+
             </section>
             
         </form>
