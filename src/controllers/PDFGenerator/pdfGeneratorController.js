@@ -79,14 +79,14 @@ const controller = {
             let contentHTML = req.body.html;
 
             // Crea una instancia de Puppeteer y abre una nueva página
-            const browser = await puppeteer.launch({ headless: "new" });
+            const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
             const page = await browser.newPage();
 
             // Establece el contenido HTML con los estilos y datos del formulario
             // Establece la URL de tu archivo CSS
             const cssFilePath = path.resolve(__dirname, './budget.css');
-const headerCssFilePath = path.resolve(__dirname, './alternativeHeader.css');
-const imageFilePath = path.resolve(__dirname, './logo-background.png');
+            const headerCssFilePath = path.resolve(__dirname, './alternativeHeader.css');
+            const imageFilePath = path.resolve(__dirname, './logo-background.png');
 
             // await page.emulateMedia('screen');
             // MODIFICO LAS IMAGENES
@@ -165,10 +165,10 @@ const imageFilePath = path.resolve(__dirname, './logo-background.png');
 
             // Modifica el atributo src de la etiqueta img específica
             $('img#img-logo').attr('src', `data:image/jpeg;base64,${fs.readFileSync(imageFilePath).toString('base64')}`);
-            
+
             // Reemplaza un elemento específico por una etiqueta <img> con la imagen deseada
             $('.canvas-container').replaceWith(`<img src="${signaturePath}" alt="signature" class="signature-image">`);
-            
+
             // Obtiene el objeto HTML modificado
             contentHTML = $.html();
 
