@@ -153,7 +153,9 @@
     .product-info-container{
         height: 20%;
     }
-
+    .price-name-container{
+        row-gap: 5px;
+    }
     .product-card-container .product-name,
     .product-card-container .product-price {
         font-size: 15px;

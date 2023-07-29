@@ -603,11 +603,12 @@ async function checkForUserLogged() {
 
         // Mientras pido los productos hago el cargando...
         let products = await (await (await fetch(`${window.location.origin}/api/product`)).json()).products;
-
+        console.log(products);
         // Saco el spinner
-        document.querySelector('.spinner-overlay').remove()
+        document.querySelector('.spinner-overlay').remove();
         productCardWrapper.innerHTML = '';
         localStorageCart?.forEach(item => {
+            // TODO: Preguntar a martin si esto al ser front deberia manejarse con otro campo
             let product = products.find(prod => prod.id == item.products_id);
             product.filename = product.files.find(file => file.file_types_id == 1)?.filename;
             let cardHTML =

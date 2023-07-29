@@ -34,7 +34,7 @@
                 </form>
             </div>
             <% } %>
-            <article class="product-container" data-productid=<%=product.id %>>
+            <article class="product-container" data-productid="<%=product.id %>">
                 <div class="first-column">
                     
                     <div class="main-img-container">
@@ -115,7 +115,7 @@
                 <div class="suggested-product-list">
                     <% suggestedProducts.forEach(sugProd=> { %>
                         <article class="product-card-container suggested-product-card-detail-container"
-                            data-productId=<%=sugProd.id %>>
+                            data-productId="<%=sugProd.id %>">
                             <a href="/product/<%= sugProd.id %>" class="product-card-link">
                                 <div class="image-container suggested-image-container">
                                     <div class="image-carousel">
@@ -125,7 +125,7 @@
                                                     <img src="<%= file?.file_url || 'img/product/default.png'%>"
                                                         alt="<%= sugProd.name %>-<%= file.filename %>"
                                                         class="product-image-test <%= i==0 && 'product-image-test-active' %>  product-detail-suggested-media"
-                                                        data-productId=<%=sugProd.id %> >
+                                                        data-productId="<%=sugProd.id %>" >
                                                     <% }else if(file.file_types_id==2){ %> <!--VIDEO-->
                                                         <video
                                                             class="video product-image-test product-detail-suggested-media"
@@ -139,7 +139,7 @@
                                         <% } else{ %>
                                             <img src="/img/product/default.png" alt="default-img"
                                                         class="product-image-test product-image-test-active product-detail-suggested-media"
-                                                        data-productId=<%=sugProd.id %> >
+                                                        data-productId="<%=sugProd.id %>" >
                                         <% } %>
                                         
                                     </div>
@@ -156,7 +156,7 @@
                             </a>
                             <div class="product-quick-actions-container suggested-quick-cart-container"
                                 data-productId=<%=sugProd.id %> >
-                                <div class="quick-cart-container" data-productid=<%=sugProd.id %>>
+                                <div class="quick-cart-container" data-productid="<%=sugProd.id %>">
                                     <div class="logo-container">
                                         <i class='bx bx-shopping-bag quick-add-cart-btn'></i>
                                         <i class='bx bx-check-circle remove-cart-product hidden'></i>

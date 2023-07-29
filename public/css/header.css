@@ -186,9 +186,11 @@ body {
     visibility: hidden;
 
 }
-.header-hidden .open-search-form-button{
+
+.header-hidden .open-search-form-button {
     transition: none;
 }
+
 .header-active {
     /* Para cuando scrollean para arriba */
     animation: fadeInDown .4s ease;
@@ -245,20 +247,28 @@ body {
     font-weight: 500;
     position: relative;
     z-index: 1;
-    transition: transform .5s ease,background-color 1s ease;
+    transition: transform .5s ease, background-color 1s ease;
     transition-delay: .3s;
     background-color: transparent;
 }
-.brand-name-active{
+
+.brand-name-active {
     transition: transform .5s ease;
     transition-delay: .2s;
     transform: translateX(90%);
     background-color: #fff;
 }
+
+.brand-name-image-container {
+    height: 100%;
+    margin: 0 auto;
+    width: 90%;
+}
+
 .header-logo {
     height: 100%;
     width: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .wishlist-container {
@@ -419,8 +429,8 @@ body {
         font-size: 22px;
     }
 
-    .header-logo {
-        width: 50%;
+    .brand-name-image-container {
+        width: 70%;
     }
 
     .lupa-mobile {
@@ -444,8 +454,8 @@ body {
         width: 50%;
     }
 
-    .header-logo {
-        width: fit-content;
+    .brand-name-image-container {
+        width: 25%;
     }
 
     .nav-start {
@@ -513,8 +523,8 @@ body {
         justify-content: flex-end;
         width: fit-content;
     }
-    .user-logged-container
-    .logged-menu-container {
+
+    .user-logged-container .logged-menu-container {
         width: 160px;
         left: 158%;
         transform: translateX(-50%);

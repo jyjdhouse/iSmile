@@ -42,7 +42,7 @@
 
             <section class="product-list-section">
                 <% products.forEach(prod=> { %>
-                    <article class="product-card-container" data-productId=<%=prod.id%>>
+                    <article class="product-card-container" data-productId="<%=prod.id%>">
                         <a href="/product/<%= prod.id %>" class="product-card-link">
                             <div class="image-container">
                                 <div class="image-carousel">
@@ -87,8 +87,8 @@
                                 </div>
                             </div>
                         </a>
-                        <div class="product-quick-actions-container" data-productId=<%=prod.id %>>
-                            <div class="quick-cart-container" data-productid=<%=prod.id %>>
+                        <div class="product-quick-actions-container" data-productId="<%=prod.id %>">
+                            <div class="quick-cart-container" data-productid="<%=prod.id %>">
                                 <div class="logo-container">
                                     <i class='bx bx-shopping-bag quick-add-cart-btn '></i>
                                     <i class='bx bx-check-circle remove-cart-product hidden'></i>

@@ -267,7 +267,9 @@ video::-webkit-media-controls-time-remaining-display {
 .product-gallery-card .overlay {
     z-index: 0;
     opacity: 0;
-    transition-delay: .3s;
+    transition-delay: .5s;
+    transition: all .5s ease;
+    background-color: rgba(0, 0, 0, .4);
 }
 
 .product-gallery-card-hover .overlay {
@@ -733,16 +735,14 @@ video::-webkit-media-controls-time-remaining-display {
     position: absolute;
     top: 0;
     cursor: pointer;
-    transition: all .3s ease;
+    transition: opacity .7s ease;
     opacity: 0;
     overflow: hidden;
     border-radius: 1.5rem;
-    scale: 0;
 }
 
 .instagram-card-active {
     opacity: 1;
-    scale: 1;
 }
 
 .instagram-card-active .instagram-client-overlay {

@@ -464,7 +464,7 @@ export function addProductToLocaleCart(prodId) {
 
     // Agrego el producto al carrito
     cart.push({
-        products_id: parseInt(prodId),
+        products_id: prodId,
         quantity: 1
     });
 

@@ -1,6 +1,9 @@
 const db = require('../database/models');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 // Librerias
 const bcrypt = require('bcryptjs');
 
