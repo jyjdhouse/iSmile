@@ -73,6 +73,17 @@ const controller = {
                     home_sections_id: 5
                 }
             }));
+            // Si hay mas de 6 fotos entonces agarro 6 nomas
+            let galleryProductLength = 6;
+            let galleryProductsForDisplay = [];
+            let count = 0;
+            while (count < galleryProductLength) { //Dejo 6 productos random
+                let random = productGalleryfiles[Math.floor(Math.random() * productGalleryfiles.length)];
+                if (!galleryProductsForDisplay.includes(random)) {
+                    galleryProductsForDisplay.push(random)
+                    count++;
+                }
+            };
             for (let i = 0; i < productGalleryfiles.length; i++) {
                 const file = productGalleryfiles[i];
                 const getObjectParams = {
@@ -84,7 +95,7 @@ const controller = {
                 file.file_url = url; //en el href product.files[x].file_url
             };
             // return res.send(productGalleryfiles);
-            return res.render('productList', { products, viewLabel, productGalleryfiles })
+            return res.render('productList', { products, viewLabel, productGalleryfiles: galleryProductsForDisplay })
         } catch (error) {
             console.log(`Falle en productController.list: ${error}`);
             return res.json(error);
@@ -155,7 +166,7 @@ const controller = {
         try {
             let { name, price, description, category } = req.body;
             let images = req.files;
-           
+
             const convertToHtml = () => { // este showdown es para convertir el html a markdown, y conservar el formato
                 var converter = new showdown.Converter();
                 var htmlText = converter.makeHtml(description);
@@ -223,9 +234,9 @@ const controller = {
     },
     updateProduct: async (req, res) => {
         const productId = req.params.productId;
-        const product =  getDeepCopy(await getProduct(productId));
+        const product = getDeepCopy(await getProduct(productId));
         const markdown = turndownService.turndown(product.description);
-        const productToUpdate = {...product, description: markdown};
+        const productToUpdate = { ...product, description: markdown };
         for (let i = 0; i < productToUpdate.files.length; i++) {
             const file = productToUpdate.files[i];
             const getObjectParams = {
@@ -301,17 +312,17 @@ const controller = {
 
             // Array con imagenes para borrar
             let filesToDelete = []
-            if(!current_imgs){ //Si no vinieron quiere decir que borro todas las que habia
+            if (!current_imgs) { //Si no vinieron quiere decir que borro todas las que habia
                 filesToDelete = [...productToUpdate.files]
-            }else{
+            } else {
                 productToUpdate.files.forEach(file => { //FILTER TO DELETE IMAGES    
-                           
+
                     if (!current_imgs.includes(file.filename)) {
                         return filesToDelete.push(file)
                     }
                 })
-            } 
-            
+            }
+
 
             // me fijo si hay imagenes para borrar
             if (filesToDelete.length > 0) {

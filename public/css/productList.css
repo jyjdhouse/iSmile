@@ -48,7 +48,7 @@
     display: flex;
     width: 100%;
     overflow: visible;
-    transition: all .4s ease;
+    transition: all .7s ease;
 
 }
 
@@ -127,7 +127,7 @@
 
     /* GALLERY SECTION */
     .gallery-photo-section {
-        height: 60vh;
+        height: 70vh;
     }
 
 
@@ -138,6 +138,15 @@
 }
 
 @media(min-width:1024px) {
+    .gallery-photo-section {
+        height: 80vh;
+    }
+    .photo-wrapper {
+        height: 94%;
+    }
+    .dots-wrapper {
+        height: 5%;
+    }
     .change-gallery-photo-btn {
         display: initial;
         position: absolute;

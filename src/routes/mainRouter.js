@@ -13,19 +13,20 @@ const multer = require('multer');
 const upload = multer();
 
 // GET
-router.get('/',loginMiddleware,mainController.index);
-router.get('/servicios',loginMiddleware,mainController.services);
-router.get('/servicios/:specialtyId/:specialtyServiceId?',loginMiddleware,mainController.serviceDetail)
-router.get('/preguntas-frecuentes',loginMiddleware,mainController.frequentQAndA);
-
+router.get('/', loginMiddleware, mainController.index);
+router.get('/servicios', loginMiddleware, mainController.services);
+router.get('/servicios/:specialtyId/:specialtyServiceId?', loginMiddleware, mainController.serviceDetail)
+router.get('/preguntas-frecuentes', loginMiddleware, mainController.frequentQAndA);
+// Ruta unica (para hacer cosas puntuales)
+// router.get('/saddfdfgrtewrdcsadxqa');
 
 
 // POST
-router.post('/generateMedicalPDF',upload.single('signature'),PDFGeneratorController.medicalPDF);
-router.post('/generateBudgetPDF',PDFGeneratorController.budgetPDF);
-router.post('/generateConsentPDF',upload.single('signature'),PDFGeneratorController.consentPDF);
+router.post('/generateMedicalPDF', upload.single('signature'), PDFGeneratorController.medicalPDF);
+router.post('/generateBudgetPDF', PDFGeneratorController.budgetPDF);
+router.post('/generateConsentPDF', upload.single('signature'), PDFGeneratorController.consentPDF);
 
 // PUT
-router.put('/updateHomeFile',isAdminMiddleware,uploadHomeImages.single('homeFile'),mainController.updateHomeFile)
+router.put('/updateHomeFile', isAdminMiddleware, uploadHomeImages.single('homeFile'), mainController.updateHomeFile)
 
-module.exports=router;
+module.exports = router;
