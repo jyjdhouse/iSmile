@@ -33,6 +33,11 @@ const controller = {
         try {
 
             let homeFiles = await db.HomeFile.findAll({
+                where:{
+                    home_sections_id: {
+                        [Op.ne]: 5 //Traigo todos los que corresponden al index
+                    }
+                },
                 include: ['fileType', 'homeSection']
             });
             // Ahora seccióno todo aca asi en el ejs se simplifica

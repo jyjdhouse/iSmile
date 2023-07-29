@@ -67,7 +67,24 @@ const controller = {
                 viewLabel = `"${searchQuery}"`;
             }
             // return res.send(products);
-            return res.render('productList', { products, viewLabel })
+            // Para agarrar las imagenes para galleria
+            let productGalleryfiles = getDeepCopy(await db.HomeFile.findAll({
+                where: {
+                    home_sections_id: 5
+                }
+            }));
+            for (let i = 0; i < productGalleryfiles.length; i++) {
+                const file = productGalleryfiles[i];
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key: `product/galleryPhoto/${file.filename}`
+                }
+                const command = new GetObjectCommand(getObjectParams);
+                const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+                file.file_url = url; //en el href product.files[x].file_url
+            };
+            // return res.send(productGalleryfiles);
+            return res.render('productList', { products, viewLabel, productGalleryfiles })
         } catch (error) {
             console.log(`Falle en productController.list: ${error}`);
             return res.json(error);

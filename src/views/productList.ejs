@@ -16,6 +16,22 @@
     <%- include('./partials/header.ejs') %>
 
         <main class="main">
+            <section class="gallery-photo-section">
+                <i class='bx bx-left-arrow change-gallery-photo-btn previous-photo-btn'></i>
+                <i class='bx bx-right-arrow change-gallery-photo-btn next-photo-btn'></i>
+                <div class="photo-wrapper">
+                    <% productGalleryfiles.forEach(file=> { %>
+                        <article class="gallery-photo">
+                            <img src="<%= file.file_url %>" alt="gallery-photo-<%= file.filename %>">
+                        </article>
+                        <% }) %>
+                </div>
+                <div class="dots-wrapper">
+                    <% for( let i=0; i < productGalleryfiles?.length; i++ ) { %>
+                        <div class="gallery-dot <%= i == 0 ? 'gallery-dot-active' : '' %>"></div>
+                        <% } %>
+                </div>
+            </section>
             <div class="product-list-intro">
                 <div class="product-title">
                     <h2 class="bold">
@@ -33,28 +49,32 @@
                                     <% if (prod.files.length) { %>
                                         <%prod.files.forEach((file, i)=>{ %>
                                             <% if (file.file_types_id==1) { %> <!--FOTO-->
-                                                <% if(i == 0) {  %>
-                                                    <img src="<%= file.file_url %>" alt="<%= prod.name%>-<%=file.filenanme %>"
-                                                    class="product-image-test product-image-test-active">
-                                                <% } else {  %>
-                                                    <img src="<%= file.file_url %>" alt="<%= prod.name%>-<%=file.filenanme %>"
-                                                    class="product-image-test <%= prod.files.length == 2 ? 'carousel-animation' : ''%>">
-                                                <% } %>
-                                                
-                                                <% }else if(file.file_types_id == 2){ %><!--VIDEO--> %>
-                                                    <video
-                                                    class="video product-image-test"
-                                                    muted playsinline loop>
-                                                    <source src="<%= file.file_url %>" type="video/mp4">
-                                                    <source src="<%= file.file_url %>" type="video/webm">
-                                                    No se puede reproducir el video
-                                                </video>
-                                                <% } %>
-                                        <% })%>     
-                                    <% } else{ %>
-                                        <img src="/img/product/default.png" alt="<%= prod.name%>" class="product-image-test product-image-test-active">
-                                    <% } %>
-                                                                                  
+                                                <% if(i==0) { %>
+                                                    <img src="<%= file.file_url %>"
+                                                        alt="<%= prod.name%>-<%=file.filenanme %>"
+                                                        class="product-image-test product-image-test-active">
+                                                    <% } else { %>
+                                                        <img src="<%= file.file_url %>"
+                                                            alt="<%= prod.name%>-<%=file.filenanme %>"
+                                                            class="product-image-test <%= prod.files.length == 2 ? 'carousel-animation' : ''%>">
+                                                        <% } %>
+
+                                                            <% }else if(file.file_types_id==2){ %><!--VIDEO--> %>
+                                                                <video class="video product-image-test" muted
+                                                                    playsinline loop>
+                                                                    <source src="<%= file.file_url %>" type="video/mp4">
+                                                                    <source src="<%= file.file_url %>"
+                                                                        type="video/webm">
+                                                                    No se puede reproducir el video
+                                                                </video>
+                                                                <% } %>
+                                                                    <% })%>
+                                                                        <% } else{ %>
+                                                                            <img src="/img/product/default.png"
+                                                                                alt="<%= prod.name%>"
+                                                                                class="product-image-test product-image-test-active">
+                                                                            <% } %>
+
                                 </div>
                             </div>
                             <div class="product-info-container">
@@ -62,12 +82,13 @@
                                     <p class="product-name">
                                         <%= prod.name %>
                                     </p>
-                                    <p class="product-price">$<%= prod.price %></p>
+                                    <p class="product-price">$<%= prod.price %>
+                                    </p>
                                 </div>
                             </div>
                         </a>
-                        <div class="product-quick-actions-container" data-productId=<%= prod.id %>>
-                            <div class="quick-cart-container" data-productid=<%= prod.id %>>
+                        <div class="product-quick-actions-container" data-productId=<%=prod.id %>>
+                            <div class="quick-cart-container" data-productid=<%=prod.id %>>
                                 <div class="logo-container">
                                     <i class='bx bx-shopping-bag quick-add-cart-btn '></i>
                                     <i class='bx bx-check-circle remove-cart-product hidden'></i>
@@ -84,9 +105,9 @@
                             </div>
                         </div>
                     </article>
-                <% }) %>
-               
-               
+                    <% }) %>
+
+
             </section>
         </main>
         <%- include('./partials/footer.ejs') %>
