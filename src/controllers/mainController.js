@@ -146,9 +146,13 @@ const controller = {
     serviceDetail: async (req, res) => {
         try {
             const specialtyId = req.params.specialtyId;
-
             const serviceSpecialtyId = req.params.specialtyServiceId;
-            const specialtyService = await db.SpecialtyService.findByPk(serviceSpecialtyId)
+            let description;
+            
+            if(serviceSpecialtyId) {
+                description = await db.SpecialtyService.findByPk(serviceSpecialtyId).description
+            }
+          
 
             let title;
             let treatments = getDeepCopy(await db.Treatment.findAll());
@@ -176,7 +180,7 @@ const controller = {
                 };
             };
             // return res.send(treatments);
-            return res.render('serviceDetail', { services: treatments, title, specialtyService })
+            return res.render('serviceDetail', { services: treatments, title, description: description != '' ? description : '' })
         } catch (error) {
             console.log(`Falle en mainController.serviceDetail: ${error}`);
             return res.json({ error })
