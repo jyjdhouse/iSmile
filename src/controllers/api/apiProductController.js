@@ -41,7 +41,7 @@ const controller = {
     getTreatments: async(req,res) => {//Metodo que devuelve producto en especifico
         let treatments = await getAllTreatments();
         treatments = getDeepCopy(treatments);
-        console.log(treatments)
+       
 
         return res.status(200).json({
             meta: {
