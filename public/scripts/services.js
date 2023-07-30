@@ -4,7 +4,8 @@ import { checkIfIsInScreen } from "./utils.js";
 }) */
 window.addEventListener('load', () => {
     let serviceCards = document.querySelectorAll('.service-card')
-    const servicesCards = document.querySelectorAll('.service-card');
+    const servicesCards = Array.from(document.querySelectorAll('.service-card'));
+    console.log(serviceCards)
 
     const openDropdown = (card) => {
         let wrapper = card.querySelector('.service-card-wrapper')
@@ -35,17 +36,11 @@ window.addEventListener('load', () => {
             card.style.animationDelay = `${cardIndex * .5}s`;
         }
     }
-    
-    // Voy por cada una para preguntarle si aparece en pantalla
-    const observeCards = servicesCards.forEach((card, i) => {
-        const observer = checkIfIsInScreen(.3, handleVisibleServiceCard, card)
-        // Me fijo si aparece en pantalla
-        observer.observe(card)
-    })
+
+
 
     const toggleDropdownBtn = document.querySelectorAll('.toggle-dropdown')
     const minus = document.querySelectorAll('.bx-minus')
-    let isModalOpen = false
 
     let url = new URL(window.location.href);
 
@@ -53,31 +48,36 @@ window.addEventListener('load', () => {
     let queryParams = url.searchParams;
 
     if (queryParams && queryParams.has('open')) {
-        
+
         // agarro valor del open y hago find para saber a cual div scrollear
         let paramService = queryParams.get('open');
         serviceCards.forEach((serv, i) => {
-            if(i == paramService){
+            if (i == paramService) {
                 let targetDivTopOffset = serv.getBoundingClientRect().top + window.scrollY;
-               
+
                 window.scrollTo({
                     top: targetDivTopOffset,
-                    behavior: 'smooth', 
+                    behavior: 'smooth',
                 });
-        
-               
+
+
                 setTimeout(() => {
                     handleVisibleServiceCard(serv);
                     openDropdown(serv)
-                }, 500); 
-        
-               
+                }, 500);
+
+
             }
         });
-        
+
 
     } else {
-        observeCards()
+        // Voy por cada una para preguntarle si aparece en pantalla
+        servicesCards.forEach((card, i) => {
+            const observer = checkIfIsInScreen(.3, handleVisibleServiceCard, card)
+            // Me fijo si aparece en pantalla
+            observer.observe(card)
+        })
     }
 
 
@@ -85,7 +85,7 @@ window.addEventListener('load', () => {
         min.classList.add('toggle-dropdown-inactive')
     })
 
-    
+
 
     const toggleDropdown = () => {
         toggleDropdownBtn.forEach(btn => {
@@ -111,7 +111,7 @@ window.addEventListener('load', () => {
     }
     toggleDropdown()
 
-  
+
 
 
 })

@@ -18,7 +18,10 @@
             <div class="service-detail-title-container">
                 <div class="service-title-info-container">
                     <h1 class="service-detail-title page-title bold"><%= title %></h1>
-                    <p><%= description %> </p>
+                    <% if(service && service.description) { %>
+                    <p><%= service.description %></p>    
+                    <%} %> 
+                   
                 </div>
                 
             </div>

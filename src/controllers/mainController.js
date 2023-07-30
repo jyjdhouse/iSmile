@@ -147,10 +147,11 @@ const controller = {
         try {
             const specialtyId = req.params.specialtyId;
             const serviceSpecialtyId = req.params.specialtyServiceId;
-            let description;
+            let service;
+
             
             if(serviceSpecialtyId) {
-                description = await db.SpecialtyService.findByPk(serviceSpecialtyId).description
+                service = await db.SpecialtyService.findByPk(serviceSpecialtyId)
             }
           
 
@@ -180,7 +181,7 @@ const controller = {
                 };
             };
             // return res.send(treatments);
-            return res.render('serviceDetail', { services: treatments, title, description: description != '' ? description : '' })
+            return res.render('serviceDetail', { services: treatments, title, service })
         } catch (error) {
             console.log(`Falle en mainController.serviceDetail: ${error}`);
             return res.json({ error })
