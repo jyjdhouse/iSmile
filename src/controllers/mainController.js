@@ -1,6 +1,9 @@
 const db = require('../database/models');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 // Librerias
 const bcrypt = require('bcryptjs');
 
@@ -33,6 +36,11 @@ const controller = {
         try {
 
             let homeFiles = await db.HomeFile.findAll({
+                where:{
+                    home_sections_id: {
+                        [Op.ne]: 5 //Traigo todos los que corresponden al index
+                    }
+                },
                 include: ['fileType', 'homeSection']
             });
             // Ahora seccióno todo aca asi en el ejs se simplifica
@@ -138,9 +146,13 @@ const controller = {
     serviceDetail: async (req, res) => {
         try {
             const specialtyId = req.params.specialtyId;
-
             const serviceSpecialtyId = req.params.specialtyServiceId;
-            const specialtyService = await db.SpecialtyService.findByPk(serviceSpecialtyId)
+            let description;
+            
+            if(serviceSpecialtyId) {
+                description = await db.SpecialtyService.findByPk(serviceSpecialtyId).description
+            }
+          
 
             let title;
             let treatments = getDeepCopy(await db.Treatment.findAll());
@@ -168,7 +180,7 @@ const controller = {
                 };
             };
             // return res.send(treatments);
-            return res.render('serviceDetail', { services: treatments, title, specialtyService })
+            return res.render('serviceDetail', { services: treatments, title, description: description != '' ? description : '' })
         } catch (error) {
             console.log(`Falle en mainController.serviceDetail: ${error}`);
             return res.json({ error })

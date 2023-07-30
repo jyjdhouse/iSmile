@@ -11,7 +11,7 @@ window.addEventListener('load', () => {
     const copyPhoneNumberBtn = document.querySelector('.copy-phone-number');
     const phoneNumberContainer = document.querySelector('.phone-number-container');
     const callMobileNumber = document.querySelector('.call-mobile-number');
-    const callPhoneNumber = document.querySelector('.call-phone-number');
+    const callPhoneNumber = document.querySelector('.call-btn');
     const blackScreen = document.querySelector('.black-screen');
     // Para abrir maps
     const mapIcons = document.querySelectorAll('.bx-map');
@@ -34,18 +34,7 @@ window.addEventListener('load', () => {
     });
 
     //Para llamar cuando toca
-    /* const phoneNumber = '+541159442644'
-    callNumber.addEventListener('click', () => {
-        window.location.href = `tel:${phoneNumber}`;
-    });
- */
-   /*  copyNumber.addEventListener('click', () => {
-        navigator.clipboard.writeText(phoneNumber)
-        copyNumber.innerHTML = 'Número copiado'
-        setTimeout(() => {
-            copyNumber.innerHTML = 'Copiar número de teléfono en portapapeles'
-        }, 2000)
-    }) */
+    
 
     // Para copiar al portapapeles
     const address = 'Avenida Santa Fé 2911 3 F, C1425 Buenos Aires'
@@ -57,7 +46,7 @@ window.addEventListener('load', () => {
         }, 2000)
     })
 
-    const mobilePhone = '+541124852020'
+    const mobilePhone = '+541124852020';
     copyMobileNumberBtn?.addEventListener('click', () => {
         navigator.clipboard.writeText(mobilePhone)
         mobileNumberContainer.innerHTML = '<p class="copy-msg">Número copiado</p>'
@@ -71,14 +60,6 @@ window.addEventListener('load', () => {
     });
 
     const phone = '+541148245430'
-    copyPhoneNumberBtn?.addEventListener('click', () => {
-        navigator.clipboard.writeText(phone)
-        phoneNumberContainer.innerHTML = '<p class="copy-msg">Número copiado</p>'
-        setTimeout(() => {
-            phoneNumberContainer.innerHTML = `Tel: 4824 5430<i class='bx bx-copy copy-phone-number'></i><i class='bx bx-phone call-phone-number' ></i>`
-        }, 2000)
-    })
-
     callPhoneNumber?.addEventListener('click', () => {
         window.location.href = `tel:${phone}`;
     });

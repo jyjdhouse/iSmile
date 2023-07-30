@@ -302,6 +302,7 @@ export function checkIfIsInScreen(percentege, cb, arg) {
 
 // Se fija si esta en desktop
 export function isInDesktop() {
+    console.log(window.innerWidth);
     return window.innerWidth >= 1024 // Mobile & Tablet
 }
 
@@ -463,7 +464,7 @@ export function addProductToLocaleCart(prodId) {
 
     // Agrego el producto al carrito
     cart.push({
-        products_id: parseInt(prodId),
+        products_id: prodId,
         quantity: 1
     });
 

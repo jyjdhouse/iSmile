@@ -1,3 +1,5 @@
+@import 'variables.css';
+
 .video {
     object-position: center !important;
 }
@@ -13,7 +15,8 @@
     align-items: center;
     width: 100%;
     margin: 0 auto;
-    padding: 2rem 0;
+    padding-bottom: 2rem;
+    margin-top: 1rem;
 }
 
 .product-title {
@@ -21,7 +24,77 @@
     text-align: center;
 }
 
-@import 'variables.css';
+.product-title h2 {
+    font-size: 1.35rem;
+}
+
+/* GALLERY SECTION */
+.change-gallery-photo-btn {
+    display: none;
+}
+
+.gallery-photo-section {
+    width: 100%;
+    display: flex;
+    height: 40vh;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    position: relative;
+}
+
+.photo-wrapper {
+    height: 88%;
+    display: flex;
+    width: 100%;
+    overflow: visible;
+    transition: all .7s ease;
+
+}
+
+.photo-wrapper-moving {
+    transition: none !important;
+}
+
+.gallery-photo {
+    width: 100%;
+    height: 100%;
+    flex: 0 0 auto;
+}
+
+.gallery-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dots-wrapper {
+    height: 10%;
+    width: fit-content;
+    margin: 0 auto;
+    display: flex;
+    column-gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallery-dot {
+    width: 12px;
+    height: 12px;
+    border: 1px solid var(--gold-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color .4s ease;
+}
+
+.gallery-dot:hover {
+    border: 2px solid var(--gold-color);
+}
+
+.gallery-dot-active {
+    background-color: var(--violet-color);
+}
+
 /* LIST-SECTION */
 .product-list-section {
     display: grid;
@@ -37,6 +110,13 @@
 
 /* Tablet */
 @media (min-width:768px) {
+
+    /* TITLE */
+    .product-title h2 {
+        font-size: 1.5rem;
+    }
+
+    /*  */
     .product-list-section {
         grid-template-columns: repeat(4, 22.5%);
         /* 90% */
@@ -45,4 +125,46 @@
         width: 100%;
     }
 
+    /* GALLERY SECTION */
+    .gallery-photo-section {
+        height: 70vh;
+    }
+
+
+    .gallery-dot {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+@media(min-width:1024px) {
+    .gallery-photo-section {
+        height: 80vh;
+    }
+    .photo-wrapper {
+        height: 94%;
+    }
+    .dots-wrapper {
+        height: 5%;
+    }
+    .change-gallery-photo-btn {
+        display: initial;
+        position: absolute;
+        top: 40%;
+        font-size: 2rem;
+        color: rgba(20, 20, 20, .5);
+        cursor: pointer;
+        transition: all .4s ease;
+        opacity: 0;
+        z-index: 1;
+    }
+    .gallery-photo-section:hover>.change-gallery-photo-btn{
+        opacity: 1;
+    }
+    .previous-photo-btn{
+        left: 2%;
+    }
+    .next-photo-btn{
+        right: 2%;
+    }
 }

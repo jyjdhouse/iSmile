@@ -1,9 +1,10 @@
 import { checkIfIsInScreen } from "./utils.js";
-window.addEventListener('DOMContentLoaded', () => {
+/* window.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, 0)
-})
+}) */
 window.addEventListener('load', () => {
-    let serviceCards = Array.from(document.querySelectorAll('.service-card'))
+    let serviceCards = document.querySelectorAll('.service-card')
+    const servicesCards = document.querySelectorAll('.service-card');
 
     const openDropdown = (card) => {
         let wrapper = card.querySelector('.service-card-wrapper')
@@ -34,9 +35,9 @@ window.addEventListener('load', () => {
             card.style.animationDelay = `${cardIndex * .5}s`;
         }
     }
-    const servicesCards = document.querySelectorAll('.service-card');
+    
     // Voy por cada una para preguntarle si aparece en pantalla
-    servicesCards.forEach((card, i) => {
+    const observeCards = servicesCards.forEach((card, i) => {
         const observer = checkIfIsInScreen(.3, handleVisibleServiceCard, card)
         // Me fijo si aparece en pantalla
         observer.observe(card)
@@ -52,26 +53,31 @@ window.addEventListener('load', () => {
     let queryParams = url.searchParams;
 
     if (queryParams && queryParams.has('open')) {
+        
         // agarro valor del open y hago find para saber a cual div scrollear
-        let paramServiceId = queryParams.get('open');
-        let serviceToScrollTo = serviceCards.find(serv => serv.dataset.serviceId = paramServiceId);
-
-        let targetDivTopOffset = serviceToScrollTo.getBoundingClientRect().top + window.scrollY;
-
-        window.scrollTo({
-            top: targetDivTopOffset,
-            behavior: 'smooth', 
+        let paramService = queryParams.get('open');
+        serviceCards.forEach((serv, i) => {
+            if(i == paramService){
+                let targetDivTopOffset = serv.getBoundingClientRect().top + window.scrollY;
+               
+                window.scrollTo({
+                    top: targetDivTopOffset,
+                    behavior: 'smooth', 
+                });
+        
+               
+                setTimeout(() => {
+                    handleVisibleServiceCard(serv);
+                    openDropdown(serv)
+                }, 500); 
+        
+               
+            }
         });
+        
 
-       
-        setTimeout(() => {
-            handleVisibleServiceCard(serviceToScrollTo);
-        }, 800); // Puedes ajustar el tiempo (800 ms en este ejemplo)
-
-        setTimeout(() => {
-            openDropdown(serviceToScrollTo)
-        }, 1000)
-
+    } else {
+        observeCards()
     }
 
 

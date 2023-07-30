@@ -13,8 +13,12 @@
                     </form>
                 </div>
             </div>
-            <a href="/" class="brand-name" id="header-name"><img src="/img/logo.png" alt="header-logo"
-                    class="header-logo"></a>
+            <a href="/" class="brand-name" id="header-name">
+                <div class="brand-name-image-container">
+                    <img src="/img/logo.jpg" alt="header-logo"
+                    class="header-logo">
+                </div>
+            </a>
             <div class="nav-end">
                 <% if (locals.isLogged) { %> <!--LOGGEADO-->
                     <div class="user-logged-container">

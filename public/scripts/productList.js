@@ -14,13 +14,13 @@ window.addEventListener('load', () => {
 
         images.forEach((image, index) => {
 
-            if (images.length == 2) {      
+            if (images.length == 2) {
                 image.classList.remove('product-image-test-active', 'carousel-animation');
                 if (index === actualIndex) {
                     image.classList.add('product-image-test-active');
                 } else {
                     image.classList.add('carousel-animation');
-                }        
+                }
             } else {
                 image.classList.remove('product-image-test-active', 'product-image-test-next-slide', 'product-image-test-prev-slide');
                 if (index === actualIndex) {
@@ -80,7 +80,7 @@ window.addEventListener('load', () => {
             });
         } else {
             card.addEventListener('touchstart', () => {
-               
+
                 // Comparo el ultimo container con el que esta tocando
                 if (card != lastCard) { //Si es distinto
 
@@ -102,4 +102,115 @@ window.addEventListener('load', () => {
 
     });
 
+    // PARA LA GALERIA
+    const galleryPhotosSection = document.querySelector('.gallery-photo-section');
+    const galleryPhotos = galleryPhotosSection?.querySelectorAll('.gallery-photo');
+    const photosWrapper = document.querySelector('.photo-wrapper');
+    let currentIndex = 0;
+
+    function listenArrowClicks(){
+        const arrows = document.querySelectorAll('.change-gallery-photo-btn');
+        const imageWidth = galleryPhotos[0].getBoundingClientRect().width;
+        arrows.forEach(btn=>{
+            btn.addEventListener('click',()=>{
+                // si toca la flecha de la izquierda
+                if(btn.classList.contains('previous-photo-btn')){
+                    // Me fijo que no este en la primer foto
+                    if(currentIndex == 0)return
+                    // Si no esta en la primera voy 1 para atras
+                    currentIndex--
+                    photosWrapper.style.transform = `translateX(-${currentIndex * imageWidth}px)`;
+                    getActiveDot(currentIndex);
+                    return
+                };
+                // Me fijo que no este en la ultima foto
+                if(currentIndex == galleryPhotos.length-1)return
+                // Si no esta en la primera voy 1 para atras
+                currentIndex++
+                photosWrapper.style.transform = `translateX(-${currentIndex * imageWidth}px)`;
+                getActiveDot(currentIndex);
+                return
+            })
+        })
+    };
+    listenArrowClicks();
+    // Si esta en tablet/mobile ==> Carrusel
+    if (!isInDesktop()) {
+        let startX = 0;
+        let deltaX = 0;
+        
+
+        const amountToScroll = window.innerWidth; //Popr el column gap
+        galleryPhotosSection?.addEventListener('touchstart', (e) => { //Capturo donde arranca el touch
+            startX = e.touches[0].clientX;
+            photosWrapper.classList.add('photo-wrapper-moving');
+        });
+        galleryPhotosSection?.addEventListener('touchmove', (e) => {
+
+            deltaX = e.touches[0].clientX - startX; //Si es positivo desplaza para derecha, sino para izq
+
+            // Para que si llega a la ultima, no me mueva la foto
+            if (currentIndex <= galleryPhotos.length && currentIndex >= 0) {
+                // Traslado el carousel mientras scrollea
+                if (deltaX < 0) {//scrollLeft
+                    // Si no esta en la ultima...
+                    if (currentIndex < galleryPhotos.length - 1) {
+                        e.preventDefault();
+                        photosWrapper.style.transform = `translateX(-${(currentIndex) * amountToScroll - deltaX * 1}px)`
+                    }
+
+                } else if (deltaX > 0 && currentIndex > 0) {//Mueve hacia la derecha
+                    e.preventDefault();
+                    photosWrapper.style.transform = `translateX(${-(currentIndex) * amountToScroll + deltaX * 1}px)`;
+                };
+            };
+
+        }, { passive: false });
+        galleryPhotosSection?.addEventListener('touchend', (e) => {
+            photosWrapper.classList.remove('photo-wrapper-moving')
+            if (deltaX < 0 && currentIndex < galleryPhotos.length - 1) { //Si scrollLeft...
+                photosWrapper.style.transform = `translateX(-${deltaX}px)`;
+                photosWrapper.style.transform = `translateX(-${currentIndex * amountToScroll + amountToScroll}px)`;
+                currentIndex++
+            }
+            if (deltaX > 0 && currentIndex > 0) { //Si scrollRight...
+                photosWrapper.style.transform = `translateX(${deltaX}px)`;
+                photosWrapper.style.transform = `translateX(${-currentIndex * amountToScroll + amountToScroll}px)`;
+                currentIndex--
+            }
+            //LOGICA DE DOTS cuando hace un touch end
+            getActiveDot(currentIndex)
+        });
+
+    }
+    // Para pintar el activo
+    function getActiveDot(currentIndex) {
+        const dots = document.querySelectorAll('.gallery-dot');
+        dots.forEach((dot, i) => {
+            dot.classList.remove('gallery-dot-active')
+            if (i === currentIndex) {
+                dot.classList.add('gallery-dot-active')
+            }
+        })
+    };
+    // Escucha si tocan el dot
+    function clickOnDot() {
+        const dots = document.querySelectorAll('.gallery-dot');
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                const imageWidth = galleryPhotos[0].getBoundingClientRect().width;
+                if (i > currentIndex) {
+                    photosWrapper.style.transform = `translateX(-${i * imageWidth}px)`;
+                    currentIndex = i
+                    getActiveDot(currentIndex)
+                } else {
+                    photosWrapper.style.transform = `translateX(${-i * imageWidth}px)`;
+                    currentIndex = i
+                    getActiveDot(currentIndex)
+                }
+
+            })
+        })
+    };
+    clickOnDot();
 });
