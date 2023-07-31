@@ -32,7 +32,7 @@ const controller = {
             let products = getDeepCopy(await getAllProducts());
             console.log();
             // Si la url es checkout entonces le pido las url a cada producto
-            if (req.headers.referer.includes('checkout')) {
+            if (req.headers?.referer?.includes('checkout')) {
                 
                 for (let i = 0; i < products.length; i++) {
                     const product = products[i];
