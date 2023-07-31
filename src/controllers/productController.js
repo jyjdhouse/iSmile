@@ -74,8 +74,10 @@ const controller = {
                 }
             }));
             // Si hay mas de 6 fotos entonces agarro 6 nomas
-            let galleryProductLength = 6;
+            let galleryProductLength = 5;
             let galleryProductsForDisplay = [];
+            // Dejo la primera siempre igual
+            galleryProductsForDisplay.push(productGalleryfiles.find(file=>file.position));
             let count = 0;
             while (count < galleryProductLength) { //Dejo 6 productos random
                 let random = productGalleryfiles[Math.floor(Math.random() * productGalleryfiles.length)];
@@ -84,8 +86,8 @@ const controller = {
                     count++;
                 }
             };
-            for (let i = 0; i < productGalleryfiles.length; i++) {
-                const file = productGalleryfiles[i];
+            for (let i = 0; i < galleryProductsForDisplay.length; i++) {
+                const file = galleryProductsForDisplay[i];
                 const getObjectParams = {
                     Bucket: bucketName,
                     Key: `product/galleryPhoto/${file.filename}`
@@ -94,7 +96,8 @@ const controller = {
                 const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                 file.file_url = url; //en el href product.files[x].file_url
             };
-            // return res.send(productGalleryfiles);
+            
+            // return res.send(productGalleryfiles.find(file=>file.position));
             return res.render('productList', { products, viewLabel, productGalleryfiles: galleryProductsForDisplay })
         } catch (error) {
             console.log(`Falle en productController.list: ${error}`);

@@ -107,43 +107,54 @@ window.addEventListener('load', () => {
     const galleryPhotos = galleryPhotosSection?.querySelectorAll('.gallery-photo');
     const photosWrapper = document.querySelector('.photo-wrapper');
     let currentIndex = 0;
+    let galleryIntervalId;
 
-    function listenArrowClicks(){
+    function listenArrowClicks() {
         const arrows = document.querySelectorAll('.change-gallery-photo-btn');
         const imageWidth = galleryPhotos[0].getBoundingClientRect().width;
-        arrows.forEach(btn=>{
-            btn.addEventListener('click',()=>{
+        arrows.forEach(btn => {
+            btn.addEventListener('click', () => {
                 // si toca la flecha de la izquierda
-                if(btn.classList.contains('previous-photo-btn')){
+                if (btn.classList.contains('previous-photo-btn')) {
                     // Me fijo que no este en la primer foto
-                    if(currentIndex == 0)return
+                    if (currentIndex == 0) return
+
                     // Si no esta en la primera voy 1 para atras
                     currentIndex--
                     photosWrapper.style.transform = `translateX(-${currentIndex * imageWidth}px)`;
                     getActiveDot(currentIndex);
+                    //Reinicio el intervalo
+                    clearInterval(galleryIntervalId);
+                    slideGallery();
                     return
                 };
                 // Me fijo que no este en la ultima foto
-                if(currentIndex == galleryPhotos.length-1)return
+                if (currentIndex == galleryPhotos.length - 1) return
                 // Si no esta en la primera voy 1 para atras
                 currentIndex++
                 photosWrapper.style.transform = `translateX(-${currentIndex * imageWidth}px)`;
                 getActiveDot(currentIndex);
+                //Reinicio el intervalo
+                clearInterval(galleryIntervalId);
+                slideGallery();
                 return
             })
         })
     };
-    listenArrowClicks();
+    galleryPhotos && listenArrowClicks();
     // Si esta en tablet/mobile ==> Carrusel
     if (!isInDesktop()) {
         let startX = 0;
         let deltaX = 0;
-        
+
 
         const amountToScroll = window.innerWidth; //Popr el column gap
         galleryPhotosSection?.addEventListener('touchstart', (e) => { //Capturo donde arranca el touch
             startX = e.touches[0].clientX;
             photosWrapper.classList.add('photo-wrapper-moving');
+            //Freno el intervalo
+            clearInterval(galleryIntervalId);
+
         });
         galleryPhotosSection?.addEventListener('touchmove', (e) => {
 
@@ -179,7 +190,9 @@ window.addEventListener('load', () => {
                 currentIndex--
             }
             //LOGICA DE DOTS cuando hace un touch end
-            getActiveDot(currentIndex)
+            getActiveDot(currentIndex);
+            // Activo el intervalo devuelta
+            slideGallery();
         });
 
     }
@@ -213,4 +226,19 @@ window.addEventListener('load', () => {
         })
     };
     clickOnDot();
+
+    // Funcion que si inicia el intervalo
+    function slideGallery() {
+        galleryIntervalId = setInterval(() => {
+            let rightArrow = document.querySelector('.next-photo-btn');
+            let leftArrow = document.querySelector('.previous-photo-btn');
+            if (currentIndex == galleryPhotos.length - 1) {
+                currentIndex = 1;
+                leftArrow.click();
+            } else {
+                rightArrow.click();
+            }
+        }, 3500);
+    };
+    galleryPhotos && slideGallery();
 });

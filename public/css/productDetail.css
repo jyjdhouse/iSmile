@@ -97,13 +97,13 @@
     display: flex;
     justify-content: space-between;
     width: 70%;
-    margin: 5% auto 0;
+    margin: 5% auto;
     height: 25%;
 }
 
 .other-img-container {
     /* width: 20%; ESTO SE LO DOY CON JS */
-    margin: 0 1%;
+    /* margin: 0 1%; */
     border: 1px solid var(--gold-color);
     /* border-radius: 10px; */
 }

@@ -262,7 +262,7 @@ body {
 .brand-name-image-container {
     height: 100%;
     margin: 0 auto;
-    width: 90%;
+    width: 100%;
 }
 
 .header-logo {
@@ -400,10 +400,16 @@ body {
 }
 
 /* MEDIAS QUERIES */
-
+@media(min-width: 444px){
+    .brand-name-image-container{
+        width: 65%;
+    }
+}
 /* TABLET */
 @media (min-width:768px) {
-
+    .brand-name-image-container{
+        width: 54.5%;
+    }
     /* MENU */
     .side-navbar-container-active {
         width: 50%;
@@ -429,9 +435,6 @@ body {
         font-size: 22px;
     }
 
-    .brand-name-image-container {
-        width: 70%;
-    }
 
     .lupa-mobile {
         display: none;
@@ -455,7 +458,7 @@ body {
     }
 
     .brand-name-image-container {
-        width: 25%;
+        width: 20%;
     }
 
     .nav-start {

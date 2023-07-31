@@ -13,635 +13,71 @@
     MARGINS Y PADDINGS SIEMPRE EN %
     Al ser un login por popup, a TODOS los get hay que preguntar por errores
 
-    <div class="profile-content-wrapper">
-            <div class="options-selected-container">
-                <div class="profile-selected-field-container profile-selected-field-container-active user-data">
-                    <ul class="profile-selected-list data-list">
-                        <li class="profile-field-container">
-                            <p>Nombre:</p> <span><%= user.name %></span>
-                            
-                        </li>
-                        <li class="profile-field-container">
-                            <p>Apellido:</p> <span><%= user.last_name %></span>
-                            
-                        </li>
-                        <li class="profile-field-container">
-                            <p>Email:</p> <span><%= user.email %></span>
-                            
-                        </li>
-                        <li class="profile-field-container">
-                            <p>Celular:</p> <span><%= user.phone? user.phone : 'Sin especificar' %></span>
-                            
-                        </li>
-                        <li class="profile-field-container">
-                            <p>DNI:</p> <span><%= user.dni? user.dni : 'Sin especificar' %></span>
-                            
-                        </li>
-                    </ul>                   
-                </div>
-                <div class="profile-selected-field-container user-address">
-                    <ul class="profile-selected-list address-list">
-                        <li class="profile-field-container">
-                            <p>Calle:</p> <span><%= user.street? user.street : 'Sin especificar' %></span>
-                            
-                        </li>
-                        <li class="profile-field-container">
-                            <p>Ciudad:</p> <span><%= user.city? user.city : 'Sin especificar' %></span>
-                            
-                        </li>
-                        <li class="profile-field-container">
-                            <p>Provincia:</p> <span><%= user.province? user.province : 'Sin especificar' %></span>
-                            
-                        </li>
-                        <li class="profile-field-container">
-                            <p>CP:</p> <span><%= user.zip_code? user.zip_code : 'Sin especificar' %></span>
-                            
-                        </li>
-                    </ul>
-                    
-                </div>
-                <div class="profile-selected-field-container user-preferences">
-                    <div class="profile-checkbox-label-container">
-                        <p>Quiero recibir notificaciónes por correo electrónico</p>
-                        <div class="profile-checkbox-container">
-                            <label for="true">SI</label>
-                            <input type="checkbox" name="true">
-                            <label for="false">NO</label>
-                            <input type="checkbox" name="false">
-                        </div>
-                    </div>
-                    <div class="profile-checkbox-label-container">
-                        <p>Quiero recibir notificaciónes por WhatsApp.</p>
-                        <div class="profile-checkbox-container">
-                            <label for="true">SI</label>
-                            <input type="checkbox" name="true">
-                            <label for="false">NO</label>
-                            <input type="checkbox" name="false">
-                        </div>
-                    </div>
-                    <div class="profile-checkbox-label-container">
-                        <p>Quiero recibir el newsletter por correo electrónico.</p>
-                        <div class="profile-checkbox-container">
-                            <label for="true">SI</label>
-                            <input type="checkbox" name="true">
-                            <label for="false">NO</label>
-                            <input type="checkbox" name="false">
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="profile-options-container">
-                <ul class="profile-options-list">
-                    <li class="profile-option-item profile-option-item-active">Mis datos</li>
-                    <li class="profile-option-item">Dirección</li>
-                    <li class="profile-option-item">Preferencias</li>
-                </ul>
-            </div>
-
-
-
-    Z-INDEX:    Header ==> 11
-                Quick-add-actions => 10
-                blackScreen => 40
-                add-to-cart-container => 60
-                WhatsApp => 20 
-                Footer => 25
-                shopping-cart => 60
-                loggedMenu => 15
-                loginForm => 200
-                registForm => 10000
-                searchSectionContainer => 1000
-                sideNavbarContainer => 110
-                deleteProductPopUp => 50
-                userOptionsPopup => 50
-  
-  Jerarquias:   (RegistForm > loginForm == searchSectionContainer == sideNavbar  == shoppingCart) > blackScreen > WhatsApp
-  --------------CODIGO---------------------
-  <% categories.forEach(category=> { %>
-                <li class="burguer-menu-option" data-id=<%=category.id %>>
-                    <a href="#">
-                        <%= category.name %>
-                    </a>
-                    <i class="fa-solid fa-angle-right"></i>
-
-        <div class="side-navbar-submenu">
-
-        <div class="back-menu-container">
-            <div class="back-menu-subcontainer">
-                <li class="burger-submenu-back">Menu</li>
-            </div>
-        </div>
-        <ul class="category-submenu-options">
-                   
-            <% products.forEach((product, i)=> { %>
-                <% if(product.category_id==category.id && i < 5) { %>
-                        <li class="submenu-product"><%= product.name %></li>
-                <% } %>
-                <% })%>
-                      
-        </ul>
-    </div>
-
-                
-
-        </li> %>
-<% }) %>
-
-
-CODIGO PARA CUANDO TENGAMOS PRODUCTOS CON LAS IMAGENES
-
-PRODUCT CARD
-.product-card-link {
-    color: #000;
-}
-
-.product-card-container {
-    position: relative;
-    cursor: pointer;
-    width: 100%;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10%;
-    background: linear-gradient(rgba(200, 200, 200, .4), rgba(255, 255, 255, 0.2));
-}
-
-.image-container {
-    height: 200px;
-}
-
-.image-carousel {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-
-}
-
-.faved-item-container {
-    position: absolute;
-    right: 2%;
-    top: 1%;
-    font-size: .8rem;
-    opacity: 0;
-    transition: opacity 0.2s;
-    z-index: 2;
-}
-.bx-filter-alt{
-    font-size: 1.2rem;
-}
-.bx-heart {
-    font-size: 1.9rem;
-}
-
-.faved-item-container-active {
-    opacity: 1;
-}
-
-.product-image-test {
-    display: flex;
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-    right: 50%;
-    position: absolute;
-    transition: all .7s;
-    opacity: 0;
-    object-position: center center;
-}
-
-.product-image-test-next-slide {
-    transform: translateX(100%);
-    z-index: 0;
-}
-
-.product-image-test-prev-slide {
-    transform: translateX(-100%);
-    z-index: 0;
-}
-
-.product-image-test-active {
-    opacity: 1;
-    transform: translateX(50%);
-    z-index: 1;
-}
-
-.product-image {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-}
-
-/* PRODUCT INFO */
-.product-info-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
-}
-
-/* NOMBRE Y PRECIO */
-.price-name-container {
-    width: fit-content;
-}
-
-.product-name,
-.product-price {
-    font-size: 12px;
-    letter-spacing: 1px;
-}
-
-.product-dots-container {
-    display: flex;
-    justify-content: space-between;
-    width: 50%;
-    margin: 0 auto;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 15%;
-    z-index: 10;
-}
-
-.product-carousel-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 1px solid grey;
-}
-
-.product-carousel-dot-active {
-    background-color: black;
-}
-
-/* QUICK ACTIONS */
-
-.quick-cart-container,
-.quick-fav-container {
-    position: absolute;
-    font-size: 20px;
-    width: 20%;
-    right: 0;
-    text-align: center;
-    z-index: 5;
-    bottom: 1%;
-}
-
-
-.quick-fav-container {
-    right: 15%;
-}
-
-.quick-cart-container-active,
-.quick-fav-container-active {
-    z-index: -1;
-}
-/* 
-.favourite-logo {
-    display: none;
-} */
-
-.favourite-logo-active {
-    display: block;
-}
-
-.quick-sizes-container {
-    width: 100%;
-    position: absolute;
-    text-align: center;
-    top: 90%;
-    bottom: 18%;
-    left: 50%;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-    transition: all .3s ease;
-    padding: 0 25%;
-    transform: translateX(-50%);
-    row-gap: 8%;
-}
-
-.quick-sizes-container-active {
-    top: 0;
-    background: rgba(240, 240, 240, .8);
-}
-
-.quick-size {
-    background-color: #ccc;
-    border-radius: 0.4rem;
-    color: #000;
-}
-
-.quick-size.no-stock {
-    color: #888;
-}
-.close-size-btn-container{
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding-top: 5%;
-    width: 20%;
-    height: 100%;
-    background: rgba(240, 240, 240, .4);
-    z-index: 10;
-}
-.close-sizes-btn {
-    font-size: 20px;
-}
-MEDIAS
-.product-card-container {
-        width: 100%;
-
-    }
-
-    .image-container {
-        height: 350px;
-    }
-
-    .product-name,
-    .product-price {
-        font-size: 15px;
-    }
-
-    
-
-    /* QUICK ACTIONS */
-    .product-quick-actions-container {
-        overflow: hidden;
-        position: absolute;
-        top: 72%;
-        height: 12%;
-        width: 90%;
-        background: rgba(255,255,255,.65);
-        z-index: 1;
-        display: flex;
-        opacity: 0;
-        transition: opacity .1s ease;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .product-quick-actions-container-active {
-        opacity: 1;
-    }
-
-    .quick-cart-container,
-    .quick-fav-container {
-        position: static;
-        width: 50%;
-        flex: 0 0 auto;
-        text-align: center;
-        height: 100%;
-        font-size: 24px;
-        transition: all .3s ease;
-    }
-
-    .quick-cart-container-active,
-    .quick-fav-container-active {
-        transform: translateX(-200%);
-    }
-
-    .faved-item-container{
-        display: block;
-    }
-    .logo-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-    }
-
-    .quick-cart-container:hover,
-    .quick-fav-container:hover {
-        background-color: #eee;
-    }
-
-    .quick-sizes-container {
-        width: 100%;
-        flex: 0 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-        transition: all .2s ease;
-        position: static;
-        flex-direction: row;
-        background: none;
-        padding: 0;
-        transform: none;
-    }
-
-    .quick-sizes-container-active {
-        transform: translateX(-100%);
-    }
-    .close-size-btn-container{
-        display: none;
-    }
-    .quick-size{
-        border-radius: 0;
-        background: none;
-        color: #000;
-    }
-    .quick-size.no-stock {
-        color: #888;
-    }
-
-    .quick-size.no-stock:hover {
-        text-decoration: initial;
-    }
-
-    .quick-size:hover {
-        text-decoration: underline;
-        text-decoration-color: #333;
-        text-decoration-thickness: .9px;
-    }
-
-
-
-FUNción DOTS PARA CAMBIO IMAGEN
-function dotsNextSlide() { //Se invoca cuando una imagen cambia a la siguiente
-        const activeDot = document.querySelector('.active-dot')
-        activeDot.classList.remove('active-dot')
-        if (activeDot.nextElementSibling) {
-            const dotToActive = activeDot.nextElementSibling;
-            dotToActive.classList.add('active-dot')
-        } else {
-            imgDots[0].classList.add('active-dot'); //imgDots es un selectorAll de todos
-        }
-    }
-
-CODIGO EJS PARA DOTS
-                                   <div class="product-dots-container" data-productId="11">
-                                        <div class="product-carousel-dot product-carousel-dot-active"></div>
-                                        <div class="product-carousel-dot"></div>
-                                        <div class="product-carousel-dot"></div>
-                                    </div>
-
-
-
-CODIGO PARA RENDER DE PRODUCT card
- <% products.forEach(prod => {  %><!-- vamos por cada producto-->
-                                        <% prod.colors.forEach(col => { %>
-                                            <!-- ACA VA LA PRODUCT-CARD-CONTAINER -->
-                                        <% }) %>
-                                    <% }) %>
-
-                                                    prodId / colId
-RUTA PARA PRODUCTOS ==> http://localhost:3500/product/10/2
-
-
-// checkout alternativa pasos
-
-<div class="order-detail-user-position">
-                        <div class="order-detail-user-position-content-container">
-                            <i class='step-circle bx'></i>
-                            <p></p>
-                        </div>
-                        <div class="line"></div>
-                        <div class="order-detail-user-position-content-container">
-                            <i class='step-circle bx'></i>
-                            <p></p>
-                        </div>
-                        <div class="line"></div>
-                        <div class="order-detail-user-position-content-container">
-                            <i class='step-circle bx'></i>
-                            <p></p>
-                        </div>
-                        <div class="line"></div>
-                        <div class="order-detail-user-position-content-container">
-                            <i class='step-circle bx'></i>
-                            <p></p>
-                        </div>
-
- const imgsToDeleteFilter = deviceToUpdate.images.filter(image => { //FILTER TO DELETE IMAGES 
-                if (!req.body.current_imgs.includes(image.image)) {
-                    return imgsToDelete.push(image.image)
-                }
-            })
-
-            if (imgsToDelete.length > 0) {
-
-                imgsToDelete.forEach(image =>
-                    fs.unlinkSync(path.join(__dirname, '../../public/images/devices/' + image)) // DELETE IMGS IN LOCAL FOLDER    
-                );
-
-
-                await db.Image.destroy({
-                    where: {
-                        image: {
-                            [Op.in]: imgsToDelete
-                        }
-                    },
-                    force: true
-                }) // DELETE IMGS IN DATABASE     
-
+const fs = require('fs');
+const path = require('path')
+const db = require('../database/models');
+const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+
+const sharp = require('sharp')
+
+const bucketName = process.env.BUCKET_NAME;
+const bucketRegion = process.env.BUCKET_REGION;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+// Creo el objeto
+const s3 = new S3Client({
+    credentials: {
+        accessKeyId: accessKey,
+        secretAccessKey: secretAccessKey
+    },
+    region: bucketRegion
+});
+router.get('/saddfdfgrtewrdcsadxqa', async (req, res) => {
+    // Cargo las fotos que estan cargadas en la carpeta borrar
+    // Especifica la ruta de la imagen relativa a la carpeta pública
+    const folderPath = path.join(__dirname, '../../public/img/borrar');
+    let imagesFileNames = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg','7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg'];
+    let filesToAddDb = [];
+    for (let i = 0; i < imagesFileNames.length; i++) {
+        const filename = imagesFileNames[i];
+        // Lee el contenido de la imagen
+        fs.readFile(`${folderPath}/${filename}`, async (err, data) => {
+            if (err) {
+                // Si ocurre un error al leer la imagen, responde con un mensaje de error
+                return res.status(500).send('Error al leer la imagen.');
             }
+            // En el data tengo el buffer
+            let fileType = 1;
+            let randomName, buffer;
 
- 
-            <!-- <section class="checkout-info-section">
-            <div class="user-info-container">
-                <p class="info-label checkout-label">Dirección de facturación</p>
-                <form action="" class="user-info-form">
-                    <div class="input-field must-field">
-                        <label>Nombre <span class="must-sign">*</span></label>
-                        <input type="text" class="input" name="name">
-                    </div>
-                    <div class="input-field must-field">
-                        <label>Apellido/s <span class="must-sign">*</span></label>
-                        <input type="text" class="input" name="lastName">
-                    </div>
-                    <div class="input-field must-field">
-                        <label>Email <span class="must-sign">*</span></label>
-                        <input type="text" class="input" name="email">
-                    </div>
-                    <div class="input-field must-field">
-                        <label>Dirección de Envío<span class="must-sign">*</span></label>
-                        <input type="text" class="input" name="address">
-                    </div>
-                    <div class="input-field must-field">
-                        <label>Ciudad<span class="must-sign">*</span></label>
-                        <input type="text" class="input" name="city">
-                    </div>
-                    <div class="input-field must-field">
-                        <label>Codigo Postal <span class="must-sign">*</span></label>
-                        <input type="text" class="input" name="zip">
-                    </div>
-                    <div class="input-field must-field">
-                        <label>Telefono <span class="must-sign">*</span></label>
-                        <input type="text" class="input" name="phone">
-                    </div>
-                </form>
-            </div>
-            <div class="deliver-method-container">
-                <p class="deliver-label checkout-label">Método de Entrega</p>
-                <form action="" class="deliver-method-form">
-                    <div class="input-field">
-                        <input type="radio" name="deliver-method">
-                        <label>Envio a domicilio (dirección de facturación)</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="radio" name="deliver-method">
-                        <label>Retirar por el local</label>
-                    </div>
-                </form>
-            </div>
-            <div class="billing-resume-container">
-                <p class="billing-resume-label checkout-label">Resumen de factura</p>
-                <div class="billing-resume-field">
-                    <p class="billing-resume-field-label">TOTAL DE PRODUCTOS</p>
-                    <p class="billing-resume-field-number"> 100000,00</p>
-                </div>
-                <div class="billing-resume-field">
-                    <p class="billing-resume-field-label">Envíos</p>
-                    <p class="billing-resume-field-number"> 500,00</p>
-                </div>
-                <div class="billing-resume-field">
-                    <p class="billing-resume-field-label">Impuestos</p>
-                    <p class="billing-resume-field-number"> 5000,00</p>
-                </div>
-                <div class="billing-total-order-price-container">
-                    <p class="billing-total-order-price-label">Total del pedido</p>
-                    <p class="billing-total-order-price billing-resume-field-number"> 105500,00</p>
-                </div>
-                <p class="billing-resume-description">El importe de tu pedido incluye todas las tasas, impuestos y aranceles aplicables. No tendrás que realizar ningún pago adiciónal al recibirlo.</p>
-            </div>
-        </section> 
-        </main> --->
+            // Creo el nombre unico para la foto (dentro del forEach)
+            randomName = "galletyPhoto-" + Math.random().toString(36).substring(2, 2 + 10) + '.webp';
+            // Cambio el formato a webp y redimensiono la imagen, total la de los productos 
+            //  no se necesita tan gde      .resize({ height: 1920, width: 1080, fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
+            buffer = await sharp(data).toFormat('webp').toBuffer();
 
 
-          <% service.treatments.forEach((treatment,i) => { %>
-                    <article class="service-detail-card">
-                        <!-- <i class='bx bx-minus '></i> -->
-                        <div class="service-card-content-wrapper">
-                            <div class="service-card-first-column">
-                                <div class="service-card-img-container">
-                                    <img src="/img/<%= service.specialty.src %>" alt="<%= service.name %>-<%= i+1 %>" class="service-card-img">
-                                </div>
-                                <div class="service-card-first-column-dropdown-container">
-                                    <div class="first-column-item-info">
-                                        <p>Tiempo de aplicación</p>
-                                        <p>30 min</p>
-                                    </div>
-                                    <div class="first-column-item-info">
-                                        <p>Tiempo de duración</p>
-                                        <p>6 meses</p>
-                                    </div>                   
-                                </div>
-                            </div>
-    
-                            <div class="service-card-info-container">
-                                <h2 class="bold"><%= treatment.name %></h2>
-                                <div class="service-info-p-container">
-                                    <p class="service-info-p"><%= treatment.description %></p>
-                                </div>
-                                <div class="see-more-container">
-                                    <p class="see-more-action">Ver más</p>
-                                    <p class="see-more-action see-more-action-inactive close-card">Ver menos</p>
-                                </div>
-                            </div>
-                        </div>
-    
-                    </article>
-                <% }) %>
+            // El objeto de la imagen que voy a subir
+            const params = {
+                Bucket: bucketName,
+                Key: `product/galleryPhoto/${randomName}`,//Esto hace que se guarde en la carpeta product
+                Body: buffer,
+                ContentType: 'image/webp'
+            };
+            const command = new PutObjectCommand(params);
+            await s3.send(command);
+            // Armo el objeto para la db
+            filesToAddDb.push({
+                filename: randomName,
+                file_types_id: fileType,
+                home_sections_id: 5,
+            });
+        });
+    };
+    await db.HomeFile.bulkCreate(filesToAddDb);
+    return res.send('Imagenes subidas')
+
+})
+

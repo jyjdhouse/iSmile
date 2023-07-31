@@ -11,6 +11,7 @@ const orderIsCompleteValidations = require('../middlewares/orderIsCompleteValida
 // Rutas
 
 // GET
+router.get('/login',userController.login);
 router.get('/logout',userController.logout);
 router.get('/checkout',loginMiddleware,userController.checkout); 
 router.get('/profile',guestMiddleware,userController.userProfile);
@@ -18,7 +19,7 @@ router.get('/cambiar-contrasena/:token',userController.changePasswordView);
 router.get('/contrasena-error',userController.passwordError);
 router.get('/booking',userController.bookingView)
 // POST
-router.post('/login',userController.login);
+router.post('/login',userController.processLogin);
 router.post('/regist',registValidations,userController.processRegist);
 router.post('/change-password/:token',userController.processNewPassword)
 // router.post('/checkout',orderIsCompleteValidations,userController.processCheckout); 
