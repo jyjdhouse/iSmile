@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head') %>
+    <link rel="stylesheet" href="/css/login.css">
+        <title>Registrarse</title>
+</head>
+
+<body>
+    <%- include('./partials/header') %>
+        <main class="main login-main">
+            <form action="/user/regist" method="POST" class="regist-form">
+                <div class="regist-field">
+                    <label for="register-email" class="bold">Email</label>
+                    <input type="text" id="register-email" class="input" placeholder="Ingrese su Email" name="email">
+                </div>
+                <div class="regist-field pass-field">
+                    <label for="register-password" class="bold">Contraseña</label>
+                    <input type="password" id="register-password" class="input" placeholder="Ingrese su Contraseña" name="password" autocomplete="off"> 
+                    <i class="fa-solid fa-eye show-password-btn password-btn-toggler"></i>
+                    <i class="fa-solid fa-eye-slash hide-password-btn password-btn-toggler hidden"></i>
+                </div>
+                <div class="regist-field pass-field">
+                    <label for="register-re-password" class="bold">Confirmar contraseña</label>
+                    <input type="password" id="register-re-password" class="input" placeholder="Ingrese su Contraseña" name="re-password" autocomplete="off">
+                    <i class="fa-solid fa-eye show-password-btn password-btn-toggler"></i>
+                    <i class="fa-solid fa-eye-slash hide-password-btn password-btn-toggler hidden"></i>
+                </div>
+                <% if (locals.errors) { %>
+                    <p class="error-msg"><%= errors.msg %></p>
+                <% } %>
+                <div class="button-container">
+                    <button class="regist-button bold">Registrarse</button>
+                </div>
+            </form>
+        </main>
+        <%- include('./partials/footer') %>
+</body>
+
+</html>

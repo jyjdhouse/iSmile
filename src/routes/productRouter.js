@@ -4,14 +4,13 @@ const productController = require('../controllers/productController');
 const uploadFile = require('../middlewares/uploadProductImages')
 
 // MIDDLEWARES
-const loginMiddleware = require('../middlewares/loginMiddleware');
 const isAdminMiddleware = require('../middlewares/isAdminMiddleware');
 
 // GET
-router.get('/',loginMiddleware,productController.list);
-router.get('/create',loginMiddleware,isAdminMiddleware, productController.createProduct)
-router.get('/update/:productId',loginMiddleware,isAdminMiddleware, productController.updateProduct)
-router.get('/:productId',loginMiddleware,productController.detail);
+router.get('/',productController.list);
+router.get('/create',isAdminMiddleware, productController.createProduct)
+router.get('/update/:productId',isAdminMiddleware, productController.updateProduct)
+router.get('/:productId',productController.detail);
 
 // POST
 router.post('/create', uploadFile.any('images'),productController.processProductCreation);

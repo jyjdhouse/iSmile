@@ -4,7 +4,7 @@ const path = require('path');
 const adminController = require('../controllers/adminController');
 
 // Middlewares
-const loginMiddleware = require('../middlewares/loginMiddleware');
+
 const isAdminMiddleware = require('../middlewares/isAdminMiddleware');
 
 // RUTEO

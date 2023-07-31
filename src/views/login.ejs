@@ -3,6 +3,7 @@
 
 <head>
     <%- include('./partials/head') %>
+    <link rel="stylesheet" href="/css/login.css">
         <title>Inicio Sesion</title>
 </head>
 
@@ -10,7 +11,7 @@
     <%- include('./partials/header') %>
         <main class="main login-main">
             <form action="/user/login" method="POST"
-                class="popup login-popup user-options-popup-option <%= locals.loginErrors && 'translate-option-left' %>">
+                class="popup login-form">
                 <div class="login-field">
                     <label for="login-email" class="bold">Email</label>
                     <input type="text" id="login-email" class="input" placeholder="Ingrese su Email" name="email">
@@ -23,9 +24,9 @@
                     <i class="fa-solid fa-eye-slash hide-password-btn password-btn-toggler hidden"></i>
                     <p class="forget-password-btn">Olvide mi contraseña</p>
                 </div>
-                <% if (locals.loginErrors) { %>
+                <% if (locals.errors) { %>
                     <p class="error-msg">Los datos ingresados no son válidos.</p>
-                    <% } %>
+                <% } %>
                         <div class="button-container">
                             <button type="submit" class="login-button bold">Iniciar Sesion</button>
                         </div>
