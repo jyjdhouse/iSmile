@@ -32,7 +32,7 @@ video::-webkit-media-controls-time-remaining-display {
 
 /* VIDEO LANDING */
 .landing-video-container {
-    height: 100vh;
+    height: 90vh;
     width: 100vw;
     position: relative;
 }
@@ -41,6 +41,7 @@ video::-webkit-media-controls-time-remaining-display {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 0 43%;
 }
 
 

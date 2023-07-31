@@ -38,7 +38,7 @@ window.addEventListener('load', () => {
                 `
         })
     });
-    // Logica para hacer que los video
+    // Logica para hacer que los videos se reproduzcan
     const videoElements = document.querySelectorAll('.video');
     videoElements.forEach(video=>video.play())
     // Apenas carga me fijo cuantas other-images vienen- en base a eso le doy width
@@ -48,8 +48,9 @@ window.addEventListener('load', () => {
     // Modifico el tamano de otherImg en función de la foto gde
     const otherImgContainer = document.querySelector('.other-product-imgs-container');
     // console.log(otherImgContainer);
-    const mainImgContainer = document.querySelector('.main-img-container');
-    let widthToSet = mainImgContainer.offsetWidth;
+    const mainImgContainer = document.querySelector('.main-img');
+    // console.log(mainImgContainer.offsetWidth, mainImgContainer.clientWidth);
+    let widthToSet = mainImgContainer.attributes.width ;
     otherImgContainer.style.width = `${widthToSet}px`;
     // Cuando cambia la resolución va cambiando con esto
     window.addEventListener('resize', () => {
