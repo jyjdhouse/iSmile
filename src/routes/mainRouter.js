@@ -17,6 +17,7 @@ router.get('/', loginMiddleware, mainController.index);
 router.get('/servicios', loginMiddleware, mainController.services);
 router.get('/servicios/:specialtyId/:specialtyServiceId?', loginMiddleware, mainController.serviceDetail)
 router.get('/preguntas-frecuentes', loginMiddleware, mainController.frequentQAndA);
+router.get('/nosotros', mainController.aboutUs)
 // Ruta unica (para hacer cosas puntuales)
 // router.get('/saddfdfgrtewrdcsadxqa');
 

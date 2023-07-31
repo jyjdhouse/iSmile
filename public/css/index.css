@@ -491,24 +491,7 @@ video::-webkit-media-controls-time-remaining-display {
     justify-content: center;
 }
 
-.pattern {
-    position: absolute;
-    width: 20%;
-    z-index: -1;
-    opacity: .8;
-}
 
-.right-pattern {
-    right: 0;
-}
-
-.left-pattern {
-    left: 0%;
-    bottom: 1%;
-    z-index: 0;
-    left: -8%;
-    bottom: 0%;
-}
 
 .about-us-background {
     position: absolute;

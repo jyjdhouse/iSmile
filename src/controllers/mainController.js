@@ -257,6 +257,9 @@ const controller = {
             console.log(`Falle en mainController.updateHomeFile: ${error}`);
             return res.json({ error })
         }
+    },
+    aboutUs: (req, res) => {
+        return res.render('aboutUs')
     }
 };
 
