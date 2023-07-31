@@ -400,10 +400,16 @@ body {
 }
 
 /* MEDIAS QUERIES */
-
+@media(min-width: 444px){
+    .brand-name-image-container{
+        width: 65%;
+    }
+}
 /* TABLET */
 @media (min-width:768px) {
-
+    .brand-name-image-container{
+        width: 54.5%;
+    }
     /* MENU */
     .side-navbar-container-active {
         width: 50%;
@@ -429,9 +435,6 @@ body {
         font-size: 22px;
     }
 
-    .brand-name-image-container {
-        width: 54.5%;
-    }
 
     .lupa-mobile {
         display: none;
