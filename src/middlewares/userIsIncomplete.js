@@ -7,7 +7,7 @@ const secret = require('../utils/secret').secret;
 const userIsIncomplete = async (req, res, next) => {
     try {
         // Obtener la URL actual
-        var pathToCheck = getRelativePath(req.url);// Ruta a la que quiere acceder el cliente
+        var pathToCheck = getRelativePath(req.headers.url);// Ruta a la que quiere acceder el cliente
         
         // Si esta loggeado..
         if (req.session && req.session.userLoggedId) {
