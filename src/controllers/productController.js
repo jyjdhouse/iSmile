@@ -96,6 +96,7 @@ const controller = {
                 const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                 file.file_url = url; //en el href product.files[x].file_url
             };
+            
             // return res.send(productGalleryfiles.find(file=>file.position));
             return res.render('productList', { products, viewLabel, productGalleryfiles: galleryProductsForDisplay })
         } catch (error) {

@@ -25,7 +25,7 @@ const s3 = new S3Client({
     region: bucketRegion
 });
 // Utils
-const getAllTreatments = require('../utils/getAllTreatments');
+const getAllProducts = require('../utils/getAllProducts');
 const getAllSpecialties = require('../utils/getAllSpecialties');
 const getDeepCopy = require('../utils/getDeepCopy')
 const homePageLabels = require('../utils/staticDB/homePageLabels');
@@ -36,7 +36,7 @@ const controller = {
         try {
 
             let homeFiles = await db.HomeFile.findAll({
-                where:{
+                where: {
                     home_sections_id: {
                         [Op.ne]: 5 //Traigo todos los que corresponden al index
                     }
@@ -120,8 +120,59 @@ const controller = {
                 order: [['createdAt', 'DESC']],
                 limit: 6
             });
+            // SLIDESHOW
+            const productsInDb = getDeepCopy(await getAllProducts());
+            let productsGroupDesktop = []
+            let productsGroupMobile = []; //Grupos para la galeria
+            // Calculamos el número de grupos completos de tres elementos
+            const groupNumber = Math.floor(productsInDb.length / 3);
+            // Recorremos el array con incrementos de 3 elementos
+            for (let i = 0; i < groupNumber; i++) {
+                const group = productsInDb.slice(i * 3, i * 3 + 3);
+                productsGroupDesktop.push(group);
+            }
+            // Para el mobile agarro 5 items random
+            let count = 0;
+            while (count < 6) { //Dejo 6 productos random
+                let random = productsInDb[Math.floor(Math.random() * productsInDb.length)];
+                if (!productsGroupMobile.includes(random)) {
+                    productsGroupMobile.push(random)
+                    count++;
+                }
+            };
+            // Ahora ya tengo el array armado ==> Busco las url
+            // desktop
+            for (let i = 0; i < productsGroupDesktop.length; i++) {
+                const group = productsGroupDesktop[i];
+                // Voy por cada producto del grupo
+                for (let j = 0; j < group.length; j++) {
+                    const product = group[j];
+                    const file = product.files && product.files.find(file => file.file_types_id == 1); //Agarro la primer imagen
+                    const getObjectParams = {
+                        Bucket: bucketName,
+                        Key: `product/${file.filename}`
+                    }
+                    const command = new GetObjectCommand(getObjectParams);
+                    const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+                    product.file_url = url; //en el href product.files[x].file_url
+                }
+            };
+            // mobile images
+            for (let i = 0; i < productsGroupMobile.length; i++) {
+                const product = productsGroupMobile[i];
+                const file = product.files && product.files.find(file => file.file_types_id == 1); //Agarro la primer imagen
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key: `product/${file.filename}`
+                }
+                const command = new GetObjectCommand(getObjectParams);
+                const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+                product.file_url = url; //en el href product.files[x].file_url
 
-            return res.render('index', { videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, products, homePageLabels })
+            }
+
+            // return res.send({ productsInDb, productsGroupDesktop, productsGroupMobile });
+            return res.render('index', { videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, products, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile })
 
         } catch (error) {
             console.log(`Falle en mainController.list: ${error}`);
@@ -149,11 +200,11 @@ const controller = {
             const serviceSpecialtyId = req.params.specialtyServiceId;
             let service;
 
-            
-            if(serviceSpecialtyId) {
+
+            if (serviceSpecialtyId) {
                 service = await db.SpecialtyService.findByPk(serviceSpecialtyId)
             }
-          
+
 
             let title;
             let treatments = getDeepCopy(await db.Treatment.findAll());

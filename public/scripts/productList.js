@@ -240,5 +240,5 @@ window.addEventListener('load', () => {
             }
         }, 3500);
     };
-    slideGallery();
+    galleryPhotos && slideGallery();
 });

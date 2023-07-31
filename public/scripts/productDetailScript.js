@@ -1,3 +1,5 @@
+import {isInDesktop} from './utils.js';
+
 window.addEventListener('load', () => {
 
     const mainImg = document.querySelector('.main-img')
@@ -19,7 +21,7 @@ window.addEventListener('load', () => {
             console.log(file);
             // Pregunto si es foto o video, y en base a eso cambio
             if(file.classList.contains('video')){ //Video
-                const fileSrc = file.querySelector('source').src
+                const fileSrc = file.querySelector('source').src;
                 mainImgContainer.innerHTML = 
                 `
                 <video class="video main-img" muted playsinline loop>
@@ -44,19 +46,26 @@ window.addEventListener('load', () => {
     // Apenas carga me fijo cuantas other-images vienen- en base a eso le doy width
     const otherImgs = document.querySelectorAll('.other-img-container');
     const count = otherImgs.length;
-    otherImgs.forEach(cont => cont.style.width = `${100 / count - (count > 2 ? 5 : 15)}%`)
+    otherImgs.forEach(cont => cont.style.width = `${100 / count - (count > 2 ? 5 : 15)}%`);
+    
     // Modifico el tamano de otherImg en función de la foto gde
     const otherImgContainer = document.querySelector('.other-product-imgs-container');
+    count == 1 ? otherImgContainer.style.justifyContent = 'center' : null;
     // console.log(otherImgContainer);
-    const mainImgContainer = document.querySelector('.main-img');
+    const mainImgContainer = document.querySelector('.main-img-container');
     // console.log(mainImgContainer.offsetWidth, mainImgContainer.clientWidth);
-    let widthToSet = mainImgContainer.attributes.width ;
-    otherImgContainer.style.width = `${widthToSet}px`;
-    // Cuando cambia la resolución va cambiando con esto
-    window.addEventListener('resize', () => {
-        widthToSet = mainImgContainer.offsetWidth;
+    if(!isInDesktop()){
+        otherImgContainer.style.width = `172px`;
+    } else{
+        console.log('compu');
+        const widthToSet = mainImgContainer.offsetWidth;
         otherImgContainer.style.width = `${widthToSet}px`;
-    })
+    }
+    
+    // Cuando cambia la resolución va cambiando con esto
+    // window.addEventListener('resize', () => {
+    //     
+    // })
 
     // LOGICA para tocar boton "ELiminar productop"
     // Capturo cuando tocan el boton

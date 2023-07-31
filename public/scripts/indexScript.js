@@ -101,7 +101,7 @@ window.addEventListener('load', () => {
         });
         slideShowIndex = (slideShowIndex + 1) % slideImagesGroup.length;
     }
-    let slideIntervalId = setInterval(updateSlideShow, 5000);
+    let slideIntervalId = setInterval(updateSlideShow, 3500);
 
     // LOGICA para aboutUS
     if (!isInDesktop()) { //Mobile

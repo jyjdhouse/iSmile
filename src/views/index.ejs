@@ -34,75 +34,27 @@
             <section class="slide-show" id="products">
                 <a href="/product" class="slide-show-button">Ir a la tienda <i class='bx bx-shopping-bag'></i></a>
                 <div class="slide-images-wraper slide-images-wraper-desktop">
-                    <div class="slide-image-group slide-image-group-active">
-                        <div class="slide-image-container">
-                            <img src="/img/product1.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
+                    <% slideShowDesktop.forEach((group,i)=>{ %>
+                        <div class="slide-image-group <%= i == 0 ? 'slide-image-group-active':'' %> <%= i == 1 ? 'slide-image-group-next':'' %> <%= i == slideShowMobile.length-1 || (i != 1&& i != 0) ? 'slide-image-group-prev':'' %>">
+                            <% group.forEach(prod=>{ %>
+                                <div class="slide-image-container">
+                                    <img src="<%- prod.file_url %>" alt="slide-product-image-<%= prod.name %>" class="slide-image">
+                                    <p class="slide-image-label bold"><%= prod.name %></p>
+                                </div>
+                            <% }) %>
                         </div>
-                        <div class="slide-image-container">
-                            <img src="/img/product2.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
-                        </div>
-                        <div class="slide-image-container">
-                            <img src="/img/product3.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
-                        </div>
-                    </div>
-                    <div class="slide-image-group slide-image-group-next">
-                        <div class="slide-image-container">
-                            <img src="/img/product1.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
-                        </div>
-                        <div class="slide-image-container">
-                            <img src="/img/product2.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
-                        </div>
-                        <div class="slide-image-container">
-                            <img src="/img/product3.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
-                        </div>
-                    </div>
-                    <div class="slide-image-group slide-image-group-prev">
-                        <div class="slide-image-container">
-                            <img src="/img/product1.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
-                        </div>
-                        <div class="slide-image-container">
-                            <img src="/img/product2.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
-                        </div>
-                        <div class="slide-image-container">
-                            <img src="/img/product3.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
-                        </div>
-                    </div>
+                    <% }) %>
                 </div>
                 <div class="slide-images-wraper slide-images-wraper-mobile">
-                    <!-- Grupos de 1 (Mobile) -->
-                    <div class="slide-image-group slide-image-group-active">
+                    <% slideShowMobile.forEach((prod,i)=>{ %>
+                        <div class="slide-image-group <%= i == 0 ? 'slide-image-group-active':'' %> <%= i == 1 ? 'slide-image-group-next':'' %> <%= i == slideShowMobile.length-1 || (i != 1&& i != 0) ? 'slide-image-group-prev':'' %>">
                         <div class="slide-image-container">
-                            <img src="/img/product1.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
+                            <img src="<%= prod.file_url %>" alt="slide-product-image-<%= prod.name %>" class="slide-image">
+                            <p class="slide-image-label bold"><%= prod.name %></p>
                         </div>
                     </div>
-                    <div class="slide-image-group slide-image-group-next">
-                        <div class="slide-image-container">
-                            <img src="/img/product2.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
-                        </div>
-                    </div>
-                    <div class="slide-image-group slide-image-group-prev">
-                        <div class="slide-image-container">
-                            <img src="/img/product3.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
-                        </div>
-                    </div>
-                    <div class="slide-image-group slide-image-group-prev">
-                        <div class="slide-image-container">
-                            <img src="/img/product4.png" alt="slide-product-image" class="slide-image">
-                            <p class="slide-image-label bold">Crema Restauradora</p>
-                        </div>
-                    </div>
+                    <% }) %>
+                    
                 </div>
             </section>
 
