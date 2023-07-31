@@ -174,7 +174,10 @@ const controller = {
             return res.json(error);
         }
     },
-    login: async (req, res) => {
+    login: async(req,res)=>{
+        return res.render('login');
+    },
+    processLogin: async (req, res) => {
         try {
             // Ultima ruta que estuvo, para luego redirigir
             let relativePath = getRelativePath(req.headers.referer);
