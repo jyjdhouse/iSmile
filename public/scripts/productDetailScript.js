@@ -63,20 +63,20 @@ window.addEventListener('load', () => {
     const deleteProductFormPopup = document.querySelector('.update-delete-btn-container');
     const blackScreen = document.querySelector('.black-screen');
     const cancelProductDeleteBtn = document.querySelector('.cancel-product-delete');
-    startDeleteBtn.addEventListener('click',()=>{
+    startDeleteBtn?.addEventListener('click',()=>{
         // Hago aparecer el popup
         deleteProductFormPopup.classList.add('update-delete-btn-container-active');
         blackScreen.classList.add('black-screen-active');
     });
     // si toca cancelar... 
-    cancelProductDeleteBtn.addEventListener('click',(e)=>{
+    cancelProductDeleteBtn?.addEventListener('click',(e)=>{
         e.preventDefault();
         // Hago desaparecer el popup
         deleteProductFormPopup.classList.remove('update-delete-btn-container-active');
         blackScreen.classList.remove('black-screen-active');
     });
     // si toca blackscreen... 
-    blackScreen.addEventListener('click',()=>{
+    blackScreen?.addEventListener('click',()=>{
         // Hago desaparecer el popup
         deleteProductFormPopup.classList.remove('update-delete-btn-container-active');
         blackScreen.classList.remove('black-screen-active');
