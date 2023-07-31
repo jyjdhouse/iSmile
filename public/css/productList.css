@@ -98,7 +98,8 @@
 /* LIST-SECTION */
 .product-list-section {
     display: grid;
-    grid-template-columns: repeat(2, 50%);
+    /* grid-template-columns: repeat(2, 50%); */
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     /*90% */
     justify-items: center;
     width: 90%;

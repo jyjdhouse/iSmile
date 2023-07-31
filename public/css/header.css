@@ -262,7 +262,7 @@ body {
 .brand-name-image-container {
     height: 100%;
     margin: 0 auto;
-    width: 90%;
+    width: 100%;
 }
 
 .header-logo {
@@ -430,7 +430,7 @@ body {
     }
 
     .brand-name-image-container {
-        width: 70%;
+        width: 54.5%;
     }
 
     .lupa-mobile {
@@ -455,7 +455,7 @@ body {
     }
 
     .brand-name-image-container {
-        width: 25%;
+        width: 20%;
     }
 
     .nav-start {
