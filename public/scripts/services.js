@@ -52,19 +52,21 @@ window.addEventListener('load', () => {
         // agarro valor del open y hago find para saber a cual div scrollear
         let paramService = queryParams.get('open');
         serviceCards.forEach((serv, i) => {
+            const observer = checkIfIsInScreen(.3, handleVisibleServiceCard, serv)
+            // Me fijo si aparece en pantalla
+            observer.observe(serv)
             if (i == paramService) {
-                let targetDivTopOffset = serv.getBoundingClientRect().top + window.scrollY;
-
-                window.scrollTo({
-                    top: targetDivTopOffset,
-                    behavior: 'smooth',
-                });
 
 
                 setTimeout(() => {
-                    handleVisibleServiceCard(serv);
+                    let targetDivTopOffset = serv.getBoundingClientRect().top + window.scrollY;
+
+                    window.scrollTo({
+                        top: targetDivTopOffset,
+                        behavior: 'smooth',
+                    });
                     openDropdown(serv)
-                }, 500);
+                }, 2000);
 
 
             }
