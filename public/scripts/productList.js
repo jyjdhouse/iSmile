@@ -133,7 +133,7 @@ window.addEventListener('load', () => {
             })
         })
     };
-    listenArrowClicks();
+    galleryPhotos && listenArrowClicks();
     // Si esta en tablet/mobile ==> Carrusel
     if (!isInDesktop()) {
         let startX = 0;
