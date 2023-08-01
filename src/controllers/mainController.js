@@ -141,6 +141,7 @@ const controller = {
                 }
             };
             // Ahora ya tengo el array armado ==> Busco las url
+
             // desktop
             for (let i = 0; i < productsGroupDesktop.length; i++) {
                 const group = productsGroupDesktop[i];
@@ -148,6 +149,23 @@ const controller = {
                 for (let j = 0; j < group.length; j++) {
                     const product = group[j];
                     const file = product.files && product.files.find(file => file.file_types_id == 1); //Agarro la primer imagen
+                    if (file) {
+                        const getObjectParams = {
+                            Bucket: bucketName,
+                            Key: `product/${file.filename}`
+                        }
+                        const command = new GetObjectCommand(getObjectParams);
+                        const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+                        product.file_url = url; //en el href product.files[x].file_url
+                    }
+                }
+
+            };
+            // mobile images
+            for (let i = 0; i < productsGroupMobile.length; i++) {
+                const product = productsGroupMobile[i];
+                const file = product.files && product.files.find(file => file.file_types_id == 1); //Agarro la primer imagen
+                if (file) {
                     const getObjectParams = {
                         Bucket: bucketName,
                         Key: `product/${file.filename}`
@@ -156,21 +174,9 @@ const controller = {
                     const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                     product.file_url = url; //en el href product.files[x].file_url
                 }
-            };
-            // mobile images
-            for (let i = 0; i < productsGroupMobile.length; i++) {
-                const product = productsGroupMobile[i];
-                const file = product.files && product.files.find(file => file.file_types_id == 1); //Agarro la primer imagen
-                const getObjectParams = {
-                    Bucket: bucketName,
-                    Key: `product/${file.filename}`
-                }
-                const command = new GetObjectCommand(getObjectParams);
-                const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
-                product.file_url = url; //en el href product.files[x].file_url
+
 
             }
-
             // return res.send({ productsInDb, productsGroupDesktop, productsGroupMobile });
             return res.render('index', { videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, products, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile })
 

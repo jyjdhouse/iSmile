@@ -239,6 +239,7 @@ h1.product-title {
 .suggested-product-title-container h2 {
     font-size: 1.2rem;
     text-align: center;
+    color: var(--bold-color);
 }
 
 .product-card-container.suggested-product-card-detail-container {

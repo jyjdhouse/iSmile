@@ -229,8 +229,7 @@
 }
 
 .checkout-btn {
-    color: white;
-    background-color: rgb(35, 35, 35);
+    border: 1px solid var(--gold-color);
 }
 
 .checkout-btn a {
@@ -238,7 +237,7 @@
 }
 
 .view-bag-btn {
-    border: 1px solid rgb(166, 166, 166);
+    border: 1px solid var(--gold-color);
 }
 
 /* CART POPUP */
