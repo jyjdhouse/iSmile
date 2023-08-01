@@ -17,10 +17,15 @@
     background-position: center;
     background-size: cover;
     height: 350px;
+    position: relative;
 }
 
 .service-title-info-container {
-    width: 95%;
+    position: absolute;
+    width: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-200%, -50%);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -29,6 +34,13 @@
     border-radius: 10px;
     padding: 2% 0;
     max-width: 750px;
+    opacity: 0;
+    transition: all .5s;
+}
+
+.service-title-info-container-active {
+    opacity: 1;
+    transform: translate(-50%, -50%);
 }
 
 .service-detail-title {
@@ -255,6 +267,11 @@
 }
 
 @media (min-width: 1024px) {
+
+    .service-detail-title-container {
+        height: 450px;
+        
+    }
 
     .service-detail-title-container {
         margin-bottom: 20vh;
