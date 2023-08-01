@@ -22,8 +22,8 @@ const controller = {
 
         // Establece el contenido HTML con los estilos y datos del formulario
         // Establece la URL de tu archivo CSS
-        const cssFilePath = path.resolve(__dirname, '/clientMedicalInfo.css');
-        const headerCssFilePath = path.resolve(__dirname, '/alternativeHeader.css');
+        const cssFilePath = path.resolve(__dirname, './clientMedicalInfo.css');
+        const headerCssFilePath = path.resolve(__dirname, './alternativeHeader.css');
         const lastRowCssFilePath = path.resolve(__dirname, './lastFormRow.css');
         const imageFilePath = path.resolve(__dirname, '/logo-background.png')
 
