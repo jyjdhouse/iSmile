@@ -5,7 +5,7 @@ window.addEventListener('load', () => {
     const mainImg = document.querySelector('.main-img')
     const productFiles = document.querySelectorAll('.product-img')
     const converter = new showdown.Converter();
-    const productText = document.querySelector('.product-description-container p')
+    const productText = document.querySelector('.product-description')
     
     
     // función para convertir a html el contenido
@@ -46,7 +46,13 @@ window.addEventListener('load', () => {
     // Apenas carga me fijo cuantas other-images vienen- en base a eso le doy width
     const otherImgs = document.querySelectorAll('.other-img-container');
     const count = otherImgs.length;
-    otherImgs.forEach(cont => cont.style.width = `${100 / count - (count > 2 ? 5 : 15)}%`);
+    otherImgs.forEach(cont => {
+        if(count==1) {
+            cont.style.width = '40%';
+            return
+        }
+        cont.style.width = `${100 / count - (count > 2 ? 5 : 15)}%`
+    });
     
     // Modifico el tamano de otherImg en función de la foto gde
     const otherImgContainer = document.querySelector('.other-product-imgs-container');
@@ -90,5 +96,34 @@ window.addEventListener('load', () => {
         // Hago desaparecer el popup
         deleteProductFormPopup.classList.remove('update-delete-btn-container-active');
         blackScreen.classList.remove('black-screen-active');
+    });
+
+    // Logica para mostrar detalles del producto
+    const productInfoItems = document.querySelectorAll('.product-info-item');
+    //Voy por cada uno para ocultarlo
+    productInfoItems.forEach(container => {
+        //"DESCRIPCION - INGREDIENTES - TAMANO"
+        const infoToggler = container.querySelector('.product-info-label');
+    
+        infoToggler.addEventListener('click',()=>{
+            const informationToToggle = container.querySelector('.product-information');
+            // Primero me fijo si esta abierto o cerrado
+            if (!informationToToggle.classList.contains('product-information-active')) { //Quiere decir que estaba cerrado
+                // Activo la altura
+                informationToToggle.classList.add('product-information-active');
+                // Cambio el signo
+                container.querySelector('.product-info-toggler').innerHTML = '-';
+                return
+            }
+            // Aca lo cierro
+            // Activo la altura
+            informationToToggle.classList.remove('product-information-active');
+            // Cambio el signo
+            setTimeout(() => {
+                container.querySelector('.product-info-toggler').innerHTML = '+';
+            }, 300);
+            return
+        });
+
     });
 })

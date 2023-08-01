@@ -207,7 +207,9 @@
         width: 100%;
         align-items: center;
     }
-
+    .dropdown-list-item a{
+        font-size: 14px;
+    }
     .dropdown-list-item {
         margin: 0;
         width: 25%;
@@ -278,12 +280,13 @@
     }
 
     .dropdown-list-item {
-        font-size: 1rem;
         margin: 2% 10%;
         text-align: start;
         width: unset;
     }
-
+    .dropdown-list-item a{
+        font-size: 16px;
+    }
     .navbar .bx-chevron-right {
         transition: all .3s ease;
         font-size: 1.8rem;

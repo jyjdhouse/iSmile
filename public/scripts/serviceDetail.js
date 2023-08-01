@@ -65,7 +65,7 @@ window.addEventListener('load', () => {
         mainImageInfoContainer.classList.add('service-title-info-container-active');
         serviceDetailCardsContainer.classList.add('service-detail-cards-container-active')
         return clearTimeout(timeoutId)
-    }, 1000)
+    }, 750)
  
 
 
