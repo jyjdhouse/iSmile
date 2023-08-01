@@ -254,14 +254,17 @@ h1.product-title {
     }
 
     .product-title-container h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
-
-    .product-detail-info-container {
+    .product-title-container .product-price{
         font-size: 1.2rem;
+    }
+    .product-detail-info-container {
         height: fit-content;
     }
-
+    .product-description-container p{
+        font-size: 16px;
+    }
     .cart-options-btn-form {
         display: flex;
         align-items: center;
@@ -308,7 +311,7 @@ h1.product-title {
         align-items: flex-start;
         justify-content: center;
         width: 90%;
-        height: 30rem;
+        min-height: 30rem;
         margin: 0 auto;
     }
 
@@ -318,11 +321,11 @@ h1.product-title {
     }
     .main-img-container {
         width: fit-content;
-        height: 70%;
+        height: 20rem;
     }
     .other-product-imgs-container {
         margin: 3% auto;
-        height: 24%;
+        height: 10rem;
     }
     .other-img-container {
         margin: 0;
