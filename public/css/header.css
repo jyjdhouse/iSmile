@@ -199,6 +199,7 @@ body {
 
 .header i {
     font-size: 20px;
+    color: var(--bold-color);
 }
 
 .header .open-popup-cart-btn {
