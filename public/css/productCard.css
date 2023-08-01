@@ -95,12 +95,13 @@
 
 /* NOMBRE Y PRECIO */
 .price-name-container {
-    width: fit-content;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     row-gap: 10px;
+    align-items: center;
 }
 
 .product-card-container .product-name,

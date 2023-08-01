@@ -51,6 +51,7 @@ window.addEventListener('load', () => {
     }
 
     // Logica para mostrar labels en slideShow
+    let slideIntervalId = setInterval(updateSlideShow, 3500);
     const labels = document.querySelectorAll('.slide-image-label');
     const slideImageContainers = document.querySelectorAll('.slide-image-container')
     if (isInDesktop()) { //Si esta en desktop es distinto el slideShow
@@ -69,9 +70,7 @@ window.addEventListener('load', () => {
         });
     } else { //Aca es otra logica
         labels.forEach(lab => {
-
-            const labelObserver = checkIfIsInScreen(.5, handleVisibleLabel, lab);
-            labelObserver.observe(lab);
+            lab.classList.add('slide-image-label-visible');
         });
     }
 
@@ -88,7 +87,6 @@ window.addEventListener('load', () => {
 
     function updateSlideShow() {
         // Le saco el nombre porque aparece una vez que esta en vista
-        labels.forEach(lab => lab.classList.remove('slide-image-label-visible'));
         slideImagesGroup.forEach((container, index) => {
             container.classList.remove('slide-image-group-active', 'slide-image-group-next', 'slide-image-group-prev');
             if (index === slideShowIndex) {
@@ -101,7 +99,7 @@ window.addEventListener('load', () => {
         });
         slideShowIndex = (slideShowIndex + 1) % slideImagesGroup.length;
     }
-    let slideIntervalId = setInterval(updateSlideShow, 3500);
+    
 
     // LOGICA para aboutUS
     if (!isInDesktop()) { //Mobile

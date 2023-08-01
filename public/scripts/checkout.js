@@ -615,7 +615,7 @@ async function checkForUserLogged() {
                 `
             <article class="product-card" data-productid = ${product.id}>
                 <div class="product-card-image-container article-div-child">
-                    <img src="/img/product/${product.filename || 'default.png'}" alt="${product.name}-${product.filename}" class="product-image">
+                    <img src="${product.file_url || '/img/product/default.png'}" alt="${product.name}-${product.filename}" class="product-image">
                 </div>
                 <div class="product-name-container article-div-child">
                     <p class="product-name">${product.name}</p>

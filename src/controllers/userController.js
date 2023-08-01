@@ -105,39 +105,22 @@ const controller = {
 
             if (!errors.isEmpty()) { //Si hay errores en el back...
                 errors = errors.mapped();
-                console.log(errors);
-                let registErrors = {
+                
+                errors = {
                     msg: `${errors.email ? errors.email.msg : errors['password']?.msg || errors['re-password'].msg}`//Si viene el del mail le mando primero ese
                 }
-                return res.redirect(`${relativePath}?errors=${true}&registErrors=${JSON.stringify(registErrors)}`);
-            }
-
-            const emailBody = req.body.email.toLowerCase();
-
-            const emailAlreadyInDb = await db.User.findOne({
-                where: {
-                    email: emailBody
-                }
-            });
-
-            if (emailAlreadyInDb) {
-                errors = {
-                    credentials: { msg: "Email ya registrado" }
-                };
-                const oldData = {
-                    email: emailAlreadyInDb.email
-                }
-                return res.redirect(`${relativePath}?errors=${JSON.stringify(errors)}&oldData=${JSON.stringify(oldData)}`);
+                // return res.send(errors)
+                return res.render('regist',{errors});
             }
 
             // Datos del body
-            let { password } = req.body
+            let { password, email } = req.body
             let userData = {
                 id: uuidv4(),
                 first_name: '',
                 last_name: '',
                 dni: '',
-                email: emailBody,
+                email,
                 password: bcrypt.hashSync(password, 10),//encripta la password ingresada ,
                 wpp_notifications: 0,
                 email_notifications: 0,
@@ -174,14 +157,15 @@ const controller = {
             return res.json(error);
         }
     },
-    login: async(req,res)=>{
+    login: (req,res)=>{
         return res.render('login');
+    },
+    regist: (req,res) =>{
+        return res.render('regist')
     },
     processLogin: async (req, res) => {
         try {
             // Ultima ruta que estuvo, para luego redirigir
-            let relativePath = getRelativePath(req.headers.referer);
-
             let userData = req.body;
 
             let userToLog = await db.User.findOne({ where: { email: userData.email } });
@@ -200,24 +184,15 @@ const controller = {
                         const adminToken = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '4h' });
                         cookieTime = (1000 * 60) * 60 * 4; //4 horas
                         res.cookie('adminToken', adminToken, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
-                        // Le agrego el token al user en la db
-                        // TODO: Preguntarle a martin para que usar esto
-                        // await db.User.update({
-                        //     admin_token: adminToken
-                        // },{
-                        //     where: {
-                        //         id: userToLog.id
-                        //     }
-                        // })
                     }
-                    return res.redirect(relativePath);
+                    return res.redirect('/');
                 }
                 // Si llego aca es porque esta mal la contrasena
-                return res.redirect(`${relativePath}?loginErrors=${true}`);
+                return res.render('login',{errors:true});
 
             }
             // Si llego aca es porque esta mal el email o password
-            return res.redirect(`${relativePath}?loginErrors=${true}`);
+            return res.render('login',{errors:true});
 
         } catch (error) {
             console.log(`Falle en userController.login: ${error}`);

@@ -4,13 +4,10 @@ window.addEventListener('load', () => {
     const userOptionsPopup = document.querySelector('.user-options-popup');
     const userOptions = document.querySelectorAll('.user-options-popup-option');
     const userOptionsFirstColumn = document.querySelector('.user-options-first-column');
-    const loginForm = document.querySelector('.login-popup');
-    const registForm = document.querySelector('.regist-popup');
+
     // Boton del usuario
     const userOptionsTriggerBtn = document.querySelector('.user-options-trigger-btn');
-    // Boton de iniciar-sesion / Registrarse
-    const loginTriggerBtns = document.querySelectorAll('.login-trigger-btn');
-    const registerTriggerBtns = document.querySelectorAll('.regist-trigger-btn');
+
     // Boton de x
     const closeUserOptionsBtn = document.querySelector('.close-user-options-popup');
     // Boton de <--
@@ -21,26 +18,6 @@ window.addEventListener('load', () => {
         // La agrego por si no la tenia
         blackScreen.classList.add('black-screen-active');
         userOptionsPopup.classList.add('user-options-popup-active');
-    });
-    loginTriggerBtns.forEach(btn => {
-        // Toca en el "iniciar sesion"
-        btn.addEventListener('click', () => {
-            // Le agrego la clase a cada opción para que se traslade
-            userOptionsFirstColumn.classList.add('translate-option-left');
-            loginForm.classList.add('translate-option-left');
-            // Le agrego la clase active para que se vea la flechita de volver
-            backUserOptionsBtn.classList.add('back-user-option-btn-active');
-        });
-    });
-    registerTriggerBtns.forEach(btn => {
-        // Toca en el "Registrarse"
-        btn.addEventListener('click', () => {
-            // Le agrego la clase a cada opción para que se traslade
-            userOptionsFirstColumn.classList.add('translate-option-left');
-            registForm.classList.add('translate-option-left');
-            // Le agrego la clase active para que se vea la flechita de volver
-            backUserOptionsBtn.classList.add('back-user-option-btn-active');
-        });
     });
 
     // Para sacar
@@ -74,21 +51,10 @@ window.addEventListener('load', () => {
         // Le saco la clase active a la flecha para atras
         backUserOptionsBtn.classList.remove('back-user-option-btn-active');
     });
-    // Si toca la flecha para atras
-    backUserOptionsBtn.addEventListener('click', () => {
-        // Le saco la clase a cada opción para que se traslade
-        userOptions.forEach(opt => {
-            opt.classList.remove('translate-option-left');
-            opt.querySelector('.error-msg')?.remove();
-            // Borro el valor de los input
-            opt.querySelectorAll('input').forEach(inp=>inp.value='');
-            opt.querySelector('button').classList.remove('send-form-button-error');
-        });
-        // Le saco la clase active a la flecha para atras
-        backUserOptionsBtn.classList.remove('back-user-option-btn-active');
-    })
 
     // Una vez que mandan el login Form
+    const loginForm = document.querySelector('.login-form');
+    const registForm = document.querySelector('.regist-form');
     const checkIfFormIsComplete = (form) => {
         const inputs = form.querySelectorAll('input');
         let flag = true
@@ -112,7 +78,7 @@ window.addEventListener('load', () => {
     const hidePassBtn = document.querySelectorAll('.hide-password-btn')
 
     showPassBtn.forEach(btn => { //Para mostrar
-        btn.addEventListener('click', () => {
+        btn?.addEventListener('click', () => {
             let field = btn.closest('.pass-field');
             field.querySelector('input').type = 'text';
             field.querySelector('.hide-password-btn').classList.remove('hidden');
@@ -120,14 +86,14 @@ window.addEventListener('load', () => {
         });
     });
     hidePassBtn.forEach(btn => { //Para ocultar
-        btn.addEventListener('click', () => {
+        btn?.addEventListener('click', () => {
             let field = btn.closest('.pass-field');
             field.querySelector('input').type = 'password';
             field.querySelector('.show-password-btn').classList.remove('hidden');
             btn.classList.add('hidden');
         });
     });
-    loginForm.addEventListener('submit', (e) => {
+    loginForm?.addEventListener('submit', (e) => {
         let formIsComplete = checkIfFormIsComplete(loginForm);
         // Si esta incompleto...
         if (!formIsComplete) {
@@ -142,7 +108,7 @@ window.addEventListener('load', () => {
         }
     });
 
-    registForm.addEventListener('submit', (e) => {
+    registForm?.addEventListener('submit', (e) => {
         let formIsComplete = checkIfFormIsComplete(registForm);
         // Si esta incompleto...
         if (!formIsComplete) {
@@ -160,12 +126,12 @@ window.addEventListener('load', () => {
     // LOGICA para "olvide mi contrasena"
     const forgetPassSection = document.querySelector('.forget-password-section');
     const forgetPassBtn = document.querySelector('.forget-password-btn');
-    forgetPassBtn.addEventListener('click',()=>{
+    forgetPassBtn?.addEventListener('click',()=>{
         forgetPassSection.classList.add('forget-password-section-active')
     });
     // Capturo el "Recuperar que hace el pedido POST"
     const forgetPasswordLinkBtn = document.querySelector('.forget-password-link');
-    forgetPasswordLinkBtn.addEventListener('click',async()=>{
+    forgetPasswordLinkBtn?.addEventListener('click',async()=>{
         // Capturo el valor del mail
         const userMail = document.querySelector('#user-forget-password-email')?.value;
         // Realizo un pedido por POST donde mando la info del user en cuestion con el mail

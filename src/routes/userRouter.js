@@ -6,14 +6,14 @@ const guestMiddleware = require('../middlewares/guestMiddleware');
 const registValidations = require('../middlewares/registValidations');
 
 // MIDDLEWARES
-const loginMiddleware = require('../middlewares/loginMiddleware');
 const orderIsCompleteValidations = require('../middlewares/orderIsCompleteValidatons');
 // Rutas
 
 // GET
 router.get('/login',userController.login);
+router.get('/regist',userController.regist);
 router.get('/logout',userController.logout);
-router.get('/checkout',loginMiddleware,userController.checkout); 
+router.get('/checkout',userController.checkout); 
 router.get('/profile',guestMiddleware,userController.userProfile);
 router.get('/cambiar-contrasena/:token',userController.changePasswordView);
 router.get('/contrasena-error',userController.passwordError);

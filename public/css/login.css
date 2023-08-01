@@ -1,0 +1,144 @@
+.login-main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-form,
+.regist-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+    row-gap: 40px;
+    max-width: 400px;
+}
+
+.login-field,
+.regist-field {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+
+.pass-field {
+    position: relative;
+}
+
+.pass-field .password-btn-toggler {
+    position: absolute;
+    right: 3%;
+    top: 40%;
+    color: #777;
+    cursor: pointer;
+}
+.regist-form .pass-field .password-btn-toggler{
+    top: 59%;
+}
+.login-field label,
+.regist-field label {
+    width: 100%;
+    height: fit-content;
+    text-align: center;
+    margin-bottom: .3rem;
+    font-size: 1.2rem;
+    color: var(--violet-color);
+}
+
+.login-field .input,
+.regist-field .input {
+    width: 80%;
+    height: fit-content;
+    border: 1px solid var(--gold-color);
+    border-radius: 1rem;
+    outline: none;
+    padding: .5rem;
+}
+
+.login-form .button-container,
+.regist-form .button-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.login-button,
+.regist-button {
+    width: fit-content;
+    text-align: center;
+    padding: .5rem;
+    margin: 0 auto;
+    background-color: #fff;
+    color: var(--violet-color);
+    border: 1px solid var(--gold-color);
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.login-form .error-msg,
+.regist-form .error-msg {
+    width: 100%;
+    text-align: center;
+}
+
+/* Olvide mi contrasena form */
+.forget-password-btn{
+    color: #333;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.forget-password-section{
+    position: absolute;
+    scale: 0;
+    transition: all .5s ease;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    background: white;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    z-index: 10;
+}
+.forget-password-section-active{
+    scale: 1;
+}
+.forget-password-section-title{
+    width: 100%;
+    font-size: 1.1rem;
+    height: fit-content;
+    text-align: center;
+}
+.forget-password-section button,
+.forget-password-section input{
+    
+    height: 2rem;
+}
+.forget-password-section input{
+    border: 1px solid var(--violet-color);
+    border-radius: 1rem;
+    width: 80%;
+    padding-left: 10px;
+}
+.forget-password-section button{
+    border-radius: 1rem;
+    border: 1px solid var(--violet-color);
+    background: none;
+    width: 35%;
+    cursor: pointer;
+    
+}
+@media (min-width:768px){
+    .user-options-form{
+        width: 50vw;
+    }
+}
+@media (min-width:1024px) {
+    .user-options-form {
+        width: 30vw;
+        height: 40vh;
+    }
+}

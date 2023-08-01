@@ -79,17 +79,15 @@
 }
 
 .gallery-dot {
-    width: 12px;
-    height: 12px;
+    width: 9px;
+    height: 9px;
     border: 1px solid var(--gold-color);
     border-radius: 50%;
     cursor: pointer;
     transition: background-color .4s ease;
 }
 
-.gallery-dot:hover {
-    border: 2px solid var(--gold-color);
-}
+
 
 .gallery-dot-active {
     background-color: var(--violet-color);
@@ -133,8 +131,12 @@
 
 
     .gallery-dot {
-        width: 15px;
-        height: 15px;
+        width: 12px;
+        height: 12px;
+        border: 1px solid var(--gold-color);
+    }
+    .gallery-dot:hover {
+        border: 2px solid var(--gold-color);
     }
 }
 
