@@ -156,7 +156,7 @@ const controller = {
             const cssFilePath = path.resolve(__dirname, '/clientConsent.css');
             const headerCssFilePath = path.resolve(__dirname, '/alternativeHeader.css');
             const lastRowCssFilePath = path.resolve(__dirname, './lastFormRow.css');
-           /*  const imageFilePath = path.resolve(__dirname, '/logo-background.png') */
+            const imageFilePath = path.resolve(__dirname, './logo-background.png')
 
             // await page.emulateMedia('screen');
             // MODIFICO LAS IMAGENES
