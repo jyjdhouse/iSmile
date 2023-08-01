@@ -158,6 +158,7 @@
     }
     .price-name-container{
         row-gap: 5px;
+        justify-content: flex-end;
     }
     .product-card-container .product-name,
     .product-card-container .product-price {

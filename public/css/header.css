@@ -256,7 +256,7 @@ body {
 .brand-name-active {
     transition: transform .5s ease;
     transition-delay: .2s;
-    transform: translateX(90%);
+    transform: translateX(100%);
     background-color: #fff;
 }
 
@@ -410,6 +410,9 @@ body {
 @media(min-width: 444px) {
     .brand-name-image-container {
         width: 65%;
+    }
+    .brand-name-active{
+        transform: translateX(110%);
     }
 }
 
