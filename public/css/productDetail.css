@@ -137,10 +137,47 @@ h1.product-title {
     margin-bottom: 3%;
 }
 
-.product-description-container {
-    margin: 8% 0;
+/* Parte de info producto */
+.product-info-item {
+    margin-top: 20px;
+    overflow: hidden;
 }
-
+.product-info-item:last-child{
+    margin-bottom: 20px;
+    
+}
+.product-info-label{
+    width: 100%;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(0,0,0,.4);
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+.product-info-toggler{
+    font-size: 22px;
+}
+.product-information{
+    font-size: 14px;
+    transition: all .4s;
+    max-height: 0;
+    height: fit-content;
+    margin-top: 10px;
+}
+.product-information-active{
+    max-height: 2000px;
+}
+.product-size-info{
+    border-radius: 5px;
+    width: fit-content;
+    height: fit-content;
+}
+.product-information-active.product-size-info{
+    border: 1px solid var(--gold-color);
+    padding: 5px;
+}
 .purchase-product-container {
     display: flex;
     width: 85%;
@@ -254,14 +291,23 @@ h1.product-title {
     }
 
     .product-title-container h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
-
-    .product-detail-info-container {
+    .product-title-container .product-price{
         font-size: 1.2rem;
+    }
+    .product-detail-info-container {
         height: fit-content;
     }
-
+    .product-info-label{
+        font-size: 16px;
+    }
+    .product-info-toggler{
+        font-size: 24px;
+    }
+    .product-information{
+        font-size: 13px;
+    }
     .cart-options-btn-form {
         display: flex;
         align-items: center;
@@ -308,7 +354,7 @@ h1.product-title {
         align-items: flex-start;
         justify-content: center;
         width: 90%;
-        height: 30rem;
+        min-height: 30rem;
         margin: 0 auto;
     }
 
@@ -318,11 +364,11 @@ h1.product-title {
     }
     .main-img-container {
         width: fit-content;
-        height: 70%;
+        height: 20rem;
     }
     .other-product-imgs-container {
         margin: 3% auto;
-        height: 24%;
+        height: 5rem;
     }
     .other-img-container {
         margin: 0;
@@ -337,7 +383,9 @@ h1.product-title {
         display: flex;
         /* flex-direction: column; */
     }
-
+    .product-information{
+        font-size: 15px;
+    }
     .cart-options-btn {
         cursor: pointer;
         padding: 2% 4%;

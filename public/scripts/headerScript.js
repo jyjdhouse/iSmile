@@ -36,7 +36,7 @@ window.addEventListener('load', () => {
 
     // Logica del userLoggedMenu
     const userLoggedOptions = document.querySelector('.logged-menu-container');
-    const userLoggedOptionsToggler = document.querySelector('.user-logged-menu-toggler');
+    const userLoggedOptionsToggler = document.querySelector('.user-logged-name');
     userLoggedOptionsToggler?.addEventListener('click',()=>{
         userLoggedOptions.classList.toggle('logged-menu-container-active');
     });

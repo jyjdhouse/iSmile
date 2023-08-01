@@ -167,7 +167,7 @@ const controller = {
     },
     processProductCreation: async (req, res) => {
         try {
-            let { name, price, description, category } = req.body;
+            let { name, price, description, category, ingredients, size } = req.body;
             let images = req.files;
 
             const convertToHtml = () => { // este showdown es para convertir el html a markdown, y conservar el formato
@@ -178,13 +178,15 @@ const controller = {
 
 
 
-            //PRobando
+            //Probando
             let productObject = {
                 id: uuidv4(),
                 name,
                 price,
                 description: convertToHtml(),
-                category_id: category
+                category_id: category,
+                ingredients,
+                size
             };
 
             const newProduct = await db.Product.create(productObject);
@@ -259,7 +261,7 @@ const controller = {
 
             const productId = req.params.productId;
             const productToUpdate = await getProduct(productId)
-            const { name, price, description, current_imgs } = req.body
+            const { name, price, description, current_imgs, ingredients, size } = req.body
 
             // Agarro las imagenes del input
             let files = req.files
@@ -267,7 +269,9 @@ const controller = {
             const productUpdated = await db.Product.update({
                 name,
                 price,
-                description
+                description,
+                ingredients,
+                size
             }, {
                 where: {
                     id: productToUpdate.id

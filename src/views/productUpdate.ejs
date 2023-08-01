@@ -48,7 +48,6 @@
                     <input class="form-input" type="file" name="images" multiple>
                 </div>
                 <div class="input-label-container files-displayed-wrapper">
-
                     <label class="form-labels files-displayed-wrapper-title">Imagenes actuales <span class="grey">(toca el tick para destildar la que quieres sacar)</span></label>
                     <% productToUpdate.files.map((file, i)=> { %>
                         <div class="current-img-subcontainer">
@@ -69,7 +68,14 @@
                         </div>
                         <% }) %>
                 </div>
-
+                <div class="input-label-container">
+                    <label for="images">Ingredientes</label>
+                    <textarea name="ingredients"cols="30" rows="10" value="<%= productToUpdate.ingredients %>"></textarea>
+                </div>
+                <div class="input-label-container">
+                    <label for="images">Tamaño</label>
+                    <textarea name="size"cols="30" rows="10" value="<%= productToUpdate.size %>"></textarea>
+                </div>
                 <button type="submit">Actualizar</button>
 
             </form>

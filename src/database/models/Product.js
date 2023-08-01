@@ -11,6 +11,8 @@ module.exports = (sequelize, dataTypes) => {
         description: { type: dataTypes.TEXT },
         category_id: { type: dataTypes.INTEGER },
         stock: { type: dataTypes.INTEGER },
+        ingredients: { type: dataTypes.TEXT },
+        size: { type: dataTypes.TEXT },
     }
 
     let config = {

@@ -23,10 +23,11 @@
                 <% if (locals.isLogged) { %> <!--LOGGEADO-->
                     <div class="user-logged-container">
                         <p class="user-logged-name login-menu-btn-desktop bold"> 
-                               <%= locals.userLogged.first_name || 'user' %>
+                               <%= userLogged.first_name && userLogged.first_name[0].toUpperCase() || 'user' %>
                         </p>
                         <div class="logged-menu-container">
                         <ul class="logged-menu-list">
+                            <li class="logged-menu-list-item bold"><%= userLogged.first_name %></li>
                             <% if (locals.userLogged.user_categories_id!=3) { %>
                                 <!--SI ES ADMIN userLogged.user_categories_id-->
                                 <li class="logged-menu-list-item expandable-list-item">
@@ -51,7 +52,6 @@
                                     <li class="logged-menu-list-item"><a href="/user/logout">Cerrar Sesion</a></li>
                         </ul>
                         </div>
-                        <i class='bx bx-chevron-down user-logged-menu-toggler'></i>
                     </div>
                 <% }else{ %> <!-- Si no esta loggeado...-->
                     <i class="fa-regular fa-user login-toggler login-toggler-desktop user-options-trigger-btn"></i>

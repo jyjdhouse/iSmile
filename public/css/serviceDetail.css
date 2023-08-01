@@ -24,8 +24,7 @@
     position: absolute;
     width: 300px;
     top: 50%;
-    left: 50%;
-    transform: translate(-200%, -50%);
+    transform: translate(0, -100%);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -35,12 +34,12 @@
     padding: 2% 0;
     max-width: 750px;
     opacity: 0;
-    transition: all .5s;
+    transition: all 1s;
 }
 
 .service-title-info-container-active {
     opacity: 1;
-    transform: translate(-50%, -50%);
+    transform: translate(0, -50%);
 }
 
 .service-detail-title {
@@ -56,8 +55,13 @@
     justify-items: center;
     row-gap: 100px;
     margin-top: 10vh;
+    transition: all .5s ease;
+    transition-delay: 1s;
+    opacity: 0;
 }
-
+.service-detail-cards-container-active{
+    opacity: 1;
+}
 .service-detail-card {
     width: 80%;
     border: 1px solid var(--gold-color);
@@ -270,11 +274,11 @@
 
     .service-detail-title-container {
         height: 450px;
-        
+        margin-bottom: 20vh;
     }
 
-    .service-detail-title-container {
-        margin-bottom: 20vh;
+    .service-title-info-container {
+        width: 600px;
     }
     .service-detail-title{
         font-size: 25px;
