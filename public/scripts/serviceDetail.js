@@ -3,6 +3,7 @@ window.addEventListener('load', () => {
     const paragraphs = document.querySelectorAll('service-info-p');
     const openDropdown = document.querySelectorAll('.open-dropdown');
     const closeCard = document.querySelectorAll('.close-dropdown');
+    const mainImageInfoContainer = document.querySelector('.service-title-info-container')
 
 
     // hago la función de los que se remueven generales
@@ -43,7 +44,7 @@ window.addEventListener('load', () => {
             }
             let parent = act.closest('.service-detail-card');
             addClasses(parent);
-            
+
         })
 
     })
@@ -55,5 +56,15 @@ window.addEventListener('load', () => {
 
         })
     })
+
+
+    const timeoutId = setTimeout(() => {
+        console.log('entro')
+        mainImageInfoContainer.classList.add('service-title-info-container-active')
+        return clearTimeout(timeoutId)
+    }, 2000)
+ 
+
+
 
 })
