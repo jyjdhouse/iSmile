@@ -1,9 +1,3 @@
-@import 'variables.css';
-
-.about-us-main {
-    margin-top: 12vh;
-}
-
 .about-us-img-container {
     position: relative;
     background: url('/img/about_us_background.jpg');
@@ -37,9 +31,17 @@
 }
 
 .about-us-info-container {
-    margin-top: 100px;
+    padding-top: 50px;
+    position: relative;
 }
-
+/* Patterns */
+.right-pattern{
+    top: 0;
+}
+.left-pattern{
+    z-index: -1;
+}
+/*  */
 .about-us-copies-list {
     display: flex;
     flex-direction: column;

@@ -124,7 +124,7 @@ window.addEventListener('load', () => {
 
     // Si lo cierra...
     const closeForgetPasswordPopup = document.querySelector('.close-forget-password-section');
-    closeForgetPasswordPopup.addEventListener('click',()=>{
+    closeForgetPasswordPopup?.addEventListener('click',()=>{
         // Le saco el valor del input
         document.querySelector('#user-forget-password-email').value= '';
         forgetPassSection.classList.remove('forget-password-section-active');

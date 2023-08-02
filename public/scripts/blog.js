@@ -100,9 +100,14 @@ window.addEventListener('load', () => {
     const month = date.toLocaleString('es', { month: 'long' });
     const year = date.getFullYear();
 
-    const fullDate = `Creado el ${day} de ${month} del año ${year}`
+    const fullDate = `${day} de ${month} del ${year}`
     blogDateCont.innerHTML = fullDate
 
+    // LOGICA para hacer correr los videos
+    const videos = document.querySelectorAll('.video');
+    videos.forEach(video => {
+        video.play();
+    });
 
     // LOGICA para tocar boton "ELiminar productop"
     // Capturo cuando tocan el boton

@@ -1,6 +1,6 @@
 /* COLOR PICKER */
 
-@import 'variables.css';
+
 
 .noScroll {
     overflow: hidden;
@@ -268,11 +268,11 @@
     }
 
     .dropdown-items-container {
-        margin: 5% 0;
         flex-direction: column;
         /* justify-content: flex-start; */
         align-items: flex-start;
-        margin-top: 2%;
+        /* margin: 5% 0;
+        margin-top: 2%; */
     }
 
     .dropdown-active .navbar-list-item {
