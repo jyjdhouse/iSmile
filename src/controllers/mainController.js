@@ -317,6 +317,9 @@ const controller = {
     },
     aboutUs: (req, res) => {
         return res.render('aboutUs')
+    },
+    termsAndCondition: (req, res) => {
+        return res.render('terms')
     }
 };
 

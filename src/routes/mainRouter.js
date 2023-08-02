@@ -17,6 +17,7 @@ router.get('/servicios', mainController.services);
 router.get('/servicios/:specialtyId/:specialtyServiceId?', mainController.serviceDetail)
 router.get('/preguntas-frecuentes', mainController.frequentQAndA);
 router.get('/nosotros', mainController.aboutUs)
+router.get('/terminos-condiciones', mainController.termsAndCondition)
 // Ruta unica (para hacer cosas puntuales)
 
 
