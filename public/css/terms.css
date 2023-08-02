@@ -1,0 +1,58 @@
+@import 'variables.css';
+
+.terms-conditions-main {
+    margin-top: 12vh;
+}
+
+.terms-conditions-main h1 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--violet-color);
+}
+
+.terms-conditions-container {
+    height: 75vh;
+    border: 1px solid var(--gold-color);
+    width: 90%;
+    margin: 7vh auto; 
+    padding: 3%;
+    overflow-y: scroll;
+    max-width: 500px;
+}
+
+.terms-conditions-container h2 {
+    font-size: 1rem;
+    margin-bottom: 3%;
+}
+
+.terms-conditions-container li {
+    font-size: 0.875rem;
+}
+
+.term-container {
+    margin: 7% 0;
+}
+
+.bxs-circle {
+    font-size: 0.300rem;
+}
+
+.term-container li {
+    margin-bottom: 3%;
+}
+
+@media (min-width: 768px) {
+    
+.terms-conditions-container {
+
+    max-width: 700px;
+}
+}
+
+@media (min-width: 1024px) {
+    
+    .terms-conditions-container {
+    
+        max-width: 900px;
+    }
+    }
