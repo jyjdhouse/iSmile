@@ -47,7 +47,7 @@ window.addEventListener('load', () => {
             const file = fileObject[i];
             files.push(file);
         }
-        console.log(files);
+        
         const filePromises = files.map((file) => {
             return new Promise((resolve) => {
                 const reader = new FileReader();

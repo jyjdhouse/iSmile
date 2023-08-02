@@ -34,13 +34,13 @@ const getRandomItems = require('../utils/getRandomItems');
 const getProduct = require('../utils/getProduct');
 const getDeepCopy = require('../utils/getDeepCopy');
 const getAllProducts = require('../utils/getAllProducts');
+const orderMainImageFile = require('../utils/orderMainImageFile');
 // const adaptProductsToBeListed = require('../utils/adaptProductsToBeListed');
 // const getCountryCodes = require('../utils/getCountryCodes');
 const controller = {
     list: async (req, res) => { //Controlador que renderiza listado de productos
         try {
             let products = getDeepCopy(await getAllProducts());
-            // return res.send(products)
             // Para traer los archivos, primero voy por cada producto y despues a las imagenes de ese producto
             for (let i = 0; i < products.length; i++) {
                 const product = products[i];
@@ -54,10 +54,12 @@ const controller = {
                         const command = new GetObjectCommand(getObjectParams);
                         const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                         file.file_url = url; //en el href product.files[x].file_url
+                        // Si el archivo es main image entonces dejo al producto el main image url para poder acceder
                     }
+                    product.files = orderMainImageFile(product.files);
                 }
-            }
-            // return res.send(products)
+            };
+            // return res.send(products);
             let searchQuery = req.query.s;
             let viewLabel;
             // Si viene por busqueda
@@ -77,7 +79,7 @@ const controller = {
             let galleryProductLength = 5;
             let galleryProductsForDisplay = [];
             // Dejo la primera siempre igual
-            galleryProductsForDisplay.push(productGalleryfiles.find(file=>file.position));
+            galleryProductsForDisplay.push(productGalleryfiles.find(file => file.position));
             let count = 0;
             while (count < galleryProductLength) { //Dejo 6 productos random
                 let random = productGalleryfiles[Math.floor(Math.random() * productGalleryfiles.length)];
@@ -96,7 +98,7 @@ const controller = {
                 const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                 file.file_url = url; //en el href product.files[x].file_url
             };
-            
+
             // return res.send(productGalleryfiles.find(file=>file.position));
             return res.render('productList', { products, viewLabel, productGalleryfiles: galleryProductsForDisplay })
         } catch (error) {
@@ -128,7 +130,8 @@ const controller = {
                     const command = new GetObjectCommand(getObjectParams);
                     const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                     file.file_url = url; //en el href product.files[x].file_url
-                }
+                };
+                product.files = orderMainImageFile(product.files);
             };
             // Lo ordeno video ultimo
             product.files.forEach(file => {
@@ -151,11 +154,10 @@ const controller = {
                         const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                         file.file_url = url; //en el href product.files[x].file_url
                     }
+                    suggesteProd.files = orderMainImageFile(suggesteProd.files)
                 }
 
             }
-
-            // return res.send(suggestedProducts);
             return res.render('productDetail', { product, suggestedProducts })
         } catch (error) {
             console.log(`Falle en productController.detail: ${error}`);
@@ -167,7 +169,7 @@ const controller = {
     },
     processProductCreation: async (req, res) => {
         try {
-            let { name, price, description, category, ingredients, size } = req.body;
+            let { name, price, description, category, ingredients, size, mainImage } = req.body;
             let images = req.files;
 
             const convertToHtml = () => { // este showdown es para convertir el html a markdown, y conservar el formato
@@ -221,7 +223,8 @@ const controller = {
                     filesToCreate.push({
                         filename: randomName,
                         products_id: newProduct.id,
-                        file_types_id: fileType
+                        file_types_id: fileType,
+                        main_image: file.originalname == mainImage ? 1 : 0
                     })
                 };
                 // Hago el bulkcreate de las imagenes
@@ -261,12 +264,12 @@ const controller = {
 
             const productId = req.params.productId;
             const productToUpdate = await getProduct(productId)
-            const { name, price, description, current_imgs, ingredients, size } = req.body
+            const { name, price, description, current_imgs, ingredients, size, mainImage } = req.body
 
             // Agarro las imagenes del input
             let files = req.files
             // Hago el update del producto en la db
-            const productUpdated = await db.Product.update({
+            await db.Product.update({
                 name,
                 price,
                 description,
@@ -277,10 +280,20 @@ const controller = {
                     id: productToUpdate.id
                 }
             })
-            // return res.send(productUpdated);
+
+            let filesToUpdateDb = productToUpdate.files.map(file => {
+                let isMainImage = file.filename == mainImage ? 1 : 0;
+                return {
+                    id: file.id,
+                    filename: file.filename,
+                    products_id: productToUpdate.id,
+                    main_image: isMainImage,
+                    file_types_id: file.file_types_id
+                }
+            });
 
             // Aca voy por cada imagen que llego, y la creo en AWS 
-            let filesObjectDB = [];
+            let filesToCreateDB = [];
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
                 let fileType = file.mimetype.startsWith('video/') ? 2 : 1;
@@ -307,14 +320,19 @@ const controller = {
                 const command = new PutObjectCommand(params);
                 await s3.send(command);
                 // Armo el objeto para la db
-                filesObjectDB.push({
+                filesToCreateDB.push({
                     filename: randomName,
                     products_id: productToUpdate.id,
-                    file_types_id: fileType
+                    file_types_id: fileType,
+                    main_image: file.originalname == mainImage ? 1 : 0
                 })
             };
+            let arrayWithFiles = [...filesToUpdateDb, ...filesToCreateDB];
+
             // Hago el bulkcreate de las imagenes
-            await db.ProductFile.bulkCreate(filesObjectDB);
+            await db.ProductFile.bulkCreate(arrayWithFiles,{
+                updateOnDuplicate: ["main_image"] // update on duplicate busca por primary key y en caso de encontrar cambia el campo que se le pasa
+            });
 
 
             // Array con imagenes para borrar

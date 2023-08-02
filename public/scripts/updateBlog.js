@@ -1,5 +1,3 @@
-
-
 window.addEventListener('load', () => {
     let images = document.querySelector('.images')
 

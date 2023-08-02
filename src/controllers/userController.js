@@ -61,9 +61,9 @@ const controller = {
             // Ahora voy por cada producto del temporalItem, lo dejo con un precio y la primer imagen
             // de cada producto
             cart = cart?.map(tempItem => {
-                // Esto es por si tiene un video como primer archivo, no puedo hacer files [0],
-                // antes era tempItem.product.files[0]?.filename
-                let tempItemFile = tempItem.product.files.find(file => file.file_types_id == 1)?.filename;
+                // Primero busco si hay mainImage, sino primer foto que aparezca
+                let tempItemFile = tempItem.product.files?.find(file => file.main_image)?.filename;
+                !tempItemFile ? tempItemFile =tempItem.product.files?.find(file => file.file_types_id = 1)?.filename : null;
                 return {
                     tempItemId: tempItem.id,
                     products_id: tempItem.products_id,

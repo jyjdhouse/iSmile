@@ -81,3 +81,42 @@
     height: 100%;
     object-fit: contain;
 }
+
+/* Para la parte de elegir imagen ppal */
+.images-radio-content-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 10vh;
+    row-gap: 10px;
+}
+.images-radio-content-wrapper>label{
+    width: 100%;
+}
+.images-radio-box-wrapper{
+    width: 100%;
+    height: 30vh;
+    display: flex;
+    column-gap: 20px;
+}
+.image-radio-box{
+    height: 100%;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.image-container{
+    height: 90%;
+}
+.image-radio-box input{
+    width: 100%;
+    height: fit-content;
+}
+.image-container img,
+.image-container video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
