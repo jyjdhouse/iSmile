@@ -138,7 +138,6 @@
     cursor: pointer;   
 }
 .close-forget-password-section{
-    font-size: 13px;
     color: var(--bold-color);
     cursor: pointer;
 }

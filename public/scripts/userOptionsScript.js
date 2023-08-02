@@ -25,16 +25,8 @@ window.addEventListener('load', () => {
         // La agrego por si no la tenia
         blackScreen.classList.remove('black-screen-active');
         userOptionsPopup.classList.remove('user-options-popup-active');
-        // Le saco la clase a cada opción para que se traslade
-        userOptions.forEach(opt => {
-            opt.classList.remove('translate-option-left');
-            opt.querySelector('.error-msg')?.remove();
-        });
-        forgetPassSection.classList.remove('forget-password-section-active');
-        // Le saco la clase active a la flecha para atras
-        backUserOptionsBtn.classList.remove('back-user-option-btn-active');
-        // Le saco el valor del input
-        document.querySelector('#user-forget-password-email').value= '';
+
+        
     });
     closeUserOptionsBtn.addEventListener('click', () => {
         // La agrego por si no la tenia
@@ -133,7 +125,9 @@ window.addEventListener('load', () => {
     // Si lo cierra...
     const closeForgetPasswordPopup = document.querySelector('.close-forget-password-section');
     closeForgetPasswordPopup.addEventListener('click',()=>{
-        forgetPassSection.classList.remove('forget-password-section-active')
+        // Le saco el valor del input
+        document.querySelector('#user-forget-password-email').value= '';
+        forgetPassSection.classList.remove('forget-password-section-active');
     })
 
     // Capturo el "Recuperar que hace el pedido POST"

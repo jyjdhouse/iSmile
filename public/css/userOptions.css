@@ -26,12 +26,13 @@
 .close-user-options-popup,
 .back-user-option-btn {
     position: absolute;
-    top: 2%;
-    right: 2%;
+    top: 4%;
+    right: 4%;
     color: var(--gold-color);
     cursor: pointer;
     z-index: 1;
     width: fit-content;
+    font-size: 20px;
 }
 
 .back-user-option-btn {
