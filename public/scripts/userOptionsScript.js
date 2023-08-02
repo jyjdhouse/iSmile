@@ -4,7 +4,7 @@ window.addEventListener('load', () => {
     const userOptionsPopup = document.querySelector('.user-options-popup');
     const userOptions = document.querySelectorAll('.user-options-popup-option');
     const userOptionsFirstColumn = document.querySelector('.user-options-first-column');
-
+    
     // Boton del usuario
     const userOptionsTriggerBtn = document.querySelector('.user-options-trigger-btn');
 
@@ -51,7 +51,7 @@ window.addEventListener('load', () => {
         // Le saco la clase active a la flecha para atras
         backUserOptionsBtn.classList.remove('back-user-option-btn-active');
     });
-
+    
     // Una vez que mandan el login Form
     const loginForm = document.querySelector('.login-form');
     const registForm = document.querySelector('.regist-form');
@@ -129,6 +129,13 @@ window.addEventListener('load', () => {
     forgetPassBtn?.addEventListener('click',()=>{
         forgetPassSection.classList.add('forget-password-section-active')
     });
+
+    // Si lo cierra...
+    const closeForgetPasswordPopup = document.querySelector('.close-forget-password-section');
+    closeForgetPasswordPopup.addEventListener('click',()=>{
+        forgetPassSection.classList.remove('forget-password-section-active')
+    })
+
     // Capturo el "Recuperar que hace el pedido POST"
     const forgetPasswordLinkBtn = document.querySelector('.forget-password-link');
     forgetPasswordLinkBtn?.addEventListener('click',async()=>{
