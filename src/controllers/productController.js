@@ -113,6 +113,7 @@ const controller = {
             let product = getDeepCopy(await db.Product.findByPk(id, {
                 include: ['files']
             }));
+            if(!product)return res.render('error404')
             let suggestedProducts = getDeepCopy(await db.Product.findAll({
                 where: {
                     id: { [Op.ne]: id }
