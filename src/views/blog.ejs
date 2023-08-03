@@ -61,10 +61,8 @@
                         <div class="mobile-carousel-container">
                             <% if(blog.files.length ) %>
                                 <% blog.files.forEach((file, i)=> { %>
-
                                     <% if(file.main_image==0) { %>
-
-                                        <div class="other-img-container">
+                                        <div class="other-img-container <%= file.file_types_id == 2 ? 'video-container' : '' %>">
                                             <% if (file.file_types_id == 1) { %>
                                                 <img src="<%= file.file_url %>" alt="<%= file.id %>">
                                             <% } else if (file.file_types_id == 2) { %>
@@ -82,7 +80,7 @@
                         </div>
                     </section>
                     <section class="lastest-blogs-section bold">
-                        <p class="lastest-blogs-title">Ultimos blogs</p>
+                        <p class="lastest-blogs-title">Últimos Blogs</p>
                         <div class="lastest-blogs-cards-wrapper">
                             <a href="/" class="last-blog-card">
                                 <div class="last-blog-img-container">

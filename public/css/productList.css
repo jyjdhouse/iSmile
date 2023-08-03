@@ -108,6 +108,14 @@
 
 
 /* Tablet */
+/* Estilos para dispositivos táctiles */
+@media (hover: none) {
+    /* Ocultar las flechas */
+    .change-gallery-photo-btn {
+      display: none !important;
+    }
+  }
+
 @media (min-width:768px) {
 
     /* TITLE */

@@ -267,8 +267,6 @@
     }
 
     .service-card-visible:hover {
-        opacity: 1;
-        /*  filter: contrast(120%); */
         cursor: pointer;
     }
     .service-card-dropdown-content-container a {

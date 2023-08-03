@@ -146,18 +146,19 @@ const controller = {
     },
     logout: async (req, res) => {
         try {
-            let relativePath = getRelativePath(req.headers.referer);
+            let pathToReturn = req.session.returnTo
             res.clearCookie('userAccessToken');
             res.clearCookie('adminToken')
             // res.clearCookie('token');
             req.session.destroy();
-            res.redirect(relativePath);
+            res.redirect(`${pathToReturn}`);
         } catch (error) {
             console.log(`Falle en userController.logout: ${error}`);
             return res.json(error);
         }
     },
     login: (req,res)=>{
+        console.log(req.session);
         return res.render('login');
     },
     regist: (req,res) =>{
@@ -185,7 +186,7 @@ const controller = {
                         cookieTime = (1000 * 60) * 60 * 4; //4 horas
                         res.cookie('adminToken', adminToken, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
                     }
-                    return res.redirect('/');
+                    return res.redirect(`${req.session.returnTo}`);
                 }
                 // Si llego aca es porque esta mal la contrasena
                 return res.render('login',{errors:true});

@@ -97,7 +97,7 @@ window.addEventListener('load', () => {
                     }, 0);
                 };
                 lastCard = card;
-            });
+            }, { passive: true });
         }
 
     });
@@ -132,7 +132,7 @@ window.addEventListener('load', () => {
                 if (currentIndex == galleryPhotos.length - 1) return
                 // Si no esta en la primera voy 1 para atras
                 currentIndex++
-                photosWrapper.style.transform = `translateX(-${currentIndex * imageWidth}px)`;
+                photosWrapper.style.transform = `translateX(${-currentIndex * imageWidth}px)`;
                 getActiveDot(currentIndex);
                 //Reinicio el intervalo
                 clearInterval(galleryIntervalId);
@@ -143,59 +143,58 @@ window.addEventListener('load', () => {
     };
     galleryPhotos && listenArrowClicks();
     // Si esta en tablet/mobile ==> Carrusel
-    if (!isInDesktop()) {
-        let startX = 0;
-        let deltaX = 0;
+    let startX = 0;
+    let deltaX = 0;
+    
+    const amountToScroll = galleryPhotos[0].getBoundingClientRect().width;;
+    console.log(amountToScroll);
+    galleryPhotosSection?.addEventListener('touchstart', (e) => { //Capturo donde arranca el touch
+        startX = e.touches[0].clientX;
+        photosWrapper.classList.add('photo-wrapper-moving');
+        //Freno el intervalo
+        clearInterval(galleryIntervalId);
 
+    }, { passive: true });
+    galleryPhotosSection?.addEventListener('touchmove', (e) => {
 
-        const amountToScroll = window.innerWidth; //Popr el column gap
-        galleryPhotosSection?.addEventListener('touchstart', (e) => { //Capturo donde arranca el touch
-            startX = e.touches[0].clientX;
-            photosWrapper.classList.add('photo-wrapper-moving');
-            //Freno el intervalo
-            clearInterval(galleryIntervalId);
+        deltaX = e.touches[0].clientX - startX; //Si es positivo desplaza para derecha, sino para izq
 
-        });
-        galleryPhotosSection?.addEventListener('touchmove', (e) => {
-
-            deltaX = e.touches[0].clientX - startX; //Si es positivo desplaza para derecha, sino para izq
-
-            // Para que si llega a la ultima, no me mueva la foto
-            if (currentIndex <= galleryPhotos.length && currentIndex >= 0) {
-                // Traslado el carousel mientras scrollea
-                if (deltaX < 0) {//scrollLeft
-                    // Si no esta en la ultima...
-                    if (currentIndex < galleryPhotos.length - 1) {
-                        e.preventDefault();
-                        photosWrapper.style.transform = `translateX(-${(currentIndex) * amountToScroll - deltaX * 1}px)`
-                    }
-
-                } else if (deltaX > 0 && currentIndex > 0) {//Mueve hacia la derecha
+        // Para que si llega a la ultima, no me mueva la foto
+        if (currentIndex <= galleryPhotos.length && currentIndex >= 0) {
+            // Traslado el carousel mientras scrollea
+            if (deltaX < 0) {//scrollLeft
+                // Si no esta en la ultima...
+                if (currentIndex < galleryPhotos.length - 1) {
                     e.preventDefault();
-                    photosWrapper.style.transform = `translateX(${-(currentIndex) * amountToScroll + deltaX * 1}px)`;
-                };
+                    photosWrapper.style.transform = `translateX(-${(currentIndex) * amountToScroll - deltaX * 1}px)`
+                }
+
+            } else if (deltaX >= 0 && currentIndex > 0) {//Mueve hacia la derecha
+                e.preventDefault();
+                photosWrapper.style.transform = `translateX(${-(currentIndex) * amountToScroll + deltaX * 1}px)`;
             };
+        };
 
-        }, { passive: false });
-        galleryPhotosSection?.addEventListener('touchend', (e) => {
-            photosWrapper.classList.remove('photo-wrapper-moving')
-            if (deltaX < 0 && currentIndex < galleryPhotos.length - 1) { //Si scrollLeft...
-                photosWrapper.style.transform = `translateX(-${deltaX}px)`;
-                photosWrapper.style.transform = `translateX(-${currentIndex * amountToScroll + amountToScroll}px)`;
-                currentIndex++
-            }
-            if (deltaX > 0 && currentIndex > 0) { //Si scrollRight...
-                photosWrapper.style.transform = `translateX(${deltaX}px)`;
-                photosWrapper.style.transform = `translateX(${-currentIndex * amountToScroll + amountToScroll}px)`;
-                currentIndex--
-            }
-            //LOGICA DE DOTS cuando hace un touch end
-            getActiveDot(currentIndex);
-            // Activo el intervalo devuelta
-            slideGallery();
-        });
+    }, { passive: false });
+    galleryPhotosSection?.addEventListener('touchend', (e) => {
+        photosWrapper.classList.remove('photo-wrapper-moving')
+        if (deltaX < 0 && currentIndex < galleryPhotos.length - 1) { //Si scrollLeft...
+            photosWrapper.style.transform = `translateX(-${deltaX}px)`;
+            photosWrapper.style.transform = `translateX(-${currentIndex * amountToScroll + amountToScroll}px)`;
+            currentIndex++
+        }
+        if (deltaX >= 0 && currentIndex > 0) { //Si scrollRight...
+            photosWrapper.style.transform = `translateX(${deltaX}px)`;
+            photosWrapper.style.transform = `translateX(${-currentIndex * amountToScroll + amountToScroll}px)`;
+            currentIndex--
+        }
+        //LOGICA DE DOTS cuando hace un touch end
+        getActiveDot(currentIndex);
+        // Activo el intervalo devuelta
+        slideGallery();
+    });
 
-    }
+
     // Para pintar el activo
     function getActiveDot(currentIndex) {
         const dots = document.querySelectorAll('.gallery-dot');

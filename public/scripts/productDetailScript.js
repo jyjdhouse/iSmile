@@ -6,7 +6,7 @@ window.addEventListener('load', () => {
     const productFiles = document.querySelectorAll('.product-img')
     const converter = new showdown.Converter();
     const productText = document.querySelector('.product-description')
-    
+    const videoElements = document.querySelectorAll('.video');
     
     // función para convertir a html el contenido
     const htmlText = converter.makeHtml(productText.innerText);
@@ -18,7 +18,7 @@ window.addEventListener('load', () => {
             const activeImg = document?.querySelector('.other-img-container-active')
             activeImg?.classList.remove('other-img-container-active');
             file.classList.add('other-img-container-active');
-            console.log(file);
+            
             // Pregunto si es foto o video, y en base a eso cambio
             if(file.classList.contains('video')){ //Video
                 const fileSrc = file.querySelector('source').src;
@@ -30,7 +30,9 @@ window.addEventListener('load', () => {
                     No se puede reproducir el video
                 </video>
                 `;
+                videoElements.forEach(video=>video.currentTime = 0)
                 mainImgContainer.querySelector('.main-img').play();
+
                 return
             } //Sino es foto
             mainImgContainer.innerHTML = 
@@ -41,7 +43,7 @@ window.addEventListener('load', () => {
         })
     });
     // Logica para hacer que los videos se reproduzcan
-    const videoElements = document.querySelectorAll('.video');
+
     videoElements.forEach(video=>video.play())
     // Apenas carga me fijo cuantas other-images vienen- en base a eso le doy width
     const otherImgs = document.querySelectorAll('.other-img-container');
