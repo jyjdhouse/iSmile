@@ -9,6 +9,7 @@ module.exports = (sequelize, dataTypes) => {
         },
         filename: { type: dataTypes.TEXT },
         products_id: { type: dataTypes.STRING(36) },
+        main_image: {type: dataTypes.INTEGER},
         file_types_id: {type: dataTypes.INTEGER}
     }
 

@@ -45,10 +45,9 @@
                 </div>
                 <div class="input-label-container">
                     <label id='device-image' class="form-labels" for="images">Agregar imagenes</label>
-                    <input class="form-input" type="file" name="images" multiple>
+                    <input class="form-input files" type="file" name="images" multiple>
                 </div>
                 <div class="input-label-container files-displayed-wrapper">
-
                     <label class="form-labels files-displayed-wrapper-title">Imagenes actuales <span class="grey">(toca el tick para destildar la que quieres sacar)</span></label>
                     <% productToUpdate.files.map((file, i)=> { %>
                         <div class="current-img-subcontainer">
@@ -69,7 +68,31 @@
                         </div>
                         <% }) %>
                 </div>
-
+                <div class="input-label-container images-radio-content-wrapper">
+                    <label class="main-label" for="main-img">Selecciónar 1er imagen que se mostrara</label>
+                    <div class="images-radio-box-wrapper">
+                        <% productToUpdate.files.map((file, i) => { %>
+                            <% if (file.file_types_id==1) { //IMAGEN %>
+                                <div class="image-radio-box">
+                                    <div class="image-container">
+                                        <label for="<%= file.filename %>">
+                                            <img src="<%= file.file_url %>" alt="<%= file.filename %>">
+                                        </label>
+                                    </div>
+                                    <input type="radio" name="mainImage" id="<%= file.filename %>" value="<%= file.filename %>" <%= file.main_image == 1 ? 'checked' : '' %>>
+                                </div>
+                            <% } %>
+                        <% }) %>
+                    </div>
+                </div>
+                <div class="input-label-container">
+                    <label for="images">Ingredientes</label>
+                    <textarea name="ingredients"cols="30" rows="10"><%= productToUpdate.ingredients %></textarea>
+                </div>
+                <div class="input-label-container">
+                    <label for="images">Tamaño</label>
+                    <textarea name="size"cols="30" rows="10"><%= productToUpdate.size %></textarea>
+                </div>
                 <button type="submit">Actualizar</button>
 
             </form>

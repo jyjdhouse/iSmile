@@ -4,7 +4,6 @@ const mainController = require('../controllers/mainController');
 const PDFGeneratorController = require('../controllers/PDFGenerator/pdfGeneratorController');
 
 // Middlewares
-const loginMiddleware = require('../middlewares/loginMiddleware');
 const isAdminMiddleware = require('../middlewares/isAdminMiddleware');
 const uploadHomeImages = require('../middlewares/uploadHomeImages');
 
@@ -13,11 +12,12 @@ const multer = require('multer');
 const upload = multer();
 
 // GET
-router.get('/', loginMiddleware, mainController.index);
-router.get('/servicios', loginMiddleware, mainController.services);
-router.get('/servicios/:specialtyId/:specialtyServiceId?', loginMiddleware, mainController.serviceDetail)
-router.get('/preguntas-frecuentes', loginMiddleware, mainController.frequentQAndA);
+router.get('/', mainController.index);
+router.get('/servicios', mainController.services);
+router.get('/servicios/:specialtyId/:specialtyServiceId?', mainController.serviceDetail)
+router.get('/preguntas-frecuentes', mainController.frequentQAndA);
 router.get('/nosotros', mainController.aboutUs)
+router.get('/terminos-condiciones', mainController.termsAndCondition)
 // Ruta unica (para hacer cosas puntuales)
 
 

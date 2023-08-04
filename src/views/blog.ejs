@@ -44,12 +44,13 @@
                         </div>
                         <div class="blog-detail-info-container">
                             <div class="blog-detail-intro-container">
-                                <p class="blog-date">
-                                    <%= blog.createdAt %>
-                                </p>
+                               
                                 <h1>
                                     <%= blog.title %>
                                 </h1>
+                                <p class="blog-date">
+                                    <%= blog.createdAt %>
+                                </p>
                             </div>
                             <div class="blog-detail-text-container">
                                 <%= blog.text %>
@@ -60,16 +61,66 @@
                         <div class="mobile-carousel-container">
                             <% if(blog.files.length ) %>
                                 <% blog.files.forEach((file, i)=> { %>
-
                                     <% if(file.main_image==0) { %>
-
-                                        <div class="other-img-container">
-                                            <img src="<%= file.file_url %>" alt="<%= file.id %>">
+                                        <div class="other-img-container <%= file.file_types_id == 2 ? 'video-container' : '' %>">
+                                            <% if (file.file_types_id == 1) { %>
+                                                <img src="<%= file.file_url %>" alt="<%= file.id %>">
+                                            <% } else if (file.file_types_id == 2) { %>
+                                                <video class="video"
+                                                muted playsinline loop>
+                                                    <source src=<%= file?.file_url %> type="video/mp4">
+                                                    <source src=<%= file?.file_url %> type="video/webm">
+                                                            No se puede reproducir el video
+                                                </video>
+                                            <% } %>
                                         </div>
 
                                         <% } %>
                                             <% }) %>
-
+                        </div>
+                    </section>
+                    <section class="lastest-blogs-section bold">
+                        <p class="lastest-blogs-title">Últimos Blogs</p>
+                        <div class="lastest-blogs-cards-wrapper">
+                            <a href="/" class="last-blog-card">
+                                <div class="last-blog-img-container">
+                                    <img src="/img/estheticblog1.jpg" class="last-blog-image" alt="blog-image">
+                                </div>
+                                <div class="last-blog-info-container">
+                                    <p class="last-blog-author-date">By I SMILE | Apr 21, 2023</p>
+                                    <h3 class="last-blog-card-title">La Verdadera Belleza Es Cuando Te Pones A Quien Realmente
+                                        Sos💜</h3>
+                                    <p class="last-blog-card-description">El momento para sentirte bien es AHORA . Dra. Inés Añó .
+                                        Gracias a todos nuestros pacientes por elegirnos y confiar en…</p>
+                                </div>
+                                <button class="last-blog-card-button">LEER MAS</button>
+                            </a>
+                            <a href="/" class="last-blog-card">
+                                <div class="last-blog-img-container">
+                                    <img src="/img/estheticblog1.jpg" class="last-blog-image" alt="blog-image">
+                                </div>
+                                <div class="last-blog-info-container">
+                                    <p class="last-blog-author-date">By I SMILE | Apr 21, 2023</p>
+                                    <h3 class="last-blog-card-title">La Verdadera Belleza Es Cuando Te Pones A Quien Realmente
+                                        Sos💜</h3>
+                                    <p class="last-blog-card-description">El momento para sentirte bien es AHORA . Dra. Inés Añó .
+                                        Gracias a todos nuestros pacientes por elegirnos y confiar en…</p>
+                                </div>
+                                <button class="last-blog-card-button">LEER MAS</button>
+                            </a>
+                            <a href="/" class="last-blog-card">
+                                <div class="last-blog-img-container">
+                                    <img src="/img/estheticblog1.jpg" class="last-blog-image" alt="blog-image">
+                                </div>
+                                <div class="last-blog-info-container">
+                                    <p class="last-blog-author-date">By I SMILE | Apr 21, 2023</p>
+                                    <h3 class="last-blog-card-title">La Verdadera Belleza Es Cuando Te Pones A Quien Realmente
+                                        Sos💜</h3>
+                                    <p class="last-blog-card-description">El momento para sentirte bien es AHORA . Dra. Inés Añó .
+                                        Gracias a todos nuestros pacientes por elegirnos y confiar en…</p>
+                                </div>
+                                <button class="last-blog-card-button">LEER MAS</button>
+                            </a>
                         </div>
                     </section>
         </main>

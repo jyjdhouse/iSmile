@@ -3,16 +3,20 @@ window.addEventListener('load', () => {
     const paragraphs = document.querySelectorAll('service-info-p');
     const openDropdown = document.querySelectorAll('.open-dropdown');
     const closeCard = document.querySelectorAll('.close-dropdown');
-
+    const mainImageInfoContainer = document.querySelector('.service-title-info-container')
+    const serviceDetailCardsContainer = document.querySelector('.service-detail-cards-container');
 
     // hago la función de los que se remueven generales
     function removeClasses(item) {
         let dropdown = item.querySelector('.servicio-dropdown');
         let plusBtn = item.querySelector('.open-dropdown');
+        let minusBtn = item.querySelector('.close-dropdown');
         dropdown.classList.remove('servicio-dropdown-active');
         item.classList.remove('service-detail-card-active');
         plusBtn.classList.add('icon-active');
         plusBtn.classList.remove('icon-inactive');
+        minusBtn.classList.add('icon-inactive');
+        minusBtn.classList.remove('icon-active');
     }
 
     function addClasses(item) {
@@ -30,7 +34,6 @@ window.addEventListener('load', () => {
 
     openDropdown.forEach(act => {
         act.addEventListener('click', () => {
-
             let activeCard = document.querySelector('.service-detail-card-active');
             if (activeCard !== null) {
                 activeCard.classList.remove('service-detail-card-active');
@@ -43,7 +46,7 @@ window.addEventListener('load', () => {
             }
             let parent = act.closest('.service-detail-card');
             addClasses(parent);
-            
+
         })
 
     })
@@ -55,5 +58,16 @@ window.addEventListener('load', () => {
 
         })
     })
+
+
+    const timeoutId = setTimeout(() => {
+        console.log('entro')
+        mainImageInfoContainer.classList.add('service-title-info-container-active');
+        serviceDetailCardsContainer.classList.add('service-detail-cards-container-active')
+        return clearTimeout(timeoutId)
+    }, 750)
+ 
+
+
 
 })

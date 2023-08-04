@@ -4,7 +4,6 @@
 <head>
     <%- include('./partials/head.ejs') %>
         <link rel="stylesheet" href="./css/index.css">
-        <link rel="stylesheet" href="./css/variables.css">
         <script type="module" src="./scripts/indexScript.js"></script>
         <title>Home</title>
 </head>
@@ -39,8 +38,8 @@
                         <div class="slide-image-group <%= i == 0 ? 'slide-image-group-active':'' %> <%= i == 1 ? 'slide-image-group-next':'' %> <%= i == slideShowMobile.length-1 || (i != 1&& i != 0) ? 'slide-image-group-prev':'' %>">
                             <% group.forEach(prod=>{ %>
                                 <div class="slide-image-container">
-                                    <img src="<%- prod.file_url %>" alt="slide-product-image-<%= prod.name %>" class="slide-image">
                                     <p class="slide-image-label bold"><%= prod.name %></p>
+                                    <img src="<%- prod.file_url %>" alt="slide-product-image-<%= prod.name %>" class="slide-image">
                                 </div>
                             <% }) %>
                         </div>
@@ -50,8 +49,8 @@
                     <% slideShowMobile.forEach((prod,i)=>{ %>
                         <div class="slide-image-group <%= i == 0 ? 'slide-image-group-active':'' %> <%= i == 1 ? 'slide-image-group-next':'' %> <%= i == slideShowMobile.length-1 || (i != 1&& i != 0) ? 'slide-image-group-prev':'' %>">
                         <div class="slide-image-container">
-                            <img src="<%= prod.file_url %>" alt="slide-product-image-<%= prod.name %>" class="slide-image">
                             <p class="slide-image-label bold"><%= prod.name %></p>
+                            <img src="<%= prod.file_url %>" alt="slide-product-image-<%= prod.name %>" class="slide-image">
                         </div>
                     </div>
                     <% }) %>
@@ -96,8 +95,8 @@
                         <a href="/servicios" class="product-gallery-button individual-button">Ver
                             Servicios</a>
                     </div>
-                    <% }) %>
-
+                <% }) %>
+                <a href="/servicios" class="product-gallery-button">Ver Servicios</a>
             </section>
 
             <section class="about-us-container" id="us">

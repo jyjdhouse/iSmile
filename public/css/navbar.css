@@ -1,6 +1,6 @@
 /* COLOR PICKER */
 
-@import 'variables.css';
+
 
 .noScroll {
     overflow: hidden;
@@ -123,7 +123,7 @@
 
 .navbar .bx-chevron-right {
     transition: all .4s ease;
-    font-size: 1.2rem;
+    font-size: 28px;
     color: var(--gold-color);
 }
 
@@ -137,8 +137,7 @@
 }
 
 .dropdown-list-item {
-    margin: 13px 10%;
-    font-size: .6rem;
+    margin: 15px 10%;
     cursor: pointer;
 }
 .dropdown-list-item:first-child{
@@ -148,7 +147,7 @@
     margin-bottom: 5px;
 }
 .dropdown-list-item a{
-    font-size: 14px;
+    font-size: 12.5px;
 }
 .checkbox-container {
     display: flex;
@@ -208,7 +207,9 @@
         width: 100%;
         align-items: center;
     }
-
+    .dropdown-list-item a{
+        font-size: 14px;
+    }
     .dropdown-list-item {
         margin: 0;
         width: 25%;
@@ -267,11 +268,11 @@
     }
 
     .dropdown-items-container {
-        margin: 5% 0;
         flex-direction: column;
         /* justify-content: flex-start; */
         align-items: flex-start;
-        margin-top: 2%;
+        /* margin: 5% 0;
+        margin-top: 2%; */
     }
 
     .dropdown-active .navbar-list-item {
@@ -279,12 +280,13 @@
     }
 
     .dropdown-list-item {
-        font-size: 1rem;
         margin: 2% 10%;
         text-align: start;
         width: unset;
     }
-
+    .dropdown-list-item a{
+        font-size: 16px;
+    }
     .navbar .bx-chevron-right {
         transition: all .3s ease;
         font-size: 1.8rem;

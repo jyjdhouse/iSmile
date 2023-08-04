@@ -58,6 +58,7 @@ const controller = {
         try {
             const { blogId } = req.params
             let blog = getDeepCopy(await getBlog(blogId));
+            if(!blog)return res.render('error404')
             // si tiene archivos
             if (blog.files) {
                 for (let i = 0; i < blog.files.length; i++) {
@@ -69,7 +70,14 @@ const controller = {
                     const command = new GetObjectCommand(getObjectParams);
                     const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                     file.file_url = url; //en el href blog.files[x].file_url
-                }
+                };
+                blog.files.forEach(file => {
+                    if (file.file_types_id == 2) {
+                        const indexToRemove = blog.files.indexOf(file);
+                        blog.files.splice(indexToRemove, 1);//Lo elimino
+                        blog.files.splice(2, 0, file); //Lo pongo 2do (3ero en realidad contando el main)
+                    }
+                });
             };
             return res.render('blog', { blog })
         } catch (error) {

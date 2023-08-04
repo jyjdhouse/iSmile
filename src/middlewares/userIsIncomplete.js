@@ -7,8 +7,6 @@ const secret = require('../utils/secret').secret;
 const userIsIncomplete = async (req, res, next) => {
     try {
         // Obtener la URL actual
-        var pathToCheck = getRelativePath(req.url);// Ruta a la que quiere acceder el cliente
-        
         // Si esta loggeado..
         if (req.session && req.session.userLoggedId) {
             // Agarrar al usuario que está loggeado
@@ -22,7 +20,7 @@ const userIsIncomplete = async (req, res, next) => {
                 
                 if (req.originalUrl) {
                     // Verificar si el usuario se encuentra en una URL específica
-                    if (pathToCheck != '/user/profile') {
+                    if (!req.originalUrl.includes('/user/profile')) {
                         // console.log('El path es:' + pathToCheck);
                         // Lo redirijo para que complete sus datos
                         return res.redirect(`/user/profile?completeForm=${true}`);

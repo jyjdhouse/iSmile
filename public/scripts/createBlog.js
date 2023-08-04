@@ -47,13 +47,15 @@ window.addEventListener('load', () => {
             const file = fileObject[i];
             files.push(file);
         }
-        console.log(files);
+        
         const filePromises = files.map((file) => {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = function () {
-                    let boxHTML =
+                    let boxHTML;
+                    if (file.type.startsWith('image/')) {
+                        boxHTML =
                         `
                         <div class="image-radio-box">
                             <div class="image-container">
@@ -62,6 +64,9 @@ window.addEventListener('load', () => {
                             <input type="radio" name="mainImage" id="${reader.result}" value="${file.name}">
                         </div>
                         `
+                    }else{
+                        boxHTML = '';
+                    }
                     resolve(boxHTML)
                 }
             });

@@ -110,9 +110,10 @@ window.addEventListener('load', () => {
                 secondParent.forEach(div => {
                     const firstParent = div.closest('.options-selected-container')
                     const spanParent = div.querySelectorAll('.profile-field-container')
-                    spanParent.forEach(span => {
-                        if(span?.classList.contains('unique-email-field'))return
-                        span?.querySelector('span').classList.add('span-inactive')
+                    spanParent.forEach(parent => {
+                        if(parent?.classList.contains('unique-email-field'))return
+                        const spanTrue = parent?.querySelector('span').classList.add('span-inactive')
+                        console.log(spanTrue)
 
                     })
                     const inputContainers = div.querySelectorAll('.profile-input')
@@ -185,6 +186,7 @@ window.addEventListener('load', () => {
     const sendFormBtns = document.querySelectorAll('.send-user-info-form-btn');
     sendFormBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
+            e.preventDefault();
             // Agarro el formulario que envio
             const form = btn.closest('.user-info-form');
             // Bandera para saber si se completo lo necesario
@@ -203,8 +205,8 @@ window.addEventListener('load', () => {
                     input.closest('div').appendChild(additionalMessage);
                 }
             });
-            if (!flag) {
-                e.preventDefault();
+            if(flag){
+                form.submit()
             }
         })
     });

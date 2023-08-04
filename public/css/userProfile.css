@@ -1,4 +1,4 @@
-@import 'variables.css';
+
 
 .error-msg {
     width: 100%;
@@ -10,17 +10,18 @@ select {
     cursor: pointer;
 }
 .unique-email-field{
-    flex-direction: row;
-}
+    display: flex;
+    flex-direction: column;
+} 
 /* ESTILOS PARA PREFERENCES MOBILE */
 .mobile-profile-content-wrapper .user-preferences{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.unique-email-field{
+/* .unique-email-field{
     flex-direction: row !important;
-}
+} */
 .unique-email-field>p{
     width: fit-content !important;
 }
@@ -96,7 +97,7 @@ select {
 
 .options-selected-container {
     position: relative;
-    height: 450px;
+    height: 500px;
     width: 100%;
     border: 1px solid var(--gold-color);
     margin: 5% 0;
@@ -228,10 +229,18 @@ select {
     transition: background-color 0.3s;
     text-transform: uppercase;
     font-size: 0.875rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile-option-item-active {
     background-color: var(--gold-color);
+}
+
+.profile-option-item i {
+    font-size: 1.5rem;
+    color: black;
 }
 
 .update-form-inactive {
@@ -243,6 +252,11 @@ select {
     flex-direction: column;
 }
 
+.profile-radio-p-container{
+    display: flex;
+    flex-direction: column;
+   
+}
 
 @media (min-width: 768px) {
 

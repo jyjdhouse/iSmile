@@ -1,5 +1,5 @@
 /* Variables */
-@import 'variables.css';
+
 
 /* PARA OCULTAR EL PROGRESO DEL VIDEO */
 /* Ocultar el control de progreso en el video */
@@ -30,6 +30,13 @@ video::-webkit-media-controls-time-remaining-display {
     white-space: nowrap;
 }
 
+.left-pattern{
+
+    rotate: 109deg;
+    left: -38%;
+    width: 74%;
+    z-index: 1;
+}
 /* VIDEO LANDING */
 .landing-video-container {
     height: 90vh;
@@ -148,13 +155,11 @@ video::-webkit-media-controls-time-remaining-display {
     width: 100%;
     text-align: center;
     position: absolute;
-    top: 10%;
-    font-size: 1.5rem;
-    font-weight: 600;
+    top: 15%;
+    font-size: 1.2rem;
+    font-weight: 400 !important;
     opacity: 0;
     transition: all 1s;
-    transition-delay: 1s;
-
 }
 
 .slide-image-label-visible {
@@ -487,7 +492,7 @@ video::-webkit-media-controls-time-remaining-display {
     height: 80vh;
     position: relative;
     overflow: hidden;
-    margin-bottom: 15vh;
+    margin-bottom: 5vh;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -539,8 +544,8 @@ video::-webkit-media-controls-time-remaining-display {
     width: 100%;
     align-items: center;
     position: relative;
+    z-index: 10;
     height: 80%;
-    background-color: #fff;
     overflow: visible;
     column-gap: 20%;
     transition: all .6s ease;
@@ -564,6 +569,8 @@ video::-webkit-media-controls-time-remaining-display {
     align-content: space-evenly;
     flex: 0 0 auto;
     margin: 0 5%;
+    position: relative;
+    z-index: 10;
 }
 
 .about-us-dots-container {
@@ -930,9 +937,9 @@ video::-webkit-media-controls-time-remaining-display {
     }
 
     .blog-overlay .edit-file-buttons-container {
-        top: 35%;
+        top: 15%;
         left: 15%;
-        z-index: unset;
+        z-index: 15;
         background: none;
         width: 30%;
     }
@@ -1000,7 +1007,7 @@ video::-webkit-media-controls-time-remaining-display {
         top: 5%;
         transition: .5s;
         transition-delay: 0;
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 
 
@@ -1109,6 +1116,9 @@ video::-webkit-media-controls-time-remaining-display {
     }
 
     /* ABOUT US */
+    .about-us-container{
+        margin-bottom: 15vh;
+    }
     .about-us-information-container {
         align-items: center;
     }
@@ -1119,8 +1129,10 @@ video::-webkit-media-controls-time-remaining-display {
 
     .left-pattern {
         z-index: -1;
-        left: -8%;
         bottom: 0%;
+        rotate: 58deg;
+        left: -22%;
+        width: 37%;
     }
 
     .about-us-information-title {
@@ -1129,7 +1141,7 @@ video::-webkit-media-controls-time-remaining-display {
     }
 
     .about-us-information-subtitle {
-        font-size: 1.6rem;
+        font-size: 1.3rem;
     }
 
     /* .about-us-frames-container {
@@ -1156,7 +1168,6 @@ video::-webkit-media-controls-time-remaining-display {
 
     .about-us-small-frame {
         height: 16rem;
-        
     }
 
     .about-us-big-frame {
@@ -1167,9 +1178,9 @@ video::-webkit-media-controls-time-remaining-display {
         font-size: 1.35rem;
     }
 
-    .about-us-information {
+    /* .about-us-information {
         font-size: 1.2rem;
-    }
+    } */
 
     .about-us-details-container-desktop {
         display: flex;

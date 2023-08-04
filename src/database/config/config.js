@@ -2,6 +2,7 @@
 const dotenv = require('dotenv')
 dotenv.config()
 
+console.log(process.env.DEV_DB)
 
 module.exports = {
   "development": {

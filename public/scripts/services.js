@@ -5,8 +5,7 @@ import { checkIfIsInScreen } from "./utils.js";
 window.addEventListener('load', () => {
     let serviceCards = document.querySelectorAll('.service-card')
     const servicesCards = Array.from(document.querySelectorAll('.service-card'));
-    console.log(serviceCards)
-
+    let serviceLabels = document.querySelectorAll('.service-card-visible-part')
     const openDropdown = (card) => {
         let wrapper = card.querySelector('.service-card-wrapper')
         let dropdown = card.querySelector('.service-card-dropdown')
@@ -90,21 +89,21 @@ window.addEventListener('load', () => {
 
 
     const toggleDropdown = () => {
-        toggleDropdownBtn.forEach(btn => {
-            btn.addEventListener('click', () => {
-                let wrapper = btn.closest('.service-card-wrapper')
-                let serviceCard = btn.closest('.service-card')
+        serviceLabels.forEach(label => {
+            label.addEventListener('click', () => {
+                let wrapper = label.closest('.service-card-wrapper')
+                let serviceCard = label.closest('.service-card')
                 let dropdown = serviceCard.querySelector('.service-card-dropdown')
                 let iconsContainer = serviceCard.querySelector('.toggle-dropdown-icons-container')
                 let minusBtn = serviceCard.querySelector('.bx-minus')
                 let plusBtn = serviceCard.querySelector('.bx-plus-circle')
-                let serviceLabel = serviceCard.querySelector('.service-card-visible-part')
+                
                 iconsContainer.classList.toggle('toggle-dropdown-icons-container-active')
                 dropdown.classList.toggle('service-card-dropdown-active')
                 wrapper.classList.toggle('service-card-wrapper-active')
                 minusBtn.classList.toggle('toggle-dropdown-inactive')
                 plusBtn.classList.toggle('toggle-dropdown-inactive')
-                serviceLabel.classList.toggle('service-card-visible-part-active')
+                label.classList.toggle('service-card-visible-part-active')
                 serviceCard.classList.toggle('service-card-inactive')
                 serviceCard.classList.toggle('service-card-active')
 

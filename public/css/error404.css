@@ -1,4 +1,4 @@
-@import 'variables.css';
+
 
 .error-404-container {
     margin-top: 12vh;
@@ -7,7 +7,7 @@
 }
 
 .error-404-title-container h1 {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     text-align: center;
 }
 

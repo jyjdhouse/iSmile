@@ -17,15 +17,15 @@ const controller = {
 
 
         // Crea una instancia de Puppeteer y abre una nueva página
-        const browser = await puppeteer.launch({ headless: true });
+        const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
         const page = await browser.newPage();
 
         // Establece el contenido HTML con los estilos y datos del formulario
         // Establece la URL de tu archivo CSS
-        const cssFilePath = path.join(__dirname, '/clientMedicalInfo.css');
-        const headerCssFilePath = path.join(__dirname, '/alternativeHeader.css');
-        const lastRowCssFilePath = path.join(__dirname, './lastFormRow.css');
-        const imageFilePath = path.join(__dirname, '/logo-background.png')
+        const cssFilePath = path.resolve(__dirname, './clientMedicalInfo.css');
+        const headerCssFilePath = path.resolve(__dirname, './alternativeHeader.css');
+        const lastRowCssFilePath = path.resolve(__dirname, './lastFormRow.css');
+        const imageFilePath = path.resolve(__dirname, '/logo-background.png')
 
         // await page.emulateMedia('screen');
         // MODIFICO LAS IMAGENES
@@ -148,15 +148,15 @@ const controller = {
             }
 
             // Crea una instancia de Puppeteer y abre una nueva página
-            const browser = await puppeteer.launch({ headless: true });
+            const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
             const page = await browser.newPage();
 
             // Establece el contenido HTML con los estilos y datos del formulario
             // Establece la URL de tu archivo CSS
-            const cssFilePath = path.join(__dirname, '/clientConsent.css');
-            const headerCssFilePath = path.join(__dirname, '/alternativeHeader.css');
-            const lastRowCssFilePath = path.join(__dirname, './lastFormRow.css');
-            const imageFilePath = path.join(__dirname, '/logo-background.png')
+            const cssFilePath = path.resolve(__dirname, './clientConsent.css');
+            const headerCssFilePath = path.resolve(__dirname, './alternativeHeader.css');
+            const lastRowCssFilePath = path.resolve(__dirname, './lastFormRow.css');
+            const imageFilePath = path.resolve(__dirname, './logo-background.png')
 
             // await page.emulateMedia('screen');
             // MODIFICO LAS IMAGENES
