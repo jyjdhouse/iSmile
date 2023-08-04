@@ -15,15 +15,12 @@
 
 
 .about-us-intro-container {
-    position: absolute;
+
     display: flex;
     flex-direction: column;
     text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background-color: rgba(230, 230, 230, .85);
-    padding: 3%;
+
     border-radius: 10px;
 }
 
