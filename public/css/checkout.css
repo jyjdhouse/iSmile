@@ -6,6 +6,7 @@ body {
     color: #ccc;
     background-color: #eee;
     cursor: unset;
+    pointer-events: none;
 }
 /* Para el loading Animation */
 .loading-container {

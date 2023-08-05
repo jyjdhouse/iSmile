@@ -31,11 +31,11 @@ const getDeepCopy = require('../utils/getDeepCopy')
 const homePageLabels = require('../utils/staticDB/homePageLabels');
 const getSpecialtyService = require('../utils/getSpecialtyService');
 const orderMainImageFile = require('../utils/orderMainImageFile');
+const getAllUsers = require('../utils/getAllUsers.js');
 
 const controller = {
     index: async (req, res) => {
         try {
-
             let homeFiles = await db.HomeFile.findAll({
                 where: {
                     home_sections_id: {

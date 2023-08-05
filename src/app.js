@@ -51,7 +51,7 @@ const userLogged = require('./middlewares/userLogged.js');
 const userIsIncomplete = require('./middlewares/userIsIncomplete');
 const guestMiddleware = require('./middlewares/guestMiddleware')
 const headerMiddleware = require('./middlewares/headerMiddleware')
-// const getAllUsers = require('./utils/getAllUsers.js');
+
 
 
 // Ruteo para api
@@ -83,5 +83,5 @@ const PORT = process.env.PORT || 4500;
 app.listen(PORT, () => {
     console.log(" 🚀 Se levanto proyecto en http://localhost:" + PORT)
 });
-// const scheduleMail = require('./mail-scheduler');
-// scheduleMail.start(); TODO: Activarlo para activar mails
+const scheduleMail = require('./mail-scheduler');
+scheduleMail.start(); //TODO: Activarlo para activar mails

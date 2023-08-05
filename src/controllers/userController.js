@@ -63,7 +63,7 @@ const controller = {
             cart = cart?.map(tempItem => {
                 // Primero busco si hay mainImage, sino primer foto que aparezca
                 let tempItemFile = tempItem.product.files?.find(file => file.main_image)?.filename;
-                !tempItemFile ? tempItemFile =tempItem.product.files?.find(file => file.file_types_id = 1)?.filename : null;
+                !tempItemFile ? tempItemFile = tempItem.product.files?.find(file => file.file_types_id = 1)?.filename : null;
                 return {
                     tempItemId: tempItem.id,
                     products_id: tempItem.products_id,
@@ -72,25 +72,28 @@ const controller = {
                     filename: tempItemFile
                 }
             });
-            // Para obtener url de las fotos
-            for (let i = 0; i < cart.length; i++) {
-                const product = cart[i];
-                const filename = product.filename;
-                let url;
-                if(filename){
-                    const getObjectParams = {
-                        Bucket: bucketName,
-                        Key: `product/${filename}`
+            if (cart) {
+                // Para obtener url de las fotos
+                for (let i = 0; i < cart.length; i++) {
+                    const product = cart[i];
+                    const filename = product.filename;
+                    let url;
+                    if (filename) {
+                        const getObjectParams = {
+                            Bucket: bucketName,
+                            Key: `product/${filename}`
+                        }
+                        const command = new GetObjectCommand(getObjectParams);
+                        url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                     }
-                    const command = new GetObjectCommand(getObjectParams);
-                    url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
-                }
-                
-                product.file_url = url; //en el href product.files[x].file_url
-            };
-            // return res.send(cart);
-            // Ordeno el carro del tempItemId mas gde a mas chico (Mas nuevo arriba)
-            cart = cart?.sort((a, b) => b.tempItemId - a.tempItemId);
+
+                    product.file_url = url; //en el href product.files[x].file_url
+                };
+                // return res.send(cart);
+                // Ordeno el carro del tempItemId mas gde a mas chico (Mas nuevo arriba)
+                cart = cart?.sort((a, b) => b.tempItemId - a.tempItemId);
+            }
+
             return res.render('checkout.ejs', { user, cart, provinces, countryCodes });
         }
         return res.render('checkout.ejs', { provinces, countryCodes });
@@ -105,12 +108,12 @@ const controller = {
 
             if (!errors.isEmpty()) { //Si hay errores en el back...
                 errors = errors.mapped();
-                
+
                 errors = {
                     msg: `${errors.email ? errors.email.msg : errors['password']?.msg || errors['re-password'].msg}`//Si viene el del mail le mando primero ese
                 }
                 // return res.send(errors)
-                return res.render('regist',{errors});
+                return res.render('regist', { errors });
             }
 
             // Datos del body
@@ -157,11 +160,11 @@ const controller = {
             return res.json(error);
         }
     },
-    login: (req,res)=>{
+    login: (req, res) => {
         console.log(req.session);
         return res.render('login');
     },
-    regist: (req,res) =>{
+    regist: (req, res) => {
         return res.render('regist')
     },
     processLogin: async (req, res) => {
@@ -189,11 +192,11 @@ const controller = {
                     return res.redirect(`${req.session.returnTo}`);
                 }
                 // Si llego aca es porque esta mal la contrasena
-                return res.render('login',{errors:true});
+                return res.render('login', { errors: true });
 
             }
             // Si llego aca es porque esta mal el email o password
-            return res.render('login',{errors:true});
+            return res.render('login', { errors: true });
 
         } catch (error) {
             console.log(`Falle en userController.login: ${error}`);

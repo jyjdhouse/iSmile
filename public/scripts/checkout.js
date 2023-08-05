@@ -1,5 +1,7 @@
 import { getDeepCopy, handleRemoveCartBtnClick, isInDesktop, isLetter, isNumeric } from "./utils.js";
-window.scrollTo(0, 0)
+window.scrollTo(0, 0);
+// agarro el contenedor de tarjetas
+const productCardWrapper = document.querySelector('.product-card-wrapper');
 // Si no hay usuario, tengo que pintar desde el LocalStorage
 await checkForUserLogged();
 // Si no hay usuario, se pinto devuelta la vista => llamo a la función
@@ -8,6 +10,15 @@ if (!window.userLogged) handleRemoveCartBtnClick(window.userLogged);
 //Agarro las provincias
 const provinces = Array.from(document.querySelectorAll('#billing_province option'));
 
+checkIfCartIsEmpty();
+function checkIfCartIsEmpty(){
+    const cartLength = document.querySelectorAll('.product-card').length;
+    console.log(cartLength);
+    if(cartLength==0){
+        productCardWrapper.innerHTML = `<p class="no-products-msg">No tienes productos en el carro</p>`;
+        document.querySelector('.start-buy-button').classList.add('disabled')
+    };
+}
 // Logica para hacer a todos los input con valor 1
 document.querySelectorAll('.product-quantity').forEach(inp => {
     inp.value = 1;
@@ -54,7 +65,7 @@ const handleSubstractingQuantity = (e) => { //función que se encarga de manera 
 // Voy por cada signo + & - 
 reduceProductQuantityBtns.forEach(btn => {
     // Da click en el -
-    btn.addEventListener('click', (e) => {
+    btn?.addEventListener('click', (e) => {
         handleSubstractingQuantity(e);
     });
 });
@@ -95,6 +106,7 @@ removeProductCardBtns.forEach(btn => {
         const card = btn.closest('.product-card');
         card.remove();
         getTotalPrice();
+        checkIfCartIsEmpty();
     });
 });
 
@@ -587,8 +599,7 @@ async function checkForUserLogged() {
         let userLogged = window.userLogged;
         // Si hay usuario en session, se deja como esta
         if (userLogged) return;
-        // agarro el contenedor de tarjetas
-        const productCardWrapper = document.querySelector('.product-card-wrapper');
+        
         // Si no hay, tengo que pintar el carro con el localStorage
         let localStorageCart = JSON.parse(localStorage.getItem('temporalCart'));
         // Ordeno el carro de ultimo a primero (antiguedad mas reciente)
@@ -603,7 +614,7 @@ async function checkForUserLogged() {
 
         // Mientras pido los productos hago el cargando...
         let products = await (await (await fetch(`${window.location.origin}/api/product`)).json()).products;
-        console.log(products);
+        
         // Saco el spinner
         document.querySelector('.spinner-overlay').remove();
         productCardWrapper.innerHTML = '';
@@ -647,6 +658,7 @@ async function checkForUserLogged() {
         });
         if (!localStorageCart || localStorageCart.length == 0) {
             productCardWrapper.innerHTML = `<p class="no-products-msg">No tienes productos en el carro</p>`;
+            document.querySelector('.start-buy-button').classList.add('disabled')
         }
 
         return
@@ -822,13 +834,16 @@ form.addEventListener('submit', async (e) => {
             body: JSON.stringify(bodyForm)
         });
         if (!fetchResponse.ok) {
-            window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${fetchResponse.msg}`;
+            // console.log(fetchResponse);
+            const errorMsg = 'Error al procesar la venta';
+            window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${errorMsg}`;
             return
         };
         // Una vez que se compra, si no hay usuario se borra el carro del locale
         if(!window.userLogged){
             localStorage.removeItem('temporalCart');
         };
+        window.location.href = `/`;
     } catch (error) {
         return console.log(`Error en el envio del formulario: ${error}`);
     }

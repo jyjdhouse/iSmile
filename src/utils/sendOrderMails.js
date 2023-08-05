@@ -1,16 +1,10 @@
 const nodemailer = require('nodemailer');
 const provinces = require('./staticDB/provinces');
-const dateFormater = require('./dateFormater')
+const dateFormater = require('./dateFormater');
+const emailConfig = require('./staticDB/emailConfig');
 async function sendOrderMails(order) {
     // Configuración del transporte del correo
-    const transporter = nodemailer.createTransport({
-        // Configuración del servicio de correo saliente (SMTP)
-        service: 'Gmail',
-        auth: {
-            user: 'janoo.pereira@gmail.com',
-            pass: 'wubwcoifjtogwonk'
-        }
-    });
+    const transporter = nodemailer.createTransport(emailConfig);
 
     // Contenido del correo
     let userMailContentDeliveryMethod = ``;
@@ -112,14 +106,14 @@ async function sendOrderMails(order) {
   `;
     // Opciones del correo
     const userMailOptions = {
-        from: 'janoo.pereira@gmail.com',
+        from: 'ismile@ismile.com.ar',
         to: order.billing_email,
         subject: 'Resumen de compra',
         html: userMailContent
     };
     const operatorMailOptions = {
-        from: 'janoo.pereira@gmail.com',
-        to: 'janoo.pereira@gmail.com',
+        from: 'ismile@ismile.com.ar',
+        to: 'info@ismile.com.ar',
         subject: `Venta online - ${order.tra_id}`,
         html: operatorMailContent
     }

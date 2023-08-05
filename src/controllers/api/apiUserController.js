@@ -14,6 +14,7 @@ const getDeepCopy = require('../../utils/getDeepCopy');
 const sendOrderMails = require('../../utils/sendOrderMails');
 const getAllProducts = require('../../utils/getAllProducts');
 const getOrder = require('../../utils/getOrder');
+const emailConfig = require('../../utils/staticDB/emailConfig')
 
 const controller = {
     getLoggedUserId: async (req, res) => {
@@ -64,10 +65,10 @@ const controller = {
             const tempCart = await db.TemporalCart.create({
                 users_id: userId
             });
-            console.log(tempCart);
+            
             await db.TemporalItem.create({
                 temporal_cart_id: parseInt(tempCart.id),
-                products_id: parseInt(prodId),
+                products_id: prodId,
                 quantity: 1
             })
 
@@ -87,13 +88,23 @@ const controller = {
     },
     addTempItem: async (req, res) => {
         try {
-            let { tempCartId, prodId } = req.body;
+            let { tempCartId, prodId, userId } = req.body;
 
             let tempItem = await db.TemporalItem.create({
                 temporal_cart_id: parseInt(tempCartId),
                 products_id: prodId,
-                quantity: 1
+                quantity: 1,
+                added_date: Date.now()
             });
+            // Tengo que reiniciar el periodo del carro para tema mails
+            await db.User.update({
+                cart_period_type: null
+            }, {
+                where: {
+                    id: userId
+                }
+            })
+
             return res.json({
                 ok: true,
                 meta: {
@@ -110,12 +121,21 @@ const controller = {
     deleteTempItem: async (req, res) => {
         try {
             let { prodId, user } = req.body;
-            let deletedItem = await db.TemporalItem.destroy({
+            await db.TemporalItem.destroy({
                 where: {
                     products_id: prodId,
                     temporal_cart_id: user.temporalCart.id
                 }
-            })
+            });
+            // Reinicio el contador de mails
+            await db.User.update({
+                cart_period_type: null
+            }, {
+                where: {
+                    id: user.id
+                }
+            });
+            
             return res.json({
                 ok: true,
                 meta: {
@@ -162,15 +182,9 @@ const controller = {
             const changePassURL = `"http://${host}/user/cambiar-contrasena/${token}`;
 
             // Configurar el transporte de correo electrónico con nodemailer
-            let transporter = nodemailer.createTransport({
-                service: 'Gmail',
-                auth: {
-                    user: 'janoo.pereira@gmail.com',
-                    pass: 'wubwcoifjtogwonk'
-                }
-            });
+            let transporter = nodemailer.createTransport(emailConfig);
             const mailOptions = {
-                from: 'janoo.pereira@gmail.com', // Tu dirección de correo electrónico
+                from: 'ismile@ismile.com.ar', // Tu dirección de correo electrónico
                 to: userEmail, // Correo electrónico del usuario
                 subject: 'Cambio de contraseña',
                 text: `Hola, haz clic en el siguiente enlace para cambiar tu contraseña: ${changePassURL}`,
@@ -231,15 +245,9 @@ const controller = {
             const changePassURL = `"http://${host}/user/cambiar-contrasena/${token}`;
 
             // Configurar el transporte de correo electrónico con nodemailer
-            let transporter = nodemailer.createTransport({
-                service: 'Gmail',
-                auth: {
-                    user: 'janoo.pereira@gmail.com',
-                    pass: 'wubwcoifjtogwonk'
-                }
-            });
+            let transporter = nodemailer.createTransport(emailConfig);
             const mailOptions = {
-                from: 'janoo.pereira@gmail.com', // Tu dirección de correo electrónico
+                from: 'ismile@ismile.com.ar', // Tu dirección de correo electrónico
                 to: mail, // Correo electrónico del usuario
                 subject: 'Cambio de contraseña',
                 text: `Hola, haz clic en el siguiente enlace para cambiar tu contraseña: ${changePassURL}`,
@@ -282,11 +290,13 @@ const controller = {
                 // No importa de que fue error, fue porque algo hicieron en el front ==> Repinto la vista
                 // con mensaje de que hubo error
                 // return res.send(errors);
+                console.log('HAY ERRORES');
                 return res.status(404).json({
                     meta: {
                         status: 404
                     },
                     ok:false,
+                    errors,
                     msg: 'Error al procesar la compra, intente nuevamente'
                 });
                     
@@ -438,11 +448,21 @@ const controller = {
             orderCreated = await getOrder(orderCreated.id);
             // Tengo que armar 2 mails: 1 al que compro y otro a las chicas
             await sendOrderMails(orderCreated);
-            // Si se creo la orden entonces limpio el carro del usuario 
             if(users_id){
-                await db.temporalCart.destroy({
+                
+                // Si se creo la orden entonces limpio el carro del usuario 
+                await db.TemporalCart.destroy({
                     where: {
                         users_id
+                    }
+                });
+                // Tambien reinicio los mails del carro por si vuelve a meter cosas
+                await db.User.update({
+                    last_cart_email: null,
+                    cart_period_type: null
+                },{
+                    where: {
+                        id: users_id 
                     }
                 })
             }

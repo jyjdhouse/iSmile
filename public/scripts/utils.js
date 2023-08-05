@@ -229,48 +229,7 @@ export function adaptProductsToBeListed(products) {
     return products
 }
 
-export async function listenSizesBtns(condition) {//Escucha a todos los quick-sizes => Ultimo boton antes de agregar a la wishlist
-    const quickSizes = document.querySelectorAll('.quick-size');
-    for (let i = 0; i < quickSizes.length; i++) {
-        const btn = quickSizes[i];
-        btn.addEventListener('click', handeClickInSizeBtn);
-    };
-};
 
-export function removeSizesBtnsListener() { //Función que va por todos los quick-sizes y le saca el evento
-    const quickSizes = document.querySelectorAll('.quick-size');
-    for (let i = 0; i < quickSizes.length; i++) {
-        const btn = quickSizes[i];
-        btn.removeEventListener('click', handeClickInSizeBtn);
-    };
-}
-const handeClickInSizeBtn = async (e) => {//Para manejar el evento 'click'
-    const body = document.querySelector('body');
-    const quickAddCartContainer = 'add-to-cart-container'
-    const blackScreen = 'black-screen';
-    const btn = e.target;
-    // Capturo al producto
-    const productCard = btn.closest('.product-quick-actions-container');
-    // Activo la animación de loading
-    productCard.querySelector('.loading-container').classList.add('loading-container-active');
-    // Agarro id y colorid
-    const productId = productCard.dataset.productid;
-    const productColorId = productCard.dataset.colorid;
-    await addCartProduct(productId, productColorId); //TODO: COMPLETAR
-    setTimeout(() => { //Simula el tiempo de pedido a la api
-        // Activo las clases para el popup "Agregaste al carro..."
-        body.classList.add('noScroll');
-        activateClass([blackScreen, quickAddCartContainer]);
-        // Desactivo la animación de loading una vez complete el pedido a la api
-        productCard.querySelector('.loading-container').classList.remove('loading-container-active');
-        // Desactivo la clase active del card
-        clearQuickActions(productCard);
-    }, 1000);
-
-
-
-
-}
 export function clearQuickActions(container) { //Vuelve las quickAction del container a predeterminadas
     container?.querySelector('.product-quick-actions-container')?.classList.remove(`product-quick-actions-container-active`)
     container?.querySelector('.quick-cart-container')?.classList.remove('quick-cart-container-active');
@@ -418,7 +377,8 @@ export async function addTempItemToDB(prodId,user) {//Agrega producto a la db
                     },
                     body: JSON.stringify({
                         tempCartId: user.temporalCart.id,
-                        prodId
+                        prodId,
+                        userId: user.id
                     })
                 })).json());
                 // Agrego el producto a temporalItems parcial

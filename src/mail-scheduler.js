@@ -5,14 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const getDeepCopy = require('./utils/getDeepCopy');
 const db = require('./database/models');
-// const timePeriods = require('./utils/staticDB/timePeriods.js); TODO: activarlo cuando le mostremos asi lo pruebo
+const emailConfig = require('./utils/staticDB/emailConfig');
+const timePeriods = require('./utils/staticDB/timePeriods.js'); 
 
-const timePeriods = {
-  1: 1000 * 60 * 2, //2min
-  2: 1000 * 60 * 5, //5min
-  3: 1000 * 60 * 10, //10min
-  4: 1000 * 60 * 15 //15min
-}
 function updateType(type) {
   if (type) { //Si ya viene alguno, le retorno 1 mas
     return (parseInt(type) + 1).toString()
@@ -20,45 +15,50 @@ function updateType(type) {
   return '1'
 }
 // MANDA MAILS PERIODICAMENTE
-module.exports = cron.schedule('*/1 * * * *', async () => { //TODO: Cada 30 minutos
-  function buildWishlistEmail() {
+module.exports = cron.schedule('*/30 * * * *', async () => { 
+  function buildCartProductsEmail(user) {
     // Aca armo el array con nombre y foto del producto
-    wishedProducts = wishedProducts?.map(prod => {
-      let file = prod.wishedProduct.files.find(file => file.file_types_id == 1)
+    cartProducts = cartProducts?.map(prod => {
+      // let file = prod.wishedProduct.files.find(file => file.file_types_id == 1)
       return {
-        productName: prod.wishedProduct.name,
-        productImage: file.filename
+        productName: prod.product.name,
+        productPrice: prod.product.price
       }
     });
 
-    let mailHTML = `<p>${user.name}, tienes productos en tu wishlist:<p>`
-    let products = [];
-    wishedProducts.forEach(prod => {
-      const imagePath = path.join(__dirname, '../public/img/' + prod.productImage);
-
-      mailHTML += `
-          <p>
-            <img src="${imagePath}" style="width: 100px; height: 100px;" alt="Imagen de producto"/>
-            ${prod.productName}
-          </p>
-          <br>
-        `
+    let tableContent = '';
+    cartProducts.forEach(prod => {
+      // const imagePath = path.join(__dirname, '../public/img/' + prod.productImage);
+      {/* <img src="${imagePath}" style="width: 100px; height: 100px;" alt="Imagen de producto"/> */ }
+      tableContent +=
+            `
+        <tr>
+            <td style="width:50%;text-align:center;padding: 10px 0;">${prod.productName}</td>
+            <td style="width:50%;text-align:center;padding: 10px 0;">$${prod.productPrice}</td>
+        </tr>
+        `;
     });
-
+    const cartSubTotal = cartProducts.reduce((total, product) => total + product.productPrice, 0)
+    let mailHTML = `
+    <p style="font-size:25px;">${user.first_name}, tienes productos en tu carro:</p><br>
+    <table style="width:100%;margin-bottom:30px;">
+      <tr>
+        <th style="width:50%;text-align:center;padding: 10px 0;">Item</th>
+        <th style="width:50%;text-align:center;padding: 10px 0;">Precio unitario</th>
+      </tr>
+      ${tableContent}
+    </table>
+    <p style="font-size:22px;margin-top:20px;color:#222;">Subtotal: $${cartSubTotal}</p>
+    `
+    mailHTML += `<a href="https://ismile.com.ar/user/checkout">Ir al carro</a>`
     // Crea un objeto de transporte SMTP para enviar el correo electrónico
-    let transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: 'janoo.pereira@gmail.com',
-        pass: 'wubwcoifjtogwonk'
-      }
-    });
+    let transporter = nodemailer.createTransport(emailConfig);
 
     // Configura los detalles del correo electrónico a enviar
     let mailOptions = {
-      from: 'janoo.pereira@gmail.com',
-      to: 'janopk789@gmail.com',
-      subject: 'ALTER EGO',
+      from: 'ismile@ismile.com.ar',
+      to: user.email,
+      subject: `${user.first_name}, tienes productos en tu carro`,
       html: mailHTML
     };
 
@@ -79,98 +79,98 @@ module.exports = cron.schedule('*/1 * * * *', async () => { //TODO: Cada 30 minu
   let user;
   // Este array es para hacer el bulkCreate
   let idsToUpdate = [];
-  
+
 
   // Voy por cada usuario, me fijo su wishListProducts y armo el mail
-  let wishedProducts;
+  let cartProducts;
 
   for (let i = 0; i < users.length; i++) {
     user = users[i];
 
-                          //__________WISHLIST__________
+    //__________CART__________
+    if (user.temporalCart) {
+      // Filtro los cartProducts por los que siguen vigentes
+      cartProducts = [...user.temporalCart.temporalItems];
+      // Ordeno para tener de mas reciente a menos reciente
+      cartProducts = cartProducts?.sort((a, b) => b.id - a.id);
+      // Armo la logica si el usuario tiene cartProducts
+      if (cartProducts.length) {
 
-    // Filtro los wishListProd por los que siguen vigentes
-    wishedProducts = user.wishlistProducts?.filter(prod => prod.wishedProduct);
-    // Ordeno para tener de mas reciente a menos reciente
-    wishedProducts = wishedProducts?.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-    // Armo la logica si el usuario tiene wishedProducts
-    if (wishedProducts) {
+        // Agarro el ultimo cartProduct que hay en la lista
+        const lastCartProductAdded = new Date(cartProducts[0].added_date);
+        // Agarro el ultimo email que se mando
+        let lastEmailSent = new Date(user.last_cart_email);
+        // Tengo que fijarme cuanto tiempo paso desde que se agrego un producto
+        const actualTime = new Date(new Date().toISOString());
+        // Aca me va a dar un numero en milisegundos
+        let difference = actualTime - lastCartProductAdded;
+        let newType
+        //Me fijo en que momento de los mails se encuentra el usuario
+        switch (user.cart_period_type) {
 
-      // Agarro el ultimo wishedProduct que hay en la lista
-      lastWishedProductAdded = new Date(wishedProducts[0].createdAt);
-      // Agarro el ultimo email que se mando
-      let lastEmailSent = new Date(user.last_wishlist_email);
-      // Tengo que fijarme cuanto tiempo paso desde que se agrego un producto
-      const actualTime = new Date(new Date().toISOString());
-      // Aca me va a dar un numero en milisegundos
-      let difference = actualTime - lastWishedProductAdded;
-      let newType
-      //Me fijo en que momento de los mails se encuentra el usuario
-      switch (user.wishlist_period_type) {
+          case '1': //Ya se mando el mail de 1hs
+            difference = actualTime - lastEmailSent;//Aca la diferencia tiene que ser con respecto al ultimo mail
+            // Me fijo si la diferencia supera 24hs (ms)
+            if (difference >= timePeriods[2]) {//supero...
+              buildCartProductsEmail(user); //Armo el email y lo mando
+              user.last_cart_email = new Date()//hora actual
+              //Actualizo el type
+              newType = updateType(user.cart_period_type)
 
-        case '1': //Ya se mando el mail de 1hs
-          difference = actualTime - lastEmailSent;//Aca la diferencia tiene que ser con respecto al ultimo mail
-          // Me fijo si la diferencia supera 24hs (ms)
-          if (difference >= timePeriods[2]) {//supero...
-            buildWishlistEmail(); //Armo el email y lo mando
-            user.last_wishlist_email = new Date()//hora actual
-            //Actualizo el type
-            newType = updateType(user.wishlist_period_type)
+            };
 
-          };
+            break;
 
-          break;
+          case '2': //Ya se mando el mail de 24hs
+            difference = actualTime - lastEmailSent;//Aca la diferencia tiene que ser con respecto al ultimo mail
+            // Me fijo si la diferencia supera 72hs (ms)
+            if (difference >= timePeriods[3]) {//supero...
+              buildCartProductsEmail(user); //Armo el email y lo mando
+              user.last_cart_email = new Date()//hora actual
+              //Actualizo el type
+              newType = updateType(user.cart_period_type)
+            }
+            break;
 
-        case '2': //Ya se mando el mail de 24hs
-          difference = actualTime - lastEmailSent;//Aca la diferencia tiene que ser con respecto al ultimo mail
-          // Me fijo si la diferencia supera 72hs (ms)
-          if (difference >= timePeriods[3]) {//supero...
-            buildWishlistEmail(); //Armo el email y lo mando
-            user.last_wishlist_email = new Date()//hora actual
-            //Actualizo el type
-            newType = updateType(user.wishlist_period_type)
-          }
-          break;
+          case '3': // Ya mando el mail de 72hs
+            difference = actualTime - lastEmailSent;//Aca la diferencia tiene que ser con respecto al ultimo mail
+            // Me fijo si la diferencia supera 1w (ms)
+            if (difference >= timePeriods[4]) {//supero...
+              buildCartProductsEmail(user); //Armo el email y lo mando
+              user.last_cart_email = new Date()//hora actual
+              //Actualizo el type
+              newType = updateType(user.cart_period_type)
+            }
+            break;
 
-        case '3': // Ya mando el mail de 72hs
-          difference = actualTime - lastEmailSent;//Aca la diferencia tiene que ser con respecto al ultimo mail
-          // Me fijo si la diferencia supera 1w (ms)
-          if (difference >= timePeriods[4]) {//supero...
-            buildWishlistEmail(); //Armo el email y lo mando
-            user.last_wishlist_email = new Date()//hora actual
-            //Actualizo el type
-            newType = updateType(user.wishlist_period_type)
-          }
-          break;
+          case '4': // Ya es lo ultimo
+            // No cambia el type
+            newType = user.cart_period_type
+            break;
 
-        case '4': // Ya es lo ultimo
-          // No cambia el type
-          newType = user.wishlist_period_type
-          break;
-
-        default: // No se mando ningun mail
-          // Me fijo si la diferencia supera 1hs (ms)
-          if (difference >= timePeriods[1]) {//supero...
-            buildWishlistEmail(); //Armo el email y lo mando
-            user.last_wishlist_email = new Date()//hora actual
-            //Actualizo el type
-            newType = updateType(user.wishlist_period_type)
-          };
-          break;
-      };
-      // Pusheo el objeto para luego hacer bulkUpdate
-      idsToUpdate.push({
-        id: user.id,
-        wishlist_period_type: newType || user.wishlist_period_type, //El or es por si no se modifica
-        last_wishlist_email: user.last_wishlist_email
-      })
+          default: // No se mando ningun mail
+            // Me fijo si la diferencia supera 1hs (ms)
+            if (difference >= timePeriods[1]) {//supero...
+              buildCartProductsEmail(user); //Armo el email y lo mando
+              user.last_cart_email = new Date()//hora actual
+              //Actualizo el type
+              newType = updateType(user.cart_period_type)
+            };
+            break;
+        };
+        // Pusheo el objeto para luego hacer bulkUpdate
+        idsToUpdate.push({
+          id: user.id,
+          cart_period_type: newType || user.cart_period_type, //El or es por si no se modifica
+          last_cart_email: user.last_cart_email
+        })
+      }
     }
 
-    // TODO:            __________CART__________
   }
   // console.log(idsToUpdate);
   // Una vez que hago esto con todos los usuarios, hago el bulkUpdate
   await db.User.bulkCreate(idsToUpdate, {
-    updateOnDuplicate: ["wishlist_period_type","last_wishlist_email"]
+    updateOnDuplicate: ["cart_period_type", "last_cart_email"]
   });
 });

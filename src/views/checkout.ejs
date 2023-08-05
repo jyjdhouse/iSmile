@@ -53,7 +53,7 @@
                                 </article>
                                 <% }) %>
                                     <!-- Si no hay productos en el carro -->
-                                    <% if(locals.cart && locals.cart.length==0) { %>
+                                    <% if(locals.cart && locals.cart.length==0 || !locals.cart) { %>
                                         <p class="no-products-msg">No tienes productos en el carro</p>
                                         <% } %>
                         </div>
@@ -68,7 +68,7 @@
                             <p class="cart-total">$<span class="cart-total-span"></span></p>
                         </div>
                         <div class="button-container">
-                            <button class="continue-view-button continue-button">INICIAR COMPRA</button>
+                            <button class="continue-view-button continue-button start-buy-button">INICIAR COMPRA</button>
                         </div>
                         <a href="/product" class="continue-shopping-link grey"><i
                                 class='bx bx-chevron-left continue-shopping-logo'></i> Seguir comprando</a>

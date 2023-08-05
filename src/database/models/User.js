@@ -18,7 +18,9 @@ module.exports = (sequelize, dataTypes) => {
         email_notifications: { type: dataTypes.TINYINT },
         email_newsletter: { type: dataTypes.TINYINT },
         user_categories_id: {type: dataTypes.INTEGER},
-        password_token: { type: dataTypes.TEXT }
+        password_token: { type: dataTypes.TEXT },
+        last_cart_email: { type: dataTypes.DATE },
+        cart_period_type: { type: dataTypes.STRING(1) }
     }
 
     let config = {
