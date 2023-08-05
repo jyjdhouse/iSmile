@@ -64,8 +64,11 @@ window.addEventListener('load', () => {
                         top: targetDivTopOffset,
                         behavior: 'smooth',
                     });
-                    openDropdown(serv)
-                }, 2000);
+                    setTimeout(() => {
+                        openDropdown(serv)
+                    }, 1000);
+                    
+                }, 2500);
 
 
             }
