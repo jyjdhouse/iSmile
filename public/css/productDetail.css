@@ -199,7 +199,7 @@ h1.product-title {
     background-color: var(--violet-color);
     color: #fff;
     border-radius: 1rem;
-    width: 50%;
+    width: 100%;
     cursor: pointer;
 }
 
@@ -322,7 +322,6 @@ h1.product-title {
     .cart-options-btn {
         font-size: 1rem;
         padding: 1.5% 3%;
-        width: 100%;
     }
 
     .item-quantity {
@@ -392,7 +391,6 @@ h1.product-title {
         cursor: pointer;
         padding: 2% 4%;
         margin-left: 0;
-        width: 60%;
     }
 
     /* Spinner de cargando */
