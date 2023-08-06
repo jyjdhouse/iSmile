@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const getDeepCopy = require('./utils/getDeepCopy');
 const db = require('./database/models');
-const emailConfig = require('./utils/staticDB/emailConfig');
+const emailConfig = require('./utils/staticDB/mailConfig');
 const timePeriods = require('./utils/staticDB/timePeriods.js'); 
 
 function updateType(type) {

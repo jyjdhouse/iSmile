@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const provinces = require('./staticDB/provinces');
 const dateFormater = require('./dateFormater');
-const emailConfig = require('./staticDB/emailConfig');
+const emailConfig = require('./staticDB/mailConfig');
 async function sendOrderMails(order) {
     // Configuración del transporte del correo
     const transporter = nodemailer.createTransport(emailConfig);

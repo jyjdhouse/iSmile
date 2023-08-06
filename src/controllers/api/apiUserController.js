@@ -14,7 +14,7 @@ const getDeepCopy = require('../../utils/getDeepCopy');
 const sendOrderMails = require('../../utils/sendOrderMails');
 const getAllProducts = require('../../utils/getAllProducts');
 const getOrder = require('../../utils/getOrder');
-const emailConfig = require('../../utils/staticDB/emailConfig')
+const emailConfig = require('../../utils/staticDB/mailConfig')
 
 const controller = {
     getLoggedUserId: async (req, res) => {
