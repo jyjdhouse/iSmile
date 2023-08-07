@@ -84,4 +84,4 @@ app.listen(PORT, () => {
     console.log(" 🚀 Se levanto proyecto en http://localhost:" + PORT)
 });
 const scheduleMail = require('./mail-scheduler');
-// scheduleMail.start(); //TODO: Activarlo para activar mails
+scheduleMail.start(); 

@@ -6,13 +6,13 @@ const path = require('path');
 const getDeepCopy = require('./utils/getDeepCopy');
 const db = require('./database/models');
 const emailConfig = require('./utils/staticDB/mailConfig');
-// const timePeriods = require('./utils/staticDB/timePeriods.js'); 
-const timePeriods = {
-  1: 1000 * 60 * 2, //2min
-  2: 1000 * 60 * 5, //5min
-  3: 1000 * 60 * 10, //10min
-  4: 1000 * 60 * 15 //15min
-}
+const timePeriods = require('./utils/staticDB/timePeriods.js'); 
+// const timePeriods = {
+//   1: 1000 * 60 * 2, //2min
+//   2: 1000 * 60 * 5, //5min
+//   3: 1000 * 60 * 10, //10min
+//   4: 1000 * 60 * 15 //15min
+// }
 function updateType(type) {
   if (type) { //Si ya viene alguno, le retorno 1 mas
     return (parseInt(type) + 1).toString()
