@@ -46,6 +46,7 @@ const controller = {
             // Formateo la fecha
             let dateFormated = dateFormater(user.birth_date);
             user.birth_date = dateFormaterForInput(user.birth_date)
+
        
             
             // return res.send(user);
