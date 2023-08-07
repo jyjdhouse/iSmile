@@ -4,6 +4,7 @@
 <head>
     <%- include('./partials/head.ejs') %>
         <link rel="stylesheet" href="./css/index.css">
+        <link rel="stylesheet" href="./css/blogList.css">
         <script type="module" src="./scripts/indexScript.js"></script>
         <title>Home</title>
 </head>
@@ -175,42 +176,48 @@
                 </div>
                 <div class="blogs-cards-container">
                     <div class="blog-group blog-group-active">
-                        <article class="blog-card">
-                            <a href="./blog/1">
-                                <div class="card-overlay"></div>
-                                <img src="/img/estheticblog1.jpg" alt="blog-image" class="blog-img">
-                                <div class="blog-info">
-                                    <p class="blog-title">La Verdadera Belleza Es Cuando Te Pones A Quien Realmente
-                                        Sos💜
-                                    </p>
-                                    <p class="blog-author">by <span class="bold">Ines Añó</span></p>
-                                    <p class="blog-date">Apr 21, 2023</p>
+                        <a href="/" class="blog-link index-blog">
+                            <article class="blog-card">
+                                <div class="blog-img-container index-blog-img">
+                                    <img src="/img/estheticblog1.jpg" class="blog-image" alt="blog-image">
                                 </div>
-                            </a>
-
-                        </article>
-                        <article class="blog-card">
-                            <a href="./blog/1">
-                                <div class="card-overlay"></div>
-                                <img src="/img/estheticblog2.jpg" alt="blog-image" class="blog-img">
-                                <div class="blog-info">
-                                    <p class="blog-title">Lifting Líquido _ RADIESSE 🤩</p>
-                                    <p class="blog-author">by <span class="bold blog-name">Ines Añó</span></p>
-                                    <p class="blog-date">Apr 21, 2023</p>
+                                <div class="blog-info-container">
+                                    <p class="blog-author-date">By I SMILE | Apr 21, 2023</p>
+                                    <h3 class="blog-card-title">La Verdadera Belleza Es Cuando Te Pones A Quien Realmente
+                                        Sos💜</h3>
+                                    
                                 </div>
-                            </a>
-                        </article>
-                        <article class="blog-card">
-                            <a href="./blog/1">
-                                <div class="card-overlay"></div>
-                                <img src="/img/estheticblog3.jpg" alt="blog-image" class="blog-img">
-                                <div class="blog-info">
-                                    <p class="blog-title">DEFINICIÓN MANDIBULAR</p>
-                                    <p class="blog-author">by <span class="bold">Ines Añó</span></p>
-                                    <p class="blog-date">Apr 21, 2023</p>
+                                <button class="blog-card-button">LEER MAS</button>
+                            </article>
+                        </a>
+    
+                        <a href="/" class="blog-link index-blog">
+                            <article class="blog-card">
+                                <div class="blog-img-container index-blog-img">
+                                    <img src="/img/estheticblog2.jpg" class="blog-image" alt="blog-image">
                                 </div>
-                            </a>
-                        </article>
+                                <div class="blog-info-container ">
+                                    <p class="blog-author-date">By I SMILE | Apr 21, 2023</p>
+                                    <h3 class="blog-card-title">Lifting Líquido _ RADIESSE 🤩</h3>
+                                  
+                                </div>
+                                <button class="blog-card-button">LEER MAS</button>
+                            </article>
+                        </a>
+    
+                        <a href="/" class="blog-link index-blog">
+                            <article class="blog-card">
+                                <div class="blog-img-container index-blog-img">
+                                    <img src="/img/estheticblog3.jpg" class="blog-image" alt="blog-image">
+                                </div>
+                                <div class="blog-info-container">
+                                    <p class="blog-author-date">By I SMILE | Apr 21, 2023</p>
+                                    <h3 class="blog-card-title">DEFINICIÓN MANDIBULAR</h3>
+                                    
+                                </div>
+                                <button class="blog-card-button">LEER MAS</button>
+                            </article>
+                        </a>
                         
                     </div>
                     <div class="blog-group blog-group-next">

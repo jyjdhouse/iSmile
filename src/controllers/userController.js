@@ -34,6 +34,7 @@ const getDeepCopy = require('../utils/getDeepCopy');
 const getAllGenres = require('../utils/getAllGenres');
 const getAllProducts = require('../utils/getAllProducts');
 const dateFormater = require('../utils/dateFormater');
+const dateFormaterForInput = require('../utils/userProfDateFormater');
 
 // CONTROLLER
 const controller = {
@@ -42,10 +43,11 @@ const controller = {
         try {
             const user = getDeepCopy(await getUser(req.session.userLoggedId));
             // Formateo la fecha
-            user.birth_date = dateFormater(user.birth_date);
+            let dateFormated = dateFormater(user.birth_date);
+            user.birth_date = dateFormaterForInput(user.birth_date)
             // return res.send(user);
             const genres = await getAllGenres()
-            return res.render('userProfile', { user, provinces, genres })
+            return res.render('userProfile', { user, provinces, genres, dateFormated })
         } catch (error) {
             console.log(`Falle en userController.userProfile: ${error}`);
             return res.json({ error })
