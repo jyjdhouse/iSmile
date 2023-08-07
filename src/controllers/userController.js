@@ -41,10 +41,13 @@ const controller = {
 
     userProfile: async (req, res) => {
         try {
-            const user = getDeepCopy(await getUser(req.session.userLoggedId));
+            let user = getDeepCopy(await getUser(req.session.userLoggedId));
+        
             // Formateo la fecha
             let dateFormated = dateFormater(user.birth_date);
             user.birth_date = dateFormaterForInput(user.birth_date)
+       
+            
             // return res.send(user);
             const genres = await getAllGenres()
             return res.render('userProfile', { user, provinces, genres, dateFormated })
@@ -226,6 +229,7 @@ const controller = {
                 email_notifications: parseInt(userBodyData.email_notifications),
                 email_newsletter: parseInt(userBodyData.email_newsletter),
             };
+            console.log(userBodyData.birth_date)
             // Actualizo el usuario
             await db.User.update(userDataDB, {
                 where: {

@@ -1,10 +1,14 @@
-module.exports = function(date) {
-    const fechaObjeto = new Date(date);
+const { parseISO, format } = require('date-fns');
 
-    const año = fechaObjeto.getFullYear();
-    const mes = (fechaObjeto.getMonth() + 1).toString().padStart(2, '0');
-    const dia = fechaObjeto.getDate().toString().padStart(2, '0');
-    
-    const fechaFormateada = `${año}-${mes}-${dia}`;
-    return fechaFormateada
+module.exports = function(date) {
+    let fechaObjeto = parseISO(date);
+
+
+    let año = format(fechaObjeto, 'yyyy');
+    let mes = format(fechaObjeto, 'MM');
+    let dia = format(fechaObjeto, 'dd');
+
+
+    let fechaFormateada = `${año}-${mes}-${dia}`;
+    return fechaFormateada;
 }

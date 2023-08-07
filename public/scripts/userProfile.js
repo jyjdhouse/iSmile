@@ -207,6 +207,7 @@ window.addEventListener('load', () => {
             });
             if(flag){
                 form.submit()
+               
             }
         })
     });
