@@ -160,7 +160,7 @@ const controller = {
                         const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                         product.file_url = url; //en el href product.files[x].file_url
                     };
-        
+
                 }
 
             };
@@ -180,8 +180,32 @@ const controller = {
 
 
             }
+
+            // TRAIGO BLOGS DE DB (ultimos 3)
+            const lastBlogs = getDeepCopy(await db.Blog.findAll({
+                order: [['createdAt', 'DESC']],
+                limit: 3,
+                include:['files']
+            }));
+            for (let i = 0; i < lastBlogs.length; i++) {
+                const blog = lastBlogs[i];
+                if(blog.files.length){
+                    const mainImage = blog.files.find(file=>file.main_image);
+                    if(mainImage){
+                        const getObjectParams = {
+                            Bucket: bucketName,
+                            Key: `blog/${mainImage.filename}`
+                        }
+                        const command = new GetObjectCommand(getObjectParams);
+                        const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+                        blog.mainImageURL = url; //en el href product.files[x].file_url
+                    }
+                }
+                
+            }
+            // return res.send(lastBlogs)
             // return res.send({ productsInDb, productsGroupDesktop, productsGroupMobile });
-            return res.render('index', { videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, products, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile })
+            return res.render('index', { lastBlogs, videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, products, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile })
 
         } catch (error) {
             console.log(`Falle en mainController.list: ${error}`);

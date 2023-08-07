@@ -12,7 +12,8 @@ const getDeepCopy = require('../utils/getDeepCopy')
 const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
-const sharp = require('sharp')
+const sharp = require('sharp');
+const cutDescription = require('../utils/cutDescription');
 
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
@@ -34,20 +35,22 @@ const controller = {
             let blogs = getDeepCopy(await getAllBlogs());
             for (let i = 0; i < blogs.length; i++) {
                 const blog = blogs[i];
-                if (blog.files?.length && blog.files) {
-                    for (let j = 0; j < blog.files.length; j++) {
-                        const file = blog.files[j];
+                if(blog.files.length){
+                    const mainImage = blog.files.find(file=>file.main_image);
+                    if(mainImage){
                         const getObjectParams = {
                             Bucket: bucketName,
-                            Key: `blog/${file.filename}`
+                            Key: `blog/${mainImage.filename}`
                         }
                         const command = new GetObjectCommand(getObjectParams);
                         const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
-                        file.file_url = url; //en el href blog.files[x].file_url
+                        blog.mainImageURL = url; //en el href product.files[x].file_url
                     }
-                }
+                };
+                // Acorto la descripcion
+                blog.cutDesc = cutDescription(blog.text);
             };
-
+            // return res.send(blogs)
             return res.render('blogList', { blogs })
         } catch (error) {
             console.log(`Falle en blogController.list: ${error}`);

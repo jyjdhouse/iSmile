@@ -16,21 +16,22 @@
             </div>
             <section class="blogs-container">
                 <div class="blogs-wrapper">
-                    <a href="/" class="blog-link">
-                        <article class="blog-card">
-                            <div class="blog-img-container">
-                                <img src="/img/estheticblog1.jpg" class="blog-image" alt="blog-image">
-                            </div>
-                            <div class="blog-info-container">
-                                <p class="blog-author-date">By I SMILE | Apr 21, 2023</p>
-                                <h3 class="blog-card-title">La Verdadera Belleza Es Cuando Te Pones A Quien Realmente
-                                    Sos💜</h3>
-                                <p class="blog-card-description">El momento para sentirte bien es AHORA . Dra. Inés Añó .
-                                    Gracias a todos nuestros pacientes por elegirnos y confiar en…</p>
-                            </div>
-                            <button class="blog-card-button">LEER MAS</button>
-                        </article>
-                    </a>
+                    <% blogs.forEach(blog => { %>
+                        <a href="/blog/<%= blog.id %>" class="blog-link">
+                            <article class="blog-card">
+                                <div class="blog-img-container">
+                                    <img src="<%= blog.mainImageURL %>" class="blog-image" alt="<%= blog.title %>-main-image">
+                                </div>
+                                <div class="blog-info-container">
+                                    <p class="blog-author-date">By <%= blog.author %> | Apr 21, 2023</p>
+                                    <h3 class="blog-card-title"><%= blog.title %></h3>
+                                    <p class="blog-card-description"><%= blog.cutDesc %></p>
+                                </div>
+                                <button class="blog-card-button">LEER MAS</button>
+                            </article>
+                        </a>
+                    <% }) %>
+                    
 
                     <a href="/" class="blog-link">
                         <article class="blog-card">

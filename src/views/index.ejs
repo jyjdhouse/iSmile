@@ -176,80 +176,22 @@
                 </div>
                 <div class="blogs-cards-container">
                     <div class="blog-group blog-group-active">
-                        <a href="/" class="blog-link index-blog">
+                        <% lastBlogs.forEach(blog=>{ %>
+                            <a href="/blog/<%= blog.id %>" class="blog-link index-blog">
                             <article class="blog-card">
                                 <div class="blog-img-container index-blog-img">
-                                    <img src="/img/estheticblog1.jpg" class="blog-image" alt="blog-image">
+                                    <img src="<%= blog.mainImageURL %>" class="blog-image" alt="<%= blog.title %>-main-image">
                                 </div>
                                 <div class="blog-info-container">
-                                    <p class="blog-author-date">By I SMILE | Apr 21, 2023</p>
-                                    <h3 class="blog-card-title">La Verdadera Belleza Es Cuando Te Pones A Quien Realmente
-                                        Sos💜</h3>
-                                    
+                                    <p class="blog-author-date">By <%= blog.author %> | Apr 21, 2023</p>
+                                    <h3 class="blog-card-title"><%= blog.title %></h3>
                                 </div>
                                 <button class="blog-card-button">LEER MAS</button>
                             </article>
                         </a>
-    
-                        <a href="/" class="blog-link index-blog">
-                            <article class="blog-card">
-                                <div class="blog-img-container index-blog-img">
-                                    <img src="/img/estheticblog2.jpg" class="blog-image" alt="blog-image">
-                                </div>
-                                <div class="blog-info-container ">
-                                    <p class="blog-author-date">By I SMILE | Apr 21, 2023</p>
-                                    <h3 class="blog-card-title">Lifting Líquido _ RADIESSE 🤩</h3>
-                                  
-                                </div>
-                                <button class="blog-card-button">LEER MAS</button>
-                            </article>
-                        </a>
-    
-                        <a href="/" class="blog-link index-blog">
-                            <article class="blog-card">
-                                <div class="blog-img-container index-blog-img">
-                                    <img src="/img/estheticblog3.jpg" class="blog-image" alt="blog-image">
-                                </div>
-                                <div class="blog-info-container">
-                                    <p class="blog-author-date">By I SMILE | Apr 21, 2023</p>
-                                    <h3 class="blog-card-title">DEFINICIÓN MANDIBULAR</h3>
-                                    
-                                </div>
-                                <button class="blog-card-button">LEER MAS</button>
-                            </article>
-                        </a>
+                        <% }) %>
                         
                     </div>
-                    <div class="blog-group blog-group-next">
-                        <article class="blog-card">
-                            <div class="card-overlay"></div>
-                            <img src="/img/estheticblog4.jpg" alt="blog-image" class="blog-img">
-                            <div class="blog-info">
-                                <p class="blog-title">MASCULINIZACIÓN FACIAL</p>
-                                <p class="blog-author">by Cherly Bentancourt</p>
-                                <p class="blog-date">Apr 21, 2023</p>
-                            </div>
-                        </article>
-                        <article class="blog-card">
-                            <div class="card-overlay"></div>
-                            <img src="/img/estheticblog5.jpg" alt="blog-image" class="blog-img">
-                            <div class="blog-info">
-                                <p class="blog-title">MASCULINIZACIÓN FACIAL</p>
-                                <p class="blog-author">by Ines Añó</p>
-                                <p class="blog-date">Mar 21, 2023</p>
-                            </div>
-                        </article>
-                        <article class="blog-card">
-                            <div class="card-overlay"></div>
-                            <img src="/img/estheticblog6.jpg" alt="blog-image" class="blog-img">
-                            <div class="blog-info">
-                                <p class="blog-title">Ácido Hialurónico Para #Ojeras</p>
-                                <p class="blog-author">by Ines Añó</p>
-                                <p class="blog-date">Mar 22, 2023</p>
-                            </div>
-                        </article>
-                    </div>
-
                 </div>
             </section>
 
