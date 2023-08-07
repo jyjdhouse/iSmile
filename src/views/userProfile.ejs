@@ -273,7 +273,7 @@
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <input type="date" name="birth_date"
-                                                value="<%= user.birth_date ? '2023-10-10' : null %>"
+                                                value="<%= user.birth_date ? user.birth_date : null %>"
                                                 placeholder="<%= !user.birth_date && 'Ingresar fecha de nacimiento'%>">
                                         </div>
                                     </li>
