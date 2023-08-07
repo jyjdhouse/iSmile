@@ -24,7 +24,7 @@
 }
 
 .gradient-border {
-    background: linear-gradient(to right, #663399, #cf74e6);
+    background: linear-gradient(to left, #663399, #cf74e6);
     position: absolute;
     width: 100%;
     bottom: 0;
