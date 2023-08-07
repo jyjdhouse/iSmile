@@ -319,7 +319,7 @@ const controller = {
                     id: blogId
                 }
             })
-            return res.redirect('/')
+            return res.redirect('/blog')
         } catch (error) {
             console.log(`Falle en blogController.delete: ${error}`);
             return res.json(error);
