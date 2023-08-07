@@ -171,11 +171,14 @@
     }
     .gallery-photo-section:hover>.change-gallery-photo-btn{
         opacity: 1;
+        transform: translateX(0);
     }
     .previous-photo-btn{
         left: 2%;
+        transform: translateX(-200%);
     }
     .next-photo-btn{
         right: 2%;
+        transform: translateX(200%);
     }
 }
