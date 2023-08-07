@@ -276,8 +276,8 @@ const controller = {
                     password_token: token
                 }
             });
-            // Si no encuentro usuario redirijo a la home TODO: 404
-            if (!userWithToken) return res.redirect('/');
+            // Si no encuentro usuario redirijo a la 404
+            if (!userWithToken) return res.render('error404');
             // Ahora me fijo si el token sigue siendo valido
             const decodedData = jwt.verify(token, secret);
             // Renderizar la página de cambio de contraseña
@@ -299,8 +299,8 @@ const controller = {
                     password_token: token
                 }
             });
-            // Si no encuentro usuario redirijo a la home TODO: 404
-            if (!userWithToken) return res.redirect('/');
+            // Si no encuentro usuario redirijo a la 404
+            if (!userWithToken) return res.render('error404');
             // Ahora me fijo si el token sigue siendo valido
             const decodedData = jwt.verify(token, secret);
 

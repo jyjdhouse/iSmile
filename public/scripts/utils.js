@@ -81,66 +81,6 @@ export async function addFilesToFormData(formData, fileInputs) {
     }
 };
 
-export async function addWishlistProduct(productId, colorId) {
-    const data = await getLoggedUser();
-    if (!data.userId) { //Si dio error el usuario
-        return data.meta.msg
-    }
-    // Armo el body
-    let body = {
-        userId: data.userId,
-        productId,
-        colorId
-    }
-    //Armo el fetch
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-    };
-
-    // Enviar la solicitud HTTP utilizando la API Fetch
-    fetch(`/api/product/addWishlistProduct`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-            return
-            // TODO: Con esta data crear un cartelito con el mensaje
-        })
-        .catch(error => console.log(error));
-};
-
-export async function removeWishlistProduct(productId, colorId) {
-    const data = await getLoggedUser();
-    if (!data.userId) { //Si dio error el usuario
-        return
-    }
-    // Armo el body
-    let body = {
-        userId: data.userId,
-        productId,
-        colorId
-    }
-    //Armo el fetch
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-    };
-
-    // Enviar la solicitud HTTP utilizando la API Fetch
-    fetch('/api/product/removeWishlistProduct', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-            return
-            // TODO: Con esta data crear un cartelito con el mensaje
-
-        })
-        .catch(error => console.log(error));
-};
 
 export async function getLoggedUser() {
     let response =  (await (await fetch(`/api/user/getLoggedUserId`)).json());

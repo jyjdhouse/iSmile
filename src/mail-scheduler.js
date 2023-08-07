@@ -1,18 +1,17 @@
 const cron = require('node-cron');
 const nodemailer = require('nodemailer');
-const getAllUsers = require('./utils/getAllUsers');
-const fs = require('fs');
 const path = require('path');
+const getAllUsers = require('./utils/getAllUsers');
 const getDeepCopy = require('./utils/getDeepCopy');
 const db = require('./database/models');
 const emailConfig = require('./utils/staticDB/mailConfig');
-const timePeriods = require('./utils/staticDB/timePeriods.js'); 
-// const timePeriods = {
-//   1: 1000 * 60 * 2, //2min
-//   2: 1000 * 60 * 5, //5min
-//   3: 1000 * 60 * 10, //10min
-//   4: 1000 * 60 * 15 //15min
-// }
+// const timePeriods = require('./utils/staticDB/timePeriods.js'); 
+const timePeriods = {
+  1: 1000 * 60 * 2, //2min
+  2: 1000 * 60 * 5, //5min
+  3: 1000 * 60 * 10, //10min
+  4: 1000 * 60 * 15 //15min
+}
 function updateType(type) {
   if (type) { //Si ya viene alguno, le retorno 1 mas
     return (parseInt(type) + 1).toString()
@@ -20,7 +19,7 @@ function updateType(type) {
   return '1'
 }
 // MANDA MAILS PERIODICAMENTE
-module.exports = cron.schedule('*/1 * * * *', async () => { 
+module.exports = cron.schedule('*/1 * * * *', async () => {
   function buildCartProductsEmail(user) {
     // Aca armo el array con nombre y foto del producto
     cartProducts = cartProducts?.map(prod => {
@@ -36,7 +35,7 @@ module.exports = cron.schedule('*/1 * * * *', async () => {
       // const imagePath = path.join(__dirname, '../public/img/' + prod.productImage);
       {/* <img src="${imagePath}" style="width: 100px; height: 100px;" alt="Imagen de producto"/> */ }
       tableContent +=
-            `
+        `
         <tr>
             <td style="width:50%;text-align:center;padding: 10px 0;">${prod.productName}</td>
             <td style="width:50%;text-align:center;padding: 10px 0;">$${prod.productPrice}</td>
@@ -45,8 +44,9 @@ module.exports = cron.schedule('*/1 * * * *', async () => {
     });
     const cartSubTotal = cartProducts.reduce((total, product) => total + product.productPrice, 0)
     let mailHTML = `
+    <img src="cid:galleryPhoto" id="mail-image" alt="mail-image" style="width:100%;height:35vh;object-fit:contain;">
     <p style="font-size:23px;width:100%;">¡Hola ${user.first_name}!</p><br>
-    <p>Hemos notado que dejaste algunos productos en tu carrito de compras en www.ismile.com.ar . ¡No te preocupes, todavía están disponibles! Si tienes alguna pregunta sobre los productos o necesitas ayuda para completar tu compra, no dudes en contactarnos.</p><br>
+    <p>Hemos notado que dejaste algunos productos en tu carrito de compras. ¡No te preocupes, todavía están disponibles! Si tienes alguna pregunta sobre los productos o necesitas ayuda para completar tu compra, no dudes en contactarnos.</p><br>
     <p>Haz clic en el siguiente enlace para volver a tu carrito y finalizar tu compra: <a href="https://ismile.com.ar/user/checkout">Ir al carro</a>.</p><br>
 
     <table style="width:100%;margin-bottom:30px;">
@@ -57,7 +57,7 @@ module.exports = cron.schedule('*/1 * * * *', async () => {
       ${tableContent}
     </table>
     <p style="font-size:22px;margin-top:20px;color:#222;">Subtotal: $${cartSubTotal}</p><br>
-    <p>Agradecemos tu interés en nuestros productos y esperamos verte pronto en www.ismile.com.ar.</p><br>
+    <p>Agradecemos tu interés en nuestros productos y esperamos verte pronto.</p><br>
     <p>¡Saludos cordiales!</p><br>
     <p>El Equipo de I Smile 💜.</p><br>
     `
@@ -70,7 +70,12 @@ module.exports = cron.schedule('*/1 * * * *', async () => {
       from: 'ismile@ismile.com.ar',
       to: user.email,
       subject: `💜No olvides tus productos en el carrito! 🛒`,
-      html: mailHTML
+      html: mailHTML,
+      attachments: [{
+        filename: 'mailPhoto.jpg',
+        path: __dirname + '/mailPhoto.jpg',
+        cid: 'galleryPhoto'
+      }],
     };
 
     // Envía el correo electrónico
@@ -179,7 +184,6 @@ module.exports = cron.schedule('*/1 * * * *', async () => {
     }
 
   }
-  console.log(idsToUpdate);
   // Una vez que hago esto con todos los usuarios, hago el bulkUpdate
   await db.User.bulkCreate(idsToUpdate, {
     updateOnDuplicate: ["cart_period_type", "last_cart_email"]

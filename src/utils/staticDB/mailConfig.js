@@ -7,6 +7,6 @@ module.exports = {
     secure: true, // Usar TLS o SSL (true para 465, false para 587)
     auth: {
       user: process.env.EMAIL_USER, // Tu dirección de correo electrónico
-      pass: process.env.EMAIL_PASSWORD + '#', // Tu contraseña de correo electrónico
+      pass: process.env.EMAIL_PASSWORD, // Tu contraseña de correo electrónico
     },
   };
