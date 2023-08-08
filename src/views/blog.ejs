@@ -4,10 +4,10 @@
 <head>
 
     <%- include('./partials/head.ejs') %>
-        <title>Blog <%= blog.id %>
-        </title>
+        <title><%= blog.title %></title>
         <link rel="stylesheet" href="/css/blog.css">
         <script src="/scripts/blog.js" type="module"></script>
+        <script src="/scripts/blogList.js" type="module"></script>
 </head>
 
 <body>
@@ -88,7 +88,7 @@
                                         <img src="<%= blog.mainImageURL %>" class="last-blog-image" alt="<%= blog.title %>-main-image">
                                     </div>
                                     <div class="last-blog-info-container">
-                                        <p class="last-blog-author-date">By <%= blog.author %> | Apr 21, 2023</p>
+                                        <p class="last-blog-author-date">By <%= blog.author %> | <span class="blog-date"><%= blog.createdAt %></span></p>
                                         <h3 class="last-blog-card-title"><%= blog.title %></h3>
                                         <p class="last-blog-card-description"><%= blog.cutDesc %></p>
                                     </div>
