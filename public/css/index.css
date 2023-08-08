@@ -451,11 +451,6 @@ video::-webkit-media-controls-time-remaining-display {
     color: #580846;
 }
 
-.blog-author,
-.blog-date {
-    width: fit-content;
-    color: black;
-}
 
 .blog-name {
     color: var(--violet-color);

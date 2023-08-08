@@ -32,6 +32,7 @@ const homePageLabels = require('../utils/staticDB/homePageLabels');
 const getSpecialtyService = require('../utils/getSpecialtyService');
 const orderMainImageFile = require('../utils/orderMainImageFile');
 const getAllUsers = require('../utils/getAllUsers.js');
+const cutDescription = require('../utils/cutDescription');
 
 const controller = {
     index: async (req, res) => {
@@ -200,7 +201,9 @@ const controller = {
                         const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                         blog.mainImageURL = url; //en el href product.files[x].file_url
                     }
-                }
+                };
+                // Acorto la descripcion
+                blog.cutDesc = cutDescription(blog.text,100);
 
             }
             // return res.send(lastBlogs)

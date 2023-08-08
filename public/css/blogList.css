@@ -95,7 +95,9 @@
     display: flex;
     align-items: center;
 }
-
+.index-blog .blog-card-title{
+    height: 30%;
+}
 .blog-card-description {
     color: #444;
     font-size: 12px;
@@ -136,7 +138,9 @@
     .blog-card-description {
         font-size: 1rem;
     }
-
+    .index-blog .blog-card-description{
+        font-size: .9rem;
+    }
     .blog-card-button {
         font-size: 12px;
     }
