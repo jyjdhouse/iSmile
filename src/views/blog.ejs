@@ -82,45 +82,19 @@
                     <section class="lastest-blogs-section bold">
                         <p class="lastest-blogs-title">Últimos Blogs</p>
                         <div class="lastest-blogs-cards-wrapper">
-                            <a href="/" class="last-blog-card">
-                                <div class="last-blog-img-container">
-                                    <img src="/img/estheticblog1.jpg" class="last-blog-image" alt="blog-image">
-                                </div>
-                                <div class="last-blog-info-container">
-                                    <p class="last-blog-author-date">By I SMILE | Apr 21, 2023</p>
-                                    <h3 class="last-blog-card-title">La Verdadera Belleza Es Cuando Te Pones A Quien Realmente
-                                        Sos💜</h3>
-                                    <p class="last-blog-card-description">El momento para sentirte bien es AHORA . Dra. Inés Añó .
-                                        Gracias a todos nuestros pacientes por elegirnos y confiar en…</p>
-                                </div>
-                                <button class="last-blog-card-button">LEER MAS</button>
-                            </a>
-                            <a href="/" class="last-blog-card">
-                                <div class="last-blog-img-container">
-                                    <img src="/img/estheticblog1.jpg" class="last-blog-image" alt="blog-image">
-                                </div>
-                                <div class="last-blog-info-container">
-                                    <p class="last-blog-author-date">By I SMILE | Apr 21, 2023</p>
-                                    <h3 class="last-blog-card-title">La Verdadera Belleza Es Cuando Te Pones A Quien Realmente
-                                        Sos💜</h3>
-                                    <p class="last-blog-card-description">El momento para sentirte bien es AHORA . Dra. Inés Añó .
-                                        Gracias a todos nuestros pacientes por elegirnos y confiar en…</p>
-                                </div>
-                                <button class="last-blog-card-button">LEER MAS</button>
-                            </a>
-                            <a href="/" class="last-blog-card">
-                                <div class="last-blog-img-container">
-                                    <img src="/img/estheticblog1.jpg" class="last-blog-image" alt="blog-image">
-                                </div>
-                                <div class="last-blog-info-container">
-                                    <p class="last-blog-author-date">By I SMILE | Apr 21, 2023</p>
-                                    <h3 class="last-blog-card-title">La Verdadera Belleza Es Cuando Te Pones A Quien Realmente
-                                        Sos💜</h3>
-                                    <p class="last-blog-card-description">El momento para sentirte bien es AHORA . Dra. Inés Añó .
-                                        Gracias a todos nuestros pacientes por elegirnos y confiar en…</p>
-                                </div>
-                                <button class="last-blog-card-button">LEER MAS</button>
-                            </a>
+                            <% lastBlogs.forEach(blog => { %>
+                                <a href="/blog/<%= blog.id %>" class="last-blog-card">
+                                    <div class="last-blog-img-container">
+                                        <img src="<%= blog.mainImageURL %>" class="last-blog-image" alt="<%= blog.title %>-main-image">
+                                    </div>
+                                    <div class="last-blog-info-container">
+                                        <p class="last-blog-author-date">By <%= blog.author %> | Apr 21, 2023</p>
+                                        <h3 class="last-blog-card-title"><%= blog.title %></h3>
+                                        <p class="last-blog-card-description"><%= blog.cutDesc %></p>
+                                    </div>
+                                    <button class="last-blog-card-button">LEER MAS</button>
+                                </a>
+                            <% }) %>
                         </div>
                     </section>
         </main>

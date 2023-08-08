@@ -68,6 +68,24 @@ const controller = {
                 limit: 3, //Solo 3
                 include: ['files']
             }));
+            for (let i = 0; i < lastBlogs.length; i++) {
+                const blog = lastBlogs[i];
+                if(blog.files.length){
+                    const mainImage = blog.files.find(file=>file.main_image);
+                    if(mainImage){
+                        const getObjectParams = {
+                            Bucket: bucketName,
+                            Key: `blog/${mainImage.filename}`
+                        }
+                        const command = new GetObjectCommand(getObjectParams);
+                        const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+                        blog.mainImageURL = url; //en el href product.files[x].file_url
+                    }
+                };
+                // Acorto la descripcion
+                blog.cutDesc = cutDescription(blog.text);
+                
+            }
             // si tiene archivos
             if (blog.files) {
                 for (let i = 0; i < blog.files.length; i++) {
