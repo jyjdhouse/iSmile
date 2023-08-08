@@ -1,4 +1,4 @@
-import { checkIfIsInScreen } from "./utils.js";
+import { checkIfIsInScreen, getPrettyDate } from "./utils.js";
 
 window.addEventListener('load', () => {
 
@@ -88,12 +88,8 @@ window.addEventListener('load', () => {
         }
     }
 
-    const date = new Date(blogDateCont.innerText)
-    const day = date.getDate();
-    const month = date.toLocaleString('es', { month: 'long' });
-    const year = date.getFullYear();
-
-    const fullDate = `${day} de ${month} del ${year}`
+    // Obtengo la fecha para mostrar
+    const fullDate = getPrettyDate(blogDateCont.innerText);
     blogDateCont.innerHTML = fullDate
 
     // LOGICA para hacer correr los videos

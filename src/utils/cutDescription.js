@@ -1,7 +1,6 @@
-const cutDescription = function (description) {
+const cutDescription = function (description,maxLength) {
     // Eliminar etiquetas <p> y </p> utilizando una expresión regular
     const descWithoutHTMLElements = description.replace(/<\/?p>/g, "");
-    const maxLength = 120
     const descriptionArray = descWithoutHTMLElements.split(" ");
     let result = "";
     let count = 0;

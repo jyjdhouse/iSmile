@@ -5,13 +5,13 @@ const getAllUsers = require('./utils/getAllUsers');
 const getDeepCopy = require('./utils/getDeepCopy');
 const db = require('./database/models');
 const emailConfig = require('./utils/staticDB/mailConfig');
-// const timePeriods = require('./utils/staticDB/timePeriods.js'); 
-const timePeriods = {
-  1: 1000 * 60 * 2, //2min
-  2: 1000 * 60 * 5, //5min
-  3: 1000 * 60 * 10, //10min
-  4: 1000 * 60 * 15 //15min
-}
+const timePeriods = require('./utils/staticDB/timePeriods.js');
+// const timePeriods = {
+//   1: 1000 * 60 * 2, //2min
+//   2: 1000 * 60 * 5, //5min
+//   3: 1000 * 60 * 10, //10min
+//   4: 1000 * 60 * 15 //15min
+// }
 function updateType(type) {
   if (type) { //Si ya viene alguno, le retorno 1 mas
     return (parseInt(type) + 1).toString()
@@ -19,7 +19,7 @@ function updateType(type) {
   return '1'
 }
 // MANDA MAILS PERIODICAMENTE
-module.exports = cron.schedule('*/1 * * * *', async () => {
+module.exports = cron.schedule('*/30 * * * *', async () => {
   function buildCartProductsEmail(user) {
     // Aca armo el array con nombre y foto del producto
     cartProducts = cartProducts?.map(prod => {
@@ -99,10 +99,10 @@ module.exports = cron.schedule('*/1 * * * *', async () => {
 
   // Voy por cada usuario, me fijo su wishListProducts y armo el mail
   let cartProducts;
-
+  // Esto es basicamente para no actualizar la db al pedo
+  let emailSent = false;
   for (let i = 0; i < users.length; i++) {
     user = users[i];
-
     //__________CART__________
     if (user.temporalCart) {
       // Filtro los cartProducts por los que siguen vigentes
@@ -120,7 +120,7 @@ module.exports = cron.schedule('*/1 * * * *', async () => {
         const actualTime = new Date(new Date().toISOString());
         // Aca me va a dar un numero en milisegundos
         let difference = actualTime - lastCartProductAdded;
-        let newType
+        let newType;
         //Me fijo en que momento de los mails se encuentra el usuario
         switch (user.cart_period_type) {
 
@@ -129,6 +129,7 @@ module.exports = cron.schedule('*/1 * * * *', async () => {
             // Me fijo si la diferencia supera 24hs (ms)
             if (difference >= timePeriods[2]) {//supero...
               buildCartProductsEmail(user); //Armo el email y lo mando
+              emailSent = true;
               user.last_cart_email = new Date()//hora actual
               //Actualizo el type
               newType = updateType(user.cart_period_type)
@@ -142,6 +143,7 @@ module.exports = cron.schedule('*/1 * * * *', async () => {
             // Me fijo si la diferencia supera 72hs (ms)
             if (difference >= timePeriods[3]) {//supero...
               buildCartProductsEmail(user); //Armo el email y lo mando
+              emailSent = true;
               user.last_cart_email = new Date()//hora actual
               //Actualizo el type
               newType = updateType(user.cart_period_type)
@@ -153,6 +155,7 @@ module.exports = cron.schedule('*/1 * * * *', async () => {
             // Me fijo si la diferencia supera 1w (ms)
             if (difference >= timePeriods[4]) {//supero...
               buildCartProductsEmail(user); //Armo el email y lo mando
+              emailSent = true;
               user.last_cart_email = new Date()//hora actual
               //Actualizo el type
               newType = updateType(user.cart_period_type)
@@ -168,6 +171,7 @@ module.exports = cron.schedule('*/1 * * * *', async () => {
             // Me fijo si la diferencia supera 1hs (ms)
             if (difference >= timePeriods[1]) {//supero...
               buildCartProductsEmail(user); //Armo el email y lo mando
+              emailSent = true;
               user.last_cart_email = new Date()//hora actual
               //Actualizo el type
               newType = updateType(user.cart_period_type)
@@ -184,8 +188,11 @@ module.exports = cron.schedule('*/1 * * * *', async () => {
     }
 
   }
-  // Una vez que hago esto con todos los usuarios, hago el bulkUpdate
-  await db.User.bulkCreate(idsToUpdate, {
-    updateOnDuplicate: ["cart_period_type", "last_cart_email"]
-  });
+  if (emailSent) { //Si se mando algun email ahi solo actualizo la db
+    // Una vez que hago esto con todos los usuarios, hago el bulkUpdate
+    await db.User.bulkCreate(idsToUpdate, {
+      updateOnDuplicate: ["cart_period_type", "last_cart_email"]
+    });
+  }
+
 });

@@ -1,4 +1,3 @@
-import { activateClass, changeCartProductDimension, changeWishlistProductDimension, deactivateClass } from './utils.js';
 window.addEventListener('load', () => {
     
     // window.scrollTo(0,0);

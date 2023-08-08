@@ -11,187 +11,89 @@
 
 <body>
 
-    <%-  include('./partials/header.ejs') %> 
+    <%- include('./partials/header.ejs') %>
 
-    <main class="service-detail-main">
-        <div class="service-detail-content-container">
-            <div class="service-detail-title-container">
-                <div class="service-title-info-container">
-                    <h1 class="service-detail-title page-title bold"><%= title %></h1>
-                    <% if(service && service.description) { %>
-                    <p><%= service.description %></p>    
-                    <%} %> 
-                   
-                </div>
-                
-            </div>
-            
-            <div class="service-detail-cards-container">
-
-                
-          <% services.forEach((treatment,i) => { %>
-            <article class="service-detail-card">
-                    <div class="service-card-img-container">
-                        <img src="<%= treatment.file_url ? treatment.file_url : '/img/default.png'%>" alt="<%= treatment.filename %>" class="service-card-img">
-                    </div>
-                    <div class="service-info-title">
-                        <h2> <%= treatment.name %> </h2>
-                        <i class='bx bx-plus open-dropdown icon-active'></i>
-                        <i class='bx bx-minus close-dropdown icon-inactive'></i>
-                    </div>
-
-                    <div class="servicio-dropdown">
-                        <p><%= treatment.description %></p>
-                        <div class="service-time">
-                            <div class="service-time-container">
-                                <p>Tiempo de aplicación</p>
-                                <p><%= treatment.application_time %></p>
+        <main class="service-detail-main">
+            <div class="service-detail-content-container">
+                <div class="service-detail-title-container">
+                    <img src="<%= service.file_url || '/img/servicesdetailbackground.jpg' %>" alt="service-image">
+                    <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                    locals.userLogged.user_categories_id==2)) { %>
+                    <form class="edit-file-overlay" method="POST"
+                        action='/updateServiceFile?_method=PUT' enctype="multipart/form-data">
+                        <div class="edit-file-buttons-container">
+                            <div class="change-image-btn-container action-container">
+                                <i class='bx bx-pencil change-image-btn'></i><br>
                             </div>
-                            <div class="service-time-container">
-                                <p>Tiempo de duración</p>
-                                <p><%= treatment.duration %></p>
+                            <label for="service-img" class="service-input-file-label  action-container"><i class='bx bx-image-alt' ></i></label>
+                            <div class="cancel-file-action  action-container">
+                                <i class='bx bx-x'></i>
                             </div>
+                            <input type="file" accept="image/*" name="serviceFile" id="service-img"
+                                class="edit-file-input hidden">
+                            <button type="submit" class="confirm-instagram-file-btn  action-container"><i class='bx bx-check'></i></button>
                         </div>
-                    </div>
-
-                </article>
-        <% }) %>
-
-             <!--    <article class="service-detail-card">
-                    <div class="service-card-img-container">
-                        <img src="/img/blog2.png" alt="Servicios" class="service-card-img">
-                    </div>
-                    <div class="service-info-title">
-                        <h2>Titulo</h2>
-                        <i class='bx bx-plus open-dropdown icon-active'></i>
-                        <i class='bx bx-minus close-dropdown icon-inactive'></i>
-                    </div>
-
-                    <div class="servicio-dropdown">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore nesciunt officiis quasi!
-                            Officiis totam similique itaque expedita accusamus, aperiam harum quas sunt nobis.
-                            Voluptatibus provident, exercitationem ex veniam nisi atque!</p>
-                        <div class="service-time">
-                            <p>Tiempo de aplicación</p>
-                            <p>30 min</p>
-                        </div>
-                    </div>
-
-                </article>
-                <article class="service-detail-card">
-                    <div class="service-card-img-container">
-                        <img src="/img/blog2.png" alt="Servicios" class="service-card-img">
-                    </div>
-                    <div class="service-info-title">
-                        <h2 class="page-title">Titulo</h2>
-                        <i class='bx bx-plus open-dropdown icon-active'></i>
-                        <i class='bx bx-minus close-dropdown icon-inactive'></i>
-                    </div>
-
-                    <div class="servicio-dropdown">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore nesciunt officiis quasi!
-                            Officiis totam similique itaque expedita accusamus, aperiam harum quas sunt nobis.
-                            Voluptatibus provident, exercitationem ex veniam nisi atque!</p>
-                        <div class="service-time">
-                            <p>Tiempo de aplicación</p>
-                            <p>30 min</p>
-                        </div>
-                    </div>
-
-                </article>
-                <article class="service-detail-card">
-                    <div class="service-card-img-container">
-                        <img src="/img/blog2.png" alt="Servicios" class="service-card-img">
-                    </div>
-                    <div class="service-info-title">
-                        <h2>Titulo</h2>
-                        <i class='bx bx-plus open-dropdown icon-active'></i>
-                        <i class='bx bx-minus close-dropdown icon-inactive'></i>
-                    </div>
-
-                    <div class="servicio-dropdown">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore nesciunt officiis quasi!
-                            Officiis totam similique itaque expedita accusamus, aperiam harum quas sunt nobis.
-                            Voluptatibus provident, exercitationem ex veniam nisi atque!</p>
-                        <div class="service-time">
-                            <p>Tiempo de aplicación</p>
-                            <p>30 min</p>
-                        </div>
-                    </div>
-
-                </article>
-                <article class="service-detail-card">
-                    <div class="service-card-img-container">
-                        <img src="/img/blog2.png" alt="Servicios" class="service-card-img">
-                    </div>
-                    <div class="service-info-title">
-                        <h2>Titulo</h2>
-                        <i class='bx bx-plus open-dropdown icon-active'></i>
-                        <i class='bx bx-minus close-dropdown icon-inactive'></i>
-                    </div>
-
-                    <div class="servicio-dropdown">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore nesciunt officiis quasi!
-                            Officiis totam similique itaque expedita accusamus, aperiam harum quas sunt nobis.
-                            Voluptatibus provident, exercitationem ex veniam nisi atque!</p>
-                        <div class="service-time">
-                            <p>Tiempo de aplicación</p>
-                            <p>30 min</p>
-                        </div>
-                    </div>
-
-                </article>
-                <article class="service-detail-card">
-                    <div class="service-card-img-container">
-                        <img src="/img/blog2.png" alt="Servicios" class="service-card-img">
-                    </div>
-                    <div class="service-info-title">
-                        <h2>Titulo</h2>
-                        <i class='bx bx-plus open-dropdown icon-active'></i>
-                        <i class='bx bx-minus close-dropdown icon-inactive'></i>
-                    </div>
-
-                    <div class="servicio-dropdown">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore nesciunt officiis quasi!
-                            Officiis totam similique itaque expedita accusamus, aperiam harum quas sunt nobis.
-                            Voluptatibus provident, exercitationem ex veniam nisi atque!</p>
-                        <div class="service-time">
-                            <p>Tiempo de aplicación</p>
-                            <p>30 min</p>
-                        </div>
-                    </div>
-
-                </article>
-                <article class="service-detail-card">
-                    <div class="service-card-img-container">
-                        <img src="/img/blog2.png" alt="Servicios" class="service-card-img">
-                    </div>
-                    <div class="service-info-title">
-                        <h2>Titulo</h2>
-                        <i class='bx bx-plus open-dropdown icon-active'></i>
-                        <i class='bx bx-minus close-dropdown icon-inactive'></i>
-                    </div>
-
-                    <div class="servicio-dropdown">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore nesciunt officiis quasi!
-                            Officiis totam similique itaque expedita accusamus, aperiam harum quas sunt nobis.
-                            Voluptatibus provident, exercitationem ex veniam nisi atque!</p>
-                        <div class="service-time">
-                            <p>Tiempo de aplicación</p>
-                            <p>30 min</p>
-                        </div>
-                    </div>
-
-                </article>
-
- -->
-        
+                    </form>
+                    <% } %>
                     
-            
+                    <div class="service-title-info-container">
+                        <h1 class="service-detail-title page-title bold">
+                            <%= title %>
+                        </h1>
+                        <% if(service && service.description) { %>
+                            <p>
+                                <%= service.description %>
+                            </p>
+                        <%} %>
+
+                    </div>
+
+                </div>
+
+                <div class="service-detail-cards-container">
+
+
+                    <% services.forEach((treatment,i)=> { %>
+                        <article class="service-detail-card">
+                            <div class="service-card-img-container">
+                                <img src="<%= treatment.file_url ? treatment.file_url : '/img/default.png'%>"
+                                    alt="<%= treatment.filename %>" class="service-card-img">
+                            </div>
+                            <div class="service-info-title">
+                                <h2>
+                                    <%= treatment.name %>
+                                </h2>
+                                <i class='bx bx-plus open-dropdown icon-active'></i>
+                                <i class='bx bx-minus close-dropdown icon-inactive'></i>
+                            </div>
+
+                            <div class="servicio-dropdown">
+                                <p>
+                                    <%= treatment.description %>
+                                </p>
+                                <div class="service-time">
+                                    <div class="service-time-container">
+                                        <p>Tiempo de aplicación</p>
+                                        <p>
+                                            <%= treatment.application_time %>
+                                        </p>
+                                    </div>
+                                    <div class="service-time-container">
+                                        <p>Tiempo de duración</p>
+                                        <p>
+                                            <%= treatment.duration %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </article>
+                        <% }) %>
+
+                </div>
             </div>
-        </div>
-    </main>
-    <%- include('./partials/footer.ejs') %>
+        </main>
+        <%- include('./partials/footer.ejs') %>
 </body>
 
 </html>

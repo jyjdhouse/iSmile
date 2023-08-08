@@ -48,7 +48,7 @@ const controller = {
                     }
                 };
                 // Acorto la descripcion
-                blog.cutDesc = cutDescription(blog.text);
+                blog.cutDesc = cutDescription(blog.text,120);
             };
             // return res.send(blogs)
             return res.render('blogList', { blogs })
@@ -69,9 +69,9 @@ const controller = {
                 include: ['files']
             }));
             for (let i = 0; i < lastBlogs.length; i++) {
-                const blog = lastBlogs[i];
-                if(blog.files.length){
-                    const mainImage = blog.files.find(file=>file.main_image);
+                const lastBlog = lastBlogs[i];
+                if(lastBlog.files.length){
+                    const mainImage = lastBlog.files.find(file=>file.main_image);
                     if(mainImage){
                         const getObjectParams = {
                             Bucket: bucketName,
@@ -79,11 +79,11 @@ const controller = {
                         }
                         const command = new GetObjectCommand(getObjectParams);
                         const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
-                        blog.mainImageURL = url; //en el href product.files[x].file_url
+                        lastBlog.mainImageURL = url; //en el href product.files[x].file_url
                     }
                 };
                 // Acorto la descripcion
-                blog.cutDesc = cutDescription(blog.text);
+                lastBlog.cutDesc = cutDescription(lastBlog.text,120);
                 
             }
             // si tiene archivos

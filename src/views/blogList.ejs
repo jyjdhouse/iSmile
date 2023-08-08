@@ -4,7 +4,7 @@
 <head>
     <%- include('./partials/head.ejs') %>
         <link rel="stylesheet" href="./css/blogList.css">
-        <!-- <script type="module" src="./scripts/indexScript.js"></script> -->
+        <script type="module" src="./scripts/blogList.js"></script>
         <title>Blogs</title>
 </head>
 
@@ -23,7 +23,7 @@
                                     <img src="<%= blog.mainImageURL %>" class="blog-image" alt="<%= blog.title %>-main-image">
                                 </div>
                                 <div class="blog-info-container">
-                                    <p class="blog-author-date">By <%= blog.author %> | Apr 21, 2023</p>
+                                    <p class="blog-author-date">By <%= blog.author %> | <span class="blog-date"><%= blog.createdAt %></span></p>
                                     <h3 class="blog-card-title"><%= blog.title %></h3>
                                     <p class="blog-card-description"><%= blog.cutDesc %></p>
                                 </div>

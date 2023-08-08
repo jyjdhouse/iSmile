@@ -1,5 +1,5 @@
 
-import { activateClass, deactivateClass, getDeepCopy } from './utils.js';
+import { deactivateClass } from './utils.js';
 
 window.addEventListener('load', async () => {
     try {

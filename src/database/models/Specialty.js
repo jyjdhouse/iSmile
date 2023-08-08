@@ -8,7 +8,7 @@ module.exports = (sequelize, dataTypes) => {
             autoIncrement: true
         },
         name: { type: dataTypes.STRING(255) },
-        src: { type: dataTypes.TEXT },
+        filename: { type: dataTypes.TEXT },
         
     }
 

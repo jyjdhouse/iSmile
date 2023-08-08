@@ -9,7 +9,8 @@ module.exports = (sequelize, dataTypes) => {
         },
         name: { type: dataTypes.STRING(255) },
         description: { type: dataTypes.TEXT },
-        specialties_id: { type: dataTypes.INTEGER }
+        specialties_id: { type: dataTypes.INTEGER },
+        filename: { type: dataTypes.TEXT },
         
     }
 

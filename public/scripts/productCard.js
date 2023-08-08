@@ -97,7 +97,7 @@ window.addEventListener('load', async () => {
 
         function paintShoppingCartPopup(card) {
             let productSelectedCard = document.querySelector('.product-selected-card');
-            let imagePath = card.querySelector('.product-image-test-active')?.src||
+            let imagePath = card.querySelectorAll('.product-image-test')[0]?.src||
             card.querySelector('.main-img')?.src || '/img/product/default.png';
             let productName = card.querySelector('.product-name').innerHTML;
             let productPrice = card.querySelector('.product-price').innerHTML;

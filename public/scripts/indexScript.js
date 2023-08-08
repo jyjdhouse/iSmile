@@ -5,9 +5,11 @@ window.addEventListener('unload', () => {
 });
 window.addEventListener('load', () => {
     window.scrollTo(0, 0);
-    let video = document.querySelector('.video');
-    video.muted = true
-    video.play();
+    let videos = document.querySelectorAll('.video');
+    videos.forEach(video => {
+        video.muted = true;
+        video.play();    
+    });
 
     // Función que se ejecutará cuando se haga scroll
     function detectarElementoEnPantalla(e, element) {

@@ -1,5 +1,45 @@
-
-
+/* PARA EL EDIT */
+.edit-file-overlay{
+    position: absolute;
+    left: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.action-container{
+    /* padding: 5px; */
+    font-size: 25px;
+    background: #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .4s ease;
+    border: none;
+    z-index: 1;
+    position: relative;
+}
+.change-image-btn-container{
+    z-index: 10;
+}
+.action-container:hover{
+    background-color: #ddd;
+}
+.service-input-file-label{
+    transform: translateY(-100%);
+}
+.cancel-file-action{
+    transform: translateY(-200%);
+}
+.confirm-instagram-file-btn{
+    transform: translateY(-300%);
+}
+.edit-file-overlay-active .action-container{
+    transform: translateY(0);
+}
+/*  */
 .service-detail-main {
     margin-top: 12vh;
     width: 100%;
@@ -13,13 +53,17 @@
     justify-content: center;
     margin-bottom: 15vh;
     text-align: center;
-    background-image: url('/img/servicesdetailbackground.jpg');
-    background-position: center;
-    background-size: cover;
     height: 350px;
     position: relative;
 }
-
+.service-detail-title-container img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+}
 .service-title-info-container {
     position: absolute;
     width: 300px;

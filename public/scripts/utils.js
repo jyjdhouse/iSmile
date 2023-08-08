@@ -1,10 +1,3 @@
-export function activateClass(array) {
-    //El array que llegan son los nombres de las clases de las funciónes
-    // a las cuales quiero agregar el '#nombreClase-active'
-    array.forEach(element => {
-        document.querySelector(`.${element}`).classList.add(`${element}-active`);
-    });
-}
 export function deactivateClass(array) {
     //El array que llegan son los nombres de las clases de las funciónes
     // a las cuales quiero agregar el '#nombreClase-active'
@@ -13,134 +6,9 @@ export function deactivateClass(array) {
     });
 }
 
-export function changeCartProductDimension() {
-    const productCards = document.querySelectorAll('.cart-product-card');
-    // Le saco la clase multiple por las dudas que no haya 2
-    document.querySelector('.cart-products-section').classList.remove('multiple-cart-products-section');
-    productCards.forEach(card => {
-        card.classList.remove('two-products');
-        card.classList.remove('multiple-products');
-    });
-
-    if (productCards.length < 3) { //Menos de 3 productos
-        if (productCards.length == 2) {
-            productCards.forEach(card => {
-                card.classList.add('two-products');
-            });
-        }
-        if (productCards.length == 0) {
-            document.querySelector('.cart-products-section').innerHTML =
-                `<p class ="no-items-msg">No tienes productos en el carro</p>`;
-        }
-    } else {//3 o mas productos
-        document.querySelector('.cart-products-section').classList.add('multiple-cart-products-section');
-        productCards.forEach(card => {
-            card.classList.add('multiple-products');
-        });
-    }
-}
-
-export function changeWishlistProductDimension() {
-    const productCards = document.querySelectorAll('.wishlist-product-card');
-    // Le saco la clase multiple por las dudas que no haya 2
-    document.querySelector('.wishlist-products-section').classList.remove('multiple-wishlist-products-section');
-    productCards.forEach(card => {
-        card.classList.remove('two-products');
-        card.classList.remove('multiple-products');
-    });
-
-    if (productCards.length < 3) { //Menos de 3 productos
-        if (productCards.length == 2) {
-            productCards.forEach(card => {
-                card.classList.add('two-products');
-            });
-        }
-        if (productCards.length == 0) {
-            document.querySelector('.wishlist-products-section').innerHTML =
-                `<p class ="no-items-msg">No tienes productos en tu wishlist</p>`;
-        }
-    } else {//3 o mas productos
-        document.querySelector('.wishlist-products-section').classList.add('multiple-wishlist-products-section');
-        productCards.forEach(card => {
-            card.classList.add('multiple-products');
-        });
-    }
-}
-
-export async function addFilesToFormData(formData, fileInputs) {
-    // Itero sobre cada uno
-    for (let i = 0; i < fileInputs.length; i++) {
-        const input = fileInputs[i];
-        // Capturo el color_id de ese input
-        const inputColorId = input.dataset.colorid;
-        // Agarro todos los files asociados a ese input
-        const files = input.files;
-        for (let j = 0; j < files.length; j++) {
-            formData.append(inputColorId, files[j]);
-        }
-    }
-};
-
-
 export async function getLoggedUser() {
     let response =  (await (await fetch(`/api/user/getLoggedUserId`)).json());
     return response.ok ? response : undefined;
-};
-
-export async function printWishlistProducts() {
-    const data = await getLoggedUser();
-    if (!data.userId) { //Si dio error el usuario
-        return
-    }
-    const userId = data.userId;
-    //Armo el fetch
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userId })
-    };
-    // Enviar la solicitud HTTP utilizando la API Fetch
-    let response = (await (await fetch('/api/product/getWishedProducts', requestOptions)).json());
-    let wishedProducts = response.userWishlistProducts;
-    // return console.log(response);
-    const wishlistProductsSection = document.querySelector('.wishlist-products-section');
-    wishlistProductsSection ? wishlistProductsSection.innerHTML = '' : null;
-    wishedProducts.forEach(prod => {
-        const filename = (prod.wishedProduct.files.find(img => img.colors_id == prod.wishedProductColor.id)).filename;
-        wishlistProductsSection ? wishlistProductsSection.innerHTML +=
-            `
-        <div class="wishlist-product-card" data-colorid="${prod.wishedProductColor.id}" data-productid="${prod.wishedProduct.id}">
-                <div class="wishlist-product-img-container">
-                    <img src="/img/${filename}" alt="product-image" class="wishlist-product-selected-img">
-                </div>
-                <div class="wishlist-product-selected-info-qty-container">
-                    <div class="wishlist-product-selected-name-remove-container">
-                        <p class="wishlist-product-selected-name">${prod.wishedProduct.name}</p>
-                        <button class="wishlist-product-selected-remove-btn"><i class='bx bx-x remove-wishlist-product-btn'></i>
-                        </button>
-                    </div>
-                    
-                    <div class="quick-add-bag-container">
-                        <p class="wishlist-product-selected-color-size">${prod.wishedProductColor.name}</p>
-                        <i class='bx bx-shopping-bag quick-add-bag-button'></i>
-                        <ul class="wishlist-quick-add-sizes-list">
-                            <li class="wishlist-quick-add-size">XS</li>
-                            <li class="wishlist-quick-add-size">S</li>
-                            <li class="wishlist-quick-add-size">M</li>
-                            <li class="wishlist-quick-add-size">L</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="wishlist-product-selected-quantity-container">
-                        <p class="total">US$ ${prod.wishedProduct.price}</p>
-                    </div>
-                </div>
-            </div>
-        ` : null;
-    })
-
 };
 
 export function getDeepCopy(arg) {
@@ -167,24 +35,6 @@ export function adaptProductsToBeListed(products) {
         })
     });
     return products
-}
-
-
-export function clearQuickActions(container) { //Vuelve las quickAction del container a predeterminadas
-    container?.querySelector('.product-quick-actions-container')?.classList.remove(`product-quick-actions-container-active`)
-    container?.querySelector('.quick-cart-container')?.classList.remove('quick-cart-container-active');
-    container?.querySelector('.quick-fav-container')?.classList.remove('quick-fav-container-active');
-    container?.querySelector('.quick-sizes-container')?.classList.remove('quick-sizes-container-active');
-    removeSizesBtnsListener();//Esta función es para sacrle el eventListener
-}
-
-export function disableAllPopups(exception) {
-    // desabilita todos los popUps, excepto el que se pasa por argumento
-    const popups = document.querySelectorAll('.popup');
-    popups.forEach(elem => {
-        const className = elem.classList[0];
-        elem.classList.remove(`${className}-active`)
-    })
 }
 
 //Se fija si aparece en pantalla para poder hace algo
@@ -395,4 +245,26 @@ export function checkIfProductIsInCartDetail() {
         productCard.querySelector('.quick-add-cart-btn').classList.add('hidden');
         productCard.querySelector('.remove-cart-product').classList.remove('hidden');
     }
+}
+
+// Recibe fecha de DB y devuelve 15 de agosto de 2021
+export function getPrettyDate(dbDate){
+    const date = new Date(dbDate);
+    
+    const day = date.getDate();
+    const month = date.toLocaleString('es', { month: 'long' });
+    const year = date.getFullYear();
+
+    return `${day} de ${month} del ${year}`
+};
+// Recibe fecha de DB y devuelve ago 15, 2023
+export function getPrettyDateReversed(dbDate){
+    const date = new Date(dbDate);
+    
+    const day = date.getDate();
+    let month = date.toLocaleString('es', { month: 'short' });
+    month = month.charAt(0).toUpperCase() + month.slice(1); //Primer letra en mayuscula
+    const year = date.getFullYear();
+
+    return `${month} ${day}, ${year}`
 }

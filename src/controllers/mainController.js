@@ -185,13 +185,13 @@ const controller = {
             const lastBlogs = getDeepCopy(await db.Blog.findAll({
                 order: [['createdAt', 'DESC']],
                 limit: 3,
-                include:['files']
+                include: ['files']
             }));
             for (let i = 0; i < lastBlogs.length; i++) {
                 const blog = lastBlogs[i];
-                if(blog.files.length){
-                    const mainImage = blog.files.find(file=>file.main_image);
-                    if(mainImage){
+                if (blog.files.length) {
+                    const mainImage = blog.files.find(file => file.main_image);
+                    if (mainImage) {
                         const getObjectParams = {
                             Bucket: bucketName,
                             Key: `blog/${mainImage.filename}`
@@ -201,7 +201,7 @@ const controller = {
                         blog.mainImageURL = url; //en el href product.files[x].file_url
                     }
                 }
-                
+
             }
             // return res.send(lastBlogs)
             // return res.send({ productsInDb, productsGroupDesktop, productsGroupMobile });
@@ -231,25 +231,52 @@ const controller = {
         try {
             const specialtyId = req.params.specialtyId;
             const serviceSpecialtyId = req.params.specialtyServiceId;
-            let service;
+            let service, treatments, title;
 
 
-            if (serviceSpecialtyId) {
-                service = await db.SpecialtyService.findByPk(serviceSpecialtyId)
+            if (serviceSpecialtyId) { //Si es una subcategoria
+                // Busco el servicio de esa especialidad (necesito el filename)
+                service = getDeepCopy(await db.SpecialtyService.findByPk(serviceSpecialtyId));
+                if (service.filename) {//Si tiene archivo
+                    const getObjectParams = {
+                        Bucket: bucketName,
+                        Key: `service/${service.filename}`
+                    }
+                    const command = new GetObjectCommand(getObjectParams);
+                    const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min;
+                    service.file_url = url;
+                }
+                // Obtengo solo los treatments que corresponde
+                treatments = getDeepCopy(await db.Treatment.findAll({
+                    where: {
+                        specialties_id: specialtyId,
+                        specialties_services_id: serviceSpecialtyId
+                    }
+                }));
+                // Agarro el titulo correspondiente
+                title = specialties_services.find(serv => serv.id == serviceSpecialtyId).name;
+            } else { //Esto es cuando viene de una especialidad puntual (sin subcategoria)
+                // Aca service es la especialidad
+                service = getDeepCopy(await db.Specialty.findByPk(specialtyId));
+                if (service.filename) {//Si tiene archivo
+                    const getObjectParams = {
+                        Bucket: bucketName,
+                        Key: `service/${service.filename}`
+                    }
+                    const command = new GetObjectCommand(getObjectParams);
+                    const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min;
+                    service.file_url = url;
+                }
+                // Obtengo solo los treatments que corresponde
+                treatments = getDeepCopy(await db.Treatment.findAll({
+                    where: {
+                        specialties_id: specialtyId,
+                    }
+                }));
+                // Agarro el titulo correspondiente
+                title = specialties.find(spec => spec.id == specialtyId).name;;
             }
 
-
-            let title;
-            let treatments = getDeepCopy(await db.Treatment.findAll());
-            treatments = treatments.filter(treatment => {
-                if (serviceSpecialtyId) {
-                    title = specialties_services.find(serv => serv.id == serviceSpecialtyId).name;
-                    return treatment.specialties_id == specialtyId && treatment.specialties_services_id == serviceSpecialtyId;
-                }
-                title = specialties.find(spec => spec.id == specialtyId).name;
-                // Sino son los que no tienen subcategoria
-                return treatment.specialties_id == specialtyId
-            });
             // Para obtener las url
             // return res.se
             for (let index = 0; index < treatments.length; index++) {
@@ -264,7 +291,7 @@ const controller = {
                     treatment.file_url = url;
                 };
             };
-            // return res.send(treatments);
+            // return res.send({treatments,service});
             return res.render('serviceDetail', { services: treatments, title, service })
         } catch (error) {
             console.log(`Falle en mainController.serviceDetail: ${error}`);
@@ -293,7 +320,7 @@ const controller = {
             // PARA AWS
             if (fileType == 1) {//FOTO
                 // Creo el nombre unico para la foto (dentro del forEach)
-                randomName = 'homeFile' + Math.random().toString(36).substring(2, 2 + 10) + '.webp';
+                randomName = 'homeFile-' + Math.random().toString(36).substring(2, 2 + 10) + '.webp';
                 // Cambio el formato a webp y redimensiono la imagen, total la de los productos 
                 //  no se necesita tan gde      .resize({ height: 1920, width: 1080, fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
                 buffer = await sharp(file.buffer).toFormat('webp').toBuffer();
@@ -339,6 +366,73 @@ const controller = {
             return res.redirect('/');
         } catch (error) {
             console.log(`Falle en mainController.updateHomeFile: ${error}`);
+            return res.json({ error })
+        }
+    },
+    updateServiceFile: async (req, res) => {
+        try {
+            let specialtyId = req.body.specialtyId;
+            let specialtyServiceId = req.body.specialtyServiceId;
+            // return res.send({body:req.body,file:req.file});
+            const file = req.file;
+            const fileType = file.mimetype.startsWith('video/') ? 2 : 1;;
+            if (fileType == 2) return res.reditect('/');
+            let randomName, buffer;
+
+            // PARA AWS
+
+            // Creo el nombre unico para la foto (dentro del forEach)
+            randomName = 'serviceFile-' + Math.random().toString(36).substring(2, 2 + 10) + '.webp';
+            // Cambio el formato a webp y redimensiono la imagen, total la de los productos 
+            //  no se necesita tan gde      .resize({ height: 1920, width: 1080, fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
+            buffer = await sharp(file.buffer).toFormat('webp').toBuffer();
+            // Lo unico que hago es rescribir la imagen que ya estaba   
+            let params = {
+                Bucket: bucketName,
+                Key: `service/${randomName}`,//Esto hace que se guarde en la carpeta homePage, y que sobreEscriba a la foto vieja
+                Body: buffer,
+                ContentType: file.mimetype
+            };
+            let command = new PutObjectCommand(params);
+            await s3.send(command);
+            // Ahora tengo que borrar lo viejo en AWS
+            if (specialtyServiceId) {//Si entra es que es una subCategoria ==> Modifico la tabla de subcat
+                let fileToRemove = (await db.SpecialtyService.findByPk(specialtyServiceId));
+                params = {
+                    Bucket: bucketName,
+                    Key: `service/${fileToRemove.filename}`,
+                };
+                command = new DeleteObjectCommand(params);
+                await s3.send(command);
+                // Actualizo en la db
+                await db.SpecialtyService.update({
+                    filename: randomName
+                }, {
+                    where: {
+                        id: specialtyServiceId
+                    }
+                });
+                return res.redirect(`/servicios/${specialtyId}/${specialtyServiceId}`);
+            }
+            let fileToRemove = (await db.Specialty.findByPk(specialtyId));
+            params = {
+                Bucket: bucketName,
+                Key: `service/${fileToRemove.filename}`,
+            };
+            command = new DeleteObjectCommand(params);
+            await s3.send(command);
+            // Actualizo en la db
+            await db.Specialty.update({
+                filename: randomName
+            }, {
+                where: {
+                    id: specialtyId
+                }
+            });
+            return res.redirect(`/servicios/${specialtyId}`);
+
+        } catch (error) {
+            console.log(`Falle en mainController.updateServiceFile: ${error}`);
             return res.json({ error })
         }
     },
