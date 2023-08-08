@@ -13,7 +13,6 @@ const provinces = Array.from(document.querySelectorAll('#billing_province option
 checkIfCartIsEmpty();
 function checkIfCartIsEmpty(){
     const cartLength = document.querySelectorAll('.product-card').length;
-    console.log(cartLength);
     if(cartLength==0){
         productCardWrapper.innerHTML = `<p class="no-products-msg">No tienes productos en el carro</p>`;
         document.querySelector('.start-buy-button').classList.add('disabled')
@@ -599,7 +598,11 @@ async function checkForUserLogged() {
         let userLogged = window.userLogged;
         // Si hay usuario en session, se deja como esta
         if (userLogged) return;
-        
+        const params = new URLSearchParams(window.location.search);
+        // si viene del mail y no esta logueado entonces lo llevo al login directo
+        if(params.get('fromEmail')){
+            return window.location.href = '/user/login'
+        }
         // Si no hay, tengo que pintar el carro con el localStorage
         let localStorageCart = JSON.parse(localStorage.getItem('temporalCart'));
         // Ordeno el carro de ultimo a primero (antiguedad mas reciente)

@@ -47,7 +47,7 @@ module.exports = cron.schedule('*/30 * * * *', async () => {
     <img src="cid:galleryPhoto" id="mail-image" alt="mail-image" style="width:100%;height:35vh;object-fit:contain;">
     <p style="font-size:23px;width:100%;">¡Hola ${user.first_name}!</p><br>
     <p>Hemos notado que dejaste algunos productos en tu carrito de compras. ¡No te preocupes, todavía están disponibles! Si tienes alguna pregunta sobre los productos o necesitas ayuda para completar tu compra, no dudes en contactarnos.</p><br>
-    <p>Haz clic en el siguiente enlace para volver a tu carrito y finalizar tu compra: <a href="https://ismile.com.ar/user/checkout">Ir al carro</a>.</p><br>
+    <p>Haz clic en el siguiente enlace para volver a tu carrito y finalizar tu compra: <a href="https://ismile.com.ar/user/checkout?fromEmail=true">Ir al carro</a>.</p><br>
 
     <table style="width:100%;margin-bottom:30px;">
       <tr>
