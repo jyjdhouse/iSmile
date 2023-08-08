@@ -23,11 +23,11 @@
                 <% if (locals.isLogged) { %> <!--LOGGEADO-->
                     <div class="user-logged-container">
                         <p class="user-logged-name login-menu-btn-desktop bold"> 
-                               <%= userLogged.first_name && userLogged.first_name[0].toUpperCase() || 'user' %>
+                               <%= userLogged.first_name && userLogged.first_name[0].toUpperCase() || 'U' %>
                         </p>
                         <div class="logged-menu-container">
                         <ul class="logged-menu-list">
-                            <li class="logged-menu-list-item bold"><%= userLogged.first_name %></li>
+                            <li class="logged-menu-list-item bold"><%= userLogged.first_name || 'User' %></li>
                             <% if (locals.userLogged.user_categories_id!=3) { %>
                                 <!--SI ES ADMIN userLogged.user_categories_id-->
                                 <li class="logged-menu-list-item expandable-list-item">

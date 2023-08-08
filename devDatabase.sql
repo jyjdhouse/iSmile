@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-08-2023 a las 15:19:33
+-- Tiempo de generación: 08-08-2023 a las 20:38:09
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -95,7 +95,10 @@ CREATE TABLE `blogs` (
 --
 
 INSERT INTO `blogs` (`id`, `title`, `text`, `author`, `createdAt`) VALUES
-(25, 'La Verdadera Belleza Es Cuando Te Pones A Quien Realmente Sos💜', '<p>Este texto es de prueba. Un texto es una composición de signos codificados en un sistema de escritura que forma una unidad de sentido. También es una composición de caracteres imprimibles generados por un algoritmo de cifrado que, aunque no tienen sentido para cualquier persona, sí puede ser descifrado por su destinatario original</p>\n<p>Parrafo bien hecho Parrafo mal hecho.Un texto es una composición de signos codificados en un sistema de escritura que forma una unidad de sentido. También es una composición de caracteres imprimibles generados por un algoritmo de cifrado que, aunque no tienen sentido para cualquier persona, sí puede ser descifrado por su destinatario original</p>', 'Jano', '2023-08-03 15:08:03');
+(25, 'La Verdadera Belleza Es Cuando Te Pones A Quien Realmente Sos💜', '<p>Este texto es de prueba. Un texto es una composición de signos codificados en un sistema de escritura que forma una unidad de sentido. También es una composición de caracteres imprimibles generados por un algoritmo de cifrado que, aunque no tienen sentido para cualquier persona, sí puede ser descifrado por su destinatario original</p>\n<p>Parrafo bien hecho Parrafo mal hecho.Un texto es una composición de signos codificados en un sistema de escritura que forma una unidad de sentido. También es una composición de caracteres imprimibles generados por un algoritmo de cifrado que, aunque no tienen sentido para cualquier persona, sí puede ser descifrado por su destinatario original</p>', 'Jano', '2023-08-08 01:35:45'),
+(26, 'Blog de belleza facial', '<p>Bienvenidos a nuestro blog de belleza facial, donde exploraremos los secretos para lograr una piel radiante y saludable. La belleza facial es mucho más que una simple rutina de cuidado de la piel; es un reflejo de cómo nos cuidamos interna y externamente. Aquí, descubriremos los mejores consejos, productos y técnicas para mantener una tez luminosa y juvenil, sin importar la edad o el tipo de piel. Ya sea que estés luchando contra el acné, buscando la manera de reducir las arrugas o simplemente deseas mejorar la textura general de tu piel, estamos aquí para acompañarte en tu viaje hacia una belleza facial deslumbrante.</p>\n<p>Una piel sana y hermosa es el lienzo perfecto para cualquier look de maquillaje y, más importante aún, es una señal de una buena salud. En nuestro blog, nos centraremos en los pilares fundamentales del cuidado de la piel, que incluyen la limpieza adecuada, la hidratación, la protección solar y el uso de ingredientes beneficiosos. Aprenderás a adaptar tu rutina según las necesidades únicas de tu piel, ya sea que tengas piel seca, grasa, mixta o sensible. Además, compartiremos recetas caseras de mascarillas y tratamientos naturales para aquellos que prefieren una opción más orgánica. Recuerda, invertir tiempo y dedicación en tu piel hoy es la clave para mantener una apariencia juvenil y saludable en el futuro.</p>\n<p>En nuestro blog de belleza facial, nos mantendremos actualizados sobre las últimas tendencias y avances en el mundo de la cosmética y la belleza. Exploraremos los productos y tratamientos más novedosos, desde serums con ingredientes revolucionarios hasta técnicas de rejuvenecimiento facial no invasivas. Nuestro objetivo es brindarte información detallada y honesta para que puedas tomar decisiones informadas sobre qué productos y procedimientos son los más adecuados para ti. Además, te proporcionaremos consejos de maquillaje que realzarán tus rasgos y complementarán tu piel radiante. Únete a nosotros en este emocionante viaje hacia una belleza facial excepcional, ¡estamos ansiosos por compartir contigo nuestros conocimientos y pasión por el cuidado de la piel!</p>', 'Jano Pereira', '2023-08-08 15:52:29'),
+(27, 'Blog de vinos', '<p>¡Bienvenidos a nuestro apasionante blog dedicado al mundo del vino! Aquí, nos sumergiremos en el fascinante universo de los sabores, aromas y culturas que rodean esta sublime bebida. El vino es mucho más que una simple bebida alcohólica; es un arte, una tradición milenaria y una experiencia sensorial única. A través de nuestras publicaciones, te llevaremos a explorar las diversas regiones vinícolas, variedades de uvas, técnicas de elaboración y maridajes perfectos. Ya seas un aficionado curioso o un conocedor apasionado, estamos aquí para compartir nuestro amor por el vino y enriquecer tu comprensión de este elixir que ha cautivado a la humanidad durante siglos.</p>\n<p>Embárcate en un viaje inolvidable mientras recorremos las prestigiosas regiones vinícolas de todo el mundo. Desde los exquisitos vinos tintos de Burdeos hasta los elegantes espumosos de la región de Champagne en Francia, pasando por los robustos Malbecs de Argentina y los refinados Chardonnays de California, exploraremos los secretos de cada lugar y sus vinos distintivos. Conoceremos a los apasionados viticultores y enólogos que trabajan incansablemente para crear estos líquidos tesoros, y aprenderemos sobre las técnicas y tradiciones que hacen que cada vino sea único. Descubriremos cómo el terroir, el clima y la vendimia influyen en el carácter de cada botella, y te ayudaremos a elegir el vino perfecto para cada ocasión.</p>\n<p>En nuestro blog de vinos, te llevaremos a través de emocionantes catas para afinar tu paladar y aprender a apreciar las sutilezas de diferentes cepas y añadas. Te guiaremos en la elección de copas adecuadas, la temperatura ideal para servir cada tipo de vino y los elementos clave para organizar una cata memorable. Además, descubriremos el emocionante arte del maridaje, combinando sabores y texturas para realzar tanto el vino como la comida. Desde maridajes clásicos hasta combinaciones más atrevidas, te inspiraremos para llevar tus experiencias gastronómicas al siguiente nivel. Así que, si eres un entusiasta del vino o simplemente deseas aprender más sobre esta bebida fascinante, te invitamos a compartir con nosotros la pasión por el mundo del vino. ¡Salud!</p>', 'Jano Pereira Kent', '2023-08-08 15:54:29'),
+(28, 'El Transito', '<p>Bienvenidos a nuestro blog dedicado al apasionante y a veces desafiante mundo del tránsito. En esta plataforma, exploraremos diversos aspectos relacionados con la movilidad urbana, la seguridad vial, las tendencias en transporte y cómo enfrentar los desafíos del tráfico en nuestras ciudades. El tránsito es una parte esencial de la vida diaria, y entender su dinámica nos permite tomar decisiones más informadas para mejorar nuestros desplazamientos y contribuir a la construcción de ciudades más amigables, eficientes y sostenibles. Únete a nosotros en esta travesía para descubrir soluciones innovadoras, consejos prácticos y reflexiones sobre el presente y futuro del tráfico.</p>\n<p>El crecimiento poblacional y la urbanización plantean desafíos significativos en materia de movilidad urbana. En nuestro blog, analizaremos las diversas opciones de transporte disponibles, desde sistemas de transporte público hasta alternativas de movilidad sostenible, como bicicletas eléctricas y scooters compartidos. Exploraremos cómo el diseño de infraestructuras, como carriles exclusivos y calles peatonales, puede mejorar el flujo del tránsito y promover una convivencia armoniosa entre peatones, ciclistas y automovilistas. También examinaremos iniciativas innovadoras y tecnológicas, como la movilidad autónoma y el uso de aplicaciones para compartir viajes, que están transformando la forma en que nos desplazamos por nuestras ciudades.</p>\n<p>La seguridad vial es una preocupación crucial en el contexto del tráfico y la movilidad. En nuestro blog, nos enfocaremos en la importancia de la educación para conductores y peatones, resaltando la necesidad de fomentar el respeto por las normas de tránsito y la conciencia de los riesgos asociados con comportamientos imprudentes. Abordaremos temas como la conducción defensiva, el respeto a los límites de velocidad y el uso responsable del teléfono móvil mientras se conduce. Además, destacaremos la relevancia de la planificación y el diseño de infraestructuras seguras, así como el papel de las tecnologías de asistencia en la prevención de accidentes de tráfico. Juntos, trabajaremos para promover una cultura vial responsable y forjar un entorno de tránsito más seguro y armonioso para todos.</p>', 'Ines Anio', '2023-08-08 15:58:06');
 
 -- --------------------------------------------------------
 
@@ -119,7 +122,19 @@ INSERT INTO `blogs_images` (`id`, `filename`, `blog_id`, `main_image`, `file_typ
 (121, 'blog-u8nepii3vl.webp', 25, 1, 1),
 (122, 'blog-ekwnz7olde.webp', 25, 0, 1),
 (123, 'blog-zal3b57et2.webp', 25, 0, 1),
-(128, 'blog-2hlf7lb3nr.mp4', 25, 0, 2);
+(138, 'blog-6r36znk0ov.mp4', 25, 0, 2),
+(143, 'blog-3g1mgv40fo.webp', 26, 0, 1),
+(144, 'blog-uyvkonll7f.webp', 26, 1, 1),
+(145, 'blog-kw1nckrhhe.webp', 26, 0, 1),
+(146, 'blog-121lo7pczp.mp4', 26, 0, 2),
+(147, 'blog-xd2u5e033m.webp', 27, 0, 1),
+(148, 'blog-cqp0mi7wrd.webp', 27, 1, 1),
+(149, 'blog-8derw15me1.webp', 27, 0, 1),
+(150, 'blog-ewcpeqe9ah.mp4', 27, 0, 2),
+(151, 'blog-1bah05kudu.webp', 28, 0, 1),
+(152, 'blog-qfuzu23war.webp', 28, 1, 1),
+(153, 'blog-sfsz82por2.webp', 28, 0, 1),
+(154, 'blog-fkhvwvo2wh.mp4', 28, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -438,7 +453,7 @@ INSERT INTO `products` (`id`, `name`, `price`, `description`, `category_id`, `cr
 ('a541d777-7dce-426b-aaa8-421978c2486e', 'Producto prueba Formato', 3333, 'Este es un formato para la prueba del formato esperado. Este producto viene bien. Lorem ipsum lorem ipsum.', 1, '2023-07-26 17:58:28', '2023-07-31 16:48:55', '2023-07-26 18:25:09', NULL, NULL, NULL),
 ('a9c2dc18-3086-4d3c-94b6-18f5f5db2e6b', 'Espuma de limpieza 3 en 1', 9000, 'Limpia, desmaquilla e hidrata ? La limpieza facial es un paso indispensable y necesario para mantener una piel saludable luminosa y protegida de los contaminantes que generan el envejecimiento prematuro. ??Limpiar es el primer paso fundamental de tu rutina de skincare. Su fórmula en espuma micelar retira rápida, suave y fácilmente el maquillaje y las impurezas. Dejando una piel visiblemente más fresca, limpia e hidratada. Está específicamente pensado para pieles de normales a mixtas. ✨Libre de fragancia, colorantes y parabenos. ✨ \r\n??MODO DE USO: Aplicar por la mañana y por la noche con suaves movimientos circulares en rostro, cuello y escote. Enjuagar con agua y con ayuda de nuestro exclusivo Pad de Limpieza para una mejor remoción. \r\n', 1, '2023-07-12 16:12:02', NULL, '2023-07-31 16:25:53', NULL, NULL, NULL),
 ('ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, '<ul>\n<li>Contiene los antioxidantes más       poderosos</li>\n<li>Posee un alto contenido en proteínas.</li>\n<li>Mantiene las articulaciones saludables.</li>\n<li>Aumenta la energía y la recuperación post ejercicio</li>\n<li>Reduce la ansiedad y el estrés.</li>\n<li>Promueve el fortalecimiento de tendones y colágeno articular </li>\n<li>Aumenta la asimilación del calcio y el hierro.</li>\n<li>Disminuye y evita la aparición de nuevas arrugas. Ayuda a prevenir lesiones.</li>\n<li>Previene la pérdida de cabello</li>\n<li>Disminuye la adherencia de las lipoproteínas de colesterol.</li>\n</ul>', 1, '2023-07-31 16:38:35', NULL, '2023-07-31 16:38:35', NULL, NULL, NULL),
-('b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 'adscsadcasdcas', 1, '2023-08-02 16:21:24', NULL, '2023-08-02 17:22:45', NULL, 'adsdsadas', '10g sanax'),
+('b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 'adscsadcasdcas', 1, '2023-08-02 16:21:24', NULL, '2023-08-08 12:21:50', NULL, 'adsdsadas', '10g sanax'),
 ('c1f196b4-8861-4032-ba39-523530df0299', 'Latisse', 15000, 'LATISSE es un tratamiento del laboratorio francés Allergan, aprobado por la FDA y sin parabenos que permite obtener pestañas más largas, gruesas y oscuras. Se aplica por la noche antes de ir a dormir. ??Los resultados comienzan a verse a las 4 semanas de aplicación, viendo resultados completos a la semana 12 del tratamiento. Luego se aplica 1 vez por semana para mantenimiento. Está indicado en cualquier persona que desee mejorar el aspecto de sus pestañas.', 1, '2023-07-21 16:44:41', NULL, '2023-07-31 16:36:00', NULL, NULL, NULL),
 ('db005c8d-ccd0-4e0e-9d36-aaed244e8559', 'Crema despigmentante', 15000, 'Posee una fórmula innovadora con un poderoso complejo anti-manchas. Su acción despigmentante de rápida absorción ayuda a unificar el color de la piel disminuyendo notablemente manchas e hiperpigmentaciones en rostro, cuello y escote, ayudando también a prevenirlas. Logra un aspecto más uniforme de la piel ✨Su formulación sinérgica aporta luminosidad, brillo y tersura a la piel✨. Ingredientes: Tranexámico 3% + Niacinamida 2% + Vit C 4% + Arbutina 2%. Exfolia y normaliza la renovación celular. Reduce los efectos negativos del estrés y la contaminación. ? Nuestra filosofía de pureza: Sin parabenos. Sin sulfatos. Sin fragancia. Piel simplemente feliz. :) Hipoalergénico. Free Mineral Oil. \r\n??MODO DE USO: Aplicar únicamente por la noche sobre la superficie de la piel a tratar, una vez limpia y seca, en rostro, cuello y escote. Se recomienda complementar con nuestro Serum de Vitamina C. Utilizar protección solar si se aplica durante el día.\r\n', 1, '2023-07-04 11:31:11', NULL, '2023-07-31 16:27:39', NULL, NULL, NULL),
 ('e3da8d17-89bb-4f42-8ae7-77791d9f4533', 'Contorno de Ojos', 12000, 'Nuestra fórmula ofrece tratamiento y prevención a la delicada piel del contorno de ojos otorgando luminosidad y revitalización de la mirada ✨?️. Posee una concentración de activos que renuevan el aspecto de la piel alisándola y favoreciendo la microcirculación; desacelera la aparición de líneas de expresión y prolonga la duración de la toxina botulínica por su gran concentración de Argireline. ? Nuestra presentación con dosificador ofrece excelente comodidad en su uso y garantiza la efectividad del tratamiento. Para todo tipo de piel. Sin fragancias ni parabenos. \r\n?? MODO DE USO: Extrae una pequeña cantidad de crema utilizando el aplicador a presión. Aplica la crema en pequeños puntos alrededor del contorno de los ojos. Con movimientos suaves y circulares difumina la crema utilizando el aplicador. Esto ayudará a mejorar la absorción y promoverá una apariencia más rejuvenecida.\r\n', 1, '2023-07-12 16:10:48', NULL, '2023-07-31 16:26:41', NULL, NULL, NULL),
@@ -477,8 +492,8 @@ INSERT INTO `products_files` (`id`, `filename`, `products_id`, `file_types_id`, 
 (131, 'jcwqnnzy10.webp', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 1, NULL),
 (152, 'xfc88j0n2r.webp', 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, 0),
 (153, 'cthltv9y5j.webp', 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, 0),
-(154, 'vwegx15jrc.webp', 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, 0),
-(155, 'z4ie39p9xz.webp', 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, 1),
+(154, 'vwegx15jrc.webp', 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, 1),
+(155, 'z4ie39p9xz.webp', 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, 0),
 (160, 'ecxbvfyvls.webp', '46bf971d-62f1-4b96-b727-d2cafa725f42', 1, 0),
 (161, 'qklta3qc75.webp', '46bf971d-62f1-4b96-b727-d2cafa725f42', 1, 1),
 (162, 'higj0mwtxx.MP4', '46bf971d-62f1-4b96-b727-d2cafa725f42', 2, 0),
@@ -508,6 +523,7 @@ CREATE TABLE `shipping_addresses` (
 --
 
 INSERT INTO `shipping_addresses` (`id`, `street`, `apartment`, `city`, `provinces_id`, `zip_code`, `users_id`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
+('0e0e36c6-1bd2-468a-9cec-b39e0f74e136', NULL, NULL, NULL, 1, NULL, '44578a4e-aa20-4ecc-9fd6-323a34e6377b', '2023-08-07 15:14:08', '2023-08-07 16:20:25', NULL),
 ('2', 'Juana Azurduy', NULL, 'Nunez', 1, '1430', '8', NULL, '2023-07-04 14:16:24', NULL),
 ('3', 'Libertador 2232', '3B', 'Nuñez', 1, '1430', NULL, '2023-07-04 14:35:12', '2023-07-15 23:03:08', NULL),
 ('30cb8ec9-a017-4399-b920-ed141012af2c', 'Livertador 1300', NULL, 'CABA', 1, '1212', '2e703d70-fbaf-4674-9c76-238d5ec4f44e', '2023-07-13 00:46:10', '2023-07-13 01:06:06', NULL),
@@ -518,9 +534,9 @@ INSERT INTO `shipping_addresses` (`id`, `street`, `apartment`, `city`, `province
 ('6c6412fa-f589-46f9-a153-3f637b06b287', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', NULL, '2023-07-17 16:57:11', '2023-07-17 16:57:11', NULL),
 ('73d98bfc-77c4-4da7-9796-f147dd01ab84', 'Juncal 2222', '3a', 'Recoleta', 1, '1211', NULL, '2023-07-18 00:11:58', '2023-07-18 00:11:58', NULL),
 ('76205f7b-1754-4108-84f2-649147d848d4', NULL, NULL, NULL, 1, NULL, 'f636404c-60bc-41e1-bd7a-14d629ac7f07', '2023-07-17 23:24:15', '2023-07-17 23:24:17', NULL),
+('76828896-8cbc-4c37-9323-b5c3a0fc7dc1', 'Callao 6969', '9b', 'CABA', 1, '1469', '10', '2023-07-15 23:03:09', '2023-08-07 21:23:39', NULL),
 ('a83e27c8-4833-42a8-b90d-8f320c1e56eb', 'Juncal 2222', '3a', 'Recoleta', 1, '1211', NULL, '2023-07-18 00:08:15', '2023-07-18 00:08:15', NULL),
-('e5edf259-8e15-4b62-8a46-6e9df537024f', NULL, NULL, NULL, 1, NULL, '214ee117-1788-4155-8895-9f61d9e2dcf6', '2023-07-31 21:52:04', '2023-07-31 21:52:04', NULL),
-('f895b5fe-cade-480e-9f34-0c947fe216ac', 'Callao 6969', '9b', 'CABA', 1, '1469', '10', '2023-07-15 23:03:09', '2023-07-15 23:03:09', NULL);
+('e5edf259-8e15-4b62-8a46-6e9df537024f', NULL, NULL, NULL, 1, NULL, '214ee117-1788-4155-8895-9f61d9e2dcf6', '2023-07-31 21:52:04', '2023-07-31 21:52:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -531,18 +547,18 @@ INSERT INTO `shipping_addresses` (`id`, `street`, `apartment`, `city`, `province
 CREATE TABLE `specialties` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `src` text DEFAULT NULL
+  `filename` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `specialties`
 --
 
-INSERT INTO `specialties` (`id`, `name`, `src`) VALUES
-(1, 'Estética facial', 'servicios1.jpg'),
-(2, 'Medicina Regenerativa', 'servicios2.jpg'),
-(3, 'Estética corporal', 'servicios3.jpg'),
-(4, 'ODONTOLOGIA', 'servicios4.jpg');
+INSERT INTO `specialties` (`id`, `name`, `filename`) VALUES
+(1, 'Estética facial', NULL),
+(2, 'Medicina Regenerativa', NULL),
+(3, 'Estética corporal', NULL),
+(4, 'ODONTOLOGIA', NULL);
 
 -- --------------------------------------------------------
 
@@ -554,22 +570,23 @@ CREATE TABLE `specialties_services` (
   `id` int(11) NOT NULL,
   `specialties_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL
+  `description` text DEFAULT NULL,
+  `filename` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `specialties_services`
 --
 
-INSERT INTO `specialties_services` (`id`, `specialties_id`, `name`, `description`) VALUES
-(1, 1, 'Armonización facial', 'La percepción de un rostro bello, armónico y natural depende fundamentalmente de las proporciones de una parte de nuestro rostro en relación con otra.'),
-(2, 1, 'BOTOX®️', 'Uno de los tratamientos con más demanda a nivel mundial, del que podemos beneficiarnos en sus múltiples usos.'),
-(3, 1, 'COSMETOLOGIA', 'La piel que siempre soñaste está mucho más cerca de lo que te imaginas.'),
-(4, 1, 'TRATAMIENTO DE PAPADA', 'Una de las zonas que todos queremos mejorar. Siempre con la cabeza en alto y con la ayuda de los tratamientos adecuados en cada caso obtenemos esos resultados que tanto buscamos.'),
-(5, 1, 'BIOESTIMULADORES', 'Llegaron para quedarse! Representan los últimos avances en estética facial que todos queremos. Sin aportar volumen estimulan potentemente a nuestras células para que produzcan grandes cantidades de colageno.'),
-(6, 4, 'ODONTOLOGIA GENERAL', 'Todos deberíamos saber el bien que una simple sonrisa puede hacer.'),
-(7, 4, 'TRATAMIENTO DE BRUXISMO', 'El Bruxismo es el apretamiento o rechinamiento de los dientes que se realiza tanto de forma consciente como inconsciente; y afecta a una gran parte de la población.'),
-(8, 4, 'DISEÑO DE SONRISA', 'Para comenzar realizamos un estudio completo del rostro del paciente tomando medidas dentarias y faciales, escaneo digital de la boca y fotografías. Mediante esta información podremos definir el largo, ancho y anatomía ideal de cada uno de sus dientes en perfecta relación a al rostro y a sus labios. Toda esta información es enviada al laboratorio quien confeccionará una impresión digital del modelo de la boca con la forma exacta del diseño realizado, que será probado en el paciente mediante un material provisorio para visualizar el agrado del diseño. Y en base al mismo proceder a confeccionar las carillas.  ');
+INSERT INTO `specialties_services` (`id`, `specialties_id`, `name`, `description`, `filename`) VALUES
+(1, 1, 'Armonización facial', 'La percepción de un rostro bello, armónico y natural depende fundamentalmente de las proporciones de una parte de nuestro rostro en relación con otra.', NULL),
+(2, 1, 'BOTOX®️', 'Uno de los tratamientos con más demanda a nivel mundial, del que podemos beneficiarnos en sus múltiples usos.', NULL),
+(3, 1, 'COSMETOLOGIA', 'La piel que siempre soñaste está mucho más cerca de lo que te imaginas.', NULL),
+(4, 1, 'TRATAMIENTO DE PAPADA', 'Una de las zonas que todos queremos mejorar. Siempre con la cabeza en alto y con la ayuda de los tratamientos adecuados en cada caso obtenemos esos resultados que tanto buscamos.', NULL),
+(5, 1, 'BIOESTIMULADORES', 'Llegaron para quedarse! Representan los últimos avances en estética facial que todos queremos. Sin aportar volumen estimulan potentemente a nuestras células para que produzcan grandes cantidades de colageno.', NULL),
+(6, 4, 'ODONTOLOGIA GENERAL', 'Todos deberíamos saber el bien que una simple sonrisa puede hacer.', NULL),
+(7, 4, 'TRATAMIENTO DE BRUXISMO', 'El Bruxismo es el apretamiento o rechinamiento de los dientes que se realiza tanto de forma consciente como inconsciente; y afecta a una gran parte de la población.', NULL),
+(8, 4, 'DISEÑO DE SONRISA', 'Para comenzar realizamos un estudio completo del rostro del paciente tomando medidas dentarias y faciales, escaneo digital de la boca y fotografías. Mediante esta información podremos definir el largo, ancho y anatomía ideal de cada uno de sus dientes en perfecta relación a al rostro y a sus labios. Toda esta información es enviada al laboratorio quien confeccionará una impresión digital del modelo de la boca con la forma exacta del diseño realizado, que será probado en el paciente mediante un material provisorio para visualizar el agrado del diseño. Y en base al mismo proceder a confeccionar las carillas.  ', NULL);
 
 -- --------------------------------------------------------
 
@@ -588,7 +605,7 @@ CREATE TABLE `temporal_carts` (
 
 INSERT INTO `temporal_carts` (`id`, `users_id`) VALUES
 (34, '10'),
-(35, '12');
+(36, '44578a4e-aa20-4ecc-9fd6-323a34e6377b');
 
 -- --------------------------------------------------------
 
@@ -611,9 +628,12 @@ CREATE TABLE `temporal_items` (
 INSERT INTO `temporal_items` (`id`, `temporal_cart_id`, `products_id`, `quantity`, `added_date`) VALUES
 (133, 34, '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 1, NULL),
 (134, 34, '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 1, NULL),
-(136, 35, '83838646-6969-449d-8132-2ad967701c64', 1, NULL),
-(137, 35, 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 1, NULL),
-(138, 35, '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 1, NULL);
+(141, 36, '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 1, NULL),
+(142, 36, '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 1, '2023-08-07 15:14:21'),
+(143, 36, '0d0cd130-d652-41e1-b7e6-da9553322823', 1, '2023-08-07 15:14:23'),
+(145, 34, 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 1, '2023-08-08 12:22:02'),
+(149, 34, 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, '2023-08-08 12:32:03'),
+(150, 34, '46bf971d-62f1-4b96-b727-d2cafa725f42', 1, '2023-08-08 12:32:09');
 
 -- --------------------------------------------------------
 
@@ -730,16 +750,17 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `phone`, `dni`, `password`, `email`, `wpp_notifications`, `email_notifications`, `email_newsletter`, `user_categories_id`, `birth_date`, `genres_id`, `createdAt`, `deletedAt`, `updatedAt`, `password_token`, `last_cart_email`, `cart_period_type`) VALUES
 ('0b06d883-f6ba-4f64-bf1d-418230fbbc20', '', '', NULL, '', '$2a$10$5gRGlpd3HTeaYunGidwGUeuvQHG9V1AexKU/U4YW.60OrnJxX5gYu', 'prueba@gmail.com', 0, 0, 0, 3, NULL, NULL, '2023-07-12 12:55:21', NULL, '2023-07-12 12:55:21', NULL, NULL, NULL),
-('10', 'Jano', 'Pereira Kent', '01158817312', '43083506', '$2a$10$kROb/UzSCL6fuKn/HFMvOuoUMPAJsgtEBGos2aRfUhizr3GbrSKyC', 'janopk789@gmail.com', 0, 0, 0, 1, '2001-02-12 00:00:00', NULL, '2023-07-04 14:35:00', NULL, '2023-08-06 14:58:25', NULL, '2023-08-06 15:17:00', '2'),
+('10', 'Jano', 'Pereira Kent', '01158817312', '43083507', '$2a$10$kROb/UzSCL6fuKn/HFMvOuoUMPAJsgtEBGos2aRfUhizr3GbrSKyC', 'janopk789@gmail.com', 0, 0, 0, 1, '2001-02-05 00:00:00', 2, '2023-07-04 14:35:00', NULL, '2023-08-08 12:32:09', NULL, '2023-08-08 15:31:00', '3'),
 ('11', 'Jano00', 'Pereira Kent', '01158817312', '', '$2a$10$Vz40dkbxoBxWgbaUrMZbOul97Y59CjL9H6Lq.6Y1boQ5.NLPqiUpq', 'hola@gmail.com', 0, 0, 0, 2, NULL, NULL, '2023-07-04 20:51:27', NULL, '2023-07-04 20:56:39', NULL, NULL, NULL),
-('12', 'Joaquin', 'Cataldo', '', '', '$2a$10$VPw7f.Nv6sM8ZDhh3S06oua43xB5fafDXCMBbkHrv/DzP5bbQmTUy', 'janoo.pereira@gmail.com', 0, 0, 0, 1, NULL, NULL, '2023-07-05 11:28:07', NULL, '2023-08-06 15:11:02', NULL, '2023-08-06 15:17:00', '2'),
 ('13', 'Admin', 'Admin', '', '', '$2a$10$F7R5mDNPyIN755qTjbA6.efd1/xNHMqN2Rn6MuZa/XkyCxodqsUaS', 'info@ismile.com.ar', 0, 0, 0, 2, NULL, NULL, '2023-07-06 22:52:39', NULL, '2023-07-06 23:53:48', '', NULL, NULL),
 ('15', 'Inés', 'Añó', NULL, NULL, '$2a$10$WMQbFld9.6lnnnGNAqdrl.hYIQprJSgtvBZuW.OxE3a73W0NuMf7W', 'ines.anio@gmail.com', 0, 0, 0, 1, NULL, NULL, '2023-07-06 22:58:58', NULL, '2023-07-30 17:19:54', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1IiwiaWF0IjoxNjkwNzM3NTk0LCJleHAiOjE2OTA3NDExOTR9.lBO3odlPHYCGdi-NaQ1960LiM_sQZRCPwF7ybD5se-I', NULL, NULL),
 ('16', 'CJoaquin', 'Cataldo', '', '', '$2a$10$NneD5C8KExxSt8KgwXGcJewSn62J2dYelRMN7eTbwOER07KleOuNm', 'joaco.cataldo3@gmail.com', 0, 0, 0, 2, NULL, NULL, '2023-07-11 11:10:11', NULL, '2023-07-11 11:10:32', NULL, NULL, NULL),
 ('17', '', '', NULL, '', '$2a$10$H/XGplmwvmq5ah.nwq6DH.0vCUvzdgmb3De/h45iUrqsLvht5BHf6', 'jano@gmail.com', 0, 0, 0, 3, '2023-07-06 00:00:00', NULL, '2023-07-11 20:12:36', NULL, '2023-07-11 20:12:36', NULL, NULL, NULL),
 ('214ee117-1788-4155-8895-9f61d9e2dcf6', 'Valentina', 'Antonelli', '1139421136', '45479865', '$2a$10$p2DL7DnIQKNOfNG3UuYEPuhcB89vOk/27rCKiH0TooWiZFHivolXm', 'valen@gmail.com', 0, 0, 0, 3, '2004-02-02 00:00:00', 1, '2023-07-31 21:47:48', NULL, '2023-07-31 21:52:04', NULL, NULL, NULL),
 ('2e703d70-fbaf-4674-9c76-238d5ec4f44e', 'Juan', 'Gomez', '1158817312', '43083507', '$2a$10$g3oVAsn4v2JipXYB2atgIeimRyvq6bT9OfRIM8Mpmnj3F3ShfGVH2', 'chau@gmail.com', 0, 0, 0, 3, '2023-10-10 00:00:00', 2, '2023-07-12 20:22:50', NULL, '2023-07-13 01:06:05', NULL, NULL, NULL),
+('44578a4e-aa20-4ecc-9fd6-323a34e6377b', 'Jano', 'Pereira', '1158817312', '', '$2a$10$kYXqDyqrs7mKkk7a9NlfW.pOrRZYoofbrn2NUl8yVTeW5bAPDxoEG', 'janoo.pereira@gmail.com', 0, 0, 0, 3, '2001-02-12 00:00:00', 2, '2023-08-07 15:13:41', NULL, '2023-08-07 16:20:25', NULL, '2023-08-08 15:30:00', '2'),
 ('8', 'Jano', 'Pereira Kent', '01158817312', '43083507', '$2a$10$wcUai1LYaFAVJ1Kt2OcnnOdPHEiTslzDty5X/SIFCroXIji71qLpS', 'diego@gmail.com', 1, 0, 0, 3, NULL, NULL, '2023-07-04 11:30:00', NULL, '2023-07-04 14:16:24', NULL, NULL, NULL),
+('cc10f663-a145-4762-83f8-9d8c7c1e6660', '', '', NULL, '', '$2a$10$b9HHWqAbbNUJXyGhIT6q/OitGGa0dKT8muHfwD54cJV7F0Byor2CK', 'borra@gmail.com', 0, 0, 0, 3, NULL, NULL, '2023-08-08 16:50:00', NULL, '2023-08-08 16:50:00', NULL, NULL, NULL),
 ('f636404c-60bc-41e1-bd7a-14d629ac7f07', 'Martin', 'Berra', '1144301111', '', '$2a$10$RkdmG6iBhyoiULCLpZQmNOwZb/GV8y4k/7AouZOfk9CJdgTITsgBi', 'martin.berra+test@gmail.com', 0, 0, 0, 3, '2023-10-10 00:00:00', 1, '2023-07-17 23:23:40', NULL, '2023-07-17 23:24:17', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -935,13 +956,13 @@ ALTER TABLE `users_categories`
 -- AUTO_INCREMENT de la tabla `blogs`
 --
 ALTER TABLE `blogs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `blogs_images`
 --
 ALTER TABLE `blogs_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -1007,13 +1028,13 @@ ALTER TABLE `specialties_services`
 -- AUTO_INCREMENT de la tabla `temporal_carts`
 --
 ALTER TABLE `temporal_carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `temporal_items`
 --
 ALTER TABLE `temporal_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
 
 --
 -- AUTO_INCREMENT de la tabla `treatments`
