@@ -1,6 +1,5 @@
 //Database
 const db = require('../database/models');
-const axios = require('axios')
 // Utils
 const getRelativePath = require('../utils/getRelativePath');
 const secret = require('../utils/secret').secret;

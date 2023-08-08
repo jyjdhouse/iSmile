@@ -290,7 +290,7 @@ const controller = {
                 // No importa de que fue error, fue porque algo hicieron en el front ==> Repinto la vista
                 // con mensaje de que hubo error
                 // return res.send(errors);
-                console.log('HAY ERRORES');
+                // console.log('HAY ERRORES');
                 return res.status(404).json({
                     meta: {
                         status: 404
