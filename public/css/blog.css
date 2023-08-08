@@ -152,7 +152,18 @@
     left: 0;
     opacity: 0;
     transition: transform .7s, opacity .7s;
-    background-color: transparent;
+    /* background-color: transparent; */
+    box-shadow:
+        -2px 0 8px rgba(128, 128, 128, 0.3),
+        /* Sombra a la izquierda */
+        2px 0 8px rgba(128, 128, 128, 0.3),
+        /* Sombra a la derecha */
+        0 -2px 8px rgba(128, 128, 128, 0.3),
+        /* Sombra arriba */
+        0 2px 8px rgba(128, 128, 128, 0.3);
+    /* Sombra abajo */
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .img-container-active {
@@ -180,9 +191,11 @@
     text-align: justify;
     font-size: 16px;
 }
-.blog-detail-text-container>p:last-child{
+
+.blog-detail-text-container>p:last-child {
     margin-bottom: 80px;
 }
+
 @keyframes carouselAnimation {
     25% {
         transform: translateX(-100%);
@@ -199,8 +212,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
+
 }
 
 /* LASTES BLOGS SECTION */
@@ -301,12 +313,15 @@
     .update-delete-btn-container {
         width: 40%;
     }
-
+    .blog-detail-container{
+        padding-top: 5vh;
+    }
     .mobile-carousel-container {
         position: static;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        overflow: unset;
     }
 
 
@@ -317,11 +332,26 @@
     }
 
     .blog-detail-img-container {
-        height: 70vh;
+        height: 75vh;
+        width: 80%;
+        margin: 0 auto;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow:
+            -2px 0 6px rgba(128, 128, 128, 0.2),
+            /* Sombra a la izquierda */
+            2px 0 6px rgba(128, 128, 128, 0.2),
+            /* Sombra a la derecha */
+            0 -2px 6px rgba(128, 128, 128, 0.2),
+            /* Sombra arriba */
+            0 2px 6px rgba(128, 128, 128, 0.2);
+        /* Sombra abajo */
     }
-    .blog-detail-intro-container{
+
+    .blog-detail-intro-container {
         padding: 0 10%;
     }
+
     .blog-detail-intro-container h1 {
         font-size: 34px;
     }
@@ -336,6 +366,7 @@
     .lastest-blogs-section {
         height: 80vh;
     }
+
     .lastest-blogs-cards-wrapper {
         row-gap: unset;
         flex-wrap: nowrap;

@@ -35,9 +35,9 @@ const controller = {
             let blogs = getDeepCopy(await getAllBlogs());
             for (let i = 0; i < blogs.length; i++) {
                 const blog = blogs[i];
-                if(blog.files.length){
-                    const mainImage = blog.files.find(file=>file.main_image);
-                    if(mainImage){
+                if (blog.files.length) {
+                    const mainImage = blog.files.find(file => file.main_image);
+                    if (mainImage) {
                         const getObjectParams = {
                             Bucket: bucketName,
                             Key: `blog/${mainImage.filename}`
@@ -61,7 +61,13 @@ const controller = {
         try {
             const { blogId } = req.params
             let blog = getDeepCopy(await getBlog(blogId));
-            if(!blog)return res.render('error404')
+            if (!blog) return res.render('error404');
+            let lastBlogs = getDeepCopy(await db.Blog.findAll({
+                where: { id: { [Op.ne]: blogId } }, //Para que no me traiga ese blog
+                order: [['createdAt', 'DESC']], //Ordenado de mas reciente a mas antiguo
+                limit: 3, //Solo 3
+                include: ['files']
+            }));
             // si tiene archivos
             if (blog.files) {
                 for (let i = 0; i < blog.files.length; i++) {
@@ -82,7 +88,7 @@ const controller = {
                     }
                 });
             };
-            return res.render('blog', { blog })
+            return res.render('blog', { blog, lastBlogs })
         } catch (error) {
             console.log(`Falle en blogController.detail: ${error}`);
             return res.json(error);
@@ -160,7 +166,7 @@ const controller = {
     update: async (req, res) => {
         const blogId = req.params.blogId
         const blog = getDeepCopy(await getBlog(blogId));
-        if(blog.files){
+        if (blog.files) {
             for (let i = 0; i < blog.files.length; i++) {
                 const file = blog.files[i];
                 const getObjectParams = {
@@ -279,7 +285,7 @@ const controller = {
                     const command = new DeleteObjectCommand(params);
                     // Hago el delete de la base de datos
                     await s3.send(command);
-                }               
+                }
                 await db.BlogImage.destroy({
                     where: {
                         filename: {
@@ -303,7 +309,7 @@ const controller = {
             const blogId = req.params.blogId;
             const blogToDelete = getDeepCopy(await getBlog(blogId))
             // Limpio las imagenes del blog de AWS
-            if(blogToDelete.files){
+            if (blogToDelete.files) {
                 for (let index = 0; index < blogToDelete.files.length; index++) {
                     const file = blogToDelete.files[index];
                     params = {

@@ -3,6 +3,7 @@
 .blog-to-update-img {
     width: 100px;
     height: 100px;
+    object-fit: cover;
 }
 
 .main-label {
