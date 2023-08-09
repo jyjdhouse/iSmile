@@ -211,7 +211,7 @@ body {
     width: 35%;
     height: 100%;
     display: flex;
-    column-gap: 1.2rem;
+    /* column-gap: 1.2rem; NO ES COMPATIBLE */
     align-items: center;
     position: relative;
 }
@@ -220,7 +220,12 @@ body {
     justify-content: flex-start;
     padding-left: 1rem;
 }
-
+.nav-start>*{
+    margin-right: 1.2rem !important;
+}
+.nav-end>*{
+    margin-left: 1.2rem !important;
+}
 .nav-end {
     padding-right: 5%;
     justify-content: flex-end;
@@ -269,7 +274,7 @@ body {
 .header-logo {
     height: 100%;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .wishlist-container {
@@ -421,7 +426,9 @@ body {
     .brand-name-image-container {
         width: 54.5%;
     }
-
+    .header-logo{
+        object-fit: cover;
+    }
     /* MENU */
     .side-navbar-container-active {
         width: 50%;
@@ -475,12 +482,17 @@ body {
     .brand-name-image-container {
         width: 20%;
     }
-
+    
     .nav-start {
         padding-left: 3%;
         justify-content: flex-start;
     }
-
+    .nav-start>*{
+        margin-right: 1.8rem;
+    }
+    .nav-end>*{
+        margin-left: 1.8rem;
+    }
     .nav-end {
         padding-right: 3%;
         justify-content: flex-end;
@@ -489,7 +501,7 @@ body {
     .nav-start,
     .nav-end {
         width: 25%;
-        column-gap: 1.8rem;
+        /* column-gap: 1.8rem; NO ES COMPATIBLE*/ 
     }
 
     .shopping-cart-mobile {
