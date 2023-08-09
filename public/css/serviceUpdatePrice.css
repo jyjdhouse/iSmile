@@ -1,28 +1,38 @@
-
-.main{
+.main {
     margin: 10vh 0;
 }
-.main h1, .main h6{
+select{
+    cursor: pointer;
+}
+textarea{
+    resize: none;
+}
+.main h1,
+.main h6 {
     text-align: center;
 }
-.form-label{
+
+.form-label {
     width: 100%;
     margin: 3vh 5vw;
     font-size: 20px;
 }
-.form{
+
+.form {
     width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
 }
-.choose-service-section{
+
+.choose-service-section {
     width: 40%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-.choose-service-checkbox-container{
+
+.choose-service-checkbox-container {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -32,23 +42,26 @@
     justify-content: space-evenly;
     height: 60vh;
     overflow-y: scroll;
-    border: 1px solid rgba(200,200,200,.4);
+    border: 1px solid rgba(200, 200, 200, .4);
 }
-.shown-labels-section{
+
+.shown-labels-section {
     width: 35%;
     display: flex;
     flex-wrap: wrap;
     height: 60vh;
     align-content: flex-start;
 }
-.shown-labels-title{
+
+.shown-labels-title {
     width: 100%;
     height: fit-content;
     text-align: center;
     font-size: 18px;
     margin-bottom: 2.5vh;
 }
-.shown-labels-container{
+
+.shown-labels-container {
     width: 100%;
     max-height: 100%;
     display: flex;
@@ -58,7 +71,8 @@
     height: fit-content;
     overflow-y: auto;
 }
-.shown-label-container{
+
+.shown-label-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -67,7 +81,8 @@
     border-bottom: 1px dashed;
     padding-bottom: 15px;
 }
-.shown-label{
+
+.shown-label {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -78,40 +93,46 @@
     background: #eee;
     height: fit-content;
     margin-bottom: 20px;
-    border: .5px solid rgba(0,0,0,.7);
+    border: .5px solid rgba(0, 0, 0, .7);
     text-align: center;
     align-self: center;
     position: relative;
     cursor: pointer;
 }
-.shown-label-container input{
+
+.shown-label-container input {
     cursor: pointer;
 }
-.shown-label:hover{
+
+.shown-label:hover {
     background-color: rgb(143, 6, 6);
     color: #ccc;
 }
-.remove-shown-label{
+
+.remove-shown-label {
     position: absolute;
     right: 5%;
     top: 5%;
     font-size: 10px;
 }
-.new-price-container{
+
+.new-price-container {
     width: 20%;
     display: flex;
     flex-wrap: wrap;
     height: 60vh;
     align-content: space-between;
 }
-.new-price-container .field{
+
+.new-price-container .field {
     display: flex;
     flex-direction: column;
     width: 100%;
     align-items: center;
-    
+
 }
-.service-checkbox-container{
+
+.service-checkbox-container {
     width: 20%;
     display: flex;
     flex-direction: column;
@@ -121,20 +142,23 @@
     padding: 12px;
     border-radius: 0.6rem;
 }
-.search-checkbox-container{
+
+.search-checkbox-container {
     width: 100%;
     display: flex;
     justify-content: center;
     padding: 10px 0;
 }
-.search-checkbox{
+
+.search-checkbox {
     width: 80%;
     border: 1px solid var(--violet-color);
     padding: 10px;
     border-radius: 1rem;
 
 }
-.checkbox-label{
+
+.checkbox-label {
     cursor: pointer;
     text-align: center;
     font-size: .8rem;
@@ -149,7 +173,9 @@
     align-self: center;
 }
 
-.field>input{
+.field>input,
+.field>select,
+.field>textarea {
     width: 60%;
     border: 1px solid var(--gold-color);
     outline: none;
@@ -158,21 +184,25 @@
     height: fit-content;
     margin-top: 15px;
 }
-.send-form-button-container{
+
+.send-form-button-container {
     width: 100%;
     position: relative;
     overflow: hidden;
 }
-.button-loading-spinner{
+
+.button-loading-spinner {
     position: absolute;
     width: 100%;
     height: 100%;
     z-index: -1;
 }
-.button-loading-spinner-active{
+
+.button-loading-spinner-active {
     z-index: 1;
 }
-.form button{
+
+.form button {
     background: none;
     border: 1px solid var(--gold-color);
     border-radius: 1rem;
@@ -180,4 +210,62 @@
     padding: 10px 0;
     cursor: pointer;
     height: fit-content;
+}
+
+/* Para agregar servicios */
+.add-treatment-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 80px;
+    padding: 15px 30px;
+    border-top: 1px dashed var(--violet-color);
+    border-bottom: 1px dashed var(--violet-color);
+}
+
+.add-treatment-title {
+    width: 100%;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    align-items: center;
+    margin-top: 25px;
+}
+.field>textarea{
+    height: 80px;
+    width: 80%;
+}
+.image-label{
+    border: 1px solid var(--gold-color);
+    width: 50px;
+    border-radius: 50%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 15px;
+}
+.image-label>i{
+    font-size: 35px;
+}
+.add-treatment-form button{
+    width: 30%;
+    margin: 25px auto 0;
+    padding: 10px 0;
+    border: 1px solid var(--gold-color);
+    outline: none;
+    font: 25px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.add-treatment-form button:hover{
+    background-color: #ddd;
 }

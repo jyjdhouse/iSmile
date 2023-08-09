@@ -47,9 +47,60 @@
                 </div>
 
             </section>
-            
         </form>
-        
+        <form action="/admin/addTreatment" method="POST" class="add-treatment-form" enctype="multipart/form-data">
+            <p class="add-treatment-title">Agregar Tratamiento</p>
+            <div class="field">
+                <label for="treatment_name">Nombre</label>
+                <input type="text" name="treatment_name" id="treatment_name">
+            </div>
+            <div class="field">
+                <label for="treatment_description">Descripcion</label>
+                <textarea name="treatment_description" id="treatment_description"></textarea>
+            </div>
+            <div class="field">
+                <label for="specialty_id">Especialidad</label>
+                <select name="specialty_id" id="specialty_id">
+                    <option value="">Elegir una especialidad</option>
+                    <% specialties.forEach(spec => { %>
+                        <option value="<%= spec.id %>"><%= spec.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="field">
+                <label for="specialtyService_id">Subespecialidad (opcional)</label>
+                <select name="specialtyService_id" id="specialtyService_id">
+                    <option value="">Elegir una subespecialidad</option>
+                    <% specialtiesServices.forEach(specServ => { %>
+                        <option value="<%= specServ.id %>"><%= specServ.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="field">
+                <label for="">Imagen</label>
+                <label for="treatment_image" class="image-label"><i class='bx bx-image'></i></label>
+                <input type="file" class="hidden" name="treatment_image" id="treatment_image">
+            </div>
+
+            <div class="field">
+                <label for="application_time">Tiempo aplicacion</label>
+                <input type="text" name="application_time" id="application_time" placeholder="30 min">
+            </div>
+            <div class="field">
+                <label for="duration">Tiempo duracion</label>
+                <input type="text" name="duration" id="duration" placeholder="6-12 meses">
+            </div>
+            <div class="field">
+                <label for="price">Precio</label>
+                <input type="text numeric-only-input" name="price" id="price">
+            </div>
+            <div class="field">
+                <label for="cash_price">Precio (efectivo)</label>
+                <input type="text numeric-only-input" name="cash_price" id="cash_price">
+            </div>
+            
+            <button type="submit">Crear</button>
+        </form>
     </main>
     <%- include('./partials/footer.ejs') %>
 </body>

@@ -4,6 +4,7 @@ const path = require('path');
 const adminController = require('../controllers/adminController');
 
 // Middlewares
+const upload = require('../middlewares/uploadServiceImage');
 
 const isAdminMiddleware = require('../middlewares/isAdminMiddleware');
 
@@ -16,7 +17,8 @@ router.get('/registrar-venta',isAdminMiddleware, adminController.registerSale)
 router.get('/medicalInfo',isAdminMiddleware, adminController.showMedicalForm);
 router.get('/budget',isAdminMiddleware,adminController.budget);
 router.get('/consent',isAdminMiddleware,adminController.consent);
-// PUT
+// POST
+router.post('/addTreatment',isAdminMiddleware,upload.single('treatment_image'),adminController.addTreatment)
 
 
 module.exports=router;

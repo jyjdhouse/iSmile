@@ -2,22 +2,18 @@ const specialties = [
     {
         id:1,
         name: 'Estética facial',
-        src: 'servicios1.jpg',
     },
     {
         id:2,
         name: 'Medicina Regenerativa',
-        src: 'servicios2.jpg',
     },
     {
         id:3,
         name: 'Estética corporal',
-        src: 'servicios3.jpg',
     },
     {
         id:4,
         name: 'ODONTOLOGIA',
-        src: 'servicios4.jpg'
     }
 ]
 

@@ -210,7 +210,7 @@ const controller = {
           Bucket: bucketName,
           Key: `treatment/${randomName}`,//Esto hace que se guarde en la carpeta treatment, y que sobreEscriba a la foto vieja
           Body: buffer,
-          ContentType: file.mimetype
+          ContentType: 'image/webp'
         };
         let command = new PutObjectCommand(params);
         await s3.send(command);
