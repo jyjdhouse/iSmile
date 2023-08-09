@@ -147,5 +147,25 @@ window.addEventListener('load', () => {
             return console.log(`Error al mandar el formulario: ${error}`);
         }
 
-    })
+    });
+
+    // LOGICA PARA SELECTS
+    const specialtySelect = document.getElementById('specialty_id');
+    const specialtyServiceSelect = document.getElementById('specialtyService_id')
+    specialtySelect.addEventListener('change',(e)=>{
+        // Le pongo hidden a todas las subespecialidades
+        specialtyServiceSelect.classList.remove('required')
+        specialtyServiceSelect.value = '';
+        specialtyServiceSelect.querySelectorAll('option').forEach(opt=>opt.classList.add('hidden'));
+        // Busco la opcion que eligio
+        const optionChosen = Array.from(specialtySelect.querySelectorAll('option')).find(opt=>opt.value==e.target.value);
+        const hasSubCategory = optionChosen.dataset.subcategory;
+        if(hasSubCategory == 'true'){
+            specialtyServiceSelect.classList.add('required')
+            const specialtyId = optionChosen.value;
+            // Le saco el hidden a los que corresponde
+            const optionsToShow = Array.from(specialtyServiceSelect.querySelectorAll('option')).filter(opt=>opt.dataset.specialtyid == specialtyId);
+            optionsToShow.forEach(opt=>opt.classList.remove('hidden'));
+        }
+    });
 });

@@ -1,18 +1,22 @@
 const specialties = [
     {
         id:1,
+        subSpec: true,
         name: 'Estética facial',
     },
     {
         id:2,
+        subSpec: false,
         name: 'Medicina Regenerativa',
     },
     {
         id:3,
+        subSpec: false,
         name: 'Estética corporal',
     },
     {
         id:4,
+        subSpec: true,
         name: 'ODONTOLOGIA',
     }
 ]
@@ -23,49 +27,42 @@ const specialties_services = [
         id: 1,
         specialties_id: 1,
         name: 'Armonización facial',
-        description: 'La percepción de un rostro bello, armónico y natural depende fundamentalmente de las proporciónes de una parte de nuestro rostro en relación con otra.',
     },
     {
         id: 2,
         specialties_id: 1,
         name: 'BOTOX®️',
-        description: 'Uno de los tratamientos con más demanda a nivel mundial, del que podemos beneficiarnos en sus múltiples usos.',
     },
     {
         id: 3,
         specialties_id: 1,
         name: 'COSMETOLOGIA',
-        description: 'La piel que siempre soñaste está mucho más cerca de lo que te imaginas.',
     },
     {
         id: 4,
         specialties_id: 1,
         name: 'TRATAMIENTO DE PAPADA',
-        description: 'Una de las zonas que todos queremos mejorar. Siempre con la cabeza en alto y con la ayuda de los tratamientos adecuados en cada caso obtenemos esos resultados que tanto buscamos.',
     },
     {
         id: 5,
         specialties_id: 1,
         name: 'BIOESTIMULADORES',
-        description: 'Llegaron para quedarse! Representan los últimos avances en estética facial que todos queremos. Sin aportar volumen estimulan potentemente a nuestras células para que produzcan grandes cantidades de colageno.',
     },
     {
         id: 6,
         name: 'ODONTOLOGIA GENERAL',
         specialties_id: 4,
-        description: 'Todos deberíamos saber el bien que una simple sonrisa puede hacer.'
     },
     {
         id: 7,
         name: 'TRATAMIENTO DE BRUXISMO',
         specialties_id: 4,
-        description: 'El Bruxismo es el apretamiento o rechinamiento de los dientes que se realiza tanto de forma consciente como inconsciente; y afecta a una gran parte de la población.',
     },
     {
         id: 8,
         name: 'DISEÑO DE SONRISA',
         specialties_id: 4,
-        description: 'Para comenzar realizamos un estudio completo del rostro del paciente tomando medidas dentarias y faciales, escaneo digital de la boca y fotografías. Mediante esta información podremos definir el largo, ancho y anatomía ideal de cada uno de sus dientes en perfecta relación a al rostro y a sus labios. Toda esta información es enviada al laboratorio quien confecciónará una impresión digital del modelo de la boca con la forma exacta del diseño realizado, que será probado en el paciente mediante un material provisorio para visualizar el agrado del diseño. Y en base al mismo proceder a confecciónar las carillas.  '
+        
     }
 ]
 

@@ -8,6 +8,7 @@ const provinces = require('../utils/staticDB/provinces');
 const paymentMethods = require('../utils/staticDB/paymentMethods');
 const orderStatus = require('../utils/staticDB/orderStatus');
 const specialtiesStatic = require('../utils/staticDB/services').specialties;
+const specialtiesServicesStatic = require('../utils/staticDB/services').specialties_services;
 // Libreries
 const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
@@ -54,7 +55,7 @@ const controller = {
         let treatments = getDeepCopy(await getAllTreatments());
         treatments = orderByAlfabet(treatments);
         let specialtiesServices = await db.SpecialtyService.findAll();
-        return res.render('updateServicePrice', { treatments, specialties: specialtiesStatic, specialtiesServices });
+        return res.render('updateServicePrice', { treatments, specialties: specialtiesStatic, specialtiesServices: specialtiesServicesStatic });
     },
     addTreatment: async (req, res) => {
         try {
@@ -73,7 +74,7 @@ const controller = {
                     // El objeto de la imagen que voy a subir
                     const params = {
                         Bucket: bucketName,
-                        Key: `treatment/${randomName}`,//Esto hace que se guarde en la carpeta product
+                        Key: `treatment/${randomName}`,//Esto hace que se guarde en la carpeta treatment
                         Body: buffer,
                         ContentType: 'image/webp'
                     };
@@ -93,7 +94,7 @@ const controller = {
                 cash_price: parseInt(cash_price),
                 filename: randomName
             };
-            await db.Treatment.create(treatmentToPushDB)
+            await db.Treatment.create(treatmentToPushDB);
             return res.redirect('/admin/servicios-modificar-precio');
         } catch (error) {
             console.log(`Falle en adminController.addTreatment: ${error}`);
