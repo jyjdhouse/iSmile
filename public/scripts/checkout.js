@@ -39,12 +39,13 @@ const handleAddingQuantity = (e) => { //función que se encarga de manera el cli
     // agarro el icono de eliminar prod
     const trashIcon = productCard.querySelector('.bx-trash')
     // Agarro al input mas cerca
+    trashIcon.classList.remove('bx-trash-active')
     const input = parentDiv.querySelector('.product-quantity');
     const substractQuantityIcon = parentDiv.querySelector('.subtract-quantity-btn')
     substractQuantityIcon.classList.remove('subtract-quantity-btn-inactive')
     input.value = parseInt(input.value) + 1;
     if (input.value >= 1) {
-        trashIcon.classList.contains('bx-trash-active') && trashIcon.classList.remove('bx-trash-active')
+       /*  trashIcon.classList.contains('bx-trash-active') && trashIcon.classList.remove('bx-trash-active') */
         parentDiv.querySelector('.subtract-quantity-btn').classList.add('available')
     }
     checkInputPrice(parentDiv.closest('.product-card'));
@@ -59,6 +60,7 @@ const handleSubstractingQuantity = (e) => { //función que se encarga de manera 
     // agarro el icono de eliminar prod
     const trashIcon = productCard.querySelector('.bx-trash')
     const input = parentDiv.querySelector('.product-quantity');
+   
     if (input.value <= 2) {
         input.value = 1;
         e.target.classList.remove('available');
@@ -77,6 +79,7 @@ reduceProductQuantityBtns.forEach(btn => {
     // Da click en el -
     btn.classList.add('subtract-quantity-btn-inactive')
     btn?.addEventListener('click', (e) => {
+        btn.classList.add('subtract-quantity-btn-inactive')
         handleSubstractingQuantity(e);
     });
 });
@@ -117,11 +120,11 @@ removeProductCardBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         // Agarro a la card
         const card = btn.closest('.product-card');
-        btn.classList.remove('.bx-trash-active')
+       /*  btn.classList.remove('.bx-trash-active') */
+        btn.classList.add('bx-trash-to-confirm') 
         const confirmDeleteContainer = card.querySelector('.confirm-delete-product-container')
         confirmDeleteContainer.classList.add('confirm-delete-product-container-active')
         const productInfoContainer = card.querySelector('.product-info-delete-container .product-info-container')
-
         productInfoContainer.classList.add('product-info-container-active')
         /* card.remove();
         getTotalPrice();

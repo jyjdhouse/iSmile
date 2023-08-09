@@ -177,6 +177,11 @@ body {
     opacity: 1;
 }
 
+.bx-trash-to-confirm {
+    color: grey;
+    pointer-events: none;
+}
+
 .article-div-child {
     display: flex;
     justify-content: center;
