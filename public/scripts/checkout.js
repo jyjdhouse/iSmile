@@ -597,10 +597,14 @@ async function checkForUserLogged() {
     try {
         let userLogged = window.userLogged;
         // Si hay usuario en session, se deja como esta
-        if (userLogged) return;
         const params = new URLSearchParams(window.location.search);
+        const comesFromEmail = params.get('fromEmail');
+        if (userLogged){
+            if(comesFromEmail) return window.location.href = '/user/checkout'
+            return;
+        } 
         // si viene del mail y no esta logueado entonces lo llevo al login directo
-        if(params.get('fromEmail')){
+        if(comesFromEmail){
             return window.location.href = '/user/login'
         }
         // Si no hay, tengo que pintar el carro con el localStorage

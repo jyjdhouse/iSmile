@@ -201,14 +201,14 @@ const controller = {
                     let randomName, buffer;
                     if (fileType == 1) {//FOTO
                         // Creo el nombre unico para la foto (dentro del forEach)
-                        randomName = Math.random().toString(36).substring(2, 2 + 10) + '.webp';
+                        randomName = 'product-'+Math.random().toString(36).substring(2, 2 + 10) + '.webp';
                         // Cambio el formato a webp y redimensiono la imagen, total la de los productos 
                         //  no se necesita tan gde      .resize({ height: 1920, width: 1080, fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
                         buffer = await sharp(file.buffer).toFormat('webp').toBuffer();
 
                     } else {//VIDEO
                         // Creo el nombre unico para el video
-                        randomName = Math.random().toString(36).substring(2, 2 + 10) + path.extname(file.originalname);
+                        randomName = 'product-'+Math.random().toString(36).substring(2, 2 + 10) + path.extname(file.originalname);
                         buffer = file.buffer;
                     }
                     // El objeto de la imagen que voy a subir

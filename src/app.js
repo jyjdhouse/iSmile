@@ -45,7 +45,7 @@ const adminRouter = require('./routes/adminRouter.js');
 const apiProductRouter = require('./routes/api/apiProductRouter.js');
 const apiUserRouter = require('./routes/api/apiUserRouter.js');
 const apiAdminRouter = require('./routes/api/apiAdminRouter.js')
-
+const apiPaymentRouter = require('./routes/api/apiPaymentRouter.js')
 // Middlewares
 const userLogged = require('./middlewares/userLogged.js');
 const userIsIncomplete = require('./middlewares/userIsIncomplete');
@@ -55,9 +55,10 @@ const headerMiddleware = require('./middlewares/headerMiddleware')
 
 
 // Ruteo para api
-app.use('/api/product', apiProductRouter);
+app.use('/api/product',apiProductRouter);
 app.use('/api/user', apiUserRouter);
 app.use('/api/admin', apiAdminRouter);
+app.use('/api/payment', apiPaymentRouter);
 
 app.use(userLogged);
 app.use(userIsIncomplete);
