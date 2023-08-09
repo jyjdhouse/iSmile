@@ -155,8 +155,9 @@
                         <a href="/blog" class="see-all-blogs">Ver Blogs</a>
                     </div>
                     
-                    <img src="<%= blogFile.file_url %>" alt="background-image"
-                        class="blog-background-image">
+                   
+                        <img src="img/homePage/rightPattern.png" alt="background-image"
+                        class="blog-pattern right-pattern blog-pattern">
                     <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
                         locals.userLogged.user_categories_id==2) ) { %>
                         <form class="edit-file-overlay blog-overlay" method="POST" action='/updateHomeFile?_method=PUT'
@@ -196,6 +197,8 @@
                         
                     </div>
                 </div>
+                <img src="img/homePage/leftPattern.png" alt="background-image"
+                class="blog-pattern blog-left-pattern blog-pattern">
             </section>
 
 

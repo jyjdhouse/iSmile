@@ -42,11 +42,14 @@ const controller = {
     userProfile: async (req, res) => {
         try {
             let user = getDeepCopy(await getUser(req.session.userLoggedId));
-        
+            let dateFormated;
             // Formateo la fecha
-            let dateFormated = dateFormater(user.birth_date);
-            user.birth_date = dateFormaterForInput(user.birth_date)
-
+            if(user.birth_date){
+                dateFormated = dateFormater(user.birth_date);
+                user.birth_date = dateFormaterForInput(user.birth_date)
+            }
+           
+            console.log(user.birth_date)
        
             
             // return res.send(user);

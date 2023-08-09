@@ -10,7 +10,7 @@ module.exports = function(date) {
     let mes = format(fechaSumada, 'MM');
     let dia = format(fechaSumada, 'dd');
 
-
     let fechaFormateada = `${año}-${mes}-${dia}`;
+    console.log(fechaFormateada)
     return fechaFormateada;
 }

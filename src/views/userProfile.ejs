@@ -18,6 +18,7 @@
                                 <ul class="profile-selected-list data-list">
                                     <li class="profile-field-container">
                                         <p>Nombre:</p> <span>
+                                            
                                             <%= user.first_name %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -38,7 +39,7 @@
                                     </li>
                                     <li class="profile-field-container">
                                         <p>Fecha de nacimiento:</p> <span>
-                                            <%= user.birth_date ? dateFormated : '' %>
+                                            <%= user.birth_date ? dateFormated : 'Sin Especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <input type="date" name="birth_date" <%=user.birth_date ?
@@ -269,7 +270,7 @@
                                     </li>
                                     <li class="profile-field-container">
                                         <p>Fecha de nacimiento:</p> <span>
-                                                <%= user.birth_date ? dateFormated : '' %>
+                                                <%= user.birth_date ? dateFormated : 'Sin Especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <input type="date" name="birth_date"

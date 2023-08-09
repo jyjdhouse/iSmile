@@ -30,13 +30,20 @@ video::-webkit-media-controls-time-remaining-display {
     white-space: nowrap;
 }
 
-.left-pattern{
+.blog-left-pattern{
+    bottom: 0;
+}
 
-    rotate: 109deg;
-    left: -38%;
-    width: 74%;
+.blog-right-pattern {
+    right: 0;
+}
+
+.blog-pattern {
+    position: absolute;
+    width: 30%;
     z-index: 1;
 }
+
 /* VIDEO LANDING */
 .landing-video-container {
     height: 90vh;
@@ -301,7 +308,7 @@ video::-webkit-media-controls-time-remaining-display {
     width: 100%;
     position: relative;
     height: 30%;
-    background: linear-gradient(rgb(0, 0, 0), rgba(0, 0, 0, .8));
+   
 }
 
 .blog-background .overlay {
@@ -413,6 +420,9 @@ video::-webkit-media-controls-time-remaining-display {
     outline: none;
     border: none;
 }
+
+
+
 
 /* .card-overlay {
     position: absolute;
@@ -1122,6 +1132,8 @@ video::-webkit-media-controls-time-remaining-display {
         align-items: center;
     }
 
+
+
     .right-pattern {
         right: -10%;
     }
@@ -1133,6 +1145,8 @@ video::-webkit-media-controls-time-remaining-display {
         left: -22%;
         width: 37%;
     }
+
+    
 
     .about-us-information-title {
         font-size: 1.8rem;
