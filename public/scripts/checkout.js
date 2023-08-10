@@ -74,6 +74,20 @@ const handleSubstractingQuantity = (e) => { //función que se encarga de manera 
 
     // checkRowPrices(input.closest('.row'));
 }
+
+// logica para confirmar el borrado de cards
+const confirmDeleteBtns = document.querySelectorAll('.confirm-delete-product-container');
+
+confirmDeleteBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const card = btn.closest('.product-card');
+        card.remove()
+        getTotalPrice();
+        checkIfCartIsEmpty(); 
+    })
+})
+
+
 // Voy por cada signo + & - 
 reduceProductQuantityBtns.forEach(btn => {
     // Da click en el -
@@ -126,9 +140,8 @@ removeProductCardBtns.forEach(btn => {
         confirmDeleteContainer.classList.add('confirm-delete-product-container-active')
         const productInfoContainer = card.querySelector('.product-info-delete-container .product-info-container')
         productInfoContainer.classList.add('product-info-container-active')
-        /* card.remove();
-        getTotalPrice();
-        checkIfCartIsEmpty(); */
+      
+      
     });
 });
 
