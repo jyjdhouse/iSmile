@@ -73,13 +73,10 @@ const controller = {
         res.set(headers);
         fs.createReadStream(filePath).pipe(res);
 
-        fs.unlink(filePath, (error) => {
-          if (error) {
-            console.log('Error al eliminar el archivo CSV:', error);
-          } else {
-            console.log('Archivo CSV eliminado exitosamente.');
-          }
-        });
+        // Elimina el archivo después de enviarlo al cliente
+        await fs.promises.unlink(filePath);
+
+        return
 
       } catch (error) {
         console.error('Error al generar el archivo CSV:', error);

@@ -20,28 +20,11 @@ const controller = {
     getLoggedUserId: async (req, res) => {
         try {
             let userId = req.userId;
-            if (!userId) { //Si no viene el userID, no se chekeo el token ==> devuelvo error en la solicitud
-                const error = new Error('Error en la solicitud, debes iniciar sesion nuevamente');
-                // Devolviendo una respuesta de error
-                res.status(404).json({
-                    ok: false,
-                    error: error.message
-                });
-                return
-            }
             let msg = req.msg;
 
-            let user = getDeepCopy(await getUser(userId));
-            // Esto es para no mandar al front estos datos
-            delete user?.password;  
-            delete user?.dni;  
-            delete user?.shippingAddress;  
-            delete user?.userCategory;  
-            delete user?.password_token; 
-            delete user?.email; 
-            delete user?.phone; 
-            delete user?.birth_date; 
-
+            let user = getDeepCopy(await db.User.findByPk(userId,{
+                attributes: ['id']
+            }));
             // Mando la respuesta
             return res.status(200).json({
                 meta: {
@@ -59,7 +42,6 @@ const controller = {
     },
     createTempCart: async (req, res) => {
         try {
-            // TODO: Preguntar a martin y cambiar el body por lo que me llega en el middleware de checkForToken
             const { userId, prodId } = req.body;
             
             const tempCart = await db.TemporalCart.create({
@@ -152,15 +134,6 @@ const controller = {
         try {
 
             const userToChangePassID = req.userId;
-            if (!userToChangePassID) { //Si no viene el userID, no se chekeo el token ==> devuelvo error en la solicitud
-                const error = new Error('Error en la solicitud, debes iniciar sesion nuevamente');
-                // Devolviendo una respuesta de error
-                res.status(400).json({
-                    ok: false,
-                    error: error.message
-                });
-                return
-            }
             // El principio de la url
             const host = req.headers.host;
 

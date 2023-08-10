@@ -1,3 +1,4 @@
+import {isNumeric} from './utils.js'
 window.addEventListener('load', () => {
 
     const form = document.querySelector('.create-product-form')
@@ -34,9 +35,9 @@ window.addEventListener('load', () => {
                             `
                     <div class="image-radio-box">
                         <div class="image-container">
-                            <label for="${reader.result}"><img src="${reader.result}" alt="${file.name}"></label>
+                            <img src="${reader.result}" alt="${file.name}" class='image-to-select-main'>
                         </div>
-                        <input type="radio" name="mainImage" id="${reader.result}" value="${file.name}">
+                        <input type="radio" name="mainImage" value="${file.name}" class="radio-from-image">
                     </div>
                     `;
                     } else {
@@ -48,10 +49,24 @@ window.addEventListener('load', () => {
         });
         Promise.all(filePromises).then((boxes) => {
             // Agrega los boxes al contenedor
-            boxes.forEach(box => divContainer.innerHTML += box)
+            boxes.forEach(box => divContainer.innerHTML += box);
+            listenForImagesToSelectMain();
         });
+        
     });
-
+    function listenForImagesToSelectMain(){
+        const images = document.querySelectorAll('.image-to-select-main');
+        console.log(images);
+        images.forEach(img=>{
+            img.addEventListener('click',()=>{
+                console.log('Di click');
+                const cont = img.closest('.image-radio-box');
+                console.log(cont);
+                cont.querySelector('input').checked = true;
+            })
+        })
+    };
+    // listenForImagesToSelectMain();
     form.addEventListener('submit', (e) => {
         e.preventDefault()
         formErrors = false;
@@ -76,6 +91,20 @@ window.addEventListener('load', () => {
             form.submit()
         }
 
-    })
+    });
+    // Logica para que todos los inputs numericos no acepten letras
+    let numericInputs = document.querySelectorAll('.numeric-only-input');
+    numericInputs.forEach(input => {
+        // Tomo el ultimo valor
+        let lastInputValue = input.value;
+        input.addEventListener("input", function (e) {
+            var inputValue = e.target.value;
+            if (!isNumeric(inputValue)) { // Si no es un número, borra el contenido del campo
+                e.target.value = lastInputValue;
+            } else {
+                lastInputValue = inputValue; // Almacenar el último valor válido
+            }
+        });
+    });
 
 })

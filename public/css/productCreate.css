@@ -95,13 +95,15 @@
 }
 .images-radio-box-wrapper{
     width: 100%;
-    height: 30vh;
     display: flex;
-    column-gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 20px;
+    height: fit-content;
 }
 .image-radio-box{
     height: 100%;
-    width: 150px;
+    width: 45%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -111,12 +113,23 @@
     height: 90%;
 }
 .image-radio-box input{
-    width: 100%;
-    height: fit-content;
+    width: fit-content;
+    height: 15px;
+
 }
 .image-container img,
 .image-container video{
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+@media(min-width:1024px){
+    .images-radio-box-wrapper{
+        flex-wrap: nowrap;
+        height: 30vh;
+    }
+    .image-radio-box{
+        width: 150px;
+    }
 }

@@ -13,13 +13,13 @@ router.get('/update/:productId',isAdminMiddleware, productController.updateProdu
 router.get('/:productId',productController.detail);
 
 // POST
-router.post('/create', uploadFile.any('images'),productController.processProductCreation);
+router.post('/create', isAdminMiddleware, uploadFile.any('images'), productController.processProductCreation);
 
 // PUT
-router.put('/:productId',uploadFile.any('images'),productController.processProductUpdate);
+router.put('/:productId', isAdminMiddleware, uploadFile.any('images'), productController.processProductUpdate);
 
 // DELETE
-router.delete('/:productId', productController.deleteProduct);
+router.delete('/:productId', isAdminMiddleware, productController.deleteProduct);
 
 // router.get('/getProduct',productController.getOneProduct);
 

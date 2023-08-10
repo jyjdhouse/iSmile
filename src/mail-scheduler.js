@@ -1,6 +1,5 @@
 const cron = require('node-cron');
 const nodemailer = require('nodemailer');
-const path = require('path');
 const getAllUsers = require('./utils/getAllUsers');
 const getDeepCopy = require('./utils/getDeepCopy');
 const db = require('./database/models');

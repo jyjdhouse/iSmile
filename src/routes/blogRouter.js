@@ -7,7 +7,7 @@ const isAdminMiddleware = require('../middlewares/isAdminMiddleware')
 const uploadBlogImage = require('../middlewares/uploadBlogImages');
 
 // Middleware
-/* const checkForToken = require('../../middlewares/checkForToken'); */
+
 
 
 

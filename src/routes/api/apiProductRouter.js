@@ -3,14 +3,14 @@ const router = express.Router();
 
 const apiProductController = require('../../controllers/api/apiProductController');
 // Middleware
-// const checkForToken = require('../../middlewares/checkForToken');
+const adminCredentialsMiddleware = require('../../middlewares/adminCredentialsMiddleware')
 
 
 
 // RUTEO
 router.get('/',apiProductController.list);
-router.get('/getTreatments',apiProductController.getTreatments);
-router.get('/:productId',apiProductController.detail); //Esta va ultima por el :id
+router.get('/getTreatments',adminCredentialsMiddleware,apiProductController.getTreatments); //Solo lo pidp en budget ==> hago el chequeo que sea admin
+// router.get('/:productId',apiProductController.detail); //Esta va ultima por el :id
 
 
 

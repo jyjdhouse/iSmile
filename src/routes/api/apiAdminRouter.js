@@ -7,7 +7,7 @@ const adminCredentialsMiddleware = require('../../middlewares/adminCredentialsMi
 const uploadTreatmentFiles = require('../../middlewares/uploadTreatmentImages');
 
 // GET
-router.get('/get-clients', apiAdminController.downloadClients);
+router.get('/get-clients',adminCredentialsMiddleware, apiAdminController.downloadClients);
 router.get('/order',adminCredentialsMiddleware,apiAdminController.getOrders);
 
 // PUT

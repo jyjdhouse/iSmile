@@ -8,21 +8,28 @@ const getUser = require('../utils/getUser');
 const userLogged = async (req, res, next) => {
     // Ruta de la que proviene
     let lastPath = getRelativePath(req.headers?.referer);
+
     try {
         let userInCookie;
         res.locals.isLogged = false;
         req.session.userLoggedId = null;
+        //Agarro la cookie del token
+        const token = req.cookies?.userAccessToken;
         // Ruta a la que quiere ir
         let pathToGo = getRelativePath(req.url);
         // Si quiere ir a logout no quiero nada de aca
-        if(pathToGo =='/user/logout') return next();
-        //Agarro la cookie del token
-        const token = req.cookies?.userAccessToken;
+        if (pathToGo == '/user/logout') return next();
+
         if (token) {
             const decodedData = jwt.verify(token, secret);
             if (decodedData) { //Si verifico el token, solo agarro el id
                 userInCookie = await getUser(decodedData?.id);
                 delete userInCookie.password; // Para no llevar la password session
+            } else { //Si no lo verifica, lo deslogueo
+                res.clearCookie('userAccessToken');
+                res.clearCookie('adminToken');
+                req.session.destroy();
+                return res.redirect(lastPath)
             }
         };
         if (userInCookie) { //Si encontro el usuario en la cookie
@@ -36,9 +43,11 @@ const userLogged = async (req, res, next) => {
         return next();
 
     } catch (error) {
-        
+
         console.log('Falle en userLoggedMiddleware: ' + error);
-        if(isJwtError(error)){ //Si es error de jwt
+        if (isJwtError(error)) { //Si es error de jwt
+            res.clearCookie('userAccessToken');
+            res.clearCookie('adminToken');
             let msg = "Ha ocurrido un error, por favor vuelve a iniciar sesion"
             return res.redirect(`${lastPath}?alert=${msg}`);
         }
