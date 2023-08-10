@@ -1,4 +1,4 @@
-import { addTempItemToDB, isNumeric } from "./utils.js";
+import { isNumeric } from "./utils.js";
 window.addEventListener('load', () => {
     let selectedTreatmentsToDestroy = [];
     // Logica para que todos los inputs numericos no acepten letras

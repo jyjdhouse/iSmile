@@ -69,7 +69,7 @@
             </div>
             <div class="field">
                 <label for="specialtyService_id">Subespecialidad</label>
-                <select name="specialtyService_id" id="specialtyService_id">
+                <select name="specialtyService_id" id="specialtyService_id" >
                     <option value="">Elegir una subespecialidad</option>
                     <% specialtiesServices.forEach(specServ => { %>
                         <option value="<%= specServ.id %>" class="hidden" data-specialtyId = <%= specServ.specialties_id %>><%= specServ.name %></option>
