@@ -50,24 +50,22 @@ window.addEventListener('load', () => {
     const count = otherImgs.length;
     otherImgs.forEach(cont => {
         if(isInDesktop()){
-            console.log('entrodesk')
-            console.log('entro')
+    
+            if(count==1) {
+                cont.style.height = '40%';
+                return
+            }
+            cont.style.height = `${100 / count - (count > 2 ? 2 : 15)}%`
+            cont.style.width = "80%"
+        } else{
             if(count==1) {
                 cont.style.width = '50%';
                 return
             }
             cont.style.width = `${100 / count - (count > 2 ? 5 : 15)}%`
-            cont.style.height = "70%"
-        } else{
-            if(count==1) {
-                cont.style.height = '50%';
-                return
-            }
-            cont.style.height = `${100 / count - (count > 2 ? 5 : 15)}%`
-            cont.style.width = "55%"
+            cont.style.height = "60%"
             
-        }
-       
+        }  
     });
     
     // Modifico el tamano de otherImg en función de la foto gde
@@ -77,13 +75,13 @@ window.addEventListener('load', () => {
     const mainImgContainer = document.querySelector('.main-img-container');
     // console.log(mainImgContainer.offsetWidth, mainImgContainer.clientWidth);
     if(isInDesktop()){
-        otherImgContainer.style.height = '20rem'
+        otherImgContainer.style.height = '25rem'
         
     } else{
        /*  const widthToSet = mainImgContainer.offsetWidth;
         otherImgContainer.style.width = `${widthToSet}px`; */
         
-        otherImgContainer.style.width = `195px`;
+        otherImgContainer.style.width = `90%`;
     }
     
     // Cuando cambia la resolución va cambiando con esto

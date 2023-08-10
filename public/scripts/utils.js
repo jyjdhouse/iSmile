@@ -185,8 +185,6 @@ export async function addTempItemToDB(prodId,user) {//Agrega producto a la db
 };
 // Borra el item en cuestion de la DB
 export async function removeTempItemFromDB(prodId, user) {
-
-
     (await (await fetch(`${window.location.origin}/api/user/deleteTempItem`, {
         method: "DELETE",
         headers: {

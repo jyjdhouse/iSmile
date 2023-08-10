@@ -98,8 +98,9 @@
     display: flex;
     justify-content: space-between;
     width: 70%;
-    margin: 5% auto;
-    height: 25%;
+    margin: 0% auto;
+    margin-top: 3%;
+    height: 40%;
 }
 
 .other-img-container {

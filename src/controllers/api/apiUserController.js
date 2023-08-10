@@ -22,9 +22,17 @@ const controller = {
             let userId = req.userId;
             let msg = req.msg;
 
-            let user = getDeepCopy(await db.User.findByPk(userId,{
-                attributes: ['id']
-            }));
+            let user = getDeepCopy(await getUser(userId));
+            // Esto es para no mandar al front estos datos
+            delete user?.password;  
+            delete user?.dni;  
+            delete user?.shippingAddress;  
+            delete user?.userCategory;  
+            delete user?.password_token; 
+            delete user?.email; 
+            delete user?.phone; 
+            delete user?.birth_date; 
+
             // Mando la respuesta
             return res.status(200).json({
                 meta: {

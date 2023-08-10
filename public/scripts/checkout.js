@@ -11,9 +11,9 @@ if (!window.userLogged) handleRemoveCartBtnClick(window.userLogged);
 const provinces = Array.from(document.querySelectorAll('#billing_province option'));
 
 checkIfCartIsEmpty();
-function checkIfCartIsEmpty(){
+function checkIfCartIsEmpty() {
     const cartLength = document.querySelectorAll('.product-card').length;
-    if(cartLength==0){
+    if (cartLength == 0) {
         productCardWrapper.innerHTML = `<p class="no-products-msg">No tienes productos en el carro</p>`;
         document.querySelector('.start-buy-button').classList.add('disabled')
     };
@@ -35,7 +35,7 @@ const addProductQuantityBtns = document.querySelectorAll('.add-quantity-btn');
 
 const handleAddingQuantity = (e) => { //función que se encarga de manera el click del +
     const parentDiv = e.target.closest('div');
-    const productCard =  e.target.closest('.product-card');
+    const productCard = e.target.closest('.product-card');
     // agarro el icono de eliminar prod
     const trashIcon = productCard.querySelector('.bx-trash')
     // Agarro al input mas cerca
@@ -45,7 +45,7 @@ const handleAddingQuantity = (e) => { //función que se encarga de manera el cli
     substractQuantityIcon.classList.remove('subtract-quantity-btn-inactive')
     input.value = parseInt(input.value) + 1;
     if (input.value >= 1) {
-       /*  trashIcon.classList.contains('bx-trash-active') && trashIcon.classList.remove('bx-trash-active') */
+        /*  trashIcon.classList.contains('bx-trash-active') && trashIcon.classList.remove('bx-trash-active') */
         parentDiv.querySelector('.subtract-quantity-btn').classList.add('available')
     }
     checkInputPrice(parentDiv.closest('.product-card'));
@@ -56,12 +56,12 @@ const handleAddingQuantity = (e) => { //función que se encarga de manera el cli
 const handleSubstractingQuantity = (e, btn) => { //función que se encarga de manera el click del +
     // Agarro al input mas cerca
     const parentDiv = e.target.closest('div')
-    const productCard =  e.target.closest('.product-card');
+    const productCard = e.target.closest('.product-card');
     // agarro el icono de eliminar prod
     const trashIcon = productCard.querySelector('.bx-trash')
     const input = parentDiv.querySelector('.product-quantity');
 
-   
+
     if (input.value <= 2) {
         btn.classList.add('subtract-quantity-btn-inactive')
         input.value = 1;
@@ -90,17 +90,25 @@ confirmDeleteBtns.forEach(btn => {
 }) */
 
 // logica para confirmar el borrado de cards
-const checkClickTrashOrScreen = () => {
+const checkClickTrashOrScreen = (btn) => {
     document.addEventListener('click', (e) => {
         const elementClicked = e.target
         if (elementClicked.classList.contains('confirm-delete-product-container')) {
             console.log('toco')
-         const card = btn.closest('.product-card');
+            const card = btn.closest('.product-card');
             card.remove()
             getTotalPrice();
             checkIfCartIsEmpty();
         } else {
+            const btnClicked = btn;
             console.log('no toco')
+            const card = btnClicked.closest('.product-card');
+            /*  btn.classList.remove('.bx-trash-active') */
+            btnClicked.classList.remove('bx-trash-to-confirm')
+            const confirmDeleteContainer = card.querySelector('.confirm-delete-product-container')
+            confirmDeleteContainer.classList.remove('confirm-delete-product-container-active')
+            const productInfoContainer = card.querySelector('.product-info-delete-container .product-info-container')
+            productInfoContainer.classList.remove('product-info-container-active')
         }
     })
 }
@@ -111,7 +119,7 @@ reduceProductQuantityBtns.forEach(btn => {
     // Da click en el -
     btn.classList.add('subtract-quantity-btn-inactive')
     btn?.addEventListener('click', (e) => {
-       
+
         handleSubstractingQuantity(e, btn);
     });
 });
@@ -152,14 +160,16 @@ removeProductCardBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         // Agarro a la card
         const card = btn.closest('.product-card');
-       /*  btn.classList.remove('.bx-trash-active') */
-        btn.classList.add('bx-trash-to-confirm') 
+        /*  btn.classList.remove('.bx-trash-active') */
+        btn.classList.add('bx-trash-to-confirm')
         const confirmDeleteContainer = card.querySelector('.confirm-delete-product-container')
         confirmDeleteContainer.classList.add('confirm-delete-product-container-active')
         const productInfoContainer = card.querySelector('.product-info-delete-container .product-info-container')
         productInfoContainer.classList.add('product-info-container-active')
-        checkClickTrashOrScreen()
-      
+        setTimeout(() => {
+            checkClickTrashOrScreen(btn);
+        }, 100);
+
     });
 });
 
@@ -656,12 +666,12 @@ async function checkForUserLogged() {
         const params = new URLSearchParams(window.location.search);
         const comesFromEmail = params.get('fromEmail');
         const reloded = params.get('reloded');
-         // si viene del mail y no recargo la pagina la refresco
-        if(comesFromEmail && !reloded)return window.location.href = '/user/checkout?fromEmail=true&reloded=true'
+        // si viene del mail y no recargo la pagina la refresco
+        if (comesFromEmail && !reloded) return window.location.href = '/user/checkout?fromEmail=true&reloded=true'
         // Si hay usuario loggeado entonces no hago nada
-        if (userLogged)return
+        if (userLogged) return
         // si viene del mail y no esta logueado entonces lo llevo al login directo
-        if(comesFromEmail && reloded){
+        if (comesFromEmail && reloded) {
             return window.location.href = '/user/login'
         }
         // Si no hay, tengo que pintar el carro con el localStorage
@@ -678,7 +688,7 @@ async function checkForUserLogged() {
 
         // Mientras pido los productos hago el cargando...
         let products = await (await (await fetch(`${window.location.origin}/api/product`)).json()).products;
-        
+
         // Saco el spinner
         document.querySelector('.spinner-overlay').remove();
         productCardWrapper.innerHTML = '';
@@ -858,12 +868,12 @@ form.addEventListener('submit', async (e) => {
         let shipping_province = form.querySelector('select[name="shipping_province"]').value;
         let shipping_zip_code = form.querySelector('input[name="shipping_zip_code"]').value;
         // Estas 3 son los radio, entonces pregunto asi
-        let use_same_address = form.querySelector('input[name="use_same_address"]').checked ? 
-        form.querySelector('input[name="use_same_address"]').value : null;
-        let save_user_address = form.querySelector('input[name="save_user_address"]').checked ? 
-        form.querySelector('input[name="save_user_address"]').value : null;
-        let use_user_address = form.querySelector('input[name="use_user_address"]').checked ? 
-        form.querySelector('input[name="use_user_address"]').value : null;
+        let use_same_address = form.querySelector('input[name="use_same_address"]').checked ?
+            form.querySelector('input[name="use_same_address"]').value : null;
+        let save_user_address = form.querySelector('input[name="save_user_address"]').checked ?
+            form.querySelector('input[name="save_user_address"]').value : null;
+        let use_user_address = form.querySelector('input[name="use_user_address"]').checked ?
+            form.querySelector('input[name="use_user_address"]').value : null;
         const bodyForm = {
             items,
             users_id,
@@ -904,7 +914,7 @@ form.addEventListener('submit', async (e) => {
             return
         };
         // Una vez que se compra, si no hay usuario se borra el carro del locale
-        if(!window.userLogged){
+        if (!window.userLogged) {
             localStorage.removeItem('temporalCart');
         };
         window.location.href = `/`;
