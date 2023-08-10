@@ -698,26 +698,41 @@ async function checkForUserLogged() {
             product.filename = product.files.find(file => file.file_types_id == 1)?.filename;
             let cardHTML =
                 `
-            <article class="product-card" data-productid = ${product.id}>
-                <div class="product-card-image-container article-div-child">
-                    <img src="${product.file_url || '/img/product/default.png'}" alt="${product.name}-${product.filename}" class="product-image">
-                </div>
-                <div class="product-name-container article-div-child">
-                    <p class="product-name">${product.name}</p>
-                </div>
-                <div class="product-price-container article-div-child">
-                    <p class="product price">$<span class="product-price-span">${product.price}</span></p>
-                </div>
-                <div class="product-quantity-container article-div-child">
-                    <i class='bx bx-plus-medical add-quantity-btn'></i>
-                    <i class='bx bx-minus subtract-quantity-btn'></i>
-                    <input type="number" name="quantity" id="" class="product-quantity">
-                </div>
-                <div class="product-subtotal-container article-div-child">
-                    <p class="product-subtotal">$ <span class="product-subtotal-span">${product.price}</span></p>
-                </div>
-                <i class='bx bx-trash remove-cart-product'></i>
-                <div class="loading-container">
+                <article class="product-card" data-productid="${product.id}">
+                                    <div class="product-card-image-container article-div-child">
+                                        <img src="${product.file_url || '/img/product/default.png'}"
+                                        alt="${product.name}-${product.filename}" class="product-image">
+                                    </div>
+                                    <div class="product-info-delete-container">
+                                        <div class="product-info-container">
+                                            <div class="product-name-container article-div-child">
+                                                <p class="product-name">
+                                                    ${product.name}
+                                                </p>
+                                            </div>
+                                            <div class="product-price-container article-div-child">
+                                                <p class="product price">$<span class="product-price-span">
+                                                ${product.price}
+                                                    </span></p>
+                                            </div>
+                                            <div class="product-quantity-container article-div-child">
+                                                <i class='bx bx-plus-medical add-quantity-btn'></i>
+                                                <i class='bx bx-minus subtract-quantity-btn'></i>
+                                                <i class='bx bx-trash remove-cart-product'></i>
+                                                <input type="number" name="quantity" id="" class="product-quantity">
+                                            </div>
+                                            <div class="product-subtotal-container article-div-child">
+                                                <p class="product-subtotal">$ <span class="product-subtotal-span">
+                                                ${product.price}
+                                                    </span></p>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div class="confirm-delete-product-container">
+                                            <i class='bx bxs-trash-alt confirm-product-delete'></i>
+                                        </div>
+                                        <div class="loading-container">
                     <div class="load-wrapp">
                         <div class="load-3">
                             <div class="line"></div>
@@ -726,9 +741,42 @@ async function checkForUserLogged() {
                         </div>
                     </div>
                 </div>
-            </article>
+                                    </div>
+                                    
+                                   
             `;
             productCardWrapper.innerHTML += cardHTML;
+           /*  <%- include('./partials/loadingSpinner.ejs') %>
+            </article>
+<article class="product-card" data-productid = "${product.id}">
+<div class="product-card-image-container article-div-child">
+<img src="${product.file_url || '/img/product/default.png'}" alt="${product.name}-${product.filename}" class="product-image">
+</div>
+<div class="product-name-container article-div-child">
+<p class="product-name">${product.name}</p>
+</div>
+<div class="product-price-container article-div-child">
+<p class="product price">$<span class="product-price-span">${product.price}</span></p>
+</div>
+<div class="product-quantity-container article-div-child">
+<i class='bx bx-plus-medical add-quantity-btn'></i>
+<i class='bx bx-minus subtract-quantity-btn'></i>
+<input type="number" name="quantity" id="" class="product-quantity">
+</div>
+<div class="product-subtotal-container article-div-child">
+<p class="product-subtotal">$ <span class="product-subtotal-span">${product.price}</span></p>
+</div>
+<i class='bx bx-trash remove-cart-product'></i>
+<div class="loading-container">
+<div class="load-wrapp">
+    <div class="load-3">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</div>
+</div>
+</article> */
         });
         if (!localStorageCart || localStorageCart.length == 0) {
             productCardWrapper.innerHTML = `<p class="no-products-msg">No tienes productos en el carro</p>`;
