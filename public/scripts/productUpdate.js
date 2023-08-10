@@ -1,3 +1,4 @@
+import { listenForImagesToSelectMain } from "./utils.js";
 window.addEventListener('load', () => {
 
     const form = document.querySelector('.create-product-form')
@@ -18,6 +19,9 @@ window.addEventListener('load', () => {
     files.addEventListener('change', (e) => {
         // Contenedor donde van a ir las fotos
         let divContainer = document.querySelector('.images-radio-box-wrapper');
+        // Limpio todos los que son a partir del input
+        const containersToRemove = divContainer.querySelectorAll('.image-radio-box.from-input');
+        containersToRemove.forEach(cont=>cont.remove());
         // Archivos del input
         let fileObject = e.target.files
         let files = [];
@@ -37,13 +41,13 @@ window.addEventListener('load', () => {
                         // Si es una imagen
                         boxHTML =
                             `
-                    <div class="image-radio-box">
-                        <div class="image-container">
-                            <label for="${reader.result}"><img src="${reader.result}" alt="${file.name}"></label>
+                            <div class="image-radio-box from-input">
+                            <div class="image-container">
+                                <img src="${reader.result}" alt="${file.name}" class='image-to-select-main'>
+                            </div>
+                            <input type="radio" name="mainImage" value="${file.name}" class="radio-from-image">
                         </div>
-                        <input type="radio" name="mainImage" id="${reader.result}" value="${file.name}">
-                    </div>
-                    `;
+                        `;
                     } else if (file.type.startsWith('video/')) {
                         // Si es un video
                         boxHTML = ``;
@@ -54,7 +58,8 @@ window.addEventListener('load', () => {
         });
         Promise.all(filePromises).then((boxes) => {
             // Agrega los boxes al contenedor
-            boxes.forEach(box => divContainer.innerHTML += box)
+            boxes.forEach(box => divContainer.innerHTML += box);
+            listenForImagesToSelectMain();
         });
     });
 

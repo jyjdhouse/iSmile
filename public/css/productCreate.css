@@ -115,7 +115,15 @@
 .image-radio-box input{
     width: fit-content;
     height: 15px;
+}
 
+button{
+    border: 1px solid var(--violet-color);
+    padding: 15px 20px;
+    font-size: 18px;
+    border-radius: 15px;
+    margin: 0 auto;
+    color: var(--bold-color);
 }
 .image-container img,
 .image-container video{
@@ -128,6 +136,8 @@
     .images-radio-box-wrapper{
         flex-wrap: nowrap;
         height: 30vh;
+        justify-content: unset;
+        column-gap: 20px;
     }
     .image-radio-box{
         width: 150px;

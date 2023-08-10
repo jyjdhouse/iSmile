@@ -268,3 +268,15 @@ export function getPrettyDateReversed(dbDate){
 
     return `${month} ${day}, ${year}`
 }
+
+// Escucha las imagenes de productEdit/Create y blogEdit/Create
+export function listenForImagesToSelectMain(){
+    const images = document.querySelectorAll('.image-to-select-main');
+
+    images.forEach(img=>{
+        img.addEventListener('click',()=>{
+            const cont = img.closest('.image-radio-box');
+            cont.querySelector('input').checked = true;
+        })
+    })
+};

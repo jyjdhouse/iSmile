@@ -1,4 +1,4 @@
-import {isNumeric} from './utils.js'
+import {isNumeric, listenForImagesToSelectMain} from './utils.js'
 window.addEventListener('load', () => {
 
     const form = document.querySelector('.create-product-form')
@@ -54,18 +54,6 @@ window.addEventListener('load', () => {
         });
         
     });
-    function listenForImagesToSelectMain(){
-        const images = document.querySelectorAll('.image-to-select-main');
-        console.log(images);
-        images.forEach(img=>{
-            img.addEventListener('click',()=>{
-                console.log('Di click');
-                const cont = img.closest('.image-radio-box');
-                console.log(cont);
-                cont.querySelector('input').checked = true;
-            })
-        })
-    };
     // listenForImagesToSelectMain();
     form.addEventListener('submit', (e) => {
         e.preventDefault()
