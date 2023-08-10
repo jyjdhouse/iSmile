@@ -911,8 +911,9 @@ transition: padding-right .5s;
     }
 
     .product-card .bx-trash {
-        right: -2%;
         width: 10px;
+        font-size: 22px;
+        left: 15%;
     }
 
     .product-card-image-container {
