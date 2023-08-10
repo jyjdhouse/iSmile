@@ -53,15 +53,17 @@ const handleAddingQuantity = (e) => { //función que se encarga de manera el cli
     // checkRowPrices(input.closest('.row'));
 
 }
-const handleSubstractingQuantity = (e) => { //función que se encarga de manera el click del +
+const handleSubstractingQuantity = (e, btn) => { //función que se encarga de manera el click del +
     // Agarro al input mas cerca
     const parentDiv = e.target.closest('div')
     const productCard =  e.target.closest('.product-card');
     // agarro el icono de eliminar prod
     const trashIcon = productCard.querySelector('.bx-trash')
     const input = parentDiv.querySelector('.product-quantity');
+
    
     if (input.value <= 2) {
+        btn.classList.add('subtract-quantity-btn-inactive')
         input.value = 1;
         e.target.classList.remove('available');
         trashIcon.classList.add('bx-trash-active')
@@ -74,13 +76,27 @@ const handleSubstractingQuantity = (e) => { //función que se encarga de manera 
 
     // checkRowPrices(input.closest('.row'));
 }
+
+// logica para confirmar el borrado de cards
+const confirmDeleteBtns = document.querySelectorAll('.confirm-delete-product-container');
+
+confirmDeleteBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const card = btn.closest('.product-card');
+        card.remove()
+        getTotalPrice();
+        checkIfCartIsEmpty(); 
+    })
+})
+
+
 // Voy por cada signo + & - 
 reduceProductQuantityBtns.forEach(btn => {
     // Da click en el -
     btn.classList.add('subtract-quantity-btn-inactive')
     btn?.addEventListener('click', (e) => {
-        btn.classList.add('subtract-quantity-btn-inactive')
-        handleSubstractingQuantity(e);
+       
+        handleSubstractingQuantity(e, btn);
     });
 });
 addProductQuantityBtns.forEach(btn => {
@@ -126,9 +142,8 @@ removeProductCardBtns.forEach(btn => {
         confirmDeleteContainer.classList.add('confirm-delete-product-container-active')
         const productInfoContainer = card.querySelector('.product-info-delete-container .product-info-container')
         productInfoContainer.classList.add('product-info-container-active')
-        /* card.remove();
-        getTotalPrice();
-        checkIfCartIsEmpty(); */
+      
+      
     });
 });
 
