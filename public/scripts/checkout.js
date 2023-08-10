@@ -93,7 +93,8 @@ confirmDeleteBtns.forEach(btn => {
 const checkClickTrashOrScreen = (btn) => {
     document.addEventListener('click', (e) => {
         const elementClicked = e.target
-        if (elementClicked.classList.contains('confirm-delete-product-container')) {
+        const isTrashClicked = elementClicked.classList.contains('confirm-delete-product-container') || elementClicked.classList.contains('confirm-product-delete')
+        if (isTrashClicked) {
             console.log('toco')
             const card = btn.closest('.product-card');
             card.remove()
@@ -101,7 +102,6 @@ const checkClickTrashOrScreen = (btn) => {
             checkIfCartIsEmpty();
         } else {
             const btnClicked = btn;
-            console.log('no toco')
             const card = btnClicked.closest('.product-card');
             /*  btn.classList.remove('.bx-trash-active') */
             btnClicked.classList.remove('bx-trash-to-confirm')
