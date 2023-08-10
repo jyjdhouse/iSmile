@@ -1,6 +1,6 @@
-import { isNumeric } from "./utils.js";
+import { addTempItemToDB, isNumeric } from "./utils.js";
 window.addEventListener('load', () => {
-    let selectedTreatments = [];
+    let selectedTreatmentsToDestroy = [];
     // Logica para que todos los inputs numericos no acepten letras
     let numericInputs = document.querySelectorAll('.numeric-only-input');
     numericInputs.forEach(input => {
@@ -22,34 +22,35 @@ window.addEventListener('load', () => {
         let checkboxLabels = Array.from(document.querySelectorAll('.checkbox-label'));
         checkboxLabels.forEach(lab => {
             lab.addEventListener('click', () => {
+                // Busco el form al que pertenecen
+                const form = lab.closest('form');
+                const isDestroyForm = form.classList.contains('delete-treatment-form');
                 // lugar donde van a ir los shown. (lo agarro aca para que este actualziado)
-                let shownSectionContainer = document.querySelector('.shown-labels-container');
+                let shownSectionContainer = form.querySelector('.shown-labels-container');
                 let name = lab.innerHTML;
                 let id = lab.dataset.id;
                 // Me fijo que ya no este
                 let oldShownLabels = Array.from(shownSectionContainer.querySelectorAll('.shown-label'));
                 const isAlreadyShown = oldShownLabels.filter(lab => lab.innerHTML == name);
                 if (isAlreadyShown.length) return;
+                // Dependiendo en que form este lo pusheo al array correspondiente
+                isDestroyForm ? selectedTreatmentsToDestroy.push(id) : null;
 
-                selectedTreatments.push({
-                    id
-                })
-                // let treatmentIdInput = document.createElement('input');
-                // treatmentIdInput.name = 'treatments_id';
-                // treatmentIdInput.setAttribute('hidden', true);
-                // treatmentIdInput.value = id;
-                // Lo agrego al form
-                // document.querySelector('.form').appendChild(treatmentIdInput);
-
-
-                !isAlreadyShown.length ? shownSectionContainer.innerHTML +=
-                    `<div class="shown-label-container" data-id="${id}">
-                    <p class="shown-label">${name}</p>
-                    <input type="file" class="label-file-input">
-                ` : null
-                    ;
+                if (!isAlreadyShown.length) {
+                    if (isDestroyForm) {
+                        shownSectionContainer.innerHTML +=
+                            `<div class="shown-label-container" data-id="${id}">
+                        <p class="shown-label">${name}</p>
+                    `
+                    } else {
+                        shownSectionContainer.innerHTML +=
+                            `<div class="shown-label-container" data-id="${id}">
+                        <p class="shown-label">${name}</p>
+                        <input type="file" class="label-file-input" accept="image/*">
+                        `
+                    }
+                }
                 listenRemoveLabelsBtns();
-
             });
         });
     }
@@ -57,30 +58,45 @@ window.addEventListener('load', () => {
     const listenRemoveLabelsBtns = () => {
         const btns = document.querySelectorAll('.shown-label');
         btns.forEach(btn => {
+
             btn.addEventListener('click', () => {
-                btn.closest('.shown-label-container').remove();
+                const form = btn.closest('form');
+                const container = btn.closest('.shown-label-container')
+                if (form.classList.contains('delete-treatment-form')) {
+                    const idToRemove = container.dataset.id;
+                    const indexToRemove = selectedTreatmentsToDestroy.findIndex(id=>id==idToRemove);
+                    // Lo borro del array
+                    selectedTreatmentsToDestroy.splice(indexToRemove,1);
+                }
+                container.remove();
             })
+            console.log(selectedTreatmentsToDestroy);
         })
     };
     listenRemoveLabelsBtns();
 
     // LOGICA para buscador de tarjetas
     const listenToSearchInput = () => {
-        let inputSerach = document.querySelector('.search-checkbox');
-        inputSerach.addEventListener('input', (e) => {
-            // Agarro las labels 
-            let checkboxLabels = Array.from(document.querySelectorAll('.checkbox-label'));
-            // tomo el valor de busqueda
-            let value = e.target.value.toLowerCase();
-            // Si el valor esta contenido en el nombre, muestro las etiquetas
-            checkboxLabels.forEach(label => {
-                if (!label.innerHTML.toLowerCase().includes(value)) {
-                    label.classList.add('hidden');
-                } else {
-                    label.classList.remove('hidden')
-                }
+        // Esto es un queselAll porque hay 2 buscadores
+        let inputSearches = document.querySelectorAll('.search-checkbox');
+        inputSearches.forEach(inputSearch => {
+            inputSearch.addEventListener('input', (e) => {
+                const form = inputSearch.closest('form')
+                // Agarro las labels 
+                let checkboxLabels = Array.from(form.querySelectorAll('.checkbox-label'));
+                // tomo el valor de busqueda
+                let value = e.target.value.toLowerCase();
+                // Si el valor esta contenido en el nombre, muestro las etiquetas
+                checkboxLabels.forEach(label => {
+                    if (!label.innerHTML.toLowerCase().includes(value)) {
+                        label.classList.add('hidden');
+                    } else {
+                        label.classList.remove('hidden')
+                    }
+                });
             });
         });
+
     }
     listenToSearchInput();
 
@@ -100,7 +116,7 @@ window.addEventListener('load', () => {
 
     // Funcion que va por cada campo y creo el formData para enviar por post
     function loadFormData(formData) {
-        const shownLabelsContainer = document.querySelectorAll('.shown-label-container');
+        const shownLabelsContainer = document.querySelectorAll('.form .shown-label-container');
         let ids = [];
         // Voy por cada uno para agregar id, file
         shownLabelsContainer.forEach(cont => {
@@ -118,8 +134,8 @@ window.addEventListener('load', () => {
         formData.append('ids', JSON.stringify(ids));
 
         // Ahora con los prices
-        const newPrice = document.querySelector('input[name="new_price"]').value;
-        const newCashPrice = document.querySelector('input[name="new_cash_price"]').value;
+        const newPrice = document.querySelector('.form input[name="new_price"]').value;
+        const newCashPrice = document.querySelector('.form input[name="new_cash_price"]').value;
         //Los sumo al formData
         formData.append('newPrice', newPrice);
         formData.append('newCashPrice', newCashPrice);
@@ -137,11 +153,11 @@ window.addEventListener('load', () => {
                 method: 'PUT',
                 body: formData
             });
-            if(response.ok){
+            if (response.ok) {
                 // Dejo de mostrar el spinner
                 handleSpinnerBehave(false);
                 // Limpio todas las tarjetas
-                document.querySelectorAll('.shown-label-container').forEach(cont=>cont.remove());
+                document.querySelectorAll('.form .shown-label-container').forEach(cont => cont.remove());
             }
         } catch (error) {
             return console.log(`Error al mandar el formulario: ${error}`);
@@ -152,20 +168,55 @@ window.addEventListener('load', () => {
     // LOGICA PARA SELECTS
     const specialtySelect = document.getElementById('specialty_id');
     const specialtyServiceSelect = document.getElementById('specialtyService_id')
-    specialtySelect.addEventListener('change',(e)=>{
+    specialtySelect.addEventListener('change', (e) => {
         // Le pongo hidden a todas las subespecialidades
         specialtyServiceSelect.classList.remove('required')
         specialtyServiceSelect.value = '';
-        specialtyServiceSelect.querySelectorAll('option').forEach(opt=>opt.classList.add('hidden'));
+        specialtyServiceSelect.querySelectorAll('option').forEach(opt => opt.classList.add('hidden'));
         // Busco la opcion que eligio
-        const optionChosen = Array.from(specialtySelect.querySelectorAll('option')).find(opt=>opt.value==e.target.value);
+        const optionChosen = Array.from(specialtySelect.querySelectorAll('option')).find(opt => opt.value == e.target.value);
         const hasSubCategory = optionChosen.dataset.subcategory;
-        if(hasSubCategory == 'true'){
+        if (hasSubCategory == 'true') {
             specialtyServiceSelect.classList.add('required')
             const specialtyId = optionChosen.value;
             // Le saco el hidden a los que corresponde
-            const optionsToShow = Array.from(specialtyServiceSelect.querySelectorAll('option')).filter(opt=>opt.dataset.specialtyid == specialtyId);
-            optionsToShow.forEach(opt=>opt.classList.remove('hidden'));
+            const optionsToShow = Array.from(specialtyServiceSelect.querySelectorAll('option')).filter(opt => opt.dataset.specialtyid == specialtyId);
+            optionsToShow.forEach(opt => opt.classList.remove('hidden'));
         }
     });
+
+    // LOGICA para cuando mandar form de agregar servicio
+    const addTreatmentForm = document.querySelector('.add-treatment-form');
+    function checkForRequiredFields(form) {
+        const requiredInputs = form.querySelectorAll('.required');
+        let flag = true;
+        requiredInputs.forEach(inp => {
+            if (!inp.value) {
+                inp.classList.add('error-border');
+                flag = false;
+            }
+        });
+        return flag
+    };
+
+    addTreatmentForm.addEventListener('submit', (e) => {
+        const formIsComplete = checkForRequiredFields(e.target);
+        if (!formIsComplete) e.preventDefault();
+    });
+
+    // Logica para escuchar cuando cambian los input y despintar lo rojo
+    const inputs = document.querySelectorAll('input,select,textarea');
+    inputs.forEach(inp => {
+        inp.addEventListener('input', (e) => {
+            if (e.target.value) inp.classList.remove('error-border')
+        })
+    });
+
+    const destroyTreatmentsForm = document.querySelector('.delete-treatment-form');
+    destroyTreatmentsForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Inserto al input los ids a borrar
+        document.getElementById('ids').value = JSON.stringify(selectedTreatmentsToDestroy);
+        e.target.submit();
+    })
 });

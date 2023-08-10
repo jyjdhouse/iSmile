@@ -4,7 +4,7 @@
     <%- include('./partials/head.ejs') %>
     <link rel="stylesheet" href="/css/serviceUpdatePrice.css">
     <script type="module" src="/scripts/updateServicePrice.js"></script>
-    <title>Servicios - precio</title>
+    <title>Servicios - edicion</title>
 </head>
 <body>
     <%- include('./partials/header.ejs') %>
@@ -79,7 +79,7 @@
             <div class="field">
                 <label for="">Imagen</label>
                 <label for="treatment_image" class="image-label"><i class='bx bx-image'></i></label>
-                <input type="file" class="hidden" name="treatment_image" id="treatment_image">
+                <input type="file" class="hidden" name="treatment_image" accept="image/*" id="treatment_image">
             </div>
 
             <div class="field">
@@ -100,6 +100,28 @@
             </div>
             
             <button type="submit">Crear</button>
+        </form>
+
+        <form action="/admin/destroyTreatment?_method=DELETE" method="POST" class="delete-treatment-form">
+            <p class="add-treatment-title">Borrar Tratamiento/s</p>
+            <section class="choose-service-section">
+                <div class="search-checkbox-container">
+                    <input type="text" class="search-checkbox" placeholder="Busca por nombre">
+                </div>
+                <div class="choose-service-checkbox-container">
+                    <% treatments.forEach(treat => { %>
+                        <label class="checkbox-label" data-id="<%= treat.id %>"><%= treat.name %></label>
+                <% }) %>
+                </div>
+            </section>
+            <section class="shown-labels-section">
+                <p class="shown-labels-title bold">Tratamientos elegidos (toca para remover)</p>
+                <div class="shown-labels-container">
+
+                </div>
+            </section>
+            <input type="hidden" id="ids" name="ids">
+            <button type="submit">Borrar</button>
         </form>
     </main>
     <%- include('./partials/footer.ejs') %>

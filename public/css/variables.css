@@ -41,6 +41,8 @@ button {
     background: none;
 }
 
+
+
 li {
     list-style: none;
 }
@@ -68,7 +70,26 @@ li {
 .red {
     color: var(--red-color) !important;
 }
+.error-border{
+    border: 2px solid var(--red-color) !important;
+}
+.error-card{
+    padding: 10px;
+    position: absolute;
+    background: var(--red-color);
+    color: #ccc;
+    border-radius: 0.5rem;
+    right: 0;
+    bottom: 5vh;
+    transition: all 2s ease;
+}
+.error-card-inactive{
+    opacity: 0;
+}
 
+.error-msg {
+    color: var(--red-color);
+}
 /* SACAR FLECHAS INPUT TYPE NUMBER */
 /* SACAR FLECHAS INPUT TYPE NUMBER */
 
@@ -83,19 +104,7 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
-.error-card{
-    padding: 10px;
-    position: absolute;
-    background: var(--red-color);
-    color: #ccc;
-    border-radius: 0.5rem;
-    right: 0;
-    bottom: 5vh;
-    transition: all 2s ease;
-}
-.error-card-inactive{
-    opacity: 0;
-}
+
 .page-title {
     text-transform: uppercase;
 }
@@ -155,9 +164,6 @@ input[type=number] {
     color: white;
 }
 
-.error-msg {
-    color: var(--red-color);
-}
 
 .available {
     color: #000 !important;

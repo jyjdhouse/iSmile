@@ -18,7 +18,9 @@ router.get('/medicalInfo',isAdminMiddleware, adminController.showMedicalForm);
 router.get('/budget',isAdminMiddleware,adminController.budget);
 router.get('/consent',isAdminMiddleware,adminController.consent);
 // POST
-router.post('/addTreatment',isAdminMiddleware,upload.single('treatment_image'),adminController.addTreatment)
+router.post('/addTreatment',isAdminMiddleware,upload.single('treatment_image'),adminController.addTreatment);
+// DELETE
+router.delete('/destroyTreatment',isAdminMiddleware,adminController.destroyTreatment);
 
 
 module.exports=router;

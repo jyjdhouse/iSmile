@@ -18,7 +18,7 @@ textarea{
     font-size: 20px;
 }
 
-.form {
+.form{
     width: 100%;
     margin: 0 auto;
     display: flex;
@@ -213,7 +213,8 @@ textarea{
 }
 
 /* Para agregar servicios */
-.add-treatment-form {
+.add-treatment-form,
+.delete-treatment-form{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -256,7 +257,8 @@ textarea{
 .image-label>i{
     font-size: 35px;
 }
-.add-treatment-form button{
+.add-treatment-form button,
+.delete-treatment-form button{
     width: 30%;
     margin: 25px auto 0;
     padding: 10px 0;
@@ -268,4 +270,12 @@ textarea{
 }
 .add-treatment-form button:hover{
     background-color: #ddd;
+}
+
+/* PARA BORRAR TRATAMIENTOS */
+.delete-treatment-form button .add-treatment-title{
+    margin-bottom: 20px;
+}
+.delete-treatment-form .choose-service-section{
+    width: 60%;
 }

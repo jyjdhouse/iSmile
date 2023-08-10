@@ -10,6 +10,9 @@ const orderStatus = require('../utils/staticDB/orderStatus');
 const specialtiesStatic = require('../utils/staticDB/services').specialties;
 const specialtiesServicesStatic = require('../utils/staticDB/services').specialties_services;
 // Libreries
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
@@ -96,6 +99,42 @@ const controller = {
             };
             await db.Treatment.create(treatmentToPushDB);
             return res.redirect('/admin/servicios-modificar-precio');
+        } catch (error) {
+            console.log(`Falle en adminController.addTreatment: ${error}`);
+            return res.json({ error })
+        }
+    },
+    destroyTreatment: async (req, res) => {
+        try {
+            let { ids } = req.body;
+            ids = JSON.parse(ids);
+            // return res.send(ids);
+            // Obtengo los tratamientos
+            const treatmentsToDestroy = getDeepCopy(await db.Treatment.findAll({
+                where: {
+                    id: { [Op.in]: ids }
+                }
+            }));
+            // Antes de hacer el destroy tengo que ver si tiene files para borrarlo de aws
+            for (let i = 0; i < treatmentsToDestroy.length; i++) {
+                const treatment = treatmentsToDestroy[i];
+                if (treatment.filename) {
+                    const params = {
+                        Bucket: bucketName,
+                        Key: `treatment/${treatment.filename}`
+                    };
+                    const command = new DeleteObjectCommand(params);
+                    // Hago el delete de la base de datos
+                    await s3.send(command);
+                }
+            };
+            // Ahora si hago el destroy
+            await db.Treatment.destroy({
+                where: {
+                    id: { [Op.in]: ids }
+                }
+            })
+            return res.redirect('/admin/servicios-modificar-precio')
         } catch (error) {
             console.log(`Falle en adminController.addTreatment: ${error}`);
             return res.json({ error })
