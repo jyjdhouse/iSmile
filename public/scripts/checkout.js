@@ -95,7 +95,6 @@ const checkClickTrashOrScreen = (btn) => {
         const elementClicked = e.target
         const isTrashClicked = elementClicked.classList.contains('confirm-delete-product-container') || elementClicked.classList.contains('confirm-product-delete')
         if (isTrashClicked) {
-            console.log('toco')
             const card = btn.closest('.product-card');
             card.remove()
             getTotalPrice();
