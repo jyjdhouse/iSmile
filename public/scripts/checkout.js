@@ -77,8 +77,8 @@ const handleSubstractingQuantity = (e, btn) => { //función que se encarga de ma
     // checkRowPrices(input.closest('.row'));
 }
 
-// logica para confirmar el borrado de cards
-const confirmDeleteBtns = document.querySelectorAll('.confirm-delete-product-container');
+
+/* const confirmDeleteBtns = document.querySelectorAll('.confirm-delete-product-container');
 
 confirmDeleteBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -87,7 +87,23 @@ confirmDeleteBtns.forEach(btn => {
         getTotalPrice();
         checkIfCartIsEmpty(); 
     })
-})
+}) */
+
+// logica para confirmar el borrado de cards
+const checkClickTrashOrScreen = () => {
+    document.addEventListener('click', (e) => {
+        const elementClicked = e.target
+        if (elementClicked.classList.contains('confirm-delete-product-container')) {
+            console.log('toco')
+         const card = btn.closest('.product-card');
+            card.remove()
+            getTotalPrice();
+            checkIfCartIsEmpty();
+        } else {
+            console.log('no toco')
+        }
+    })
+}
 
 
 // Voy por cada signo + & - 
@@ -142,10 +158,12 @@ removeProductCardBtns.forEach(btn => {
         confirmDeleteContainer.classList.add('confirm-delete-product-container-active')
         const productInfoContainer = card.querySelector('.product-info-delete-container .product-info-container')
         productInfoContainer.classList.add('product-info-container-active')
-      
+        checkClickTrashOrScreen()
       
     });
 });
+
+
 
 // Logica para cambiar entre retiro por el local y a domicilio
 const updateDeliveryChoice = (e) => {

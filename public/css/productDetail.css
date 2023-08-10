@@ -277,7 +277,26 @@ h1.product-title {
     }
 
     .first-column {
+        display: flex;
+        align-items: center;
         width: 60%;
+        padding-left: 5%;
+    }
+
+    .main-img-container {
+        width: 80%;
+    }
+
+    .other-product-imgs-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+  
+    }
+
+    .other-img-container {
+        width: 60%;   
     }
 
     .second-column {
@@ -364,10 +383,11 @@ h1.product-title {
         height: 100%;
     }
     .main-img-container {
-        width: fit-content;
+        width: 80%;
         height: 20rem;
     }
     .other-product-imgs-container {
+        width: 20%;
         margin: 3% auto;
         height: 5rem;
     }

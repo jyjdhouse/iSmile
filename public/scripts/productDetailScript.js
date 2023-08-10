@@ -49,11 +49,25 @@ window.addEventListener('load', () => {
     const otherImgs = document.querySelectorAll('.other-img-container');
     const count = otherImgs.length;
     otherImgs.forEach(cont => {
-        if(count==1) {
-            cont.style.width = '40%';
-            return
+        if(isInDesktop()){
+            console.log('entrodesk')
+            console.log('entro')
+            if(count==1) {
+                cont.style.width = '50%';
+                return
+            }
+            cont.style.width = `${100 / count - (count > 2 ? 5 : 15)}%`
+            cont.style.height = "70%"
+        } else{
+            if(count==1) {
+                cont.style.height = '50%';
+                return
+            }
+            cont.style.height = `${100 / count - (count > 2 ? 5 : 15)}%`
+            cont.style.width = "55%"
+            
         }
-        cont.style.width = `${100 / count - (count > 2 ? 5 : 15)}%`
+       
     });
     
     // Modifico el tamano de otherImg en función de la foto gde
@@ -62,12 +76,14 @@ window.addEventListener('load', () => {
     // console.log(otherImgContainer);
     const mainImgContainer = document.querySelector('.main-img-container');
     // console.log(mainImgContainer.offsetWidth, mainImgContainer.clientWidth);
-    if(!isInDesktop()){
-        otherImgContainer.style.width = `172px`;
+    if(isInDesktop()){
+        otherImgContainer.style.height = '20rem'
+        
     } else{
-        console.log('compu');
-        const widthToSet = mainImgContainer.offsetWidth;
-        otherImgContainer.style.width = `${widthToSet}px`;
+       /*  const widthToSet = mainImgContainer.offsetWidth;
+        otherImgContainer.style.width = `${widthToSet}px`; */
+        
+        otherImgContainer.style.width = `195px`;
     }
     
     // Cuando cambia la resolución va cambiando con esto

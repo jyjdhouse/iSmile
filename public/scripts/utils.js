@@ -104,7 +104,7 @@ export function getCartTotalProducts(user) {
 // Cuando tocan el boton del tick (sacan el producto del carro)
 // Lo hago función porque lo uso tambien cuando se carga despues
 export function handleRemoveCartBtnClick(userLogged){
-    const removingCartButtons = document.querySelectorAll('.remove-cart-product');
+    const removingCartButtons = document.querySelectorAll('.confirm-delete-product-container');
     let totalProducts = document.querySelectorAll('.products-quantity');
     removingCartButtons.forEach(btn => {
         btn.addEventListener('click', async (e) => {
@@ -185,6 +185,8 @@ export async function addTempItemToDB(prodId,user) {//Agrega producto a la db
 };
 // Borra el item en cuestion de la DB
 export async function removeTempItemFromDB(prodId, user) {
+
+
     (await (await fetch(`${window.location.origin}/api/user/deleteTempItem`, {
         method: "DELETE",
         headers: {
