@@ -280,7 +280,7 @@ const controller = {
 
     // aca voy por cada item del array para agarrar el id y el quantity
     await Promise.all(productsArray.map(async item => {
-      const { id, quantity } = item;
+      let { id, quantity } = item;
   
     await db.Product.update(
         // ejecuta la consulta sql literal para restar el quantity
