@@ -272,6 +272,27 @@ const controller = {
 
     return res.redirect('/');
   },
+  substractStore: async (req, res) => {
+
+    const productsArray = req.body;
+    // el array deberia recibir los campos 
+    // id y quantity
+
+    // aca voy por cada item del array para agarrar el id y el quantity
+    await Promise.all(productsArray.map(async item => {
+      const { id, quantity } = item;
+  
+      await db.Product.update(
+        { quantity: Sequelize.literal(`quantity - ${quantity}`) }, // Usamos una expresión SQL para incrementar la cantidad
+        { where: { id } }
+      );
+    }));
+
+
+
+
+
+  }
 }
 
 module.exports = controller
