@@ -49,7 +49,7 @@ window.addEventListener('load', () => {
     const otherImgs = document.querySelectorAll('.other-img-container');
     const count = otherImgs.length;
     otherImgs.forEach(cont => {
-        if(isInDesktop()){
+        if(window.innerWidth >= 1024){
     
             if(count==1) {
                 cont.style.height = '40%';
@@ -57,7 +57,16 @@ window.addEventListener('load', () => {
             }
             cont.style.height = `${100 / count - (count > 2 ? 2 : 15)}%`
             cont.style.width = "80%"
-        } else{
+        }
+        else if(window.innerWidth <= 1024 && window.innerWidth >= 768){
+            if(count==1) {
+                cont.style.height = '40%';
+                return
+            }
+            cont.style.height = `${100 / count - (count > 2 ? 2 : 15)}%`
+            cont.style.width = "50%"
+        }
+        else{
             if(count==1) {
                 cont.style.width = '50%';
                 return
