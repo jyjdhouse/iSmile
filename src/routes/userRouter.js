@@ -13,11 +13,11 @@ const onlyGuestsMiddleware = require('../middlewares/onlyGuestsMiddleware');
 // Rutas
 
 // GET
-router.get('/login',onlyGuestsMiddleware,getLastURL,userController.login);
-router.get('/regist',onlyGuestsMiddleware,userController.regist);
-router.get('/logout',/* guestMiddleware, */getLastURL,userController.logout);
+router.get('/login', onlyGuestsMiddleware,getLastURL,userController.login);
+router.get('/regist', onlyGuestsMiddleware,userController.regist);
+router.get('/logout', getLastURL,userController.logout);
 router.get('/checkout',userController.checkout); 
-router.get('/profile',guestMiddleware,userController.userProfile);
+router.get('/profile', guestMiddleware,userController.userProfile);
 router.get('/cambiar-contrasena/:token',userController.changePasswordView);
 router.get('/contrasena-error',userController.passwordError);
 router.get('/booking',userController.bookingView)

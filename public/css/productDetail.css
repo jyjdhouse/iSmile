@@ -79,6 +79,7 @@
 }
 
 .main-img-container {
+    position: relative;
     display: flex;
     justify-content: center;
     width: fit-content;
