@@ -282,15 +282,14 @@ const controller = {
     await Promise.all(productsArray.map(async item => {
       const { id, quantity } = item;
   
-      await db.Product.update(
-        { quantity: Sequelize.literal(`quantity - ${quantity}`) }, // Usamos una expresión SQL para incrementar la cantidad
+    await db.Product.update(
+        // ejecuta la consulta sql literal para restar el quantity
+        { quantity: Sequelize.literal(`quantity - ${quantity}`) },
         { where: { id } }
       );
     }));
 
-
-
-
+    return res.status(200).json({msg: 'Item restado del stock'})
 
   }
 }
