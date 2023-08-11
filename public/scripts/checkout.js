@@ -90,26 +90,37 @@ confirmDeleteBtns.forEach(btn => {
 }) */
 
 // logica para confirmar el borrado de cards
+let isEventHandlerActive = true;
 const checkClickTrashOrScreen = (btn) => {
-    document.addEventListener('click', (e) => {
-        const elementClicked = e.target
-        const isTrashClicked = elementClicked.classList.contains('confirm-delete-product-container') || elementClicked.classList.contains('confirm-product-delete')
+    const handleClick = (e) => {
+
+        if (!isEventHandlerActive) {
+            return;
+        }
+
+        const elementClicked = e.target;
+        const isTrashClicked = elementClicked.classList.contains('confirm-delete-product-container') || elementClicked.classList.contains('confirm-product-delete');
         if (isTrashClicked) {
             const card = btn.closest('.product-card');
-            card.remove()
+            card.remove();
             getTotalPrice();
             checkIfCartIsEmpty();
         } else {
             const btnClicked = btn;
             const card = btnClicked.closest('.product-card');
-            /*  btn.classList.remove('.bx-trash-active') */
-            btnClicked.classList.remove('bx-trash-to-confirm')
-            const confirmDeleteContainer = card.querySelector('.confirm-delete-product-container')
-            confirmDeleteContainer.classList.remove('confirm-delete-product-container-active')
-            const productInfoContainer = card.querySelector('.product-info-delete-container .product-info-container')
-            productInfoContainer.classList.remove('product-info-container-active')
+            btnClicked.classList.remove('bx-trash-to-confirm');
+            const confirmDeleteContainer = card.querySelector('.confirm-delete-product-container');
+            confirmDeleteContainer.classList.remove('confirm-delete-product-container-active');
+            const productInfoContainer = card.querySelector('.product-info-delete-container .product-info-container');
+            productInfoContainer.classList.remove('product-info-container-active');
+
+            // Desactivar el evento después del bloque 'else'
+            isEventHandlerActive = false;
+            document.removeEventListener('click', handleClick)
         }
-    })
+    };
+    
+    document.addEventListener('click', handleClick);
 }
 
 
@@ -166,6 +177,7 @@ removeProductCardBtns.forEach(btn => {
         const productInfoContainer = card.querySelector('.product-info-delete-container .product-info-container')
         productInfoContainer.classList.add('product-info-container-active')
         setTimeout(() => {
+            isEventHandlerActive = true;
             checkClickTrashOrScreen(btn);
         }, 100);
 
