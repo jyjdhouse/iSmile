@@ -61,6 +61,7 @@ const controller = {
     },
     checkout: async (req, res) => {
         let userId = req.session.userLoggedId;
+        console.log({userCheckout: req.session})
         // return res.render('checkout.ejs', { provinces });
         if (userId) { //Si hay usuario loggeado
             let user = getDeepCopy(await getUser(userId));
@@ -142,7 +143,7 @@ const controller = {
             // Lo tengo que loggear directamente
             const cookieTime = (1000 * 60) * 60 * 24 * 7 //1 Semana
 
-            req.session.userLoggedId = userCreated.id; //Defino en sessions al usuario loggeado
+            /* req.session.userLoggedId = userCreated.id; //Defino en sessions al usuario loggeado */
 
             // Generar el token de autenticación
             const token = jwt.sign({ id: userCreated.id }, secret, { expiresIn: '1w' }); // genera el token
@@ -189,6 +190,8 @@ const controller = {
 
                     let cookieTime = (1000 * 60) * 60 * 24  //1 Dia
                     // Generar el token de autenticación
+                    req.session.userLoggedId = userToLog.id;
+                    console.log({userController: req.session})
                     const token = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1d' }); // genera el token
                     res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
                     // Si es admin armo una cookie con el token de admin

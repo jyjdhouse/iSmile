@@ -15,7 +15,7 @@ const onlyGuestsMiddleware = require('../middlewares/onlyGuestsMiddleware');
 // GET
 router.get('/login',onlyGuestsMiddleware,getLastURL,userController.login);
 router.get('/regist',onlyGuestsMiddleware,userController.regist);
-router.get('/logout',guestMiddleware,getLastURL,userController.logout);
+router.get('/logout',/* guestMiddleware, */getLastURL,userController.logout);
 router.get('/checkout',userController.checkout); 
 router.get('/profile',guestMiddleware,userController.userProfile);
 router.get('/cambiar-contrasena/:token',userController.changePasswordView);
