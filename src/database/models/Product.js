@@ -13,6 +13,7 @@ module.exports = (sequelize, dataTypes) => {
         stock: { type: dataTypes.INTEGER },
         ingredients: { type: dataTypes.TEXT },
         size: { type: dataTypes.TEXT },
+        discount: { type: dataTypes.TINYINT },
     }
 
     let config = {

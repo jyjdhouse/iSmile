@@ -70,10 +70,22 @@
                         <div class="product-title-container">
                             <h1 class="product-title product-name">
                                 <%= product.name %>
+                                <% if (product.discount) { %>
+                                    <span class="discount-tag"><%= product.discount %>% OFF</span>
+                                <% } %>
                             </h1>
-                            <h3 class="product-title product-price">
-                                $<%= product.price %>
-                            </h3>
+                            
+                            <% if (product.discount) { %>
+                                <div class="price-with-discount">
+                                    <p class="product-price striked">$<%= product.price %></p>
+                                    <p class="product-price-discount">$<%= product.price * (1 - product.discount/100) %></p>
+                                </div>
+                            <% }else{ %>
+                                <h3 class="product-title product-price with-discount">
+                                    $<%= product.price %> <span class="discount-tag"></span>
+                                </h3>
+                            <% } %>
+                            
                         </div>
                         <div class="product-description-container product-info-item">
                             <p class="product-info-label">DESCRIPCIÓN <span class="product-info-toggler">-</span></p>
@@ -111,6 +123,12 @@
                     <% suggestedProducts.forEach(sugProd=> { %>
                         <article class="product-card-container suggested-product-card-detail-container"
                             data-productId="<%=sugProd.id %>">
+                            <% if (sugProd.discount) { %>
+                                <div class="card-discount-tag-container">
+                                    <p class="card-discount-tag"><%=sugProd.discount %>%</p>
+                                </div>
+                            <% } %>
+                            
                             <a href="/product/<%= sugProd.id %>" class="product-card-link">
                                 <div class="image-container suggested-image-container">
                                     <div class="image-carousel">
@@ -144,8 +162,15 @@
                                         <p class="product-name">
                                             <%= sugProd.name %>
                                         </p>
-                                        <p class="product-price">$<%= sugProd.price %>
-                                        </p>
+                                        <% if (sugProd.discount) { %>
+                                            <div class="price-with-discount">
+                                                <p class="product-price striked">$<%= sugProd.price %></p>
+                                                <p class="product-price-discount">$<%= Math.round(sugProd.price * (1-sugProd.discount/100)) %></p>
+                                            </div>
+                                        <% } else{ %>
+                                            <p class="product-price">$<%= sugProd.price %></p>
+                                        <% } %>
+                                        
                                     </div>
                                 </div>
                             </a>

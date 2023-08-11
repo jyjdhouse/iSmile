@@ -159,6 +159,7 @@ const controller = {
                 }
 
             }
+            // return res.send(product);
             return res.render('productDetail', { product, suggestedProducts })
         } catch (error) {
             console.log(`Falle en productController.detail: ${error}`);
@@ -170,7 +171,7 @@ const controller = {
     },
     processProductCreation: async (req, res) => {
         try {
-            let { name, price, description, category, ingredients, size, mainImage } = req.body;
+            let { name, price, description, category, ingredients, size, mainImage, stock, discount } = req.body;
             let images = req.files;
 
             const convertToHtml = () => { // este showdown es para convertir el html a markdown, y conservar el formato
@@ -189,7 +190,9 @@ const controller = {
                 description: convertToHtml(),
                 category_id: category,
                 ingredients,
-                size
+                size,
+                stock: parseInt(stock) || 0,
+                discount: parseInt(discount) || 0
             };
 
             const newProduct = await db.Product.create(productObject);
@@ -265,7 +268,7 @@ const controller = {
 
             const productId = req.params.productId;
             const productToUpdate = await getProduct(productId)
-            const { name, price, description, current_imgs, ingredients, size, mainImage } = req.body
+            const { name, price, description, current_imgs, ingredients, size, mainImage, stock, discount } = req.body
 
             // Agarro las imagenes del input
             let files = req.files
@@ -275,7 +278,9 @@ const controller = {
                 price,
                 description,
                 ingredients,
-                size
+                size,
+                stock: parseInt(stock) || 0,
+                discount: parseInt(discount) || 0
             }, {
                 where: {
                     id: productToUpdate.id
