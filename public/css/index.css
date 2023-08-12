@@ -85,6 +85,7 @@ video::-webkit-media-controls-time-remaining-display {
 
 .cta-container span {
     font-weight: 700;
+    text-transform: uppercase;
     color: var(--violet-color);
 }
 
@@ -984,6 +985,10 @@ video::-webkit-media-controls-time-remaining-display {
 
     .call-to-actions-container .cta-container {
         cursor: pointer;
+    }
+
+    .call-to-actions-container .cta-container {
+        height: 50px;
     }
 
     .blog-section {

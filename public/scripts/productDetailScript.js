@@ -69,6 +69,7 @@ window.addEventListener('load', () => {
         else{
             if(count==1) {
                 cont.style.width = '50%';
+                cont.style.width = '50%';
                 return
             }
             cont.style.width = `${100 / count - (count > 2 ? 5 : 15)}%`

@@ -1,12 +1,12 @@
 const db = require('../../database/models');
 const fs = require('fs');
+const handleStock = require('../../utils/handleStock')
 // Librerias
 const secret = require('../../utils/secret').secret;
 const jwt = require('jsonwebtoken');
 const json2csv = require('json2csv').parse;
 const Sequelize = require('sequelize');
 const { Op } = require('sequelize');
-
 const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const sharp = require('sharp');
@@ -146,9 +146,16 @@ const controller = {
   },
   updateOrders: async (req, res) => {
     try {
-      const orderId = req.params.orderId
+      const orderId = req.params.orderId;
+      const categoryId = req.body.categoryId;
+      const order = await db.Order.findByPk(orderId);
+      let method;
 
-      const categoryId = req.body.categoryId
+      // veo si va de pendiente de confirmación a pendiente de pago o va a ser anulada
+      if((order.order_status_id == 4 && orderId == 3) || orderId == 5){
+        method = 'resta';
+        handleStock(order, method);
+      }
 
       await db.Order.update(
         { order_status_id: categoryId },
@@ -271,26 +278,6 @@ const controller = {
 
 
     return res.redirect('/');
-  },
-  substractStore: async (req, res) => {
-
-    const productsArray = req.body;
-    // el array deberia recibir los campos 
-    // id y quantity
-
-    // aca voy por cada item del array para agarrar el id y el quantity
-    await Promise.all(productsArray.map(async item => {
-      let { id, quantity } = item;
-  
-    await db.Product.update(
-        // ejecuta la consulta sql literal para restar el quantity
-        { quantity: Sequelize.literal(`quantity - ${quantity}`) },
-        { where: { id } }
-      );
-    }));
-
-    return res.status(200).json({msg: 'Item restado del stock'})
-
   }
 }
 
