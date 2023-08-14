@@ -9,6 +9,7 @@ const paymentMethods = require('../utils/staticDB/paymentMethods');
 const orderStatus = require('../utils/staticDB/orderStatus');
 const specialtiesStatic = require('../utils/staticDB/services').specialties;
 const specialtiesServicesStatic = require('../utils/staticDB/services').specialties_services;
+const handleStock = require('../utils/handleStock');
 // Libreries
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -154,6 +155,7 @@ const controller = {
     orderList: async (req, res) => {
         return res.render('orderList', { orderStatus })
     }
+   
 };
 
 module.exports = controller;
