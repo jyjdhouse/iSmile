@@ -151,9 +151,14 @@ const controller = {
       const order = await db.Order.findByPk(orderId);
       let method;
 
-      // veo si va de pendiente de confirmación a pendiente de pago o va a ser anulada
-      if((order.order_status_id == 4 && orderId == 3) || orderId == 5){
+      // veo si va de pendiente de confirmación a pendiente de pago 
+      if(order.order_status_id == 4 && orderId == 3){
         method = 'resta';
+        handleStock(order, method);
+      } 
+
+      if(order.order_status_id == 5){
+        method = 'suma';
         handleStock(order, method);
       }
 

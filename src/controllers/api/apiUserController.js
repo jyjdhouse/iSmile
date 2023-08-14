@@ -14,7 +14,8 @@ const getDeepCopy = require('../../utils/getDeepCopy');
 const sendOrderMails = require('../../utils/sendOrderMails');
 const getAllProducts = require('../../utils/getAllProducts');
 const getOrder = require('../../utils/getOrder');
-const emailConfig = require('../../utils/staticDB/mailConfig')
+const emailConfig = require('../../utils/staticDB/mailConfig');
+const handleStock = require('../../utils/handleStock');
 
 const controller = {
     getLoggedUserId: async (req, res) => {
@@ -313,6 +314,8 @@ const controller = {
             };
             // armo los orderItems
             const orderItemsToDB = [];
+            let stockItems = [];
+            let method = 'resta';
             items.forEach(item => {
                 // Agarro el producto
                 let itemInDB = productsInDB.find(prod => prod.id == item.products_id);
@@ -322,15 +325,23 @@ const controller = {
                 let orderItemPrice = item.price ? parseInt(item.price) : itemInDB?.price;
                 let orderItemQuantity = parseInt(item.quantity);
                 // Voy armando el array de orderItems para hacer un bulkcreate
+                let orderId = uuidv4();
                 orderItemsToDB.push({
-                    id: uuidv4(),
+                    id: orderId,
                     orders_id: orderDataToDB.id,
                     products_id: itemInDB.id,
                     name: orderItemName,
                     price: orderItemPrice,
                     quantity: orderItemQuantity
                 });
+                // pusheo los objetos al stockItems
+                stockItems.push({
+                    id: orderId,
+                    quantity: orderItemQuantity
+                })
             });
+            // hago el handleStock y le paso el metodo resta
+            handleStock(stockItems, method);
             
             // Pregunto que tipo de orden es (RETIRO LOCAL - ENTREGA A DOMICILIO)
             let shippingAddressToDB;
