@@ -148,18 +148,32 @@ const controller = {
     try {
       const orderId = req.params.orderId;
       const categoryId = req.body.categoryId;
-      const order = await db.Order.findByPk(orderId);
+      const order = await db.Order.findOne({ where: { tra_id: orderId } });
+      const orderItem = await db.OrderItem.findAll({ where: { orders_id: order.id } })
       let method;
 
-      // veo si va de pendiente de confirmación a pendiente de pago 
-      if(order.order_status_id == 4 && orderId == 3){
-        method = 'resta';
-        handleStock(order, method);
-      } 
+     
+      // armo el stock items para mandarle a la funcion
+      let stockItems = [];
+      orderItem.forEach(item => {
+        stockItems.push({
+          id: item.products_id,
+          quantity: item.quantity
+        })
 
-      if(order.order_status_id == 5){
+      })
+
+
+      // veo si va de pendiente de confirmación a pendiente de pago 
+      if (order.order_status_id == 4 && categoryId == 3) {
+        method = 'resta';
+        handleStock(stockItems, method);
+      }
+
+      // veo si se anula
+      if (categoryId == 5) {
         method = 'suma';
-        handleStock(order, method);
+        handleStock(stockItems, method);
       }
 
       await db.Order.update(

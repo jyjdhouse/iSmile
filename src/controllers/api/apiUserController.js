@@ -336,12 +336,14 @@ const controller = {
                 });
                 // pusheo los objetos al stockItems
                 stockItems.push({
-                    id: orderId,
+                    id: itemInDB.id,
                     quantity: orderItemQuantity
                 })
+                console.log(stockItems)
             });
             // hago el handleStock y le paso el metodo resta
-            handleStock(stockItems, method);
+            stock = await handleStock(stockItems, method);
+
             
             // Pregunto que tipo de orden es (RETIRO LOCAL - ENTREGA A DOMICILIO)
             let shippingAddressToDB;
