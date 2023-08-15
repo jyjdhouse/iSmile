@@ -150,6 +150,7 @@ const controller = {
     try {
       const orderId = req.params.orderId;
       const categoryId = req.body.categoryId;
+      const categoryNumber = Number(categoryId)
       const order = await db.Order.findOne({ where: { tra_id: orderId } });
       const orderItem = await db.OrderItem.findAll({ where: { orders_id: order.id } })
       let method;
@@ -165,10 +166,34 @@ const controller = {
 
       })
 
-      switch (categoryId) {
-        // veo si va de pendiente de confirmación a pendiente de pago 
-        case order.order_status_id == 4 && categoryId == 3:
-          method = 'resta';
+      switch (categoryNumber) {
+         // completa
+         case 1:
+          await db.Order.update(
+            {
+              order_status_id: categoryId,
+            },
+            { where: { tra_id: orderId } }
+          );
+          // solamente en el caso de que sea presencial se resta stock
+          // en el caso que sea online, quiere decir que ya paso por las otras etapas
+          if(order.order_types_id == 3){
+            method = 'resta'
+          handleStock(stockItems, method);
+          }
+        
+          // pendiente de envio
+        case 2:
+          await db.Order.update(
+            {
+              order_status_id: categoryId,
+            },
+            { where: { tra_id: orderId } }
+          );
+        // veo si a pendiente de pago 
+        case 3:
+
+          method = 'resta'
           handleStock(stockItems, method);
           // hago el update con la fecha y el valor true en e
           await db.Order.update(
@@ -187,6 +212,10 @@ const controller = {
 
               if (currentTime >= twentyFourHoursLater) {
                 console.log('Han transcurrido 24 horas. Actualización de estado realizada.');
+
+                
+                method = 'suma';
+                handleStock(stockItems, method);
 
                 await db.Order.update
                   ({ is_pending_payment_expired: 1 },
@@ -219,34 +248,25 @@ const controller = {
             }
           });
           break;
-           // veo si se anula
-          case 5:
-            method = 'suma';
-            handleStock(stockItems, method);
-            await db.Order.update(
-              {
-                order_status_id: categoryId,
-                pending_payment_date: null,
-                is_pending_payment_expired: 0
-              },
-              { where: { tra_id: orderId } }
-            );
+        // veo si se anula
+        case 5:
+          method = 'suma';
+          handleStock(stockItems, method);
+          await db.Order.update(
+            {
+              order_status_id: categoryId,
+              pending_payment_date: null,
+              is_pending_payment_expired: 0
+            },
+            { where: { tra_id: orderId } }
+          );
           break;
-          // veo si va a pendiente de envio
-          case 2:
-            await db.Order.update(
-              {
-                order_status_id: categoryId,
-                pending_payment_date: null,
-                is_pending_payment_expired: 0
-              },
-              { where: { tra_id: orderId } }
-            );
-        
-        }
+       
+
+      }
 
 
-    
+
 
       return res.status(200).json({ msg: 'Orden actualizada correctamente' })
 

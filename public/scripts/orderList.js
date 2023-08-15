@@ -284,7 +284,7 @@ window.addEventListener('load', async () => {
             const orderStatus = status.find(stat => stat.id == order.order_status_id).status;
             tableBody +=
                 `
-            <tr>
+            <tr class=${order.is_pending_payment_expired == 1 && order.order_status_id == 3 && 'order-expired'}>
                 <td class='order-id'>${order.tra_id.split('-')[1] /*Solo la parte alfanumerica */}</td>
                 <td class='order-date'>${order.date}</td>
                 <td>${order.billing_name}</td>
@@ -292,7 +292,7 @@ window.addEventListener('load', async () => {
                 <td class="item-quantity-column">${order.orderItems.length}</td>
                 <td>${orderStatus}</td>
                 ${order.order_types_id == 3 ? `<td class="remove-transaction-btn-container"><i class="bx bx-x-circle"></i></td>` : ''}
-                 <i class='${order.is_pending_payment_expired == 1 && 'expired-alert bx bxs-bell-ring'}'></i> 
+                 <i class='}'></i> 
             </tr>
             `
         });

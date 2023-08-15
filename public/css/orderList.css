@@ -611,12 +611,12 @@ tbody tr {
     display: block;
 }
 
-.expired-alert {
-    font-size: 1.5rem;
-    color: red;
-    position: absolute;
-    right: -3%;
-    top: 14.5%;
+.order-expired {
+    background-color: red;
+}
+
+.order-expired:hover {
+    background-color: red;
 }
 
 
