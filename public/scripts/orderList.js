@@ -292,6 +292,7 @@ window.addEventListener('load', async () => {
                 <td class="item-quantity-column">${order.orderItems.length}</td>
                 <td>${orderStatus}</td>
                 ${order.order_types_id == 3 ? `<td class="remove-transaction-btn-container"><i class="bx bx-x-circle"></i></td>` : ''}
+                 <i class='${order.is_pending_payment_expired == 1 && 'expired-alert bx bxs-bell-ring'}'></i> 
             </tr>
             `
         });
