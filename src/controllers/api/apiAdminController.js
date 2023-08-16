@@ -12,6 +12,7 @@ const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const sharp = require('sharp');
 const cron = require('node-cron');
 const nodemailer = require('nodemailer');
+const emailConfig = require('../../../src/utils/staticDB/mailConfig');
 
 // AWS 
 const bucketName = process.env.BUCKET_NAME;
@@ -222,9 +223,7 @@ const controller = {
                     { where: { tra_id: orderId } });
 
                 // Configurar el transporte SMTP para enviar el correo electrónico
-                const transporter = nodemailer.createTransport({
-                  // Configuración de tu proveedor de correo
-                });
+                let transporter = nodemailer.createTransport(emailConfig);
 
                 // Configurar los detalles del correo electrónico a enviar
                 let mailOptions = {

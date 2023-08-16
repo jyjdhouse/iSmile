@@ -62,7 +62,7 @@ video::-webkit-media-controls-time-remaining-display {
     position: absolute;
     right: 0;
     left: 0;
-    bottom: 10%;
+    bottom: 2%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,7 +80,7 @@ video::-webkit-media-controls-time-remaining-display {
 }
 
 .call-to-actions-container .cta-container:first-child {
-    margin-right: 5%;
+    margin-right: 2%;
 }
 
 .cta-container span {
