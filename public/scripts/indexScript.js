@@ -1,14 +1,13 @@
 import { checkIfIsInScreen, isInDesktop } from "./utils.js";
 
-window.addEventListener('unload', () => {
+window.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, 0);
 });
 window.addEventListener('load', () => {
-    window.scrollTo(0, 0);
     let videos = document.querySelectorAll('.video');
     videos.forEach(video => {
         video.muted = true;
-        video.play();    
+        video.play();
     });
 
     // Función que se ejecutará cuando se haga scroll
@@ -47,9 +46,21 @@ window.addEventListener('load', () => {
 
 
 
-    // LOGICA QUE APAREZCAN LOS TEXTOS AL SCROLLEAR
-    const handleVisibleLabel = (label) => {
-        label.classList.add('slide-image-label-visible');
+    // LOGICA QUE APAREZCAN LAS COSAS DEL BANNER AL SCROLLEAR
+    const bannerImgContainer = document.querySelector('.discount-banner-img-container');
+    const bannerImgObserver = checkIfIsInScreen(.6, handleVisibleBannerImg, bannerImgContainer)
+    // Me fijo si aparece en pantalla
+    bannerImgObserver.observe(bannerImgContainer);
+    function handleVisibleBannerImg(container) {
+        console.log(container);
+        container.classList.add('discount-banner-img-container-active');
+    };
+    const bannerTextContainer = document.querySelector('.discount-banner-text-container');
+    const bannerTextObserver = checkIfIsInScreen(.6, handleVisibleBannerText, bannerTextContainer)
+    // Me fijo si aparece en pantalla
+    bannerTextObserver.observe(bannerTextContainer);
+    function handleVisibleBannerText(container) {
+        container.classList.add('discount-banner-text-container-active');
     }
 
     // Logica para mostrar labels en slideShow
@@ -101,7 +112,7 @@ window.addEventListener('load', () => {
         });
         slideShowIndex = (slideShowIndex + 1) % slideImagesGroup.length;
     }
-    
+
 
     // LOGICA para aboutUS
     if (!isInDesktop()) { //Mobile
@@ -154,7 +165,7 @@ window.addEventListener('load', () => {
             getActiveDot(currentIndex)
         });
 
-        function getActiveDot(currentIndex){
+        function getActiveDot(currentIndex) {
             const dots = document.querySelectorAll('.about-us-dot');
             dots.forEach((dot, i) => {
                 dot.classList.remove('about-us-dot-active')

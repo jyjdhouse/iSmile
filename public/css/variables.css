@@ -12,7 +12,10 @@
     box-sizing: border-box;
     user-select: none;
 }
-
+.noScroll {
+    overflow: hidden;
+    /* pointer-events: none; */
+}
 .icon{
     font-size: 26px !important;
 }
@@ -58,6 +61,9 @@ li {
 
 .grey{
     color: #888;
+}
+.gold{
+    color: var(--gold-color);
 }
 .striked{
     text-decoration: line-through;

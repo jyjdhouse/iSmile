@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-08-2023 a las 19:31:47
+-- Tiempo de generación: 16-08-2023 a las 00:56:30
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -209,38 +209,39 @@ CREATE TABLE `home_files` (
   `filename` text DEFAULT NULL,
   `file_types_id` int(11) DEFAULT NULL,
   `home_sections_id` int(11) DEFAULT NULL,
-  `position` int(11) DEFAULT NULL
+  `position` int(11) DEFAULT NULL,
+  `label` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `home_files`
 --
 
-INSERT INTO `home_files` (`id`, `filename`, `file_types_id`, `home_sections_id`, `position`) VALUES
-(1, 'homeFilel6grmld6hll.mp4', 2, 1, NULL),
-(2, '4zvsp2yino.webp', 1, 2, 1),
-(3, 'homeFile-o18xxj9w9u.jpg', 1, 2, 2),
-(4, 'nose.jpg', 1, 2, 3),
-(5, 'homeFile-yyxix3xbzf.jpg', 1, 2, 4),
-(6, 'hair.jpg', 1, 2, 5),
-(7, 'homeFilejlxqhb7na3.webp', 1, 3, 1),
-(8, 'ig2.jpeg', 1, 3, 2),
-(9, 'homeFile-wjeym5q0gi.jpeg', 1, 3, 3),
-(10, 'ig4.jpeg', 1, 3, 4),
-(11, 'ig5.jpeg', 1, 3, 5),
-(12, 'homeFile-qly531ubu8.avif', 1, 4, NULL),
-(13, 'galletyPhoto-mjpl80z86z.webp', 1, 5, NULL),
-(14, 'galletyPhoto-3bd2rehhhk.webp', 1, 5, NULL),
-(15, 'galletyPhoto-659bdxmhp1.webp', 1, 5, NULL),
-(16, 'galletyPhoto-b9cv0fbf64.webp', 1, 5, NULL),
-(17, 'galletyPhoto-ohl9dfo1x9.webp', 1, 5, NULL),
-(18, 'galletyPhoto-jrsap05nrw.webp', 1, 5, 1),
-(20, 'galletyPhoto-iaseb9yvsd.webp', 1, 5, NULL),
-(22, 'galletyPhoto-7yaspob7f2.webp', 1, 5, NULL),
-(25, 'galletyPhoto-sbwvmjwj37.webp', 1, 5, NULL),
-(28, 'galletyPhoto-yixqo5gun7.webp', 1, 5, NULL),
-(29, 'galletyPhoto-v58nbp0x7w.webp', 1, 5, NULL),
-(32, 'galletyPhoto-6o0oh3etzd.webp', 1, 5, NULL);
+INSERT INTO `home_files` (`id`, `filename`, `file_types_id`, `home_sections_id`, `position`, `label`) VALUES
+(1, 'homeFilel6grmld6hll.mp4', 2, 1, NULL, NULL),
+(2, '4zvsp2yino.webp', 1, 2, 1, NULL),
+(3, 'homeFile-o18xxj9w9u.jpg', 1, 2, 2, NULL),
+(4, 'nose.jpg', 1, 2, 3, NULL),
+(5, 'homeFile-yyxix3xbzf.jpg', 1, 2, 4, NULL),
+(6, 'hair.jpg', 1, 2, 5, NULL),
+(7, 'homeFilejlxqhb7na3.webp', 1, 3, 1, NULL),
+(8, 'ig2.jpeg', 1, 3, 2, NULL),
+(9, 'homeFile-wjeym5q0gi.jpeg', 1, 3, 3, NULL),
+(10, 'ig4.jpeg', 1, 3, 4, NULL),
+(11, 'ig5.jpeg', 1, 3, 5, NULL),
+(12, 'homeFile-qly531ubu8.avif', 1, 4, NULL, NULL),
+(13, 'galletyPhoto-mjpl80z86z.webp', 1, 5, NULL, NULL),
+(14, 'galletyPhoto-3bd2rehhhk.webp', 1, 5, NULL, NULL),
+(15, 'galletyPhoto-659bdxmhp1.webp', 1, 5, NULL, NULL),
+(16, 'galletyPhoto-b9cv0fbf64.webp', 1, 5, NULL, NULL),
+(17, 'galletyPhoto-ohl9dfo1x9.webp', 1, 5, NULL, NULL),
+(18, 'galletyPhoto-jrsap05nrw.webp', 1, 5, 1, NULL),
+(20, 'galletyPhoto-iaseb9yvsd.webp', 1, 5, NULL, NULL),
+(22, 'galletyPhoto-7yaspob7f2.webp', 1, 5, NULL, NULL),
+(25, 'galletyPhoto-sbwvmjwj37.webp', 1, 5, NULL, NULL),
+(28, 'galletyPhoto-yixqo5gun7.webp', 1, 5, NULL, NULL),
+(29, 'galletyPhoto-v58nbp0x7w.webp', 1, 5, NULL, NULL),
+(32, 'galletyPhoto-6o0oh3etzd.webp', 1, 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -262,7 +263,8 @@ INSERT INTO `home_sections` (`id`, `name`) VALUES
 (2, 'home_gallery'),
 (3, 'instagram'),
 (4, 'blog'),
-(5, 'product_gallery');
+(5, 'product_gallery'),
+(6, 'discount_banner');
 
 -- --------------------------------------------------------
 
@@ -288,23 +290,25 @@ CREATE TABLE `orders` (
   `billing_id` varchar(45) DEFAULT NULL,
   `createdAt` timestamp NULL DEFAULT NULL,
   `updatedAt` timestamp NULL DEFAULT NULL,
-  `deletedAt` timestamp NULL DEFAULT NULL
+  `deletedAt` timestamp NULL DEFAULT NULL,
+  `pending_payment_date` timestamp NULL DEFAULT NULL,
+  `is_pending_payment_expired` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `orders`
 --
 
-INSERT INTO `orders` (`id`, `tra_id`, `users_id`, `shipping_addresses_id`, `billing_addresses_id`, `is_same_address`, `total`, `order_status_id`, `order_types_id`, `payment_methods_id`, `date`, `billing_name`, `billing_email`, `billing_phone`, `billing_id`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
-('05590144-cb8d-41b4-a385-d4b6f93894ff', '1691264503772-554fta47yu', '10', NULL, '6183530e-3fc9-46c1-b089-8724e54ec5bd', 0, 48222, 4, 2, 1, '2023-08-05 19:41:43', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '212212121', '2023-08-05 19:41:43', '2023-08-05 19:41:43', NULL),
-('3fba444f-b2e4-4253-a3f0-1936c151f1ae', '1691264921121-mru84pn26n', '10', NULL, '66f381f2-de82-41ea-a38f-7cfb102fe3df', 0, 88222, 4, 2, 1, '2023-08-05 19:48:41', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:48:41', '2023-08-05 19:48:41', NULL),
-('4af4b51c-c9ab-4b3e-a849-9d47e498bf4b', '1691264966112-rm99oa9591', '10', NULL, '15097bce-f867-466b-8011-a2a49905bcc0', 0, 88222, 2, 2, 1, '2023-08-05 19:49:26', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:49:26', '2023-08-05 19:59:18', NULL),
-('5b236ed8-75d4-42de-91c4-a11405eeb141', '1691266547618-iij4n8sl7h', '10', NULL, 'f7e49784-218f-4c8a-af5c-4fbe92c3bb90', 1, 26000, 4, 1, 1, '2023-08-05 20:15:47', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '21212112', '2023-08-05 20:15:47', '2023-08-05 20:15:47', NULL),
-('8195143a-45f0-4554-b077-a20c4a059cec', '1691264526020-9yrisv0b2i', '10', NULL, 'bc631a0c-8684-4edb-92cd-2010b20f3808', 0, 88222, 4, 2, 1, '2023-08-05 19:42:06', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:42:06', '2023-08-05 19:42:06', NULL),
-('9e3cb10d-c760-4722-8d29-3e97148cb8f5', '1691264760323-ocxvhyskey', '10', NULL, '5345aa85-682b-4c2c-b908-84107d3914bf', 0, 88222, 4, 2, 1, '2023-08-05 19:46:00', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:46:00', '2023-08-05 19:46:00', NULL),
-('af3177e3-5465-48a3-931b-58d83b5a7be2', '1691529822765-649cvbarit', NULL, NULL, 'dc36f020-4e0c-49bd-9dcd-6af2fa86912c', 0, 13000, 1, 3, 4, '2023-08-08 00:00:00', 'jano perez', 'janoperez@gmail.com', '+541158817312', '43083507', '2023-08-08 21:23:42', '2023-08-08 21:23:42', NULL),
-('b2353be1-e708-4e08-a57e-24337533b638', '1691264657492-13lgopc8wx', '10', NULL, 'eef923f7-ada6-44c0-a202-77496c2ba424', 0, 88222, 4, 2, 1, '2023-08-05 19:44:17', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:44:17', '2023-08-05 19:44:17', NULL),
-('e5cdbd31-e816-4210-9f69-46659c484e64', '1691264370124-44ina3xulr', '10', NULL, '6d653043-8048-473b-8149-1de8de673daf', 0, 88222, 4, 2, 1, '2023-08-05 19:39:30', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '21211212', '2023-08-05 19:39:30', '2023-08-05 19:39:30', NULL);
+INSERT INTO `orders` (`id`, `tra_id`, `users_id`, `shipping_addresses_id`, `billing_addresses_id`, `is_same_address`, `total`, `order_status_id`, `order_types_id`, `payment_methods_id`, `date`, `billing_name`, `billing_email`, `billing_phone`, `billing_id`, `createdAt`, `updatedAt`, `deletedAt`, `pending_payment_date`, `is_pending_payment_expired`) VALUES
+('05590144-cb8d-41b4-a385-d4b6f93894ff', '1691264503772-554fta47yu', '10', NULL, '6183530e-3fc9-46c1-b089-8724e54ec5bd', 0, 48222, 1, 2, 1, '2023-08-05 19:41:43', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '212212121', '2023-08-05 19:41:43', '2023-08-05 19:41:43', NULL, NULL, NULL),
+('3fba444f-b2e4-4253-a3f0-1936c151f1ae', '1691264921121-mru84pn26n', '10', NULL, '66f381f2-de82-41ea-a38f-7cfb102fe3df', 0, 88222, 5, 2, 1, '2023-08-05 19:48:41', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:48:41', '2023-08-05 19:48:41', NULL, NULL, NULL),
+('4af4b51c-c9ab-4b3e-a849-9d47e498bf4b', '1691264966112-rm99oa9591', '10', NULL, '15097bce-f867-466b-8011-a2a49905bcc0', 0, 88222, 2, 2, 1, '2023-08-05 19:49:26', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:49:26', '2023-08-05 19:59:18', NULL, NULL, NULL),
+('5b236ed8-75d4-42de-91c4-a11405eeb141', '1691266547618-iij4n8sl7h', '10', NULL, 'f7e49784-218f-4c8a-af5c-4fbe92c3bb90', 1, 26000, 1, 1, 1, '2023-08-05 20:15:47', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '21212112', '2023-08-05 20:15:47', '2023-08-05 20:15:47', NULL, NULL, NULL),
+('8195143a-45f0-4554-b077-a20c4a059cec', '1691264526020-9yrisv0b2i', '10', NULL, 'bc631a0c-8684-4edb-92cd-2010b20f3808', 0, 88222, 4, 2, 1, '2023-08-05 19:42:06', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:42:06', '2023-08-05 19:42:06', NULL, NULL, NULL),
+('9e3cb10d-c760-4722-8d29-3e97148cb8f5', '1691264760323-ocxvhyskey', '10', NULL, '5345aa85-682b-4c2c-b908-84107d3914bf', 0, 88222, 4, 2, 1, '2023-08-05 19:46:00', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:46:00', '2023-08-05 19:46:00', NULL, NULL, NULL),
+('af3177e3-5465-48a3-931b-58d83b5a7be2', '1691529822765-649cvbarit', NULL, NULL, 'dc36f020-4e0c-49bd-9dcd-6af2fa86912c', 0, 13000, 1, 3, 4, '2023-08-08 00:00:00', 'jano perez', 'janoperez@gmail.com', '+541158817312', '43083507', '2023-08-08 21:23:42', '2023-08-08 21:23:42', NULL, NULL, NULL),
+('b2353be1-e708-4e08-a57e-24337533b638', '1691264657492-13lgopc8wx', '10', NULL, 'eef923f7-ada6-44c0-a202-77496c2ba424', 0, 88222, 4, 2, 1, '2023-08-05 19:44:17', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:44:17', '2023-08-05 19:44:17', NULL, NULL, NULL),
+('e5cdbd31-e816-4210-9f69-46659c484e64', '1691264370124-44ina3xulr', '10', NULL, '6d653043-8048-473b-8149-1de8de673daf', 0, 88222, 4, 2, 1, '2023-08-05 19:39:30', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '21211212', '2023-08-05 19:39:30', '2023-08-05 19:39:30', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -445,7 +449,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `price`, `description`, `category_id`, `stock`, `ingredients`, `size`, `discount`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
-('0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, '<p>Son el complemento ideal de nuestra “Espuma de Limpieza 3 en 1” para una limpieza facial excepcional. Diseñados\npara ayudar a eliminar eficazmente el maquillaje e impurezas, dejando tu piel limpia y fresca.\nCada Pad presenta dos texturas diferentes: una suave y delicada para una limpieza gentil, ideal para zonas sensibles, y otra exfoliante para una limpieza más profunda y efectiva en áreas que necesitan mayor atención. Estas dos opciones te permiten personalizar tu rutina de limpieza según las necesidades de tu piel.</p>\n<p>??Son fáciles de limpiar: simplemente enjuágalos con agua y jabón luego de cada uso y estarán listos para la próxima limpieza facial.</p>', 1, NULL, NULL, NULL, NULL, '2023-07-31 16:33:02', '2023-07-31 16:33:02', NULL),
+('0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, '<p>Son el complemento ideal de nuestra “Espuma de Limpieza 3 en 1” para una limpieza facial excepcional. Diseñados\npara ayudar a eliminar eficazmente el maquillaje e impurezas, dejando tu piel limpia y fresca.\nCada Pad presenta dos texturas diferentes: una suave y delicada para una limpieza gentil, ideal para zonas sensibles, y otra exfoliante para una limpieza más profunda y efectiva en áreas que necesitan mayor atención. Estas dos opciones te permiten personalizar tu rutina de limpieza según las necesidades de tu piel.</p>\n<p>??Son fáciles de limpiar: simplemente enjuágalos con agua y jabón luego de cada uso y estarán listos para la próxima limpieza facial.</p>', 1, NULL, NULL, NULL, 15, '2023-07-31 16:33:02', '2023-07-31 16:33:02', NULL),
 ('1c58ddbd-a791-46eb-b98a-611a00af2645', 'Prueba', 5000, 'Descripcion\r\n\r\nOtra mas\r\n\r\nY una mas', 1, NULL, '', '', NULL, '2023-08-01 18:15:28', '2023-08-01 18:21:35', '2023-08-01 18:21:46'),
 ('46bf971d-62f1-4b96-b727-d2cafa725f42', 'Prueba para borrar', 22222, 'asdsdaasads', 1, NULL, 'Un ingrediente', '1 blister de 30 pastillas', NULL, '2023-07-31 18:05:32', '2023-08-10 16:58:07', NULL),
 ('4d05e5c1-1827-4bfe-8b74-f30bbabca8b0', 'Jano', 2222, 'asddasdsaads', 1, NULL, 'Muchos', 'Grande', NULL, '2023-08-02 16:54:12', '2023-08-02 16:54:53', '2023-08-11 17:28:23'),
@@ -458,9 +462,9 @@ INSERT INTO `products` (`id`, `name`, `price`, `description`, `category_id`, `st
 ('a541d777-7dce-426b-aaa8-421978c2486e', 'Producto prueba Formato', 3333, 'Este es un formato para la prueba del formato esperado. Este producto viene bien. Lorem ipsum lorem ipsum.', 1, NULL, NULL, NULL, NULL, '2023-07-26 17:58:28', '2023-07-26 18:25:09', '2023-07-31 16:48:55'),
 ('a9c2dc18-3086-4d3c-94b6-18f5f5db2e6b', 'Espuma de limpieza 3 en 1', 9000, 'Limpia, desmaquilla e hidrata ? La limpieza facial es un paso indispensable y necesario para mantener una piel saludable luminosa y protegida de los contaminantes que generan el envejecimiento prematuro. ??Limpiar es el primer paso fundamental de tu rutina de skincare. Su fórmula en espuma micelar retira rápida, suave y fácilmente el maquillaje y las impurezas. Dejando una piel visiblemente más fresca, limpia e hidratada. Está específicamente pensado para pieles de normales a mixtas. ✨Libre de fragancia, colorantes y parabenos. ✨ \r\n??MODO DE USO: Aplicar por la mañana y por la noche con suaves movimientos circulares en rostro, cuello y escote. Enjuagar con agua y con ayuda de nuestro exclusivo Pad de Limpieza para una mejor remoción. \r\n', 1, NULL, NULL, NULL, NULL, '2023-07-12 16:12:02', '2023-07-31 16:25:53', NULL),
 ('ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, '<ul>\n<li>Contiene los antioxidantes más       poderosos</li>\n<li>Posee un alto contenido en proteínas.</li>\n<li>Mantiene las articulaciones saludables.</li>\n<li>Aumenta la energía y la recuperación post ejercicio</li>\n<li>Reduce la ansiedad y el estrés.</li>\n<li>Promueve el fortalecimiento de tendones y colágeno articular </li>\n<li>Aumenta la asimilación del calcio y el hierro.</li>\n<li>Disminuye y evita la aparición de nuevas arrugas. Ayuda a prevenir lesiones.</li>\n<li>Previene la pérdida de cabello</li>\n<li>Disminuye la adherencia de las lipoproteínas de colesterol.</li>\n</ul>', 1, NULL, NULL, NULL, NULL, '2023-07-31 16:38:35', '2023-07-31 16:38:35', NULL),
-('b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 'adscsadcasdcas', 1, NULL, 'adsdsadas', '10g sanax', NULL, '2023-08-02 16:21:24', '2023-08-10 17:17:22', NULL),
+('b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 'adscsadcasdcas', 1, 0, 'adsdsadas', '10g sanax', 0, '2023-08-02 16:21:24', '2023-08-15 13:54:41', '2023-08-15 13:56:28'),
 ('c1f196b4-8861-4032-ba39-523530df0299', 'Latisse', 15000, 'LATISSE es un tratamiento del laboratorio francés Allergan, aprobado por la FDA y sin parabenos que permite obtener pestañas más largas, gruesas y oscuras. Se aplica por la noche antes de ir a dormir. ??Los resultados comienzan a verse a las 4 semanas de aplicación, viendo resultados completos a la semana 12 del tratamiento. Luego se aplica 1 vez por semana para mantenimiento. Está indicado en cualquier persona que desee mejorar el aspecto de sus pestañas.', 1, NULL, NULL, NULL, NULL, '2023-07-21 16:44:41', '2023-07-31 16:36:00', NULL),
-('db005c8d-ccd0-4e0e-9d36-aaed244e8559', 'Crema despigmentante', 15000, 'Posee una fórmula innovadora con un poderoso complejo anti-manchas. Su acción despigmentante de rápida absorción ayuda a unificar el color de la piel disminuyendo notablemente manchas e hiperpigmentaciones en rostro, cuello y escote, ayudando también a prevenirlas. Logra un aspecto más uniforme de la piel ✨Su formulación sinérgica aporta luminosidad, brillo y tersura a la piel✨. Ingredientes: Tranexámico 3% + Niacinamida 2% + Vit C 4% + Arbutina 2%. Exfolia y normaliza la renovación celular. Reduce los efectos negativos del estrés y la contaminación. ? Nuestra filosofía de pureza: Sin parabenos. Sin sulfatos. Sin fragancia. Piel simplemente feliz. :) Hipoalergénico. Free Mineral Oil. \r\n??MODO DE USO: Aplicar únicamente por la noche sobre la superficie de la piel a tratar, una vez limpia y seca, en rostro, cuello y escote. Se recomienda complementar con nuestro Serum de Vitamina C. Utilizar protección solar si se aplica durante el día.\r\n', 1, NULL, NULL, NULL, NULL, '2023-07-04 11:31:11', '2023-07-31 16:27:39', NULL),
+('db005c8d-ccd0-4e0e-9d36-aaed244e8559', 'Crema despigmentante', 15000, 'Posee una fórmula innovadora con un poderoso complejo anti-manchas. Su acción despigmentante de rápida absorción ayuda a unificar el color de la piel disminuyendo notablemente manchas e hiperpigmentaciones en rostro, cuello y escote, ayudando también a prevenirlas. Logra un aspecto más uniforme de la piel ✨Su formulación sinérgica aporta luminosidad, brillo y tersura a la piel✨. Ingredientes: Tranexámico 3% + Niacinamida 2% + Vit C 4% + Arbutina 2%. Exfolia y normaliza la renovación celular. Reduce los efectos negativos del estrés y la contaminación. ? Nuestra filosofía de pureza: Sin parabenos. Sin sulfatos. Sin fragancia. Piel simplemente feliz. :) Hipoalergénico. Free Mineral Oil. ??MODO DE USO: Aplicar únicamente por la noche sobre la superficie de la piel a tratar, una vez limpia y seca, en rostro, cuello y escote. Se recomienda complementar con nuestro Serum de Vitamina C. Utilizar protección solar si se aplica durante el día.', 1, 10, '', '', 0, '2023-07-04 11:31:11', '2023-08-15 11:06:25', NULL),
 ('e3da8d17-89bb-4f42-8ae7-77791d9f4533', 'Contorno de Ojos', 12000, 'Nuestra fórmula ofrece tratamiento y prevención a la delicada piel del contorno de ojos otorgando luminosidad y revitalización de la mirada ✨?️. Posee una concentración de activos que renuevan el aspecto de la piel alisándola y favoreciendo la microcirculación; desacelera la aparición de líneas de expresión y prolonga la duración de la toxina botulínica por su gran concentración de Argireline. ? Nuestra presentación con dosificador ofrece excelente comodidad en su uso y garantiza la efectividad del tratamiento. Para todo tipo de piel. Sin fragancias ni parabenos. \r\n?? MODO DE USO: Extrae una pequeña cantidad de crema utilizando el aplicador a presión. Aplica la crema en pequeños puntos alrededor del contorno de los ojos. Con movimientos suaves y circulares difumina la crema utilizando el aplicador. Esto ayudará a mejorar la absorción y promoverá una apariencia más rejuvenecida.\r\n', 1, NULL, NULL, NULL, NULL, '2023-07-12 16:10:48', '2023-07-31 16:26:41', NULL),
 ('f05669b2-7376-4d5c-9e4a-6f2bd654cd89', 'Serum de Vitamina C', 13000, 'Con su textura perfecta este poderoso concentrado de Vitamina C tiene una triple acción: - Antioxidante. - Revitalizante. - Anti-Age. Además actúa como un potente protector de la polución dejando la piel visiblemente calmada y renovada. Aporta una luminosidad inigualable desde su primera aplicación ✨ Apta para todo tipo de piel.  \r\nMODO DE USO: Aplicar 3 a 4 gotas por día sobre la superficie de la piel, una vez limpia y seca. Puede aplicarse en rostro, cuello, escote y dorso de manos, masajeando suavemente hasta su absorción. Recomendamos dejar actuar unos instantes antes de aplicar su crema de tratamiento habitual y utilizar protección solar de ser aplicado durante el día.\r\n', 1, NULL, NULL, NULL, NULL, '2023-07-21 16:35:52', '2023-07-31 16:28:54', NULL);
 
@@ -486,7 +490,7 @@ INSERT INTO `products_files` (`id`, `filename`, `products_id`, `file_types_id`, 
 (120, 'k99z0dhya8.webp', '9965b799-1f1b-43d1-8537-c9713373188e', 1, NULL),
 (121, 'auidrfbvvo.webp', 'a9c2dc18-3086-4d3c-94b6-18f5f5db2e6b', 1, NULL),
 (122, 'sy6qxlhc0j.webp', 'e3da8d17-89bb-4f42-8ae7-77791d9f4533', 1, NULL),
-(123, 's1qb1vngse.webp', 'db005c8d-ccd0-4e0e-9d36-aaed244e8559', 1, NULL),
+(123, 's1qb1vngse.webp', 'db005c8d-ccd0-4e0e-9d36-aaed244e8559', 1, 1),
 (124, 'fnax6jdtlr.webp', 'f05669b2-7376-4d5c-9e4a-6f2bd654cd89', 1, NULL),
 (125, 'b8da891hrl.webp', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 1, NULL),
 (126, 'slddsu2f39.webp', '5a1d4ed8-135f-4177-b7ce-0a239b7f1afc', 1, NULL),
@@ -495,13 +499,12 @@ INSERT INTO `products_files` (`id`, `filename`, `products_id`, `file_types_id`, 
 (129, 'lf2fhx8d.webp', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 1, NULL),
 (130, 'kt26rcc2n4.webp', '83838646-6969-449d-8132-2ad967701c64', 1, NULL),
 (131, 'jcwqnnzy10.webp', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 1, 1),
-(152, 'xfc88j0n2r.webp', 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, 0),
-(153, 'cthltv9y5j.webp', 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, 0),
-(154, 'vwegx15jrc.webp', 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, 0),
-(155, 'z4ie39p9xz.webp', 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, 1),
 (160, 'ecxbvfyvls.webp', '46bf971d-62f1-4b96-b727-d2cafa725f42', 1, 0),
 (161, 'qklta3qc75.webp', '46bf971d-62f1-4b96-b727-d2cafa725f42', 1, 1),
-(217, 'zbj0nr4qzm.webp', '46bf971d-62f1-4b96-b727-d2cafa725f42', 1, 0);
+(217, 'zbj0nr4qzm.webp', '46bf971d-62f1-4b96-b727-d2cafa725f42', 1, 0),
+(240, 'txr4e703zc.webp', 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, 0),
+(241, 's9qignjy8c.MP4', 'b2e86191-8b70-431b-9808-ba754697ac2b', 2, 0),
+(242, 's70snixo1d.webp', 'b2e86191-8b70-431b-9808-ba754697ac2b', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -961,7 +964,7 @@ ALTER TABLE `blogs`
 -- AUTO_INCREMENT de la tabla `blogs_images`
 --
 ALTER TABLE `blogs_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -985,7 +988,7 @@ ALTER TABLE `home_files`
 -- AUTO_INCREMENT de la tabla `home_sections`
 --
 ALTER TABLE `home_sections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `order_status`
@@ -1009,7 +1012,7 @@ ALTER TABLE `payment_methods`
 -- AUTO_INCREMENT de la tabla `products_files`
 --
 ALTER TABLE `products_files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=236;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=243;
 
 --
 -- AUTO_INCREMENT de la tabla `specialties`

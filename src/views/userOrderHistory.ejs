@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+        <link rel="stylesheet" href="/css/userOrderHistory.css">
+        <script src="/scripts/userOrderHistory.js" type="module"></script>
+        <title>Historial compras</title>
+</head>
+
+<body>
+    <%- include('./partials/header.ejs') %>
+        <main class="main">
+            <h1 class="main-title bold">Compras</h1>
+            <section class="order-history-section">
+                <div class="order-history-header">
+                    <p class="order-history-header-label grey"><%= orders.length %> compra<%= orders.length > 1 ? 's' : '' %></p>
+                </div>
+                <div class="order-history-wrapper">
+                    <% orders.forEach(order => { %>
+                        <article class="order-history-card">
+                            <div class="order-card-date-row">
+                                <p class="order-card-date bold date-to-format"><%= order.date %></p>
+                                <p class="order-card-tra-id grey"><%= order.tra_id.split('-')[1] %></p>
+                            </div>
+                            <div class="order-card-item-list">
+                                <% order.orderItems.forEach(item => { %>
+                                    <div class="order-card-item">
+                                        <div class="order-card-item-image-container">
+                                            <img src="<%= item.file_url? item.file_url : '/img/product/default.png' %>" alt="order-item-1">
+                                        </div>
+                                        <div class="order-card-item-info">
+                                            <p class="order-card-item-name"><%= item.name %></p>
+                                            <p class="order-card-item-quantity grey"><%= item.quantity %> unidad<%= item.quantity > 1 ? 'es':''%></5></p>
+                                            <p class="order-card-item-subtotal grey">$<%= item.quantity * item.price %></p>
+                                        </div>
+                                    </div>
+                                <% }) %>
+                                
+                            </div>
+                            <div class="order-card-info">
+                                <p class="order-card-status">
+                                    <span class="status-color-circle" style="background: <%= order.status.color_code %>;"></span>
+                                    <%= order.status.status %>
+                                    </p>
+                                <p class="order-card-total-price">$<%= order.total %></p>
+                                <p class="order-card-type grey"><%= order.type %></p>
+                            </div>
+                            <% if (order.order_status_id == 1) { //Entrega a domicilio %>
+                                <div class="shipping-details hidden">
+                                    <p class="shipping-street"><%= order.shippingAddress ?  order.shippingAddress.street : order.billingAddress.street%></p>
+                                    <p class="shipping-apartment"><%= order.shippingAddress ?  order.shippingAddress.apartment : order.billingAddress.apartment%></p>
+                                    <p class="shipping-city"><%= order.shippingAddress ?  order.shippingAddress.city : order.billingAddress.city%></p>
+                                    <p class="shipping-zip-code"><%= order.shippingAddress ?  order.shippingAddress.zip_code : order.billingAddress.zip_code%></p>
+                                    <p class="shipping-province"><%=  provinces.find(prov=> prov.id == order.shippingAddress ? order.shippingAddress.provinces_id : order.billingAddress.provinces_id).name %></p>
+                                </div>
+                            <% } %>
+                        </article>
+                    <% }) %>
+
+                </div>
+            </section>
+            <section class="order-detail-popup"></section>
+        </main>
+        <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

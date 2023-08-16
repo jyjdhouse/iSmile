@@ -13,10 +13,7 @@ body {
     overflow-x: hidden;
 }
 
-.noScroll {
-    overflow: hidden;
-    /* pointer-events: none; */
-}
+
 
 
 .lupa-desktop {

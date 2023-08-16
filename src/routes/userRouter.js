@@ -20,7 +20,9 @@ router.get('/checkout',userController.checkout);
 router.get('/profile', guestMiddleware,userController.userProfile);
 router.get('/cambiar-contrasena/:token',userController.changePasswordView);
 router.get('/contrasena-error',userController.passwordError);
-router.get('/booking',userController.bookingView)
+router.get('/booking',userController.bookingView);
+router.get('/historial-compras',guestMiddleware,userController.orderHistory);
+
 // POST
 router.post('/login',userController.processLogin);
 router.post('/regist',registValidations,userController.processRegist);
