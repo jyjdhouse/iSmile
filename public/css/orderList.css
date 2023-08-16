@@ -611,6 +611,15 @@ tbody tr {
     display: block;
 }
 
+.order-expired {
+    background-color: red;
+}
+
+.order-expired:hover {
+    background-color: red;
+}
+
+
 @media(min-width:768px) {
     th {
         width: 20%;

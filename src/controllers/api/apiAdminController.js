@@ -10,6 +10,9 @@ const { Op } = require('sequelize');
 const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const sharp = require('sharp');
+const cron = require('node-cron');
+const nodemailer = require('nodemailer');
+const emailConfig = require('../../../src/utils/staticDB/mailConfig');
 
 // AWS 
 const bucketName = process.env.BUCKET_NAME;
@@ -148,24 +151,121 @@ const controller = {
     try {
       const orderId = req.params.orderId;
       const categoryId = req.body.categoryId;
-      const order = await db.Order.findByPk(orderId);
+      const categoryNumber = Number(categoryId)
+      const order = await db.Order.findOne({ where: { tra_id: orderId } });
+      const orderItem = await db.OrderItem.findAll({ where: { orders_id: order.id } })
       let method;
 
-      // veo si va de pendiente de confirmación a pendiente de pago 
-      if(order.order_status_id == 4 && orderId == 3){
-        method = 'resta';
-        handleStock(order, method);
-      } 
 
-      if(order.order_status_id == 5){
-        method = 'suma';
-        handleStock(order, method);
+      // armo el stock items para mandarle a la funcion
+      let stockItems = [];
+      orderItem.forEach(item => {
+        stockItems.push({
+          id: item.products_id,
+          quantity: item.quantity
+        })
+
+      })
+
+      switch (categoryNumber) {
+         // completa
+         case 1:
+          await db.Order.update(
+            {
+              order_status_id: categoryId,
+            },
+            { where: { tra_id: orderId } }
+          );
+          // solamente en el caso de que sea presencial se resta stock
+          // en el caso que sea online, quiere decir que ya paso por las otras etapas
+          if(order.order_types_id == 3){
+            method = 'resta'
+          handleStock(stockItems, method);
+          }
+        
+          // pendiente de envio
+        case 2:
+          await db.Order.update(
+            {
+              order_status_id: categoryId,
+            },
+            { where: { tra_id: orderId } }
+          );
+        // veo si a pendiente de pago 
+        case 3:
+
+          method = 'resta'
+          handleStock(stockItems, method);
+          // hago el update con la fecha y el valor true en e
+          await db.Order.update(
+            {
+              order_status_id: categoryId,
+              pending_payment_date: Date.now()
+            },
+            { where: { tra_id: orderId } }
+          );
+          cron.schedule('0 0 */24 * * *', async () => {
+            const order = await db.Order.findOne({ where: { tra_id: orderId } });
+
+            if (order) {
+              const currentTime = new Date();
+              const twentyFourHoursLater = new Date(order.pending_payment_date.getTime() + (24 * 60 * 60 * 1000)); // Suma 24 horas en milisegundos
+
+              if (currentTime >= twentyFourHoursLater) {
+                console.log('Han transcurrido 24 horas. Actualización de estado realizada.');
+
+                
+                method = 'suma';
+                handleStock(stockItems, method);
+
+                await db.Order.update
+                  ({ is_pending_payment_expired: 1 },
+                    { where: { tra_id: orderId } });
+
+                // Configurar el transporte SMTP para enviar el correo electrónico
+                let transporter = nodemailer.createTransport(emailConfig);
+
+                // Configurar los detalles del correo electrónico a enviar
+                let mailOptions = {
+                  from: 'ismile@ismile.com.ar',
+                  to: 'ismile@ismile.com.ar',
+                  subject: `Orden vencida: ${order.tra_id}`,
+                  text: `Hola ! Este es un mail automático para dejarles saber que la orden ${order.tra_id} pasó el plazo de las 24 horas para completar el pago.`
+                };
+
+                // Enviar el correo electrónico
+                transporter.sendMail(mailOptions, (error, info) => {
+                  if (error) {
+                    console.log('Error al enviar el correo:', error);
+                  } else {
+                    console.log('Correo electrónico enviado:', info.response);
+                  }
+                });
+              } else {
+                console.log('No han transcurrido 24 horas aún.');
+              }
+            }
+          });
+          break;
+        // veo si se anula
+        case 5:
+          method = 'suma';
+          handleStock(stockItems, method);
+          await db.Order.update(
+            {
+              order_status_id: categoryId,
+              pending_payment_date: null,
+              is_pending_payment_expired: 0
+            },
+            { where: { tra_id: orderId } }
+          );
+          break;
+       
+
       }
 
-      await db.Order.update(
-        { order_status_id: categoryId },
-        { where: { tra_id: orderId } }
-      );
+
+
 
       return res.status(200).json({ msg: 'Orden actualizada correctamente' })
 
