@@ -1,14 +1,13 @@
 import { checkIfIsInScreen, isInDesktop } from "./utils.js";
 
-window.addEventListener('unload', () => {
+window.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, 0);
 });
 window.addEventListener('load', () => {
-    window.scrollTo(0, 0);
     let videos = document.querySelectorAll('.video');
     videos.forEach(video => {
         video.muted = true;
-        video.play();    
+        video.play();
     });
 
     // Función que se ejecutará cuando se haga scroll
@@ -47,34 +46,46 @@ window.addEventListener('load', () => {
 
 
 
-    // LOGICA QUE APAREZCAN LOS TEXTOS AL SCROLLEAR
-    const handleVisibleLabel = (label) => {
-        label.classList.add('slide-image-label-visible');
+    // LOGICA QUE APAREZCAN LAS COSAS DEL BANNER AL SCROLLEAR
+    const bannerImgContainer = document.querySelector('.discount-banner-img-container');
+    const bannerImgObserver = checkIfIsInScreen(.6, handleVisibleBannerImg, bannerImgContainer)
+    // Me fijo si aparece en pantalla
+    bannerImgObserver.observe(bannerImgContainer);
+    function handleVisibleBannerImg(container) {
+        console.log(container);
+        container.classList.add('discount-banner-img-container-active');
+    };
+    const bannerTextContainer = document.querySelector('.discount-banner-text-container');
+    const bannerTextObserver = checkIfIsInScreen(.6, handleVisibleBannerText, bannerTextContainer)
+    // Me fijo si aparece en pantalla
+    bannerTextObserver.observe(bannerTextContainer);
+    function handleVisibleBannerText(container) {
+        container.classList.add('discount-banner-text-container-active');
     }
 
     // Logica para mostrar labels en slideShow
-    let slideIntervalId = setInterval(updateSlideShow, 3500);
-    const labels = document.querySelectorAll('.slide-image-label');
-    const slideImageContainers = document.querySelectorAll('.slide-image-container')
-    if (isInDesktop()) { //Si esta en desktop es distinto el slideShow
-        slideImageContainers?.forEach(container => {
-            container.addEventListener('mouseenter', () => {
-                const labelToActivate = container.querySelector('.slide-image-label');
-                labelToActivate.classList.add('slide-image-label-visible');
-                // Freno el slideShow
-                clearInterval(slideIntervalId);
-            });
-            container?.addEventListener('mouseleave', () => {
-                const labelToDeactivate = container.querySelector('.slide-image-label');
-                labelToDeactivate.classList.remove('slide-image-label-visible');
-                slideIntervalId = setInterval(updateSlideShow, 5000);
-            });
-        });
-    } else { //Aca es otra logica
-        labels.forEach(lab => {
-            lab.classList.add('slide-image-label-visible');
-        });
+    const slideShowSection = document.querySelector('.slide-show')
+    const slideShowObserver = checkIfIsInScreen(.85, handleVisibleSlideSection, slideShowSection)
+    // Me fijo si aparece en pantalla
+    slideShowObserver.observe(slideShowSection);
+    function handleVisibleBannerText(container) {
+        container.classList.add('discount-banner-text-container-active');
     }
+    let slideIntervalId;
+    function handleVisibleSlideSection() {
+        slideIntervalId = setInterval(updateSlideShow, 3500);
+    }
+
+    const slideImageContainers = document.querySelectorAll('.slide-image-container')
+    slideImageContainers?.forEach(container => {
+        container.addEventListener('mouseenter', () => {
+            // Freno el slideShow
+            clearInterval(slideIntervalId);
+        });
+        container?.addEventListener('mouseleave', () => {
+            slideIntervalId = setInterval(updateSlideShow, 5000);
+        });
+    });
 
 
     // LOGICA para slideShow
@@ -101,7 +112,7 @@ window.addEventListener('load', () => {
         });
         slideShowIndex = (slideShowIndex + 1) % slideImagesGroup.length;
     }
-    
+
 
     // LOGICA para aboutUS
     if (!isInDesktop()) { //Mobile
@@ -154,7 +165,7 @@ window.addEventListener('load', () => {
             getActiveDot(currentIndex)
         });
 
-        function getActiveDot(currentIndex){
+        function getActiveDot(currentIndex) {
             const dots = document.querySelectorAll('.about-us-dot');
             dots.forEach((dot, i) => {
                 dot.classList.remove('about-us-dot-active')
@@ -344,6 +355,23 @@ window.addEventListener('load', () => {
         })
     });
 
+    // Logica para destruir los descuentos
+    const startDestroyingProcess = document.querySelector('.start-discounts-destroying');
+    const destroyDiscountsPopup = document.querySelector('.destroy-discounts-popup');
+    const cancelButton = document.querySelector('.cancel-destroying-process-btn');
+    const blackScreen = document.querySelector('.black-screen')
+    startDestroyingProcess?.addEventListener('click',()=>{
+        blackScreen.classList.add('black-screen-active');
+        destroyDiscountsPopup.classList.add('destroy-discounts-popup-active');
+    });
+    cancelButton?.addEventListener('click',(e)=>{
+        e.preventDefault();
+        blackScreen.classList.remove('black-screen-active');
+        destroyDiscountsPopup.classList.remove('destroy-discounts-popup-active');
+    });
+    blackScreen?.addEventListener('click',()=>{
+        blackScreen.classList.remove('black-screen-active');
+        destroyDiscountsPopup.classList.remove('destroy-discounts-popup-active');
+    })
 
-
-})
+});

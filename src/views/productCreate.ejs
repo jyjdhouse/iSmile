@@ -3,7 +3,7 @@
 
 <head>
     <%- include('./partials/head.ejs') %>
-        
+
 
         <link rel="stylesheet" href="/css/productCreate.css" type="text/css">
         <script src="/scripts/productCreate.js" type="module"></script>
@@ -11,58 +11,72 @@
 </head>
 
 <body>
-                <%- include('./partials/header.ejs') %>
-                        
-                            <main class="product-create-main">
-                                <h2 class="product-create-title uppercase">CREAción PRODUCTO</h2>
+    <%- include('./partials/header.ejs') %>
 
-                                
-                                    
-                                <form action="/product/create" class="create-product-form" enctype="multipart/form-data" method="POST">
-                                    <div class="input-label-container">
-                                        <label for="name">Nombre</label>
-                                        <input type="text" name="name" class="required">
-                                    </div>
-                                    <div class="input-label-container">
-                                        <label for="category">Categoría</label>
-                                        <select name="category" id="" class="required">
-                                            <% categories.forEach(cat => { %>
-                                                <option value="<%= cat.id %>"><%=cat.category%></option>
-                                            <%  }) %>
-                                           
-                                        </select>
-                                    </div>
-                                    <div class="input-label-container">
-                                        <label for="description">Descripción</label>
-                                        <textarea name="description" id="" cols="30" rows="10"></textarea>
-                                    </div>
-                                    <div class="input-label-container">
-                                        <label for="price">Precio</label>
-                                        <input type="text" name="price" class="required numeric-only-input">
-                                    </div>
-                                    <div class="input-label-container">
-                                        <label for="images">Imagenes</label>
-                                        <input type="file" name="images" multiple class="files">
-                                    </div>
-                                    <div class="images-radio-content-wrapper">
-                                        <label for="main-img bold">Selecciónar 1er imagen</label>
-                                        <div class="images-radio-box-wrapper"></div>
-                                    </div>
-                                    <div class="input-label-container">
-                                        <label for="images">Ingredientes</label>
-                                        <textarea name="ingredients"cols="30" rows="10"></textarea>
-                                    </div>
-                                    <div class="input-label-container">
-                                        <label for="images">Tamaño</label>
-                                        <textarea name="size"cols="30" rows="10" placeholder="1 lata de 30 sobres de Xgr cada uno"></textarea>
-                                    </div>
-                                    <button type="submit">Crear</button>
+        <main class="product-create-main">
+            <h2 class="product-create-title uppercase">CREAción PRODUCTO</h2>
 
-                                </form>
 
-                                </div>
-                            </main>
-                            <%- include('./partials/footer.ejs') %>
+
+            <form action="/product/create" class="create-product-form" enctype="multipart/form-data" method="POST">
+                <div class="input-label-container">
+                    <label for="name">Nombre</label>
+                    <input type="text" name="name" class="required">
+                </div>
+                <div class="input-label-container">
+                    <label for="category">Categoría</label>
+                    <select name="category" id="" class="required">
+                        <% categories.forEach(cat=> { %>
+                            <option value="<%= cat.id %>">
+                                <%=cat.category%>
+                            </option>
+                            <% }) %>
+
+                    </select>
+                </div>
+                <div class="input-label-container">
+                    <label for="description">Descripción</label>
+                    <textarea name="description" id="" cols="30" rows="10"></textarea>
+                </div>
+                <div class="input-label-container price-container">
+                    <label for="">Solo numeros <span class="grey">(si no se completa es 0)</span></label>
+                    <div class="field">
+                        <label for="price">Precio</label>
+                        <input type="text" name="price" class="required numeric-only-input" placeholder="5000">
+                    </div>
+                    <div class="field">
+                        <label for="discount">Descuento</label>
+                        <input type="text" name="discount" class="required numeric-only-input" placeholder="10">
+                    </div>
+                    <div class="field">
+                        <label for="stock">Stock</label>
+                        <input type="text" name="stock" class="required numeric-only-input" placeholder="40">
+                    </div>
+                </div>
+                <div class="input-label-container">
+                    <label for="images">Imagenes</label>
+                    <input type="file" name="images" multiple class="files">
+                </div>
+                <div class="images-radio-content-wrapper">
+                    <label for="main-img bold">Selecciónar 1er imagen</label>
+                    <div class="images-radio-box-wrapper"></div>
+                </div>
+                <div class="input-label-container">
+                    <label for="images">Ingredientes</label>
+                    <textarea name="ingredients" cols="30" rows="10"></textarea>
+                </div>
+                <div class="input-label-container">
+                    <label for="images">Tamaño</label>
+                    <textarea name="size" cols="30" rows="10"
+                        placeholder="1 lata de 30 sobres de Xgr cada uno"></textarea>
+                </div>
+                <button type="submit">Crear</button>
+
+            </form>
+
+            </div>
+        </main>
+        <%- include('./partials/footer.ejs') %>
 </body>
 
 </html>

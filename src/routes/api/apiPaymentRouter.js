@@ -6,7 +6,6 @@ const apiPaymentController = require('../../controllers/api/apiPaymentController
 
 // MIDDLEWARES
 const orderIsCompleteValidations = require('../../middlewares/orderIsCompleteValidatons');
-
 // RUTEO
 
 

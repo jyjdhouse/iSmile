@@ -4,6 +4,7 @@
     --gold-color: #bba059;
     --red-color: rgb(198, 23, 23);
     --bold-color: #580846;
+    --gold-bg-color: #aa9477
 }
 
 * {
@@ -12,7 +13,10 @@
     box-sizing: border-box;
     user-select: none;
 }
-
+.noScroll {
+    overflow: hidden;
+    /* pointer-events: none; */
+}
 .icon{
     font-size: 26px !important;
 }
@@ -39,6 +43,7 @@ select,option{
 button {
     color: #000;
     background: none;
+    cursor: pointer;
 }
 
 
@@ -58,6 +63,13 @@ li {
 
 .grey{
     color: #888;
+}
+.gold{
+    color: var(--gold-color);
+}
+.striked{
+    text-decoration: line-through;
+    text-decoration-thickness: 1.5px;
 }
 .overflow-auto {
     overflow: auto;

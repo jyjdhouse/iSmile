@@ -30,7 +30,7 @@ video::-webkit-media-controls-time-remaining-display {
     white-space: nowrap;
 }
 
-.blog-left-pattern{
+.blog-left-pattern {
     bottom: 0;
 }
 
@@ -66,17 +66,17 @@ video::-webkit-media-controls-time-remaining-display {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
 }
 
 .call-to-actions-container .cta-container {
-   padding: 3%;
-   background-color: rgba(250, 250, 250, .6);
-   border: 1px solid var(--gold-color);
-   border-radius: 10px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
+    padding: 3%;
+    background-color: rgba(250, 250, 250, .6);
+    border: 1px solid var(--gold-color);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .call-to-actions-container .cta-container:first-child {
@@ -89,7 +89,7 @@ video::-webkit-media-controls-time-remaining-display {
     color: var(--violet-color);
 }
 
- 
+
 
 
 /* PARA EDITAR HOME VIDEO */
@@ -198,13 +198,14 @@ video::-webkit-media-controls-time-remaining-display {
     top: 15%;
     font-size: 1.2rem;
     font-weight: 400 !important;
-    opacity: 0;
+    opacity: 1;
     transition: all 1s;
 }
 
+/* 
 .slide-image-label-visible {
     opacity: 1;
-}
+} */
 
 .slide-image {
     width: 60%;
@@ -341,7 +342,7 @@ video::-webkit-media-controls-time-remaining-display {
     width: 100%;
     position: relative;
     height: 30%;
-   
+
 }
 
 .blog-background .overlay {
@@ -489,7 +490,7 @@ video::-webkit-media-controls-time-remaining-display {
     width: 100%;
     height: 60%;
     font-size: 1.2rem;
-   
+
     text-align: center;
     color: #580846;
 }
@@ -811,7 +812,7 @@ video::-webkit-media-controls-time-remaining-display {
 
 
 
-.photo-label-container{
+.photo-label-container {
     border-radius: 15px;
     border: 1px solid var(--gold-color);
     padding: 10px;
@@ -885,6 +886,143 @@ video::-webkit-media-controls-time-remaining-display {
     background: none;
 }
 
+/* DISCOUNT BANNER  */
+.discount-banner-section {
+    width: 100%;
+    height: 40vh;
+    /* background:radial-gradient(circle,var(--light-violet-color),var(--violet-color));  */
+    background: linear-gradient(to bottom, var(--gold-bg-color), #aa947794);
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.discount-banner-img-container {
+    position: relative;
+    width: 60%;
+    height: 100%;
+    max-width: 220px;
+}
+
+.discount-banner-img {
+    width: 100%;
+    height: 100%;
+    /* Comienza desde arriba y transparente */
+    margin-top: -100%;
+    opacity: 0;
+    object-fit: contain;
+    transition: all 1.4s ease-in-out;
+}
+
+.discount-banner-img-container-active img {
+    margin-top: 0;
+    /* Llega a la posición original */
+    opacity: 1;
+}
+
+
+.discount-banner-text-container {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+}
+
+
+.banner-label {
+    color: var(--bold-color);
+    font-weight: 600;
+    font-size: 28px;
+    text-align: center;
+    width: fit-content;
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */
+    overflow: hidden;
+    opacity: 0;
+    transition: 1.3s;
+    transition-delay: 1.2s;
+}
+
+.discount-banner-text-container-active .banner-label {
+    opacity: 1;
+}
+
+
+
+.banner-discount-tag {
+    font-size: 16px;
+    border-radius: 10px;
+    width: fit-content;
+    transition: all 1.2s ease;
+    transition-delay: 1.6s;
+    margin-right: -200%;
+    opacity: 0;
+}
+
+.banner-button {
+    padding: 5px 15px;
+    border: 1px solid;
+    border-radius: 15px;
+    font-size: 14px;
+    height: fit-content;
+    width: fit-content;
+    background-color: var(--bold-color);
+    color: #fff;
+    border-color: var(--violet-color);
+    transition: all 1.4s ease;
+    transition-delay: 2s;
+    margin-left: -200%;
+    opacity: 0;
+    margin-top: 20%;
+}
+
+.discount-banner-text-container-active .banner-discount-tag,
+.discount-banner-text-container-active .banner-button {
+    opacity: 1;
+    margin-right: 0;
+    margin-left: 0;
+}
+/* Para eliminarlos */
+.destroy-all-discounts-form{
+    margin-top: 5%;
+}
+.start-discounts-destroying{
+    padding: 5px 10px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.destroy-discounts-popup{
+    padding: 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #fff;
+    border-radius: 10px;
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    scale: 0;
+    opacity: 0;
+    z-index: 100;
+    transition: all .3s ease;
+}
+.destroy-discounts-popup-active{
+    scale: 1;
+    opacity: 1;
+}
+.destroy-discounts-popup-buttons-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
 
 @media(min-width: 576px) {
     .call-to-actions-container {
@@ -898,13 +1036,13 @@ video::-webkit-media-controls-time-remaining-display {
 
     .call-to-actions-container .cta-container {
         padding: 0;
-        width: 300px;
+        width: 230px;
         height: 70px;
     }
 
     .cta-container span {
         font-size: 1.2rem;
-       
+
     }
 
 }
@@ -961,6 +1099,7 @@ video::-webkit-media-controls-time-remaining-display {
         margin-bottom: 2%;
         width: 60%;
     }
+
     .about-us-frames-container {
         background: none;
         width: 90%;
@@ -975,10 +1114,38 @@ video::-webkit-media-controls-time-remaining-display {
         flex: unset;
         margin: unset;
     }
-    .about-us-dots-container{
+
+    .about-us-dots-container {
         display: none;
     }
 
+    /* DISCOUNT BANNER */
+    .discount-banner-img-container {
+        width: 35%;
+        max-width: 490px;
+    }
+
+    .discount-banner-img {
+        object-fit: cover;
+    }
+
+    .discount-banner-text-container {
+        width: 40%;
+    }
+
+    .banner-label {
+        font-size: 45px;
+    }
+
+    .banner-discount-tag {
+        font-size: 28px;
+    }
+
+    .banner-button {
+        padding: 12.5px 17.5px;
+        font-size: 18px;
+        margin-top: 10%;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -1057,17 +1224,13 @@ video::-webkit-media-controls-time-remaining-display {
         cursor: pointer;
     }
 
-    /* 
-    .slide-image-container:hover {
-        cursor: pointer;
-        opacity: 1;
-        width: 40%;
-        object-position: center;
-        filter: contrast(120%);
-    } */
     .slide-image-container:hover>.slide-image {
         height: 70%;
         width: 80%;
+    }
+
+    .slide-image-container:hover>.slide-image-label {
+        opacity: 1;
     }
 
     .slide-image {
@@ -1083,12 +1246,16 @@ video::-webkit-media-controls-time-remaining-display {
         transition: .5s;
         transition-delay: 0;
         font-size: 1.5rem;
+        opacity: 0;
     }
 
 
     .slide-show-button {
         font-size: 1.2rem;
     }
+
+
+
 
     /* GALLERYSHOW */
 
@@ -1142,11 +1309,11 @@ video::-webkit-media-controls-time-remaining-display {
     }
 
     .blog-info {
-        
+
         align-content: space-around;
-        
+
     }
-    
+
 
     .blog-group {
         flex-direction: row;
@@ -1191,9 +1358,10 @@ video::-webkit-media-controls-time-remaining-display {
     }
 
     /* ABOUT US */
-    .about-us-container{
+    .about-us-container {
         margin-bottom: 15vh;
     }
+
     .about-us-information-container {
         align-items: center;
     }
@@ -1212,7 +1380,7 @@ video::-webkit-media-controls-time-remaining-display {
         width: 37%;
     }
 
-    
+
 
     .about-us-information-title {
         font-size: 1.8rem;
@@ -1223,24 +1391,10 @@ video::-webkit-media-controls-time-remaining-display {
         font-size: 1.3rem;
     }
 
-    /* .about-us-frames-container {
-        background: none;
-        width: 90%;
-        justify-content: space-evenly;
-        column-gap: unset;
-        margin: 0 auto;
-    }
-
-    .about-us-frame {
-        width: 30%;
-        position: static;
-        flex: unset;
-        margin: unset;
-    } */
-
-    .about-us-dots-container{
+    .about-us-dots-container {
         display: none;
     }
+
     .about-us-frame:hover {
         scale: 1.1;
     }
@@ -1256,10 +1410,6 @@ video::-webkit-media-controls-time-remaining-display {
     .about-us-frame-title {
         font-size: 1.35rem;
     }
-
-    /* .about-us-information {
-        font-size: 1.2rem;
-    } */
 
     .about-us-details-container-desktop {
         display: flex;
@@ -1334,13 +1484,30 @@ video::-webkit-media-controls-time-remaining-display {
     .instagram-logo {
         font-size: 1.5rem;
     }
-    .instagram-page-name{
+
+    .instagram-page-name {
         font-size: 1.1rem;
     }
+
     .instagram-image {
         object-fit: cover;
         width: 100%;
         height: 100%;
+    }
+
+    /* DISCOUNT BANNER */
+    .banner-label {
+        font-size: 60px;
+    }
+
+    .banner-discount-tag {
+        font-size: 30px;
+    }
+
+    .banner-button {
+        padding: 10px 20px;
+        font-size: 20px;
+        margin-top: 4%;
     }
 }
 

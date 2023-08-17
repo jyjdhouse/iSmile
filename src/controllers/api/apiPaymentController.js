@@ -8,6 +8,7 @@ const paymentAccessKey = process.env.PAYMENT_API_KEY;
 const controller = {
     getPaymentRequest: async (req, res) => {
         try {
+            
             let { items, date, name, last_name} = req.body;
             // Traigo los errores de formulario (si alguno vino vacio de los que no debia)
             let errors = validationResult(req);
@@ -23,7 +24,9 @@ const controller = {
                     msg: 'Error al procesar la compra, intente nuevamente'
                 });
             }
+            // TODO: Hacer validacion para restar el stock
 
+            
             // Si no hay errores
             let productsInDB = getDeepCopy(await getAllProducts());
             items = JSON.parse(items);

@@ -151,7 +151,7 @@ const controller = {
     try {
       const orderId = req.params.orderId;
       const categoryId = req.body.categoryId;
-      const categoryNumber = Number(categoryId)
+      const categoryNumber = Number(categoryId); //2
       const order = await db.Order.findOne({ where: { tra_id: orderId } });
       const orderItem = await db.OrderItem.findAll({ where: { orders_id: order.id } })
       let method;
@@ -164,39 +164,66 @@ const controller = {
           id: item.products_id,
           quantity: item.quantity
         })
+      });
 
-      })
+      /* 
+      CASOS A RESTAR: 
+                      VENTAS FISICAS: --> status = 1 SIEMPRE
+
+                      VENTAS ONLINE: -pago transferencia ==> Se descuenta cuando el put registra 
+                                    cambio de estado 4 a 3 
+                                     -pagan online ==> Se descuenta cuando la tarjeta esta aprobada
+
+      if(order.status_id == 4){
+        
+      }
+      */
 
       switch (categoryNumber) {
-         // completa
-         case 1:
-          await db.Order.update(
-            {
-              order_status_id: categoryId,
-            },
-            { where: { tra_id: orderId } }
-          );
-          // solamente en el caso de que sea presencial se resta stock
-          // en el caso que sea online, quiere decir que ya paso por las otras etapas
-          if(order.order_types_id == 3){
-            method = 'resta'
-          handleStock(stockItems, method);
+        // completa
+        case 1:
+          if (order.order_status_id == 3) {//Quiere decir que pago & eligio retiro por local, entonces anulo la fecha
+            await db.Order.update(
+              {
+                order_status_id: categoryId,
+                pending_payment_date: null
+              },
+              { where: { tra_id: orderId } }
+            );
+          } else {
+            await db.Order.update(
+              {
+                order_status_id: categoryId,
+              },
+              { where: { tra_id: orderId } }
+            );
           }
-        
-          // pendiente de envio
+          break
+        // Pendiente de envio
         case 2:
-          await db.Order.update(
-            {
-              order_status_id: categoryId,
-            },
-            { where: { tra_id: orderId } }
-          );
-        // veo si a pendiente de pago 
-        case 3:
+          if (order.order_status_id == 3) {//Quiere decir que pago & eligio envio a domicilio, entonces anulo la fecha
+            await db.Order.update(
+              {
+                order_status_id: categoryId,
+                pending_payment_date: null
+              },
+              { where: { tra_id: orderId } }
+            );
+          } else {
+            await db.Order.update(
+              {
+                order_status_id: categoryId,
+              },
+              { where: { tra_id: orderId } }
+            );
+          };
 
-          method = 'resta'
+          break
+        // Pendiente de pago && antes era pendiente de confirmacion
+        case 3 && order.order_status_id == 4:
+          method = 'resta';
           handleStock(stockItems, method);
-          // hago el update con la fecha y el valor true en e
+          // hago el update con el inicio de la fecha para pagar
           await db.Order.update(
             {
               order_status_id: categoryId,
@@ -204,23 +231,23 @@ const controller = {
             },
             { where: { tra_id: orderId } }
           );
+          // en 24 horas me fijo si pago
           cron.schedule('0 0 */24 * * *', async () => {
             const order = await db.Order.findOne({ where: { tra_id: orderId } });
 
-            if (order) {
+            if (order && order.order_status_id == 3) {
+              // Me fijo los tiempos (inicial, actual)
               const currentTime = new Date();
               const twentyFourHoursLater = new Date(order.pending_payment_date.getTime() + (24 * 60 * 60 * 1000)); // Suma 24 horas en milisegundos
-
+              // Si pasaron 24 horas y la orden sigue con el pago pendiente
               if (currentTime >= twentyFourHoursLater) {
                 console.log('Han transcurrido 24 horas. Actualización de estado realizada.');
 
-                
-                method = 'suma';
-                handleStock(stockItems, method);
-
-                await db.Order.update
-                  ({ is_pending_payment_expired: 1 },
-                    { where: { tra_id: orderId } });
+                await db.Order.update({
+                  is_pending_payment_expired: 1
+                }, {
+                  where: { tra_id: orderId }
+                });
 
                 // Configurar el transporte SMTP para enviar el correo electrónico
                 let transporter = nodemailer.createTransport(emailConfig);
@@ -251,17 +278,15 @@ const controller = {
         case 5:
           method = 'suma';
           handleStock(stockItems, method);
-          await db.Order.update(
-            {
-              order_status_id: categoryId,
-              pending_payment_date: null,
-              is_pending_payment_expired: 0
-            },
-            { where: { tra_id: orderId } }
+          await db.Order.update({
+            order_status_id: categoryId,
+            pending_payment_date: null,
+            is_pending_payment_expired: 0
+          }, {
+            where: { tra_id: orderId }
+          }
           );
           break;
-       
-
       }
 
 

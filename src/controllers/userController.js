@@ -1,10 +1,9 @@
 //Database
 const db = require('../database/models');
-// Utils
-const getRelativePath = require('../utils/getRelativePath');
-const secret = require('../utils/secret').secret;
 
 // Librerias
+const Sequelize = require('sequelize');
+const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
@@ -34,6 +33,10 @@ const getAllGenres = require('../utils/getAllGenres');
 const getAllProducts = require('../utils/getAllProducts');
 const dateFormater = require('../utils/dateFormater');
 const dateFormaterForInput = require('../utils/userProfDateFormater');
+const getRelativePath = require('../utils/getRelativePath');
+const secret = require('../utils/secret').secret;
+const orderStatuses = require('../utils/staticDB/orderStatus');
+const orderTypes = require('../utils/staticDB/orderTypes');
 
 // CONTROLLER
 const controller = {
@@ -43,14 +46,14 @@ const controller = {
             let user = getDeepCopy(await getUser(req.session.userLoggedId));
             let dateFormated;
             // Formateo la fecha
-            if(user.birth_date){
+            if (user.birth_date) {
                 dateFormated = dateFormater(user.birth_date);
                 user.birth_date = dateFormaterForInput(user.birth_date)
             }
-           
+
             console.log(user.birth_date)
-       
-            
+
+
             // return res.send(user);
             const genres = await getAllGenres()
             return res.render('userProfile', { user, provinces, genres, dateFormated })
@@ -64,7 +67,7 @@ const controller = {
         // return res.render('checkout.ejs', { provinces });
         if (userId) { //Si hay usuario loggeado
             let user = getDeepCopy(await getUser(userId));
-            console.log(user.temporalCart)
+            // return res.send(user);
             // Agarro los temporal Items, que son los productos que estan en el carro
             let cart = user.temporalCart?.temporalItems;
             // Ahora voy por cada producto del temporalItem, lo dejo con un precio y la primer imagen
@@ -78,8 +81,8 @@ const controller = {
                     products_id: tempItem.products_id,
                     name: tempItem.product.name,
                     price: tempItem.product.price,
-                    filename: tempItemFile,
-                    stock: tempItem.stock
+                    stock:tempItem.product.stock,
+                    filename: tempItemFile
                 }
                 
             });
@@ -108,7 +111,7 @@ const controller = {
                 cart = cart?.sort((a, b) => b.tempItemId - a.tempItemId);
                 
             }
-            
+            // return res.send(cart)
             return res.render('checkout.ejs', { user, cart, provinces, countryCodes });
         }
         return res.render('checkout.ejs', { provinces, countryCodes });
@@ -197,7 +200,7 @@ const controller = {
                     let cookieTime = (1000 * 60) * 60 * 24  //1 Dia
                     // Generar el token de autenticación
                     req.session.userLoggedId = userToLog.id;
-                    console.log({userController: req.session})
+                    console.log({ userController: req.session })
                     const token = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1d' }); // genera el token
                     res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
                     // Si es admin armo una cookie con el token de admin
@@ -346,6 +349,83 @@ const controller = {
     },
     bookingView: (req, res) => {
         return res.render('userBooking')
+    },
+    orderHistory: async (req, res) => {
+        try {
+            let { userLoggedId } = req.session;
+            let ordersToPaint = getDeepCopy(await db.Order.findAll({
+                where: {
+                    users_id: userLoggedId
+                },
+                include: ['shippingAddress','billingAddress', {
+                    association: 'orderItems',
+                    include: [{
+                        association: 'product',
+                        include: ['files'],
+                        paranoid: false
+                    }]
+                }],
+                order: [
+                    [
+                        Sequelize.literal("cast(substring_index(tra_id, '-', 1) as unsigned)"),
+                        'DESC'
+                    ]
+                ],
+                // paranoid: false;
+            }));
+            // return res.send(ordersToPaint);
+            // Voy por cada una
+            for (let i = 0; i < ordersToPaint.length; i++) {
+                const order = ordersToPaint[i];
+                // Esto es para traer el estado de la venta
+                let orderStatus = orderStatuses.find(stat => stat.id == order.order_status_id);
+                let statusColor;
+                switch (orderStatus.id) {
+                    case 1://confirmada
+                        statusColor = '#0f0'
+                        break;
+                    case 5: //Anulada
+                        statusColor = '#f00'
+                        break;
+
+                    default: //Pendiente
+                        statusColor = '#ffd100'
+                        break;
+                };
+                order.status = {
+                    status: orderStatus.status,
+                    color_code: statusColor
+                };
+                // Esto es para el tipo de venta
+                let orderType = orderTypes.find(type=>type.id==order.order_types_id);
+                order.type = orderType.type;
+                // Esto es para ver si tiene direccion de entrega
+
+                // Esto es para: traer el url de cada producto
+                for (let j = 0; j < order.orderItems.length; j++) {
+                    const item = order.orderItems[j];
+                    // Busco en los files del item la mainImage, o la primer foto
+                    let fileToGetURL;
+                    fileToGetURL = item.product.files.find(file => file.main_image);
+                    // Si no encontro main, busco la primer foto
+                    !fileToGetURL ? fileToGetURL = item.product.files.find(file => file.file_types_id == 1) : null;
+                    if (fileToGetURL) {
+                        const getObjectParams = {
+                            Bucket: bucketName,
+                            Key: `product/${fileToGetURL.filename}`
+                        }
+                        const command = new GetObjectCommand(getObjectParams);
+                        url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+                        item.file_url = url
+                    }
+                }
+            }
+            // return res.send(ordersToPaint);
+            return res.render('userOrderHistory', { orders: ordersToPaint, orderStatuses, provinces });
+        } catch (error) {
+            console.log(`Falle en userController.orderHistory: ${error}`);
+            return res.json({ error });
+        }
     }
 
 };

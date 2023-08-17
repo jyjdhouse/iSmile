@@ -43,6 +43,11 @@
             <section class="product-list-section">
                 <% products.forEach(prod=> { %>
                     <article class="product-card-container" data-productId="<%=prod.id%>">
+                        <% if (prod.discount) { %>
+                            <div class="card-discount-tag-container">
+                                <p class="card-discount-tag"><%=prod.discount %>% OFF</p>
+                            </div>
+                        <% } %>
                         <a href="/product/<%= prod.id %>" class="product-card-link">
                             <div class="image-container">
                                 <div class="image-carousel">
@@ -82,9 +87,16 @@
                                     <p class="product-name">
                                         <%= prod.name %>
                                     </p>
-                                    <p class="product-price">$<%= prod.price %>
-                                    </p>
+                                    <% if (prod.discount) { %>
+                                        <div class="price-with-discount">
+                                            <p class="product-price striked">$<%= prod.price %></p>
+                                            <p class="product-price-discount">$<%= Math.round(prod.price * (1-prod.discount/100)) %></p>
+                                        </div>
+                                    <% } else{ %>
+                                        <p class="product-price">$<%= prod.price %></p>
+                                    <% } %>
                                 </div>
+                                
                             </div>
                         </a>
                         <div class="product-quick-actions-container" data-productId="<%=prod.id %>">

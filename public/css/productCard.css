@@ -106,7 +106,7 @@
 
 .product-card-container .product-name,
 .product-card-container .product-price {
-    font-size: 12px;
+    font-size: 12px ;
     letter-spacing: 1px;
     font-weight: initial;
 }
@@ -121,7 +121,7 @@
     position: absolute;
     font-size: 20px;
     width: 20%;
-    right: 5%;
+    right: 0;
     text-align: center;
     z-index: 5;
     bottom: 0;
@@ -139,11 +139,74 @@
     left: 50%;
     transform: translate(-50%,-50%);
 }
+/* Si tiene descuento */
+.discount-tag {
+    color: var(--violet-color);
+    font-size: 16px;
+}
 
+.price-with-discount {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.price-with-discount .product-price {
+    color: #aaa;
+    /* text-decoration-color: var(--violet-color); */
+}
+
+.price-with-discount .product-price-discount {
+    margin-left: 20px;
+    color: var(--gold-color);
+}
+
+/* Para el circulo con descuento */
+.card-discount-tag-container {
+    position: absolute;
+    width: 60px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--gold-color);
+    color: var(--violet-color);
+    border-radius: 2px;
+    overflow: hidden;
+    right: 0%;
+    top: 0%;
+}
+
+.card-discount-tag {
+    color: #fff;
+    font-size: 11px;
+}
+
+.product-card-container .price-with-discount {
+    justify-content: center;
+}
+
+.product-card-container .product-price-discount {
+    font-size: 13px;
+    margin-left: 5px;
+}
 @media(min-width:768px) {
     .product-card-container{
         max-width: 180px;
     }
+    /* Para el descuento */
+    .card-discount-tag-container {
+        width: 75px;
+        height: 25px;
+    }
+    .card-discount-tag {
+        font-size: 16px;
+    }
+    .product-card-container .product-price-discount {
+        font-size: 16px;
+        margin-left: 10px;
+    }
+
 }
 @media(min-width:1024px) {
     .product-card-container{
@@ -206,7 +269,17 @@
         transform: translateX(-200%);
     }
 
-    /* .quick-cart-container:hover {
-        background-color: #eee;
-    } */
+    /* Para el descuento */
+    .card-discount-tag-container {
+        width: 100px;
+        height: 30px;
+        font-size: 14px;
+    }
+    .card-discount-tag {
+        font-size: 18px;
+    }
+    .product-card-container .product-price-discount {
+        font-size: 18px;
+        margin-left: 15px;
+    }
 }

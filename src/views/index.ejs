@@ -12,7 +12,7 @@
 
 <body>
     <%- include('./partials/header.ejs') %>
-     
+
         <main class="main">
             <section class="landing-video-container">
                 <video class="video" src="<%= videoFile.file_url %>" playsinline muted autoplay loop></video>
@@ -33,228 +33,261 @@
                         </div>
                     </form>
                     <% } %>
-                    <div class="call-to-actions-container">
-                        <a class="cta-container" href="/product">
-                            <span>Ir la tienda</span>
-                        </a>
-                        <a class="cta-container" href="/user/booking">
-                            <span>Agendá tu visita</span>
-                        </a>
-                       
-                       
-                    </div>
+                        <div class="call-to-actions-container">
+                            <a class="cta-container" href="/product">
+                                <span>Shop <i class='bx bx-shopping-bag'></i></span>
+                            </a>
+                            <a class="cta-container" href="/user/booking">
+                                <span>Turnos <i class='bx bx-calendar'></i></span>
+                            </a>
+
+
+                        </div>
             </section>
-            
-            <section class="slide-show" id="products">
-                <a href="/product" class="slide-show-button">Ir a la tienda <i class='bx bx-shopping-bag'></i></a>
-                <div class="slide-images-wraper slide-images-wraper-desktop">
-                    <% slideShowDesktop.forEach((group,i)=>{ %>
-                        <div class="slide-image-group <%= i == 0 ? 'slide-image-group-active':'' %> <%= i == 1 ? 'slide-image-group-next':'' %> <%= i == slideShowMobile.length-1 || (i != 1&& i != 0) ? 'slide-image-group-prev':'' %>">
-                            <% group.forEach(prod=>{ %>
-                                <div class="slide-image-container">
-                                    <p class="slide-image-label bold"><%= prod.name %></p>
-                                    <img src="<%- prod.file_url %>" alt="slide-product-image-<%= prod.name %>" class="slide-image">
+            <% if(locals.maxDiscount){ //Si hay en db productos con descuento%>
+                <section class="discount-banner-section">
+                    <div class="discount-banner-img-container">
+                        <img src="./img/discount-banner-img.png" class="discount-banner-img" alt="banner-img">
+                    </div>
+                    <div class="discount-banner-text-container">
+                        <p class="banner-label">FLASH SALE</p>
+                        <p class="banner-discount-tag">Up to <span class="bold"><%= maxDiscount %>%</span> off</p>
+                        <a href="/product" class="banner-button">Ir a la tienda </a>
+                        <% if(locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                            locals.userLogged.user_categories_id==2)){ %>
+                            <form class="destroy-all-discounts-form" method="get" action='/admin/destroyAllDiscounts'>
+                                <p class="start-discounts-destroying">Eliminar todos los descuentos</p>
+                                <div class="destroy-discounts-popup">
+                                    <p class="destroy-discounts-popup-label">¿Estas segura? No hay vuelta atras</p>
+                                    <p class="destroy-discounts-popup-desc grey">Tendras que cargarlos nuevamente cada
+                                        uno</p>
+                                    <div class="destroy-discounts-popup-buttons-container">
+                                        <button class="cancel-destroying-process-btn" type="button">Cancelar</button>
+                                        <button type="submit">Eliminar</button>
+                                    </div>
                                 </div>
+                            </form>
+                            <% } %>
+                    </div>
+
+                </section>
+                <% } %>
+
+                    <section class="slide-show" id="products">
+                        <a href="/product" class="slide-show-button">Ir a la tienda <i
+                                class='bx bx-shopping-bag'></i></a>
+                        <div class="slide-images-wraper slide-images-wraper-desktop">
+                            <% slideShowDesktop.forEach((group,i)=>{ %>
+                                <div
+                                    class="slide-image-group <%= i == 0 ? 'slide-image-group-active':'' %> <%= i == 1 ? 'slide-image-group-next':'' %> <%= i == slideShowMobile.length-1 || (i != 1&& i != 0) ? 'slide-image-group-prev':'' %>">
+                                    <% group.forEach(prod=>{ %>
+                                        <div class="slide-image-container">
+                                            <p class="slide-image-label bold">
+                                                <%= prod.name %>
+                                            </p>
+                                            <img src="<%- prod.file_url %>" alt="slide-product-image-<%= prod.name %>"
+                                                class="slide-image">
+                                        </div>
+                                        <% }) %>
+                                </div>
+                                <% }) %>
+                        </div>
+                        <div class="slide-images-wraper slide-images-wraper-mobile">
+                            <% slideShowMobile.forEach((prod,i)=>{ %>
+                                <div
+                                    class="slide-image-group <%= i == 0 ? 'slide-image-group-active':'' %> <%= i == 1 ? 'slide-image-group-next':'' %> <%= i == slideShowMobile.length-1 || (i != 1&& i != 0) ? 'slide-image-group-prev':'' %>">
+                                    <div class="slide-image-container">
+                                        <p class="slide-image-label bold">
+                                            <%= prod.name %>
+                                        </p>
+                                        <img src="<%= prod.file_url %>" alt="slide-product-image-<%= prod.name %>"
+                                            class="slide-image">
+                                    </div>
+                                </div>
+                                <% }) %>
+
+                        </div>
+                    </section>
+
+                    <section class="gallery-show" id="services">
+                        <% galleryFiles.forEach(file=>{ %>
+                            <div class="product-gallery-card">
+                                <a href="/servicios">
+                                    <div class="overlay"></div>
+                                    <img src="<%= file.file_url %>" class="gallery-image" alt="<%= file.filename %>">
+                                    <div class="gallery-product-detail">
+                                        <p class="gallery-product-name">
+                                            <%= homePageLabels.galleryShowLabels.find(homeLab=>homeLab.position ==
+                                                file.position).label %>
+                                        </p>
+                                    </div>
+                                    <% if(locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                                        locals.userLogged.user_categories_id==2)){ %>
+                                        <form class="edit-file-overlay gallery-overlay" method="POST"
+                                            action='/updateHomeFile?_method=PUT' enctype="multipart/form-data"
+                                            data-sectionid="<%= file?.home_sections_id %>"
+                                            data-position="<%= file?.position %>">
+                                            <div class="edit-file-buttons-container">
+                                                <div class="change-image-btn-container">
+                                                    <i class='bx bx-pencil change-image-btn'></i><br>
+                                                </div>
+                                                <p class="cancel-file-action hidden">Cancelar</p>
+                                                <label for="gallery-image-1"
+                                                    class="instagram-input-file-label hidden">Selecciónar
+                                                    foto</label>
+                                                <input type="file" accept="image/*" name="homeFile" id="gallery-image-1"
+                                                    class="edit-file-input hidden">
+                                                <button type="submit"
+                                                    class="confirm-instagram-file-btn hidden">Confirmar</button>
+                                            </div>
+                                        </form>
+                                        <% } %>
+                                </a>
+                                <a href="/servicios" class="product-gallery-button individual-button">Ver
+                                    Servicios</a>
+                            </div>
                             <% }) %>
-                        </div>
-                    <% }) %>
-                </div>
-                <div class="slide-images-wraper slide-images-wraper-mobile">
-                    <% slideShowMobile.forEach((prod,i)=>{ %>
-                        <div class="slide-image-group <%= i == 0 ? 'slide-image-group-active':'' %> <%= i == 1 ? 'slide-image-group-next':'' %> <%= i == slideShowMobile.length-1 || (i != 1&& i != 0) ? 'slide-image-group-prev':'' %>">
-                        <div class="slide-image-container">
-                            <p class="slide-image-label bold"><%= prod.name %></p>
-                            <img src="<%= prod.file_url %>" alt="slide-product-image-<%= prod.name %>" class="slide-image">
-                        </div>
-                    </div>
-                    <% }) %>
-                    
-                </div>
-            </section>
+                                <a href="/servicios" class="product-gallery-button">Ver Servicios</a>
+                    </section>
 
-            <section class="gallery-show" id="services">
-                <% galleryFiles.forEach(file=>{ %>
-                    <div class="product-gallery-card">
+                    <section class="about-us-container" id="us">
+                        <img src="/img/homePage/rightPattern.png" alt="about-us-pattern" class="pattern right-pattern">
+                        <img src="/img/homePage/leftPattern.png" alt="about-us-pattern" class="pattern left-pattern">
+                        <div class="about-us-information-container">
+                            <p class="about-us-information-title bold">SOMOS I SMILE</p>
+                            <p class="about-us-information-subtitle">Somos una clínica de estética de vanguardia
+                                especializada
+                                en Armonización Facial, Estética Dental y Medicina Regenerativa.</p>
+                            <div class="about-us-frames-space">
+                                <div class="about-us-frames-container">
+                                    <article class="about-us-small-frame about-us-frame about-us-frame-active">
+                                        <p class="about-us-frame-title bold">SERVICIO INTEGRAL</p>
+                                        <p class="about-us-information">
+                                            Trabajamos en equipo con nuestros especialistas con una visión de cada
+                                            especialidad
+                                            para lograr un bienestar y una estética global.
+                                        </p>
+                                    </article>
+                                    <article class="about-us-big-frame about-us-frame about-us-frame-next">
+                                        <p class="about-us-frame-title bold uppercase">INNOVAción</p>
+                                        <p class="about-us-information">
+                                            Nuestros conocimientos y constante capacitación e investigación
+                                            sobre los últimos avances en odontología y medicina estética
+                                            nos permiten estar a la vanguardia de las tendencias y descubrimientos
+                                            estéticos a nivel mundial.
 
-                        <a href="/servicios">
-                            <div class="overlay"></div>
-                            <img src="<%= file.file_url %>" class="gallery-image" alt="<%= file.filename %>">
-                            <div class="gallery-product-detail">
-                                <p class="gallery-product-name">
-                                    <%= homePageLabels.galleryShowLabels.find(homeLab=>homeLab.position == file.position).label %>
-                                </p>
+                                        </p>
+                                    </article>
+                                    <article class="about-us-small-frame about-us-frame about-us-frame-prev">
+                                        <p class="about-us-frame-title bold">ALTOS ESTANDARES</p>
+                                        <p class="about-us-information">
+                                            Profesionales especializados con las técnicas más novedosas en combinación
+                                            con los
+                                            mejores productos para cumplir nuestro principal objetivo: <br>
+                                            <span class="bold">que cada uno de
+                                                nuestros pacientes se vaya con una sonrisa.</span>
+                                        </p>
+                                    </article>
+                                </div>
                             </div>
-                            <% if(locals.userLogged && (locals.userLogged.user_categories_id==1 ||
-                                locals.userLogged.user_categories_id==2)){ %>
-                                <form class="edit-file-overlay gallery-overlay" method="POST"
-                                    action='/updateHomeFile?_method=PUT' enctype="multipart/form-data"
-                                    data-sectionid="<%= file?.home_sections_id %>"
-                                    data-position="<%= file?.position %>">
-                                    <div class="edit-file-buttons-container">
-                                        <div class="change-image-btn-container">
-                                            <i class='bx bx-pencil change-image-btn'></i><br>
-                                        </div>
-                                        <p class="cancel-file-action hidden">Cancelar</p>
-                                        <label for="gallery-image-1"
-                                            class="instagram-input-file-label hidden">Selecciónar
-                                            foto</label>
-                                        <input type="file" accept="image/*" name="homeFile" id="gallery-image-1"
-                                            class="edit-file-input hidden">
-                                        <button type="submit"
-                                            class="confirm-instagram-file-btn hidden">Confirmar</button>
-                                    </div>
-                                </form>
-                                <% } %>
-                        </a>
-                        <a href="/servicios" class="product-gallery-button individual-button">Ver
-                            Servicios</a>
-                    </div>
-                <% }) %>
-                <a href="/servicios" class="product-gallery-button">Ver Servicios</a>
-            </section>
-
-            <section class="about-us-container" id="us">
-                <img src="/img/homePage/rightPattern.png" alt="about-us-pattern" class="pattern right-pattern">
-                <img src="/img/homePage/leftPattern.png" alt="about-us-pattern" class="pattern left-pattern">
-                <div class="about-us-information-container">
-                    <p class="about-us-information-title bold">SOMOS I SMILE</p>
-                    <p class="about-us-information-subtitle">Somos una clínica de estética de vanguardia especializada en Armonización Facial, Estética Dental y Medicina Regenerativa.</p>
-                    <div class="about-us-frames-space">
-                        <div class="about-us-frames-container">
-                            <article class="about-us-small-frame about-us-frame about-us-frame-active">
-                                <p class="about-us-frame-title bold">SERVICIO INTEGRAL</p>
-                                <p class="about-us-information">
-                                    Trabajamos en equipo con nuestros especialistas con una visión de cada especialidad
-                                    para lograr un bienestar y una estética global.
-                                </p>
-                            </article>
-                            <article class="about-us-big-frame about-us-frame about-us-frame-next">
-                                <p class="about-us-frame-title bold uppercase">INNOVAción</p>
-                                <p class="about-us-information">
-                                    Nuestros conocimientos y constante capacitación e investigación
-                                    sobre los últimos avances en odontología y medicina estética
-                                    nos permiten estar a la vanguardia de las tendencias y descubrimientos
-                                    estéticos a nivel mundial.
-
-                                </p>
-                            </article>
-                            <article class="about-us-small-frame about-us-frame about-us-frame-prev">
-                                <p class="about-us-frame-title bold">ALTOS ESTANDARES</p>
-                                <p class="about-us-information">
-                                    Profesionales especializados con las técnicas más novedosas en combinación con los
-                                    mejores productos para cumplir nuestro principal objetivo: <br>
-                                    <span class="bold">que cada uno de
-                                        nuestros pacientes se vaya con una sonrisa.</span>
-                                </p>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="about-us-dots-container">
-                        <div class="about-us-dot about-us-dot-active"></div>
-                        <div class="about-us-dot"></div>
-                        <div class="about-us-dot"></div>
-                    </div>
-
-
-                </div>
-            </section>
-            
-            <section class="blog-section" id="blog">
-                <div class="blog-background">
-                    <p class="blog-section-title">The <span class="bold">I smile</span> Blog</p>
-                    <div class="see-all-blogs-container">
-                        <a href="/blog" class="see-all-blogs">Ver Blogs</a>
-                    </div>
-                    
-                   
-                        <img src="img/homePage/rightPattern.png" alt="background-image"
-                        class="blog-pattern right-pattern blog-pattern">
-                    <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
-                        locals.userLogged.user_categories_id==2) ) { %>
-                        <form class="edit-file-overlay blog-overlay" method="POST" action='/updateHomeFile?_method=PUT'
-                            enctype="multipart/form-data" data-sectionid="<%= blogFile.home_sections_id %>"
-                            data-position="<%= blogFile.position %>">
-                            <div class="edit-file-buttons-container">
-                                <div class="change-image-btn-container">
-                                    <i class='bx bx-pencil change-image-btn'></i><br>
-                                </div>
-                                <p class="cancel-file-action hidden">Cancelar</p>
-                                <label for="blog-image" class="instagram-input-file-label hidden">Selecciónar
-                                    foto</label>
-                                <input type="file" accept="image/*" name="homeFile" id="blog-image"
-                                    class="edit-file-input hidden">
-                                <button type="submit" class="confirm-instagram-file-btn hidden">Confirmar</button>
+                            <div class="about-us-dots-container">
+                                <div class="about-us-dot about-us-dot-active"></div>
+                                <div class="about-us-dot"></div>
+                                <div class="about-us-dot"></div>
                             </div>
-                        </form>
-                        <% } %>
-                </div>
-                <div class="blogs-cards-container">
-                    <div class="blog-group blog-group-active">
-                        <% lastBlogs.forEach(blog=>{ %>
-                            <a href="/blog/<%= blog.id %>" class="blog-link index-blog">
-                            <article class="blog-card">
-                                <div class="blog-img-container index-blog-img">
-                                    <img src="<%= blog.mainImageURL %>" class="blog-image" alt="<%= blog.title %>-main-image">
-                                </div>
-                                <div class="blog-info-container">
-                                    <p class="blog-author-date">By <%= blog.author %> | <span class="blog-date"><%= blog.createdAt %></span></p>
-                                    <h3 class="blog-card-title"><%= blog.title %></h3>
-                                    <p class="blog-card-description"><%= blog.cutDesc %></p>
-                                </div>
-                                <button class="blog-card-button">LEER MAS</button>
-                            </article>
-                        </a>
-                        <% }) %>
-                        
-                    </div>
-                </div>
-                <img src="img/homePage/leftPattern.png" alt="background-image"
-                class="blog-pattern blog-left-pattern blog-pattern">
-            </section>
 
 
-            
-            <section class="instagram-container">
-                <p class="instagram-label bold">SIGUENOS</p>
-                <div class="instagram-cards-container">
-                    <% igFiles.forEach((file,i)=>{ %>
-                        <div class="instagram-card <%= i==0 ? 'instagram-card-active' : '' %>">
-                        <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
-                            <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
-                                locals.userLogged.user_categories_id==2) ) { %>
-                                <form class="instagram-overlay edit-file-overlay" method="POST"
-                                    action='/updateHomeFile?_method=PUT' enctype="multipart/form-data"
-                                    data-sectionid="<%= file?.home_sections_id %>"
-                                    data-position="<%= file?.position %>">
-                                    <div class="edit-file-buttons-container">
-                                        <div class="change-image-btn-container">
-                                            <i class='bx bx-pencil change-image-btn'></i><br>
-                                        </div>
-                                        <p class="cancel-file-action hidden">Cancelar</p>
-                                        <label for="instagram-input1"
-                                            class="instagram-input-file-label hidden">Selecciónar foto</label>
-                                        <input type="file" accept="image/*" name="homeFile" id="instagram-input1"
-                                            class="edit-file-input hidden">
-                                        <button type="submit"
-                                            class="confirm-instagram-file-btn hidden">Confirmar</button>
-                                    </div>
-                                </form>
-                                <% }else{ %>
-                                    <div class="instagram-client-overlay">
-                                        <div class="photo-label-container">
-                                            <i class="fa-brands fa-instagram instagram-logo"></i>
-                                            <p class="instagram-page-name">@ismile.estetica</p>
-                                        </div>
-                                    </div>
-                                    <% } %>
-                                        <img src="<%= file.file_url %>" alt="instagram-image"
-                                            class="instagram-image">
-                        </a>
-                    </div>
-                    <% }) %>
-                    
-                </div>
-            </section>
+                        </div>
+                    </section>
+
+                    <section class="blog-section" id="blog">
+                        <div class="blog-background">
+                            <p class="blog-section-title">The <span class="bold">I smile</span> Blog</p>
+                            <div class="see-all-blogs-container">
+                                <a href="/blog" class="see-all-blogs">Ver Blogs</a>
+                            </div>
+
+
+                            <img src="img/homePage/rightPattern.png" alt="background-image"
+                                class="blog-pattern right-pattern blog-pattern">
+
+                        </div>
+                        <div class="blogs-cards-container">
+                            <div class="blog-group blog-group-active">
+                                <% lastBlogs.forEach(blog=>{ %>
+                                    <a href="/blog/<%= blog.id %>" class="blog-link index-blog">
+                                        <article class="blog-card">
+                                            <div class="blog-img-container index-blog-img">
+                                                <img src="<%= blog.mainImageURL %>" class="blog-image"
+                                                    alt="<%= blog.title %>-main-image">
+                                            </div>
+                                            <div class="blog-info-container">
+                                                <p class="blog-author-date">By <%= blog.author %> | <span
+                                                            class="blog-date">
+                                                            <%= blog.createdAt %>
+                                                        </span></p>
+                                                <h3 class="blog-card-title">
+                                                    <%= blog.title %>
+                                                </h3>
+                                                <p class="blog-card-description">
+                                                    <%= blog.cutDesc %>
+                                                </p>
+                                            </div>
+                                            <button class="blog-card-button">LEER MAS</button>
+                                        </article>
+                                    </a>
+                                    <% }) %>
+
+                            </div>
+                        </div>
+                        <img src="img/homePage/leftPattern.png" alt="background-image"
+                            class="blog-pattern blog-left-pattern blog-pattern">
+                    </section>
+
+
+
+                    <section class="instagram-container">
+                        <p class="instagram-label bold">SIGUENOS</p>
+                        <div class="instagram-cards-container">
+                            <% igFiles.forEach((file,i)=>{ %>
+                                <div class="instagram-card <%= i==0 ? 'instagram-card-active' : '' %>">
+                                    <a target="_blank" href="https://www.instagram.com/ismile.estetica/">
+                                        <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
+                                            locals.userLogged.user_categories_id==2) ) { %>
+                                            <form class="instagram-overlay edit-file-overlay" method="POST"
+                                                action='/updateHomeFile?_method=PUT' enctype="multipart/form-data"
+                                                data-sectionid="<%= file?.home_sections_id %>"
+                                                data-position="<%= file?.position %>">
+                                                <div class="edit-file-buttons-container">
+                                                    <div class="change-image-btn-container">
+                                                        <i class='bx bx-pencil change-image-btn'></i><br>
+                                                    </div>
+                                                    <p class="cancel-file-action hidden">Cancelar</p>
+                                                    <label for="instagram-input1"
+                                                        class="instagram-input-file-label hidden">Selecciónar
+                                                        foto</label>
+                                                    <input type="file" accept="image/*" name="homeFile"
+                                                        id="instagram-input1" class="edit-file-input hidden">
+                                                    <button type="submit"
+                                                        class="confirm-instagram-file-btn hidden">Confirmar</button>
+                                                </div>
+                                            </form>
+                                            <% }else{ %>
+                                                <div class="instagram-client-overlay">
+                                                    <div class="photo-label-container">
+                                                        <i class="fa-brands fa-instagram instagram-logo"></i>
+                                                        <p class="instagram-page-name">@ismile.estetica</p>
+                                                    </div>
+                                                </div>
+                                                <% } %>
+                                                    <img src="<%= file.file_url %>" alt="instagram-image"
+                                                        class="instagram-image">
+                                    </a>
+                                </div>
+                                <% }) %>
+
+                        </div>
+                    </section>
         </main>
         <%- include('./partials/footer.ejs') %>
 </body>
