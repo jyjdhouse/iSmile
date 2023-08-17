@@ -64,28 +64,28 @@ window.addEventListener('load', () => {
     }
 
     // Logica para mostrar labels en slideShow
-    let slideIntervalId = setInterval(updateSlideShow, 3500);
-    const labels = document.querySelectorAll('.slide-image-label');
-    const slideImageContainers = document.querySelectorAll('.slide-image-container')
-    if (isInDesktop()) { //Si esta en desktop es distinto el slideShow
-        slideImageContainers?.forEach(container => {
-            container.addEventListener('mouseenter', () => {
-                const labelToActivate = container.querySelector('.slide-image-label');
-                labelToActivate.classList.add('slide-image-label-visible');
-                // Freno el slideShow
-                clearInterval(slideIntervalId);
-            });
-            container?.addEventListener('mouseleave', () => {
-                const labelToDeactivate = container.querySelector('.slide-image-label');
-                labelToDeactivate.classList.remove('slide-image-label-visible');
-                slideIntervalId = setInterval(updateSlideShow, 5000);
-            });
-        });
-    } else { //Aca es otra logica
-        labels.forEach(lab => {
-            lab.classList.add('slide-image-label-visible');
-        });
+    const slideShowSection = document.querySelector('.slide-show')
+    const slideShowObserver = checkIfIsInScreen(.85, handleVisibleSlideSection, slideShowSection)
+    // Me fijo si aparece en pantalla
+    slideShowObserver.observe(slideShowSection);
+    function handleVisibleBannerText(container) {
+        container.classList.add('discount-banner-text-container-active');
     }
+    let slideIntervalId;
+    function handleVisibleSlideSection() {
+        slideIntervalId = setInterval(updateSlideShow, 3500);
+    }
+
+    const slideImageContainers = document.querySelectorAll('.slide-image-container')
+    slideImageContainers?.forEach(container => {
+        container.addEventListener('mouseenter', () => {
+            // Freno el slideShow
+            clearInterval(slideIntervalId);
+        });
+        container?.addEventListener('mouseleave', () => {
+            slideIntervalId = setInterval(updateSlideShow, 5000);
+        });
+    });
 
 
     // LOGICA para slideShow

@@ -29,7 +29,27 @@ const s3 = new S3Client({
 const controller = {
     list: async (req, res) => { //Metodo que devuelve todos los productos
         try {
-            let products = getDeepCopy(await getAllProducts());
+            let {ids} = req.query;
+            ids = ids.split(',')
+            let products;
+            if(ids){ //Si viene por params ids, es que solo quiere un par
+                products = getDeepCopy( await db.Product.findAll({
+                    where: {
+                        id:ids
+                    },
+                    include: [
+                        {
+                            association: 'files',
+                            include: ['fileType']
+                        },
+                        'temporalItems',
+                        'category'
+                    ]
+                }));
+            } else{ //Sino busco todos
+                products = getDeepCopy(await getAllProducts());
+            }
+             
             // Si la url es checkout entonces le pido las url a cada producto
             if (req.headers?.referer?.includes('checkout')) {
 

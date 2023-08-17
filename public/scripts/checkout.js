@@ -119,7 +119,7 @@ const checkClickTrashOrScreen = (btn) => {
             document.removeEventListener('click', handleClick)
         }
     };
-    
+
     document.addEventListener('click', handleClick);
 }
 
@@ -687,6 +687,17 @@ async function checkForUserLogged() {
         }
         // Si no hay, tengo que pintar el carro con el localStorage
         let localStorageCart = JSON.parse(localStorage.getItem('temporalCart'));
+        if (!localStorageCart || localStorageCart.length == 0) {
+            productCardWrapper.innerHTML = `<p class="no-products-msg">No tienes productos en el carro</p>`;
+            document.querySelector('.start-buy-button').classList.add('disabled');
+            return
+        };
+        // Los ids que voy a pedir
+        let itemsToFetch = localStorageCart.map(item => item.products_id);
+        // Construye la URL con los IDs de productos como parámetros de consulta
+        const idsQueryString = itemsToFetch.join(',');
+        // console.log(idsQueryString);
+
         // Ordeno el carro de ultimo a primero (antiguedad mas reciente)
         localStorageCart?.reverse();
         productCardWrapper.innerHTML =
@@ -698,8 +709,8 @@ async function checkForUserLogged() {
         `
 
         // Mientras pido los productos hago el cargando...
-        let products = await (await (await fetch(`${window.location.origin}/api/product`)).json()).products;
-
+        let products = await (await (await fetch(`${window.location.origin}/api/product?ids=${idsQueryString}`)).json()).products;
+        // console.log(products);
         // Saco el spinner
         document.querySelector('.spinner-overlay').remove();
         productCardWrapper.innerHTML = '';
@@ -757,42 +768,7 @@ async function checkForUserLogged() {
                                    
             `;
             productCardWrapper.innerHTML += cardHTML;
-           /*  <%- include('./partials/loadingSpinner.ejs') %>
-            </article>
-<article class="product-card" data-productid = "${product.id}">
-<div class="product-card-image-container article-div-child">
-<img src="${product.file_url || '/img/product/default.png'}" alt="${product.name}-${product.filename}" class="product-image">
-</div>
-<div class="product-name-container article-div-child">
-<p class="product-name">${product.name}</p>
-</div>
-<div class="product-price-container article-div-child">
-<p class="product price">$<span class="product-price-span">${product.price}</span></p>
-</div>
-<div class="product-quantity-container article-div-child">
-<i class='bx bx-plus-medical add-quantity-btn'></i>
-<i class='bx bx-minus subtract-quantity-btn'></i>
-<input type="number" name="quantity" id="" class="product-quantity">
-</div>
-<div class="product-subtotal-container article-div-child">
-<p class="product-subtotal">$ <span class="product-subtotal-span">${product.price}</span></p>
-</div>
-<i class='bx bx-trash remove-cart-product'></i>
-<div class="loading-container">
-<div class="load-wrapp">
-    <div class="load-3">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-    </div>
-</div>
-</div>
-</article> */
         });
-        if (!localStorageCart || localStorageCart.length == 0) {
-            productCardWrapper.innerHTML = `<p class="no-products-msg">No tienes productos en el carro</p>`;
-            document.querySelector('.start-buy-button').classList.add('disabled')
-        }
 
         return
 
@@ -975,6 +951,7 @@ form.addEventListener('submit', async (e) => {
         // Una vez que se compra, si no hay usuario se borra el carro del locale
         if (!window.userLogged) {
             localStorage.removeItem('temporalCart');
+            // TODO: Armar vista success;
         };
         window.location.href = `/`;
     } catch (error) {
