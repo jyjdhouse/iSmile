@@ -17,6 +17,7 @@ router.get('/registrar-venta',isAdminMiddleware, adminController.registerSale)
 router.get('/medicalInfo',isAdminMiddleware, adminController.showMedicalForm);
 router.get('/budget',isAdminMiddleware,adminController.budget);
 router.get('/consent',isAdminMiddleware,adminController.consent);
+router.get('/destroyAllDiscounts',isAdminMiddleware,adminController.destroyAllDiscounts)
 // POST
 router.post('/addTreatment',isAdminMiddleware,upload.single('treatment_image'),adminController.addTreatment);
 // DELETE

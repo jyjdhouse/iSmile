@@ -355,6 +355,23 @@ window.addEventListener('load', () => {
         })
     });
 
+    // Logica para destruir los descuentos
+    const startDestroyingProcess = document.querySelector('.start-discounts-destroying');
+    const destroyDiscountsPopup = document.querySelector('.destroy-discounts-popup');
+    const cancelButton = document.querySelector('.cancel-destroying-process-btn');
+    const blackScreen = document.querySelector('.black-screen')
+    startDestroyingProcess?.addEventListener('click',()=>{
+        blackScreen.classList.add('black-screen-active');
+        destroyDiscountsPopup.classList.add('destroy-discounts-popup-active');
+    });
+    cancelButton?.addEventListener('click',(e)=>{
+        e.preventDefault();
+        blackScreen.classList.remove('black-screen-active');
+        destroyDiscountsPopup.classList.remove('destroy-discounts-popup-active');
+    });
+    blackScreen?.addEventListener('click',()=>{
+        blackScreen.classList.remove('black-screen-active');
+        destroyDiscountsPopup.classList.remove('destroy-discounts-popup-active');
+    })
 
-
-})
+});

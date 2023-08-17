@@ -296,37 +296,10 @@ h1.product-title {
 }
 
 .product-quick-actions-container.suggested-quick-cart-container .quick-cart-container {
-    bottom: 7%;
+    bottom: 5px;
 }
 
-/* Para el circulo con descuento */
-.card-discount-tag-container {
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--light-violet-color);
-    border-radius: 50%;
-    overflow: hidden;
-    right: 0%;
-    top: 0%;
-}
 
-.card-discount-tag {
-    color: #fff;
-    font-size: 14px;
-}
-
-.suggested-product-card-detail-container .price-with-discount {
-    justify-content: center;
-}
-
-.suggested-product-card-detail-container .product-price-discount {
-    font-size: 13px;
-    margin-left: 5px;
-}
 
 @media(min-width: 576px) {
     .suggested-product-list {
@@ -340,7 +313,7 @@ h1.product-title {
     }
 
     .product-quick-actions-container.suggested-quick-cart-container .quick-cart-container {
-        bottom: 5%;
+        bottom: 3%;
     }
 }
 
@@ -393,9 +366,6 @@ h1.product-title {
         font-size: 1.5rem;
     }
 
-    .product-title-container .product-price {
-        /* font-size: 1.2rem; */
-    }
 
     .product-detail-info-container {
         height: fit-content;
@@ -443,18 +413,6 @@ h1.product-title {
 
     .suggested-product-list {
         grid-template-columns: repeat(3, 33.33%);
-    }
-
-    .card-discount-tag-container {
-        width: 45px;
-        height: 45px;
-    }
-    .card-discount-tag {
-        font-size: 16px;
-    }
-    .suggested-product-card-detail-container .product-price-discount {
-        font-size: 16px;
-        margin-left: 10px;
     }
 
     /* Para el loading  spinner */
@@ -557,17 +515,7 @@ h1.product-title {
     .suggested-logo-container {
         margin-bottom: 5%;
     }
-    .card-discount-tag-container {
-        width: 55px;
-        height: 55px;
-    }
-    .card-discount-tag {
-        font-size: 18px;
-    }
-    .suggested-product-card-detail-container .product-price-discount {
-        font-size: 18px;
-        margin-left: 15px;
-    }
+   
 
     .product-quick-actions-container.suggested-quick-cart-container {
         top: 65%;

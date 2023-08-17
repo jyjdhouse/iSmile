@@ -154,6 +154,19 @@ const controller = {
     },
     orderList: async (req, res) => {
         return res.render('orderList', { orderStatus })
+    },
+    destroyAllDiscounts: async(req,res)=>{
+        try {
+            await db.Product.update({
+                discount: 0
+            },{
+                where: {}
+            });
+            return res.redirect('/');
+        } catch (error) {
+            console.log(`Falle en adminController.destroyAllDiscounts: ${error}`);
+            return res.json({error});
+        }
     }
    
 };

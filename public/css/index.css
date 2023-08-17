@@ -895,6 +895,7 @@ video::-webkit-media-controls-time-remaining-display {
     display: flex;
     justify-content: center;
     overflow: hidden;
+    position: relative;
 }
 
 .discount-banner-img-container {
@@ -982,6 +983,45 @@ video::-webkit-media-controls-time-remaining-display {
     opacity: 1;
     margin-right: 0;
     margin-left: 0;
+}
+/* Para eliminarlos */
+.destroy-all-discounts-form{
+    margin-top: 5%;
+}
+.start-discounts-destroying{
+    padding: 5px 10px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.destroy-discounts-popup{
+    padding: 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #fff;
+    border-radius: 10px;
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    scale: 0;
+    opacity: 0;
+    z-index: 100;
+    transition: all .3s ease;
+}
+.destroy-discounts-popup-active{
+    scale: 1;
+    opacity: 1;
+}
+.destroy-discounts-popup-buttons-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 @media(min-width: 576px) {

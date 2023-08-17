@@ -117,11 +117,6 @@ const controller = {
                 file_url: blogUrl
             }
 
-            const products = await db.Product.findAll({
-                // de más nuevo a más viejo
-                order: [['createdAt', 'DESC']],
-                limit: 6
-            });
             // SLIDESHOW
             const productsInDb = getDeepCopy(await getAllProducts());
             let productsGroupDesktop = []
@@ -203,12 +198,27 @@ const controller = {
                     }
                 };
                 // Acorto la descripcion
-                blog.cutDesc = cutDescription(blog.text,100);
+                blog.cutDesc = cutDescription(blog.text, 100);
 
             }
-            // return res.send(lastBlogs)
+
+            // Me fijo si por lomenos hay un producto que tenga descuento
+            let productsWithDiscount = productsInDb.filter(prod => prod.discount);
+            let maxDiscount = 0;
+            // Si hay productos con descuento, busco el mas gde
+            if (productsWithDiscount.length) {
+                maxDiscount = productsWithDiscount[0].discount; // Asignar el primer elemento como valor inicial máximo
+
+                for (let i = 1; i < productsWithDiscount.length; i++) {
+                    if (productsWithDiscount[i].discount > maxDiscount) {
+                        maxDiscount = productsWithDiscount[i].discount; // Actualizar el valor máximo si encontramos un elemento mayor
+                    }
+                }
+            }
+
+            // return res.send(productWithDiscount);
             // return res.send({ productsInDb, productsGroupDesktop, productsGroupMobile });
-            return res.render('index', { lastBlogs, videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, products, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile })
+            return res.render('index', { lastBlogs, videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile, maxDiscount })
 
         } catch (error) {
             console.log(`Falle en mainController.list: ${error}`);

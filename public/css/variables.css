@@ -43,6 +43,7 @@ select,option{
 button {
     color: #000;
     background: none;
+    cursor: pointer;
 }
 
 

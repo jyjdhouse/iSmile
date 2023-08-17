@@ -710,20 +710,19 @@ async function checkForUserLogged() {
 
         // Mientras pido los productos hago el cargando...
         let products = await (await (await fetch(`${window.location.origin}/api/product?ids=${idsQueryString}`)).json()).products;
-        // console.log(products);
+        console.log(products);
         // Saco el spinner
         document.querySelector('.spinner-overlay').remove();
         productCardWrapper.innerHTML = '';
         localStorageCart?.forEach(item => {
             // TODO: Preguntar a martin si esto al ser front deberia manejarse con otro campo
             let product = products.find(prod => prod.id == item.products_id);
-            product.filename = product.files.find(file => file.file_types_id == 1)?.filename;
             let cardHTML =
                 `
                 <article class="product-card" data-productid="${product.id}">
                                     <div class="product-card-image-container article-div-child">
                                         <img src="${product.file_url || '/img/product/default.png'}"
-                                        alt="${product.name}-${product.filename}" class="product-image">
+                                        alt="${product.name}" class="product-image">
                                     </div>
                                     <div class="product-info-delete-container">
                                         <div class="product-info-container">

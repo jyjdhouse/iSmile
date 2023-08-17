@@ -30,7 +30,7 @@ const controller = {
     list: async (req, res) => { //Metodo que devuelve todos los productos
         try {
             let {ids} = req.query;
-            ids = ids.split(',')
+            ids = ids.split(','); //Lo armo array para consultar en db
             let products;
             if(ids){ //Si viene por params ids, es que solo quiere un par
                 products = getDeepCopy( await db.Product.findAll({
@@ -48,14 +48,25 @@ const controller = {
                 }));
             } else{ //Sino busco todos
                 products = getDeepCopy(await getAllProducts());
-            }
-             
+            };
+            // No llevo al front datos innecesarios
+            products = products.map(prod=>{
+                return {
+                    name: prod.name,
+                    description: prod.description,
+                    discount: prod.discount,
+                    id: prod.id,
+                    price: prod.price,
+                    stock: prod.stock,
+                    files: prod.files
+                }
+            })
             // Si la url es checkout entonces le pido las url a cada producto
             if (req.headers?.referer?.includes('checkout')) {
 
                 for (let i = 0; i < products.length; i++) {
                     const product = products[i];
-                    if (product.files.length) {
+                    if (product.files?.length) {
                         //Agarro la primer foto
                         let file = product.files.find(file => file.main_image == 1); //Agarro la primer mainImage
                         !file ? file = product.files.find(file => file.file_types_id == 1) : null;
@@ -67,7 +78,9 @@ const controller = {
                         const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
                         product.file_url = url; //en el href product.files[x].file_url
                     }
-
+                    delete product.files;
+                    delete product.filename;
+                    delete product.description;
                 }
             }
             return res.status(200).json({
