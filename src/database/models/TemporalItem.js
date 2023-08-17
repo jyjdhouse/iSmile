@@ -10,7 +10,7 @@ module.exports = (sequelize, dataTypes) => {
         temporal_cart_id: { type: dataTypes.INTEGER },
         products_id: { type: dataTypes.STRING(36) },
         quantity: { type: dataTypes.INTEGER },
-        added_date: {type: dataTypes.DATE}
+        added_date: {type: dataTypes.DATE},
     }
 
     let config = {

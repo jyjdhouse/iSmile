@@ -23,6 +23,7 @@
                         </div>
                         <div class="product-card-wrapper">
                             <% locals.cart && locals.cart.forEach(product=>{ %>
+                     
                                 <article class="product-card" data-productid="<%=product.products_id %>">
                                     <div class="product-card-image-container article-div-child">
                                         <img src="<%= product.file_url || '/img/product/default.png' %>"
@@ -45,6 +46,7 @@
                                                 <i class='bx bx-minus subtract-quantity-btn'></i>
                                                 <i class='bx bx-trash remove-cart-product'></i>
                                                 <input type="number" name="quantity" id="" class="product-quantity">
+                                                <p class="stock-number" style="display: none;"><%= product.stock %></p>
                                             </div>
                                             <div class="product-subtotal-container article-div-child">
                                                 <p class="product-subtotal">$ <span class="product-subtotal-span">

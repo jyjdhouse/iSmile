@@ -81,13 +81,18 @@ const controller = {
         try {
             let { tempCartId, prodId, userId } = req.body;
 
+            let prod = await db.Product.findByPk(prodId)
+         
+
             let tempItem = await db.TemporalItem.create({
                 temporal_cart_id: parseInt(tempCartId),
                 products_id: prodId,
                 quantity: 1,
-                added_date: Date.now()
+                added_date: Date.now(),
+                stock: prod.stock
             });
-            // Tengo que reiniciar el periodo del carro para tema mails
+            console.log(tempItem)
+          // Tengo que reiniciar el periodo del carro para tema mails
             await db.User.update({
                 cart_period_type: null
             }, {

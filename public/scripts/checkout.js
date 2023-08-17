@@ -28,6 +28,36 @@ document.querySelectorAll('.product-quantity').forEach(inp => {
     });
 });
 
+// logica para chequear el stock de cada producto
+const productCards= document.querySelectorAll('.product-card')
+
+productCards.forEach(card => {
+    let stock = card.querySelector('.stock-number')
+    let addQuantityBtn = card.querySelector('.add-quantity-btn')
+    let substractQuantityBtn = card.querySelector('.subtract-quantity-btn')
+    let quantityNumImput = card.querySelector('.product-quantity')
+    quantityNumImput.addEventListener('change', () => {
+        if(quantityNumImput.value >= stock.innerText){
+            quantityNumImput.value = stock.innerText
+        } else {
+            addQuantityBtn.style.pointerEvents = "none"
+        }
+    })  
+    addQuantityBtn.addEventListener('click', () => {
+        if(quantityNumImput.value == (Number(stock.innerText) - 1)){
+           addQuantityBtn.style.pointerEvents = "none"
+        }
+    })
+    substractQuantityBtn.addEventListener('click', () => {
+        if(addQuantityBtn.style.pointerEvents == "none"){
+            addQuantityBtn.style.pointerEvents = "all"
+        }
+    })
+
+})
+
+// TODO
+// logica para si viene checkout errors de stock error
 
 // Logica para que funcióne el mas y el menos
 const reduceProductQuantityBtns = document.querySelectorAll('.subtract-quantity-btn');

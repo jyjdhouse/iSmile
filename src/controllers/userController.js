@@ -61,10 +61,10 @@ const controller = {
     },
     checkout: async (req, res) => {
         let userId = req.session.userLoggedId;
-        console.log({userCheckout: req.session})
         // return res.render('checkout.ejs', { provinces });
         if (userId) { //Si hay usuario loggeado
             let user = getDeepCopy(await getUser(userId));
+            console.log(user.temporalCart)
             // Agarro los temporal Items, que son los productos que estan en el carro
             let cart = user.temporalCart?.temporalItems;
             // Ahora voy por cada producto del temporalItem, lo dejo con un precio y la primer imagen
@@ -78,9 +78,14 @@ const controller = {
                     products_id: tempItem.products_id,
                     name: tempItem.product.name,
                     price: tempItem.product.price,
-                    filename: tempItemFile
+                    filename: tempItemFile,
+                    stock: tempItem.stock
                 }
+                
             });
+            console.log(cart)
+           
+           
             if (cart) {
                 // Para obtener url de las fotos
                 for (let i = 0; i < cart.length; i++) {
@@ -101,8 +106,9 @@ const controller = {
                 // return res.send(cart);
                 // Ordeno el carro del tempItemId mas gde a mas chico (Mas nuevo arriba)
                 cart = cart?.sort((a, b) => b.tempItemId - a.tempItemId);
+                
             }
-
+            
             return res.render('checkout.ejs', { user, cart, provinces, countryCodes });
         }
         return res.render('checkout.ejs', { provinces, countryCodes });
