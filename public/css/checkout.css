@@ -854,11 +854,11 @@ body {
     margin-bottom: .5rem;
 }
 
-.checkout-stock-error-container {
+.check-stock-error {
     width: 100%;
 }
 
-.checkout-stock-error-container p {
+.check-stock-error p {
     font-size: 0.675rem;
     color: red;
 }

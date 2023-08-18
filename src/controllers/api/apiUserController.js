@@ -80,10 +80,10 @@ const controller = {
     addTempItem: async (req, res) => {
         try {
             let { tempCartId, prodId, userId } = req.body;
-
+            
             let prod = await db.Product.findByPk(prodId)
-         
 
+        
             let tempItem = await db.TemporalItem.create({
                 temporal_cart_id: parseInt(tempCartId),
                 products_id: prodId,

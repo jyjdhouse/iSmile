@@ -13,89 +13,6 @@
         <%- include('./partials/header.ejs') %>
             <main class="main checkout-main">
                 <%- include('./partials/orderOverlay.ejs') %>
-                <section class="first-view view view-active">
-                    <div class="product-list-section">
-                        <div class="product-list-header">
-                            <p class="product-name-label bold">PRODUCTO</p>
-                            <p class="product-price-label bold">PRECIO UNITARIO</p>
-                            <p class="product-quantity-label bold">CANTIDAD</p>
-                            <p class="product-subtotal-label bold">SUBTOTAL</p>
-                        </div>
-                        <div class="product-card-wrapper">
-                            <% locals.cart && locals.cart.forEach(product=>{ %>
-                     
-                                <article class="product-card" data-productid="<%=product.products_id %>">
-                                    <div class="product-card-image-container article-div-child">
-                                        <img src="<%= product.file_url || '/img/product/default.png' %>"
-                                            alt="<%= product.name %>-<%= product.filename %>" class="product-image">
-                                    </div>
-                                    <div class="product-info-delete-container">
-                                        <div class="product-info-container">
-                                            <div class="product-name-container article-div-child">
-                                                <p class="product-name">
-                                                    <%= product.name %>
-                                                </p>
-                                                <div class="checkout-stock-error-container">
-
-                                                </div>
-                                            </div>
-                                            <div class="product-price-container article-div-child">
-                                                <p class="product price">$<span class="product-price-span">
-                                                        <%= product.price %>
-                                                    </span></p>
-                                            </div>
-                                            <div class="product-quantity-container article-div-child">
-                                                <i class='bx bx-plus-medical add-quantity-btn'></i>
-                                                <i class='bx bx-minus subtract-quantity-btn'></i>
-                                                <i class='bx bx-trash remove-cart-product'></i>
-                                                <input type="number" name="quantity" id="" class="product-quantity">
-                                                <p class="stock-number" style="display: none;"><%= product.stock %></p>
-                                            </div>
-                                            <div class="product-subtotal-container article-div-child">
-                                                <p class="product-subtotal">$ <span class="product-subtotal-span">
-                                                        <%= product.price %>
-                                                    </span></p>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                        <div class="confirm-delete-product-container">
-                                            <i class='bx bxs-trash-alt confirm-product-delete'></i>
-                                        </div>
-                                    </div>
-                                   
-                                    
-                                    <%- include('./partials/loadingSpinner.ejs') %>
-                                </article>
-                                <% }) %>
-                                    <!-- Si no hay productos en el carro -->
-                                    <% if(locals.cart && locals.cart.length==0 || !locals.cart) { %>
-                                        <p class="no-products-msg">No tienes productos en el carrito</p>
-                                        <% } %>
-                        </div>
-                    </div>
-                    <div class="checkout-total-section">
-                        <div class="cart-subtotal-container">
-                            <p class="cart-subtotal-label">Subtotal</p>
-                            <p class="cart-subtotal">$<span class="cart-subtotal-span"></span></p>
-                        </div>
-                        <div class="cart-total-container">
-                            <p class="cart-total-label">Total</p>
-                            <p class="cart-total">$<span class="cart-total-span"></span></p>
-                        </div>
-                        <div class="button-container">
-                            <button class="continue-view-button continue-button start-buy-button">INICIAR COMPRA</button>
-                        </div>
-                        <a href="/product" class="continue-shopping-link grey"><i
-                                class='bx bx-chevron-left continue-shopping-logo'></i> Seguir comprando</a>
-                    </div>
-                </section>
-                <form class="second-view view" id="checkout-form" action="/user/checkout" method="POST">
-                    <div class="information-wrapper">
-                        <div class="user-info-container step-container">
-                            <i class='bx bx-edit-alt edit-step-btn hidden'></i>
-                            <div class="info-step-title-container">
-                                <p class="grey info-step-title"><span class="bold">1-</span>FACTURAción - DATOS</p>
                     <section class="first-view view view-active">
                         <div class="product-list-section">
                             <div class="product-list-header">
@@ -106,6 +23,7 @@
                             </div>
                             <div class="product-card-wrapper">
                                 <% locals.cart && locals.cart.forEach(product=>{ %>
+
                                     <article class="product-card" data-productid="<%=product.products_id %>">
                                         <div class="product-card-image-container article-div-child">
                                             <img src="<%= product.file_url || '/img/product/default.png' %>"
@@ -117,6 +35,11 @@
                                                     <p class="product-name">
                                                         <%= product.name %>
                                                     </p>
+                                                    <div class="check-stock-error">
+                                                        <p class="stock-number" style="display: none;">
+                                                            <%= product.stock %>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                                 <div class="product-price-container article-div-child">
                                                     <p class="product price">$<span class="product-price-span">
@@ -128,27 +51,31 @@
                                                     <i class='bx bx-minus subtract-quantity-btn'></i>
                                                     <i class='bx bx-trash remove-cart-product'></i>
                                                     <input type="number" name="quantity" id="" class="product-quantity">
+                                                    <p class="stock-number" style="display: none;">
+                                                        <%= product.stock %>
+                                                    </p>
                                                 </div>
                                                 <div class="product-subtotal-container article-div-child">
-                                                    <p
-                                                        class="product-subtotal <%= product.discount ? 'discount-product-price-container' : '' %>">
+                                                    <p class="product-subtotal <%= product.discount ?'discount-product-price-container' : '' %>">
                                                         <% if (product.discount) { %>
                                                             <span class="span-discount-tag">
                                                                 <%= product.discount %>% OFF
                                                             </span>
                                                             <% } %>
-                                                                <span
-                                                                    class="product-subtotal-span <%= product.discount ? 'striked grey' : '' %>">
+                                                                <span class="product-subtotal-span <%= product.discount ? 'striked grey' :'' %>">
                                                                     $<%= product.price %>
                                                                 </span>
                                                                 <% if (product.discount) { %>
+
                                                                     <span class="span-discount-price"
                                                                         data-discount='<%= product.discount  %>'>
+
                                                                         $<%= product.price * (1-product.discount/100) %>
                                                                     </span>
                                                                     <% } %>
                                                     </p>
                                                 </div>
+
 
                                             </div>
 
@@ -156,6 +83,7 @@
                                                 <i class='bx bxs-trash-alt confirm-product-delete'></i>
                                             </div>
                                         </div>
+
 
                                         <%- include('./partials/loadingSpinner.ejs') %>
                                     </article>

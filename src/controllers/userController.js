@@ -88,9 +88,7 @@ const controller = {
                 }
                 
             });
-            console.log(cart)
-           
-           
+                
             if (cart) {
                 // Para obtener url de las fotos
                 for (let i = 0; i < cart.length; i++) {
