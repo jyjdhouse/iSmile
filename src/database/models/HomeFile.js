@@ -10,7 +10,8 @@ module.exports = (sequelize, dataTypes) => {
         filename: { type: dataTypes.TEXT },
         file_types_id: { type: dataTypes.INTEGER},
         home_sections_id: { type: dataTypes.INTEGER },
-        position: { type: dataTypes.INTEGER}
+        position: { type: dataTypes.INTEGER},
+        label: { type: dataTypes.TEXT }
     }
 
     let config = {

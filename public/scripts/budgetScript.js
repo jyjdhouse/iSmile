@@ -11,7 +11,6 @@ window.addEventListener('load', async () => {
     iniciateSelect2();
     // Pido los productos 
     let treatments = (await (await fetch(`${window.location.origin}/api/product/getTreatments`)).json()).treatments;
-    console.log(treatments)
 
     // Obtén la fila original que deseas clonar
     var originalRow = document.querySelector('.row') // Obtén la primera fila original

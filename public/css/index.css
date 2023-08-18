@@ -944,12 +944,12 @@ video::-webkit-media-controls-time-remaining-display {
     transition: 1.3s;
     transition-delay: 1.2s;
 }
-
+.banner-label-input{
+    background: none;
+}
 .discount-banner-text-container-active .banner-label {
     opacity: 1;
 }
-
-
 
 .banner-discount-tag {
     font-size: 16px;
@@ -987,15 +987,64 @@ video::-webkit-media-controls-time-remaining-display {
 /* Para eliminarlos */
 .destroy-all-discounts-form{
     margin-top: 5%;
+    width: 80%;
+}
+
+.action-buttons-container,
+.confirm-action-buttons-container{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    border-radius: 25px;
+    overflow: hidden;
+    align-items: center;
+    transition: all .3s ease;
+}
+.confirm-action-buttons-container{
+    scale: 0;
+    opacity: 0;
+    z-index: 10;
+}
+.confirm-action-buttons-container-active{
+    scale: 1;
+    opacity: 1;
+}
+.action-buttons-container{
+    position: relative;
+}
+.confirm-action-buttons-container{
+    position: absolute;
+}
+.action-buttons-container>p,
+.confirm-action-buttons-container>p{
+    width: 50%;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 5px 15px;
+    height: 100%;
+    white-space: nowrap;
+    text-align: center;
 }
 .start-discounts-destroying{
-    padding: 5px 10px;
     background-color: #000;
-    color: #fff;
-    border-radius: 25px;
-    font-size: 15px;
-    cursor: pointer;
 }
+.start-discounts-destroying:hover{
+    background-color: #555;
+}
+.start-editing{
+    background-color: var(--bold-color);
+}
+.start-editing:hover{
+    background-color: #5808469e;
+}
+.undo-title-change{
+    background-color: rgb(158, 27, 27);
+}
+.confirm-title-change{
+    background-color: rgb(10, 81, 26);
+}
+
 .destroy-discounts-popup{
     padding: 15px;
     position: absolute;

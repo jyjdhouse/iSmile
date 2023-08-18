@@ -205,6 +205,7 @@ const controller = {
             // Me fijo si por lomenos hay un producto que tenga descuento
             let productsWithDiscount = productsInDb.filter(prod => prod.discount);
             let maxDiscount = 0;
+            let discountLabel;
             // Si hay productos con descuento, busco el mas gde
             if (productsWithDiscount.length) {
                 maxDiscount = productsWithDiscount[0].discount; // Asignar el primer elemento como valor inicial máximo
@@ -213,12 +214,19 @@ const controller = {
                     if (productsWithDiscount[i].discount > maxDiscount) {
                         maxDiscount = productsWithDiscount[i].discount; // Actualizar el valor máximo si encontramos un elemento mayor
                     }
-                }
-            }
+                };
+                // Busco el label en db
+                discountLabel = (await db.HomeFile.findOne({
+                    where: {
+                        home_sections_id: 6 //seccion de discount banner
+                    }
+                })).label;
+            };
 
-            // return res.send(productWithDiscount);
+
+            // return res.send(discountLabel);
             // return res.send({ productsInDb, productsGroupDesktop, productsGroupMobile });
-            return res.render('index', { lastBlogs, videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile, maxDiscount })
+            return res.render('index', { lastBlogs, videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile, maxDiscount, discountLabel })
 
         } catch (error) {
             console.log(`Falle en mainController.list: ${error}`);

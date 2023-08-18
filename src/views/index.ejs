@@ -50,13 +50,23 @@
                         <img src="./img/discount-banner-img.png" class="discount-banner-img" alt="banner-img">
                     </div>
                     <div class="discount-banner-text-container">
-                        <p class="banner-label">FLASH SALE</p>
-                        <p class="banner-discount-tag">Up to <span class="bold"><%= maxDiscount %>%</span> off</p>
+                        <p class="banner-label"><%= locals.discountLabel ? discountLabel :'FLASH SALE'%></p>
+                        <p class="banner-discount-tag">Up to <span class="bold">
+                                <%= maxDiscount %>%
+                            </span> off</p>
                         <a href="/product" class="banner-button">Ir a la tienda </a>
                         <% if(locals.userLogged && (locals.userLogged.user_categories_id==1 ||
                             locals.userLogged.user_categories_id==2)){ %>
                             <form class="destroy-all-discounts-form" method="get" action='/admin/destroyAllDiscounts'>
-                                <p class="start-discounts-destroying">Eliminar todos los descuentos</p>
+                                <div class="action-buttons-container">
+                                    <p class="start-discounts-destroying">Eliminar descuentos</p>
+                                    <p class="start-editing">Editar titulo</p>
+                                    <div class="confirm-action-buttons-container">
+                                        <p class="undo-title-change">Deshacer</p>
+                                        <p class="confirm-title-change">Aplicar</p>
+                                    </div>
+                                </div>
+
                                 <div class="destroy-discounts-popup">
                                     <p class="destroy-discounts-popup-label">¿Estas segura? No hay vuelta atras</p>
                                     <p class="destroy-discounts-popup-desc grey">Tendras que cargarlos nuevamente cada

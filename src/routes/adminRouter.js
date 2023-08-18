@@ -20,6 +20,8 @@ router.get('/consent',isAdminMiddleware,adminController.consent);
 router.get('/destroyAllDiscounts',isAdminMiddleware,adminController.destroyAllDiscounts)
 // POST
 router.post('/addTreatment',isAdminMiddleware,upload.single('treatment_image'),adminController.addTreatment);
+// PUT  
+router.put('/updateLabel',isAdminMiddleware,adminController.updateHomeLabel);
 // DELETE
 router.delete('/destroyTreatment',isAdminMiddleware,adminController.destroyTreatment);
 

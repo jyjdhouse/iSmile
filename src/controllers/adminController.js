@@ -155,20 +155,38 @@ const controller = {
     orderList: async (req, res) => {
         return res.render('orderList', { orderStatus })
     },
-    destroyAllDiscounts: async(req,res)=>{
+    destroyAllDiscounts: async (req, res) => {
         try {
             await db.Product.update({
                 discount: 0
-            },{
+            }, {
                 where: {}
             });
             return res.redirect('/');
         } catch (error) {
             console.log(`Falle en adminController.destroyAllDiscounts: ${error}`);
-            return res.json({error});
+            return res.json({ error });
+        }
+    },
+    updateHomeLabel: async (req, res) => {
+        try {
+            // Agarro la nueva etiqueta para hacer el update en DB
+            let {newLabel} = req.body;
+            // Se que es solo para la section 6 (CAMBIAR SI HAY OTRAS)
+            await db.HomeFile.update({
+                label: newLabel
+            },{
+                where: {
+                    home_sections_id: 6
+                }
+            });
+            return res.redirect('/');
+        } catch (error) {
+            console.log(`Falle en adminController.updateHomeLabel: ${error}`);
+            return res.json({ error });
         }
     }
-   
+
 };
 
 module.exports = controller;
