@@ -360,18 +360,70 @@ window.addEventListener('load', () => {
     const destroyDiscountsPopup = document.querySelector('.destroy-discounts-popup');
     const cancelButton = document.querySelector('.cancel-destroying-process-btn');
     const blackScreen = document.querySelector('.black-screen')
-    startDestroyingProcess?.addEventListener('click',()=>{
+    startDestroyingProcess?.addEventListener('click', () => {
         blackScreen.classList.add('black-screen-active');
         destroyDiscountsPopup.classList.add('destroy-discounts-popup-active');
     });
-    cancelButton?.addEventListener('click',(e)=>{
+    cancelButton?.addEventListener('click', (e) => {
         e.preventDefault();
         blackScreen.classList.remove('black-screen-active');
         destroyDiscountsPopup.classList.remove('destroy-discounts-popup-active');
     });
-    blackScreen?.addEventListener('click',()=>{
+    blackScreen?.addEventListener('click', () => {
         blackScreen.classList.remove('black-screen-active');
         destroyDiscountsPopup.classList.remove('destroy-discounts-popup-active');
-    })
+    });
+
+    // Logica por si tocan "Editar titulo"
+    // Titulo actual 
+    const editTitleButton = document.querySelector('.start-editing');
+    let title;
+    let content = document.querySelector('.banner-label').textContent;
+    // Contenedo de botones deshacer/aplicar
+    const confirmTitleEditingContainer = document.querySelector('.confirm-action-buttons-container');
+    // Botones de deshacer/aplicar cambios
+    const cancelTitleEditingBtn = document.querySelector('.undo-title-change');
+    const confirmTitleEditingBtn = document.querySelector('.confirm-title-change');
+    editTitleButton?.addEventListener("click", function () {
+        // Agarro el elemento actual (ya sea input o p)
+        title = document.querySelector('.banner-label');
+        const input = document.createElement("input");
+        input.value = content;
+        input.classList.add('banner-label-input', 'banner-label')
+        title.parentNode.replaceChild(input, title);
+        input.select();
+        // Activo los botones para confirmar el titulo
+        confirmTitleEditingContainer.classList.add('confirm-action-buttons-container-active')
+    });
+    // Si toca deshacer
+    cancelTitleEditingBtn?.addEventListener("click", function () {
+        // Agarro el elemento actual (ya sea input o p)
+        title = document.querySelector('.banner-label');
+        const parragraph = document.createElement("p");
+        parragraph.innerHTML = content;
+        parragraph.classList.add('banner-label');
+        title.parentNode.replaceChild(parragraph, title);
+        // saco los botones para confirmar el titulo
+        confirmTitleEditingContainer.classList.remove('confirm-action-buttons-container-active')
+    });
+    // Si toca confirmar
+    confirmTitleEditingBtn?.addEventListener("click", function () {
+        // Agarro el elemento actual (input)
+        title = document.querySelector('.banner-label');
+        let newContent = title.value;
+        // Creo el form para mandar por put
+        const form = document.createElement("form");
+        form.method = "post";
+        form.action = "/admin/updateLabel?_method=PUT";
+
+        // Agrego el input con el newContent
+        const inputField = document.createElement("input");
+        inputField.type = "text";
+        inputField.name = "newLabel";
+        inputField.value = newContent;
+        form.appendChild(inputField);
+        document.querySelector('body').appendChild(form);
+        form.submit();
+    });
 
 });

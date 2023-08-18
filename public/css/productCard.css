@@ -141,7 +141,7 @@
 }
 /* Si tiene descuento */
 .discount-tag {
-    color: var(--violet-color);
+    color: var(--gold-color);
     font-size: 16px;
 }
 

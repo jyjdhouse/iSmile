@@ -83,6 +83,7 @@ const controller = {
                     name: tempItem.product.name,
                     price: tempItem.product.price,
                     stock:tempItem.product.stock,
+                    discount:tempItem.product.discount,
                     filename: tempItemFile
                 }
                 

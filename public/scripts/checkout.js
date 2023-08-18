@@ -198,17 +198,37 @@ function checkInputPrice(card) {
     let price = parseInt(card.querySelector('.product-price-span').innerHTML);
     let quantity = parseInt(card.querySelector('.product-quantity').value);
     let totalElement = card.querySelector('.product-subtotal-span');
-    totalElement.innerHTML = quantity * price;
+    let discountPriceElement = card.querySelector('.span-discount-price');
+    totalElement.innerHTML = `$${quantity * price}`;
+    // si la tarjeta tiene descuento
+    if (discountPriceElement) {
+        // Agarro el descuento que se aplica
+        let discount = discountPriceElement.dataset.discount;
+        let discountDecimal = 1 - discount / 100;
+        discountPriceElement.innerHTML = `$${quantity * price * discountDecimal}`;
+    }
     getTotalPrice();
 }
 // Logica para hacer cuenta toal
 function getTotalPrice() {
-    let subTotals = document.querySelectorAll('.product-subtotal-span');
+    // Los subtotals me van a llegar '$4000', con el $ adelante ==> se los saco
+    let subTotals = Array.from(document.querySelectorAll('.product-subtotal-span'));
+    subTotals = subTotals.map(str => {
+        // Primero me fijo si ese subtotal es el real o el producto tiene descuento
+        const container = str.closest('.product-subtotal');
+        const discountSpan = container.querySelector('.span-discount-price')
+        if (discountSpan) {
+            return parseFloat(discountSpan.innerHTML.match(/\d+/)[0])
+        }
+        // Sino es el precio del producto
+        return parseFloat(str.innerHTML.match(/\d+/)[0])
+    });
+    console.log(subTotals);
     let subTotalElement = document.querySelector('.cart-subtotal-span');
     let totalElement = document.querySelector('.cart-total-span')
     let counter = 0;
     subTotals.forEach(subtotal => {
-        counter += parseInt(subtotal.innerHTML)
+        counter += parseInt(subtotal)
     });
     subTotalElement.innerHTML = counter;
     totalElement.innerHTML = counter;
@@ -262,6 +282,13 @@ const paintSideCards = () => {
         let productName = card.querySelector('.product-name').innerHTML;
         let productQuantity = card.querySelector('.product-quantity').value;
         let productPrice = card.querySelector('.product-subtotal-span').innerHTML;
+        let productDiscount = card.querySelector('.span-discount-price');
+        let discountTag;
+        // Si hay descuento obtengo ese precio en descuento
+        if (productDiscount) {
+            discountTag = productDiscount.dataset.discount;
+            productDiscount = parseFloat(productDiscount.innerHTML.match(/\d+/)[0]);
+        }
         inyectedHTML +=
             `
             <article class="product-side-card" data-productid="${card.dataset.productid}">
@@ -271,7 +298,11 @@ const paintSideCards = () => {
                 <div class="product-side-info-container">
                     <p class="product-side-name bold">${productName}</p>
                     <p class="product-side-quantity grey">Cantidad: <span class="product-side-quantity-span">${productQuantity}</span></p>
-                    <p class="product-side-price">$<span class="product-side-price-span">${productPrice}</span></p>
+                    <p class="product-side-price">
+                    ${productDiscount ? `<span class="product-side-discount-tag-span">${discountTag}% OFF</span>` : ''}
+                    <span class="product-side-price-span ${productDiscount ? `striked grey` : ''}">${productPrice}</span>
+                    ${productDiscount ? `<span class="product-side-discount-price-span">$${productDiscount}</span>` : ''}
+                    </p>
                 </div>
             </article>
             `
@@ -796,9 +827,11 @@ async function checkForUserLogged() {
                                                 <input type="number" name="quantity" id="" class="product-quantity">
                                             </div>
                                             <div class="product-subtotal-container article-div-child">
-                                                <p class="product-subtotal">$ <span class="product-subtotal-span">
-                                                ${product.price}
-                                                    </span></p>
+                                                <p class="product-subtotal ${product.discount ? 'discount-product-price-container' : ''}"> 
+                                                <span class="product-subtotal-span ${product.discount ? 'striked grey' : ''}">
+                                                $${product.price}
+                                                </span>
+                                                </p>
                                             </div>
                                             
                                         </div>
@@ -819,7 +852,19 @@ async function checkForUserLogged() {
                                     
                                    
             `;
+
             productCardWrapper.innerHTML += cardHTML;
+            // Antes de terminar, me fijo si el producto en cuestion tiene descuento para agregar ese precio con descuento
+            if (product.discount) {
+                let discountPriceHTML =
+                    `
+                <span class="span-discount-price" data-discount= '${product.discount}' >
+                 $${product.price * (1 - product.discount / 100)} 
+            </span>`;
+                let productCards = productCardWrapper.querySelectorAll('.product-card');
+                // Accedo al ultimo y le agrego el discount
+                productCards[productCards.length - 1].querySelector('.product-subtotal').innerHTML += discountPriceHTML
+            }
         });
 
         return
@@ -908,104 +953,126 @@ const form = document.getElementById('checkout-form');
 form.addEventListener('submit', async (e) => {
     try {
         e.preventDefault();
-        /*  // si esta loggeado 
-         if (window.userLogged) { // Logica para enviar form con users_id
-             let userIdInput = document.createElement('input');
-             userIdInput.type = 'hidden';
-             userIdInput.value = window.userLogged.id;
-             userIdInput.name = 'users_id';
-             form.appendChild(userIdInput)
-         };
-         // Tengo que armar el objeto items
-         let itemsInput = document.createElement('input');
-         itemsInput.type = 'hidden';
-         itemsInput.name = 'items';
-         let itemsArray = [];
-         // ahora voy por cada item que el usuario compro y lo meto en este array
-         const itemsConfirmed = document.querySelectorAll('.product-side-card');
-         itemsConfirmed.forEach(item => {
-             const products_id = item.dataset.productid;
-             const quantity = item.querySelector('.product-side-quantity-span').innerHTML;
-             itemsArray.push({
-                 products_id,
-                 quantity
-             });
-         });
-         itemsInput.value = JSON.stringify(itemsArray);
-         form.appendChild(itemsInput);
-         // Armo el body
-         let items = form.querySelector('input[name="items"]').value;
-         let users_id = window.userLogged.id || null;
-         let name = form.querySelector('input[name="name"]').value;
-         let last_name = form.querySelector('input[name="last_name"]').value;
-         let email = form.querySelector('input[name="email"]').value;
-         let dni = form.querySelector('input[name="dni"]').value;
-         let phone_code = form.querySelector('select[name="phone_code"]').value;
-         let phone = form.querySelector('input[name="phone"]').value;
-         let billing_street = form.querySelector('input[name="billing_street"]').value;
-         let billing_zip_code = form.querySelector('input[name="billing_zip_code"]').value;
-         let billing_floor = form.querySelector('input[name="billing_floor"]').value;
-         let billing_province = form.querySelector('select[name="billing_province"]').value;
-         let billing_city = form.querySelector('input[name="billing_city"]').value;
-         let order_types_id = form.querySelector('input[name="order_types_id"]').value;
-         let payment_methods_id = form.querySelector('input[name="payment_methods_id"]:checked').value;
-         let shipping_street = form.querySelector('input[name="shipping_street"]').value;
-         let shipping_floor = form.querySelector('input[name="shipping_floor"]').value;
-         let shipping_city = form.querySelector('input[name="shipping_city"]').value;
-         let shipping_province = form.querySelector('select[name="shipping_province"]').value;
-         let shipping_zip_code = form.querySelector('input[name="shipping_zip_code"]').value;
-         // Estas 3 son los radio, entonces pregunto asi
-         let use_same_address = form.querySelector('input[name="use_same_address"]').checked ?
-             form.querySelector('input[name="use_same_address"]').value : null;
-         let save_user_address = form.querySelector('input[name="save_user_address"]').checked ?
-             form.querySelector('input[name="save_user_address"]').value : null;
-         let use_user_address = form.querySelector('input[name="use_user_address"]').checked ?
-             form.querySelector('input[name="use_user_address"]').value : null;
-         const bodyForm = {
-             items,
-             users_id,
-             name,
-             last_name,
-             email,
-             dni,
-             phone_code,
-             phone,
-             billing_street,
-             billing_zip_code,
-             billing_floor,
-             billing_province,
-             billing_city,
-             order_types_id,
-             use_same_address,
-             payment_methods_id,
-             save_user_address,
-             use_user_address,
-             shipping_street,
-             shipping_floor,
-             shipping_city,
-             shipping_province,
-             shipping_zip_code,
-         }
-         // Hago el fetch
-         let fetchResponse = await fetch('/api/user/checkout', {
-             method: 'POST',
-             headers: {
-                 'Content-Type': 'application/json' // Tipo de contenido del cuerpo de la solicitud
-             },
-             body: JSON.stringify(bodyForm)
-         });
-         if (!fetchResponse.ok) {
-             // console.log(fetchResponse);
-             const errorMsg = 'Error al procesar la venta';
-             window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${errorMsg}`;
-             return
-         };
-         // Una vez que se compra, si no hay usuario se borra el carro del locale
-         if (!window.userLogged) {
-             localStorage.removeItem('temporalCart');
-             // TODO: Armar vista success;
-         };
-         window.location.href = `/`; */
+        // si esta loggeado 
+        if (window.userLogged) { // Logica para enviar form con users_id
+            let userIdInput = document.createElement('input');
+            userIdInput.type = 'hidden';
+            userIdInput.value = window.userLogged.id;
+            userIdInput.name = 'users_id';
+            form.appendChild(userIdInput)
+        };
+        // Tengo que armar el objeto items
+        let itemsInput = document.createElement('input');
+        itemsInput.type = 'hidden';
+        itemsInput.name = 'items';
+        let itemsArray = [];
+        // ahora voy por cada item que el usuario compro y lo meto en este array
+        const itemsConfirmed = document.querySelectorAll('.product-side-card');
+        itemsConfirmed.forEach(item => {
+            const products_id = item.dataset.productid;
+            const quantity = item.querySelector('.product-side-quantity-span').innerHTML;
+            itemsArray.push({
+                products_id,
+                quantity
+            });
+        });
+        itemsInput.value = JSON.stringify(itemsArray);
+        form.appendChild(itemsInput);
+        // Armo el body
+        let items = form.querySelector('input[name="items"]').value;
+        let users_id = window.userLogged.id || null;
+        let name = form.querySelector('input[name="name"]').value;
+        let last_name = form.querySelector('input[name="last_name"]').value;
+        let email = form.querySelector('input[name="email"]').value;
+        let dni = form.querySelector('input[name="dni"]').value;
+        let phone_code = form.querySelector('select[name="phone_code"]').value;
+        let phone = form.querySelector('input[name="phone"]').value;
+        let billing_street = form.querySelector('input[name="billing_street"]').value;
+        let billing_zip_code = form.querySelector('input[name="billing_zip_code"]').value;
+        let billing_floor = form.querySelector('input[name="billing_floor"]').value;
+        let billing_province = form.querySelector('select[name="billing_province"]').value;
+        let billing_city = form.querySelector('input[name="billing_city"]').value;
+        let order_types_id = form.querySelector('input[name="order_types_id"]').value;
+        let payment_methods_id = form.querySelector('input[name="payment_methods_id"]:checked').value;
+        let shipping_street = form.querySelector('input[name="shipping_street"]').value;
+        let shipping_floor = form.querySelector('input[name="shipping_floor"]').value;
+        let shipping_city = form.querySelector('input[name="shipping_city"]').value;
+        let shipping_province = form.querySelector('select[name="shipping_province"]').value;
+        let shipping_zip_code = form.querySelector('input[name="shipping_zip_code"]').value;
+        // Estas 3 son los radio, entonces pregunto asi
+        let use_same_address = form.querySelector('input[name="use_same_address"]').checked ?
+            form.querySelector('input[name="use_same_address"]').value : null;
+        let save_user_address = form.querySelector('input[name="save_user_address"]').checked ?
+            form.querySelector('input[name="save_user_address"]').value : null;
+        let use_user_address = form.querySelector('input[name="use_user_address"]').checked ?
+            form.querySelector('input[name="use_user_address"]').value : null;
+        const bodyForm = {
+            items,
+            users_id,
+            name,
+            last_name,
+            email,
+            dni,
+            phone_code,
+            phone,
+            billing_street,
+            billing_zip_code,
+            billing_floor,
+            billing_province,
+            billing_city,
+            order_types_id,
+            use_same_address,
+            payment_methods_id,
+            save_user_address,
+            use_user_address,
+            shipping_street,
+            shipping_floor,
+            shipping_city,
+            shipping_province,
+            shipping_zip_code,
+        };
+        
+        // Hago el fetch para pedir el boton de pago
+        // const paymentButtonRequestBody = {
+        //     items,
+        //     name,
+        //     last_name,
+        // }
+        let paymentButtonFetchResponse = await fetch('/api/payment/getPaymentRequest', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Tipo de contenido del cuerpo de la solicitud
+            },
+            body: JSON.stringify(bodyForm)
+        });
+        // Si hay error aca ==> Repinto la vista con errores
+        if(!paymentButtonFetchResponse.ok){
+            window.location.href = `/user/checkout?checkoutErrors=${true}`;
+            return
+        };
+
+        // Sino, hay que pintar el boton del checkout TODO:
+
+        // Aca es para mandar por post el pedido y armar la orden en db
+        let fetchResponse = await fetch('/api/user/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Tipo de contenido del cuerpo de la solicitud
+            },
+            body: JSON.stringify(bodyForm)
+        });
+        if (!fetchResponse.ok) {
+            // console.log(fetchResponse);
+            const errorMsg = 'Error al procesar la venta';
+            window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${errorMsg}`;
+            return
+        };
+        // Una vez que se compra, si no hay usuario se borra el carro del locale
+        if (!window.userLogged) {
+            localStorage.removeItem('temporalCart');
+            // TODO: Armar vista success;
+        };
+        window.location.href = `/`;
     } catch (error) {
         return console.log(`Error en el envio del formulario: ${error}`);
     }

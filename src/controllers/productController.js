@@ -41,6 +41,8 @@ const controller = {
     list: async (req, res) => { //Controlador que renderiza listado de productos
         try {
             let products = getDeepCopy(await getAllProducts());
+            products.sort((a,b)=>b.discount-a.discount);
+            // return res.send(products);
             // Para traer los archivos, primero voy por cada producto y despues a las imagenes de ese producto
             for (let i = 0; i < products.length; i++) {
                 const product = products[i];
