@@ -73,6 +73,7 @@ const controller = {
             // Ahora voy por cada producto del temporalItem, lo dejo con un precio y la primer imagen
             // de cada producto
             cart = cart?.map(tempItem => {
+                console.log(tempItem.product)
                 // Primero busco si hay mainImage, sino primer foto que aparezca
                 let tempItemFile = tempItem.product.files?.find(file => file.main_image)?.filename;
                 !tempItemFile ? tempItemFile = tempItem.product.files?.find(file => file.file_types_id = 1)?.filename : null;

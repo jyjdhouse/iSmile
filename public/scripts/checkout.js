@@ -29,7 +29,7 @@ document.querySelectorAll('.product-quantity').forEach(inp => {
 });
 
 // logica para chequear el stock de cada producto
-const productCards= document.querySelectorAll('.product-card')
+const productCards = document.querySelectorAll('.product-card')
 
 productCards.forEach(card => {
     let stock = card.querySelector('.stock-number')
@@ -37,27 +37,50 @@ productCards.forEach(card => {
     let substractQuantityBtn = card.querySelector('.subtract-quantity-btn')
     let quantityNumImput = card.querySelector('.product-quantity')
     quantityNumImput.addEventListener('change', () => {
-        if(quantityNumImput.value >= stock.innerText){
+        if (quantityNumImput.value >= stock.innerText) {
             quantityNumImput.value = stock.innerText
         } else {
             addQuantityBtn.style.pointerEvents = "none"
         }
-    })  
+    })
     addQuantityBtn.addEventListener('click', () => {
-        if(quantityNumImput.value == (Number(stock.innerText) - 1)){
-           addQuantityBtn.style.pointerEvents = "none"
+        if (quantityNumImput.value == (Number(stock.innerText) - 1)) {
+
+            addQuantityBtn.style.pointerEvents = "none"
         }
     })
     substractQuantityBtn.addEventListener('click', () => {
-        if(addQuantityBtn.style.pointerEvents == "none"){
+        if (addQuantityBtn.style.pointerEvents == "none") {
             addQuantityBtn.style.pointerEvents = "all"
         }
     })
 
 })
 
-// TODO
 // logica para si viene checkout errors de stock error
+const params = new URLSearchParams(window.location.search);
+const stockErrorParam = params.get('stock-error');
+if (stockErrorParam) {
+    const cards = document.querySelectorAll('.product-card')
+    cards.forEach(card => {
+        let stock = Number(card.querySelector('.stock-number').innerText)
+        if (stock <= 0) {
+            let stockErrorContainer = card.querySelector('.checkout-stock-error-container')
+            stockErrorContainer.innerHTML = "<p class='stock-error-p'>Este producto está fuera de stock</p>"
+         let addQuantityBtn = card.querySelector('.add-quantity-btn');
+        addQuantityBtn.style.pointerEvents = "none"
+        let quantityNumImput = card.querySelector('.product-quantity');
+        quantityNumImput.value = 0
+        quantityNumImput.addEventListener('change', () => {
+            quantityNumImput.value = 0
+        })
+        checkInputPrice(card)
+     }
+    })
+
+}
+
+
 
 // Logica para que funcióne el mas y el menos
 const reduceProductQuantityBtns = document.querySelectorAll('.subtract-quantity-btn');
@@ -885,104 +908,104 @@ const form = document.getElementById('checkout-form');
 form.addEventListener('submit', async (e) => {
     try {
         e.preventDefault();
-        // si esta loggeado 
-        if (window.userLogged) { // Logica para enviar form con users_id
-            let userIdInput = document.createElement('input');
-            userIdInput.type = 'hidden';
-            userIdInput.value = window.userLogged.id;
-            userIdInput.name = 'users_id';
-            form.appendChild(userIdInput)
-        };
-        // Tengo que armar el objeto items
-        let itemsInput = document.createElement('input');
-        itemsInput.type = 'hidden';
-        itemsInput.name = 'items';
-        let itemsArray = [];
-        // ahora voy por cada item que el usuario compro y lo meto en este array
-        const itemsConfirmed = document.querySelectorAll('.product-side-card');
-        itemsConfirmed.forEach(item => {
-            const products_id = item.dataset.productid;
-            const quantity = item.querySelector('.product-side-quantity-span').innerHTML;
-            itemsArray.push({
-                products_id,
-                quantity
-            });
-        });
-        itemsInput.value = JSON.stringify(itemsArray);
-        form.appendChild(itemsInput);
-        // Armo el body
-        let items = form.querySelector('input[name="items"]').value;
-        let users_id = window.userLogged.id || null;
-        let name = form.querySelector('input[name="name"]').value;
-        let last_name = form.querySelector('input[name="last_name"]').value;
-        let email = form.querySelector('input[name="email"]').value;
-        let dni = form.querySelector('input[name="dni"]').value;
-        let phone_code = form.querySelector('select[name="phone_code"]').value;
-        let phone = form.querySelector('input[name="phone"]').value;
-        let billing_street = form.querySelector('input[name="billing_street"]').value;
-        let billing_zip_code = form.querySelector('input[name="billing_zip_code"]').value;
-        let billing_floor = form.querySelector('input[name="billing_floor"]').value;
-        let billing_province = form.querySelector('select[name="billing_province"]').value;
-        let billing_city = form.querySelector('input[name="billing_city"]').value;
-        let order_types_id = form.querySelector('input[name="order_types_id"]').value;
-        let payment_methods_id = form.querySelector('input[name="payment_methods_id"]:checked').value;
-        let shipping_street = form.querySelector('input[name="shipping_street"]').value;
-        let shipping_floor = form.querySelector('input[name="shipping_floor"]').value;
-        let shipping_city = form.querySelector('input[name="shipping_city"]').value;
-        let shipping_province = form.querySelector('select[name="shipping_province"]').value;
-        let shipping_zip_code = form.querySelector('input[name="shipping_zip_code"]').value;
-        // Estas 3 son los radio, entonces pregunto asi
-        let use_same_address = form.querySelector('input[name="use_same_address"]').checked ?
-            form.querySelector('input[name="use_same_address"]').value : null;
-        let save_user_address = form.querySelector('input[name="save_user_address"]').checked ?
-            form.querySelector('input[name="save_user_address"]').value : null;
-        let use_user_address = form.querySelector('input[name="use_user_address"]').checked ?
-            form.querySelector('input[name="use_user_address"]').value : null;
-        const bodyForm = {
-            items,
-            users_id,
-            name,
-            last_name,
-            email,
-            dni,
-            phone_code,
-            phone,
-            billing_street,
-            billing_zip_code,
-            billing_floor,
-            billing_province,
-            billing_city,
-            order_types_id,
-            use_same_address,
-            payment_methods_id,
-            save_user_address,
-            use_user_address,
-            shipping_street,
-            shipping_floor,
-            shipping_city,
-            shipping_province,
-            shipping_zip_code,
-        }
-        // Hago el fetch
-        let fetchResponse = await fetch('/api/user/checkout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' // Tipo de contenido del cuerpo de la solicitud
-            },
-            body: JSON.stringify(bodyForm)
-        });
-        if (!fetchResponse.ok) {
-            // console.log(fetchResponse);
-            const errorMsg = 'Error al procesar la venta';
-            window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${errorMsg}`;
-            return
-        };
-        // Una vez que se compra, si no hay usuario se borra el carro del locale
-        if (!window.userLogged) {
-            localStorage.removeItem('temporalCart');
-            // TODO: Armar vista success;
-        };
-        window.location.href = `/`;
+        /*  // si esta loggeado 
+         if (window.userLogged) { // Logica para enviar form con users_id
+             let userIdInput = document.createElement('input');
+             userIdInput.type = 'hidden';
+             userIdInput.value = window.userLogged.id;
+             userIdInput.name = 'users_id';
+             form.appendChild(userIdInput)
+         };
+         // Tengo que armar el objeto items
+         let itemsInput = document.createElement('input');
+         itemsInput.type = 'hidden';
+         itemsInput.name = 'items';
+         let itemsArray = [];
+         // ahora voy por cada item que el usuario compro y lo meto en este array
+         const itemsConfirmed = document.querySelectorAll('.product-side-card');
+         itemsConfirmed.forEach(item => {
+             const products_id = item.dataset.productid;
+             const quantity = item.querySelector('.product-side-quantity-span').innerHTML;
+             itemsArray.push({
+                 products_id,
+                 quantity
+             });
+         });
+         itemsInput.value = JSON.stringify(itemsArray);
+         form.appendChild(itemsInput);
+         // Armo el body
+         let items = form.querySelector('input[name="items"]').value;
+         let users_id = window.userLogged.id || null;
+         let name = form.querySelector('input[name="name"]').value;
+         let last_name = form.querySelector('input[name="last_name"]').value;
+         let email = form.querySelector('input[name="email"]').value;
+         let dni = form.querySelector('input[name="dni"]').value;
+         let phone_code = form.querySelector('select[name="phone_code"]').value;
+         let phone = form.querySelector('input[name="phone"]').value;
+         let billing_street = form.querySelector('input[name="billing_street"]').value;
+         let billing_zip_code = form.querySelector('input[name="billing_zip_code"]').value;
+         let billing_floor = form.querySelector('input[name="billing_floor"]').value;
+         let billing_province = form.querySelector('select[name="billing_province"]').value;
+         let billing_city = form.querySelector('input[name="billing_city"]').value;
+         let order_types_id = form.querySelector('input[name="order_types_id"]').value;
+         let payment_methods_id = form.querySelector('input[name="payment_methods_id"]:checked').value;
+         let shipping_street = form.querySelector('input[name="shipping_street"]').value;
+         let shipping_floor = form.querySelector('input[name="shipping_floor"]').value;
+         let shipping_city = form.querySelector('input[name="shipping_city"]').value;
+         let shipping_province = form.querySelector('select[name="shipping_province"]').value;
+         let shipping_zip_code = form.querySelector('input[name="shipping_zip_code"]').value;
+         // Estas 3 son los radio, entonces pregunto asi
+         let use_same_address = form.querySelector('input[name="use_same_address"]').checked ?
+             form.querySelector('input[name="use_same_address"]').value : null;
+         let save_user_address = form.querySelector('input[name="save_user_address"]').checked ?
+             form.querySelector('input[name="save_user_address"]').value : null;
+         let use_user_address = form.querySelector('input[name="use_user_address"]').checked ?
+             form.querySelector('input[name="use_user_address"]').value : null;
+         const bodyForm = {
+             items,
+             users_id,
+             name,
+             last_name,
+             email,
+             dni,
+             phone_code,
+             phone,
+             billing_street,
+             billing_zip_code,
+             billing_floor,
+             billing_province,
+             billing_city,
+             order_types_id,
+             use_same_address,
+             payment_methods_id,
+             save_user_address,
+             use_user_address,
+             shipping_street,
+             shipping_floor,
+             shipping_city,
+             shipping_province,
+             shipping_zip_code,
+         }
+         // Hago el fetch
+         let fetchResponse = await fetch('/api/user/checkout', {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json' // Tipo de contenido del cuerpo de la solicitud
+             },
+             body: JSON.stringify(bodyForm)
+         });
+         if (!fetchResponse.ok) {
+             // console.log(fetchResponse);
+             const errorMsg = 'Error al procesar la venta';
+             window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${errorMsg}`;
+             return
+         };
+         // Una vez que se compra, si no hay usuario se borra el carro del locale
+         if (!window.userLogged) {
+             localStorage.removeItem('temporalCart');
+             // TODO: Armar vista success;
+         };
+         window.location.href = `/`; */
     } catch (error) {
         return console.log(`Error en el envio del formulario: ${error}`);
     }

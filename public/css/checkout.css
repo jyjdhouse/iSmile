@@ -230,6 +230,8 @@ transition: padding-right .5s;
     text-align: center;
     margin-bottom: 5%;
     padding-top: 5%;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-card .product-price-container {
@@ -340,7 +342,7 @@ transition: padding-right .5s;
     margin-bottom: 2vh;
 }
 
-.continue-button {
+.continue-button, .start-buy-button {
     padding: 4% 7%;
     outline: none;
     border-radius: 1.5rem;
@@ -812,6 +814,15 @@ transition: padding-right .5s;
     margin-bottom: .5rem;
 }
 
+.checkout-stock-error-container {
+    width: 100%;
+}
+
+.checkout-stock-error-container p {
+    font-size: 0.675rem;
+    color: red;
+}
+
 @media(min-width:768px) {
     .view {
         justify-content: space-around;
@@ -923,6 +934,7 @@ transition: padding-right .5s;
     .product-name-container {
         width: 21.5%;
         font-size: 1.2vw;
+       
     }
 
     .product-card .product-price-container {

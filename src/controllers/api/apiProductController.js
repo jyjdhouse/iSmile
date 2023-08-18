@@ -110,6 +110,24 @@ const controller = {
             product
         });
     },
+    getCheckoutProducts: async(req, res) => {
+        const productsArray = req.body;
+        let arrayToReturn = []
+
+        for (let item of productsArray) {
+            let prod = await db.Product.findByPk(item);
+            arrayToReturn.push(prod);
+        }
+
+        return res.status(200).json({
+            meta: {
+                status: 200,
+                url: `api/product/getCheckoutProducts`
+            },
+            arrayToReturn
+        });
+
+    },
     getTreatments: async (req, res) => {//Metodo que devuelve producto en especifico
         let treatments = await getAllTreatments();
         treatments = getDeepCopy(treatments);
