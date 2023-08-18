@@ -145,17 +145,37 @@ function checkInputPrice(card) {
     let price = parseInt(card.querySelector('.product-price-span').innerHTML);
     let quantity = parseInt(card.querySelector('.product-quantity').value);
     let totalElement = card.querySelector('.product-subtotal-span');
-    totalElement.innerHTML = quantity * price;
+    let discountPriceElement = card.querySelector('.span-discount-price');
+    totalElement.innerHTML = `$${quantity * price}`;
+    // si la tarjeta tiene descuento
+    if (discountPriceElement) {
+        // Agarro el descuento que se aplica
+        let discount = discountPriceElement.dataset.discount;
+        let discountDecimal = 1 - discount / 100;
+        discountPriceElement.innerHTML = `$${quantity * price * discountDecimal}`;
+    }
     getTotalPrice();
 }
 // Logica para hacer cuenta toal
 function getTotalPrice() {
-    let subTotals = document.querySelectorAll('.product-subtotal-span');
+    // Los subtotals me van a llegar '$4000', con el $ adelante ==> se los saco
+    let subTotals = Array.from(document.querySelectorAll('.product-subtotal-span'));
+    subTotals = subTotals.map(str => {
+        // Primero me fijo si ese subtotal es el real o el producto tiene descuento
+        const container = str.closest('.product-subtotal');
+        const discountSpan = container.querySelector('.span-discount-price')
+        if (discountSpan) {
+            return parseFloat(discountSpan.innerHTML.match(/\d+/)[0])
+        }
+        // Sino es el precio del producto
+        return parseFloat(str.innerHTML.match(/\d+/)[0])
+    });
+    console.log(subTotals);
     let subTotalElement = document.querySelector('.cart-subtotal-span');
     let totalElement = document.querySelector('.cart-total-span')
     let counter = 0;
     subTotals.forEach(subtotal => {
-        counter += parseInt(subtotal.innerHTML)
+        counter += parseInt(subtotal)
     });
     subTotalElement.innerHTML = counter;
     totalElement.innerHTML = counter;
@@ -209,6 +229,13 @@ const paintSideCards = () => {
         let productName = card.querySelector('.product-name').innerHTML;
         let productQuantity = card.querySelector('.product-quantity').value;
         let productPrice = card.querySelector('.product-subtotal-span').innerHTML;
+        let productDiscount = card.querySelector('.span-discount-price');
+        let discountTag;
+        // Si hay descuento obtengo ese precio en descuento
+        if (productDiscount) {
+            discountTag = productDiscount.dataset.discount;
+            productDiscount = parseFloat(productDiscount.innerHTML.match(/\d+/)[0]);
+        }
         inyectedHTML +=
             `
             <article class="product-side-card" data-productid="${card.dataset.productid}">
@@ -218,7 +245,11 @@ const paintSideCards = () => {
                 <div class="product-side-info-container">
                     <p class="product-side-name bold">${productName}</p>
                     <p class="product-side-quantity grey">Cantidad: <span class="product-side-quantity-span">${productQuantity}</span></p>
-                    <p class="product-side-price">$<span class="product-side-price-span">${productPrice}</span></p>
+                    <p class="product-side-price">
+                    ${productDiscount ? `<span class="product-side-discount-tag-span">${discountTag}% OFF</span>` : ''}
+                    <span class="product-side-price-span ${productDiscount ? `striked grey` : ''}">${productPrice}</span>
+                    ${productDiscount ? `<span class="product-side-discount-price-span">$${productDiscount}</span>` : ''}
+                    </p>
                 </div>
             </article>
             `
@@ -743,9 +774,11 @@ async function checkForUserLogged() {
                                                 <input type="number" name="quantity" id="" class="product-quantity">
                                             </div>
                                             <div class="product-subtotal-container article-div-child">
-                                                <p class="product-subtotal">$ <span class="product-subtotal-span">
-                                                ${product.price}
-                                                    </span></p>
+                                                <p class="product-subtotal ${product.discount ? 'discount-product-price-container' : ''}"> 
+                                                <span class="product-subtotal-span ${product.discount ? 'striked grey' : ''}">
+                                                $${product.price}
+                                                </span>
+                                                </p>
                                             </div>
                                             
                                         </div>
@@ -766,7 +799,19 @@ async function checkForUserLogged() {
                                     
                                    
             `;
+
             productCardWrapper.innerHTML += cardHTML;
+            // Antes de terminar, me fijo si el producto en cuestion tiene descuento para agregar ese precio con descuento
+            if (product.discount) {
+                let discountPriceHTML =
+                    `
+                <span class="span-discount-price" data-discount= '${product.discount}' >
+                 $${product.price * (1 - product.discount / 100)} 
+            </span>`;
+                let productCards = productCardWrapper.querySelectorAll('.product-card');
+                // Accedo al ultimo y le agrego el discount
+                productCards[productCards.length - 1].querySelector('.product-subtotal').innerHTML += discountPriceHTML
+            }
         });
 
         return
@@ -932,8 +977,30 @@ form.addEventListener('submit', async (e) => {
             shipping_city,
             shipping_province,
             shipping_zip_code,
-        }
-        // Hago el fetch
+        };
+        
+        // Hago el fetch para pedir el boton de pago
+        // const paymentButtonRequestBody = {
+        //     items,
+        //     name,
+        //     last_name,
+        // }
+        let paymentButtonFetchResponse = await fetch('/api/payment/getPaymentRequest', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Tipo de contenido del cuerpo de la solicitud
+            },
+            body: JSON.stringify(bodyForm)
+        });
+        // Si hay error aca ==> Repinto la vista con errores
+        if(!paymentButtonFetchResponse.ok){
+            window.location.href = `/user/checkout?checkoutErrors=${true}`;
+            return
+        };
+
+        // Sino, hay que pintar el boton del checkout TODO:
+
+        // Aca es para mandar por post el pedido y armar la orden en db
         let fetchResponse = await fetch('/api/user/checkout', {
             method: 'POST',
             headers: {

@@ -58,6 +58,7 @@ const controller = {
                     id: prod.id,
                     price: prod.price,
                     stock: prod.stock,
+                    discount: prod.discount,
                     files: prod.files
                 }
             })
