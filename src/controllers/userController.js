@@ -73,6 +73,7 @@ const controller = {
             // Ahora voy por cada producto del temporalItem, lo dejo con un precio y la primer imagen
             // de cada producto
             cart = cart?.map(tempItem => {
+                console.log(tempItem.product)
                 // Primero busco si hay mainImage, sino primer foto que aparezca
                 let tempItemFile = tempItem.product.files?.find(file => file.main_image)?.filename;
                 !tempItemFile ? tempItemFile = tempItem.product.files?.find(file => file.file_types_id = 1)?.filename : null;
@@ -85,7 +86,9 @@ const controller = {
                     discount:tempItem.product.discount,
                     filename: tempItemFile
                 }
+                
             });
+                
             if (cart) {
                 // Para obtener url de las fotos
                 for (let i = 0; i < cart.length; i++) {
@@ -106,6 +109,7 @@ const controller = {
                 // return res.send(cart);
                 // Ordeno el carro del tempItemId mas gde a mas chico (Mas nuevo arriba)
                 cart = cart?.sort((a, b) => b.tempItemId - a.tempItemId);
+                
             }
             // return res.send(cart)
             return res.render('checkout.ejs', { user, cart, provinces, countryCodes });

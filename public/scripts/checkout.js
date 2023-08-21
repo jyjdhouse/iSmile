@@ -28,6 +28,72 @@ document.querySelectorAll('.product-quantity').forEach(inp => {
     });
 });
 
+// logica para chequear el stock de cada producto
+const productCards = document.querySelectorAll('.product-card')
+productCards.forEach(card => {
+    let stock = card.querySelector('.stock-number').innerText;
+    let addQuantityBtn = card.querySelector('.add-quantity-btn');
+    let substractQuantityBtn = card.querySelector('.subtract-quantity-btn');
+    let quantityNumImput = card.querySelector('.product-quantity');
+    if(Number(quantityNumImput.value) == Number(stock)){
+        quantityNumImput.value = Number(stock)
+        quantityNumImput.style.pointerEvents = "none"
+        addQuantityBtn.style.pointerEvents = "none"
+    } 
+    quantityNumImput.addEventListener('change', () => {
+        if (quantityNumImput.value >= stock) {
+            quantityNumImput.value = stock
+        } else {
+            addQuantityBtn.style.pointerEvents = "none"
+        }
+    })
+    addQuantityBtn.addEventListener('click', () => {
+        if (quantityNumImput.value == (Number(stock) - 1)) {
+            addQuantityBtn.style.pointerEvents = "none"
+        }
+    })
+    substractQuantityBtn.addEventListener('click', () => {
+        if (addQuantityBtn.style.pointerEvents == "none") {
+            addQuantityBtn.style.pointerEvents = "all"
+        }
+    })
+
+})
+
+// logica para si viene checkout errors de stock error
+const cards = document.querySelectorAll('.product-card')
+let stockEmptyFlag = false;
+cards.forEach(card => {
+
+    let stock = Number(card.querySelector('.stock-number')?.innerText);
+    console.log(stock)
+
+    if (stock != NaN && stock <= 0) {
+        stockEmptyFlag = true;
+        let prodNameContainer = card.querySelector('.product-info-container .product-name-container')
+        let stockErrorContainer = prodNameContainer.querySelector('.check-stock-error')
+        stockErrorContainer.innerHTML = "<p class='stock-error-p'>Este producto está fuera de stock</p>"
+        let addQuantityBtn = card.querySelector('.add-quantity-btn');
+        addQuantityBtn.style.pointerEvents = "none";
+        let quantityNumImput = card.querySelector('.product-quantity');
+        quantityNumImput.style.pointerEvents = "none";
+        quantityNumImput.value = 0
+        quantityNumImput.addEventListener('change', () => {
+            quantityNumImput.value = 0
+        })
+
+    }
+})
+
+let btn = document.querySelector('.start-buy-button');
+if (stockEmptyFlag) {
+
+    btn.disabled = true;
+} else {
+    btn.disabled = false;
+}
+
+
 
 // Logica para que funcióne el mas y el menos
 const reduceProductQuantityBtns = document.querySelectorAll('.subtract-quantity-btn');
@@ -170,7 +236,6 @@ function getTotalPrice() {
         // Sino es el precio del producto
         return parseFloat(str.innerHTML.match(/\d+/)[0])
     });
-    console.log(subTotals);
     let subTotalElement = document.querySelector('.cart-subtotal-span');
     let totalElement = document.querySelector('.cart-total-span')
     let counter = 0;
@@ -741,7 +806,6 @@ async function checkForUserLogged() {
 
         // Mientras pido los productos hago el cargando...
         let products = await (await (await fetch(`${window.location.origin}/api/product?ids=${idsQueryString}`)).json()).products;
-        console.log(products);
         // Saco el spinner
         document.querySelector('.spinner-overlay').remove();
         productCardWrapper.innerHTML = '';
@@ -761,6 +825,9 @@ async function checkForUserLogged() {
                                                 <p class="product-name">
                                                     ${product.name}
                                                 </p>
+                                                <div class="check-stock-error">
+                                               </div>
+                                               <p class="stock-number" style="display:none";>${product.stock} </p>
                                             </div>
                                             <div class="product-price-container article-div-child">
                                                 <p class="product price">$<span class="product-price-span">
@@ -775,6 +842,9 @@ async function checkForUserLogged() {
                                             </div>
                                             <div class="product-subtotal-container article-div-child">
                                                 <p class="product-subtotal ${product.discount ? 'discount-product-price-container' : ''}"> 
+                                               ${product.discount ? `<span class="span-discount-tag">
+                                                        ${product.discount}% OFF
+                                                    </span>` : ""}
                                                 <span class="product-subtotal-span ${product.discount ? 'striked grey' : ''}">
                                                 $${product.price}
                                                 </span>
@@ -832,9 +902,8 @@ const urlString = window.location.search;
 const urlParams = new URLSearchParams(urlString);
 const param = urlParams.get('checkoutErrors');
 if (param) {
-    const msg = urlParams.get('msg');
     const errorCard = document.querySelector('.error-card');
-    errorCard.innerHTML = msg;
+    errorCard.innerHTML = "Hubo un problema al iniciar la compra, intente nuevamente más tarde";
     errorCard.classList.remove('hidden');
     setTimeout(() => {
         errorCard.classList.add('error-card-inactive');
@@ -978,7 +1047,7 @@ form.addEventListener('submit', async (e) => {
             shipping_province,
             shipping_zip_code,
         };
-        
+
         // Hago el fetch para pedir el boton de pago
         // const paymentButtonRequestBody = {
         //     items,
@@ -993,7 +1062,7 @@ form.addEventListener('submit', async (e) => {
             body: JSON.stringify(bodyForm)
         });
         // Si hay error aca ==> Repinto la vista con errores
-        if(!paymentButtonFetchResponse.ok){
+        if (!paymentButtonFetchResponse.ok) {
             window.location.href = `/user/checkout?checkoutErrors=${true}`;
             return
         };

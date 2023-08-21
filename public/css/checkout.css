@@ -231,6 +231,8 @@ body {
     text-align: center;
     margin-bottom: 5%;
     padding-top: 5%;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-card .product-price-container {
@@ -356,7 +358,7 @@ body {
     margin-bottom: 2vh;
 }
 
-.continue-button {
+.continue-button, .start-buy-button {
     padding: 4% 7%;
     outline: none;
     border-radius: 1.5rem;
@@ -852,6 +854,15 @@ body {
     margin-bottom: .5rem;
 }
 
+.check-stock-error {
+    width: 100%;
+}
+
+.check-stock-error p {
+    font-size: 0.675rem;
+    color: red;
+}
+
 @media(min-width:768px) {
     .view {
         justify-content: space-around;
@@ -980,6 +991,7 @@ body {
     .product-name-container {
         width: 21.5%;
         font-size: 1.2vw;
+       
     }
 
     .product-card .product-price-container {

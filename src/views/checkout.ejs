@@ -23,6 +23,7 @@
                             </div>
                             <div class="product-card-wrapper">
                                 <% locals.cart && locals.cart.forEach(product=>{ %>
+
                                     <article class="product-card" data-productid="<%=product.products_id %>">
                                         <div class="product-card-image-container article-div-child">
                                             <img src="<%= product.file_url || '/img/product/default.png' %>"
@@ -34,6 +35,11 @@
                                                     <p class="product-name">
                                                         <%= product.name %>
                                                     </p>
+                                                    <div class="check-stock-error">
+                                                        <p class="stock-number" style="display: none;">
+                                                            <%= product.stock %>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                                 <div class="product-price-container article-div-child">
                                                     <p class="product price">$<span class="product-price-span">
@@ -45,27 +51,31 @@
                                                     <i class='bx bx-minus subtract-quantity-btn'></i>
                                                     <i class='bx bx-trash remove-cart-product'></i>
                                                     <input type="number" name="quantity" id="" class="product-quantity">
+                                                    <p class="stock-number" style="display: none;">
+                                                        <%= product.stock %>
+                                                    </p>
                                                 </div>
                                                 <div class="product-subtotal-container article-div-child">
-                                                    <p
-                                                        class="product-subtotal <%= product.discount ? 'discount-product-price-container' : '' %>">
+                                                    <p class="product-subtotal <%= product.discount ?'discount-product-price-container' : '' %>">
                                                         <% if (product.discount) { %>
                                                             <span class="span-discount-tag">
                                                                 <%= product.discount %>% OFF
                                                             </span>
                                                             <% } %>
-                                                                <span
-                                                                    class="product-subtotal-span <%= product.discount ? 'striked grey' : '' %>">
+                                                                <span class="product-subtotal-span <%= product.discount ? 'striked grey' :'' %>">
                                                                     $<%= product.price %>
                                                                 </span>
                                                                 <% if (product.discount) { %>
+
                                                                     <span class="span-discount-price"
                                                                         data-discount='<%= product.discount  %>'>
+
                                                                         $<%= product.price * (1-product.discount/100) %>
                                                                     </span>
                                                                     <% } %>
                                                     </p>
                                                 </div>
+
 
                                             </div>
 
@@ -73,6 +83,7 @@
                                                 <i class='bx bxs-trash-alt confirm-product-delete'></i>
                                             </div>
                                         </div>
+
 
                                         <%- include('./partials/loadingSpinner.ejs') %>
                                     </article>

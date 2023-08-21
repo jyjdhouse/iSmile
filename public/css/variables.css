@@ -91,8 +91,9 @@ li {
     background: var(--red-color);
     color: #ccc;
     border-radius: 0.5rem;
-    right: 0;
-    bottom: 5vh;
+    left: 50%;
+    bottom: 40%;
+    transform: translate(-50%, 50%);
     transition: all 2s ease;
 }
 .error-card-inactive{
