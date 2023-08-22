@@ -1,0 +1,42 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.order-success-box{
+    width: 40vw;
+    min-height: 60vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px 0;
+    /* background-color: #eee; */
+    border-radius: 10px;
+    /* Aplicar el sombreado */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+}
+.order-success-box>*{
+    margin-bottom: 10px;
+}
+.order-success-box .bx-check-circle{
+    color: rgb(0, 164, 0);
+    font-size: 40px;
+    margin-bottom: 0;
+}
+.box-title{
+    font-size: 24px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.box-field{
+    width: 100%;
+    display: flex;
+    padding: 0 20px;
+}
+.box-field-label{
+    margin-right: 20px;
+}
+.box-description{
+    color: var(--bold-color);
+}

@@ -462,6 +462,14 @@ const controller = {
     },
     termsAndCondition: (req, res) => {
         return res.render('terms')
+    },
+    orderSuccess: async(req,res) =>{
+        try {
+            return res.render('orderSuccess')
+        } catch (error) {
+            console.log(`Falle en mainController.orderSuccess: ${error}`);
+            return res.json({ error })
+        }
     }
 };
 
