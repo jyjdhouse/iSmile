@@ -891,6 +891,18 @@ body {
     color: red;
 }
 
+.product-side-shipment-info {
+    margin: 8% 0;
+}
+
+.product-side-shipment-info div:first-child {
+    margin-bottom: 5%;
+}
+
+.product-side-shipment-info div  {
+    font-size: 1.2rem;
+}
+
 @media(min-width:768px) {
     .view {
         justify-content: space-around;

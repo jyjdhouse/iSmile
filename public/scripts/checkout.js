@@ -196,6 +196,18 @@ const getShipmentInfo = async (zipCodeInp) => {
 
 }
 
+const deliveryTypes = document.querySelectorAll('.delivery-option-box');
+deliveryTypes.forEach(devT => {
+    devT.addEventListener('click', () => {
+        if(devT.dataset.typeid == 2){
+            let shipmentPriceSpan = document.querySelector('.shipment-price-span');
+            let shipmentDelaySpan = document.querySelector('.shipment-delay-span');
+            shipmentPriceSpan.textContent = "0";
+            shipmentDelaySpan.textContent = "Retiro por el local";
+        }
+    })
+})
+
 const getShipmentPriceBtn = document.querySelector('.get-shipment-price');
 let shippingZipCodeInp = document.getElementById("shipping_zip_code");
 getShipmentPriceBtn.addEventListener('click', () => {
