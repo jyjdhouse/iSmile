@@ -255,8 +255,12 @@
                                                 <div class="field required-field shipping-field">
                                                     <label for="shipping_zip_code" class="label bold">Codigo
                                                         Postal*</label>
-                                                    <input type="text" name="shipping_zip_code" id="shipping_zip_code"
-                                                        class="input required numeric-only-input">
+                                                        <div class="zip-code-container">
+                                                            <input type="text" name="shipping_zip_code" id="shipping_zip_code"
+                                                            class="input required numeric-only-input">
+                                                            <button class="get-shipment-price">Calcular</button>
+                                                        </div>
+                                                
                                                     <% if (locals.userLogged && userLogged.shippingAddress) { %>
                                                         <p class="shipping-address-p hidden"
                                                             id="shipping-address-zip-code-p">

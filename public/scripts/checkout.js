@@ -221,12 +221,17 @@ const getShipmentInfo = async (zipCodeInput) => {
     }
 }
 
-/* let getShipmentDataForm = document.querySelector('.get-shipment-data-form');
+const getShipmentPriceBtn = document.querySelector('.get-shipment-price');
 
-getShipmentDataForm.addEventListener('submit', () => {
-    const zipCodeInp = document.getElementById('shipping_zip_code');
-    getShipmentInfo(zipCodeInp);
-}) */
+getShipmentPriceBtn.addEventListener('click', () => {
+    let shippingZipCodeInp = document.getElementById("shipping_zip_code");
+    if(Number(shippingZipCodeInp.value) === 4){
+        getShipmentInfo(zipCodeInp);
+    } /* else {
+        shipp
+    } */
+    
+}) 
 
 
 // logica para confirmar el borrado de cards
