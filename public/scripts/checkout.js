@@ -1,5 +1,5 @@
 import { getDeepCopy, handleRemoveCartBtnClick, isInDesktop, isLetter, isNumeric } from "./utils.js";
-import { shipmentStaticInfo } from "../../src/utils/staticDB/shipmentData.js";
+import { shipmentStaticInfo } from "./shipmentData.js";
 window.scrollTo(0, 0);
 // agarro el contenedor de tarjetas
 const productCardWrapper = document.querySelector('.product-card-wrapper');

@@ -1,4 +1,5 @@
-const shipmentStaticInfo = {
+
+export const shipmentStaticInfo = {
     Operativa: '94567',
     // cuit: process.env.CUIT,
     PesoTotal: {
@@ -15,5 +16,3 @@ const shipmentStaticInfo = {
     // CantidadPaquetes:
     // ValorDeclarado:
 }
-
-export {shipmentStaticInfo};
