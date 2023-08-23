@@ -91,6 +91,9 @@ const controller = {
                 added_date: Date.now(),
                 stock: prod.stock
             });
+
+            console.log(tempItem)
+
           // Tengo que reiniciar el periodo del carro para tema mails
             await db.User.update({
                 cart_period_type: null

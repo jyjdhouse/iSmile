@@ -408,6 +408,10 @@ const controller = {
 
 
     return res.redirect('/');
+  },
+  getCuit: async (req, res) => {
+    const cuit = process.env.CUIT;
+    return res.status(200).json({cuit});
   }
 }
 

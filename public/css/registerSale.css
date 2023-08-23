@@ -229,6 +229,17 @@ select{
     width: fit-content;
 }
 
+.max-quantity-active {
+    color: red;
+    font-size: 0.675rem;
+    display: flex;
+}
+
+.max-quantity-inactive {
+    display: none;
+    
+}
+
 @media(min-width:1024px) {
     .billing-section {
         width: 100%;

@@ -1,4 +1,5 @@
 import { getDeepCopy, handleRemoveCartBtnClick, isInDesktop, isLetter, isNumeric } from "./utils.js";
+import { shipmentStaticInfo } from "../../src/utils/staticDB/shipmentData.js";
 window.scrollTo(0, 0);
 // agarro el contenedor de tarjetas
 const productCardWrapper = document.querySelector('.product-card-wrapper');
@@ -35,11 +36,17 @@ productCards.forEach(card => {
     let addQuantityBtn = card.querySelector('.add-quantity-btn');
     let substractQuantityBtn = card.querySelector('.subtract-quantity-btn');
     let quantityNumImput = card.querySelector('.product-quantity');
-    if(Number(quantityNumImput.value) == Number(stock)){
+    if (Number(quantityNumImput.value) == Number(stock)) {
         quantityNumImput.value = Number(stock)
         quantityNumImput.style.pointerEvents = "none"
         addQuantityBtn.style.pointerEvents = "none"
-    } 
+    }
+    if (Number(stock) == 1) {
+        addQuantityBtn.style.pointerEvents = "none"
+        let prodNameContainer = card.querySelector('.product-info-container .product-name-container')
+        let stockErrorContainer = prodNameContainer.querySelector('.check-stock-error')
+        stockErrorContainer.innerHTML = "<p class='stock-error-p'>Último en stock !</p>"
+    }
     quantityNumImput.addEventListener('change', () => {
         if (quantityNumImput.value >= stock) {
             quantityNumImput.value = stock
@@ -50,6 +57,9 @@ productCards.forEach(card => {
     addQuantityBtn.addEventListener('click', () => {
         if (quantityNumImput.value == (Number(stock) - 1)) {
             addQuantityBtn.style.pointerEvents = "none"
+            let prodNameContainer = card.querySelector('.product-info-container .product-name-container')
+            let stockErrorContainer = prodNameContainer.querySelector('.check-stock-error')
+            stockErrorContainer.innerHTML = `<p class='stock-error-p'>${stock} en stock disponibles</p>`
         }
     })
     substractQuantityBtn.addEventListener('click', () => {
@@ -66,7 +76,6 @@ let stockEmptyFlag = false;
 cards.forEach(card => {
 
     let stock = Number(card.querySelector('.stock-number')?.innerText);
-    console.log(stock)
 
     if (stock != NaN && stock <= 0) {
         stockEmptyFlag = true;
@@ -143,17 +152,79 @@ const handleSubstractingQuantity = (e, btn) => { //función que se encarga de ma
     // checkRowPrices(input.closest('.row'));
 }
 
-
-/* const confirmDeleteBtns = document.querySelectorAll('.confirm-delete-product-container');
-
-confirmDeleteBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const card = btn.closest('.product-card');
-        card.remove()
-        getTotalPrice();
-        checkIfCartIsEmpty(); 
+const checkIfAllProductsAreInStock = () => {
+    let stockEmptyFlag = false;
+    let btn = document.querySelector('.start-buy-button');
+    let currentCards = document.querySelectorAll('.product-card')
+    currentCards.forEach(card => {
+        let stock = Number(card.querySelector('.stock-number')?.innerText);
+        if(stock === 0){
+            stockEmptyFlag = true;
+        }
     })
+    if (stockEmptyFlag) {
+        btn.disabled = true;
+    } else {
+        btn.disabled = false;
+    }
+}
+
+
+
+// logica para obtener la data del envio
+const getShipmentInfo = async (zipCodeInput) => {
+    const urlOcaApi = "http://webservice.oca.com.ar/ePak_tracking/Oep_TrackEPak.asmx/Tarifar_Envio_Corporativo";
+    const urlIsmileApi = "https://ismile.com.ar/api/admin/getCuit"
+    const zipCodeValue = zipCodeInput.value;
+    try {
+        const cuitResponse = await fetch(urlIsmileApi, {
+            method: "GET", 
+            headers: {
+              "Content-Type": "application/json",
+            },
+        })
+        const cuitData = cuitResponse.json();
+        const bodyObject = {
+            // Cuit: cuitData.cuit;
+            // Operativa: shipmentStaticInfo.Operativa
+            //PesoTotal: shipmentStaticInfo.PesoTotal[1],
+            //VolumenTotal: shipmentStaticInfo.VolumenTotal[1],
+            //CodigoPostalOrigen: shipmentStaticInfo.CodigoPostalOrigen,
+              //CodigoPostalDestino: zipCodeValue,
+              //CantidadPaquetes:TODO
+              //ValorDeclarado: TODO
+         }
+         // const input = document.querySelector('calculate-shipment-input')
+        const response = await fetch(urlOcaApi, {
+            method: "POST",
+            headers: {
+               'Content-Type': 'application/xml',
+            },
+            body: JSON.stringify(bodyObject),
+        })
+        if (!response.ok) {
+            throw new Error('Error en la solicitud de la api');
+        }
+        const data = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(data, 'text/xml');
+    
+        const totalValue = xmlDoc.querySelector('Total').textContent;
+        const plazoEntregaValue = xmlDoc.querySelector('PlazoEntrega').textContent;
+    
+        //TODO: hacer los innerhtml respectivos en esos campos
+    } catch (error) {
+        console.log('Error pidiendo datos del envio:', error);
+    }
+}
+
+/* let getShipmentDataForm = document.querySelector('.get-shipment-data-form');
+
+getShipmentDataForm.addEventListener('submit', () => {
+    const zipCodeInp = document.getElementById('shipping_zip_code');
+    getShipmentInfo(zipCodeInp);
 }) */
+
 
 // logica para confirmar el borrado de cards
 let isEventHandlerActive = true;
@@ -171,6 +242,8 @@ const checkClickTrashOrScreen = (btn) => {
             card.remove();
             getTotalPrice();
             checkIfCartIsEmpty();
+            checkIfAllProductsAreInStock();
+           
         } else {
             const btnClicked = btn;
             const card = btnClicked.closest('.product-card');
