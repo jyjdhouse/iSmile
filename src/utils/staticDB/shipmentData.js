@@ -1,7 +1,6 @@
 
-export const shipmentStaticInfo = {
+const shipmentStaticInfo = {
     Operativa: '94567',
-    // cuit: process.env.CUIT,
     PesoTotal: {
         1: '1.5',
         2: '2',
@@ -16,3 +15,8 @@ export const shipmentStaticInfo = {
     // CantidadPaquetes:
     // ValorDeclarado:
 }
+
+const shipmentEstimateUrl = "http://webservice.oca.com.ar/ePak_tracking/Oep_TrackEPak.asmx/Tarifar_Envio_Corporativo";
+
+module.exports = {shipmentEstimateUrl, shipmentStaticInfo}
+

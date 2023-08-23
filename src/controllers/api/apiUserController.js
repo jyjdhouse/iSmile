@@ -16,6 +16,7 @@ const getAllProducts = require('../../utils/getAllProducts');
 const getOrder = require('../../utils/getOrder');
 const emailConfig = require('../../utils/staticDB/mailConfig');
 const handleStock = require('../../utils/handleStock');
+const {shipmentStaticInfo, shipmentEstimateUrl} = require('../../utils/staticDB/shipmentData')
 
 const controller = {
     getLoggedUserId: async (req, res) => {
@@ -25,14 +26,14 @@ const controller = {
 
             let user = getDeepCopy(await getUser(userId));
             // Esto es para no mandar al front estos datos
-            delete user?.password;  
-            delete user?.dni;  
-            delete user?.shippingAddress;  
-            delete user?.userCategory;  
-            delete user?.password_token; 
-            delete user?.email; 
-            delete user?.phone; 
-            delete user?.birth_date; 
+            delete user?.password;
+            delete user?.dni;
+            delete user?.shippingAddress;
+            delete user?.userCategory;
+            delete user?.password_token;
+            delete user?.email;
+            delete user?.phone;
+            delete user?.birth_date;
 
             // Mando la respuesta
             return res.status(200).json({
@@ -40,7 +41,7 @@ const controller = {
                     status: 200,
                     msg
                 },
-                ok:true,
+                ok: true,
                 user
             })
 
@@ -52,11 +53,11 @@ const controller = {
     createTempCart: async (req, res) => {
         try {
             const { userId, prodId } = req.body;
-            
+
             const tempCart = await db.TemporalCart.create({
                 users_id: userId
             });
-            
+
             await db.TemporalItem.create({
                 temporal_cart_id: parseInt(tempCart.id),
                 products_id: prodId,
@@ -80,10 +81,10 @@ const controller = {
     addTempItem: async (req, res) => {
         try {
             let { tempCartId, prodId, userId } = req.body;
-            
+
             let prod = await db.Product.findByPk(prodId)
 
-        
+
             let tempItem = await db.TemporalItem.create({
                 temporal_cart_id: parseInt(tempCartId),
                 products_id: prodId,
@@ -94,7 +95,7 @@ const controller = {
 
             console.log(tempItem)
 
-          // Tengo que reiniciar el periodo del carro para tema mails
+            // Tengo que reiniciar el periodo del carro para tema mails
             await db.User.update({
                 cart_period_type: null
             }, {
@@ -133,7 +134,7 @@ const controller = {
                     id: user.id
                 }
             });
-            
+
             return res.json({
                 ok: true,
                 meta: {
@@ -266,10 +267,10 @@ const controller = {
     },
     processCheckout: async (req, res) => {
         try {
-            let { date,items, users_id, name, last_name, email, dni, phone_code, phone, billing_street, billing_zip_code,
+            let { date, items, users_id, name, last_name, email, dni, phone_code, phone, billing_street, billing_zip_code,
                 billing_floor, billing_province, billing_city, order_types_id, use_same_address, payment_methods_id,
                 save_user_address, use_user_address } = req.body;
-            
+
             items = JSON.parse(items);
 
             // Traigo los errores de formulario (si alguno vino vacio de los que no debia)
@@ -284,11 +285,11 @@ const controller = {
                     meta: {
                         status: 404
                     },
-                    ok:false,
+                    ok: false,
                     errors,
                     msg: 'Error al procesar la compra, intente nuevamente'
                 });
-                    
+
             }
 
             // Si no hay errores
@@ -351,7 +352,7 @@ const controller = {
             // hago el handleStock y le paso el metodo resta
             stock = await handleStock(stockItems, method);
 
-            
+
             // Pregunto que tipo de orden es (RETIRO LOCAL - ENTREGA A DOMICILIO)
             let shippingAddressToDB;
             if (order_types_id == 1) { //ENTREGA A DOMICILIO
@@ -409,7 +410,7 @@ const controller = {
 
             //Tema de status
             // Si la venta fue presencial entonces la venta esta COMPLETA
-            if(order_types_id == 3){
+            if (order_types_id == 3) {
                 orderDataToDB.order_status_id = 1;
             } else if (payment_methods_id == 2 || payment_methods_id == 3) { //Debito o Credito
                 // Aca es venta online ==> Chequeo metodo de pago
@@ -424,7 +425,7 @@ const controller = {
                 orderTotalPrice += parseInt(item.price) * parseInt(item.quantity);
             });
             // Hago los insert en la base de datos
-            
+
             let orderCreated = await db.Order.create({
                 id: orderDataToDB.id,
                 tra_id: orderDataToDB.tra_id,
@@ -449,8 +450,8 @@ const controller = {
             orderCreated = await getOrder(orderCreated.id);
             // Tengo que armar 2 mails: 1 al que compro y otro a las chicas
             await sendOrderMails(orderCreated);
-            if(users_id){
-                
+            if (users_id) {
+
                 // Si se creo la orden entonces limpio el carro del usuario 
                 await db.TemporalCart.destroy({
                     where: {
@@ -461,9 +462,9 @@ const controller = {
                 await db.User.update({
                     last_cart_email: null,
                     cart_period_type: null
-                },{
+                }, {
                     where: {
-                        id: users_id 
+                        id: users_id
                     }
                 })
             }
@@ -472,11 +473,11 @@ const controller = {
                 meta: {
                     status: 200,
                 },
-                ok:true,
+                ok: true,
                 msg: `Compra registrada exitosamente`
             });
-            
-            
+
+
             return res.render('orderSuccess.ejs', { Order });
             return res.send({
                 orderDataToDB, orderItemsToDB, billingAddressToDB, shippingAddressToDB
@@ -487,6 +488,57 @@ const controller = {
             return res.redirect(`/user/checkout?checkoutErrors=${true}&msg="Error al procesar la compra, intente nuevamente"`)
         }
     },
+    getEstimateShipmentData: async (req, res) => {
+        const {zipCodeValue, quantity} = req.body;
+
+        // restaria aca hacer la logica segun la cantidad de elementos, que volumen y peso mandamos
+        let totalWeigth;
+        let totalVolume;
+
+        try {
+            const bodyObject = {
+                Cuit: process.env.CUIT,
+                Operativa: shipmentStaticInfo.Operativa,
+                PesoTotal: totalWeigth,
+                VolumenTotal: totalVolume,
+                CodigoPostalOrigen: shipmentStaticInfo.CodigoPostalOrigen,
+                CodigoPostalDestino: zipCodeValue,
+                CantidadPaquetes: --TODO,
+                ValorDeclarado: --TODO
+            }
+            const response = await fetch(shipmentEstimateUrl, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/xml',
+                },
+                body: JSON.stringify(bodyObject),
+            })
+            if (!response.ok) {
+                throw new Error('Error en la solicitud de la api de OCA');
+            }
+            const data = await response.text();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(data, 'text/xml');
+
+            const totalValue = xmlDoc.querySelector('Total').textContent;
+            const plazoEntregaValue = xmlDoc.querySelector('PlazoEntrega').textContent;
+
+            return res.json({
+                ok: true,
+                meta: {
+                    status: 200,
+                    url: `api/product/addTempItem`
+                },
+                shippingData: {
+                    totalValue,
+                    plazoEntregaValue
+                }
+            });
+        } catch (error) {
+            console.log('Error pidiendo datos del envio:', error);
+        }
+    }
+
 };
 
 module.exports = controller;

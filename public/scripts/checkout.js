@@ -1,5 +1,4 @@
 import { getDeepCopy, handleRemoveCartBtnClick, isInDesktop, isLetter, isNumeric } from "./utils.js";
-import { shipmentStaticInfo } from "./shipmentData.js";
 window.scrollTo(0, 0);
 // agarro el contenedor de tarjetas
 const productCardWrapper = document.querySelector('.product-card-wrapper');
@@ -158,7 +157,7 @@ const checkIfAllProductsAreInStock = () => {
     let currentCards = document.querySelectorAll('.product-card')
     currentCards.forEach(card => {
         let stock = Number(card.querySelector('.stock-number')?.innerText);
-        if(stock === 0){
+        if (stock === 0) {
             stockEmptyFlag = true;
         }
     })
@@ -170,68 +169,44 @@ const checkIfAllProductsAreInStock = () => {
 }
 
 
+const getShipmentInfo = async (zipCodeInp) => {
+    const cards = document.querySelectorAll('.product-card');
+    let quantity = 0;
+    cards.forEach(card => {
+        let quantityInput = Number(card.querySelector('.product-quantity-container .product-quantity').value);
+        quantity += quantityInput;
 
-// logica para obtener la data del envio
-const getShipmentInfo = async (zipCodeInput) => {
-    const urlOcaApi = "http://webservice.oca.com.ar/ePak_tracking/Oep_TrackEPak.asmx/Tarifar_Envio_Corporativo";
-    const urlIsmileApi = "https://ismile.com.ar/api/admin/getCuit"
-    const zipCodeValue = zipCodeInput.value;
-    try {
-        const cuitResponse = await fetch(urlIsmileApi, {
-            method: "GET", 
-            headers: {
-              "Content-Type": "application/json",
-            },
-        })
-        if (!response.ok) {
-            throw new Error('Error en la solicitud obteniendo el cuit');
-        }
-        const cuitData = cuitResponse.json();
-        const bodyObject = {
-            // Cuit: cuitData.cuit;
-            // Operativa: shipmentStaticInfo.Operativa
-            //PesoTotal: shipmentStaticInfo.PesoTotal[1],
-            //VolumenTotal: shipmentStaticInfo.VolumenTotal[1],
-            //CodigoPostalOrigen: shipmentStaticInfo.CodigoPostalOrigen,
-              //CodigoPostalDestino: zipCodeValue,
-              //CantidadPaquetes:TODO
-              //ValorDeclarado: TODO
-         }
-         // const input = document.querySelector('calculate-shipment-input')
-        const response = await fetch(urlOcaApi, {
-            method: "POST",
-            headers: {
-               'Content-Type': 'application/xml',
-            },
-            body: JSON.stringify(bodyObject),
-        })
-        if (!response.ok) {
-            throw new Error('Error en la solicitud de la api');
-        }
-        const data = await response.text();
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(data, 'text/xml');
-    
-        const totalValue = xmlDoc.querySelector('Total').textContent;
-        const plazoEntregaValue = xmlDoc.querySelector('PlazoEntrega').textContent;
-    
-        //TODO: hacer los innerhtml respectivos en esos campos
-    } catch (error) {
-        console.log('Error pidiendo datos del envio:', error);
+    })
+    const bodyObject = {
+        zipCodeValue: zipCodeInp.value,
+        quantity
     }
+    const response = fetch("http:/ismile.com.ar/api/user/get-estimate-shipping-data", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bodyObject),
+    })
+    if (!response.ok) {
+        throw new Error('Error mientras se pedia el estimado de envio')
+    }
+    const data = response.json();
+    const shipmentData = data.shippingData;
+
 }
 
 const getShipmentPriceBtn = document.querySelector('.get-shipment-price');
-
+let shippingZipCodeInp = document.getElementById("shipping_zip_code");
 getShipmentPriceBtn.addEventListener('click', () => {
-    let shippingZipCodeInp = document.getElementById("shipping_zip_code");
-    if(Number(shippingZipCodeInp.value) === 4){
-        getShipmentInfo(zipCodeInp);
-    } /* else {
-        shipp
-    } */
-    
-}) 
+    if (Number(shippingZipCodeInp.value) === 4) {
+        getShipmentPriceBtn.classList.contains('get-shipment-price-error') && getShipmentPriceBtn.classList.remove('get-shipment-price-error')
+        //getShipmentInfo(zipCodeInp);
+    } else {
+        !getShipmentPriceBtn.classList.contains('get-shipment-price-error') && getShipmentPriceBtn.classList.add('get-shipment-price-error')
+    }
+
+})
 
 
 // logica para confirmar el borrado de cards
@@ -251,7 +226,7 @@ const checkClickTrashOrScreen = (btn) => {
             getTotalPrice();
             checkIfCartIsEmpty();
             checkIfAllProductsAreInStock();
-           
+
         } else {
             const btnClicked = btn;
             const card = btnClicked.closest('.product-card');

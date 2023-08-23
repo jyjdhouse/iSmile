@@ -559,6 +559,10 @@ body {
     width: 25%;
 }
 
+.get-shipment-price-error {
+    border: 1px solid red;
+}
+
 .checkbox-field {
     flex-wrap: nowrap;
 }
