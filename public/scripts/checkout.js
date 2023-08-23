@@ -183,6 +183,9 @@ const getShipmentInfo = async (zipCodeInput) => {
               "Content-Type": "application/json",
             },
         })
+        if (!response.ok) {
+            throw new Error('Error en la solicitud obteniendo el cuit');
+        }
         const cuitData = cuitResponse.json();
         const bodyObject = {
             // Cuit: cuitData.cuit;
