@@ -26,6 +26,10 @@ module.exports = (sequelize, dataTypes) => {
         ShippingAddress.belongsTo(models.User, {
             as: 'user',
             foreignKey: 'users_id',
+        });
+        ShippingAddress.hasMany(models.User, {
+            as: 'orders',
+            foreignKey: 'shipping_addresses_id',
         })
     };
 

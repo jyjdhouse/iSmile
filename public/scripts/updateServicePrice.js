@@ -1,20 +1,8 @@
-import { isNumeric } from "./utils.js";
+import { checkForNumericInputs } from "./utils.js";
 window.addEventListener('load', () => {
     let selectedTreatmentsToDestroy = [];
     // Logica para que todos los inputs numericos no acepten letras
-    let numericInputs = document.querySelectorAll('.numeric-only-input');
-    numericInputs.forEach(input => {
-        // Tomo el ultimo valor
-        let lastInputValue = input.value;
-        input.addEventListener("input", function (e) {
-            var inputValue = e.target.value;
-            if (!isNumeric(inputValue)) { // Si no es un número, borra el contenido del campo
-                e.target.value = lastInputValue;
-            } else {
-                lastInputValue = inputValue; // Almacenar el último valor válido
-            }
-        });
-    });
+    checkForNumericInputs();
 
     // LOGICA PARA MOSTRAR LABELS
     // agaarro las labels 

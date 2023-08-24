@@ -1,4 +1,4 @@
-import { listenForImagesToSelectMain } from "./utils.js";
+import { checkForNumericInputs, listenForImagesToSelectMain } from "./utils.js";
 window.addEventListener('load', () => {
 
     const form = document.querySelector('.create-product-form')
@@ -6,12 +6,14 @@ window.addEventListener('load', () => {
     const textArea = document.querySelector('.create-product-form textarea')
     let formErrors = false
 
-    inputs.forEach(inp => {
-        inp.addEventListener('change', (e) => {
-            inp.value(e.target.value)
-        })
-    })
-
+    // inputs.forEach(inp => {
+    //     inp.addEventListener('change', (e) => {
+    //         inp.value(e.target.value)
+    //     })
+    // })
+    
+    // Logica para que todos los inputs numericos no acepten letras
+    checkForNumericInputs();
     // LOGICA PARA MOSTRAR IMAGENES
     let files = document.querySelector('.files')
 
@@ -21,7 +23,7 @@ window.addEventListener('load', () => {
         let divContainer = document.querySelector('.images-radio-box-wrapper');
         // Limpio todos los que son a partir del input
         const containersToRemove = divContainer.querySelectorAll('.image-radio-box.from-input');
-        containersToRemove.forEach(cont=>cont.remove());
+        containersToRemove.forEach(cont => cont.remove());
         // Archivos del input
         let fileObject = e.target.files
         let files = [];
@@ -76,13 +78,6 @@ window.addEventListener('load', () => {
             }
 
         })
-
-        /*  textArea.classList.remove('input-error')
-         if(textArea.value.trim() == ''){
-             
-             textArea.classList.add('input-error')
-             formErrors = true
-         } */
 
         if (!formErrors) {
             form.submit()

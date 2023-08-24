@@ -479,11 +479,6 @@ const controller = {
                 msg: `Compra registrada exitosamente`
             });
 
-
-            return res.render('orderSuccess.ejs', { Order });
-            return res.send({
-                orderDataToDB, orderItemsToDB, billingAddressToDB, shippingAddressToDB
-            });
         } catch (error) {
             console.log(`Falle en userController.proccessOrder: ${error}`);
             return res.status(404).json({ error })

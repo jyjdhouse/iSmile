@@ -1,4 +1,4 @@
-import { getDeepCopy, handleRemoveCartBtnClick, isInDesktop, isLetter, isNumeric } from "./utils.js";
+import { checkForNumericInputs, getDeepCopy, handleRemoveCartBtnClick, isInDesktop, isLetter } from "./utils.js";
 window.scrollTo(0, 0);
 // agarro el contenedor de tarjetas
 const productCardWrapper = document.querySelector('.product-card-wrapper');
@@ -40,15 +40,12 @@ productCards.forEach(card => {
         quantityNumImput.style.pointerEvents = "none"
         addQuantityBtn.style.pointerEvents = "none"
     }
-<<<<<<< HEAD
-=======
     if (Number(stock) == 1) {
         addQuantityBtn.style.pointerEvents = "none"
         let prodNameContainer = card.querySelector('.product-info-container .product-name-container')
         let stockErrorContainer = prodNameContainer.querySelector('.check-stock-error')
         stockErrorContainer.innerHTML = "<p class='stock-error-p'>Último en stock !</p>"
     }
->>>>>>> 796968c7fafecdadc4114951b1dac1923ac08167
     quantityNumImput.addEventListener('change', () => {
         if (quantityNumImput.value >= stock) {
             quantityNumImput.value = stock
@@ -641,19 +638,7 @@ const checkForInputChange = () => {
 checkForInputChange();
 
 // Logica para que todos los inputs numericos no acepten letras
-let numericInputs = document.querySelectorAll('.numeric-only-input');
-numericInputs.forEach(input => {
-    // Tomo el ultimo valor
-    let lastInputValue = input.value;
-    input.addEventListener("input", function (e) {
-        var inputValue = e.target.value;
-        if (!isNumeric(inputValue)) { // Si no es un número, borra el contenido del campo
-            e.target.value = lastInputValue;
-        } else {
-            lastInputValue = inputValue; // Almacenar el último valor válido
-        }
-    });
-});
+checkForNumericInputs()
 
 // Logica para que todos los input de solo letras no acepten numeros
 let letterInputs = document.querySelectorAll('.letter-only-input');

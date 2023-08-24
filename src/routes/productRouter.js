@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
-const uploadFile = require('../middlewares/uploadProductImages')
 
 // MIDDLEWARES
 const isAdminMiddleware = require('../middlewares/isAdminMiddleware');
+const uploadFile = require('../middlewares/uploadProductImages');
+// Este midd es para fijarme que no esten vacios algunos campos, para chequear tipo de dato etc
+const productFieldsMiddleware = require('../middlewares/productFieldsMiddleware');
 
 // GET
 router.get('/',productController.list);
@@ -13,10 +15,10 @@ router.get('/update/:productId',isAdminMiddleware, productController.updateProdu
 router.get('/:productId',productController.detail);
 
 // POST
-router.post('/create', isAdminMiddleware, uploadFile.any('images'), productController.processProductCreation);
+router.post('/create', isAdminMiddleware, uploadFile.any('images'),productFieldsMiddleware, productController.processProductCreation);
 
 // PUT
-router.put('/:productId', isAdminMiddleware, uploadFile.any('images'), productController.processProductUpdate);
+router.put('/:productId', isAdminMiddleware, uploadFile.any('images'),productFieldsMiddleware, productController.processProductUpdate);
 
 // DELETE
 router.delete('/:productId', isAdminMiddleware, productController.deleteProduct);
