@@ -156,7 +156,7 @@ const controller = {
 
             // Generar el token de autenticación
             const token = jwt.sign({ id: userCreated.id }, webTokenSecret, { expiresIn: '1w' }); // genera el token
-            res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
+            res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, secure: true,  sameSite: "strict" });
 
             // Lo redirijo al prefil para completar la info
             return res.redirect(`/user/profile?completeForm=${true}`);
@@ -202,12 +202,12 @@ const controller = {
                     req.session.userLoggedId = userToLog.id;
                     console.log({ userController: req.session })
                     const token = jwt.sign({ id: userToLog.id }, webTokenSecret, { expiresIn: '1d' }); // genera el token
-                    res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
+                    res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, secure: true, sameSite: "strict" });
                     // Si es admin armo una cookie con el token de admin
                     if (userToLog.user_categories_id == 1 || userToLog.user_categories_id == 2) {
                         const adminToken = jwt.sign({ id: userToLog.id }, webTokenSecret, { expiresIn: '4h' });
                         cookieTime = (1000 * 60) * 60 * 4; //4 horas
-                        res.cookie('adminToken', adminToken, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
+                        res.cookie('adminToken', adminToken, { maxAge: cookieTime, httpOnly: true, secure: true, sameSite: "strict" });
                     }
                     return res.redirect(`${req.session.returnTo}`);
                 }
