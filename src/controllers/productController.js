@@ -180,7 +180,6 @@ const controller = {
             // Si hay errores..
             if (!errors.isEmpty()) {
                 errors = errors.mapped();
-                
                 // Si el error es por nombre y/o precio ==> repinto la vista
                 if (errors.name || errors.price) {
                     // return res.send({nameEr: errors.name,priceEr: errors.price});

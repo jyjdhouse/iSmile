@@ -27,7 +27,7 @@ module.exports = (sequelize, dataTypes) => {
             as: 'user',
             foreignKey: 'users_id',
         });
-        ShippingAddress.hasMany(models.User, {
+        ShippingAddress.hasMany(models.Order, {
             as: 'orders',
             foreignKey: 'shipping_addresses_id',
         })

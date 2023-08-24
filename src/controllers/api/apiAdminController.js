@@ -318,8 +318,17 @@ const controller = {
   },
   processServicesPriceUpdating: async (req, res) => {
     const ids = JSON.parse(req.body.ids);
-    const files = req.files;
     const { newPrice, newCashPrice } = req.body;
+    const files = req.files;
+    // Si el supuesto array de files no es array, retorno error
+    if (files) {
+      if (!Array.isArray(files)) {
+        return res.status(400).json({
+          ok:false,
+          msg: 'Bad Request'
+        })
+      }
+    }
     const treatmentsInDb = await db.Treatment.findAll();
     let treatmentsToModify = [];
     // Voy por cada id que me llego (tratamiento a editar)

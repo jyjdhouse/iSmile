@@ -4,7 +4,7 @@ const productController = require('../controllers/productController');
 
 // MIDDLEWARES
 const isAdminMiddleware = require('../middlewares/isAdminMiddleware');
-const uploadFile = require('../middlewares/uploadProductImages');
+const upload = require('../middlewares/multerMiddleware');
 // Este midd es para fijarme que no esten vacios algunos campos, para chequear tipo de dato etc
 const productFieldsMiddleware = require('../middlewares/productFieldsMiddleware');
 
@@ -15,10 +15,10 @@ router.get('/update/:productId',isAdminMiddleware, productController.updateProdu
 router.get('/:productId',productController.detail);
 
 // POST
-router.post('/create', isAdminMiddleware, uploadFile.any('images'),productFieldsMiddleware, productController.processProductCreation);
+router.post('/create', isAdminMiddleware, upload.any('images'),productFieldsMiddleware, productController.processProductCreation);
 
 // PUT
-router.put('/:productId', isAdminMiddleware, uploadFile.any('images'),productFieldsMiddleware, productController.processProductUpdate);
+router.put('/:productId', isAdminMiddleware, upload.any('images'),productFieldsMiddleware, productController.processProductUpdate);
 
 // DELETE
 router.delete('/:productId', isAdminMiddleware, productController.deleteProduct);

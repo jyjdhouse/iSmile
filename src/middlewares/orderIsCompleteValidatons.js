@@ -1,55 +1,41 @@
 const { body } = require('express-validator');
 const db = require('../database/models')
 const msg = 'Error al procesar el formulario, intente nuevamente'
+// UTILS
+const regExs= require('../utils/regularExpresions');
+const orderTypes = require('../utils/staticDB/orderTypes');
+const paymentMethods = require('../utils/staticDB/paymentMethods');
 
 const orderIsCompleteValidations = [
-    body('name')
-        .notEmpty().withMessage(msg)
-        .custom((value, { req }) => {
-            let name = req.body.name
-            let regEx = /^[a-z ,.'-]+$/i;
-            if (!regEx.test(name)) {
-                throw new Error(msg)
-            }
-            return true;
-        }),
+    // Primero me fijo que no esten vacios los campos obligatorios
+    body(['name','last_name','email','phone','dni','billing_street','billing_zip_code','billing_province','billing_city']).notEmpty().withMessage(msg),
+    body(['name','last_name'])
+    .custom((value, { req }) => {
+        let name = req.body.name
+        let regEx = regExs.justLetters;
+        if (!regEx.test(name)) {
+            throw new Error(msg)
+        }
+        return true;
+    }),
     body('email')
-        .notEmpty().withMessage(msg).bail()
         .isEmail().withMessage(msg).bail(),
-    // .custom(async(value,{req})=>{
-    //     let userEdited = await db.User.findByPk(req.params.id);
-    //     let userEmail = req.body.email.toLowerCase();
-    //     let emailInDataBase = await db.User.findOne({where:{email:userEmail}})
-    //     if(emailInDataBase && userEmail != userEdited.email){
-    //         throw new Error("Email ya registrado, ingrese otro")
-    //     };
-    //     return true;
-    // })
+    
     body('phone')
         .custom((value, { req }) => { /*regEX de phone number. Acepta Todo tipo de numero de telefono */
-            let regEx = /^[0-9]*$/
+            let regEx = regExs.justNumbers;
             let phone = req.body.phone;
             if (!regEx.test(phone)) {
                 throw new Error(msg);
             }
             return true;
         }),
-    body('last_name')
-        .notEmpty().withMessage(msg),
-    body('dni')
-        .notEmpty().withMessage(msg),
-    body('billing_street')
-        .notEmpty().withMessage(msg),
-    body('billing_zip_code')
-        .notEmpty().withMessage(msg),
-    body('billing_province')
-        .notEmpty().withMessage(msg),
-    body('billing_city')
-        .notEmpty().withMessage(msg),
+
     body('order_types_id')
         .custom((value, { req }) => {
             let type = req.body.order_types_id;
-            if (type != 1 && type != 2 && type != 3) {//Quiere decir que no es ningun type aceptado en la db
+            let typeInDB = orderTypes.find(typeDB=>typeDB.id==type)
+            if (!typeInDB) {//Quiere decir que no es ningun type aceptado en la db
                 throw new Error(msg);
             }
             return true;
@@ -105,12 +91,13 @@ const orderIsCompleteValidations = [
     body('payment_methods_id')
         .custom((value, { req }) => {
             let methodId = req.body.payment_methods_id;
+            let paymentMethodInDB = paymentMethods.find(payMeth=>payMeth.id==methodId)
             // Si es distinto a transferencia o cualquier tarjeta arrojo error
-            if (methodId != 1 && methodId != 2 && methodId != 3 && methodId != 4 && methodId != 5 ) {
+            if (!paymentMethodInDB ) {
                 throw new Error(msg);
             }
             return true;
-        }),
+    }),
 
 
 ];
