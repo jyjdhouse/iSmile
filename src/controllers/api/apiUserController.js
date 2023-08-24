@@ -16,6 +16,7 @@ const getAllProducts = require('../../utils/getAllProducts');
 const getOrder = require('../../utils/getOrder');
 const emailConfig = require('../../utils/staticDB/mailConfig');
 const handleStock = require('../../utils/handleStock');
+const {shipmentStaticInfo, shipmentEstimateUrl} = require('../../utils/staticDB/shipmentData')
 
 const controller = {
     getLoggedUserId: async (req, res) => {
@@ -350,8 +351,6 @@ const controller = {
                 })
             });
 
-
-
             // Pregunto que tipo de orden es (RETIRO LOCAL - ENTREGA A DOMICILIO)
             let shippingAddressToDB;
             if (order_types_id == 1) { //ENTREGA A DOMICILIO
@@ -491,6 +490,57 @@ const controller = {
             return res.redirect(`/user/checkout?checkoutErrors=${true}&msg="Error al procesar la compra, intente nuevamente"`)
         }
     },
+    getEstimateShipmentData: async (req, res) => {
+        const {zipCodeValue, quantity} = req.body;
+
+        // restaria aca hacer la logica segun la cantidad de elementos, que volumen y peso mandamos
+        let totalWeigth;
+        let totalVolume;
+
+        try {
+            const bodyObject = {
+                Cuit: process.env.CUIT,
+                Operativa: shipmentStaticInfo.Operativa,
+                PesoTotal: totalWeigth,
+                VolumenTotal: totalVolume,
+                CodigoPostalOrigen: shipmentStaticInfo.CodigoPostalOrigen,
+                CodigoPostalDestino: zipCodeValue,
+                CantidadPaquetes: --TODO,
+                ValorDeclarado: --TODO
+            }
+            const response = await fetch(shipmentEstimateUrl, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/xml',
+                },
+                body: JSON.stringify(bodyObject),
+            })
+            if (!response.ok) {
+                throw new Error('Error en la solicitud de la api de OCA');
+            }
+            const data = await response.text();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(data, 'text/xml');
+
+            const totalValue = xmlDoc.querySelector('Total').textContent;
+            const plazoEntregaValue = xmlDoc.querySelector('PlazoEntrega').textContent;
+
+            return res.json({
+                ok: true,
+                meta: {
+                    status: 200,
+                    url: `api/product/addTempItem`
+                },
+                shippingData: {
+                    totalValue,
+                    plazoEntregaValue
+                }
+            });
+        } catch (error) {
+            console.log('Error pidiendo datos del envio:', error);
+        }
+    }
+
 };
 
 module.exports = controller;

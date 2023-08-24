@@ -40,6 +40,15 @@ productCards.forEach(card => {
         quantityNumImput.style.pointerEvents = "none"
         addQuantityBtn.style.pointerEvents = "none"
     }
+<<<<<<< HEAD
+=======
+    if (Number(stock) == 1) {
+        addQuantityBtn.style.pointerEvents = "none"
+        let prodNameContainer = card.querySelector('.product-info-container .product-name-container')
+        let stockErrorContainer = prodNameContainer.querySelector('.check-stock-error')
+        stockErrorContainer.innerHTML = "<p class='stock-error-p'>Último en stock !</p>"
+    }
+>>>>>>> 796968c7fafecdadc4114951b1dac1923ac08167
     quantityNumImput.addEventListener('change', () => {
         if (quantityNumImput.value >= stock) {
             quantityNumImput.value = stock
@@ -50,6 +59,9 @@ productCards.forEach(card => {
     addQuantityBtn.addEventListener('click', () => {
         if (quantityNumImput.value == (Number(stock) - 1)) {
             addQuantityBtn.style.pointerEvents = "none"
+            let prodNameContainer = card.querySelector('.product-info-container .product-name-container')
+            let stockErrorContainer = prodNameContainer.querySelector('.check-stock-error')
+            stockErrorContainer.innerHTML = `<p class='stock-error-p'>${stock} en stock disponibles</p>`
         }
     })
     substractQuantityBtn.addEventListener('click', () => {
@@ -66,7 +78,6 @@ let stockEmptyFlag = false;
 cards.forEach(card => {
 
     let stock = Number(card.querySelector('.stock-number')?.innerText);
-    console.log(stock)
 
     if (stock != NaN && stock <= 0) {
         stockEmptyFlag = true;
@@ -143,17 +154,75 @@ const handleSubstractingQuantity = (e, btn) => { //función que se encarga de ma
     // checkRowPrices(input.closest('.row'));
 }
 
-
-/* const confirmDeleteBtns = document.querySelectorAll('.confirm-delete-product-container');
-
-confirmDeleteBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const card = btn.closest('.product-card');
-        card.remove()
-        getTotalPrice();
-        checkIfCartIsEmpty(); 
+const checkIfAllProductsAreInStock = () => {
+    let stockEmptyFlag = false;
+    let btn = document.querySelector('.start-buy-button');
+    let currentCards = document.querySelectorAll('.product-card')
+    currentCards.forEach(card => {
+        let stock = Number(card.querySelector('.stock-number')?.innerText);
+        if (stock === 0) {
+            stockEmptyFlag = true;
+        }
     })
-}) */
+    if (stockEmptyFlag) {
+        btn.disabled = true;
+    } else {
+        btn.disabled = false;
+    }
+}
+
+
+const getShipmentInfo = async (zipCodeInp) => {
+    const cards = document.querySelectorAll('.product-card');
+    let quantity = 0;
+    cards.forEach(card => {
+        let quantityInput = Number(card.querySelector('.product-quantity-container .product-quantity').value);
+        quantity += quantityInput;
+
+    })
+    const bodyObject = {
+        zipCodeValue: zipCodeInp.value,
+        quantity
+    }
+    const response = fetch("http:/ismile.com.ar/api/user/get-estimate-shipping-data", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bodyObject),
+    })
+    if (!response.ok) {
+        throw new Error('Error mientras se pedia el estimado de envio')
+    }
+    const data = response.json();
+    const shipmentData = data.shippingData;
+
+}
+
+const deliveryTypes = document.querySelectorAll('.delivery-option-box');
+deliveryTypes.forEach(devT => {
+    devT.addEventListener('click', () => {
+        if(devT.dataset.typeid == 2){
+            let shipmentPriceSpan = document.querySelector('.shipment-price-span');
+            let shipmentDelaySpan = document.querySelector('.shipment-delay-span');
+            shipmentPriceSpan.textContent = "0";
+            shipmentDelaySpan.textContent = "Retiro por el local";
+        }
+    })
+})
+
+const getShipmentPriceBtn = document.querySelector('.get-shipment-price');
+let shippingZipCodeInp = document.getElementById("shipping_zip_code");
+getShipmentPriceBtn.addEventListener('click', () => {
+    if (Number(shippingZipCodeInp.value) === 4) {
+        getShipmentPriceBtn.classList.contains('get-shipment-price-error') && getShipmentPriceBtn.classList.remove('get-shipment-price-error')
+        //getShipmentInfo(zipCodeInp);
+    } else {
+        !getShipmentPriceBtn.classList.contains('get-shipment-price-error') && getShipmentPriceBtn.classList.add('get-shipment-price-error')
+    }
+
+})
+
 
 // logica para confirmar el borrado de cards
 let isEventHandlerActive = true;
@@ -171,6 +240,8 @@ const checkClickTrashOrScreen = (btn) => {
             card.remove();
             getTotalPrice();
             checkIfCartIsEmpty();
+            checkIfAllProductsAreInStock();
+
         } else {
             const btnClicked = btn;
             const card = btnClicked.closest('.product-card');

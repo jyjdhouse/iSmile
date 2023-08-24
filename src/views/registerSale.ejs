@@ -95,7 +95,7 @@
                         <div class="choose-service-checkbox-container">
                             <% products.forEach(item=> { %>
                                 <label class="checkbox-label" data-id="<%= item.id %>"
-                                    data-price="<%= item.price ? item.price : '' %>">
+                                    data-price="<%= item.price ? item.price : '' %>" data-stock="<%= item.stock ? item.stock : '' %>">
                                     <%= item.name %>
                                 </label>
                                 <% }) %>

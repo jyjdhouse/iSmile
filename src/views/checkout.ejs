@@ -255,8 +255,12 @@
                                                 <div class="field required-field shipping-field">
                                                     <label for="shipping_zip_code" class="label bold">Codigo
                                                         Postal*</label>
-                                                    <input type="text" name="shipping_zip_code" id="shipping_zip_code"
-                                                        class="input required numeric-only-input">
+                                                        <div class="zip-code-container">
+                                                            <input type="text" name="shipping_zip_code" id="shipping_zip_code"
+                                                            class="input required numeric-only-input">
+                                                            <button class="get-shipment-price">Calcular</button>
+                                                        </div>
+                                                
                                                     <% if (locals.userLogged && userLogged.shippingAddress) { %>
                                                         <p class="shipping-address-p hidden"
                                                             id="shipping-address-zip-code-p">
@@ -399,6 +403,14 @@
                                         class="product-side-cards-wrapper-quantity-span"></span> PRODUCTOS</p>
                             </div>
                             <div class="product-side-cards-wrapper"></div>
+                            <div class="product-side-shipment-info">
+                                <div class="shipment.price">
+                                    <p><span class="bold">Envio: </span><span>$</span><span class="shipment-price-span">3000</span></p>
+                                </div>
+                                <div class="shipment-delay">
+                                    <p><span class="bold">Demora: </span> <span class="shipment-delay-span"> 1 a 3 días hábiles</span></p>
+                                </div>
+                            </div>
                             <div class="product-side-wrapper-price-container">
                                 <div class="product-side-wrapper-row product-side-wrapper-subtotal-row">
                                     <p class="product-side-wrapper-row-label grey">Subtotal</p>

@@ -36,6 +36,53 @@ window.addEventListener('load', () => {
             }
         });
     });
+
+    const listenToItemsStock = (itemContainers) => {
+ 
+        let productLabels = document.querySelectorAll('.checkbox-label');
+        for (let i = 0; i < productLabels.length; i++) {
+            let currentProductLabel = productLabels[i];
+            let currentProductID = currentProductLabel.dataset.id;
+         
+          
+            for (let j = 0; j < itemContainers.length; j++) {
+              let currentItemContainer = itemContainers[j];
+              let currentItemID = currentItemContainer.dataset.product_id;
+          
+              if (currentItemID == currentProductID) {
+                let addItemQuantityBtn = currentItemContainer.querySelector('.add-item-quantity-btn');
+                let itemQuantityInp = currentItemContainer.querySelector('.item-quantity');
+                let substractItemQuantityBtn = currentItemContainer.querySelector('.reduce-item-quantity-btn');
+                addItemQuantityBtn.addEventListener('click', () => {
+                    let stockNum = Number(currentItemContainer.dataset.stock);
+                    let inputNum = Number(itemQuantityInp.value);
+                    if(stockNum == inputNum){
+                        addItemQuantityBtn.style.pointerEvents = "none";
+                        itemQuantityInp.style.pointerEvents = "none";
+                        let maxQuantityDiv = document.createElement('div');
+                        maxQuantityDiv.setAttribute('class', 'max-quantity-container')
+                        currentItemContainer.appendChild(maxQuantityDiv);
+                        maxQuantityDiv.innerHTML = "<p class='max-quantity-active'>Max cantidad en stock</p>"
+                    }
+                })
+                substractItemQuantityBtn.addEventListener('click', () => {
+                    let stockNum = Number(currentItemContainer.dataset.stock);
+                    let inputNum = Number(itemQuantityInp.value);
+                    if(inputNum == (stockNum - 1)) {
+                        addItemQuantityBtn.style.pointerEvents = "all";
+                        itemQuantityInp.style.pointerEvents = "all";
+                        let maxQuantityDiv = document.querySelector('.max-quantity-container');
+                        maxQuantityDiv.remove()
+    
+                    }
+                })
+              }
+            }
+          }
+       
+    }
+  
+
     // LOGICA PARA MOSTRAR LABELS
     const listenCheckboxLabels = () => {
         let checkboxLabels = Array.from(document.querySelectorAll('.checkbox-label'));
@@ -47,10 +94,12 @@ window.addEventListener('load', () => {
                 
                 let id = lab.dataset.id;
                 let price = lab.dataset.price;
+                let stock = lab.dataset.stock;
 
                 let itemContainer = document.createElement('div');
                 itemContainer.setAttribute('class', 'item-container');
                 itemContainer.setAttribute('data-product_id', id);
+                itemContainer.setAttribute('data-stock', stock);
 
                 addedItemsSection.appendChild(itemContainer);
 
@@ -121,6 +170,10 @@ window.addEventListener('load', () => {
 
                 // Lo agrego al section
                 addedItemsSection.appendChild(itemContainer);
+
+                let itemsContainer = document.querySelectorAll('.item-container');
+        
+                listenToItemsStock(itemsContainer)
 
             });
         });
