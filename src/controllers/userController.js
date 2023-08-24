@@ -34,7 +34,7 @@ const getAllProducts = require('../utils/getAllProducts');
 const dateFormater = require('../utils/dateFormater');
 const dateFormaterForInput = require('../utils/userProfDateFormater');
 const getRelativePath = require('../utils/getRelativePath');
-const secret = require('../utils/secret').secret;
+const webTokenSecret = process.env.JSONWEBTOKEN_SECRET;
 const orderStatuses = require('../utils/staticDB/orderStatus');
 const orderTypes = require('../utils/staticDB/orderTypes');
 
@@ -155,7 +155,7 @@ const controller = {
             /* req.session.userLoggedId = userCreated.id; //Defino en sessions al usuario loggeado */
 
             // Generar el token de autenticación
-            const token = jwt.sign({ id: userCreated.id }, secret, { expiresIn: '1w' }); // genera el token
+            const token = jwt.sign({ id: userCreated.id }, webTokenSecret, { expiresIn: '1w' }); // genera el token
             res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
 
             // Lo redirijo al prefil para completar la info
@@ -201,11 +201,11 @@ const controller = {
                     // Generar el token de autenticación
                     req.session.userLoggedId = userToLog.id;
                     console.log({ userController: req.session })
-                    const token = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '1d' }); // genera el token
+                    const token = jwt.sign({ id: userToLog.id }, webTokenSecret, { expiresIn: '1d' }); // genera el token
                     res.cookie('userAccessToken', token, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
                     // Si es admin armo una cookie con el token de admin
                     if (userToLog.user_categories_id == 1 || userToLog.user_categories_id == 2) {
-                        const adminToken = jwt.sign({ id: userToLog.id }, secret, { expiresIn: '4h' });
+                        const adminToken = jwt.sign({ id: userToLog.id }, webTokenSecret, { expiresIn: '4h' });
                         cookieTime = (1000 * 60) * 60 * 4; //4 horas
                         res.cookie('adminToken', adminToken, { maxAge: cookieTime, httpOnly: true, /*TODO: Activarlo una vez deploy => secure: true,*/  sameSite: "strict" });
                     }
@@ -291,6 +291,7 @@ const controller = {
     changePasswordView: async (req, res) => {
         try {
             const { token } = req.params;
+            // return res.render('userChangePassword', { token });
             // Verificar si el token es válido
             const userWithToken = await db.User.findOne({
                 where: {
@@ -300,7 +301,7 @@ const controller = {
             // Si no encuentro usuario redirijo a la 404
             if (!userWithToken) return res.render('error404');
             // Ahora me fijo si el token sigue siendo valido
-            const decodedData = jwt.verify(token, secret);
+            const decodedData = jwt.verify(token, webTokenSecret);
             // Renderizar la página de cambio de contraseña
             res.render('userChangePassword', { token });
         } catch (error) {
@@ -323,7 +324,7 @@ const controller = {
             // Si no encuentro usuario redirijo a la 404
             if (!userWithToken) return res.render('error404');
             // Ahora me fijo si el token sigue siendo valido
-            const decodedData = jwt.verify(token, secret);
+            const decodedData = jwt.verify(token, webTokenSecret);
 
             // Si hay, le cambio la contrasena por la nueva
             await db.User.update({

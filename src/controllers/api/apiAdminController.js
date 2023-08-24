@@ -2,8 +2,6 @@ const db = require('../../database/models');
 const fs = require('fs');
 const handleStock = require('../../utils/handleStock')
 // Librerias
-const secret = require('../../utils/secret').secret;
-const jwt = require('jsonwebtoken');
 const json2csv = require('json2csv').parse;
 const Sequelize = require('sequelize');
 const { Op } = require('sequelize');

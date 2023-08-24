@@ -20,9 +20,9 @@ app.use(cors());
 // Express-session
 const session = require('express-session');
 app.use(session({
-    secret: "Conf middleware global session",
-    resave: false,
-    saveUninitialized: false
+    secret: process.env.SESSION_SECRET,
+    resave: false,// No guardar la sesión en cada solicitud si no hay cambios
+    saveUninitialized: false // Guardar sesiones incluso si están vacías o no modificadas
 }));
 
 

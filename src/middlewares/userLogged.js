@@ -2,7 +2,7 @@ const db = require('../database/models');
 const jwt = require('jsonwebtoken');
 const isJwtError = require('../utils/isJwtError');
 const getRelativePath = require('../utils/getRelativePath');
-const secret = require('../utils/secret').secret;
+const webTokenSecret =  process.env.JSONWEBTOKEN_SECRET;
 const getUser = require('../utils/getUser');
 
 const userLogged = async (req, res, next) => {
@@ -21,7 +21,7 @@ const userLogged = async (req, res, next) => {
         if (pathToGo == '/user/logout') return next();
 
         if (token) {
-            const decodedData = jwt.verify(token, secret);
+            const decodedData = jwt.verify(token, webTokenSecret);
             if (decodedData) { //Si verifico el token, solo agarro el id
                 userInCookie = await getUser(decodedData?.id);
                 delete userInCookie.password; // Para no llevar la password session

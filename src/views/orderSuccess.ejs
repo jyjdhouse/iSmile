@@ -4,6 +4,7 @@
 <head>
     <%- include('./partials/head.ejs') %>
     <link rel="stylesheet" href="/css/orderSuccess.css">
+    <script src="/scripts/orderSuccess.js" type="module"></script>
         <title>Compra exitosa</title>
 </head>
 
@@ -14,22 +15,31 @@
             <i class='bx bx-check-circle'></i>
             <p class="box-title bold">¡Compra Exitosa!</p>
             <div class="box-field">
-                <p class="box-field-label bold">Identificador de compra: </p>
-                <p class="box-field-info">554fta47yu</p>
+                <p class="box-field-label bold">Identificador de compra</p>
+                <p class="box-field-info"><%= order.tra_id %></p>
             </div>
             <div class="box-field">
-                <p class="box-field-label bold">Cantidad de productos: </p>
-                <p class="box-field-info">4</p>
+                <p class="box-field-label bold">Cantidad de productos</p>
+                <p class="box-field-info"><%= order.productQuantity %></p>
             </div>
             <div class="box-field">
-                <p class="box-field-label bold">Metodo de pago: </p>
-                <p class="box-field-info">Tarjeta de credito/debito</p>
+                <p class="box-field-label bold">Metodo de pago</p>
+                <p class="box-field-info"><%= order.paymentMethod.name %></p>
             </div>
+            <% if (order.paymentMethod.disclaimer) { %>
+             <div class="box-field disclaimer-field">
+                <p class="box-field-label">ACLARACION</p>
+                <p class="box-field-info grey"><%= order.paymentMethod.disclaimer %></p>
+             </div>
+            <% } %>
             <div class="box-field">
-                <p class="box-field-label bold">Metodo de entrega: </p>
-                <p class="box-field-info">Envio a domicilio</p>
+                <p class="box-field-label bold">Metodo de entrega</p>
+                <p class="box-field-info"><%= order.orderType.short %></p>
             </div>
-            
+            <div class="box-field total-field">
+                <p class="box-field-label bold">Total:</p>
+                <p class="box-field-info">$<span class="price-number"><%= order.total %></span></p>
+            </div>
             <p class="box-description">¡Gracias por elegirnos!</p>
         </section>
     </main>

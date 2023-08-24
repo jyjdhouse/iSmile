@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 const { validationResult } = require('express-validator');
 const { v4: uuidv4 } = require('uuid');
 // From utils
-const secret = require('../../utils/secret').secret;
+const webTokenSecret =  process.env.JSONWEBTOKEN_SECRET;
 const isJwtError = require('../../utils/isJwtError');
 const getRelativePath = require('../../utils/getRelativePath');
 const getDeepCopy = require('../../utils/getDeepCopy');
@@ -25,14 +25,14 @@ const controller = {
 
             let user = getDeepCopy(await getUser(userId));
             // Esto es para no mandar al front estos datos
-            delete user?.password;  
-            delete user?.dni;  
-            delete user?.shippingAddress;  
-            delete user?.userCategory;  
-            delete user?.password_token; 
-            delete user?.email; 
-            delete user?.phone; 
-            delete user?.birth_date; 
+            delete user?.password;
+            delete user?.dni;
+            delete user?.shippingAddress;
+            delete user?.userCategory;
+            delete user?.password_token;
+            delete user?.email;
+            delete user?.phone;
+            delete user?.birth_date;
 
             // Mando la respuesta
             return res.status(200).json({
@@ -40,7 +40,7 @@ const controller = {
                     status: 200,
                     msg
                 },
-                ok:true,
+                ok: true,
                 user
             })
 
@@ -52,11 +52,11 @@ const controller = {
     createTempCart: async (req, res) => {
         try {
             const { userId, prodId } = req.body;
-            
+
             const tempCart = await db.TemporalCart.create({
                 users_id: userId
             });
-            
+
             await db.TemporalItem.create({
                 temporal_cart_id: parseInt(tempCart.id),
                 products_id: prodId,
@@ -80,10 +80,10 @@ const controller = {
     addTempItem: async (req, res) => {
         try {
             let { tempCartId, prodId, userId } = req.body;
-            
+
             let prod = await db.Product.findByPk(prodId)
 
-        
+
             let tempItem = await db.TemporalItem.create({
                 temporal_cart_id: parseInt(tempCartId),
                 products_id: prodId,
@@ -91,7 +91,7 @@ const controller = {
                 added_date: Date.now(),
                 stock: prod.stock
             });
-          // Tengo que reiniciar el periodo del carro para tema mails
+            // Tengo que reiniciar el periodo del carro para tema mails
             await db.User.update({
                 cart_period_type: null
             }, {
@@ -130,7 +130,7 @@ const controller = {
                     id: user.id
                 }
             });
-            
+
             return res.json({
                 ok: true,
                 meta: {
@@ -155,7 +155,7 @@ const controller = {
             // Si la sesion no tiene el userLoggedId devuelvo ERROR
             if (!user) res.status(404).json({ error: 'Usuario no encontrado' });
             let userEmail = user.email;
-            const token = jwt.sign({ id: userToChangePassID }, secret, { expiresIn: '1h' }); // genera el token
+            const token = jwt.sign({ id: userToChangePassID }, webTokenSecret, { expiresIn: '1h' }); // genera el token
             // Guardo el token en la db
             await db.User.update({
                 password_token: token
@@ -218,7 +218,7 @@ const controller = {
             // Si la sesion no tiene el userLoggedId vuelvo a la home
             if (!user) return //res.status(404).json({ error: 'Usuario no encontrado' });
 
-            const token = jwt.sign({ id: user.id }, secret, { expiresIn: '1h' }); // genera el token
+            const token = jwt.sign({ id: user.id }, webTokenSecret, { expiresIn: '1h' }); // genera el token
             // Guardo el token en la db
             await db.User.update({
                 password_token: token
@@ -263,10 +263,10 @@ const controller = {
     },
     processCheckout: async (req, res) => {
         try {
-            let { date,items, users_id, name, last_name, email, dni, phone_code, phone, billing_street, billing_zip_code,
+            let { date, items, users_id, name, last_name, email, dni, phone_code, phone, billing_street, billing_zip_code,
                 billing_floor, billing_province, billing_city, order_types_id, use_same_address, payment_methods_id,
                 save_user_address, use_user_address } = req.body;
-            
+
             items = JSON.parse(items);
 
             // Traigo los errores de formulario (si alguno vino vacio de los que no debia)
@@ -281,11 +281,11 @@ const controller = {
                     meta: {
                         status: 404
                     },
-                    ok:false,
+                    ok: false,
                     errors,
                     msg: 'Error al procesar la compra, intente nuevamente'
                 });
-                    
+
             }
 
             // Si no hay errores
@@ -319,14 +319,19 @@ const controller = {
             // armo los orderItems
             const orderItemsToDB = [];
             let stockItems = [];
-            let method = 'resta';
             items.forEach(item => {
                 // Agarro el producto
                 let itemInDB = productsInDB.find(prod => prod.id == item.products_id);
-                // console.log(itemInDB);
                 let orderItemName = itemInDB.name;
-                // Si vino precio es porque lo modificaron las chicas en la vista de crear venta
-                let orderItemPrice = item.price ? parseInt(item.price) : itemInDB?.price;
+                let orderItemPrice;
+                if (orderDataToDB.order_types_id == 3) {//Venta presencial
+                    // Si vino precio es porque lo modificaron las chicas en la vista de crear venta
+                    orderItemPrice = item.price ? parseInt(item.price) : itemInDB?.price;
+                } else { //Venta online
+                    // Me fijo si tiene descuento el producto
+                    orderItemPrice = parseInt(itemInDB?.price) * (1 - parseInt(itemInDB?.discount || 0) / 100)
+                }
+
                 let orderItemQuantity = parseInt(item.quantity);
                 // Voy armando el array de orderItems para hacer un bulkcreate
                 let orderId = uuidv4();
@@ -343,12 +348,10 @@ const controller = {
                     id: itemInDB.id,
                     quantity: orderItemQuantity
                 })
-                console.log(stockItems)
             });
-            // hago el handleStock y le paso el metodo resta
-            stock = await handleStock(stockItems, method);
 
-            
+
+
             // Pregunto que tipo de orden es (RETIRO LOCAL - ENTREGA A DOMICILIO)
             let shippingAddressToDB;
             if (order_types_id == 1) { //ENTREGA A DOMICILIO
@@ -404,24 +407,28 @@ const controller = {
             };
             // Hasta aca ya arme todo. (BillingAddress - Order - OrderItem - ShippingAddress) ==> Tengo que insertar en la DB
 
-            //Tema de status
-            // Si la venta fue presencial entonces la venta esta COMPLETA
-            if(order_types_id == 3){
-                orderDataToDB.order_status_id = 1;
-            } else if (payment_methods_id == 2 || payment_methods_id == 3) { //Debito o Credito
-                // Aca es venta online ==> Chequeo metodo de pago
+            //Tema de orderStatus
+            // Si la venta fue presencial entonces la venta esta completa
+            if (order_types_id == 3) {
+                orderDataToDB.order_status_id = 1;//Pendiente de retiro
+            }// Aca es venta online ==> Chequeo metodo de pago 
+            else if (payment_methods_id == 2 || payment_methods_id == 3) { //Debito o Credito
                 // Si payment_methods_id es 2 o 3 quiere decir que ya se aprobo el pago
-                orderDataToDB.order_status_id = 2; //Pendiente de envio
+                // Si es 1 (entrega a domicilio) lo pongo como pendiente de envio, si no solo
+                // queda que sea 2 (retiro por local), lo pongo como pendiente de retiro
+                order_types_id == 1 ? orderDataToDB.order_status_id = 2 :
+                    orderDataToDB.order_status_id = 6;
             } else if (payment_methods_id == 1) { //Transferencia
                 orderDataToDB.order_status_id = 4; //Pendiente de confirmacion
             }
+
             // Tema total
             let orderTotalPrice = 0;
             orderItemsToDB.forEach(item => {
                 orderTotalPrice += parseInt(item.price) * parseInt(item.quantity);
             });
             // Hago los insert en la base de datos
-            
+
             let orderCreated = await db.Order.create({
                 id: orderDataToDB.id,
                 tra_id: orderDataToDB.tra_id,
@@ -446,8 +453,7 @@ const controller = {
             orderCreated = await getOrder(orderCreated.id);
             // Tengo que armar 2 mails: 1 al que compro y otro a las chicas
             await sendOrderMails(orderCreated);
-            if(users_id){
-                
+            if (users_id) {
                 // Si se creo la orden entonces limpio el carro del usuario 
                 await db.TemporalCart.destroy({
                     where: {
@@ -458,9 +464,9 @@ const controller = {
                 await db.User.update({
                     last_cart_email: null,
                     cart_period_type: null
-                },{
+                }, {
                     where: {
-                        id: users_id 
+                        id: users_id
                     }
                 })
             }
@@ -469,11 +475,12 @@ const controller = {
                 meta: {
                     status: 200,
                 },
-                ok:true,
+                ok: true,
+                order_id: orderCreated.tra_id,
                 msg: `Compra registrada exitosamente`
             });
-            
-            
+
+
             return res.render('orderSuccess.ejs', { Order });
             return res.send({
                 orderDataToDB, orderItemsToDB, billingAddressToDB, shippingAddressToDB

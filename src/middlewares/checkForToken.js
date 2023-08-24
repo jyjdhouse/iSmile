@@ -1,11 +1,10 @@
 const jwt = require('jsonwebtoken');
-const secret = require('../utils/secret').secret;
-
+const webTokenSecret =  process.env.JSONWEBTOKEN_SECRET;
 module.exports = (req, res, next) => {
     const token = req.cookies.userAccessToken; // Obtener el token desde la cookie "token"
     if (token) {
         let userId;
-        jwt.verify(token, secret, (err, decoded) => {
+        jwt.verify(token, webTokenSecret, (err, decoded) => {
             if (err) {
                 // Si el token no es válido, borra la cookie "token" y continua con la solicitud
                 userId = null;

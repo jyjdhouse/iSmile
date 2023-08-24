@@ -1,12 +1,12 @@
-const secret = require('../utils/secret').secret;
 const jwt = require('jsonwebtoken');
+const webTokenSecret =  process.env.JSONWEBTOKEN_SECRET;
 
 const isAdmin = async (req, res, next) => {
     let userId;
     //Agarro la cookie del token
     const token = req.cookies?.adminToken;
     if (token) {
-        const decodedData = jwt.verify(token, secret);
+        const decodedData = jwt.verify(token, webTokenSecret);
         if (decodedData) { //Si verifico el token, solo agarro el id
             userId = decodedData?.id
         }

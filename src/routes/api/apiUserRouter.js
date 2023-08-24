@@ -18,6 +18,14 @@ router.post('/createTempCart',checkForToken,apiUserController.createTempCart);
 router.post('/addTempItem',checkForToken,apiUserController.addTempItem);
 router.post('/forget-password',checkForToken,apiUserController.forgetPassword);
 router.post('/checkout',orderIsCompleteValidations,apiUserController.processCheckout);
+router.post('/testingResponse',(req,res)=>{
+    return res.status(200).json({
+        meta: {
+            status: 200
+        },
+        body: "HOLa"
+    })
+})
 // DELETE   
 router.delete('/deleteTempItem',checkForToken,apiUserController.deleteTempItem)
 module.exports=router;
