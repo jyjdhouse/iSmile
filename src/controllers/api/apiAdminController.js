@@ -2,8 +2,6 @@ const db = require('../../database/models');
 const fs = require('fs');
 const handleStock = require('../../utils/handleStock')
 // Librerias
-const secret = require('../../utils/secret').secret;
-const jwt = require('jsonwebtoken');
 const json2csv = require('json2csv').parse;
 const Sequelize = require('sequelize');
 const { Op } = require('sequelize');
@@ -320,8 +318,17 @@ const controller = {
   },
   processServicesPriceUpdating: async (req, res) => {
     const ids = JSON.parse(req.body.ids);
-    const files = req.files;
     const { newPrice, newCashPrice } = req.body;
+    const files = req.files;
+    // Si el supuesto array de files no es array, retorno error
+    if (files) {
+      if (!Array.isArray(files)) {
+        return res.status(400).json({
+          ok:false,
+          msg: 'Bad Request'
+        })
+      }
+    }
     const treatmentsInDb = await db.Treatment.findAll();
     let treatmentsToModify = [];
     // Voy por cada id que me llego (tratamiento a editar)

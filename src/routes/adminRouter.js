@@ -4,7 +4,7 @@ const path = require('path');
 const adminController = require('../controllers/adminController');
 
 // Middlewares
-const upload = require('../middlewares/uploadServiceImage');
+const upload = require('../middlewares/multerMiddleware');
 
 const isAdminMiddleware = require('../middlewares/isAdminMiddleware');
 

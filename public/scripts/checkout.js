@@ -1,4 +1,4 @@
-import { getDeepCopy, handleRemoveCartBtnClick, isInDesktop, isLetter, isNumeric } from "./utils.js";
+import { checkForNumericInputs, getDeepCopy, handleRemoveCartBtnClick, isInDesktop, isLetter } from "./utils.js";
 window.scrollTo(0, 0);
 // agarro el contenedor de tarjetas
 const productCardWrapper = document.querySelector('.product-card-wrapper');
@@ -638,19 +638,7 @@ const checkForInputChange = () => {
 checkForInputChange();
 
 // Logica para que todos los inputs numericos no acepten letras
-let numericInputs = document.querySelectorAll('.numeric-only-input');
-numericInputs.forEach(input => {
-    // Tomo el ultimo valor
-    let lastInputValue = input.value;
-    input.addEventListener("input", function (e) {
-        var inputValue = e.target.value;
-        if (!isNumeric(inputValue)) { // Si no es un número, borra el contenido del campo
-            e.target.value = lastInputValue;
-        } else {
-            lastInputValue = inputValue; // Almacenar el último valor válido
-        }
-    });
-});
+checkForNumericInputs()
 
 // Logica para que todos los input de solo letras no acepten numeros
 let letterInputs = document.querySelectorAll('.letter-only-input');
@@ -959,7 +947,7 @@ async function checkForUserLogged() {
     }
 }
 
-//logica para pintar forma de pago en el second-view
+//Logica para pintar forma de pago en el second-view
 const boxes = document.querySelectorAll('.box-container')
 const boxesType = document.querySelectorAll('.payment-field')
 const paymentMethodInputs = document.querySelectorAll('.payment-method-input');
@@ -1064,7 +1052,7 @@ form.addEventListener('submit', async (e) => {
         form.appendChild(itemsInput);
         // Armo el body
         let items = form.querySelector('input[name="items"]').value;
-        let users_id = window.userLogged.id || null;
+        let users_id = window.userLogged?.id || null;
         let name = form.querySelector('input[name="name"]').value;
         let last_name = form.querySelector('input[name="last_name"]').value;
         let email = form.querySelector('input[name="email"]').value;
@@ -1084,11 +1072,11 @@ form.addEventListener('submit', async (e) => {
         let shipping_province = form.querySelector('select[name="shipping_province"]').value;
         let shipping_zip_code = form.querySelector('input[name="shipping_zip_code"]').value;
         // Estas 3 son los radio, entonces pregunto asi
-        let use_same_address = form.querySelector('input[name="use_same_address"]').checked ?
+        let use_same_address = form.querySelector('input[name="use_same_address"]')?.checked ?
             form.querySelector('input[name="use_same_address"]').value : null;
-        let save_user_address = form.querySelector('input[name="save_user_address"]').checked ?
+        let save_user_address = form.querySelector('input[name="save_user_address"]')?.checked ?
             form.querySelector('input[name="save_user_address"]').value : null;
-        let use_user_address = form.querySelector('input[name="use_user_address"]').checked ?
+        let use_user_address = form.querySelector('input[name="use_user_address"]')?.checked ?
             form.querySelector('input[name="use_user_address"]').value : null;
         const bodyForm = {
             items,
@@ -1145,6 +1133,8 @@ form.addEventListener('submit', async (e) => {
             },
             body: JSON.stringify(bodyForm)
         });
+        // Para obtener la respuesta
+        fetchResponse = await fetchResponse.json();
         if (!fetchResponse.ok) {
             // console.log(fetchResponse);
             const errorMsg = 'Error al procesar la venta';
@@ -1154,9 +1144,8 @@ form.addEventListener('submit', async (e) => {
         // Una vez que se compra, si no hay usuario se borra el carro del locale
         if (!window.userLogged) {
             localStorage.removeItem('temporalCart');
-            // TODO: Armar vista success;
         };
-        window.location.href = `/`;
+        return window.location.href = `/compra-exitosa/${fetchResponse.order_id}`;
     } catch (error) {
         return console.log(`Error en el envio del formulario: ${error}`);
     }

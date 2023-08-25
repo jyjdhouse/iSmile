@@ -10,6 +10,7 @@ const TurndownService = require('turndown');
 const turndownService = new TurndownService();
 
 // Librerias
+const { validationResult } = require('express-validator');
 const { v4: uuidv4 } = require('uuid');
 const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
@@ -41,6 +42,7 @@ const controller = {
     list: async (req, res) => { //Controlador que renderiza listado de productos
         try {
             let products = getDeepCopy(await getAllProducts());
+<<<<<<< HEAD
             products.sort((a, b) => {
                 // Si ambos productos tienen stock en 0, no cambia el orden
                 if (a.stock === 0 && b.stock === 0) {
@@ -60,6 +62,10 @@ const controller = {
                 // Ordenar por descuento en caso de que ambos productos tengan stock
                 return b.discount - a.discount;
               });
+=======
+            products.sort((a, b) => b.discount - a.discount);
+            // return res.send(products);
+>>>>>>> ab66360dcbe0613e323f5bec4d21a0f79d53df69
             // Para traer los archivos, primero voy por cada producto y despues a las imagenes de ese producto
             for (let i = 0; i < products.length; i++) {
                 const product = products[i];
@@ -132,7 +138,7 @@ const controller = {
             let product = getDeepCopy(await db.Product.findByPk(id, {
                 include: ['files']
             }));
-            if(!product)return res.render('error404')
+            if (!product) return res.render('error404')
             let suggestedProducts = getDeepCopy(await db.Product.findAll({
                 where: {
                     id: { [Op.ne]: id }
@@ -190,9 +196,27 @@ const controller = {
     },
     processProductCreation: async (req, res) => {
         try {
-            let { name, price, description, category, ingredients, size, mainImage, stock, discount } = req.body;
+            let { name, price, description, ingredients, size, mainImage, stock, discount } = req.body;
             let images = req.files;
-
+            let errors = validationResult(req);
+            // Si hay errores..
+            if (!errors.isEmpty()) {
+                errors = errors.mapped();
+                // Si el error es por nombre y/o precio ==> repinto la vista
+                if (errors.name || errors.price) {
+                    // return res.send({nameEr: errors.name,priceEr: errors.price});
+                    return res.redirect(`/product/create`)
+                }
+                // Sino es un error de tipo de dato ==> tiro bad Request
+                return res.send('Bad Request')
+            };
+            // return res.send(errors);
+            // Si el supuesto array de files no es array, retorno error
+            if (images) {
+                if (!Array.isArray(images)) {
+                    return res.send('Bad Request')
+                }
+            }
             const convertToHtml = () => { // este showdown es para convertir el html a markdown, y conservar el formato
                 var converter = new showdown.Converter();
                 var htmlText = converter.makeHtml(description);
@@ -207,7 +231,7 @@ const controller = {
                 name,
                 price,
                 description: convertToHtml(),
-                category_id: category,
+                category_id: 1,
                 ingredients,
                 size,
                 stock: parseInt(stock) || 0,
@@ -223,14 +247,14 @@ const controller = {
                     let randomName, buffer;
                     if (fileType == 1) {//FOTO
                         // Creo el nombre unico para la foto (dentro del forEach)
-                        randomName = 'product-'+Math.random().toString(36).substring(2, 2 + 10) + '.webp';
+                        randomName = 'product-' + Math.random().toString(36).substring(2, 2 + 10) + '.webp';
                         // Cambio el formato a webp y redimensiono la imagen, total la de los productos 
                         //  no se necesita tan gde      .resize({ height: 1920, width: 1080, fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
                         buffer = await sharp(file.buffer).toFormat('webp').toBuffer();
 
                     } else {//VIDEO
                         // Creo el nombre unico para el video
-                        randomName = 'product-'+Math.random().toString(36).substring(2, 2 + 10) + path.extname(file.originalname);
+                        randomName = 'product-' + Math.random().toString(36).substring(2, 2 + 10) + path.extname(file.originalname);
                         buffer = file.buffer;
                     }
                     // El objeto de la imagen que voy a subir
@@ -284,13 +308,28 @@ const controller = {
     },
     processProductUpdate: async (req, res) => {
         try {
-
+            let errors = validationResult(req);
             const productId = req.params.productId;
-            const productToUpdate = await getProduct(productId)
             const { name, price, description, current_imgs, ingredients, size, mainImage, stock, discount } = req.body
-
+            if (!errors.isEmpty()) {
+                errors = errors.mapped();
+                // Si el error es por nombre y/o precio ==> repinto la vista
+                if (errors.name || errors.price) {
+                    return res.redirect(`/product/update/${productId}`)
+                }
+                // Sino es un error de tipo de dato ==> tiro bad Request
+                return res.send('Bad Request')
+            };
+            // return res.send(errors);
             // Agarro las imagenes del input
             let files = req.files
+            // Si el supuesto array de files no es array, retorno error
+            if (files) {
+                if (!Array.isArray(files)) {
+                    return res.send('Bad Request')
+                }
+            }
+            const productToUpdate = await getProduct(productId)
             // Hago el update del producto en la db
             await db.Product.update({
                 name,
@@ -355,7 +394,7 @@ const controller = {
             let arrayWithFiles = [...filesToUpdateDb, ...filesToCreateDB];
 
             // Hago el bulkcreate de las imagenes
-            await db.ProductFile.bulkCreate(arrayWithFiles,{
+            await db.ProductFile.bulkCreate(arrayWithFiles, {
                 updateOnDuplicate: ["main_image"] // update on duplicate busca por primary key y en caso de encontrar cambia el campo que se le pasa
             });
 

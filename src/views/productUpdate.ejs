@@ -43,15 +43,15 @@
                     <label for="">Solo numeros <span class="grey">(si no se completa es 0)</span></label>
                     <div class="field">
                         <label for="price">Precio</label>
-                        <input type="text" name="price" value="<%= productToUpdate.price %>" class="required numeric-only-input" placeholder="5000">
+                        <input type="text" name="price" value="<%= productToUpdate.price %>" class="required-input numeric-only-input" placeholder="5000">
                     </div>
                     <div class="field">
                         <label for="discount">Descuento</label>
-                        <input type="text" name="discount" value="<%= productToUpdate.discount %>" class="required numeric-only-input" placeholder="10">
+                        <input type="text" name="discount" value="<%= productToUpdate.discount || 0 %>" class="required numeric-only-input" placeholder="10">
                     </div>
                     <div class="field">
                         <label for="stock">Stock</label>
-                        <input type="text" name="stock" value="<%= productToUpdate.stock %>" class="required numeric-only-input" placeholder="10">
+                        <input type="text" name="stock" value="<%= productToUpdate.stock || 0 %>" class="required numeric-only-input" placeholder="10">
                     </div>
                 </div>
                 <div class="input-label-container">

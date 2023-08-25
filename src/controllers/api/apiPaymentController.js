@@ -10,7 +10,7 @@ const controller = {
     getPaymentRequest: async (req, res) => {
         try {
 
-            let { items, date, name, last_name } = req.body;
+            let { items, date, name, last_name, payment_methods_id } = req.body;
             // Traigo los errores de formulario (si alguno vino vacio de los que no debia)
             let errors = validationResult(req);
             if (!errors.isEmpty()) { //Si hay errores...
@@ -26,21 +26,32 @@ const controller = {
                     msg: 'Error al procesar la compra, intente nuevamente'
                 });
             };
+            // Me fijo si paga con transferencia ==> No resto nada (se hace cuando cambia el estado a pendiente de pago)
+            if (payment_methods_id == 1) {
+                // Le devuelvo un 200 para que siga con la solicitud
+                return res.status(200).json({
+                    meta: {
+                        status: 200,
+                    },
+                    ok: true,
+                });
+            }
+
             let method;
             items = JSON.parse(items);
             // Antes de hacer el pedido del boton me fijo que todos los productos esten en stock
             // Lo armo asi para que la funcion lo lea
-            let itemsToHandleStock = items.map(item=>{
+            let itemsToHandleStock = items.map(item => {
                 return {
-                    id:item.products_id,
+                    id: item.products_id,
                     quantity: item.quantity
                 }
             });
             method = 'resta';
             let responseFromHandlingStock = await handleStock(itemsToHandleStock, method);
             // Si dio error es que hubo error con descontar el stock ==> devuelvo stock y no dejo que compre
-            if(!responseFromHandlingStock.ok){
-                return  res.status(400).json({
+            if (!responseFromHandlingStock.ok) {
+                return res.status(400).json({
                     meta: {
                         status: 400,
                     },
@@ -48,7 +59,7 @@ const controller = {
                     message: 'La solicitud no se completó correctamente.',
                 });
             }
-            
+
 
             // Si no hay errores
             let productsInDB = getDeepCopy(await getAllProducts());
@@ -61,7 +72,7 @@ const controller = {
                 let itemInDB = productsInDB.find(prod => prod.id == item.products_id);
                 total += parseFloat(itemInDB.price) * parseInt(item.quantity);
                 // si tiene descuento el producto entonces le multiplico por el descuento
-                if(itemInDB.discount) total = total * (1 - itemInDB.discount/100);
+                if (itemInDB.discount) total = total * (1 - itemInDB.discount / 100);
                 itemArrayToRequest.push({
                     quantity: parseInt(item.quantity),
                     description: itemInDB.description,

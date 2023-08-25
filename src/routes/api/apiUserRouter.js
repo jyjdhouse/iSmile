@@ -18,6 +18,7 @@ router.post('/createTempCart',checkForToken,apiUserController.createTempCart);
 router.post('/addTempItem',checkForToken,apiUserController.addTempItem);
 router.post('/forget-password',checkForToken,apiUserController.forgetPassword);
 router.post('/checkout',orderIsCompleteValidations,apiUserController.processCheckout);
+
 // DELETE   
 router.delete('/deleteTempItem',checkForToken,apiUserController.deleteTempItem)
 module.exports=router;

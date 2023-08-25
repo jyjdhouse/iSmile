@@ -95,7 +95,7 @@ window.addEventListener('load', async () => {
     }
 
 
-    // TODO - HANDLE WHEN FORM SUBMITTED
+    // TODO: - HANDLE WHEN FORM SUBMITTED
     function listenToUpdateStatus(select, form, btn, orderId) {
         select.addEventListener('change', () => {
             btn.classList.remove('save-btn-inactive')
@@ -460,9 +460,13 @@ window.addEventListener('load', async () => {
         // Para limpiar los filtros
         const cleanFilters = document.querySelector('.clean-filters');
         cleanFilters.addEventListener('click', () => {
+            // Reinicio los buscadores
             inputFilter.value = '';
             selectStatusFilter.value = 0;
-            orders = ordersResponse;
+            document.querySelectorAll('input[type="date"]').forEach(inp=>inp.value='');
+            filterDatesButtonContainer.classList.add('hidden')
+            // Vuelvo a pintar las ordenes del principio
+            orders = response.orders;
             // Obtengo las ordenes para pintar (Apenas carga la pagina son 5(TODO:10))
             pageNumber = 1;
             ordersToDisplay = getDisplayedOrders();
@@ -519,6 +523,7 @@ window.addEventListener('load', async () => {
             let filteredOrders = (await ((await fetch(`/api/admin/order?from=${fromValue}&to=${toValue}`)).json())).orders;
             handleSpinnerBehave(false);
             orders = filteredOrders;
+            ordersResponse = orders;
             // Obtengo las ordenes para pintar (Apenas carga la pagina son 5(TODO:10))
             pageNumber = 1;
             ordersToDisplay = getDisplayedOrders();
@@ -554,7 +559,7 @@ window.addEventListener('load', async () => {
         let removeOrderBtns = document.querySelectorAll('.remove-transaction-btn-container');
         removeOrderBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                console.log('entro al primer')
+                // console.log('entro al primer')
                 e.stopPropagation();
                 e.preventDefault();
                 const row = btn.closest('tbody tr');

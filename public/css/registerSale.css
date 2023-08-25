@@ -1,12 +1,12 @@
-
-
-select{
+select {
     cursor: pointer;
 }
-.search-checkbox{
+
+.search-checkbox {
     padding: 10px 0;
     padding-left: 7px;
 }
+
 .register-sale-main {
     padding: 3% 5%;
 }
@@ -20,8 +20,9 @@ select{
 }
 
 .billing-section {
-    width: 45%;
+    width: 100%;
     margin-top: 5vh;
+    border-bottom: 1.5px solid rgba(100, 100, 100, .3);
 }
 
 .form-label {
@@ -95,12 +96,10 @@ select{
 }
 
 .choose-item-section {
-    width: 35%;
+    width: 100%;
 }
 
-.added-items-container {
-    width: 60%;
-}
+
 
 .search-checkbox-container {
     margin-bottom: 3%;
@@ -136,10 +135,11 @@ select{
 }
 
 .added-items-container {
+    width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 70px;
+    margin: 70px 0;
     height: fit-content;
 }
 
@@ -161,8 +161,10 @@ select{
 .item-container>* {
     width: 30%;
     text-align: center;
+    font-size: 12px;
 }
-.item-container input{
+
+.item-container input {
     border: 1px solid var(--gold-color);
     border-radius: 1rem;
     padding: 5px 0;
@@ -192,25 +194,29 @@ select{
     margin-top: 2%;
 }
 
-.item-quantity-container{
+.item-quantity-container {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.item-quantity-container>i{
+
+.item-quantity-container>i {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
 }
-.item-quantity-container .bx-minus{
+
+.item-quantity-container .bx-minus {
     left: 20%;
 }
-.item-quantity-container .bx-plus{
+
+.item-quantity-container .bx-plus {
     right: 20%;
 }
-.item-quantity{
+
+.item-quantity {
     width: 30%;
     text-align: center;
 }
@@ -221,10 +227,11 @@ select{
 
 /* Payment method & date */
 .payment-method-field,
-.date-field{
-    width: 30%;
+.date-field {
+    width: 45%;
     text-align: center;
 }
+
 .date-container.input-label-container>input {
     width: fit-content;
 }
@@ -242,11 +249,10 @@ select{
 
 @media(min-width:1024px) {
     .billing-section {
-        width: 100%;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        margin-bottom: 1px solid rgba(200,200,200,.4);
+
     }
 
     .billing-section>label {
@@ -262,10 +268,28 @@ select{
     .billing-section>.input-label-container>input {
         width: 80%;
     }
+
     .billing-section>.phone-input-container>input {
         width: 60%;
     }
+
     .checkbox-label {
         font-size: 14px;
+    }
+
+    .choose-item-section {
+        width: 35%;
+    }
+
+    .added-items-container {
+        width: 60%;
+    }
+    .added-items-container-header>*,
+    .item-container>* {
+        font-size: 14px;
+    }
+    .payment-method-field,
+    .date-field {
+        width: 30%;
     }
 }

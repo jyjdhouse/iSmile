@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 const { validationResult } = require('express-validator');
 const { v4: uuidv4 } = require('uuid');
 // From utils
-const secret = require('../../utils/secret').secret;
+const webTokenSecret =  process.env.JSONWEBTOKEN_SECRET;
 const isJwtError = require('../../utils/isJwtError');
 const getRelativePath = require('../../utils/getRelativePath');
 const getDeepCopy = require('../../utils/getDeepCopy');
@@ -92,9 +92,6 @@ const controller = {
                 added_date: Date.now(),
                 stock: prod.stock
             });
-
-            console.log(tempItem)
-
             // Tengo que reiniciar el periodo del carro para tema mails
             await db.User.update({
                 cart_period_type: null
@@ -159,7 +156,7 @@ const controller = {
             // Si la sesion no tiene el userLoggedId devuelvo ERROR
             if (!user) res.status(404).json({ error: 'Usuario no encontrado' });
             let userEmail = user.email;
-            const token = jwt.sign({ id: userToChangePassID }, secret, { expiresIn: '1h' }); // genera el token
+            const token = jwt.sign({ id: userToChangePassID }, webTokenSecret, { expiresIn: '1h' }); // genera el token
             // Guardo el token en la db
             await db.User.update({
                 password_token: token
@@ -222,7 +219,7 @@ const controller = {
             // Si la sesion no tiene el userLoggedId vuelvo a la home
             if (!user) return //res.status(404).json({ error: 'Usuario no encontrado' });
 
-            const token = jwt.sign({ id: user.id }, secret, { expiresIn: '1h' }); // genera el token
+            const token = jwt.sign({ id: user.id }, webTokenSecret, { expiresIn: '1h' }); // genera el token
             // Guardo el token en la db
             await db.User.update({
                 password_token: token
@@ -323,14 +320,19 @@ const controller = {
             // armo los orderItems
             const orderItemsToDB = [];
             let stockItems = [];
-            let method = 'resta';
             items.forEach(item => {
                 // Agarro el producto
                 let itemInDB = productsInDB.find(prod => prod.id == item.products_id);
-                // console.log(itemInDB);
                 let orderItemName = itemInDB.name;
-                // Si vino precio es porque lo modificaron las chicas en la vista de crear venta
-                let orderItemPrice = item.price ? parseInt(item.price) : itemInDB?.price;
+                let orderItemPrice;
+                if (orderDataToDB.order_types_id == 3) {//Venta presencial
+                    // Si vino precio es porque lo modificaron las chicas en la vista de crear venta
+                    orderItemPrice = item.price ? parseInt(item.price) : itemInDB?.price;
+                } else { //Venta online
+                    // Me fijo si tiene descuento el producto
+                    orderItemPrice = parseInt(itemInDB?.price) * (1 - parseInt(itemInDB?.discount || 0) / 100)
+                }
+
                 let orderItemQuantity = parseInt(item.quantity);
                 // Voy armando el array de orderItems para hacer un bulkcreate
                 let orderId = uuidv4();
@@ -347,11 +349,7 @@ const controller = {
                     id: itemInDB.id,
                     quantity: orderItemQuantity
                 })
-                console.log(stockItems)
             });
-            // hago el handleStock y le paso el metodo resta
-            stock = await handleStock(stockItems, method);
-
 
             // Pregunto que tipo de orden es (RETIRO LOCAL - ENTREGA A DOMICILIO)
             let shippingAddressToDB;
@@ -408,17 +406,21 @@ const controller = {
             };
             // Hasta aca ya arme todo. (BillingAddress - Order - OrderItem - ShippingAddress) ==> Tengo que insertar en la DB
 
-            //Tema de status
-            // Si la venta fue presencial entonces la venta esta COMPLETA
+            //Tema de orderStatus
+            // Si la venta fue presencial entonces la venta esta completa
             if (order_types_id == 3) {
-                orderDataToDB.order_status_id = 1;
-            } else if (payment_methods_id == 2 || payment_methods_id == 3) { //Debito o Credito
-                // Aca es venta online ==> Chequeo metodo de pago
+                orderDataToDB.order_status_id = 1;//Pendiente de retiro
+            }// Aca es venta online ==> Chequeo metodo de pago 
+            else if (payment_methods_id == 2 || payment_methods_id == 3) { //Debito o Credito
                 // Si payment_methods_id es 2 o 3 quiere decir que ya se aprobo el pago
-                orderDataToDB.order_status_id = 2; //Pendiente de envio
+                // Si es 1 (entrega a domicilio) lo pongo como pendiente de envio, si no solo
+                // queda que sea 2 (retiro por local), lo pongo como pendiente de retiro
+                order_types_id == 1 ? orderDataToDB.order_status_id = 2 :
+                    orderDataToDB.order_status_id = 6;
             } else if (payment_methods_id == 1) { //Transferencia
                 orderDataToDB.order_status_id = 4; //Pendiente de confirmacion
             }
+
             // Tema total
             let orderTotalPrice = 0;
             orderItemsToDB.forEach(item => {
@@ -451,7 +453,6 @@ const controller = {
             // Tengo que armar 2 mails: 1 al que compro y otro a las chicas
             await sendOrderMails(orderCreated);
             if (users_id) {
-
                 // Si se creo la orden entonces limpio el carro del usuario 
                 await db.TemporalCart.destroy({
                     where: {
@@ -474,14 +475,10 @@ const controller = {
                     status: 200,
                 },
                 ok: true,
+                order_id: orderCreated.tra_id,
                 msg: `Compra registrada exitosamente`
             });
 
-
-            return res.render('orderSuccess.ejs', { Order });
-            return res.send({
-                orderDataToDB, orderItemsToDB, billingAddressToDB, shippingAddressToDB
-            });
         } catch (error) {
             console.log(`Falle en userController.proccessOrder: ${error}`);
             return res.status(404).json({ error })

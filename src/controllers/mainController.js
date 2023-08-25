@@ -33,6 +33,9 @@ const getSpecialtyService = require('../utils/getSpecialtyService');
 const orderMainImageFile = require('../utils/orderMainImageFile');
 const getAllUsers = require('../utils/getAllUsers.js');
 const cutDescription = require('../utils/cutDescription');
+const getOrder = require('../utils/getOrder');
+const orderTypes = require('../utils/staticDB/orderTypes');
+const paymentMethods = require('../utils/staticDB/paymentMethods');
 
 const controller = {
     index: async (req, res) => {
@@ -462,6 +465,35 @@ const controller = {
     },
     termsAndCondition: (req, res) => {
         return res.render('terms')
+    },
+    orderSuccess: async(req,res) =>{
+        try {
+            let {id} = req.params;
+            let order = getDeepCopy(await db.Order.findOne({
+                where: {
+                    tra_id: id
+                },
+                include: ['billingAddress','shippingAddress','orderItems']
+            }));
+            // Dejo el id de la orden con la parte alfanumerica
+            order.tra_id = order.tra_id.split('-')[1];
+            // Me fijo cantidad de productos
+            let quantityCounter = 0;
+            order.orderItems.forEach(item => {
+                // Por cada item sumo esa cantidad
+                quantityCounter += item.quantity
+            });
+            order.productQuantity = quantityCounter;
+            // Me fijo que metodo de pago uso
+            order.paymentMethod = paymentMethods.find(method=>method.id == order.payment_methods_id);
+            // Me fijo que tipo de compra hizo
+            order.orderType = orderTypes.find(type=>type.id == order.order_types_id);
+            // return res.send(order);
+            return res.render('orderSuccess',{order})
+        } catch (error) {
+            console.log(`Falle en mainController.orderSuccess: ${error}`);
+            return res.json({ error })
+        }
     }
 };
 

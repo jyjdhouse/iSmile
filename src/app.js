@@ -20,9 +20,9 @@ app.use(cors());
 // Express-session
 const session = require('express-session');
 app.use(session({
-    secret: "Conf middleware global session",
-    resave: false,
-    saveUninitialized: false
+    secret: process.env.SESSION_SECRET,
+    resave: false,// No guardar la sesión en cada solicitud si no hay cambios
+    saveUninitialized: false // Guardar sesiones incluso si están vacías o no modificadas
 }));
 
 
@@ -33,6 +33,16 @@ app.use(cookieParser());
 // Mehtod-override --> Para usar put y delete (?_method=...)
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
+
+// set up rate limiter: maximum of five requests per minute
+var RateLimit = require('express-rate-limit');
+var limiter = RateLimit({
+  windowMs: 1*60*1000, // 1 minute
+  max: 5
+});
+
+// apply rate limiter to all requests
+app.use(limiter);
 
 // Rutas
 const mainRouter = require('./routes/mainRouter.js');

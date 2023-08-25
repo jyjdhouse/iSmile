@@ -16,8 +16,6 @@
         <main class="product-create-main">
             <h2 class="product-create-title uppercase">CREAción PRODUCTO</h2>
 
-
-
             <form action="/product/create" class="create-product-form" enctype="multipart/form-data" method="POST">
                 <div class="input-label-container">
                     <label for="name">Nombre</label>
@@ -46,11 +44,11 @@
                     </div>
                     <div class="field">
                         <label for="discount">Descuento</label>
-                        <input type="text" name="discount" class="required numeric-only-input" placeholder="10">
+                        <input type="text" name="discount" class="required numeric-only-input" placeholder="10" value="0">
                     </div>
                     <div class="field">
                         <label for="stock">Stock</label>
-                        <input type="text" name="stock" class="required numeric-only-input" placeholder="40">
+                        <input type="text" name="stock" class="required numeric-only-input" placeholder="40" value="0">
                     </div>
                 </div>
                 <div class="input-label-container">

@@ -121,7 +121,12 @@ const controller = {
             let { title, text, mainImage, author } = req.body;
             const files = req.files;
             mainImage = files.find(file => file.originalname == mainImage);
-            console.log(files, mainImage);
+            // Si el supuesto array de files no es array, retorno error
+            if (files) {
+                if (!Array.isArray(files)) {
+                    return res.send('Bad Request')
+                }
+            }
 
             const convertToHtml = () => { // este showdown es para convertir el html a markdown, y conservar el formato
                 var converter = new showdown.Converter();
@@ -205,9 +210,15 @@ const controller = {
         try {
 
             const blogId = req.params.blogId;
-            const blogToUpdate = getDeepCopy(await getBlog(blogId));
             const files = req.files;
+            // Si el supuesto array de files no es array, retorno error
+            if (files) {
+                if (!Array.isArray(files)) {
+                    return res.send('Bad Request')
+                }
+            }
             let { title, text, mainImage, author, current_imgs } = req.body;
+            const blogToUpdate = getDeepCopy(await getBlog(blogId));
 
 
 

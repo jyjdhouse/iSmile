@@ -4,4 +4,5 @@ module.exports = [
     { id: 3, status: 'Pendiente de pago'},
     { id: 4, status: 'Pendiente de confirmacion'},
     { id: 5, status: 'Anulada'},
+    { id: 6, status: 'Pendiente de retiro'},
 ]

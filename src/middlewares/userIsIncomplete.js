@@ -1,7 +1,4 @@
 const db = require('../database/models');
-const jwt = require('jsonwebtoken');
-const getRelativePath = require('../utils/getRelativePath');
-const secret = require('../utils/secret').secret;
 
 // Este middleware chequea si los datos necesarios del cliente estan completos
 const userIsIncomplete = async (req, res, next) => {

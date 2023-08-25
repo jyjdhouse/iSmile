@@ -7,7 +7,7 @@ export function deactivateClass(array) {
 }
 
 export async function getLoggedUser() {
-    let response =  (await (await fetch(`/api/user/getLoggedUserId`)).json());
+    let response = (await (await fetch(`/api/user/getLoggedUserId`)).json());
     return response.ok ? response : undefined;
 };
 
@@ -103,7 +103,7 @@ export function getCartTotalProducts(user) {
 
 // Cuando tocan el boton del tick (sacan el producto del carro)
 // Lo hago función porque lo uso tambien cuando se carga despues
-export function handleRemoveCartBtnClick(userLogged){
+export function handleRemoveCartBtnClick(userLogged) {
     const removingCartButtons = document.querySelectorAll('.confirm-delete-product-container');
     let totalProducts = document.querySelectorAll('.products-quantity');
     removingCartButtons.forEach(btn => {
@@ -115,7 +115,7 @@ export function handleRemoveCartBtnClick(userLogged){
             if (userLogged) {//Si hay usuario le pego a la api
                 await removeTempItemFromDB(idProd, userLogged); //Función que elimina el producto del carro 
             } else {
-                console.log('aca',idProd);
+                console.log('aca', idProd);
                 removeProductfromLocaleCart(idProd)
             }
             // Remuevo el spinner loading
@@ -130,7 +130,7 @@ export function handleRemoveCartBtnClick(userLogged){
 };
 
 // Agrega el item en cuestion a la DB
-export async function addTempItemToDB(prodId,user) {//Agrega producto a la db
+export async function addTempItemToDB(prodId, user) {//Agrega producto a la db
     try {
         if (!user.temporalCart) { //Si no tenia carro, lo creo
             const formData = {
@@ -144,7 +144,7 @@ export async function addTempItemToDB(prodId,user) {//Agrega producto a la db
                 },
                 body: JSON.stringify(formData)
             })).json());
-            
+
             // Actualizamos manualmente a user
             user.temporalCart = {
                 id: createdCart.tempCart.id,
@@ -196,7 +196,7 @@ export async function removeTempItemFromDB(prodId, user) {
         })
     })).json());
     // Lo borro del userLogged
-    user.temporalCart.temporalItems = user.temporalCart.temporalItems.filter(item=>item.products_id!=prodId);
+    user.temporalCart.temporalItems = user.temporalCart.temporalItems.filter(item => item.products_id != prodId);
 
 }
 // Agrega el item en cuestion a localStorage
@@ -248,9 +248,9 @@ export function checkIfProductIsInCartDetail() {
 }
 
 // Recibe fecha de DB y devuelve 15 de agosto de 2021
-export function getPrettyDate(dbDate){
+export function getPrettyDate(dbDate) {
     const date = new Date(dbDate);
-    
+
     const day = date.getDate();
     const month = date.toLocaleString('es', { month: 'long' });
     const year = date.getFullYear();
@@ -258,9 +258,9 @@ export function getPrettyDate(dbDate){
     return `${day} de ${month} del ${year}`
 };
 // Recibe fecha de DB y devuelve ago 15, 2023
-export function getPrettyDateReversed(dbDate){
+export function getPrettyDateReversed(dbDate) {
     const date = new Date(dbDate);
-    
+
     const day = date.getDate();
     let month = date.toLocaleString('es', { month: 'short' });
     month = month.charAt(0).toUpperCase() + month.slice(1); //Primer letra en mayuscula
@@ -270,13 +270,39 @@ export function getPrettyDateReversed(dbDate){
 }
 
 // Escucha las imagenes de productEdit/Create y blogEdit/Create
-export function listenForImagesToSelectMain(){
+export function listenForImagesToSelectMain() {
     const images = document.querySelectorAll('.image-to-select-main');
 
-    images.forEach(img=>{
-        img.addEventListener('click',()=>{
+    images.forEach(img => {
+        img.addEventListener('click', () => {
             const cont = img.closest('.image-radio-box');
             cont.querySelector('input').checked = true;
         })
     })
 };
+// Logica para mostrar todos los numeros con punto
+export function formatPriceNumber() {
+    let priceNumbers = document.querySelectorAll('.price-number');
+    priceNumbers.forEach(num => num.innerHTML = parseInt(removeNumberSeparators(num.innerHTML)).toLocaleString('es'));
+    return
+};
+export function removeNumberSeparators(number) { //ME los devuelve al formato 60000 para poder sumar
+    return number.replace(/\./g, '');
+};
+
+// Logica para que todos los inputs numericos no acepten letras
+export function checkForNumericInputs() {
+    let numericInputs = document.querySelectorAll('.numeric-only-input');
+    numericInputs.forEach(input => {
+        // Tomo el ultimo valor
+        let lastInputValue = input.value;
+        input.addEventListener("input", function (e) {
+            var inputValue = e.target.value;
+            if (!isNumeric(inputValue)) { // Si no es un número, borra el contenido del campo
+                e.target.value = lastInputValue;
+            } else {
+                lastInputValue = inputValue; // Almacenar el último valor válido
+            }
+        });
+    });
+}

@@ -1,4 +1,4 @@
-import { dateFormater, getTodaysDate, isNumeric } from "./utils.js";
+import { dateFormater, getTodaysDate, isNumeric, formatPriceNumber, removeNumberSeparators } from "./utils.js";
 window.addEventListener('load', async () => {
     // In your Javascript (external .js resource or <script> tag)
 
@@ -184,16 +184,6 @@ window.addEventListener('load', async () => {
         }
         formatPriceNumber();
         return
-    };
-
-    // Logica para mostrar todos los numeros con punto
-    function formatPriceNumber() {
-        let priceNumbers = document.querySelectorAll('.price-number');
-        priceNumbers.forEach(num => num.innerHTML = parseInt(removeNumberSeparators(num.innerHTML)).toLocaleString('es'));
-        return
-    };
-    function removeNumberSeparators(number) { //ME los devuelve al formato 60000 para poder sumar
-        return number.replace(/\./g, '');
     };
 
     // Logica para que todos los inputs numericos no acepten letras
