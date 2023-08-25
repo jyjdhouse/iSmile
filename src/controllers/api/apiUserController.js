@@ -325,12 +325,12 @@ const controller = {
                 let itemInDB = productsInDB.find(prod => prod.id == item.products_id);
                 let orderItemName = itemInDB.name;
                 let orderItemPrice;
+                let orderItemDiscount = parseInt(itemInDB?.discount || 0);
                 if (orderDataToDB.order_types_id == 3) {//Venta presencial
                     // Si vino precio es porque lo modificaron las chicas en la vista de crear venta
                     orderItemPrice = item.price ? parseInt(item.price) : itemInDB?.price;
                 } else { //Venta online
-                    // Me fijo si tiene descuento el producto
-                    orderItemPrice = parseInt(itemInDB?.price) * (1 - parseInt(itemInDB?.discount || 0) / 100)
+                    orderItemPrice = parseInt(itemInDB?.price);
                 }
 
                 let orderItemQuantity = parseInt(item.quantity);
@@ -342,7 +342,8 @@ const controller = {
                     products_id: itemInDB.id,
                     name: orderItemName,
                     price: orderItemPrice,
-                    quantity: orderItemQuantity
+                    quantity: orderItemQuantity,
+                    discount: orderItemDiscount
                 });
                 // pusheo los objetos al stockItems
                 stockItems.push({

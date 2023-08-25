@@ -31,8 +31,19 @@
                                         </div>
                                         <div class="order-card-item-info">
                                             <p class="order-card-item-name"><%= item.name %></p>
-                                            <p class="order-card-item-quantity grey"><%= item.quantity %> unidad<%= item.quantity > 1 ? 'es':''%></5></p>
-                                            <p class="order-card-item-subtotal grey">$<%= item.quantity * item.price %></p>
+                                            <div class="order-card-item-row-container">
+                                                <p class="order-card-item-quantity grey"><%= item.quantity %> unidad<%= item.quantity > 1 ? 'es':''%></5></p>
+                                                <p class="order-card-item-unit-price grey">($<span class="price-number"><%= item.price %></span> c/u)</p>
+                                            </div>
+                                            <div class="order-card-item-row-container order-card-item-subtotal-container">
+                                                <p class="order-card-item-subtotal grey <%= item.discount ? 'striked': '' %>">$<span class="price-number"><%= item.quantity * item.price %></span></p>
+                                                <% if (item.discount) { %>
+                                                    <p class="order-card-item-subtotal order-card-item-discounted-subtotal grey">$<span class="price-number"><%= item.quantity * item.price  * (1-item.discount/100)%></span></p>
+                                                    <p class="order-card-item-discount-tag"><%= item.discount %>% OFF</p>
+                                                <% } %>
+                                                
+                                            </div>
+                                            
                                         </div>
                                     </div>
                                 <% }) %>
@@ -43,7 +54,7 @@
                                     <span class="status-color-circle" style="background: <%= order.status.color_code %>;"></span>
                                     <%= order.status.status %>
                                     </p>
-                                <p class="order-card-total-price">$<%= order.total %></p>
+                                <p class="order-card-total-price">$<span class="price-number"><%= order.total %></span></p>
                                 <p class="order-card-type grey"><%= order.type %></p>
                             </div>
                             <% if (order.order_types_id == 1) { //Entrega a domicilio %>

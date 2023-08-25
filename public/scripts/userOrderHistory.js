@@ -1,4 +1,4 @@
-import { getPrettyDate } from "./utils.js";
+import { getPrettyDate, formatPriceNumber } from "./utils.js";
 window.addEventListener('load', () => {
     const orderDetailPopup = document.querySelector('.order-detail-popup');
     const main = document.querySelector('.main');
@@ -89,21 +89,35 @@ window.addEventListener('load', () => {
         `;
         let orderItemsWrapper;
         orderItems.forEach(item => {
+            // Elemento que hay de si tiene descuento
+            const itemWithDiscount = item.querySelector('.order-card-item-discount-tag');
+
             orderItemsWrapper = `
                     <div class="order-detail-item">
                         <div class="order-detail-item-img-container">
                             <img src="${item.querySelector('img').src}" alt="order-detail-img" class="order-item-img">
+                            ${itemWithDiscount ? `<div class="order-detail-item-discount-tag-container">
+                                                    <p class="order-detail-item-discount-tag">${itemWithDiscount.innerHTML}</p>
+                                                </div>` : ''
+                            }
                         </div>
                         <div class="order-detail-item-info">
                             <p class="order-detail-item-name">${item.querySelector('.order-card-item-name').innerHTML}</p>
                             <p class="order-detail-item-quantity">${item.querySelector('.order-card-item-quantity').innerHTML}</p>
-                            <p class="order-detail-item-subtotal">${item.querySelector('.order-card-item-subtotal').innerHTML}</p>
+                            <div class="order-detail-item-row-container">
+                                <p class="order-detail-item-subtotal grey ${ itemWithDiscount ? 'striked': '' }">
+                                    ${item.querySelector('.order-card-item-subtotal').innerHTML}
+                                </p>
+                                <p class="order-detail-item-subtotal order-detail-item-discounted-subtotal grey">
+                                    ${item.querySelector('.order-card-item-subtotal.order-card-item-discounted-subtotal')?.innerHTML || ''}
+                                </p>  
+                            </div>
+                            <p class="order-detail-item-subtotal"></p>
                         </div>
                     </div>
                 `;
             orderDetailPopup.querySelector('.order-detail-item-wrapper').innerHTML += orderItemsWrapper;
         });
-        console.log(orderShippingInfo);
         if (orderShippingInfo.street) {
             let shippingAddressChild = `
             <div class="order-detail-shipping-info">
@@ -119,12 +133,13 @@ window.addEventListener('load', () => {
             }
         }
         orderDetailPopup.innerHTML += `<p class="order-detail-total-price bold">TOTAL: <span>${orderTotal}</span></p>`
-
+        formatPriceNumber();
     }
 
     const dates = document.querySelectorAll('.date-to-format');
     dates.forEach(date => {
         const prettyDate = getPrettyDate(date.innerText);
         date.innerHTML = prettyDate
-    })
+    });
+    formatPriceNumber();
 });
