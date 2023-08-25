@@ -87,7 +87,9 @@
     transition: background-color .4s ease;
 }
 
-
+.pointer-events-inactive {
+    pointer-events: none;
+}
 
 .gallery-dot-active {
     background-color: var(--violet-color);
