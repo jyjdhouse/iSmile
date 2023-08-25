@@ -299,6 +299,15 @@ h1.product-title {
     bottom: 5px;
 }
 
+.product-out-of-stock-detail {
+    text-align: center;
+    margin: 5% 0;
+}
+
+.product-out-of-stock-detail p {
+    color: red;
+    font-size: 1.2rem;
+}
 
 
 @media(min-width: 576px) {

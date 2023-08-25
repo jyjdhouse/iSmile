@@ -101,7 +101,8 @@
                             <p class="product-information product-size-info"><%= product.size %></p>
                         </div>
                     </div>
-                    <div class="purchase-product-container add-cart-button-container" data-productid=<%=product.id %>>
+                    <% if(product.stock != 0){ %>
+                        <div class="purchase-product-container add-cart-button-container" data-productid=<%=product.id %>>
                             <button class="cart-options-btn quick-add-cart-btn" type="submit">
                                 Añadir al carro
                             </button>
@@ -110,6 +111,12 @@
                             </button>
                             <%- include('./partials/loadingSpinner.ejs') %>
                     </div>
+                    <% } else { %>
+                        <div class="product-out-of-stock-detail">
+                            <p>Sin Stock</p>
+                        </div>
+                    <% } %>
+                    
                 </div>
 
 

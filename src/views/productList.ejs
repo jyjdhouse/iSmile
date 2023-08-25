@@ -42,7 +42,7 @@
 
             <section class="product-list-section">
                 <% products.forEach(prod=> { %>
-                    <article class="product-card-container" data-productId="<%=prod.id%>">
+                    <article class="product-card-container <%= prod.stock == 0 && 'prod-card-out-of-stock' %>" data-productId="<%=prod.id%>">
                         <% if (prod.discount) { %>
                             <div class="card-discount-tag-container">
                                 <p class="card-discount-tag"><%=prod.discount %>% OFF</p>
@@ -96,11 +96,15 @@
                                         <p class="product-price">$<%= prod.price %></p>
                                     <% } %>
                                 </div>
-                                
+                                <% if(prod.stock == 0) { %>
+                                    <div class="product-out-of-stock">
+                                        <p class="out-of-stock">Sin Stock</p>
+                                    </div>
+                                <% } %>
                             </div>
                         </a>
                         <div class="product-quick-actions-container" data-productId="<%=prod.id %>">
-                            <div class="quick-cart-container" data-productid="<%=prod.id %>">
+                            <div class="quick-cart-container <%= prod.stock == 0 && 'pointer-events-inactive'%>" data-productid="<%=prod.id %>">
                                 <div class="logo-container">
                                     <i class='bx bx-shopping-bag quick-add-cart-btn '></i>
                                     <i class='bx bx-check-circle remove-cart-product hidden'></i>
