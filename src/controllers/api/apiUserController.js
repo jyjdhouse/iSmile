@@ -365,6 +365,7 @@ const controller = {
                                 users_id
                             }
                         });
+                        // console.log(shippingAddressToDB);
                         orderDataToDB.shipping_addresses_id = shippingAddressToDB.id;
                     } else { //Aca vino una direccion de entrega nueva
                         //armo el objeto shippingAddress con los datos del front

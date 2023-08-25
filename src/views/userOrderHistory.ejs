@@ -46,7 +46,7 @@
                                 <p class="order-card-total-price">$<%= order.total %></p>
                                 <p class="order-card-type grey"><%= order.type %></p>
                             </div>
-                            <% if (order.order_status_id == 1) { //Entrega a domicilio %>
+                            <% if (order.order_types_id == 1) { //Entrega a domicilio %>
                                 <div class="shipping-details hidden">
                                     <p class="shipping-street"><%= order.shippingAddress ?  order.shippingAddress.street : order.billingAddress.street%></p>
                                     <p class="shipping-apartment"><%= order.shippingAddress ?  order.shippingAddress.apartment : order.billingAddress.apartment%></p>
