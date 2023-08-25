@@ -233,10 +233,6 @@
         max-width: unset;
     }
 
-    .prod-card-out-of-stock {
-        pointer-events: none;
-    }
-
     .image-container {
         height: 75%;
     }

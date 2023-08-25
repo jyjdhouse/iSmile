@@ -42,7 +42,6 @@ const controller = {
     list: async (req, res) => { //Controlador que renderiza listado de productos
         try {
             let products = getDeepCopy(await getAllProducts());
-<<<<<<< HEAD
             products.sort((a, b) => {
                 // Si ambos productos tienen stock en 0, no cambia el orden
                 if (a.stock === 0 && b.stock === 0) {
@@ -62,10 +61,6 @@ const controller = {
                 // Ordenar por descuento en caso de que ambos productos tengan stock
                 return b.discount - a.discount;
               });
-=======
-            products.sort((a, b) => b.discount - a.discount);
-            // return res.send(products);
->>>>>>> ab66360dcbe0613e323f5bec4d21a0f79d53df69
             // Para traer los archivos, primero voy por cada producto y despues a las imagenes de ese producto
             for (let i = 0; i < products.length; i++) {
                 const product = products[i];
