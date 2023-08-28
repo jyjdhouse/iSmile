@@ -44,23 +44,24 @@ window.addEventListener('load', () => {
     // Asignar la función al evento scroll
     // window.addEventListener('scroll', detectarElementoEnPantalla(video));
 
-
-
     // LOGICA QUE APAREZCAN LAS COSAS DEL BANNER AL SCROLLEAR
     const bannerImgContainer = document.querySelector('.discount-banner-img-container');
-    const bannerImgObserver = checkIfIsInScreen(.6, handleVisibleBannerImg, bannerImgContainer)
-    // Me fijo si aparece en pantalla
-    bannerImgObserver.observe(bannerImgContainer);
-    function handleVisibleBannerImg(container) {
-        console.log(container);
-        container.classList.add('discount-banner-img-container-active');
-    };
-    const bannerTextContainer = document.querySelector('.discount-banner-text-container');
-    const bannerTextObserver = checkIfIsInScreen(.6, handleVisibleBannerText, bannerTextContainer)
-    // Me fijo si aparece en pantalla
-    bannerTextObserver.observe(bannerTextContainer);
-    function handleVisibleBannerText(container) {
-        container.classList.add('discount-banner-text-container-active');
+    if(bannerImgContainer) {
+        const bannerImgObserver = checkIfIsInScreen(.6, handleVisibleBannerImg, bannerImgContainer)
+        console.log(bannerImgContainer)
+        // Me fijo si aparece en pantalla
+        bannerImgObserver.observe(bannerImgContainer);
+        function handleVisibleBannerImg(container) {
+            console.log(container);
+            container.classList.add('discount-banner-img-container-active');
+        };
+        const bannerTextContainer = document.querySelector('.discount-banner-text-container');
+        const bannerTextObserver = checkIfIsInScreen(.6, handleVisibleBannerText, bannerTextContainer)
+        // Me fijo si aparece en pantalla
+        bannerTextObserver.observe(bannerTextContainer);
+        function handleVisibleBannerText(container) {
+            container.classList.add('discount-banner-text-container-active');
+        }
     }
 
     // Logica para mostrar labels en slideShow
@@ -378,7 +379,8 @@ window.addEventListener('load', () => {
     // Titulo actual 
     const editTitleButton = document.querySelector('.start-editing');
     let title;
-    let content = document.querySelector('.banner-label').textContent;
+    let content = document.querySelector('.banner-label');
+    console.log(content)
     // Contenedo de botones deshacer/aplicar
     const confirmTitleEditingContainer = document.querySelector('.confirm-action-buttons-container');
     // Botones de deshacer/aplicar cambios

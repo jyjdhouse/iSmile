@@ -25,16 +25,27 @@
     position: relative;
 }
 
-.pass-field .password-btn-toggler {
+.login-password-toggler-container {
     position: absolute;
+    display: flex;
+    align-items: center;
     right: 3%;
-    top: 40%;
+    top: 30%;
+}
+
+.regist-password-toggler-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 3%;
+    bottom: 10%;
+}
+
+.password-btn-toggler {
     color: #777;
     cursor: pointer;
 }
-.regist-form .pass-field .password-btn-toggler{
-    top: 59%;
-}
+
 .login-field label,
 .regist-field label {
     width: 100%;
@@ -83,9 +94,19 @@
 }
 
 /* Olvide mi contrasena form */
-.forget-password-btn{
+
+.additional-options {
+    text-align: center;
+}
+
+.additional-options .forget-password-btn {
+    margin-bottom: 10px;
+}
+
+.forget-password-btn, .back-to-login{
     color: #333;
     margin-top: 10px;
+    font-size: 0.875rem;
     cursor: pointer;
 }
 
@@ -141,6 +162,12 @@
     color: var(--bold-color);
     cursor: pointer;
 }
+
+.back-to-login-container {
+    width: 100%;
+    text-align: center;
+}
+
 @media (min-width:768px){
     .user-options-form{
         width: 50vw;
