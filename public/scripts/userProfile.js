@@ -113,7 +113,6 @@ window.addEventListener('load', () => {
                     spanParent.forEach(parent => {
                         if(parent?.classList.contains('unique-email-field'))return
                         const spanTrue = parent?.querySelector('span').classList.add('span-inactive')
-                        console.log(spanTrue)
 
                     })
                     const inputContainers = div.querySelectorAll('.profile-input')

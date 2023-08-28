@@ -17,7 +17,7 @@
                                 class="profile-selected-field-container profile-selected-field-container-active user-data">
                                 <ul class="profile-selected-list data-list">
                                     <li class="profile-field-container">
-                                        <p>Nombre:</p> <span>
+                                        <p>Nombre</p> <span>
                                             
                                             <%= user.first_name %>
                                         </span>
@@ -28,7 +28,7 @@
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>Apellido:</p> <span>
+                                        <p>Apellido</p> <span>
                                             <%= user.last_name %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -38,7 +38,7 @@
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>Fecha de nacimiento:</p> <span>
+                                        <p>Fecha de nacimiento</p> <span>
                                             <%= user.birth_date ? dateFormated : 'Sin Especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -48,7 +48,7 @@
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>Género:</p> <span>
+                                        <p>Género</p> <span>
                                             <%= user.genre ? user.genre.name : 'Sin Especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -62,17 +62,24 @@
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>Celular:</p> <span>
+                                        <p>Celular</p> <span>
                                             <%= user.phone? user.phone : 'Sin especificar' %>
                                         </span>
-                                        <div class="profile-input input-container-inactive">
+                                        <div class="profile-input input-container-inactive phone-field">
+                                            <select name="phone_code" class="prefix-phone">
+                                                <% countryCodes.forEach(country=> { %>
+                                                    <option value="<%=country.id %>" <%=country.code==54
+                                                        && 'selected' %>
+                                                        > (+<%= country.code %>) <%= country.country_name %>
+                                                    </option>
+                                                    <% }) %>
+                                            </select>
                                             <input class="numeric-only-input required" type="text" name="phone"
-                                                value="<%=user.phone || null%>"
-                                                placeholder="<%= !user.phone && 'Ingresar celular'%>">
+                                                value="<%=user.phone || null%>" placeholder="<%= '1158731281' %>">
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>DNI:</p> <span>
+                                        <p>DNI</p> <span>
                                             <%= user.dni? user.dni : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -89,7 +96,7 @@
                                 <div class="profile-selected-content-wrapper">
                                     <ul class="profile-selected-list address-list">
                                         <li class="profile-field-container">
-                                            <p>Calle:</p> <span>
+                                            <p>Calle</p> <span>
                                                 <%= user.shippingAddress?.street? user.shippingAddress?.street : 'Sin especificar' %>
                                             </span>
                                             <div class="profile-input input-container-inactive">
@@ -100,7 +107,7 @@
                                         </li>
                                         
                                         <li class="profile-field-container">
-                                            <p>Piso/Departamento:</p> <span>
+                                            <p>Piso/Departamento</p> <span>
                                                 <%= user.shippingAddress?.apartment? user.shippingAddress?.apartment : 'Sin especificar'
                                                     %>
                                             </span>
@@ -111,7 +118,7 @@
                                             </div>
                                         </li>
                                         <li class="profile-field-container">
-                                            <p>Ciudad:</p> <span>
+                                            <p>Ciudad</p> <span>
                                                 <%= user.shippingAddress?.city? user.shippingAddress?.city : 'Sin especificar' %>
                                             </span>
                                             <div class="profile-input input-container-inactive">
@@ -120,7 +127,7 @@
                                             </div>
                                         </li>
                                         <li class="profile-field-container">
-                                            <p>Provincia:</p> <span>
+                                            <p>Provincia</p> <span>
                                                 <%= user.shippingAddress?.provinces_id ? provinces.find(prov=>
                                                     user.shippingAddress?.provinces_id == prov.id).name : 'Sin especificar' %>
                                             </span>
@@ -136,7 +143,7 @@
                                             </div>
                                         </li>
                                         <li class="profile-field-container">
-                                            <p>Codigo Postal:</p> <span>
+                                            <p>Codigo Postal</p> <span>
                                                 <%= user.shippingAddress?.zip_code? user.shippingAddress?.zip_code : 'Sin especificar'
                                                     %>
                                             </span>
@@ -155,7 +162,7 @@
 
                             <div class="profile-selected-field-container user-preferences">
                                 <li class="profile-field-container unique-email-field">
-                                    <p>Email:</p> <span class="bold">
+                                    <p>Email</p> <span class="bold">
                                         <%= user.email %>
                                     </span>
                                     
@@ -249,7 +256,7 @@
                                 </div>
                                 <ul class="profile-selected-list data-list">
                                     <li class="profile-field-container">
-                                        <p>Nombre:</p> <span>
+                                        <p>Nombre</p> <span>
                                             <%= user.first_name %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -259,7 +266,7 @@
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>Apellido:</p> <span>
+                                        <p>Apellido</p> <span>
                                             <%= user.last_name %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -269,7 +276,7 @@
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>Fecha de nacimiento:</p> <span>
+                                        <p>Fecha de nacimiento</p> <span>
                                                 <%= user.birth_date ? dateFormated : 'Sin Especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -279,7 +286,7 @@
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>Género:</p> <span>
+                                        <p>Género</p> <span>
                                             <%= user.genre ? user.genre.name : 'Sin Especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -294,17 +301,24 @@
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>Celular:</p> <span>
+                                        <p>Celular</p> <span>
                                             <%= user.phone? user.phone : 'Sin especificar' %>
                                         </span>
-                                        <div class="profile-input input-container-inactive">
+                                        <div class="profile-input input-container-inactive phone-field">
+                                            <select name="phone_code" class="prefix-phone">
+                                                <% countryCodes.forEach(country=> { %>
+                                                    <option value="<%=country.id %>" <%=country.code==54
+                                                        && 'selected' %>
+                                                        > (+<%= country.code %>) <%= country.country_name %>
+                                                    </option>
+                                                    <% }) %>
+                                            </select>
                                             <input class="numeric-only-input required" type="text" name="phone"
-                                                value="<%=user.phone || null%>"
-                                                placeholder="<%= !user.phone && 'Ingresar celular'%>">
+                                                value="<%=user.phone || null%>" placeholder="<%= '1158731281' %>">
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>DNI:</p> <span>
+                                        <p>DNI</p> <span>
                                             <%= user.dni? user.dni : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -323,7 +337,7 @@
                                 </div>
                                 <ul class="profile-selected-list address-list">
                                     <li class="profile-field-container">
-                                        <p>Calle:</p> <span>
+                                        <p>Calle</p> <span>
                                             <%= user.shippingAddress?.street? user.shippingAddress?.street : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -333,7 +347,7 @@
                                     </li>
 
                                     <li class="profile-field-container">
-                                        <p>Piso/Departamento:</p> <span>
+                                        <p>Piso/Departamento</p> <span>
                                             <%= user.shippingAddress?.apartment? user.shippingAddress?.apartment : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -343,7 +357,7 @@
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>Ciudad:</p> <span>
+                                        <p>Ciudad</p> <span>
                                             <%= user.shippingAddress?.city? user.shippingAddress?.city : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -352,7 +366,7 @@
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>Provincia:</p> <span>
+                                        <p>Provincia</p> <span>
                                             <%= user.shippingAddress?.provinces_id ? provinces.find(prov=>
                                                 user.shippingAddress?.provinces_id == prov.id).name : 'Sin especificar' %>
                                         </span>
@@ -368,7 +382,7 @@
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
-                                        <p>Codigo Postal:</p> <span>
+                                        <p>Codigo Postal</p> <span>
                                             <%= user.shippingAddress?.zip_code? user.shippingAddress?.zip_code : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
@@ -386,7 +400,7 @@
                                 </div>
                                 <ul class="profile-selected-list">
                                     <li class="profile-field-container unique-email-field">
-                                        <p>Email:</p> <span class="bold">
+                                        <p>Email</p> <span class="bold">
                                             <%= user.email %>
                                         </span>
                                     </li>

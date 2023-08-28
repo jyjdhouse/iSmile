@@ -26,10 +26,10 @@ const s3 = new S3Client({
 // UTILS
 const provinces = require('../utils/staticDB/provinces');
 const countryCodes = require('../utils/staticDB/countryCodes');
+const genres = require('../utils/staticDB/genres');
 const getUser = require('../utils/getUser');
 const getOrder = require('../utils/getOrder');
 const getDeepCopy = require('../utils/getDeepCopy');
-const getAllGenres = require('../utils/getAllGenres');
 const getAllProducts = require('../utils/getAllProducts');
 const dateFormater = require('../utils/dateFormater');
 const dateFormaterForInput = require('../utils/userProfDateFormater');
@@ -51,12 +51,8 @@ const controller = {
                 user.birth_date = dateFormaterForInput(user.birth_date)
             }
 
-            console.log(user.birth_date)
-
-
             // return res.send(user);
-            const genres = await getAllGenres()
-            return res.render('userProfile', { user, provinces, genres, dateFormated })
+            return res.render('userProfile', { user, provinces, genres, dateFormated, countryCodes })
         } catch (error) {
             console.log(`Falle en userController.userProfile: ${error}`);
             return res.json({ error })
@@ -73,7 +69,6 @@ const controller = {
             // Ahora voy por cada producto del temporalItem, lo dejo con un precio y la primer imagen
             // de cada producto
             cart = cart?.map(tempItem => {
-                console.log(tempItem.product)
                 // Primero busco si hay mainImage, sino primer foto que aparezca
                 let tempItemFile = tempItem.product.files?.find(file => file.main_image)?.filename;
                 !tempItemFile ? tempItemFile = tempItem.product.files?.find(file => file.file_types_id = 1)?.filename : null;
@@ -229,22 +224,30 @@ const controller = {
     },
     update: async (req, res) => {
         try {
-            let userToUpdate = await getUser(req.session.userLoggedId)
+            let userToUpdateId = req.session.userLoggedId
+            let errors = validationResult(req);
             let userBodyData = req.body;
-            // return res.send({userToUpdate,userBodyData});
+            if (!errors.isEmpty()) { //Si hay errores en el back...
+                errors = errors.mapped();
+
+                // return res.send(errors)
+                return res.redirect('/user/profile?putErrors=true');
+            }
+
             // Datos para la tabla user
             let userDataDB = {
                 first_name: userBodyData.first_name,
                 last_name: userBodyData.last_name,
                 birth_date: userBodyData.birth_date,
                 genres_id: userBodyData.genre,
+                country_codes_id: userBodyData.phone_code,
                 phone: userBodyData.phone,
                 dni: userBodyData.dni,
                 wpp_notifications: parseInt(userBodyData.wpp_notifications),
                 email_notifications: parseInt(userBodyData.email_notifications),
                 email_newsletter: parseInt(userBodyData.email_newsletter),
             };
-            console.log(userBodyData.birth_date)
+            let userToUpdate = await getUser(userToUpdateId)
             // Actualizo el usuario
             await db.User.update(userDataDB, {
                 where: {
@@ -255,7 +258,6 @@ const controller = {
             // Armo el objeto address con los datos que me llegan del form
             let createdAddress, shippingAddressDataDB;
             let shippingAddressBody = {
-                id: uuidv4(),
                 street: userBodyData.street || null,
                 apartment: userBodyData.apartment || null,
                 city: userBodyData.city || null,

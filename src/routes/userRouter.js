@@ -3,10 +3,9 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 
 // Validators
-const registValidations = require('../middlewares/registValidations');
+const validations = require('../middlewares/validations');
 
 // MIDDLEWARES
-const orderIsCompleteValidations = require('../middlewares/orderIsCompleteValidatons');
 const getLastURL = require('../middlewares/getLastURL');
 const guestMiddleware = require('../middlewares/guestMiddleware');
 const onlyGuestsMiddleware = require('../middlewares/onlyGuestsMiddleware');
@@ -25,11 +24,10 @@ router.get('/historial-compras',guestMiddleware,userController.orderHistory);
 
 // POST
 router.post('/login',userController.processLogin);
-router.post('/regist',registValidations,userController.processRegist);
+router.post('/regist',validations.userRegistValidations,userController.processRegist);
 router.post('/change-password/:token',userController.processNewPassword)
-// router.post('/checkout',orderIsCompleteValidations,userController.processCheckout); 
 //PUT
-router.put('/profile',guestMiddleware,userController.update)
+router.put('/profile',guestMiddleware,validations.userUpdateValidations,userController.update)
 
 
 module.exports=router;

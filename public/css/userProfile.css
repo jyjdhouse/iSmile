@@ -1,5 +1,3 @@
-
-
 .error-msg {
     width: 100%;
 }
@@ -174,7 +172,16 @@ select {
     font-size: .8rem;
 }
 
-
+.phone-field{
+    flex-wrap: nowrap;
+}
+.phone-field .prefix-phone{
+    width: 25%;
+    margin-right: 5%;
+}
+.phone-field input{
+    width: 40%;
+}
 
 .edit-content-container {
     display: flex;
@@ -352,6 +359,9 @@ select {
     .profile-input input {
         padding: 1px 0;
         width: 70%;
+    }
+    .phone-field input{
+        width: 40%;
     }
     .profile-radio-p-container{
         flex-wrap: wrap;
