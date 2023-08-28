@@ -49,7 +49,10 @@ const controller = {
             if (user.birth_date) {
                 dateFormated = dateFormater(user.birth_date);
                 user.birth_date = dateFormaterForInput(user.birth_date)
-            }
+            };
+            // busco aca el prefijo del numero y lo pongo
+            user.prefixCode = countryCodes.find(code=>code.id == user.country_codes_id)?.code || '54';
+
 
             // return res.send(user);
             return res.render('userProfile', { user, provinces, genres, dateFormated, countryCodes })
@@ -243,9 +246,9 @@ const controller = {
                 country_codes_id: userBodyData.phone_code,
                 phone: userBodyData.phone,
                 dni: userBodyData.dni,
-                wpp_notifications: parseInt(userBodyData.wpp_notifications),
-                email_notifications: parseInt(userBodyData.email_notifications),
-                email_newsletter: parseInt(userBodyData.email_newsletter),
+                wpp_notifications: userBodyData.wpp_notifications ? 1 : 0,
+                email_notifications: userBodyData.email_notifications ? 1 : 0,
+                email_newsletter: userBodyData.email_newsletter ? 1 : 0,
             };
             let userToUpdate = await getUser(userToUpdateId)
             // Actualizo el usuario
@@ -256,37 +259,37 @@ const controller = {
             })
             // Datos para la tabla address
             // Armo el objeto address con los datos que me llegan del form
-            let createdAddress, shippingAddressDataDB;
-            let shippingAddressBody = {
+            let createdAddress, userAddressDataDB;
+            let userAddressBody = {
                 street: userBodyData.street || null,
                 apartment: userBodyData.apartment || null,
                 city: userBodyData.city || null,
                 zip_code: userBodyData.zip_code || null
             }
             // Me fijo si son todos los valores nulos, entonces no creo el address
-            const shippingAddressAllKeysNull = Object.values(shippingAddressBody).every(value => value === null);
+            const userAddressAllKeysNull = Object.values(userAddressBody).every(value => value === null);
             // Si completo por lo menos algun address data tengo que actualizar/crear
-            if (!shippingAddressAllKeysNull) {
-                shippingAddressDataDB = {
-                    ...shippingAddressBody,
+            if (!userAddressAllKeysNull) {
+                userAddressDataDB = {
+                    ...userAddressBody,
                     provinces_id: userBodyData.provinces_id,
                     users_id: userToUpdate.id
                 };
-                if (!userToUpdate.shippingAddress) {//Si no tiene una dirección tengo que crear una
+                if (!userToUpdate.userAddress) {//Si no tiene una dirección tengo que crear una
                     // Le agrego el campo id 
-                    shippingAddressDataDB.id = uuidv4();
-                    createdAddress = await db.ShippingAddress.create(shippingAddressDataDB);
+                    userAddressDataDB.id = uuidv4();
+                    createdAddress = await db.UserAddress.create(userAddressDataDB);
                 } else { // Si ya tenia tengo que actualizarla
-                    await db.ShippingAddress.update(shippingAddressDataDB, {
+                    await db.UserAddress.update(userAddressDataDB, {
                         where: {
-                            id: userToUpdate.shippingAddress.id
+                            id: userToUpdate.userAddress.id
                         }
                     });
                 }
             }
-            return res.redirect('/user/profile')
+            return res.redirect('/user/profile');
         } catch (error) {
-            console.log(`Falle en userController.login: ${error}`);
+            console.log(`Falle en userController.update: ${error}`);
             return res.json(error);
         }
     },
@@ -300,8 +303,8 @@ const controller = {
                     password_token: token
                 }
             });
-            // Si no encuentro usuario redirijo a la 404
-            if (!userWithToken) return res.render('error404');
+            // Si no encuentro usuario redirijo a la pagina de error
+            if (!userWithToken) return res.redirect('/user/contrasena-error');
             // Ahora me fijo si el token sigue siendo valido
             const decodedData = jwt.verify(token, webTokenSecret);
             // Renderizar la página de cambio de contraseña
@@ -324,7 +327,7 @@ const controller = {
                 }
             });
             // Si no encuentro usuario redirijo a la 404
-            if (!userWithToken) return res.render('error404');
+            if (!userWithToken) return res.render('/user/contrasena-error');
             // Ahora me fijo si el token sigue siendo valido
             const decodedData = jwt.verify(token, webTokenSecret);
 

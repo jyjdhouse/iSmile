@@ -1116,9 +1116,11 @@ form.addEventListener('submit', async (e) => {
                 'Content-Type': 'application/json' // Tipo de contenido del cuerpo de la solicitud
             },
             body: JSON.stringify(bodyForm)
-        });
+        }); // Para obtener la respuesta
+        paymentButtonFetchResponse = await paymentButtonFetchResponse.json();
         // Si hay error aca ==> Repinto la vista con errores
         if (!paymentButtonFetchResponse.ok) {
+            return console.log(paymentButtonFetchResponse);
             window.location.href = `/user/checkout?checkoutErrors=${true}`;
             return
         };
@@ -1136,7 +1138,7 @@ form.addEventListener('submit', async (e) => {
         // Para obtener la respuesta
         fetchResponse = await fetchResponse.json();
         if (!fetchResponse.ok) {
-            // console.log(fetchResponse);
+            return console.log(fetchResponse);
             const errorMsg = 'Error al procesar la venta';
             window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${errorMsg}`;
             return

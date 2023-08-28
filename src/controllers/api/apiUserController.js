@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 const { validationResult } = require('express-validator');
 const { v4: uuidv4 } = require('uuid');
 // From utils
-const webTokenSecret =  process.env.JSONWEBTOKEN_SECRET;
+const webTokenSecret = process.env.JSONWEBTOKEN_SECRET;
 const isJwtError = require('../../utils/isJwtError');
 const getRelativePath = require('../../utils/getRelativePath');
 const getDeepCopy = require('../../utils/getDeepCopy');
@@ -16,7 +16,7 @@ const getAllProducts = require('../../utils/getAllProducts');
 const getOrder = require('../../utils/getOrder');
 const emailConfig = require('../../utils/staticDB/mailConfig');
 const handleStock = require('../../utils/handleStock');
-const {shipmentStaticInfo, shipmentEstimateUrl} = require('../../utils/staticDB/shipmentData')
+const { shipmentStaticInfo, shipmentEstimateUrl } = require('../../utils/staticDB/shipmentData')
 
 const controller = {
     getLoggedUserId: async (req, res) => {
@@ -28,7 +28,7 @@ const controller = {
             // Esto es para no mandar al front estos datos
             delete user?.password;
             delete user?.dni;
-            delete user?.shippingAddress;
+            delete user?.userAddress;
             delete user?.userCategory;
             delete user?.password_token;
             delete user?.email;
@@ -296,7 +296,7 @@ const controller = {
             const billingAddressToDB = {
                 id: uuidv4(),
                 street: billing_street,
-                apartment: billing_floor || '',
+                apartment: billing_floor || null,
                 city: billing_city,
                 provinces_id: billing_province,
                 zip_code: billing_zip_code
@@ -360,46 +360,61 @@ const controller = {
                 if (!use_same_address) { //Aca vienieron 2 direcciones ( 1facturacion - 1Entrega) ==> Le tengo que agregar a la orden
                     // el shipping id
                     // Pregunto si vino marcado el campo 'Completar con direccion de entrega del usuario'
-                    if (use_user_address) { //Si vino marcado eso entonces busco por el nombre de la direccion
-                        shippingAddressToDB = await db.ShippingAddress.findOne({
+                    if (use_user_address) { //Si vino marcado eso entonces busco la direccion del usuario
+                        userAddressDB = await db.UserAddress.findOne({
                             where: {
                                 users_id
                             }
                         });
-                        // console.log(shippingAddressToDB);
-                        orderDataToDB.shipping_addresses_id = shippingAddressToDB.id;
+                        //armo el objeto shippingAddress con los datos del user
+                        shippingAddressToDB = {
+                            id: uuidv4(),
+                            street: userAddressDB?.street,
+                            apartment: userAddressDB?.apartment || null,
+                            city: userAddressDB?.city,
+                            provinces_id: userAddressDB?.provinces_id,
+                            zip_code: userAddressDB?.zip_code,
+                        }
                     } else { //Aca vino una direccion de entrega nueva
                         //armo el objeto shippingAddress con los datos del front
                         shippingAddressToDB = {
-                            id: uuidv4(),
                             street: req.body.shipping_street,
                             apartment: req.body.shipping_floor || null,
                             city: req.body.shipping_city,
                             provinces_id: req.body.shipping_province,
                             zip_code: req.body.shipping_zip_code,
-                            users_id: null,//Es nulo porque si el usuario no lo quiere guardar en su perfil queda para la compra nada mas
                         }
                         // Aca pregunto si vino 'Guardar direccion'.
                         if (save_user_address) {
-                            // Si vino tengo que borrar el users_id de la direccion vieja para poder crear la nueva
-                            // No borro la direccion porque sino no se puede acceder en una consulta (quizas se necesite para ver una
-                            // compra vieja)
-                            await db.ShippingAddress.update({
-                                users_id: null
-                            }, {
+                            // Si vino tengo que actualizar/crear la direccion del usuario
+                            // Primero busco la direccion
+                            const userAddressInDB = await db.UserAddress.findOne({
                                 where: {
-                                    users_id: users_id
+                                    users_id
                                 }
                             });
-                            // Tengo que asociar el usuario a la nueva direccion
-                            shippingAddressToDB.users_id = users_id;
-
+                            // Si el usuario ya tenia direccion guardada, le hago el update
+                            if (userAddressInDB) {
+                                await db.UserAddress.update(shippingAddressToDB, {
+                                    where: {
+                                        users_id
+                                    }
+                                });
+                            } else { //Sino el create
+                                const newUserAddressToDB = {
+                                    ...shippingAddressToDB,
+                                    id: uuidv4() //Le agrego el id para crear
+                                };
+                                await db.UserAddress.create(newUserAddressToDB);
+                            }
                         };
-                        // Creo la direccion en ShippingAddress
-                        const createdShippingAddress = await db.ShippingAddress.create(shippingAddressToDB);
-                        // Le pego a la orden con esta direccion
-                        orderDataToDB.shipping_addresses_id = createdShippingAddress.id;
+                        // Le agrego id
+                        shippingAddressToDB.id = uuidv4()
                     };
+                    // Creo la direccion en ShippingAddress
+                    const createdShippingAddress = await db.ShippingAddress.create(shippingAddressToDB);
+                    // Le pego a la orden con esta direccion
+                    orderDataToDB.shipping_addresses_id = createdShippingAddress.id;
                 };
             } else { //Retiro por local o venta fisica ==> los checkbox de la direccion de entrega van en false
                 orderDataToDB.is_same_address = 0;
@@ -411,11 +426,11 @@ const controller = {
             //Tema de orderStatus
             // Si la venta fue presencial entonces la venta esta completa
             if (order_types_id == 3) {
-                orderDataToDB.order_status_id = 1;//Pendiente de retiro
+                orderDataToDB.order_status_id = 1;
             }// Aca es venta online ==> Chequeo metodo de pago 
             else if (payment_methods_id == 2 || payment_methods_id == 3) { //Debito o Credito
                 // Si payment_methods_id es 2 o 3 quiere decir que ya se aprobo el pago
-                // Si es 1 (entrega a domicilio) lo pongo como pendiente de envio, si no solo
+                // Tema types: Si es 1 (entrega a domicilio) lo pongo como pendiente de envio, si no solo
                 // queda que sea 2 (retiro por local), lo pongo como pendiente de retiro
                 order_types_id == 1 ? orderDataToDB.order_status_id = 2 :
                     orderDataToDB.order_status_id = 6;
@@ -482,13 +497,13 @@ const controller = {
             });
 
         } catch (error) {
-            console.log(`Falle en userController.proccessOrder: ${error}`);
+            console.log(`Falle en userController.proccessCheckout: ${error}`);
             return res.status(404).json({ error })
             return res.redirect(`/user/checkout?checkoutErrors=${true}&msg="Error al procesar la compra, intente nuevamente"`)
         }
     },
     getEstimateShipmentData: async (req, res) => {
-        const {zipCodeValue, quantity} = req.body;
+        const { zipCodeValue, quantity } = req.body;
 
         // restaria aca hacer la logica segun la cantidad de elementos, que volumen y peso mandamos
         let totalWeigth;

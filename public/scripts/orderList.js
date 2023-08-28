@@ -178,13 +178,14 @@ window.addEventListener('load', async () => {
         // Aca voy pusheando los orderItems
         let orderDetailProductList = document.querySelector('.order-detail-product-list');
         order.orderItems.forEach(item => {
+            const itemPrice = item.price * ( 1 - (item.discount||0)/100);
             orderDetailProductList.innerHTML +=
                 `
             <div class="order-detail-product-card order-detail-product-card-body">
                 <p class="order-detail-product-name">${item.name}</p>
                 <p class="order-detail-product-quantity">${item.quantity}</p>
-                <p class="order-detail-product-total">$${item.price}</p>
-                <p class="order-detail-product-total">$${item.quantity * item.price}</p>
+                <p class="order-detail-product-total">$${itemPrice}</p>
+                <p class="order-detail-product-total">$${item.quantity * itemPrice}</p>
             </div>
             `;
         });

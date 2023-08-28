@@ -36,8 +36,8 @@ module.exports = (sequelize, dataTypes) => {
             as: 'genre',
             foreignKey: 'genres_id',
         }) 
-        User.hasOne(models.ShippingAddress, {
-            as: 'shippingAddress',
+        User.hasOne(models.UserAddress, {
+            as: 'userAddress',
             foreignKey: 'users_id',
         });
         User.hasOne(models.TemporalCart, {
