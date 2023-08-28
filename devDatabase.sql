@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-08-2023 a las 00:56:30
+-- Tiempo de generación: 28-08-2023 a las 23:33:30
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -46,12 +46,23 @@ CREATE TABLE `billing_addresses` (
 INSERT INTO `billing_addresses` (`id`, `street`, `apartment`, `city`, `provinces_id`, `zip_code`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
 ('0498c7a9-f133-4b85-beb2-fb8e831024b9', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-07-19 16:01:52', '2023-07-19 16:01:52', NULL),
 ('072ca0de-9d92-45ae-9c01-757681e54ee8', 'Libertador 1580', '5a', 'Nuñez', 1, '2222', '2023-07-19 13:45:40', '2023-07-19 13:45:40', NULL),
+('10d706fd-85d9-409d-8f53-691b9385b883', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-08-22 22:49:05', '2023-08-22 22:49:05', NULL),
 ('15097bce-f867-466b-8011-a2a49905bcc0', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-08-05 19:49:26', '2023-08-05 19:49:26', NULL),
+('1b5e6c28-2cc8-410e-b86a-8ed848e566a4', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-08-22 22:57:16', '2023-08-22 22:57:16', NULL),
 ('24403f4f-5c3f-47b1-bbfd-76cfe262c97e', 'Av. Libertador 2222', '3F', 'Palermo', 1, '1112', '2023-07-17 14:25:22', '2023-07-17 14:25:22', NULL),
+('26d8ae84-af45-4397-8275-100e240d03bc', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-08-28 16:04:44', '2023-08-28 16:04:44', NULL),
+('26d9dc4b-05a5-472d-b54f-ee389a7562a0', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-08-28 16:13:10', '2023-08-28 16:13:10', NULL),
 ('2c41a0f0-a045-4745-9dce-73efcacfc11f', 'Libertador 1580', '20a', 'Nuñez', 1, '2222', '2023-07-19 13:53:22', '2023-07-19 13:53:22', NULL),
 ('39a8736e-8fb7-441b-b92e-2229ea6cfe73', '1908 N 58th Way', '', 'Hollywood', 1, '33021', '2023-07-25 11:05:14', '2023-07-25 11:05:14', NULL),
+('3a5587ee-e039-404f-a0d4-76d5b987cd87', 'Juana Azurduy 1730', '', 'CABA', 2, '1429', '2023-08-24 21:56:36', '2023-08-24 21:56:36', NULL),
+('3ce31b91-f94f-4904-bef1-e0c5fdf3dd6f', 'Juana Azurduy 1730', '', 'CABA', 2, '1429', '2023-08-22 22:55:04', '2023-08-22 22:55:04', NULL),
 ('40d4625a-e539-4ebd-82df-a39ef0990f4f', 'Juana Azurduy 1730', '2a', 'CABA', 1, '1429', '2023-07-21 23:07:40', '2023-07-21 23:07:40', NULL),
+('41e9ba01-9907-4dac-9734-cfe849b2094c', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-08-28 16:01:53', '2023-08-28 16:01:53', NULL),
+('439d2fe4-b684-4f6a-9274-d83fd1ce3419', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-08-28 15:54:47', '2023-08-28 15:54:47', NULL),
+('47e26aba-94cb-4340-930a-01e3d918ab9c', 'Juana Azurduy 1730', NULL, 'CABA', 2, '1429', '2023-08-28 16:33:34', '2023-08-28 16:33:34', NULL),
 ('49942240-6749-4d5a-a5b1-572c098da894', 'Juana Azurduy 1730', '12', 'Nuñez', 1, '1429', '2023-07-19 13:57:09', '2023-07-19 13:57:09', NULL),
+('4c275412-9807-4875-a450-aedaf7431ac3', 'Juana Azurduy 1730', '', 'CABA', 2, '1429', '2023-08-22 22:50:40', '2023-08-22 22:50:40', NULL),
+('52d09dde-bbe7-4fa5-9ad0-fad014cb972a', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-08-24 21:46:18', '2023-08-24 21:46:18', NULL),
 ('5345aa85-682b-4c2c-b908-84107d3914bf', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-08-05 19:46:00', '2023-08-05 19:46:00', NULL),
 ('5d77b23b-fd8c-45d9-bbae-2fe6b4cbf73f', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-07-19 18:51:36', '2023-07-19 18:51:36', NULL),
 ('6183530e-3fc9-46c1-b089-8724e54ec5bd', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-08-05 19:41:43', '2023-08-05 19:41:43', NULL),
@@ -60,22 +71,32 @@ INSERT INTO `billing_addresses` (`id`, `street`, `apartment`, `city`, `provinces
 ('6a3bc59a-f9aa-484b-bd72-60b7632226b5', 'Libertador 1580', '20a', 'Nuñez', 1, '2222', '2023-07-19 13:55:35', '2023-07-19 13:55:35', NULL),
 ('6d653043-8048-473b-8149-1de8de673daf', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-08-05 19:39:30', '2023-08-05 19:39:30', NULL),
 ('7147f039-f430-400f-b6c4-f4ea0f584cd8', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-07-19 14:33:07', '2023-07-19 14:33:07', NULL),
+('77ecbbfa-c87e-44e9-92e9-9de26f58b72b', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-08-28 16:31:41', '2023-08-28 16:31:41', NULL),
+('7be98597-2e1c-402b-a89c-df32424375f8', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-08-28 16:05:18', '2023-08-28 16:05:18', NULL),
+('8434feaa-c6a2-4b27-a631-521ec9f049eb', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-08-28 16:08:20', '2023-08-28 16:08:20', NULL),
 ('84e69a73-1210-4c0d-b0e4-cb2ffa14f329', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-07-17 13:42:50', '2023-07-17 13:42:50', NULL),
 ('8fc54df2-1e59-4df7-9b47-0ebe52d498de', 'Av. Libertador 2222', '10A', 'Belgrano', 1, '1422', '2023-07-17 19:28:42', '2023-07-17 19:28:42', NULL),
+('9efd180a-f190-40a8-a8eb-873b9ed609df', 'Juana Azurduy 1730', '', 'CABA', 2, '1429', '2023-08-22 22:55:39', '2023-08-22 22:55:39', NULL),
 ('a993d7ba-98d1-4dd4-a479-e6c83fa2b29f', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-07-19 18:53:47', '2023-07-19 18:53:47', NULL),
+('aa4e0f0a-e23f-4f6f-8814-3999d666841a', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-08-28 16:07:48', '2023-08-28 16:07:48', NULL),
+('b23272dc-e3bd-49e0-9487-6389cb474852', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-08-28 16:17:04', '2023-08-28 16:17:04', NULL),
 ('bb22b73f-34b0-4013-9a5b-4dff3f16fbe9', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-07-17 19:16:57', '2023-07-17 19:16:57', NULL),
 ('bc631a0c-8684-4edb-92cd-2010b20f3808', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-08-05 19:42:06', '2023-08-05 19:42:06', NULL),
 ('bdec0e96-5a12-4809-a9cc-7523ba96dfb0', 'Pepe 1234', '4a', 'CABA', 1, '111111', '2023-07-17 23:34:11', '2023-07-17 23:34:11', NULL),
 ('be128cc5-d41f-47da-a0a1-aadd458dd6c0', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-07-19 14:31:34', '2023-07-19 14:31:34', NULL),
 ('c2c08c4b-5220-4e7c-a453-e7472708a260', 'Conde 3229', '2A', 'Coghlan', 1, '1430', '2023-07-17 16:57:11', '2023-07-17 16:57:11', NULL),
 ('c328920c-0255-41f5-9aed-70817a974cb5', '1908 N 58th Way', '212', 'Hollywood', 1, '33021', '2023-07-25 12:01:51', '2023-07-25 12:01:51', NULL),
+('c7443de8-ad63-4435-8d16-d947c4a98bdc', 'Juana Azurduy 1730', '', 'CABA', 2, '1429', '2023-08-22 22:47:47', '2023-08-22 22:47:47', NULL),
 ('d3cac2a7-c798-4cdc-b5af-2d27936cdff9', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-07-17 22:26:11', '2023-07-17 22:26:11', NULL),
+('d56df0a8-253f-4c0c-aa44-d8054c031708', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-08-28 16:22:50', '2023-08-28 16:22:50', NULL),
 ('d5f91132-85b3-4abe-aa1f-60bc18101449', 'Juana Azurduy 1730', '12', 'Nuñez', 1, '1429', '2023-07-19 13:58:12', '2023-07-19 13:58:12', NULL),
 ('dc36f020-4e0c-49bd-9dcd-6af2fa86912c', 'Conde 1730', '2', 'Koglan', 1, '1423', '2023-08-08 21:23:42', '2023-08-08 21:23:42', NULL),
+('dc56ccf5-75be-4646-aff5-f45c3267460e', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-08-28 16:41:01', '2023-08-28 16:41:01', NULL),
 ('def4d8db-ddaa-42c6-bf8b-a1747fb9bf07', 'Juana Azurduy 1730', '12', 'Nuñez', 1, '1429', '2023-07-19 14:01:17', '2023-07-19 14:01:17', NULL),
 ('eef923f7-ada6-44c0-a202-77496c2ba424', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-08-05 19:44:17', '2023-08-05 19:44:17', NULL),
 ('f52d09ec-203f-4993-a026-21bc21f24b2a', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-07-17 17:39:49', '2023-07-17 17:39:49', NULL),
-('f7e49784-218f-4c8a-af5c-4fbe92c3bb90', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-08-05 20:15:47', '2023-08-05 20:15:47', NULL);
+('f7e49784-218f-4c8a-af5c-4fbe92c3bb90', 'Juana Azurduy 1730', '', 'Nuñez', 1, '1429', '2023-08-05 20:15:47', '2023-08-05 20:15:47', NULL),
+('ff86f8f8-c7ad-497b-b631-0327fd88944b', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-08-28 16:20:00', '2023-08-28 16:20:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -241,7 +262,8 @@ INSERT INTO `home_files` (`id`, `filename`, `file_types_id`, `home_sections_id`,
 (25, 'galletyPhoto-sbwvmjwj37.webp', 1, 5, NULL, NULL),
 (28, 'galletyPhoto-yixqo5gun7.webp', 1, 5, NULL, NULL),
 (29, 'galletyPhoto-v58nbp0x7w.webp', 1, 5, NULL, NULL),
-(32, 'galletyPhoto-6o0oh3etzd.webp', 1, 5, NULL, NULL);
+(32, 'galletyPhoto-6o0oh3etzd.webp', 1, 5, NULL, NULL),
+(33, NULL, NULL, 6, NULL, 'CYBER MONDAY');
 
 -- --------------------------------------------------------
 
@@ -300,14 +322,34 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `tra_id`, `users_id`, `shipping_addresses_id`, `billing_addresses_id`, `is_same_address`, `total`, `order_status_id`, `order_types_id`, `payment_methods_id`, `date`, `billing_name`, `billing_email`, `billing_phone`, `billing_id`, `createdAt`, `updatedAt`, `deletedAt`, `pending_payment_date`, `is_pending_payment_expired`) VALUES
+('02a7e9b0-8a77-4cc1-a7d4-31dbc0aa67b9', '1692744640123-u4lzaldcm1', NULL, NULL, '4c275412-9807-4875-a450-aedaf7431ac3', 0, 30700, 4, 2, 1, '2023-08-22 22:50:40', 'Jonat Kent', 'janoo.pereira@gmail.com', '+5412211212', '12211212', '2023-08-22 22:50:40', '2023-08-22 22:50:40', NULL, NULL, NULL),
 ('05590144-cb8d-41b4-a385-d4b6f93894ff', '1691264503772-554fta47yu', '10', NULL, '6183530e-3fc9-46c1-b089-8724e54ec5bd', 0, 48222, 1, 2, 1, '2023-08-05 19:41:43', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '212212121', '2023-08-05 19:41:43', '2023-08-05 19:41:43', NULL, NULL, NULL),
+('164380d8-2c30-4181-973f-35774d71a8ab', '1692744467543-7x13hktz07', NULL, NULL, 'c7443de8-ad63-4435-8d16-d947c4a98bdc', 0, 30700, 4, 2, 1, '2023-08-22 22:47:47', 'Juan Pascakl', 'janoo.pereira@gmail.com', '+5401158817312', '12121212', '2023-08-22 22:47:47', '2023-08-22 22:47:47', NULL, NULL, NULL),
+('3e8e576d-bb39-4850-a655-6cf0ab5ddada', '1693240301355-t3lywjchjr', '10', NULL, '77ecbbfa-c87e-44e9-92e9-9de26f58b72b', 1, 8000, 4, 1, 1, '2023-08-28 16:31:41', 'Misma  Direccion', 'janoo.pereira@gmail.com', '+5401158817312', '22121112', '2023-08-28 16:31:41', '2023-08-28 16:31:41', NULL, NULL, NULL),
 ('3fba444f-b2e4-4253-a3f0-1936c151f1ae', '1691264921121-mru84pn26n', '10', NULL, '66f381f2-de82-41ea-a38f-7cfb102fe3df', 0, 88222, 5, 2, 1, '2023-08-05 19:48:41', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:48:41', '2023-08-05 19:48:41', NULL, NULL, NULL),
+('41c3d4ff-9f2a-4534-9d38-aba6f791ec3f', '1693238513555-l998p2e2z4', '10', NULL, '41e9ba01-9907-4dac-9734-cfe849b2094c', 0, 25000, 4, 1, 1, '2023-08-28 16:01:53', 'Prueba Direccion', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-28 16:01:53', '2023-08-28 16:01:53', NULL, NULL, NULL),
 ('4af4b51c-c9ab-4b3e-a849-9d47e498bf4b', '1691264966112-rm99oa9591', '10', NULL, '15097bce-f867-466b-8011-a2a49905bcc0', 0, 88222, 2, 2, 1, '2023-08-05 19:49:26', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:49:26', '2023-08-05 19:59:18', NULL, NULL, NULL),
+('4bca66b7-89c1-4749-b419-098a2db120da', '1693239600058-u30kc3li6p', '10', 'b10745d1-6a13-4fe2-87cc-72f5a101f159', 'ff86f8f8-c7ad-497b-b631-0327fd88944b', 0, 23000, 4, 1, 1, '2023-08-28 16:20:00', 'Direccion Jerno', 'janoo.pereira@gmail.com', '+5401158817312', '21211212', '2023-08-28 16:20:00', '2023-08-28 16:20:00', NULL, NULL, NULL),
 ('5b236ed8-75d4-42de-91c4-a11405eeb141', '1691266547618-iij4n8sl7h', '10', NULL, 'f7e49784-218f-4c8a-af5c-4fbe92c3bb90', 1, 26000, 1, 1, 1, '2023-08-05 20:15:47', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '21212112', '2023-08-05 20:15:47', '2023-08-05 20:15:47', NULL, NULL, NULL),
+('5de5cfc2-4711-4dc7-94b6-65f560239dec', '1693238900986-vz8zj0r84r', '10', NULL, '8434feaa-c6a2-4b27-a631-521ec9f049eb', 0, 25000, 4, 1, 1, '2023-08-28 16:08:20', 'Prueba Direccion', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-28 16:08:20', '2023-08-28 16:08:20', NULL, NULL, NULL),
+('69420a40-cacb-47de-9040-a3bbc8240957', '1692914196007-csxqumzyvt', '10', '564f158e-0cfa-4a02-ba82-dda1b5ce99fb', '3a5587ee-e039-404f-a0d4-76d5b987cd87', 0, 103500, 4, 1, 1, '2023-08-24 21:56:36', 'Valentina Kent', 'janoo.pereira@gmail.com', '+541221212121', '12212121', '2023-08-24 21:56:36', '2023-08-24 21:56:36', NULL, NULL, NULL),
+('7e2239f3-3411-41a9-9e3b-51ab66682f20', '1693238718802-a6c6mu9l8d', '10', NULL, '7be98597-2e1c-402b-a89c-df32424375f8', 0, 25000, 4, 1, 1, '2023-08-28 16:05:18', 'Prueba Direccion', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-28 16:05:18', '2023-08-28 16:05:18', NULL, NULL, NULL),
 ('8195143a-45f0-4554-b077-a20c4a059cec', '1691264526020-9yrisv0b2i', '10', NULL, 'bc631a0c-8684-4edb-92cd-2010b20f3808', 0, 88222, 4, 2, 1, '2023-08-05 19:42:06', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:42:06', '2023-08-05 19:42:06', NULL, NULL, NULL),
+('9159dab4-5100-4c0e-878f-35f80cb386aa', '1692744545133-f2ocvr0yz7', NULL, NULL, '10d706fd-85d9-409d-8f53-691b9385b883', 0, 30700, 4, 2, 1, '2023-08-22 22:49:05', 'Jonas Pele', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-22 22:49:05', '2023-08-22 22:49:05', NULL, NULL, NULL),
+('92e1cc08-3992-44fa-8039-c8027de0eff2', '1692745036802-560dgqv3ho', NULL, NULL, '1b5e6c28-2cc8-410e-b86a-8ed848e566a4', 0, 20700, 4, 2, 1, '2023-08-22 22:57:16', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12211212', '2023-08-22 22:57:16', '2023-08-22 22:57:16', NULL, NULL, NULL),
 ('9e3cb10d-c760-4722-8d29-3e97148cb8f5', '1691264760323-ocxvhyskey', '10', NULL, '5345aa85-682b-4c2c-b908-84107d3914bf', 0, 88222, 4, 2, 1, '2023-08-05 19:46:00', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:46:00', '2023-08-05 19:46:00', NULL, NULL, NULL),
+('a016e944-637d-4596-ab05-a512fe51a4af', '1692744939896-10ghnrcl45', NULL, NULL, '9efd180a-f190-40a8-a8eb-873b9ed609df', 0, 20700, 4, 2, 1, '2023-08-22 22:55:39', 'Shole Kent', 'janoo.pereira@gmail.com', '+5412212121', '21212112', '2023-08-22 22:55:39', '2023-08-22 22:55:39', NULL, NULL, NULL),
+('a096e365-e966-4505-8531-43707f7b4ab5', '1693238087828-n4iebx8o1q', '10', NULL, '439d2fe4-b684-4f6a-9274-d83fd1ce3419', 0, 144000, 4, 1, 1, '2023-08-28 15:54:47', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '3333232', '2023-08-28 15:54:47', '2023-08-28 15:54:47', NULL, NULL, NULL),
+('a3a73685-3faa-4f65-ac05-5deca7b77f2a', '1692913578725-473zgr4ntc', '10', NULL, '52d09dde-bbe7-4fa5-9ad0-fad014cb972a', 1, 22700, 4, 1, 1, '2023-08-24 21:46:18', 'Valentina Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212112', '2023-08-24 21:46:18', '2023-08-24 21:46:18', NULL, NULL, NULL),
+('abcc024b-2609-44aa-817b-c035431b63b2', '1693238684617-zwqx9vkk4y', '10', NULL, '26d8ae84-af45-4397-8275-100e240d03bc', 0, 25000, 4, 1, 1, '2023-08-28 16:04:44', 'Prueba Direccion', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-28 16:04:44', '2023-08-28 16:04:44', NULL, NULL, NULL),
+('ac29cc6e-ccf6-4eb6-ae59-7d0f30690e97', '1693239770285-d8n6erfcwz', '10', 'b220e5f7-0200-436a-9d5b-fd8049637c89', 'd56df0a8-253f-4c0c-aa44-d8054c031708', 0, 8000, 4, 1, 1, '2023-08-28 16:22:50', 'Modificar Direccion', 'janoo.pereira@gmail.com', '+5401158817312', '21212112', '2023-08-28 16:22:50', '2023-08-28 16:22:50', NULL, NULL, NULL),
 ('af3177e3-5465-48a3-931b-58d83b5a7be2', '1691529822765-649cvbarit', NULL, NULL, 'dc36f020-4e0c-49bd-9dcd-6af2fa86912c', 0, 13000, 1, 3, 4, '2023-08-08 00:00:00', 'jano perez', 'janoperez@gmail.com', '+541158817312', '43083507', '2023-08-08 21:23:42', '2023-08-08 21:23:42', NULL, NULL, NULL),
+('b1997aea-c40d-4814-b687-b8270eba33d9', '1693240414643-tvgk0fjg8r', '10', NULL, '47e26aba-94cb-4340-930a-01e3d918ab9c', 1, 6000, 4, 1, 1, '2023-08-28 16:33:34', 'Jano Kent', 'janoo.pereira@gmail.com', '+5401158817312', '43083507', '2023-08-28 16:33:34', '2023-08-28 16:33:34', NULL, NULL, NULL),
 ('b2353be1-e708-4e08-a57e-24337533b638', '1691264657492-13lgopc8wx', '10', NULL, 'eef923f7-ada6-44c0-a202-77496c2ba424', 0, 88222, 4, 2, 1, '2023-08-05 19:44:17', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-05 19:44:17', '2023-08-05 19:44:17', NULL, NULL, NULL),
+('c9c86ab4-b8b4-464f-bfeb-fc02cf1fc84a', '1693238868796-tvqmmwjzhl', '10', NULL, 'aa4e0f0a-e23f-4f6f-8814-3999d666841a', 0, 25000, 4, 1, 1, '2023-08-28 16:07:48', 'Prueba Direccion', 'janoo.pereira@gmail.com', '+5401158817312', '12212121', '2023-08-28 16:07:48', '2023-08-28 16:07:48', NULL, NULL, NULL),
+('ca032370-8c29-4b98-994f-8bde31ee525d', '1693239424726-dppvwzv3r7', '10', 'b7481e1a-d83e-4a1f-8b78-da3f2aab8c60', 'b23272dc-e3bd-49e0-9487-6389cb474852', 0, 41000, 4, 1, 1, '2023-08-28 16:17:04', 'Jeronimo Direccion', 'janoo.pereira@gmail.com', '+5401158817312', '21121212', '2023-08-28 16:17:04', '2023-08-28 16:17:04', NULL, NULL, NULL),
+('d53bf083-f698-4492-b443-80b48c7cbdab', '1693240861494-ilijnwq1au', '10', NULL, 'dc56ccf5-75be-4646-aff5-f45c3267460e', 0, 6000, 4, 2, 1, '2023-08-28 16:41:01', 'Producto  Discount', 'janoo.pereira@gmail.com', '+5401158817312', '12211212', '2023-08-28 16:41:01', '2023-08-28 16:41:01', NULL, NULL, NULL),
+('d7938925-b0f1-4e2c-b1e2-d1570b3aefc2', '1692744904001-1o6qm16uch', NULL, NULL, '3ce31b91-f94f-4904-bef1-e0c5fdf3dd6f', 0, 20700, 4, 2, 1, '2023-08-22 22:55:04', 'Jano Kent', 'janoo.pereira@gmail.com', '+54122121212', '12122121', '2023-08-22 22:55:04', '2023-08-22 22:55:04', NULL, NULL, NULL),
 ('e5cdbd31-e816-4210-9f69-46659c484e64', '1691264370124-44ina3xulr', '10', NULL, '6d653043-8048-473b-8149-1de8de673daf', 0, 88222, 4, 2, 1, '2023-08-05 19:39:30', 'Jano Pereira Kent', 'janoo.pereira@gmail.com', '+5401158817312', '21211212', '2023-08-05 19:39:30', '2023-08-05 19:39:30', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -323,41 +365,73 @@ CREATE TABLE `order_items` (
   `name` varchar(255) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `createdAt` date DEFAULT NULL,
-  `deletedAt` date DEFAULT NULL,
-  `updatedAt` date DEFAULT NULL
+  `discount` tinyint(3) UNSIGNED DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT NULL,
+  `deletedAt` timestamp NULL DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `order_items`
 --
 
-INSERT INTO `order_items` (`id`, `orders_id`, `products_id`, `name`, `price`, `quantity`, `createdAt`, `deletedAt`, `updatedAt`) VALUES
-('0cd635ab-d3ed-45d5-ad85-f31509ef68b8', '8195143a-45f0-4554-b077-a20c4a059cec', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 3, '2023-08-05', NULL, '2023-08-05'),
-('15ac2fb5-c239-4386-90da-3d9b1db6702f', '5b236ed8-75d4-42de-91c4-a11405eeb141', '83838646-6969-449d-8132-2ad967701c64', 'Colageno Fine Peak ', 24000, 1, '2023-08-05', NULL, '2023-08-05'),
-('191d8b69-6158-40b3-86e6-f3528592f8d2', 'e5cdbd31-e816-4210-9f69-46659c484e64', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 3, '2023-08-05', NULL, '2023-08-05'),
-('38466cd9-de2c-470f-89cd-255b26c4f43d', '4af4b51c-c9ab-4b3e-a849-9d47e498bf4b', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, '2023-08-05', NULL, '2023-08-05'),
-('3fae09ae-b314-41ab-a76f-8801212c8c6f', 'af3177e3-5465-48a3-931b-58d83b5a7be2', 'a9c2dc18-3086-4d3c-94b6-18f5f5db2e6b', 'Espuma de limpieza 3 en 1', 9000, 1, '2023-08-08', NULL, '2023-08-08'),
-('4d69e657-79dc-45e1-8175-3117926824d6', 'af3177e3-5465-48a3-931b-58d83b5a7be2', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 2, '2023-08-08', NULL, '2023-08-08'),
-('531d5c7c-b8a9-42d6-bc17-3413c0c917cc', '3fba444f-b2e4-4253-a3f0-1936c151f1ae', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, '2023-08-05', NULL, '2023-08-05'),
-('67b3da30-441f-4357-a83e-dfd2dddab419', 'e5cdbd31-e816-4210-9f69-46659c484e64', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, '2023-08-05', NULL, '2023-08-05'),
-('7596999d-d2b3-4bd5-80e3-e05c3b09811f', '9e3cb10d-c760-4722-8d29-3e97148cb8f5', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, '2023-08-05', NULL, '2023-08-05'),
-('8221a92a-da9c-4000-82aa-0aa588b21f85', '9e3cb10d-c760-4722-8d29-3e97148cb8f5', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, '2023-08-05', NULL, '2023-08-05'),
-('8c9cebe3-34fc-4aee-8b72-61b391b0d73e', '05590144-cb8d-41b4-a385-d4b6f93894ff', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 1, '2023-08-05', NULL, '2023-08-05'),
-('8d8870bb-da43-4bc9-8922-0039c41a60fe', 'e5cdbd31-e816-4210-9f69-46659c484e64', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, '2023-08-05', NULL, '2023-08-05'),
-('90447dc4-69cf-4bd7-8fbc-9958d64cc4cb', '05590144-cb8d-41b4-a385-d4b6f93894ff', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, '2023-08-05', NULL, '2023-08-05'),
-('96ee464e-a9a1-43c7-afe4-30c3e68671ad', '4af4b51c-c9ab-4b3e-a849-9d47e498bf4b', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 3, '2023-08-05', NULL, '2023-08-05'),
-('97d20d04-46b4-462e-b074-545560c42cd4', '4af4b51c-c9ab-4b3e-a849-9d47e498bf4b', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, '2023-08-05', NULL, '2023-08-05'),
-('a9b09a6b-edad-450a-a9a7-325257fba5ea', '05590144-cb8d-41b4-a385-d4b6f93894ff', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, '2023-08-05', NULL, '2023-08-05'),
-('bbdbced2-67a4-4767-92de-8bc3c2b8c02d', '5b236ed8-75d4-42de-91c4-a11405eeb141', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 1, '2023-08-05', NULL, '2023-08-05'),
-('c4f1b764-d55d-4c61-af8a-653ae5486e25', '3fba444f-b2e4-4253-a3f0-1936c151f1ae', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 3, '2023-08-05', NULL, '2023-08-05'),
-('d70c0b02-00d9-4b3f-bf2b-95ab0203580e', 'b2353be1-e708-4e08-a57e-24337533b638', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, '2023-08-05', NULL, '2023-08-05'),
-('dd7e566a-37ef-4b68-8276-00d9d99e82b3', 'b2353be1-e708-4e08-a57e-24337533b638', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, '2023-08-05', NULL, '2023-08-05'),
-('de17c967-789e-4f32-9bbd-c5a2675a1952', '8195143a-45f0-4554-b077-a20c4a059cec', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, '2023-08-05', NULL, '2023-08-05'),
-('e1c1c802-bd28-4fcd-8dbf-661eb5e8535e', '3fba444f-b2e4-4253-a3f0-1936c151f1ae', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, '2023-08-05', NULL, '2023-08-05'),
-('ef9f39a6-8a2e-4a96-b15b-1986a6174908', '8195143a-45f0-4554-b077-a20c4a059cec', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, '2023-08-05', NULL, '2023-08-05'),
-('fc6b2b73-40d8-42d2-a567-2be9f31391be', '9e3cb10d-c760-4722-8d29-3e97148cb8f5', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 3, '2023-08-05', NULL, '2023-08-05'),
-('fee62e32-3130-4e34-8580-9970bbed179b', 'b2353be1-e708-4e08-a57e-24337533b638', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 3, '2023-08-05', NULL, '2023-08-05');
+INSERT INTO `order_items` (`id`, `orders_id`, `products_id`, `name`, `price`, `quantity`, `discount`, `createdAt`, `deletedAt`, `updatedAt`) VALUES
+('05a6990b-64d3-4672-8bf9-d5e1acc2e566', '5de5cfc2-4711-4dc7-94b6-65f560239dec', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 23000, 1, 12, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('07549abb-2dfc-4722-a5c1-4eefd8a9b1d9', '4bca66b7-89c1-4749-b419-098a2db120da', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 23000, 1, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('0cd635ab-d3ed-45d5-ad85-f31509ef68b8', '8195143a-45f0-4554-b077-a20c4a059cec', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 3, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('0f978a9a-bcf8-4cb1-a1e0-9ff3541549d1', 'd7938925-b0f1-4e2c-b1e2-d1570b3aefc2', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 20700, 1, NULL, '2023-08-22 03:00:00', NULL, '2023-08-22 03:00:00'),
+('1345c834-3b15-4e3a-8b5f-48995ab79222', '164380d8-2c30-4181-973f-35774d71a8ab', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 20700, 1, NULL, '2023-08-22 03:00:00', NULL, '2023-08-22 03:00:00'),
+('15ac2fb5-c239-4386-90da-3d9b1db6702f', '5b236ed8-75d4-42de-91c4-a11405eeb141', '83838646-6969-449d-8132-2ad967701c64', 'Colageno Fine Peak ', 24000, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('191d8b69-6158-40b3-86e6-f3528592f8d2', 'e5cdbd31-e816-4210-9f69-46659c484e64', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 3, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('1e340b5f-b337-4d0b-8390-17f2ca4bd19a', 'ca032370-8c29-4b98-994f-8bde31ee525d', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 1, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('218fcc51-b81a-4150-ae4e-b377e1618dc7', '9159dab4-5100-4c0e-878f-35f80cb386aa', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 5, NULL, '2023-08-22 03:00:00', NULL, '2023-08-22 03:00:00'),
+('38466cd9-de2c-470f-89cd-255b26c4f43d', '4af4b51c-c9ab-4b3e-a849-9d47e498bf4b', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('3938467b-13d1-45dd-b235-84107843ffc6', '02a7e9b0-8a77-4cc1-a7d4-31dbc0aa67b9', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 5, NULL, '2023-08-22 03:00:00', NULL, '2023-08-22 03:00:00'),
+('3e443c46-a424-4b41-a65b-6e5609782dc3', 'c9c86ab4-b8b4-464f-bfeb-fc02cf1fc84a', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 1, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('3fae09ae-b314-41ab-a76f-8801212c8c6f', 'af3177e3-5465-48a3-931b-58d83b5a7be2', 'a9c2dc18-3086-4d3c-94b6-18f5f5db2e6b', 'Espuma de limpieza 3 en 1', 9000, 1, NULL, '2023-08-08 03:00:00', NULL, '2023-08-08 03:00:00'),
+('41d5a580-c256-4cb2-b3fb-d00d69c3e157', 'a3a73685-3faa-4f65-ac05-5deca7b77f2a', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 20700, 1, NULL, '2023-08-24 03:00:00', NULL, '2023-08-24 03:00:00'),
+('4ba5096e-193a-45a1-8cbe-2f1f5de0285e', '92e1cc08-3992-44fa-8039-c8027de0eff2', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 20700, 1, NULL, '2023-08-22 03:00:00', NULL, '2023-08-22 03:00:00'),
+('4d69e657-79dc-45e1-8175-3117926824d6', 'af3177e3-5465-48a3-931b-58d83b5a7be2', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 2, NULL, '2023-08-08 03:00:00', NULL, '2023-08-08 03:00:00'),
+('531d5c7c-b8a9-42d6-bc17-3413c0c917cc', '3fba444f-b2e4-4253-a3f0-1936c151f1ae', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('552b7ac0-62e4-4e8e-b6a1-6e41a4d6e600', '69420a40-cacb-47de-9040-a3bbc8240957', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 20700, 5, 10, '2023-08-24 03:00:00', NULL, '2023-08-24 03:00:00'),
+('67b3da30-441f-4357-a83e-dfd2dddab419', 'e5cdbd31-e816-4210-9f69-46659c484e64', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('69a1069e-1dd8-47f4-8745-3619a65f35a9', '3e8e576d-bb39-4850-a655-6cf0ab5ddada', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 4, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('6aea6b0b-cdf3-4f3d-8a6c-739b84c0880a', 'b1997aea-c40d-4814-b687-b8270eba33d9', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 3, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('6d7d9a2d-51f4-4e3d-97d1-703e0a047881', 'a096e365-e966-4505-8531-43707f7b4ab5', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 3, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('7596999d-d2b3-4bd5-80e3-e05c3b09811f', '9e3cb10d-c760-4722-8d29-3e97148cb8f5', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('8221a92a-da9c-4000-82aa-0aa588b21f85', '9e3cb10d-c760-4722-8d29-3e97148cb8f5', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('83dbe3e2-947c-43e0-ba96-26d73b1e31ad', '164380d8-2c30-4181-973f-35774d71a8ab', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 5, NULL, '2023-08-22 03:00:00', NULL, '2023-08-22 03:00:00'),
+('86d1f5b2-b3f0-460c-bb4c-3411047635af', 'abcc024b-2609-44aa-817b-c035431b63b2', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 1, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('8c9cebe3-34fc-4aee-8b72-61b391b0d73e', '05590144-cb8d-41b4-a385-d4b6f93894ff', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('8d8870bb-da43-4bc9-8922-0039c41a60fe', 'e5cdbd31-e816-4210-9f69-46659c484e64', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('90447dc4-69cf-4bd7-8fbc-9958d64cc4cb', '05590144-cb8d-41b4-a385-d4b6f93894ff', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('96ee464e-a9a1-43c7-afe4-30c3e68671ad', '4af4b51c-c9ab-4b3e-a849-9d47e498bf4b', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 3, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('97b52b17-5ca1-4647-98ee-c5432988a84e', '7e2239f3-3411-41a9-9e3b-51ab66682f20', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 23000, 1, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('97d20d04-46b4-462e-b074-545560c42cd4', '4af4b51c-c9ab-4b3e-a849-9d47e498bf4b', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('9a60dc48-8d70-4a65-90a8-14e58abc94e7', 'd53bf083-f698-4492-b443-80b48c7cbdab', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 3, 13, '2023-08-28 16:41:01', NULL, '2023-08-28 16:41:01'),
+('a18836db-3bce-4a9f-8118-b434ad2eaa7f', '9159dab4-5100-4c0e-878f-35f80cb386aa', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 20700, 1, NULL, '2023-08-22 03:00:00', NULL, '2023-08-22 03:00:00'),
+('a5751b23-eb14-445d-b607-de52135ff1db', '5de5cfc2-4711-4dc7-94b6-65f560239dec', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 1, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('a9b09a6b-edad-450a-a9a7-325257fba5ea', '05590144-cb8d-41b4-a385-d4b6f93894ff', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('b1fa432d-d7e6-4fb1-9e99-c7724e6a6924', '02a7e9b0-8a77-4cc1-a7d4-31dbc0aa67b9', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 20700, 1, NULL, '2023-08-22 03:00:00', NULL, '2023-08-22 03:00:00'),
+('ba21064f-2e69-41bc-b9c5-f772886c53fd', 'c9c86ab4-b8b4-464f-bfeb-fc02cf1fc84a', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 23000, 1, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('bbdbced2-67a4-4767-92de-8bc3c2b8c02d', '5b236ed8-75d4-42de-91c4-a11405eeb141', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('c16b2bcd-f842-4dc5-8485-a032450d6466', 'a3a73685-3faa-4f65-ac05-5deca7b77f2a', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 1, 15, '2023-08-24 03:00:00', NULL, '2023-08-24 03:00:00'),
+('c4f1b764-d55d-4c61-af8a-653ae5486e25', '3fba444f-b2e4-4253-a3f0-1936c151f1ae', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 3, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('ccbfe0be-48a2-4168-bdd2-059aaa8c0a84', 'ac29cc6e-ccf6-4eb6-ae59-7d0f30690e97', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 4, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('ce7c4b34-d256-41f6-9f5b-8d82cbecdcd2', 'abcc024b-2609-44aa-817b-c035431b63b2', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 23000, 1, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('cee11880-c1cb-4b7c-b07a-516911edd2fe', 'a016e944-637d-4596-ab05-a512fe51a4af', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 20700, 1, NULL, '2023-08-22 03:00:00', NULL, '2023-08-22 03:00:00'),
+('d450d524-c77b-42c5-bc05-929424db610d', 'ca032370-8c29-4b98-994f-8bde31ee525d', '9965b799-1f1b-43d1-8537-c9713373188e', 'Crema Anti Age 360', 13000, 3, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('d70c0b02-00d9-4b3f-bf2b-95ab0203580e', 'b2353be1-e708-4e08-a57e-24337533b638', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('d8a7d930-0a5d-4430-b85c-68cdf43289c0', '41c3d4ff-9f2a-4534-9d38-aba6f791ec3f', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 23000, 1, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('da72dc47-70fd-4575-8c4a-ed1d6d9de9af', '7e2239f3-3411-41a9-9e3b-51ab66682f20', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 1, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('dd7e566a-37ef-4b68-8276-00d9d99e82b3', 'b2353be1-e708-4e08-a57e-24337533b638', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('de17c967-789e-4f32-9bbd-c5a2675a1952', '8195143a-45f0-4554-b077-a20c4a059cec', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('e0c40272-a2c5-4676-932c-6ed35b5e4230', '41c3d4ff-9f2a-4534-9d38-aba6f791ec3f', '0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 1, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('e146cef4-c38b-4112-8e7a-1404f4b2e617', 'a096e365-e966-4505-8531-43707f7b4ab5', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 23000, 6, 0, '2023-08-28 03:00:00', NULL, '2023-08-28 03:00:00'),
+('e1c1c802-bd28-4fcd-8dbf-661eb5e8535e', '3fba444f-b2e4-4253-a3f0-1936c151f1ae', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('ef9f39a6-8a2e-4a96-b15b-1986a6174908', '8195143a-45f0-4554-b077-a20c4a059cec', 'b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 1, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('fc6b2b73-40d8-42d2-a567-2be9f31391be', '9e3cb10d-c760-4722-8d29-3e97148cb8f5', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 3, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00'),
+('fee62e32-3130-4e34-8580-9970bbed179b', 'b2353be1-e708-4e08-a57e-24337533b638', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, 3, NULL, '2023-08-05 03:00:00', NULL, '2023-08-05 03:00:00');
 
 -- --------------------------------------------------------
 
@@ -379,7 +453,8 @@ INSERT INTO `order_status` (`id`, `status`) VALUES
 (2, 'Pendiente de envio'),
 (3, 'Pendiente de pago'),
 (4, 'Pendiente de confirmacion'),
-(5, 'Anulada');
+(5, 'Anulada'),
+(6, 'Pendiente de retiro');
 
 -- --------------------------------------------------------
 
@@ -449,24 +524,24 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `price`, `description`, `category_id`, `stock`, `ingredients`, `size`, `discount`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
-('0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, '<p>Son el complemento ideal de nuestra “Espuma de Limpieza 3 en 1” para una limpieza facial excepcional. Diseñados\npara ayudar a eliminar eficazmente el maquillaje e impurezas, dejando tu piel limpia y fresca.\nCada Pad presenta dos texturas diferentes: una suave y delicada para una limpieza gentil, ideal para zonas sensibles, y otra exfoliante para una limpieza más profunda y efectiva en áreas que necesitan mayor atención. Estas dos opciones te permiten personalizar tu rutina de limpieza según las necesidades de tu piel.</p>\n<p>??Son fáciles de limpiar: simplemente enjuágalos con agua y jabón luego de cada uso y estarán listos para la próxima limpieza facial.</p>', 1, NULL, NULL, NULL, 15, '2023-07-31 16:33:02', '2023-07-31 16:33:02', NULL),
+('0d0cd130-d652-41e1-b7e6-da9553322823', 'Pads de limpieza Facial', 2000, 'Son el complemento ideal de nuestra “Espuma de Limpieza 3 en 1” para una limpieza facial excepcional. Diseñados para ayudar a eliminar eficazmente el maquillaje e impurezas, dejando tu piel limpia y fresca. Cada Pad presenta dos texturas diferentes: una suave y delicada para una limpieza gentil, ideal para zonas sensibles, y otra exfoliante para una limpieza más profunda y efectiva en áreas que necesitan mayor atención. Estas dos opciones te permiten personalizar tu rutina de limpieza según las necesidades de tu piel.\r\n\r\n??Son fáciles de limpiar: simplemente enjuágalos con agua y jabón luego de cada uso y estarán listos para la próxima limpieza facial.', 1, 10, '', '', 13, '2023-07-31 16:33:02', '2023-08-28 16:40:15', NULL),
 ('1c58ddbd-a791-46eb-b98a-611a00af2645', 'Prueba', 5000, 'Descripcion\r\n\r\nOtra mas\r\n\r\nY una mas', 1, NULL, '', '', NULL, '2023-08-01 18:15:28', '2023-08-01 18:21:35', '2023-08-01 18:21:46'),
-('46bf971d-62f1-4b96-b727-d2cafa725f42', 'Prueba para borrar', 22222, 'asdsdaasads', 1, NULL, 'Un ingrediente', '1 blister de 30 pastillas', NULL, '2023-07-31 18:05:32', '2023-08-10 16:58:07', NULL),
+('46bf971d-62f1-4b96-b727-d2cafa725f42', 'Prueba para borrar', 22222, 'asdsdaasads', 1, NULL, 'Un ingrediente', '1 blister de 30 pastillas', 0, '2023-07-31 18:05:32', '2023-08-25 19:07:37', NULL),
 ('4d05e5c1-1827-4bfe-8b74-f30bbabca8b0', 'Jano', 2222, 'asddasdsaads', 1, NULL, 'Muchos', 'Grande', NULL, '2023-08-02 16:54:12', '2023-08-02 16:54:53', '2023-08-11 17:28:23'),
 ('5a1d4ed8-135f-4177-b7ce-0a239b7f1afc', 'Silk Glow Sleepwear  ', 6000, '<p>Funda de Almohada de Seda.\nUn secreto de belleza olvidado hacía mucho tiempo. \nEsta funda de almohada de seda hipoalergénica es una experiencia de lujo para tu piel y cabello. \nPermite que la piel se beneficie al máximo de las propiedades de los productos de ‘skincare’ y ayuda a prevenir la aparición de arrugas, líneas finas y marcas de presión, lo que resulta en una piel más tersa y radiante. Evita el frizz, reduce el daño causado por el roce y mejora la suavidad y brillo natural de tu melena mientras duermes.\nIdeal para personas con piel sensible o alergias.\n¡Mejora tu rutina de sueño y belleza con este lujo accesible y saludable para tu piel y cabello! ?\nSe recomienda lavar de adentro hacia afuera con agua fría y utilizando jabón líquido neutro suave, para obtener mejores resultados y garantizar su durabilidad.</p>', 1, NULL, NULL, NULL, NULL, '2023-07-31 16:32:00', '2023-07-31 16:32:00', '2023-07-31 16:34:22'),
-('79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, '<p>Funda de Almohada de Seda.\nUn secreto de belleza olvidado hacía mucho tiempo. \nEsta funda de almohada de seda hipoalergénica es una experiencia de lujo para tu piel y cabello. \nPermite que la piel se beneficie al máximo de las propiedades de los productos de ‘skincare’ y ayuda a prevenir la aparición de arrugas, líneas finas y marcas de presión, lo que resulta en una piel más tersa y radiante. Evita el frizz, reduce el daño causado por el roce y mejora la suavidad y brillo natural de tu melena mientras duermes.\nIdeal para personas con piel sensible o alergias.\n¡Mejora tu rutina de sueño y belleza con este lujo accesible y saludable para tu piel y cabello! ?\nSe recomienda lavar de adentro hacia afuera con agua fría y utilizando jabón líquido neutro suave, para obtener mejores resultados y garantizar su durabilidad.</p>', 1, NULL, NULL, NULL, NULL, '2023-07-31 16:31:57', '2023-07-31 16:31:57', NULL),
-('7e4b718f-1f11-452f-9aa9-54d9a059d881', 'Bálsamo Lip Glow', 10000, 'HIDRATACIÓN + VOLUMEN 3D ? Este aterciopelado bálsamo con esencia de menta calma, restaura y acondiciona los labios con un toque de máxima suavidad y efecto repulpante. La concentración de activos, su textura y su suave efecto mentolado contribuye a combatir la sequedad al instante, nutriendo, restaurando y fortaleciendo la barrera de hidratación natural de tus labios. Se convertirá en un paso fundamental de tu rutina diaria. ✨.', 1, NULL, '', '', NULL, '2023-07-12 13:35:15', '2023-08-03 17:49:49', NULL),
-('83838646-6969-449d-8132-2ad967701c64', 'Colageno Fine Peak ', 24000, '<p>El empujón que necesitabas para llegar a tu cima. Poderoso blend termogénico que te ayuda a bajar de peso. Reduce el apetito, aumenta el gasto calórico y energético y estimula el drenaje linfático.\nEs antioxidante y antiinflamatorio. \nAdemás, por su alta concentración de péptidos bioactivos de colágeno hidrolizado y aminoácidos, retrasa el envejecimiento y mejora el aspecto de la piel, las uñas y el cabello.</p>', 1, NULL, NULL, NULL, NULL, '2023-07-31 16:39:56', '2023-07-31 16:39:56', NULL),
-('91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 23000, '\\\\-Combate la celulitis -Posee propiedades antiinflamatorias -Favorece al drenaje linfático y eliminación de toxinas del organismo -Reduce los depositos de grasa del organismo -Mejora la salid vascular oxigenando los tejidos -Mejora la tenacidad y elasticidad de la piel -Previene la pérdida de colágeno -Tiene capacidad antioxidante', 1, NULL, '', '', NULL, '2023-07-31 16:41:19', '2023-08-10 17:23:54', NULL),
-('9965b799-1f1b-43d1-8537-c9713373188e', 'Crema Anti Age 360', 13000, '\r\nCreamos una crema enfocada en combatir el envejecimiento cutáneo de forma global. Su textura es sedosa y de rápida absorción.  Favorece la renovación celular, fortalece la barrera cutánea y devuelve la elasticidad y flexibilidad a tu piel. ✨Ayuda a combatir los signos del envejecimiento, gracias a su novedosa combinación de activos: Retinol, Matrixyl, Carnosina y Gluconolaciona que actúan en sinergia estimulando la producción de colágeno, elastina y ácido hialurónico. Además, refuerzan la barrera cutánea protegiéndola de los agentes externos y devuelven luminosidad, elasticidad y flexibilidad a la piel✨. Libre de Fragancia. Libre de Parabenos. \r\n??MODO DE USO: Aplicar de día y/o noche sobre la superficie de la piel de rostro, cuello y escote una vez limpia y seca; realizando suaves movimientos ascendentes hasta su absorción.\r\n', 1, NULL, NULL, NULL, NULL, '2023-07-21 16:42:49', '2023-07-31 16:24:11', NULL),
+('79cbdf23-309b-4f2f-9834-9d6fd5de5251', 'Silk Glow Sleepwear  ', 6000, 'Funda de Almohada de Seda. Un secreto de belleza olvidado hacía mucho tiempo. Esta funda de almohada de seda hipoalergénica es una experiencia de lujo para tu piel y cabello. Permite que la piel se beneficie al máximo de las propiedades de los productos de ‘skincare’ y ayuda a prevenir la aparición de arrugas, líneas finas y marcas de presión, lo que resulta en una piel más tersa y radiante. Evita el frizz, reduce el daño causado por el roce y mejora la suavidad y brillo natural de tu melena mientras duermes. Ideal para personas con piel sensible o alergias. ¡Mejora tu rutina de sueño y belleza con este lujo accesible y saludable para tu piel y cabello! ? Se recomienda lavar de adentro hacia afuera con agua fría y utilizando jabón líquido neutro suave, para obtener mejores resultados y garantizar su durabilidad.', 1, 0, '', '', 0, '2023-07-31 16:31:57', '2023-08-25 19:07:37', NULL),
+('7e4b718f-1f11-452f-9aa9-54d9a059d881', 'Bálsamo Lip Glow', 10000, 'HIDRATACIÓN + VOLUMEN 3D ? Este aterciopelado bálsamo con esencia de menta calma, restaura y acondiciona los labios con un toque de máxima suavidad y efecto repulpante. La concentración de activos, su textura y su suave efecto mentolado contribuye a combatir la sequedad al instante, nutriendo, restaurando y fortaleciendo la barrera de hidratación natural de tus labios. Se convertirá en un paso fundamental de tu rutina diaria. ✨.', 1, NULL, '', '', 0, '2023-07-12 13:35:15', '2023-08-25 19:07:37', NULL),
+('83838646-6969-449d-8132-2ad967701c64', 'Colageno Fine Peak ', 24000, 'El empujón que necesitabas para llegar a tu cima. Poderoso blend termogénico que te ayuda a bajar de peso. Reduce el apetito, aumenta el gasto calórico y energético y estimula el drenaje linfático. Es antioxidante y antiinflamatorio. Además, por su alta concentración de péptidos bioactivos de colágeno hidrolizado y aminoácidos, retrasa el envejecimiento y mejora el aspecto de la piel, las uñas y el cabello.', 1, 1, '', '', 0, '2023-07-31 16:39:56', '2023-08-25 19:07:37', NULL),
+('91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 'Colageno Fine Smooth', 23000, '\\\\\\\\\\\\\\\\-Combate la celulitis -Posee propiedades antiinflamatorias -Favorece al drenaje linfático y eliminación de toxinas del organismo -Reduce los depositos de grasa del organismo -Mejora la salid vascular oxigenando los tejidos -Mejora la tenacidad y elasticidad de la piel -Previene la pérdida de colágeno -Tiene capacidad antioxidante', 1, 10, '', '', 0, '2023-07-31 16:41:19', '2023-08-25 19:07:37', NULL),
+('9965b799-1f1b-43d1-8537-c9713373188e', 'Crema Anti Age 360', 13000, '\r\nCreamos una crema enfocada en combatir el envejecimiento cutáneo de forma global. Su textura es sedosa y de rápida absorción.  Favorece la renovación celular, fortalece la barrera cutánea y devuelve la elasticidad y flexibilidad a tu piel. ✨Ayuda a combatir los signos del envejecimiento, gracias a su novedosa combinación de activos: Retinol, Matrixyl, Carnosina y Gluconolaciona que actúan en sinergia estimulando la producción de colágeno, elastina y ácido hialurónico. Además, refuerzan la barrera cutánea protegiéndola de los agentes externos y devuelven luminosidad, elasticidad y flexibilidad a la piel✨. Libre de Fragancia. Libre de Parabenos. \r\n??MODO DE USO: Aplicar de día y/o noche sobre la superficie de la piel de rostro, cuello y escote una vez limpia y seca; realizando suaves movimientos ascendentes hasta su absorción.\r\n', 1, 3, NULL, NULL, 0, '2023-07-21 16:42:49', '2023-08-25 19:07:37', NULL),
 ('a541d777-7dce-426b-aaa8-421978c2486e', 'Producto prueba Formato', 3333, 'Este es un formato para la prueba del formato esperado. Este producto viene bien. Lorem ipsum lorem ipsum.', 1, NULL, NULL, NULL, NULL, '2023-07-26 17:58:28', '2023-07-26 18:25:09', '2023-07-31 16:48:55'),
-('a9c2dc18-3086-4d3c-94b6-18f5f5db2e6b', 'Espuma de limpieza 3 en 1', 9000, 'Limpia, desmaquilla e hidrata ? La limpieza facial es un paso indispensable y necesario para mantener una piel saludable luminosa y protegida de los contaminantes que generan el envejecimiento prematuro. ??Limpiar es el primer paso fundamental de tu rutina de skincare. Su fórmula en espuma micelar retira rápida, suave y fácilmente el maquillaje y las impurezas. Dejando una piel visiblemente más fresca, limpia e hidratada. Está específicamente pensado para pieles de normales a mixtas. ✨Libre de fragancia, colorantes y parabenos. ✨ \r\n??MODO DE USO: Aplicar por la mañana y por la noche con suaves movimientos circulares en rostro, cuello y escote. Enjuagar con agua y con ayuda de nuestro exclusivo Pad de Limpieza para una mejor remoción. \r\n', 1, NULL, NULL, NULL, NULL, '2023-07-12 16:12:02', '2023-07-31 16:25:53', NULL),
-('ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, '<ul>\n<li>Contiene los antioxidantes más       poderosos</li>\n<li>Posee un alto contenido en proteínas.</li>\n<li>Mantiene las articulaciones saludables.</li>\n<li>Aumenta la energía y la recuperación post ejercicio</li>\n<li>Reduce la ansiedad y el estrés.</li>\n<li>Promueve el fortalecimiento de tendones y colágeno articular </li>\n<li>Aumenta la asimilación del calcio y el hierro.</li>\n<li>Disminuye y evita la aparición de nuevas arrugas. Ayuda a prevenir lesiones.</li>\n<li>Previene la pérdida de cabello</li>\n<li>Disminuye la adherencia de las lipoproteínas de colesterol.</li>\n</ul>', 1, NULL, NULL, NULL, NULL, '2023-07-31 16:38:35', '2023-07-31 16:38:35', NULL),
+('a9c2dc18-3086-4d3c-94b6-18f5f5db2e6b', 'Espuma de limpieza 3 en 1', 9000, 'Limpia, desmaquilla e hidrata ? La limpieza facial es un paso indispensable y necesario para mantener una piel saludable luminosa y protegida de los contaminantes que generan el envejecimiento prematuro. ??Limpiar es el primer paso fundamental de tu rutina de skincare. Su fórmula en espuma micelar retira rápida, suave y fácilmente el maquillaje y las impurezas. Dejando una piel visiblemente más fresca, limpia e hidratada. Está específicamente pensado para pieles de normales a mixtas. ✨Libre de fragancia, colorantes y parabenos. ✨ \r\n??MODO DE USO: Aplicar por la mañana y por la noche con suaves movimientos circulares en rostro, cuello y escote. Enjuagar con agua y con ayuda de nuestro exclusivo Pad de Limpieza para una mejor remoción. \r\n', 1, NULL, NULL, NULL, 0, '2023-07-12 16:12:02', '2023-08-25 19:07:37', NULL),
+('ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 'Colageno Fine Power', 20000, '<ul>\n<li>Contiene los antioxidantes más       poderosos</li>\n<li>Posee un alto contenido en proteínas.</li>\n<li>Mantiene las articulaciones saludables.</li>\n<li>Aumenta la energía y la recuperación post ejercicio</li>\n<li>Reduce la ansiedad y el estrés.</li>\n<li>Promueve el fortalecimiento de tendones y colágeno articular </li>\n<li>Aumenta la asimilación del calcio y el hierro.</li>\n<li>Disminuye y evita la aparición de nuevas arrugas. Ayuda a prevenir lesiones.</li>\n<li>Previene la pérdida de cabello</li>\n<li>Disminuye la adherencia de las lipoproteínas de colesterol.</li>\n</ul>', 1, NULL, NULL, NULL, 0, '2023-07-31 16:38:35', '2023-08-25 19:07:37', NULL),
 ('b2e86191-8b70-431b-9808-ba754697ac2b', 'Objeto para probar mainIM', 22222, 'adscsadcasdcas', 1, 0, 'adsdsadas', '10g sanax', 0, '2023-08-02 16:21:24', '2023-08-15 13:54:41', '2023-08-15 13:56:28'),
-('c1f196b4-8861-4032-ba39-523530df0299', 'Latisse', 15000, 'LATISSE es un tratamiento del laboratorio francés Allergan, aprobado por la FDA y sin parabenos que permite obtener pestañas más largas, gruesas y oscuras. Se aplica por la noche antes de ir a dormir. ??Los resultados comienzan a verse a las 4 semanas de aplicación, viendo resultados completos a la semana 12 del tratamiento. Luego se aplica 1 vez por semana para mantenimiento. Está indicado en cualquier persona que desee mejorar el aspecto de sus pestañas.', 1, NULL, NULL, NULL, NULL, '2023-07-21 16:44:41', '2023-07-31 16:36:00', NULL),
-('db005c8d-ccd0-4e0e-9d36-aaed244e8559', 'Crema despigmentante', 15000, 'Posee una fórmula innovadora con un poderoso complejo anti-manchas. Su acción despigmentante de rápida absorción ayuda a unificar el color de la piel disminuyendo notablemente manchas e hiperpigmentaciones en rostro, cuello y escote, ayudando también a prevenirlas. Logra un aspecto más uniforme de la piel ✨Su formulación sinérgica aporta luminosidad, brillo y tersura a la piel✨. Ingredientes: Tranexámico 3% + Niacinamida 2% + Vit C 4% + Arbutina 2%. Exfolia y normaliza la renovación celular. Reduce los efectos negativos del estrés y la contaminación. ? Nuestra filosofía de pureza: Sin parabenos. Sin sulfatos. Sin fragancia. Piel simplemente feliz. :) Hipoalergénico. Free Mineral Oil. ??MODO DE USO: Aplicar únicamente por la noche sobre la superficie de la piel a tratar, una vez limpia y seca, en rostro, cuello y escote. Se recomienda complementar con nuestro Serum de Vitamina C. Utilizar protección solar si se aplica durante el día.', 1, 10, '', '', 0, '2023-07-04 11:31:11', '2023-08-15 11:06:25', NULL),
-('e3da8d17-89bb-4f42-8ae7-77791d9f4533', 'Contorno de Ojos', 12000, 'Nuestra fórmula ofrece tratamiento y prevención a la delicada piel del contorno de ojos otorgando luminosidad y revitalización de la mirada ✨?️. Posee una concentración de activos que renuevan el aspecto de la piel alisándola y favoreciendo la microcirculación; desacelera la aparición de líneas de expresión y prolonga la duración de la toxina botulínica por su gran concentración de Argireline. ? Nuestra presentación con dosificador ofrece excelente comodidad en su uso y garantiza la efectividad del tratamiento. Para todo tipo de piel. Sin fragancias ni parabenos. \r\n?? MODO DE USO: Extrae una pequeña cantidad de crema utilizando el aplicador a presión. Aplica la crema en pequeños puntos alrededor del contorno de los ojos. Con movimientos suaves y circulares difumina la crema utilizando el aplicador. Esto ayudará a mejorar la absorción y promoverá una apariencia más rejuvenecida.\r\n', 1, NULL, NULL, NULL, NULL, '2023-07-12 16:10:48', '2023-07-31 16:26:41', NULL),
-('f05669b2-7376-4d5c-9e4a-6f2bd654cd89', 'Serum de Vitamina C', 13000, 'Con su textura perfecta este poderoso concentrado de Vitamina C tiene una triple acción: - Antioxidante. - Revitalizante. - Anti-Age. Además actúa como un potente protector de la polución dejando la piel visiblemente calmada y renovada. Aporta una luminosidad inigualable desde su primera aplicación ✨ Apta para todo tipo de piel.  \r\nMODO DE USO: Aplicar 3 a 4 gotas por día sobre la superficie de la piel, una vez limpia y seca. Puede aplicarse en rostro, cuello, escote y dorso de manos, masajeando suavemente hasta su absorción. Recomendamos dejar actuar unos instantes antes de aplicar su crema de tratamiento habitual y utilizar protección solar de ser aplicado durante el día.\r\n', 1, NULL, NULL, NULL, NULL, '2023-07-21 16:35:52', '2023-07-31 16:28:54', NULL);
+('c1f196b4-8861-4032-ba39-523530df0299', 'Latisse', 15000, 'LATISSE es un tratamiento del laboratorio francés Allergan, aprobado por la FDA y sin parabenos que permite obtener pestañas más largas, gruesas y oscuras. Se aplica por la noche antes de ir a dormir. ??Los resultados comienzan a verse a las 4 semanas de aplicación, viendo resultados completos a la semana 12 del tratamiento. Luego se aplica 1 vez por semana para mantenimiento. Está indicado en cualquier persona que desee mejorar el aspecto de sus pestañas.', 1, NULL, NULL, NULL, 0, '2023-07-21 16:44:41', '2023-08-25 19:07:37', NULL),
+('db005c8d-ccd0-4e0e-9d36-aaed244e8559', 'Crema despigmentante', 15000, 'Posee una fórmula innovadora con un poderoso complejo anti-manchas. Su acción despigmentante de rápida absorción ayuda a unificar el color de la piel disminuyendo notablemente manchas e hiperpigmentaciones en rostro, cuello y escote, ayudando también a prevenirlas. Logra un aspecto más uniforme de la piel ✨Su formulación sinérgica aporta luminosidad, brillo y tersura a la piel✨. Ingredientes: Tranexámico 3% + Niacinamida 2% + Vit C 4% + Arbutina 2%. Exfolia y normaliza la renovación celular. Reduce los efectos negativos del estrés y la contaminación. ? Nuestra filosofía de pureza: Sin parabenos. Sin sulfatos. Sin fragancia. Piel simplemente feliz. :) Hipoalergénico. Free Mineral Oil. ??MODO DE USO: Aplicar únicamente por la noche sobre la superficie de la piel a tratar, una vez limpia y seca, en rostro, cuello y escote. Se recomienda complementar con nuestro Serum de Vitamina C. Utilizar protección solar si se aplica durante el día.', 1, 10, '', '', 0, '2023-07-04 11:31:11', '2023-08-25 19:07:37', NULL),
+('e3da8d17-89bb-4f42-8ae7-77791d9f4533', 'Contorno de Ojos', 12000, 'Nuestra fórmula ofrece tratamiento y prevención a la delicada piel del contorno de ojos otorgando luminosidad y revitalización de la mirada ✨?️. Posee una concentración de activos que renuevan el aspecto de la piel alisándola y favoreciendo la microcirculación; desacelera la aparición de líneas de expresión y prolonga la duración de la toxina botulínica por su gran concentración de Argireline. ? Nuestra presentación con dosificador ofrece excelente comodidad en su uso y garantiza la efectividad del tratamiento. Para todo tipo de piel. Sin fragancias ni parabenos. \r\n?? MODO DE USO: Extrae una pequeña cantidad de crema utilizando el aplicador a presión. Aplica la crema en pequeños puntos alrededor del contorno de los ojos. Con movimientos suaves y circulares difumina la crema utilizando el aplicador. Esto ayudará a mejorar la absorción y promoverá una apariencia más rejuvenecida.\r\n', 1, NULL, NULL, NULL, 0, '2023-07-12 16:10:48', '2023-08-25 19:07:37', NULL),
+('f05669b2-7376-4d5c-9e4a-6f2bd654cd89', 'Serum de Vitamina C', 13000, 'Con su textura perfecta este poderoso concentrado de Vitamina C tiene una triple acción: - Antioxidante. - Revitalizante. - Anti-Age. Además actúa como un potente protector de la polución dejando la piel visiblemente calmada y renovada. Aporta una luminosidad inigualable desde su primera aplicación ✨ Apta para todo tipo de piel.  \r\nMODO DE USO: Aplicar 3 a 4 gotas por día sobre la superficie de la piel, una vez limpia y seca. Puede aplicarse en rostro, cuello, escote y dorso de manos, masajeando suavemente hasta su absorción. Recomendamos dejar actuar unos instantes antes de aplicar su crema de tratamiento habitual y utilizar protección solar de ser aplicado durante el día.\r\n', 1, NULL, NULL, NULL, 0, '2023-07-21 16:35:52', '2023-08-25 19:07:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -492,12 +567,12 @@ INSERT INTO `products_files` (`id`, `filename`, `products_id`, `file_types_id`, 
 (122, 'sy6qxlhc0j.webp', 'e3da8d17-89bb-4f42-8ae7-77791d9f4533', 1, NULL),
 (123, 's1qb1vngse.webp', 'db005c8d-ccd0-4e0e-9d36-aaed244e8559', 1, 1),
 (124, 'fnax6jdtlr.webp', 'f05669b2-7376-4d5c-9e4a-6f2bd654cd89', 1, NULL),
-(125, 'b8da891hrl.webp', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 1, NULL),
+(125, 'b8da891hrl.webp', '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 1, 0),
 (126, 'slddsu2f39.webp', '5a1d4ed8-135f-4177-b7ce-0a239b7f1afc', 1, NULL),
-(127, 'kag8q89m0h.webp', '0d0cd130-d652-41e1-b7e6-da9553322823', 1, NULL),
+(127, 'kag8q89m0h.webp', '0d0cd130-d652-41e1-b7e6-da9553322823', 1, 0),
 (128, 'tg5aklncdz.webp', 'c1f196b4-8861-4032-ba39-523530df0299', 1, NULL),
 (129, 'lf2fhx8d.webp', 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 1, NULL),
-(130, 'kt26rcc2n4.webp', '83838646-6969-449d-8132-2ad967701c64', 1, NULL),
+(130, 'kt26rcc2n4.webp', '83838646-6969-449d-8132-2ad967701c64', 1, 0),
 (131, 'jcwqnnzy10.webp', '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 1, 1),
 (160, 'ecxbvfyvls.webp', '46bf971d-62f1-4b96-b727-d2cafa725f42', 1, 0),
 (161, 'qklta3qc75.webp', '46bf971d-62f1-4b96-b727-d2cafa725f42', 1, 1),
@@ -519,7 +594,6 @@ CREATE TABLE `shipping_addresses` (
   `city` varchar(100) DEFAULT NULL,
   `provinces_id` int(11) DEFAULT NULL,
   `zip_code` varchar(10) DEFAULT NULL,
-  `users_id` varchar(36) DEFAULT NULL,
   `createdAt` timestamp NULL DEFAULT NULL,
   `updatedAt` timestamp NULL DEFAULT NULL,
   `deletedAt` timestamp NULL DEFAULT NULL
@@ -529,21 +603,24 @@ CREATE TABLE `shipping_addresses` (
 -- Volcado de datos para la tabla `shipping_addresses`
 --
 
-INSERT INTO `shipping_addresses` (`id`, `street`, `apartment`, `city`, `provinces_id`, `zip_code`, `users_id`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
-('0e0e36c6-1bd2-468a-9cec-b39e0f74e136', NULL, NULL, NULL, 1, NULL, '44578a4e-aa20-4ecc-9fd6-323a34e6377b', '2023-08-07 15:14:08', '2023-08-07 16:20:25', NULL),
-('2', 'Juana Azurduy', NULL, 'Nunez', 1, '1430', '8', NULL, '2023-07-04 14:16:24', NULL),
-('3', 'Libertador 2232', '3B', 'Nuñez', 1, '1430', NULL, '2023-07-04 14:35:12', '2023-07-15 23:03:08', NULL),
-('30cb8ec9-a017-4399-b920-ed141012af2c', 'Livertador 1300', NULL, 'CABA', 1, '1212', '2e703d70-fbaf-4674-9c76-238d5ec4f44e', '2023-07-13 00:46:10', '2023-07-13 01:06:06', NULL),
-('4', 'Corrientes', NULL, 'Nuñez', 1, '1429', '11', '2023-07-04 20:56:40', '2023-07-04 20:56:40', NULL),
-('5', 'Santa fe 329', '3f', 'caba', 1, '1111', NULL, '2023-07-12 20:31:05', '2023-07-12 20:31:05', NULL),
-('5e26ad3a-5a9a-4f06-960d-036f9597ed41', 'Juncal 2222', '3a', 'Recoleta', 1, '1211', NULL, '2023-07-18 00:10:30', '2023-07-18 00:10:30', NULL),
-('6', 'Santa Fe 312', '0', 'CABA', 1, '1111', NULL, '2023-07-12 20:51:28', '2023-07-12 20:51:28', NULL),
-('6c6412fa-f589-46f9-a153-3f637b06b287', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', NULL, '2023-07-17 16:57:11', '2023-07-17 16:57:11', NULL),
-('73d98bfc-77c4-4da7-9796-f147dd01ab84', 'Juncal 2222', '3a', 'Recoleta', 1, '1211', NULL, '2023-07-18 00:11:58', '2023-07-18 00:11:58', NULL),
-('76205f7b-1754-4108-84f2-649147d848d4', NULL, NULL, NULL, 1, NULL, 'f636404c-60bc-41e1-bd7a-14d629ac7f07', '2023-07-17 23:24:15', '2023-07-17 23:24:17', NULL),
-('76828896-8cbc-4c37-9323-b5c3a0fc7dc1', 'Callao 6969', '9b', 'CABA', 1, '1469', '10', '2023-07-15 23:03:09', '2023-08-07 21:23:39', NULL),
-('a83e27c8-4833-42a8-b90d-8f320c1e56eb', 'Juncal 2222', '3a', 'Recoleta', 1, '1211', NULL, '2023-07-18 00:08:15', '2023-07-18 00:08:15', NULL),
-('e5edf259-8e15-4b62-8a46-6e9df537024f', NULL, NULL, NULL, 1, NULL, '214ee117-1788-4155-8895-9f61d9e2dcf6', '2023-07-31 21:52:04', '2023-07-31 21:52:04', NULL);
+INSERT INTO `shipping_addresses` (`id`, `street`, `apartment`, `city`, `provinces_id`, `zip_code`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
+('0e0e36c6-1bd2-468a-9cec-b39e0f74e136', NULL, NULL, NULL, 1, NULL, '2023-08-07 15:14:08', '2023-08-07 16:20:25', NULL),
+('2', 'Juana Azurduy', NULL, 'Nunez', 1, '1430', NULL, '2023-07-04 14:16:24', NULL),
+('3', 'Libertador 2232', '3B', 'Nuñez', 1, '1430', '2023-07-04 14:35:12', '2023-07-15 23:03:08', NULL),
+('30cb8ec9-a017-4399-b920-ed141012af2c', 'Livertador 1300', NULL, 'CABA', 1, '1212', '2023-07-13 00:46:10', '2023-07-13 01:06:06', NULL),
+('4', 'Corrientes', NULL, 'Nuñez', 1, '1429', '2023-07-04 20:56:40', '2023-07-04 20:56:40', NULL),
+('5', 'Santa fe 329', '3f', 'caba', 1, '1111', '2023-07-12 20:31:05', '2023-07-12 20:31:05', NULL),
+('564f158e-0cfa-4a02-ba82-dda1b5ce99fb', 'Callao 6969', '10A', 'CABA', 1, '1469', '2023-07-15 23:03:09', '2023-08-28 15:03:04', NULL),
+('5e26ad3a-5a9a-4f06-960d-036f9597ed41', 'Juncal 2222', '3a', 'Recoleta', 1, '1211', '2023-07-18 00:10:30', '2023-07-18 00:10:30', NULL),
+('6', 'Santa Fe 312', '0', 'CABA', 1, '1111', '2023-07-12 20:51:28', '2023-07-12 20:51:28', NULL),
+('6c6412fa-f589-46f9-a153-3f637b06b287', 'Juana Azurduy 1730', NULL, 'Nuñez', 1, '1429', '2023-07-17 16:57:11', '2023-07-17 16:57:11', NULL),
+('73d98bfc-77c4-4da7-9796-f147dd01ab84', 'Juncal 2222', '3a', 'Recoleta', 1, '1211', '2023-07-18 00:11:58', '2023-07-18 00:11:58', NULL),
+('76205f7b-1754-4108-84f2-649147d848d4', NULL, NULL, NULL, 1, NULL, '2023-07-17 23:24:15', '2023-07-17 23:24:17', NULL),
+('a83e27c8-4833-42a8-b90d-8f320c1e56eb', 'Juncal 2222', '3a', 'Recoleta', 1, '1211', '2023-07-18 00:08:15', '2023-07-18 00:08:15', NULL),
+('b10745d1-6a13-4fe2-87cc-72f5a101f159', 'Vieja Direccion', '2A', 'PALERMO', 1, '1444', '2023-08-28 16:20:00', '2023-08-28 16:20:00', NULL),
+('b220e5f7-0200-436a-9d5b-fd8049637c89', '3 de Febrero 3302', NULL, 'Nunez', 1, '1429', '2023-08-28 16:22:50', '2023-08-28 16:22:50', NULL),
+('b7481e1a-d83e-4a1f-8b78-da3f2aab8c60', 'Nueva Direccion', NULL, 'PALERMO', 1, '1444', '2023-08-28 16:17:04', '2023-08-28 16:17:04', NULL),
+('e5edf259-8e15-4b62-8a46-6e9df537024f', NULL, NULL, NULL, 1, NULL, '2023-07-31 21:52:04', '2023-07-31 21:52:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -611,7 +688,6 @@ CREATE TABLE `temporal_carts` (
 --
 
 INSERT INTO `temporal_carts` (`id`, `users_id`) VALUES
-(34, '10'),
 (36, '44578a4e-aa20-4ecc-9fd6-323a34e6377b');
 
 -- --------------------------------------------------------
@@ -743,27 +819,28 @@ CREATE TABLE `users` (
   `updatedAt` timestamp NULL DEFAULT NULL,
   `password_token` text DEFAULT NULL,
   `last_cart_email` timestamp NULL DEFAULT NULL,
-  `cart_period_type` varchar(1) DEFAULT NULL
+  `cart_period_type` varchar(1) DEFAULT NULL,
+  `country_codes_id` int(11) DEFAULT 12
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `phone`, `dni`, `password`, `email`, `wpp_notifications`, `email_notifications`, `email_newsletter`, `user_categories_id`, `birth_date`, `genres_id`, `createdAt`, `deletedAt`, `updatedAt`, `password_token`, `last_cart_email`, `cart_period_type`) VALUES
-('0b06d883-f6ba-4f64-bf1d-418230fbbc20', '', '', NULL, '', '$2a$10$5gRGlpd3HTeaYunGidwGUeuvQHG9V1AexKU/U4YW.60OrnJxX5gYu', 'prueba@gmail.com', 0, 0, 0, 3, NULL, NULL, '2023-07-12 12:55:21', NULL, '2023-07-12 12:55:21', NULL, NULL, NULL),
-('10', 'Jano', 'Pereira Kent', '01158817312', '43083507', '$2a$10$kROb/UzSCL6fuKn/HFMvOuoUMPAJsgtEBGos2aRfUhizr3GbrSKyC', 'janopk789@gmail.com', 0, 0, 0, 1, '2001-02-05 00:00:00', 2, '2023-07-04 14:35:00', NULL, '2023-08-10 15:45:20', NULL, '2023-08-10 15:44:00', NULL),
-('11', 'Jano00', 'Pereira Kent', '01158817312', '', '$2a$10$Vz40dkbxoBxWgbaUrMZbOul97Y59CjL9H6Lq.6Y1boQ5.NLPqiUpq', 'hola@gmail.com', 0, 0, 0, 2, NULL, NULL, '2023-07-04 20:51:27', NULL, '2023-07-04 20:56:39', NULL, NULL, NULL),
-('13', 'Admin', 'Admin', '', '', '$2a$10$F7R5mDNPyIN755qTjbA6.efd1/xNHMqN2Rn6MuZa/XkyCxodqsUaS', 'info@ismile.com.ar', 0, 0, 0, 2, NULL, NULL, '2023-07-06 22:52:39', NULL, '2023-07-06 23:53:48', '', NULL, NULL),
-('15', 'Inés', 'Añó', NULL, NULL, '$2a$10$WMQbFld9.6lnnnGNAqdrl.hYIQprJSgtvBZuW.OxE3a73W0NuMf7W', 'ines.anio@gmail.com', 0, 0, 0, 1, NULL, NULL, '2023-07-06 22:58:58', NULL, '2023-07-30 17:19:54', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1IiwiaWF0IjoxNjkwNzM3NTk0LCJleHAiOjE2OTA3NDExOTR9.lBO3odlPHYCGdi-NaQ1960LiM_sQZRCPwF7ybD5se-I', NULL, NULL),
-('16', 'CJoaquin', 'Cataldo', '', '', '$2a$10$NneD5C8KExxSt8KgwXGcJewSn62J2dYelRMN7eTbwOER07KleOuNm', 'joaco.cataldo3@gmail.com', 0, 0, 0, 2, NULL, NULL, '2023-07-11 11:10:11', NULL, '2023-07-11 11:10:32', NULL, NULL, NULL),
-('17', '', '', NULL, '', '$2a$10$H/XGplmwvmq5ah.nwq6DH.0vCUvzdgmb3De/h45iUrqsLvht5BHf6', 'jano@gmail.com', 0, 0, 0, 3, '2023-07-06 00:00:00', NULL, '2023-07-11 20:12:36', NULL, '2023-07-11 20:12:36', NULL, NULL, NULL),
-('214ee117-1788-4155-8895-9f61d9e2dcf6', 'Valentina', 'Antonelli', '1139421136', '45479865', '$2a$10$p2DL7DnIQKNOfNG3UuYEPuhcB89vOk/27rCKiH0TooWiZFHivolXm', 'valen@gmail.com', 0, 0, 0, 3, '2004-02-02 00:00:00', 1, '2023-07-31 21:47:48', NULL, '2023-07-31 21:52:04', NULL, NULL, NULL),
-('2e703d70-fbaf-4674-9c76-238d5ec4f44e', 'Juan', 'Gomez', '1158817312', '43083507', '$2a$10$g3oVAsn4v2JipXYB2atgIeimRyvq6bT9OfRIM8Mpmnj3F3ShfGVH2', 'chau@gmail.com', 0, 0, 0, 3, '2023-10-10 00:00:00', 2, '2023-07-12 20:22:50', NULL, '2023-07-13 01:06:05', NULL, NULL, NULL),
-('44578a4e-aa20-4ecc-9fd6-323a34e6377b', 'Jano', 'Pereira', '1158817312', '', '$2a$10$kYXqDyqrs7mKkk7a9NlfW.pOrRZYoofbrn2NUl8yVTeW5bAPDxoEG', 'janoo.pereira@gmail.com', 0, 0, 0, 3, '2001-02-12 00:00:00', 2, '2023-08-07 15:13:41', NULL, '2023-08-07 16:20:25', NULL, '2023-08-11 17:00:00', '3'),
-('8', 'Jano', 'Pereira Kent', '01158817312', '43083507', '$2a$10$wcUai1LYaFAVJ1Kt2OcnnOdPHEiTslzDty5X/SIFCroXIji71qLpS', 'diego@gmail.com', 1, 0, 0, 3, NULL, NULL, '2023-07-04 11:30:00', NULL, '2023-07-04 14:16:24', NULL, NULL, NULL),
-('cc10f663-a145-4762-83f8-9d8c7c1e6660', '', '', NULL, '', '$2a$10$b9HHWqAbbNUJXyGhIT6q/OitGGa0dKT8muHfwD54cJV7F0Byor2CK', 'borra@gmail.com', 0, 0, 0, 3, NULL, NULL, '2023-08-08 16:50:00', NULL, '2023-08-08 16:50:00', NULL, NULL, NULL),
-('f636404c-60bc-41e1-bd7a-14d629ac7f07', 'Martin', 'Berra', '1144301111', '', '$2a$10$RkdmG6iBhyoiULCLpZQmNOwZb/GV8y4k/7AouZOfk9CJdgTITsgBi', 'martin.berra+test@gmail.com', 0, 0, 0, 3, '2023-10-10 00:00:00', 1, '2023-07-17 23:23:40', NULL, '2023-07-17 23:24:17', NULL, NULL, NULL);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `phone`, `dni`, `password`, `email`, `wpp_notifications`, `email_notifications`, `email_newsletter`, `user_categories_id`, `birth_date`, `genres_id`, `createdAt`, `deletedAt`, `updatedAt`, `password_token`, `last_cart_email`, `cart_period_type`, `country_codes_id`) VALUES
+('0b06d883-f6ba-4f64-bf1d-418230fbbc20', '', '', NULL, '', '$2a$10$5gRGlpd3HTeaYunGidwGUeuvQHG9V1AexKU/U4YW.60OrnJxX5gYu', 'prueba@gmail.com', 0, 0, 0, 3, NULL, NULL, '2023-07-12 12:55:21', NULL, '2023-07-12 12:55:21', NULL, NULL, NULL, 12),
+('10', 'Jano', 'Pereira Kent', '01158817312', '43083507', '$2a$10$kROb/UzSCL6fuKn/HFMvOuoUMPAJsgtEBGos2aRfUhizr3GbrSKyC', 'janopk789@gmail.com', 1, 1, 1, 1, '2001-02-12 00:00:00', 2, '2023-07-04 14:35:00', NULL, '2023-08-28 17:23:32', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwIiwiaWF0IjoxNjkzMjM0OTg0LCJleHAiOjE2OTMyMzg1ODR9.mM7D7N-h8hThUnKuGx5yK85sMk6NXNBZdw3axOLumk4', NULL, NULL, 12),
+('11', 'Jano00', 'Pereira Kent', '01158817312', '', '$2a$10$Vz40dkbxoBxWgbaUrMZbOul97Y59CjL9H6Lq.6Y1boQ5.NLPqiUpq', 'hola@gmail.com', 0, 0, 0, 2, NULL, NULL, '2023-07-04 20:51:27', NULL, '2023-07-04 20:56:39', NULL, NULL, NULL, 12),
+('13', 'Admin', 'Admin', '', '', '$2a$10$F7R5mDNPyIN755qTjbA6.efd1/xNHMqN2Rn6MuZa/XkyCxodqsUaS', 'info@ismile.com.ar', 0, 0, 0, 2, NULL, NULL, '2023-07-06 22:52:39', NULL, '2023-07-06 23:53:48', '', NULL, NULL, 12),
+('15', 'Inés', 'Añó', NULL, NULL, '$2a$10$WMQbFld9.6lnnnGNAqdrl.hYIQprJSgtvBZuW.OxE3a73W0NuMf7W', 'ines.anio@gmail.com', 0, 0, 0, 1, NULL, NULL, '2023-07-06 22:58:58', NULL, '2023-07-30 17:19:54', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1IiwiaWF0IjoxNjkwNzM3NTk0LCJleHAiOjE2OTA3NDExOTR9.lBO3odlPHYCGdi-NaQ1960LiM_sQZRCPwF7ybD5se-I', NULL, NULL, 12),
+('16', 'CJoaquin', 'Cataldo', '', '', '$2a$10$NneD5C8KExxSt8KgwXGcJewSn62J2dYelRMN7eTbwOER07KleOuNm', 'joaco.cataldo3@gmail.com', 0, 0, 0, 2, NULL, NULL, '2023-07-11 11:10:11', NULL, '2023-07-11 11:10:32', NULL, NULL, NULL, 12),
+('17', '', '', NULL, '', '$2a$10$H/XGplmwvmq5ah.nwq6DH.0vCUvzdgmb3De/h45iUrqsLvht5BHf6', 'jano@gmail.com', 0, 0, 0, 3, '2023-07-06 00:00:00', NULL, '2023-07-11 20:12:36', NULL, '2023-07-11 20:12:36', NULL, NULL, NULL, 12),
+('214ee117-1788-4155-8895-9f61d9e2dcf6', 'Valentina', 'Antonelli', '1139421136', '45479865', '$2a$10$p2DL7DnIQKNOfNG3UuYEPuhcB89vOk/27rCKiH0TooWiZFHivolXm', 'valen@gmail.com', 0, 0, 0, 3, '2004-02-02 00:00:00', 1, '2023-07-31 21:47:48', NULL, '2023-07-31 21:52:04', NULL, NULL, NULL, 12),
+('2e703d70-fbaf-4674-9c76-238d5ec4f44e', 'Juan', 'Gomez', '1158817312', '43083507', '$2a$10$g3oVAsn4v2JipXYB2atgIeimRyvq6bT9OfRIM8Mpmnj3F3ShfGVH2', 'chau@gmail.com', 0, 0, 0, 3, '2023-10-10 00:00:00', 2, '2023-07-12 20:22:50', NULL, '2023-07-13 01:06:05', NULL, NULL, NULL, 12),
+('44578a4e-aa20-4ecc-9fd6-323a34e6377b', 'Jano', 'Pereira', '1158817312', '', '$2a$10$kYXqDyqrs7mKkk7a9NlfW.pOrRZYoofbrn2NUl8yVTeW5bAPDxoEG', 'janoo.pereira@gmail.com', 0, 0, 0, 3, '2001-02-12 00:00:00', 2, '2023-08-07 15:13:41', NULL, '2023-08-07 16:20:25', NULL, '2023-08-18 17:00:00', '4', 12),
+('8', 'Jano', 'Pereira Kent', '01158817312', '43083507', '$2a$10$wcUai1LYaFAVJ1Kt2OcnnOdPHEiTslzDty5X/SIFCroXIji71qLpS', 'diego@gmail.com', 1, 0, 0, 3, NULL, NULL, '2023-07-04 11:30:00', NULL, '2023-07-04 14:16:24', NULL, NULL, NULL, 12),
+('cc10f663-a145-4762-83f8-9d8c7c1e6660', '', '', NULL, '', '$2a$10$b9HHWqAbbNUJXyGhIT6q/OitGGa0dKT8muHfwD54cJV7F0Byor2CK', 'borra@gmail.com', 0, 0, 0, 3, NULL, NULL, '2023-08-08 16:50:00', NULL, '2023-08-08 16:50:00', NULL, NULL, NULL, 12),
+('f636404c-60bc-41e1-bd7a-14d629ac7f07', 'Martin', 'Berra', '1144301111', '', '$2a$10$RkdmG6iBhyoiULCLpZQmNOwZb/GV8y4k/7AouZOfk9CJdgTITsgBi', 'martin.berra+test@gmail.com', 0, 0, 0, 3, '2023-10-10 00:00:00', 1, '2023-07-17 23:23:40', NULL, '2023-07-17 23:24:17', NULL, NULL, NULL, 12);
 
 -- --------------------------------------------------------
 
@@ -784,6 +861,32 @@ INSERT INTO `users_categories` (`id`, `name`) VALUES
 (1, 'owner'),
 (2, 'admin'),
 (3, 'cliente');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `user_addresses`
+--
+
+CREATE TABLE `user_addresses` (
+  `id` varchar(36) NOT NULL,
+  `users_id` varchar(36) DEFAULT NULL,
+  `street` varchar(255) DEFAULT NULL,
+  `apartment` varchar(45) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `provinces_id` int(11) DEFAULT NULL,
+  `zip_code` varchar(10) DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT NULL,
+  `deletedAt` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `user_addresses`
+--
+
+INSERT INTO `user_addresses` (`id`, `users_id`, `street`, `apartment`, `city`, `provinces_id`, `zip_code`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
+('9c947b7b-37f2-41da-bcf7-ce898ff45ab5', '10', '3 de Febrero 3302', NULL, 'Nuñéz', 1, '1429', '2023-08-28 15:53:43', '2023-08-28 17:23:32', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -897,8 +1000,7 @@ ALTER TABLE `products_files`
 -- Indices de la tabla `shipping_addresses`
 --
 ALTER TABLE `shipping_addresses`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `addresses_ibfk_1` (`users_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `specialties`
@@ -951,6 +1053,12 @@ ALTER TABLE `users_categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `user_addresses`
+--
+ALTER TABLE `user_addresses`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -982,7 +1090,7 @@ ALTER TABLE `genres`
 -- AUTO_INCREMENT de la tabla `home_files`
 --
 ALTER TABLE `home_files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `home_sections`
@@ -994,7 +1102,7 @@ ALTER TABLE `home_sections`
 -- AUTO_INCREMENT de la tabla `order_status`
 --
 ALTER TABLE `order_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `order_types`
@@ -1030,13 +1138,13 @@ ALTER TABLE `specialties_services`
 -- AUTO_INCREMENT de la tabla `temporal_carts`
 --
 ALTER TABLE `temporal_carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `temporal_items`
 --
 ALTER TABLE `temporal_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 
 --
 -- AUTO_INCREMENT de la tabla `treatments`
@@ -1097,12 +1205,6 @@ ALTER TABLE `products`
 ALTER TABLE `products_files`
   ADD CONSTRAINT `products_files_ibfk_2` FOREIGN KEY (`file_types_id`) REFERENCES `file_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `products_files_ibfk_3` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `shipping_addresses`
---
-ALTER TABLE `shipping_addresses`
-  ADD CONSTRAINT `shipping_addresses_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `specialties_services`
