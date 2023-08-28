@@ -233,7 +233,7 @@
                                     </div>
                                     <section class="shipping-address-section step-section">
                                         <label class="bold label step-label">Completa tu dirección de entrega</label>
-                                        <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                        <% if (locals.userLogged && userLogged.userAddress) { %>
                                             <div class="field checkbox-field">
                                                 <input type="checkbox" id="use-user-address" name="use_user_address">
                                                 <label for="use-user-address">Utilizar dirección asociada a este
@@ -245,10 +245,10 @@
                                                         Numero*</label>
                                                     <input type="text" name="shipping_street" id="shipping_street"
                                                         class="input required">
-                                                    <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                                    <% if (locals.userLogged && userLogged.userAddress) { %>
                                                         <p class="shipping-address-p hidden"
                                                             id="shipping-address-street-p">
-                                                            <%= userLogged.shippingAddress.street %>
+                                                            <%= userLogged.userAddress.street %>
                                                         </p>
                                                         <% } %>
                                                 </div>
@@ -261,10 +261,10 @@
                                                             <button class="get-shipment-price">Calcular</button>
                                                         </div>
                                                 
-                                                    <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                                    <% if (locals.userLogged && userLogged.userAddress) { %>
                                                         <p class="shipping-address-p hidden"
                                                             id="shipping-address-zip-code-p">
-                                                            <%= userLogged.shippingAddress.zip_code %>
+                                                            <%= userLogged.userAddress.zip_code %>
                                                         </p>
                                                         <% } %>
                                                 </div>
@@ -273,10 +273,10 @@
                                                         Departamento</label>
                                                     <input type="text" name="shipping_floor" id="shipping_floor"
                                                         class="input">
-                                                    <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                                    <% if (locals.userLogged && userLogged.userAddress) { %>
                                                         <p class="shipping-address-p hidden"
                                                             id="shipping-address-apartment-p">
-                                                            <%= userLogged.shippingAddress.apartment %>
+                                                            <%= userLogged.userAddress.apartment %>
                                                         </p>
                                                         <% } %>
                                                 </div>
@@ -290,11 +290,11 @@
                                                             </option>
                                                             <% }) %>
                                                     </select>
-                                                    <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                                    <% if (locals.userLogged && userLogged.userAddress) { %>
                                                         <p class="shipping-address-p hidden"
                                                             id="shipping-address-province-p">
                                                             <%= provinces.find(prov=>prov.id ==
-                                                                userLogged.shippingAddress.provinces_id).name %>
+                                                                userLogged.userAddress.provinces_id).name %>
                                                         </p>
                                                         <% } %>
                                                 </div>
@@ -302,10 +302,10 @@
                                                     <label for="shipping_city" class="label bold">Ciudad*</label>
                                                     <input type="text" name="shipping_city" id="shipping_city"
                                                         class="input required">
-                                                    <% if (locals.userLogged && userLogged.shippingAddress) { %>
+                                                    <% if (locals.userLogged && userLogged.userAddress) { %>
                                                         <p class="shipping-address-p hidden"
                                                             id="shipping-address-city-p">
-                                                            <%= userLogged.shippingAddress.city %>
+                                                            <%= userLogged.userAddress.city %>
                                                         </p>
                                                         <% } %>
                                                 </div>

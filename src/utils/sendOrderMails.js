@@ -12,7 +12,7 @@ async function sendOrderMails(order) {
     if (order.order_types_id == 1) { //Domicilio
         userMailContentDeliveryMethod += `<p style="font-weight:600;">Envío a domicilio</p>`;
         operatorMailContentDeliveryMethod += `<p style="font-weight:600;">Envío a domicilio</p>`;
-        if (order.is_same_address) { //Misma direccion (uso billingAddress)
+        if (!order.shipping_addresses_id) { //No tiene shipping_id (uso la de billing)
             const province = provinces.find(prov => prov.id == order.billingAddress.provinces_id).name
             userMailContentDeliveryMethod +=
                 `    
@@ -46,13 +46,14 @@ async function sendOrderMails(order) {
     //   Tabla con items
     let tableContent = ``;
     order.orderItems.forEach(item => {
+        const itemPrice = item.price * ( 1 - (item.discount||0)/100);
         tableContent +=
             `
         <tr>
             <td style="width:25%;text-align:center;">${item.name}</td>
-            <td style="width:25%;text-align:center;">$${item.price}</td>
+            <td style="width:25%;text-align:center;">$${itemPrice}</td>
             <td style="width:25%;text-align:center;">${item.quantity}</td>
-            <td style="width:25%;text-align:center;">${item.quantity * item.price}</td>
+            <td style="width:25%;text-align:center;">${item.quantity * itemPrice}</td>
         </tr>
         `;
     });

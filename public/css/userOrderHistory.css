@@ -1,5 +1,5 @@
 .main {
-    padding: 5vh 15vw;
+    padding: 5vh 10vw;
     transition: all .4s ease;
 }
 
@@ -26,10 +26,12 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .order-history-card {
     width: 100%;
+    max-width: 400px;
     margin-bottom: 25px;
     display: flex;
     flex-wrap: wrap;
@@ -89,6 +91,7 @@
 
 .order-card-item-image-container {
     width: 30%;
+    max-width: 80px;
     height: 60px;
     margin-right: 10px;
 }
@@ -105,10 +108,23 @@
     width: 70%;
 }
 
-.order-card-item-info>p {
+.order-card-item-info p {
     font-size: 13px;
 }
-
+.order-card-item-row-container{
+    display: flex;
+    width: 100%;
+}
+.order-card-item-subtotal-container{
+    flex-wrap: wrap;
+}
+.order-card-item-row-container>*{
+    margin-right: 4px;
+}
+.order-card-item-discount-tag{
+    width: 100%;
+    color: var(--gold-color);
+}
 .order-card-info {
     display: none;
 }
@@ -241,6 +257,7 @@
 .order-detail-item-img-container {
     width: 25%;
     height: 100%;
+    position: relative;
 }
 
 .order-item-img {
@@ -255,12 +272,18 @@
     flex-direction: column;
     padding-left: 5px;
 }
+.order-detail-item-row-container{
+    width: 100%;
+    display: flex;
+}
 
-.order-detail-item-info>* {
+.order-detail-item-info p {
     margin-bottom: 5px;
     font-size: 13px;
 }
-
+.order-detail-item-subtotal.order-detail-item-discounted-subtotal{
+    margin-left: 10px;
+}
 .order-detail-label {
     font-size: 18px;
     margin-bottom: 10px;
@@ -276,12 +299,33 @@
     color: #000;
     font-weight: 500;
 }
+/* Para el tag de la foto con descuento */
+.order-detail-item-discount-tag-container {
+    position: absolute;
+    width: 60px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #bba059bf;/* gold color con opacity */
+    color: var(--violet-color);
+    border-radius: 2px;
+    overflow: hidden;
+    right: 0%;
+    top: 0%;
+}
 
+.order-detail-item-discount-tag {
+    color: #fff;
+    font-size: 11px;
+}
 @media(min-width:768px) {
     .main-title {
         font-size: 22px;
     }
-
+    .order-history-card {
+        max-width: unset;
+    }
     .order-card-tra-id {
         display: initial;
 
@@ -289,6 +333,7 @@
 
     .order-card-item-image-container {
         width: 30%;
+        max-width: unset;
         height: 90px;
     }
 
@@ -309,7 +354,7 @@
         justify-content: space-between;
     }
 
-    .order-card-item-info>p {
+    .order-card-item-info p {
         font-size: 16px;
     }
 
@@ -321,10 +366,13 @@
         padding: 10px 7%;
     }
 
-    .order-card-info>p {
+    .order-card-info p {
         margin-bottom: 8px;
     }
-
+    .order-card-item-row-container>*{
+        margin-right: 15px;
+    }
+    
     .order-card-total-price {
         font-size: 22px;
     }
@@ -378,7 +426,7 @@
         padding-left: 10px;
     }
 
-    .order-detail-item-info>* {
+    .order-detail-item-info p {
         margin-bottom: 5px;
         font-size: 16px;
     }
@@ -392,7 +440,9 @@
     .main-title {
         font-size: 24px;
     }
-
+    .order-card-item-discount-tag{
+        width: fit-content;
+    }
 
 
 }

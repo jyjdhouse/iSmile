@@ -36,9 +36,10 @@ app.use(methodOverride('_method'));
 
 // set up rate limiter: maximum of five requests per minute
 var RateLimit = require('express-rate-limit');
+// 10 peticiones cada 30 segundos
 var limiter = RateLimit({
-  windowMs: 1*60*1000, // 1 minute
-  max: 5
+  windowMs: 1*30*1000, // 30sec
+  max: 10
 });
 
 // apply rate limiter to all requests

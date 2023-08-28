@@ -20,7 +20,8 @@ module.exports = (sequelize, dataTypes) => {
         user_categories_id: {type: dataTypes.INTEGER},
         password_token: { type: dataTypes.TEXT },
         last_cart_email: { type: dataTypes.DATE },
-        cart_period_type: { type: dataTypes.STRING(1) }
+        cart_period_type: { type: dataTypes.STRING(1) },
+        country_codes_id: { type: dataTypes.INTEGER }
     }
 
     let config = {
@@ -35,8 +36,8 @@ module.exports = (sequelize, dataTypes) => {
             as: 'genre',
             foreignKey: 'genres_id',
         }) 
-        User.hasOne(models.ShippingAddress, {
-            as: 'shippingAddress',
+        User.hasOne(models.UserAddress, {
+            as: 'userAddress',
             foreignKey: 'users_id',
         });
         User.hasOne(models.TemporalCart, {
