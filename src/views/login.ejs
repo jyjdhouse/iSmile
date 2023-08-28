@@ -20,9 +20,16 @@
                     <label for="login-password" class="bold">Contraseña</label>
                     <input type="password" id="login-password" class="input" placeholder="Ingrese su Contraseña"
                         name="password" autocomplete="off">
-                    <i class="fa-solid fa-eye show-password-btn password-btn-toggler"></i>
-                    <i class="fa-solid fa-eye-slash hide-password-btn password-btn-toggler hidden"></i>
-                    <p class="forget-password-btn">Olvide mi contraseña</p>
+                        <div class="login-password-toggler-container">
+                            <i class="fa-solid fa-eye show-password-btn password-btn-toggler"></i>
+                            <i class="fa-solid fa-eye-slash hide-password-btn password-btn-toggler hidden"></i>
+                        </div>
+                    
+                    <div class="additional-options">
+                        <p class="forget-password-btn">Olvide mi contraseña</p>
+                        <a class="back-to-login" href="/user/regist">No tenes una cuenta? Registrate</a>
+                    </div>
+                   
                 </div>
                 <% if (locals.errors) { %>
                     <p class="error-msg">Los datos ingresados no son válidos.</p>

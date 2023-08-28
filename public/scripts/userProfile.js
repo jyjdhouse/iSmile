@@ -104,8 +104,16 @@ window.addEventListener('load', () => {
     // veo cual edit content btn toca el usuario para hacer el display del form y los inputs
     editContentBtn.forEach(btn => {
         btn.addEventListener('click', (e) => {
+            let editContentContainer;
+            let discardChangesBtn;
             e.preventDefault()
             if (window.innerWidth <= 768) {
+                let editContentContainer = document.querySelector('.mobile-edit-content-container');
+                let discardChangesBtn = document.createElement('button');
+                discardChangesBtn.setAttribute('class', 'form-btn');
+                discardChangesBtn.classList.add('form-btn', 'discard-changes');
+                discardChangesBtn.textContent = "Descartar cambios";
+                editContentContainer.appendChild(discardChangesBtn);
                 const secondParent = document.querySelectorAll('.profile-selected-field-container')
                 secondParent.forEach(div => {
                     const firstParent = div.closest('.options-selected-container')
@@ -113,7 +121,6 @@ window.addEventListener('load', () => {
                     spanParent.forEach(parent => {
                         if(parent?.classList.contains('unique-email-field'))return
                         const spanTrue = parent?.querySelector('span').classList.add('span-inactive')
-
                     })
                     const inputContainers = div.querySelectorAll('.profile-input')
                     inputContainers.forEach(cont => { 
@@ -129,7 +136,9 @@ window.addEventListener('load', () => {
                 radioButtons.forEach(radio => {
                     radio.disabled = false
                 })
+               
             } else {
+               
                 const secondParent = document.querySelectorAll('.profile-data-container')
                 secondParent.forEach(div => {
                     const spanParent = div.querySelectorAll('.profile-field-container')
@@ -148,6 +157,13 @@ window.addEventListener('load', () => {
                 radioButtons.forEach(radio => {
                     radio.disabled = false
                 })
+                let editContentContainer = document.querySelector('.desktop-edit-content-container');
+
+                let discardChangesBtn = document.createElement('button');
+                discardChangesBtn.setAttribute('class', 'form-btn');
+                discardChangesBtn.classList.add('form-btn', 'discard-changes');
+                discardChangesBtn.textContent = "Descartar cambios";
+                editContentContainer.appendChild(discardChangesBtn);
             }
         })
     });

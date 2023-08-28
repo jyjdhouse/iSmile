@@ -205,7 +205,7 @@ const controller = {
 
             }
 
-            // Me fijo si por lomenos hay un producto que tenga descuento
+           /*  // Me fijo si por lomenos hay un producto que tenga descuento
             let productsWithDiscount = productsInDb.filter(prod => prod.discount);
             let maxDiscount = 0;
             let discountLabel;
@@ -225,11 +225,11 @@ const controller = {
                     }
                 })).label;
             };
-
+ */
 
             // return res.send(discountLabel);
             // return res.send({ productsInDb, productsGroupDesktop, productsGroupMobile });
-            return res.render('index', { lastBlogs, videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile, maxDiscount, discountLabel })
+            return res.render('index', { lastBlogs, videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile })
 
         } catch (error) {
             console.log(`Falle en mainController.list: ${error}`);

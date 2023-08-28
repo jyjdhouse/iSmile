@@ -44,12 +44,16 @@ window.addEventListener('load', () => {
     // Asignar la función al evento scroll
     // window.addEventListener('scroll', detectarElementoEnPantalla(video));
 
-
-
     // LOGICA QUE APAREZCAN LAS COSAS DEL BANNER AL SCROLLEAR
     const bannerImgContainer = document.querySelector('.discount-banner-img-container');
+<<<<<<< HEAD
+    if(bannerImgContainer) {
+        const bannerImgObserver = checkIfIsInScreen(.6, handleVisibleBannerImg, bannerImgContainer)
+        console.log(bannerImgContainer)
+=======
     if (bannerImgContainer) {
         const bannerImgObserver = checkIfIsInScreen(.6, handleVisibleBannerImg, bannerImgContainer)
+>>>>>>> b954e5045149e1d3ad6d666f798536e8d119432e
         // Me fijo si aparece en pantalla
         bannerImgObserver.observe(bannerImgContainer);
         function handleVisibleBannerImg(container) {
@@ -63,7 +67,10 @@ window.addEventListener('load', () => {
         function handleVisibleBannerText(container) {
             container.classList.add('discount-banner-text-container-active');
         }
+<<<<<<< HEAD
+=======
 
+>>>>>>> b954e5045149e1d3ad6d666f798536e8d119432e
     }
 
     // Logica para mostrar labels en slideShow
@@ -381,7 +388,12 @@ window.addEventListener('load', () => {
     // Titulo actual 
     const editTitleButton = document.querySelector('.start-editing');
     let title;
+<<<<<<< HEAD
+    let content = document.querySelector('.banner-label');
+    console.log(content)
+=======
     let content = document.querySelector('.banner-label')?.textContent;
+>>>>>>> b954e5045149e1d3ad6d666f798536e8d119432e
     // Contenedo de botones deshacer/aplicar
     const confirmTitleEditingContainer = document.querySelector('.confirm-action-buttons-container');
     // Botones de deshacer/aplicar cambios

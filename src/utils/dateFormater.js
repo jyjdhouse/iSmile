@@ -2,5 +2,11 @@
 module.exports = function (date) {
     date = new Date(date);
     date.setDate(date.getDate() + 1);
-    return date.toLocaleDateString();
+    
+    const options = { day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'UTC' };
+    const formattedDate = date.toLocaleDateString('es-ES', options);
+    
+    console.log(formattedDate);
+    
+    return formattedDate;
 }
