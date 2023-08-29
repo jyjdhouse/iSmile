@@ -72,7 +72,7 @@ app.use('/api/admin', apiAdminRouter);
 app.use('/api/payment', apiPaymentRouter);
 
 app.use(userLogged);
-app.use(userIsIncomplete);
+/* app.use(userIsIncomplete); */
 app.use(headerMiddleware);
 
 // Ruteo

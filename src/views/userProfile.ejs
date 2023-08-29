@@ -82,7 +82,7 @@
                                             <%= user.dni? user.dni : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
-                                            <input class="numeric-only-input" type="text" name="dni"
+                                            <input class="required numeric-only-input" type="text" name="dni"
                                                 value="<%=user.dni || null%>"
                                                 placeholder="23083620">
                                         </div>
@@ -259,7 +259,7 @@
                                             <%= user.first_name %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
-                                            <input class="required letter-only-input" type="text" name="first_name"
+                                            <input class="desktop-required letter-only-input" type="text" name="first_name"
                                                 value="<%=user.first_name || null%>"
                                                 placeholder="Ingresar nombre">
                                         </div>
@@ -269,7 +269,7 @@
                                             <%= user.last_name %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
-                                            <input class="required" type="text" name="last_name"
+                                            <input class="desktop-required" type="text" name="last_name"
                                                 value="<%=user.last_name || null%>"
                                                 placeholder="Ingresar apellido/s">
                                         </div>
@@ -311,7 +311,7 @@
                                                     </option>
                                                     <% }) %>
                                             </select>
-                                            <input class="numeric-only-input required" type="text" name="phone"
+                                            <input class="numeric-only-input desktop-required" type="text" name="phone"
                                                 value="<%=user.phone || null%>" placeholder="1158731281">
                                         </div>
                                     </li>
@@ -320,7 +320,7 @@
                                             <%= user.dni? user.dni : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
-                                            <input class="numeric-only-input" type="text" name="dni"
+                                            <input class="numeric-only-input desktop-required" type="text" name="dni"
                                                 value="<%=user.dni || null%>"
                                                 placeholder="23083620">
                                         </div>

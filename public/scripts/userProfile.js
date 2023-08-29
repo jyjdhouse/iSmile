@@ -65,6 +65,19 @@ window.addEventListener('load', () => {
             radioButtons.forEach(radio => {
                 radio.disabled = false
             })
+            const requiredInputs = document.querySelectorAll('.desktop-required');
+            requiredInputs.forEach(input => {   
+                    let div = document.createElement('div');
+                    div.classList.add('error-msg-container');
+                    input.closest('.profile-field-container').appendChild(div);   
+                    // Armo el mensaje de error
+                    // Crear el mensaje adiciónal
+                    const additionalMessage = document.createElement('span');
+                    additionalMessage.classList.add('error-msg');
+                    additionalMessage.innerHTML = 'Campo requerido'
+                    // Insertar el mensaje adiciónal después del input
+                    div.appendChild(additionalMessage)
+            });
         }
     }
 
@@ -100,71 +113,123 @@ window.addEventListener('load', () => {
         })
     })
 
+    const handleMobileClickBtn = (btn, method) => {
+        const secondParent = document.querySelectorAll('.profile-selected-field-container')
+        secondParent.forEach(div => {
+            const firstParent = div.closest('.options-selected-container')
+            const spanParent = div.querySelectorAll('.profile-field-container')
+            spanParent.forEach(parent => {
+                if(parent?.classList.contains('unique-email-field'))return
+                let spanTrue;
+                if(parent && method == 'add'){
+                    spanTrue = parent?.querySelector('span').classList.add('span-inactive')
+                } else {
+                    spanTrue = parent?.querySelector('span').classList.remove('span-inactive')
+                }          
+            })
+            const inputContainers = div.querySelectorAll('.profile-input')
+            inputContainers.forEach(cont => { 
+                if(method == 'add') {
+                    cont?.classList.remove('input-container-inactive')
+                    cont?.classList.add('input-container-active')
+                } else {
+                    cont?.classList.add('input-container-inactive')
+                    cont?.classList.remove('input-container-active')
+                }        
+            })
+            firstParent.style.height = `${firstParent.offsetHeight + 10}px`
+        })
+
+        if(method == 'add' && btn){
+            btn.classList.add('form-btn-inactive')
+            btn.nextElementSibling.classList.remove('form-btn-inactive')
+        } else {
+            const saveChangesBtn = document.querySelector('.mobile-profile-content-wrapper .send-user-info-form-btn')
+            saveChangesBtn.classList.add('form-btn-inactive')
+            saveChangesBtn.previousElementSibling.classList.remove('form-btn-inactive')
+            saveChangesBtn.nextElementSibling.remove()
+        }     
+
+        radioButtons.forEach(radio => {
+            method == 'add' ? radio.disabled = false : radio.disabled = true    
+        })
+    }
+
+    const handleDesktopClickBtn = (btn, method) => {
+        const secondParent = document.querySelectorAll('.profile-data-container')
+        secondParent.forEach(div => {
+            const spanParent = div.querySelectorAll('.profile-field-container')
+            spanParent.forEach(span => {
+                if(span?.classList.contains('unique-email-field'))return
+                if(method == 'add'){
+                    span?.querySelector('span')?.classList.add('span-inactive')
+                } else {
+                    span?.querySelector('span')?.classList.remove('span-inactive')
+                }          
+            })
+            const inputContainers = div.querySelectorAll('.profile-data-container .profile-input')
+            inputContainers.forEach(cont => { 
+                if(method == 'add'){
+                    cont?.classList.remove('input-container-inactive')
+                    cont?.classList.add('input-container-active')
+                } else {
+                    cont?.classList.add('input-container-inactive')
+                    cont?.classList.remove('input-container-active')
+                }         
+            })
+        })
+        if(method == 'add' && btn){
+            btn.classList.add('form-btn-inactive')
+            btn.nextElementSibling?.classList.remove('form-btn-inactive')
+        } else {
+            const saveChangesBtn = document.querySelector('.desktop-profile-content-wrapper .send-user-info-form-btn')
+            saveChangesBtn.classList.add('form-btn-inactive')
+            saveChangesBtn.previousElementSibling.classList.remove('form-btn-inactive')
+            saveChangesBtn.nextElementSibling.remove()
+        }
+        radioButtons.forEach(radio => {
+            method == 'add' ? radio.disabled = false : radio.disabled = true    
+        })
+    }
+
+    const listenToDiscardChangesBtn = () => {
+        let btn = document.querySelector('.discard-changes-btn');
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            let method = 'remove';
+            if(window.innerWidth <= 768){
+                handleMobileClickBtn(null, method);
+            } else {
+                handleDesktopClickBtn(null, method)
+            }
+            
+        })
+    }
 
     // veo cual edit content btn toca el usuario para hacer el display del form y los inputs
     editContentBtn.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            let editContentContainer;
-            let discardChangesBtn;
             e.preventDefault()
             if (window.innerWidth <= 768) {
+                console.log('entro mob')
                 let editContentContainer = document.querySelector('.mobile-edit-content-container');
                 let discardChangesBtn = document.createElement('button');
-                discardChangesBtn.setAttribute('class', 'form-btn');
-                discardChangesBtn.classList.add('form-btn', 'discard-changes');
+                discardChangesBtn.classList.add('discard-changes-btn');
                 discardChangesBtn.textContent = "Descartar cambios";
                 editContentContainer.appendChild(discardChangesBtn);
-                const secondParent = document.querySelectorAll('.profile-selected-field-container')
-                secondParent.forEach(div => {
-                    const firstParent = div.closest('.options-selected-container')
-                    const spanParent = div.querySelectorAll('.profile-field-container')
-                    spanParent.forEach(parent => {
-                        if(parent?.classList.contains('unique-email-field'))return
-                        const spanTrue = parent?.querySelector('span').classList.add('span-inactive')
-                    })
-                    const inputContainers = div.querySelectorAll('.profile-input')
-                    inputContainers.forEach(cont => { 
-                        cont?.classList.remove('input-container-inactive')
-                        cont?.classList.add('input-container-active')
-                    })
-                    firstParent.style.height = `${firstParent.offsetHeight + 10}px`
-                })
-
-                btn.classList.add('form-btn-inactive')
-                btn.nextElementSibling.classList.remove('form-btn-inactive')
-
-                radioButtons.forEach(radio => {
-                    radio.disabled = false
-                })
+                const method = 'add';
+                handleMobileClickBtn(btn, method)
                
-            } else {
-               
-                const secondParent = document.querySelectorAll('.profile-data-container')
-                secondParent.forEach(div => {
-                    const spanParent = div.querySelectorAll('.profile-field-container')
-                    spanParent.forEach(span => {
-                        if(span?.classList.contains('unique-email-field'))return
-                        span?.querySelector('span')?.classList.add('span-inactive')
-                    })
-                    const inputContainers = div.querySelectorAll('.profile-data-container .profile-input')
-                    inputContainers.forEach(cont => { 
-                        cont?.classList.remove('input-container-inactive')
-                        cont?.classList.add('input-container-active')
-                    })
-                })
-                btn.classList.add('form-btn-inactive')
-                btn.nextElementSibling?.classList.remove('form-btn-inactive')
-                radioButtons.forEach(radio => {
-                    radio.disabled = false
-                })
+            } else {  
                 let editContentContainer = document.querySelector('.desktop-edit-content-container');
-
                 let discardChangesBtn = document.createElement('button');
-                discardChangesBtn.setAttribute('class', 'form-btn');
-                discardChangesBtn.classList.add('form-btn', 'discard-changes');
+                discardChangesBtn.classList.add('discard-changes-btn');
                 discardChangesBtn.textContent = "Descartar cambios";
                 editContentContainer.appendChild(discardChangesBtn);
+                const method = 'add';
+                handleDesktopClickBtn(btn, method);
             }
+            listenToDiscardChangesBtn()
         })
     });
     // Logica para que todos los inputs numericos no acepten letras
@@ -192,20 +257,37 @@ window.addEventListener('load', () => {
             e.preventDefault();
             // Agarro el formulario que envio
             const form = btn.closest('.user-info-form');
+            let errorsElements = form.querySelectorAll('.error-msg');
+            if(errorsElements){
+                errorsElements.forEach(err => {
+                    err.remove()
+                }) 
+            }
+            
             // Bandera para saber si se completo lo necesario
             let flag = true;
             //Agarro los inputs requeridos
-            const requiredInputs = form.querySelectorAll('.required');
+            let requiredInputs; 
+            if(window.innerWidth <= 768){
+                requiredInputs = document.querySelectorAll('.required');
+            } else {
+                requiredInputs = document.querySelectorAll('.desktop-required');
+            }
             requiredInputs.forEach(input => {
                 if (!input.value) {
                     flag = false;
+                    let div = document.createElement('div');
+                    div.classList.add('error-msg-container');
+                    input.closest('.profile-field-container').appendChild(div);   
+                    console.log(input.closest('.profile-field-container'))
+                    console.log(input.closest('.profile-field-container'))        
                     // Armo el mensaje de error
                     // Crear el mensaje adiciónal
                     const additionalMessage = document.createElement('span');
                     additionalMessage.classList.add('error-msg');
-                    additionalMessage.innerHTML = 'Debes completar el campo'
+                    additionalMessage.innerHTML = 'Campo requerido'
                     // Insertar el mensaje adiciónal después del input
-                    input.closest('div').appendChild(additionalMessage);
+                    div.appendChild(additionalMessage)
                 }
             });
             if(flag){

@@ -121,7 +121,21 @@ const controller = {
             }
 
             // SLIDESHOW
-            const productsInDb = getDeepCopy(await getAllProducts());
+            let productsInDb = getDeepCopy(await db.Product.findAll({
+                where: {
+                    stock: {
+                        [Op.not]: 0
+                    }
+                },
+                include: [
+                    {
+                        association: 'files',
+                        include: ['fileType']
+                    },
+                    'temporalItems',
+                    'category'
+                ]
+            }));
             let productsGroupDesktop = []
             let productsGroupMobile = []; //Grupos para la galeria
             // Calculamos el número de grupos completos de tres elementos
