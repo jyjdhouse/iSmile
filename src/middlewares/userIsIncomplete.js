@@ -12,8 +12,20 @@ const userIsIncomplete = async (req, res, next) => {
                     exclude: ['password']
                 }
             });
+            // Quiere decir que no verifico el mail
+            if (!userLogged.verified_email) {
+                
+                if (req.originalUrl) {
+                    // Verificar si el usuario se encuentra en una URL específica
+                    if (!req.originalUrl.includes('/user/verificar-email')) {
+                        // console.log('El path es:' + pathToCheck);
+                        // Lo redirijo para que complete sus datos
+                        return res.redirect(`/user/verificar-email`);
+                    }
+                }
+            }
             // Quiere decir que no completó sus datos
-            if (!userLogged['first_name'].length || !userLogged['last_name'].length) {
+            else if (!userLogged['first_name'].length || !userLogged['last_name'].length) {
                 
                 if (req.originalUrl) {
                     // Verificar si el usuario se encuentra en una URL específica

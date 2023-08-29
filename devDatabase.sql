@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-08-2023 a las 23:33:30
+-- Tiempo de generación: 29-08-2023 a las 19:03:45
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -688,7 +688,7 @@ CREATE TABLE `temporal_carts` (
 --
 
 INSERT INTO `temporal_carts` (`id`, `users_id`) VALUES
-(36, '44578a4e-aa20-4ecc-9fd6-323a34e6377b');
+(45, '10');
 
 -- --------------------------------------------------------
 
@@ -709,9 +709,8 @@ CREATE TABLE `temporal_items` (
 --
 
 INSERT INTO `temporal_items` (`id`, `temporal_cart_id`, `products_id`, `quantity`, `added_date`) VALUES
-(141, 36, '79cbdf23-309b-4f2f-9834-9d6fd5de5251', 1, NULL),
-(142, 36, '91ca97a0-31e9-4c23-ac71-d18cb19eeb33', 1, '2023-08-07 15:14:21'),
-(143, 36, '0d0cd130-d652-41e1-b7e6-da9553322823', 1, '2023-08-07 15:14:23');
+(164, 45, 'db005c8d-ccd0-4e0e-9d36-aaed244e8559', 1, NULL),
+(165, 45, 'ac4abb69-97ed-4d09-87c4-c3da48ce15f8', 1, '2023-08-29 01:10:07');
 
 -- --------------------------------------------------------
 
@@ -820,27 +819,21 @@ CREATE TABLE `users` (
   `password_token` text DEFAULT NULL,
   `last_cart_email` timestamp NULL DEFAULT NULL,
   `cart_period_type` varchar(1) DEFAULT NULL,
-  `country_codes_id` int(11) DEFAULT 12
+  `country_codes_id` int(11) DEFAULT 12,
+  `verified_email` tinyint(4) DEFAULT 0,
+  `verification_code` varchar(6) DEFAULT NULL,
+  `expiration_time` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `phone`, `dni`, `password`, `email`, `wpp_notifications`, `email_notifications`, `email_newsletter`, `user_categories_id`, `birth_date`, `genres_id`, `createdAt`, `deletedAt`, `updatedAt`, `password_token`, `last_cart_email`, `cart_period_type`, `country_codes_id`) VALUES
-('0b06d883-f6ba-4f64-bf1d-418230fbbc20', '', '', NULL, '', '$2a$10$5gRGlpd3HTeaYunGidwGUeuvQHG9V1AexKU/U4YW.60OrnJxX5gYu', 'prueba@gmail.com', 0, 0, 0, 3, NULL, NULL, '2023-07-12 12:55:21', NULL, '2023-07-12 12:55:21', NULL, NULL, NULL, 12),
-('10', 'Jano', 'Pereira Kent', '01158817312', '43083507', '$2a$10$kROb/UzSCL6fuKn/HFMvOuoUMPAJsgtEBGos2aRfUhizr3GbrSKyC', 'janopk789@gmail.com', 1, 1, 1, 1, '2001-02-12 00:00:00', 2, '2023-07-04 14:35:00', NULL, '2023-08-28 17:23:32', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwIiwiaWF0IjoxNjkzMjM0OTg0LCJleHAiOjE2OTMyMzg1ODR9.mM7D7N-h8hThUnKuGx5yK85sMk6NXNBZdw3axOLumk4', NULL, NULL, 12),
-('11', 'Jano00', 'Pereira Kent', '01158817312', '', '$2a$10$Vz40dkbxoBxWgbaUrMZbOul97Y59CjL9H6Lq.6Y1boQ5.NLPqiUpq', 'hola@gmail.com', 0, 0, 0, 2, NULL, NULL, '2023-07-04 20:51:27', NULL, '2023-07-04 20:56:39', NULL, NULL, NULL, 12),
-('13', 'Admin', 'Admin', '', '', '$2a$10$F7R5mDNPyIN755qTjbA6.efd1/xNHMqN2Rn6MuZa/XkyCxodqsUaS', 'info@ismile.com.ar', 0, 0, 0, 2, NULL, NULL, '2023-07-06 22:52:39', NULL, '2023-07-06 23:53:48', '', NULL, NULL, 12),
-('15', 'Inés', 'Añó', NULL, NULL, '$2a$10$WMQbFld9.6lnnnGNAqdrl.hYIQprJSgtvBZuW.OxE3a73W0NuMf7W', 'ines.anio@gmail.com', 0, 0, 0, 1, NULL, NULL, '2023-07-06 22:58:58', NULL, '2023-07-30 17:19:54', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1IiwiaWF0IjoxNjkwNzM3NTk0LCJleHAiOjE2OTA3NDExOTR9.lBO3odlPHYCGdi-NaQ1960LiM_sQZRCPwF7ybD5se-I', NULL, NULL, 12),
-('16', 'CJoaquin', 'Cataldo', '', '', '$2a$10$NneD5C8KExxSt8KgwXGcJewSn62J2dYelRMN7eTbwOER07KleOuNm', 'joaco.cataldo3@gmail.com', 0, 0, 0, 2, NULL, NULL, '2023-07-11 11:10:11', NULL, '2023-07-11 11:10:32', NULL, NULL, NULL, 12),
-('17', '', '', NULL, '', '$2a$10$H/XGplmwvmq5ah.nwq6DH.0vCUvzdgmb3De/h45iUrqsLvht5BHf6', 'jano@gmail.com', 0, 0, 0, 3, '2023-07-06 00:00:00', NULL, '2023-07-11 20:12:36', NULL, '2023-07-11 20:12:36', NULL, NULL, NULL, 12),
-('214ee117-1788-4155-8895-9f61d9e2dcf6', 'Valentina', 'Antonelli', '1139421136', '45479865', '$2a$10$p2DL7DnIQKNOfNG3UuYEPuhcB89vOk/27rCKiH0TooWiZFHivolXm', 'valen@gmail.com', 0, 0, 0, 3, '2004-02-02 00:00:00', 1, '2023-07-31 21:47:48', NULL, '2023-07-31 21:52:04', NULL, NULL, NULL, 12),
-('2e703d70-fbaf-4674-9c76-238d5ec4f44e', 'Juan', 'Gomez', '1158817312', '43083507', '$2a$10$g3oVAsn4v2JipXYB2atgIeimRyvq6bT9OfRIM8Mpmnj3F3ShfGVH2', 'chau@gmail.com', 0, 0, 0, 3, '2023-10-10 00:00:00', 2, '2023-07-12 20:22:50', NULL, '2023-07-13 01:06:05', NULL, NULL, NULL, 12),
-('44578a4e-aa20-4ecc-9fd6-323a34e6377b', 'Jano', 'Pereira', '1158817312', '', '$2a$10$kYXqDyqrs7mKkk7a9NlfW.pOrRZYoofbrn2NUl8yVTeW5bAPDxoEG', 'janoo.pereira@gmail.com', 0, 0, 0, 3, '2001-02-12 00:00:00', 2, '2023-08-07 15:13:41', NULL, '2023-08-07 16:20:25', NULL, '2023-08-18 17:00:00', '4', 12),
-('8', 'Jano', 'Pereira Kent', '01158817312', '43083507', '$2a$10$wcUai1LYaFAVJ1Kt2OcnnOdPHEiTslzDty5X/SIFCroXIji71qLpS', 'diego@gmail.com', 1, 0, 0, 3, NULL, NULL, '2023-07-04 11:30:00', NULL, '2023-07-04 14:16:24', NULL, NULL, NULL, 12),
-('cc10f663-a145-4762-83f8-9d8c7c1e6660', '', '', NULL, '', '$2a$10$b9HHWqAbbNUJXyGhIT6q/OitGGa0dKT8muHfwD54cJV7F0Byor2CK', 'borra@gmail.com', 0, 0, 0, 3, NULL, NULL, '2023-08-08 16:50:00', NULL, '2023-08-08 16:50:00', NULL, NULL, NULL, 12),
-('f636404c-60bc-41e1-bd7a-14d629ac7f07', 'Martin', 'Berra', '1144301111', '', '$2a$10$RkdmG6iBhyoiULCLpZQmNOwZb/GV8y4k/7AouZOfk9CJdgTITsgBi', 'martin.berra+test@gmail.com', 0, 0, 0, 3, '2023-10-10 00:00:00', 1, '2023-07-17 23:23:40', NULL, '2023-07-17 23:24:17', NULL, NULL, NULL, 12);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `phone`, `dni`, `password`, `email`, `wpp_notifications`, `email_notifications`, `email_newsletter`, `user_categories_id`, `birth_date`, `genres_id`, `createdAt`, `deletedAt`, `updatedAt`, `password_token`, `last_cart_email`, `cart_period_type`, `country_codes_id`, `verified_email`, `verification_code`, `expiration_time`) VALUES
+('10', 'Jano', 'Pereira Kent', '01158817312', '43083507', '$2a$10$cCkz2p6pYsL6/Ka2EQZjge9KbNzbVCcL9sdlfXdKgVwbC9oEDhbc2', 'janopk789@gmail.com', 0, 0, 0, 1, '2001-02-12 00:00:00', 2, '2023-07-04 14:35:00', NULL, '2023-08-29 01:10:07', NULL, '2023-08-29 13:30:01', '1', 12, 0, NULL, NULL),
+('16', 'CJoaquin', 'Cataldo', '', '', '$2a$10$NneD5C8KExxSt8KgwXGcJewSn62J2dYelRMN7eTbwOER07KleOuNm', 'joaco.cataldo3@gmail.com', 0, 0, 0, 2, NULL, NULL, '2023-07-11 11:10:11', NULL, '2023-07-11 11:10:32', NULL, NULL, NULL, 12, 0, NULL, NULL),
+('5d4b6695-278b-4b5c-aeb7-801cab017eaa', '', '', NULL, '', '$2a$10$GQIWcE.Kwe0qf1BTtgBj0.eVf29yhkjtmg2bFvAw/yla5Q2zyl94i', 'janoo.pereira@gmail.com', 0, 0, 0, 3, NULL, NULL, '2023-08-29 16:58:30', NULL, '2023-08-29 16:59:41', NULL, NULL, NULL, 12, 0, '072560', '2023-08-29 17:29:41'),
+('f636404c-60bc-41e1-bd7a-14d629ac7f07', 'Martin', 'Berra', '1144301111', '', '$2a$10$RkdmG6iBhyoiULCLpZQmNOwZb/GV8y4k/7AouZOfk9CJdgTITsgBi', 'martin.berra+test@gmail.com', 0, 0, 0, 3, '2023-10-10 00:00:00', 1, '2023-07-17 23:23:40', NULL, '2023-07-17 23:24:17', NULL, NULL, NULL, 12, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -886,7 +879,7 @@ CREATE TABLE `user_addresses` (
 --
 
 INSERT INTO `user_addresses` (`id`, `users_id`, `street`, `apartment`, `city`, `provinces_id`, `zip_code`, `createdAt`, `updatedAt`, `deletedAt`) VALUES
-('9c947b7b-37f2-41da-bcf7-ce898ff45ab5', '10', '3 de Febrero 3302', NULL, 'Nuñéz', 1, '1429', '2023-08-28 15:53:43', '2023-08-28 17:23:32', NULL);
+('9c947b7b-37f2-41da-bcf7-ce898ff45ab5', '10', '3 de Febrero 3302', NULL, 'Nuñéz', 1, '1429', '2023-08-28 15:53:43', '2023-08-29 00:45:25', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -1138,13 +1131,13 @@ ALTER TABLE `specialties_services`
 -- AUTO_INCREMENT de la tabla `temporal_carts`
 --
 ALTER TABLE `temporal_carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT de la tabla `temporal_items`
 --
 ALTER TABLE `temporal_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 
 --
 -- AUTO_INCREMENT de la tabla `treatments`

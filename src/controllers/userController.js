@@ -37,6 +37,8 @@ const getRelativePath = require('../utils/getRelativePath');
 const webTokenSecret = process.env.JSONWEBTOKEN_SECRET;
 const orderStatuses = require('../utils/staticDB/orderStatus');
 const orderTypes = require('../utils/staticDB/orderTypes');
+const generateRandomCodeWithExpiration = require('../utils/generateRandomCodeWithExpiration');
+const sendVerificationCodeMail = require('../utils/sendverificationCodeMail');
 
 // CONTROLLER
 const controller = {
@@ -136,6 +138,8 @@ const controller = {
 
             // Datos del body
             let { password, email } = req.body;
+            // Genero el codigo de verificacion
+            const { verificationCode, expirationTime } = generateRandomCodeWithExpiration();
             let userData = {
                 id: uuidv4(),
                 first_name: '',
@@ -146,13 +150,16 @@ const controller = {
                 wpp_notifications: 0,
                 email_notifications: 0,
                 email_newsletter: 0,
-                user_categories_id: 3 //Cliente
+                user_categories_id: 3,//Cliente
+                verified_email: false,
+                verification_code: verificationCode,
+                expiration_time: expirationTime 
             };
+            
             const userCreated = await db.User.create(userData); //Creo el usuario
+            sendVerificationCodeMail(verificationCode,userData.email);
             // Lo tengo que loggear directamente
             const cookieTime = (1000 * 60) * 60 * 24 * 7 //1 Semana
-
-            /* req.session.userLoggedId = userCreated.id; //Defino en sessions al usuario loggeado */
 
             // Generar el token de autenticación
             const token = jwt.sign({ id: userCreated.id }, webTokenSecret, { expiresIn: '1w' }); // genera el token
@@ -438,6 +445,9 @@ const controller = {
             console.log(`Falle en userController.orderHistory: ${error}`);
             return res.json({ error });
         }
+    },
+    verifyEmailCode: async(req,res) =>{
+        return res.render('userEmailVerify')
     }
 
 };

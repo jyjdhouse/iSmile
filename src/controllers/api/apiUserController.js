@@ -16,7 +16,9 @@ const getAllProducts = require('../../utils/getAllProducts');
 const getOrder = require('../../utils/getOrder');
 const emailConfig = require('../../utils/staticDB/mailConfig');
 const handleStock = require('../../utils/handleStock');
-const { shipmentStaticInfo, shipmentEstimateUrl } = require('../../utils/staticDB/shipmentData')
+const { shipmentStaticInfo, shipmentEstimateUrl } = require('../../utils/staticDB/shipmentData');
+const generateRandomCodeWithExpiration = require('../../utils/generateRandomCodeWithExpiration');
+const sendVerificationCodeMail = require('../../utils/sendverificationCodeMail');
 
 const controller = {
     getLoggedUserId: async (req, res) => {
@@ -549,6 +551,96 @@ const controller = {
             });
         } catch (error) {
             console.log('Error pidiendo datos del envio:', error);
+            return res.json({ error })
+        }
+    },
+    getEmailCode: async (req, res) => {
+        try {
+            // Genero el codigo de verificacion
+            const { verificationCode, expirationTime } = generateRandomCodeWithExpiration();
+            await db.User.update({
+                verification_code: verificationCode,
+                expiration_time: expirationTime
+            });
+            
+            return res.status(200).json({
+                ok: true,
+                msg: 'Se ha enviado el codigo de verificacion al mail'
+            })
+        } catch (error) {
+
+            console.log('Falle en apiUserController.getEmailCode:', error);
+            return res.json({ error })
+        }
+    },
+    checkVerificationCode: async(req,res) => {
+        try {
+            let {code} = req.body;
+            code = JSON.parse(code);
+            let userId = req.userId;
+            let user = getDeepCopy(await getUser(userId));
+            if(!user)return res.status(400).json();
+            // Primero me fijo que el expiration time este bien
+            const codeExpirationTime = new Date(user.expiration_time);
+            const currentTime = new Date();
+            // Este if quiere decir que se vencio
+            if (currentTime > codeExpirationTime) {
+                return res.status(200).json({
+                    ok:false,
+                    msg: 'El codigo ha vencido, solicita otro e intente nuevamente',
+                })
+            };
+            // Aca el tiempo es correcto ==> Chequeo codigo
+            if(code != user.verification_code){
+                return res.status(200).json({
+                    ok: false,//TODO: Preguntar como manejar los codigos incorrectos (si pedir otro o dejar que intente)
+                    msg: 'El codigo introducido es incorrecto. Intente nuevamente',
+                })
+            };
+            // Aca esta todo ok ==> Hago el update al usuario y mando el status ok
+            await db.User.update({
+                verified_email: 1,
+                verification_code: null,
+                expiration_time: null
+            },{
+                where: {
+                    id: userId
+                }
+            })
+            return res.status(200).json({
+                ok:true,
+                msg: 'Codigo verificado correctamente. Redirigiendo...'
+            })
+        } catch (error) {
+            console.log(`Falle en apiUserController.checkVerificationCode: ${error}`);
+            return res.status(400).json({error});
+        }
+    },
+    sendVerificationCode: async(req,res) =>{
+        try {
+            let userId = req.userId;
+            const user = getDeepCopy(await getUser(userId));
+            if(!user)return res.status(400).json();
+            // Obtengo nuevo codigo y tiempo de expiracion
+            const {verificationCode, expirationTime} = generateRandomCodeWithExpiration();
+            // Mando los mails
+            sendVerificationCodeMail(verificationCode,user.email);
+            // Hago el update en db
+            await db.User.update({
+                verification_code: verificationCode,
+                expiration_time: expirationTime
+            },{
+                where: {
+                    id: userId
+                }
+            });
+            return res.status(200).json({
+                ok:true, 
+                msg: 'Se le ha enviado un codigo de verificación. Por favor, revise en su correo.'
+            })
+        } catch (error) {
+            console.log(`Falle en apiUserController.sendVerificationCode: ${error}`);
+            return res.status(400).json({error});
         }
     }
 

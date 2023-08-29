@@ -181,7 +181,7 @@ const getShipmentInfo = async (zipCodeInp) => {
         zipCodeValue: zipCodeInp.value,
         quantity
     }
-    const response = fetch("http:/ismile.com.ar/api/user/get-estimate-shipping-data", {
+    const response = await fetch("http:/ismile.com.ar/api/user/get-estimate-shipping-data", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

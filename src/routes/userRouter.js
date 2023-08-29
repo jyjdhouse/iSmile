@@ -21,6 +21,7 @@ router.get('/cambiar-contrasena/:token',userController.changePasswordView);
 router.get('/contrasena-error',userController.passwordError);
 router.get('/booking',userController.bookingView);
 router.get('/historial-compras',guestMiddleware,userController.orderHistory);
+router.get('/verificar-email',userController.verifyEmailCode);
 
 // POST
 router.post('/login',userController.processLogin);

@@ -74,7 +74,12 @@ li {
 .overflow-auto {
     overflow: auto;
 }
-
+.disabled {
+    color: #ccc !important;
+    background-color: #eee !important;
+    cursor: unset;
+    pointer-events: none;
+}
 .hidden {
     display: none !important;
 }
@@ -85,7 +90,8 @@ li {
 .error-border{
     border: 2px solid var(--red-color) !important;
 }
-.error-card{
+.error-card,
+.success-card{
     padding: 10px;
     position: absolute;
     background: var(--red-color);
@@ -95,6 +101,9 @@ li {
     bottom: 40%;
     transform: translate(-50%, 50%);
     transition: all 2s ease;
+}
+.success-card{
+    background: rgb(17, 121, 26);
 }
 .error-card-inactive{
     opacity: 0;
