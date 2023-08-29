@@ -205,7 +205,7 @@ const controller = {
 
             }
 
-           /*  // Me fijo si por lomenos hay un producto que tenga descuento
+       // Me fijo si por lomenos hay un producto que tenga descuento
             let productsWithDiscount = productsInDb.filter(prod => prod.discount);
             let maxDiscount = 0;
             let discountLabel;
@@ -225,7 +225,7 @@ const controller = {
                     }
                 })).label;
             };
- */
+
 
             // return res.send(discountLabel);
             // return res.send({ productsInDb, productsGroupDesktop, productsGroupMobile });
