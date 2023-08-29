@@ -5,8 +5,7 @@ module.exports = function (date) {
     
     const options = { day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'UTC' };
     const formattedDate = date.toLocaleDateString('es-ES', options);
-    
-    console.log(formattedDate);
+
     
     return formattedDate;
 }
