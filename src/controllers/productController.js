@@ -43,21 +43,36 @@ const controller = {
         try {
             let products = getDeepCopy(await getAllProducts());
             products.sort((a, b) => {
+                // Si ambos productos tienen stock nulo, no cambia el orden
+                if (a.stock === null && b.stock === null) {
+                  return 0;
+                }
+              
+                // Si solo el producto "a" tiene stock nulo, se coloca después de "b"
+                if (a.stock === null) {
+                  return 1;
+                }
+              
+                // Si solo el producto "b" tiene stock nulo, se coloca después de "a"
+                if (b.stock === null) {
+                  return -1;
+                }
+              
                 // Si ambos productos tienen stock en 0, no cambia el orden
                 if (a.stock === 0 && b.stock === 0) {
                   return 0;
                 }
-                
+              
                 // Si solo el producto "a" tiene stock en 0, se coloca después de "b"
                 if (a.stock === 0) {
                   return 1;
                 }
-                
+              
                 // Si solo el producto "b" tiene stock en 0, se coloca después de "a"
                 if (b.stock === 0) {
                   return -1;
                 }
-                
+              
                 // Ordenar por descuento en caso de que ambos productos tengan stock
                 return b.discount - a.discount;
               });
