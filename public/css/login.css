@@ -1,8 +1,9 @@
-.login-main{
+.login-main {
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .login-form,
 .regist-form {
     display: flex;
@@ -44,6 +45,50 @@
 .password-btn-toggler {
     color: #777;
     cursor: pointer;
+}
+
+.password-label-container {
+    position: relative;
+}
+
+
+.password-requirements-list{
+    position: absolute;
+    z-index: 100;
+    transform: translateX(50%);
+    width: 80vw;
+    max-width: 300px;
+    right: 50%;
+    background: #fff;
+    padding: 5px 30px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    transition: all .5s ease;
+    /* margin-top: 200%; */
+    opacity: 0;
+    scale: 0;
+    
+}
+
+.password-label-container-active .password-requirements-toggler {
+    color: #333;
+}
+.password-requirements-toggler:hover {
+    color: #565656;
+}
+.password-label-container-active .password-requirements-list {
+    opacity: 1;
+    scale: 1;
+    margin-top: 0;
+}
+
+.password-requirements-toggler {
+    color: #888;
+    cursor: pointer;
+}
+
+.password-requirements-item {
+    list-style: unset;
 }
 
 .login-field label,
@@ -103,14 +148,15 @@
     margin-bottom: 10px;
 }
 
-.forget-password-btn, .back-to-login{
+.forget-password-btn,
+.back-to-login {
     color: #333;
     margin-top: 10px;
     font-size: 0.875rem;
     cursor: pointer;
 }
 
-.forget-password-section{
+.forget-password-section {
     position: absolute;
     scale: 0;
     transition: all .5s ease;
@@ -124,41 +170,48 @@
     padding: 5%;
     z-index: 10;
 }
-.forget-password-section-active{
+
+.forget-password-section-active {
     scale: 1;
 }
-.forget-password-section-title{
+
+.forget-password-section-title {
     width: 100%;
     font-size: 1.1rem;
     height: fit-content;
     text-align: center;
 }
+
 .forget-password-section button,
-.forget-password-section input{
-    
+.forget-password-section input {
+
     height: 2rem;
 }
-.forget-password-section input{
+
+.forget-password-section input {
     border: 1px solid var(--violet-color);
     border-radius: 1rem;
     width: 80%;
     max-width: 600px;
     padding-left: 10px;
 }
-.forget-password-section .buttons-container{
+
+.forget-password-section .buttons-container {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.forget-password-section button{
+
+.forget-password-section button {
     border-radius: 1rem;
     border: 1px solid var(--violet-color);
     background: none;
     width: 35%;
-    cursor: pointer;   
+    cursor: pointer;
 }
-.close-forget-password-section{
+
+.close-forget-password-section {
     color: var(--bold-color);
     cursor: pointer;
 }
@@ -168,11 +221,18 @@
     text-align: center;
 }
 
-@media (min-width:768px){
-    .user-options-form{
+@media (min-width:768px) {
+    .user-options-form {
         width: 50vw;
     }
+    .password-requirements-list {
+        width: fit-content;
+        right: -170%;
+        transform: unset;
+        max-width: unset;
+    }
 }
+
 @media (min-width:1024px) {
     .user-options-form {
         width: 30vw;

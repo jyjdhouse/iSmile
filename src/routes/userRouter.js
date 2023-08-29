@@ -24,8 +24,8 @@ router.get('/historial-compras',guestMiddleware,userController.orderHistory);
 
 // POST
 router.post('/login',userController.processLogin);
-router.post('/regist',validations.userRegistValidations,userController.processRegist);
-router.post('/change-password/:token',userController.processNewPassword)
+router.post('/regist',validations.userRegistValidations,validations.passwordValidations,userController.processRegist);
+router.post('/change-password/:token',validations.passwordValidations,userController.processNewPassword)
 //PUT
 router.put('/profile',guestMiddleware,validations.userUpdateValidations,userController.update)
 

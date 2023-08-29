@@ -209,15 +209,14 @@ const controller = {
             // Busco si hay usuario asociado a ese mail. Si lo hay le armo todo
             // El principio de la url
             const host = req.headers.host;
-
             const user = await db.User.findOne({
                 where: {
                     email: mail
                 }
             });
 
-            // Si la sesion no tiene el userLoggedId vuelvo a la home
-            if (!user) return //res.status(404).json({ error: 'Usuario no encontrado' });
+            // Si no encuentra user devuelvo 404
+            if (!user) return res.status(404).json({});
 
             const token = jwt.sign({ id: user.id }, webTokenSecret, { expiresIn: '1h' }); // genera el token
             // Guardo el token en la db

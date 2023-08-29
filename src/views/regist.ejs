@@ -16,7 +16,16 @@
                     <input type="text" id="register-email" class="input" placeholder="Ingrese su Email" name="email">
                 </div>
                 <div class="regist-field pass-field">
-                    <label for="register-password" class="bold">Contraseña</label>
+                    <div class="password-label-container">
+                        <label for="register-password" class="bold">Contraseña</label>
+                        <i class='bx bx-help-circle password-requirements-toggler'></i>
+                        <ul class="password-requirements-list">
+                            <li class="password-requirements-item">Caracteres mínimos: 6</li>
+                            <li class="password-requirements-item">Mínimo una mayúscula</li>
+                            <li class="password-requirements-item">Mínimo un número</li>
+                        </ul>
+                    </div>
+                    
                     <input type="password" id="register-password" class="input" placeholder="Ingrese su Contraseña"
                         name="password" autocomplete="off">
                     <div class="regist-password-toggler-container">

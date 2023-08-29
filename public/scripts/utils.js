@@ -306,3 +306,23 @@ export function checkForNumericInputs() {
         });
     });
 }
+// Condiciones de la contrasena
+export function passwordValidation(password) {
+    // Al menos 1 número
+    const oneNumber = /[0-9]/.test(password);
+
+    // Mínimo 6 caracteres
+    const validLength = password.length >= 6;
+
+    // Al menos 1 letra en mayúscula
+    const oneUpperLetter = /[A-Z]/.test(password);
+
+    return oneNumber && validLength && oneUpperLetter;
+};
+
+export function createErrorMsg (msg) {
+    const paragraph = document.createElement('p');
+    paragraph.classList.add('error-msg');
+    paragraph.textContent = msg;
+    return paragraph
+}

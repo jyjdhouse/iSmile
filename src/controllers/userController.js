@@ -117,12 +117,13 @@ const controller = {
     },
     processRegist: async (req, res) => {
         // Ultima ruta que estuvo, para luego redirigir
+        
         let relativePath = getRelativePath(req.headers.referer);
         try {
 
             // Traigo errores
             let errors = validationResult(req);
-
+            // return res.send(errors);
             if (!errors.isEmpty()) { //Si hay errores en el back...
                 errors = errors.mapped();
 
@@ -134,7 +135,7 @@ const controller = {
             }
 
             // Datos del body
-            let { password, email } = req.body
+            let { password, email } = req.body;
             let userData = {
                 id: uuidv4(),
                 first_name: '',
@@ -321,6 +322,10 @@ const controller = {
         try {
             const { token } = req.params;
             const { password } = req.body;
+            let errors = validationResult(req);
+            if(!errors.isEmpty()){
+                return res.redirect(`/user/cambiar-contrasena/${token}?errors=true`)
+            }
             // Verificar si el token es válido
             const userWithToken = await db.User.findOne({
                 where: {

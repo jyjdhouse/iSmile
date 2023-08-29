@@ -173,8 +173,8 @@ input[type=number] {
     animation: rebound 0.5s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-in-out;
-    background-color: var(--red-color);
-    color: white;
+    background-color: var(--red-color) !important;
+    color: white !important;
 }
 
 

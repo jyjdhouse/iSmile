@@ -9,12 +9,14 @@ const orderTypes = require('../utils/staticDB/orderTypes');
 const paymentMethods = require('../utils/staticDB/paymentMethods');
 const provincesDB = require('../utils/staticDB/provinces');
 const genresDB = require('../utils/staticDB/genres');
+const passwordValidation = require('../utils/passwordValidation');
 
 module.exports = {
     userRegistValidations: [
         // Me fijo que esten completos y que sean tipo string
         body(['email', 'password', 're-password']).notEmpty().withMessage('Debes completar el/los campo/s').bail()
             .custom((value, { req }) => {
+
                 // Si viene formato json entonces lo parseo, sino me fijo directamente
                 if (isJson(value)) value = JSON.parse(value);
                 if (typeof value !== "string") {
@@ -32,15 +34,6 @@ module.exports = {
                 };
                 return true;
             }),
-        body('password')
-            .isLength({ min: 1 }).withMessage('La contraseña debe tener un mínimo de 1 caracter'),
-        body('re-password')
-            .custom((value, { req }) => {
-                if (req.body.password != req.body['re-password']) {
-                    throw new Error('No coinciden las contraseñas')
-                }
-                return true;
-            })
     ],
     userUpdateValidations: [
         // Me fijo que esten completos
@@ -192,5 +185,28 @@ module.exports = {
                 }
                 return true;
             }),
+    ],
+    passwordValidations: [
+        body(['password', 're-password']).notEmpty().withMessage('Debes completar el/los campo/s').bail()
+            .custom((value, { req }) => {
+                // Si viene formato json entonces lo parseo, sino me fijo directamente
+                if (isJson(value)) value = JSON.parse(value);
+                if (typeof value !== "string") {
+                    throw new Error('Error en tipo de dato')
+                };
+                return true
+            }),
+        body('password').custom((value, { req }) => {
+            if (!passwordValidation(value)) {
+                throw new Error('La contraseña no cumple con los requisitos')
+            }
+            return true
+        }),
+        body('re-password').custom((value, { req }) => {
+            if (req.body.password != value) {
+                throw new Error('No coinciden las contraseñas')
+            }
+            return true;
+        })
     ]
 }
