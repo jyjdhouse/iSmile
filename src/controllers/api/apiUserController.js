@@ -168,7 +168,7 @@ const controller = {
                 }
             });
             // URL que mando por mail
-            const changePassURL = `"http://${host}/user/cambiar-contrasena/${token}`;
+            const changePassURL = `https://${host}/user/cambiar-contrasena/${token}`;
 
             // Configurar el transporte de correo electrónico con nodemailer
             let transporter = nodemailer.createTransport(emailConfig);
@@ -177,7 +177,7 @@ const controller = {
                 to: userEmail, // Correo electrónico del usuario
                 subject: 'Cambio de contraseña',
                 text: `Hola, haz clic en el siguiente enlace para cambiar tu contraseña: ${changePassURL}`,
-                html: `<p>Hola, haz clic <a href=${changePassURL}">aquí</a> para cambiar tu contraseña.</p>`
+                html: `<p>Hola, haz clic <a href="${changePassURL}">aquí</a> para cambiar tu contraseña.</p>`
             };
 
             // Enviar el correo electrónico
@@ -230,7 +230,7 @@ const controller = {
                 }
             });
             // URL que mando por mail
-            const changePassURL = `"http://${host}/user/cambiar-contrasena/${token}`;
+            const changePassURL = `https://${host}/user/cambiar-contrasena/${token}`;
 
             // Configurar el transporte de correo electrónico con nodemailer
             let transporter = nodemailer.createTransport(emailConfig);
@@ -239,7 +239,7 @@ const controller = {
                 to: mail, // Correo electrónico del usuario
                 subject: 'Cambio de contraseña',
                 text: `Hola, haz clic en el siguiente enlace para cambiar tu contraseña: ${changePassURL}`,
-                html: `<p>Hola, haz clic <a href=${changePassURL}">aquí</a> para cambiar tu contraseña.</p>`
+                html: `<p>Hola, haz clic <a href="${changePassURL}">aquí</a> para cambiar tu contraseña.</p>`
             };
 
             // Enviar el correo electrónico

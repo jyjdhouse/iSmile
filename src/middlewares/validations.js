@@ -16,7 +16,6 @@ module.exports = {
         // Me fijo que esten completos y que sean tipo string
         body(['email', 'password', 're-password']).notEmpty().withMessage('Debes completar el/los campo/s').bail()
             .custom((value, { req }) => {
-
                 // Si viene formato json entonces lo parseo, sino me fijo directamente
                 if (isJson(value)) value = JSON.parse(value);
                 if (typeof value !== "string") {

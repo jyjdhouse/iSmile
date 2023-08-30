@@ -37,13 +37,13 @@ app.use(methodOverride('_method'));
 // set up rate limiter: maximum of five requests per minute
 var RateLimit = require('express-rate-limit');
 // 10 peticiones cada 30 segundos
-var limiter = RateLimit({
-  windowMs: 1*30*1000, // 30sec
-  max: 10
-});
+// var limiter = RateLimit({
+//   windowMs: 1*30*1000, // 30sec
+//   max: 100
+// });
 
 // apply rate limiter to all requests
-app.use(limiter);
+// app.use(limiter);
 
 // Rutas
 const mainRouter = require('./routes/mainRouter.js');

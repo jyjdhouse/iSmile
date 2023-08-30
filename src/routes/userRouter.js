@@ -9,6 +9,7 @@ const validations = require('../middlewares/validations');
 const getLastURL = require('../middlewares/getLastURL');
 const guestMiddleware = require('../middlewares/guestMiddleware');
 const onlyGuestsMiddleware = require('../middlewares/onlyGuestsMiddleware');
+const onlyUnverifiedUsers = require('../middlewares/onlyUnverifiedUsers');
 // Rutas
 
 // GET
@@ -21,7 +22,7 @@ router.get('/cambiar-contrasena/:token',userController.changePasswordView);
 router.get('/contrasena-error',userController.passwordError);
 router.get('/booking',userController.bookingView);
 router.get('/historial-compras',guestMiddleware,userController.orderHistory);
-router.get('/verificar-email',userController.verifyEmailCode);
+router.get('/verificar-email',onlyUnverifiedUsers,userController.verifyEmailCode);
 
 // POST
 router.post('/login',userController.processLogin);

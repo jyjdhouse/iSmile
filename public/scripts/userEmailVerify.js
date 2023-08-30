@@ -8,6 +8,7 @@ window.addEventListener('load', () => {
     for (let i = 0; i < inputs.length; i++) {
         const input = inputs[i];
         let lastInputValue = '';
+        // Evento si cambia el input
         input.addEventListener('input', (e) => {
             verifyButton.classList.add('disabled');
             if (input.value.length <= 1) {
@@ -25,11 +26,26 @@ window.addEventListener('load', () => {
                 //Si ya tenia, le dejo el mismo valor de antes
                 input.value = lastInputValue
             };
-            // Me fijo si todos estan con value, si es asi hablito el boton
-            const inputsNotFilled = inputs.find(inp => inp.value.length == 0);
-            // Si no hay ninguno, le saco el disabled
-            if (!inputsNotFilled) verifyButton.classList.remove('disabled');
+            checkForAllInputsFilled();
+
         });
+        if (i == 0) {
+            // Evento si hacen un paste en el input
+            input.addEventListener('paste', (e) => {
+                input.blur();
+                const valueToPaste = e.clipboardData || window.clipboardData;
+                // Agarro el codigo en un array
+                const codeToPasteArray = valueToPaste.getData("text").split('').filter(num => !isNaN(parseInt(num)));
+                console.log(codeToPasteArray);
+                codeToPasteArray.forEach((digit, j) => {
+                    if (j <= 5) {
+                        inputs[j].value = digit;
+                    }
+                });
+                checkForAllInputsFilled();
+            });
+        }
+
     }
     // Capturo cuando le da a "Reenviar codigo"
     const resendCode = document.querySelector('.resend-code');
@@ -124,5 +140,10 @@ window.addEventListener('load', () => {
             return console.log(`Falle en verifyButton.addEventListener: ${error}`)
         }
     });
-
+    function checkForAllInputsFilled() {
+        // Me fijo si todos estan con value, si es asi hablito el boton
+        const inputsNotFilled = inputs.find(inp => inp.value.length == 0);
+        // Si no hay ninguno, le saco el disabled
+        if (!inputsNotFilled) verifyButton.classList.remove('disabled');
+    }
 });
