@@ -54,13 +54,18 @@ module.exports = {
             return true
         }),
         // Me fijo que la fecha tenga valor 'YYYY-MM-DD' y que sea valida
-        body('birth_date').custom((value, { req }) => {
-            const dateIsValid = isValidDate(value)
-            if (!dateIsValid) {
-                // El valor contiene una fecha no admitible
-                throw new Error();
+       body('birth_date').custom((value, { req }) => {
+            if(!value) {
+                return true
+            } else {
+                const dateIsValid = isValidDate(value)
+                if (!dateIsValid) {
+                    // El valor contiene una fecha no admitible
+                    throw new Error();
+                }
+                return true
             }
-            return true
+            
         }),
         // Me fijo que el valor de genre este en la db
         body('genre').custom((value, { req }) => {

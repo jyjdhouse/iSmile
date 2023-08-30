@@ -241,16 +241,15 @@ const controller = {
             let userBodyData = req.body;
             if (!errors.isEmpty()) { //Si hay errores en el back...
                 errors = errors.mapped();
-
+                console.log(errors)
                 // return res.send(errors)
                 return res.redirect('/user/profile?putErrors=true');
             }
-
             // Datos para la tabla user
             let userDataDB = {
                 first_name: userBodyData.first_name,
                 last_name: userBodyData.last_name,
-                birth_date: userBodyData.birth_date,
+                birth_date: userBodyData.birth_date ? userBodyData.birth_date : null,
                 genres_id: userBodyData.genre,
                 country_codes_id: userBodyData.phone_code,
                 phone: userBodyData.phone,
