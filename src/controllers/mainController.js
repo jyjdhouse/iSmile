@@ -63,6 +63,8 @@ const controller = {
                 home_sections_id: homeVideo.home_sections_id,
                 file_url: homeVideoUrl
             }
+           
+
             // GALLERY IMAGES
             let galleryFiles = homeFiles.filter(file => file.home_sections_id == 2);
             // Ordeno el array por posiciónes
@@ -119,14 +121,14 @@ const controller = {
                 home_sections_id: blogImage.home_sections_id,
                 file_url: blogUrl
             }
-
+            
             // SLIDESHOW
             let productsInDb = getDeepCopy(await db.Product.findAll({
-                where: {
+                /*where: {
                     stock: {
                         [Op.not]: 0
                     }
-                },
+                },*/
                 include: [
                     {
                         association: 'files',
@@ -136,6 +138,7 @@ const controller = {
                     'category'
                 ]
             }));
+           
             let productsGroupDesktop = []
             let productsGroupMobile = []; //Grupos para la galeria
             // Calculamos el número de grupos completos de tres elementos
@@ -177,6 +180,7 @@ const controller = {
                 }
 
             };
+            
             // mobile images
             for (let i = 0; i < productsGroupMobile.length; i++) {
                 const product = productsGroupMobile[i];
@@ -193,7 +197,7 @@ const controller = {
 
 
             }
-
+            
             // TRAIGO BLOGS DE DB (ultimos 3)
             const lastBlogs = getDeepCopy(await db.Blog.findAll({
                 order: [['createdAt', 'DESC']],
