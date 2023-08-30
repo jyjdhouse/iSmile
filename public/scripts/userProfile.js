@@ -16,6 +16,11 @@ window.addEventListener('load', () => {
         radio.disabled = true
     })
 
+    inputs.forEach(inp => {
+        inp.addEventListener('change', (e) => {
+            inp.value = e.target.value
+        })
+    })
 
     // si el valor del param es true, pongo para completar formulario
     if (param) {
