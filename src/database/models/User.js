@@ -25,7 +25,7 @@ module.exports = (sequelize, dataTypes) => {
         verified_email: { type: dataTypes.TINYINT },
         verified_essential_data: {type: dataTypes.TINYINT},
         verification_code: { type: dataTypes.STRING(6) },
-        expiration_time: { type: dataTypes.DATE }
+        expiration_time: { type: dataTypes.DATE }   
     }
 
     let config = {
