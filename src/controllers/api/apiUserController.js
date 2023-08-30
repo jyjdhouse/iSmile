@@ -151,7 +151,7 @@ const controller = {
 
             const userToChangePassID = req.userId;
             // El principio de la url
-            const host = req.headers.host;
+            const host = 'ismile.com.ar';
 
             const user = await getUser(userToChangePassID);
 
@@ -210,7 +210,7 @@ const controller = {
             let { mail } = req.body;
             // Busco si hay usuario asociado a ese mail. Si lo hay le armo todo
             // El principio de la url
-            const host = req.headers.host;
+            const host = 'ismile.com.ar';
             const user = await db.User.findOne({
                 where: {
                     email: mail
