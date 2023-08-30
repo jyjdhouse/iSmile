@@ -13,8 +13,7 @@ const userIsIncomplete = async (req, res, next) => {
                 }
             });
             // Quiere decir que no verifico el mail
-            if (!userLogged.verified_email) {
-                
+            if (!userLogged.verified_email) {           
                 if (req.originalUrl) {
                     // Verificar si el usuario se encuentra en una URL específica
                     if (!req.originalUrl.includes('/user/verificar-email')) {
@@ -24,9 +23,9 @@ const userIsIncomplete = async (req, res, next) => {
                     }
                 }
             }
-            // Quiere decir que no completó sus datos
-            else if (!userLogged['first_name'].length || !userLogged['last_name'].length) {
-                
+           
+           /*  else if (!userLogged['first_name'].length || !userLogged['last_name'].length) {
+              
                 if (req.originalUrl) {
                     // Verificar si el usuario se encuentra en una URL específica
                     if (!req.originalUrl.includes('/user/profile')) {
@@ -34,6 +33,12 @@ const userIsIncomplete = async (req, res, next) => {
                         // Lo redirijo para que complete sus datos
                         return res.redirect(`/user/profile?completeForm=${true}`);
                     }
+                }
+            } */ 
+            // Quiere decir que no completó sus datos
+            else if (!userLogged.verified_essential_data) {
+                if (!req.originalUrl.includes('/user/profile')) {
+                    return res.redirect(`/user/profile?completeForm=true`);
                 }
             }
         }

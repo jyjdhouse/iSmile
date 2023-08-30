@@ -151,7 +151,10 @@ const controller = {
             if (!product) return res.render('error404')
             let suggestedProducts = getDeepCopy(await db.Product.findAll({
                 where: {
-                    id: { [Op.ne]: id }
+                    id: { [Op.ne]: id },
+                    stock: {
+                        [Op.not]: 0
+                    }
                 },
                 include: ['files']
             }));

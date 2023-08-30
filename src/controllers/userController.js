@@ -151,6 +151,7 @@ const controller = {
                 email_newsletter: 0,
                 user_categories_id: 3,//Cliente
                 verified_email: false,
+                verified_essential_data: false,
                 verification_code: verificationCode,
                 expiration_time: expirationTime 
             };
@@ -254,6 +255,7 @@ const controller = {
                 country_codes_id: userBodyData.phone_code,
                 phone: userBodyData.phone,
                 dni: userBodyData.dni,
+                verified_essential_data: 1,
                 wpp_notifications: userBodyData.wpp_notifications ? 1 : 0,
                 email_notifications: userBodyData.email_notifications ? 1 : 0,
                 email_newsletter: userBodyData.email_newsletter ? 1 : 0,

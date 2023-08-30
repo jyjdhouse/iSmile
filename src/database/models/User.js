@@ -23,6 +23,7 @@ module.exports = (sequelize, dataTypes) => {
         cart_period_type: { type: dataTypes.STRING(1) },
         country_codes_id: { type: dataTypes.INTEGER },
         verified_email: { type: dataTypes.TINYINT },
+        verified_essential_data: {type: dataTypes.TINYINT},
         verification_code: { type: dataTypes.STRING(6) },
         expiration_time: { type: dataTypes.DATE }
     }

@@ -193,7 +193,7 @@ select {
     margin-bottom: 3%;
 }
 
-.form-btn {
+.form-btn,.discard-changes-btn {
     border: 0;
     outline: 0;
     border: 1px solid var(--gold-color);
@@ -204,6 +204,10 @@ select {
     max-width: 300px;
     background: none;
     border-radius: 1rem;
+}
+
+.form-btn {
+    margin-bottom: 3%;
 }
 
 .form-btn-inactive {
@@ -378,7 +382,7 @@ select {
     .edit-content-container{
         margin: 3% 0;
     }
-    .form-btn {
+    .form-btn, .discard-changes-btn {
         padding: 8px 0;
         cursor: pointer;
     }
