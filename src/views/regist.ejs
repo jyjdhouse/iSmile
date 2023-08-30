@@ -19,11 +19,7 @@
                     <div class="password-label-container">
                         <label for="register-password" class="bold">Contraseña</label>
                         <i class='bx bx-help-circle password-requirements-toggler'></i>
-                        <ul class="password-requirements-list">
-                            <li class="password-requirements-item">Caracteres mínimos: 6</li>
-                            <li class="password-requirements-item">Mínimo una mayúscula</li>
-                            <li class="password-requirements-item">Mínimo un número</li>
-                        </ul>
+                        <%- include('./partials/passwordRequirementsList') %>
                     </div>
                     
                     <input type="password" id="register-password" class="input" placeholder="Ingrese su Contraseña"
