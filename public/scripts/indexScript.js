@@ -10,40 +10,6 @@ window.addEventListener('load', () => {
         video.play();
     });
 
-    // Función que se ejecutará cuando se haga scroll
-    function detectarElementoEnPantalla(e, element) {
-        // console.log(e);
-        const rect = element.getBoundingClientRect();
-        const elementPosition = rect.y //posición que esta con respecto al total
-        // if (window.pageYOffset >= elementPosition) {
-        //     console.log('Se llego al elemento');
-        // }
-
-        // Obtener la posición actual de la ventana gráfica
-        const windowHeight = window.innerHeight;
-        const totalViewportHeight = document.documentElement.scrollHeight;
-        // console.log(totalViewportHeight);
-        const windowTop = window.pageYOffset || document.documentElement.scrollTop;
-        const windowBottom = windowTop + windowHeight;
-
-        // Verificar si el elemento está visible en la pantalla
-        if (rect.top < windowBottom && rect.bottom > windowTop) {
-            // El elemento está visible en la pantalla
-            // console.log('Se llego al elemento');
-            // video.play(); //Arranca la reproducción
-        } else {
-            // El elemento no está visible en la pantalla
-            console.log('Se FUE del elemento');
-            // video.pause(); //Pausa la reproducción
-        }
-    }
-
-    // Detectar el elemento en la posición inicial
-    // detectarElementoEnPantalla();
-
-    // Asignar la función al evento scroll
-    // window.addEventListener('scroll', detectarElementoEnPantalla(video));
-
     // LOGICA QUE APAREZCAN LAS COSAS DEL BANNER AL SCROLLEAR
     const bannerImgContainer = document.querySelector('.discount-banner-img-container');
     if (bannerImgContainer) {
@@ -125,7 +91,7 @@ window.addEventListener('load', () => {
         aboutUsFixedFramesWrapper?.addEventListener('touchstart', (e) => { //Capturo donde arranca el touch
             startX = e.touches[0].clientX;
             aboutUsCarousel.classList.add('about-us-frames-container-moving');
-        });
+        }, { passive: false });
         aboutUsFixedFramesWrapper?.addEventListener('touchmove', (e) => {
 
             deltaX = e.touches[0].clientX - startX; //Si es positivo desplaza para derecha, sino para izq
@@ -172,7 +138,26 @@ window.addEventListener('load', () => {
                     dot.classList.add('about-us-dot-active')
                 }
             })
-        }
+        };
+        function listenToDotClick() {
+            const dots = Array.from(document.querySelectorAll('.about-us-dot'));
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', () => {
+                    // si toca el mismo no hago nada
+                    if (i == currentIndex) return;
+                    // cambio el currentIndex
+                    currentIndex = i;
+                    getActiveDot(currentIndex);
+                    if (i > currentIndex) {
+                        aboutUsCarousel.style.transform = `translateX(-${i * amountToScroll}px)`;
+                    } else {
+                        aboutUsCarousel.style.transform = `translateX(${-i * amountToScroll}px)`;
+                    }
+
+                })
+            })
+        };
+        listenToDotClick();
 
     }
 
