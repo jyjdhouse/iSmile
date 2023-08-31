@@ -43,7 +43,9 @@ video::-webkit-media-controls-time-remaining-display {
     width: 30%;
     z-index: 1;
 }
-
+.blog-section .right-pattern{
+    top: 30%;
+}
 /* VIDEO LANDING */
 .landing-video-container {
     height: 90vh;
@@ -622,8 +624,8 @@ video::-webkit-media-controls-time-remaining-display {
 }
 
 .about-us-dot {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     border: 1px solid #000;
     border-radius: 50%;
     transition: all .5s ease;

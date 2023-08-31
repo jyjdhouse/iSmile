@@ -36,10 +36,10 @@ app.use(methodOverride('_method'));
 
 // set up rate limiter: maximum of five requests per minute
 var RateLimit = require('express-rate-limit');
-// // 50 peticiones cada 30 segundos
+// // 40 peticiones cada 30 segundos
 var limiter = RateLimit({
     windowMs: 1 * 30 * 1000, // 30sec
-    max: 10
+    max: 40
 });
 
 // // apply rate limiter to all requests
@@ -72,7 +72,7 @@ app.use('/api/admin', apiAdminRouter);
 app.use('/api/payment', apiPaymentRouter);
 
 app.use(userLogged);
-/* app.use(userIsIncomplete);  */
+app.use(userIsIncomplete); 
 app.use(headerMiddleware);
 
 // Ruteo
