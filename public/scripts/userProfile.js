@@ -273,19 +273,20 @@ window.addEventListener('load', () => {
             let flag = true;
             //Agarro los inputs requeridos
             let requiredInputs; 
+            let dniInput;
             if(window.innerWidth <= 768){
                 requiredInputs = document.querySelectorAll('.required');
+                dniInput = document.querySelector('.mobile-dni');
             } else {
                 requiredInputs = document.querySelectorAll('.desktop-required');
+                dniInput = document.querySelector('.desktop-dni');
             }
             requiredInputs.forEach(input => {
                 if (!input.value) {
                     flag = false;
                     let div = document.createElement('div');
                     div.classList.add('error-msg-container');
-                    input.closest('.profile-field-container').appendChild(div);   
-                    console.log(input.closest('.profile-field-container'))
-                    console.log(input.closest('.profile-field-container'))        
+                    input.closest('.profile-field-container').appendChild(div);    
                     // Armo el mensaje de error
                     // Crear el mensaje adiciónal
                     const additionalMessage = document.createElement('span');
@@ -295,6 +296,19 @@ window.addEventListener('load', () => {
                     div.appendChild(additionalMessage)
                 }
             });
+            if(dniInput.value.length != 8){
+                    flag = false;
+                    let div = document.createElement('div');
+                    div.classList.add('error-msg-container');
+                    dniInput.closest('.profile-field-container').appendChild(div);    
+                    // Armo el mensaje de error
+                    // Crear el mensaje adiciónal
+                    const additionalMessage = document.createElement('span');
+                    additionalMessage.classList.add('error-msg');
+                    additionalMessage.innerHTML = 'DNI debe tener 8 numeros'
+                    // Insertar el mensaje adiciónal después del input
+                    div.appendChild(additionalMessage)
+            }
             if(flag){
                 form.submit()
                
