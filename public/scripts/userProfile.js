@@ -293,7 +293,9 @@ window.addEventListener('load', () => {
                     div.appendChild(additionalMessage)
                 }
             });
+            console.log(dniInput.value.length)
             if(dniInput.value.length != 8){
+                    console.log('entro')
                     flag = false;
                     let div = document.createElement('div');
                     div.classList.add('error-msg-container');
@@ -304,8 +306,7 @@ window.addEventListener('load', () => {
                     div.appendChild(additionalMessage)
             }
             if(flag){
-                form.submit()
-               
+                form.submit()       
             }
         })
     });
