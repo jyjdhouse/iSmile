@@ -84,6 +84,13 @@ module.exports = {
                 throw new Error();
             }
             return true
+        }),
+        body('dni').custom((value, { req }) => {
+            if (value.length != 8) {
+                // La longitud debe ser 8
+                throw new Error("La longitud debe ser 8");
+            }
+            return true
         })
     ],
     productFieldsValidations: [
