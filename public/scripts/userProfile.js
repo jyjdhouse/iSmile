@@ -295,7 +295,6 @@ window.addEventListener('load', () => {
                 }
             });
             if (dniInput.value.length != 8) {
-                console.log('entro')
                 flag = false;
                 let div = document.createElement('div');
                 div.classList.add('error-msg-container');

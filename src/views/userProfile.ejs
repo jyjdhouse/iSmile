@@ -18,13 +18,12 @@
                                 <ul class="profile-selected-list data-list">
                                     <li class="profile-field-container">
                                         <p>Nombre</p> <span>
-                                            
+
                                             <%= user.first_name %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <input class="required letter-only-input" type="text" name="first_name"
-                                                value="<%=user.first_name || null%>"
-                                                placeholder="Ingresar nombre">
+                                                value="<%=user.first_name || null%>" placeholder="Ingresar nombre">
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
@@ -33,8 +32,7 @@
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <input class="required letter-only-input" type="text" name="last_name"
-                                                value="<%=user.last_name || null%>"
-                                                placeholder='Ingresar apellido/s'>
+                                                value="<%=user.last_name || null%>" placeholder='Ingresar apellido/s'>
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
@@ -53,7 +51,8 @@
                                         <div class="profile-input input-container-inactive">
                                             <select name="genre" id="">
                                                 <% genres.forEach(gen=> { %>
-                                                    <option value="<%= gen.id %>" <%= gen.id == user.genres_id && 'selected'%>>
+                                                    <option value="<%= gen.id %>" <%=gen.id==user.genres_id
+                                                        && 'selected' %>>
                                                         <%=gen.name%>
                                                     </option>
                                                     <% }) %>
@@ -67,8 +66,8 @@
                                         <div class="profile-input input-container-inactive phone-field">
                                             <select name="phone_code" class="prefix-phone">
                                                 <% countryCodes.forEach(country=> { %>
-                                                    <option value="<%=country.id %>" <%=country.code==54
-                                                        && 'selected' %>
+                                                    <option value="<%=country.id %>" <%=country.code==54 && 'selected'
+                                                        %>
                                                         > (+<%= country.code %>) <%= country.country_name %>
                                                     </option>
                                                     <% }) %>
@@ -83,9 +82,13 @@
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <input class="required numeric-only-input mobile-dni" type="text" name="dni"
-                                                value="<%=user.dni || null%>"
-                                                placeholder="23083620">
+                                                value="<%=user.dni || null%>" placeholder="23083620">
                                         </div>
+                                        <% if(locals.errors && locals.errors.dni) { %>
+                                            <p class="error-msg">
+                                                <%= errors.dni.msg %>
+                                            </p>
+                                            <% } %>
                                     </li>
 
                                 </ul>
@@ -96,7 +99,8 @@
                                     <ul class="profile-selected-list address-list">
                                         <li class="profile-field-container">
                                             <p>Calle & Altura</p> <span>
-                                                <%= user.userAddress?.street? user.userAddress?.street : 'Sin especificar' %>
+                                                <%= user.userAddress?.street? user.userAddress?.street
+                                                    : 'Sin especificar' %>
                                             </span>
                                             <div class="profile-input input-container-inactive">
                                                 <input type="text" name="street"
@@ -104,21 +108,21 @@
                                                     placeholder="Santa Fe 3322">
                                             </div>
                                         </li>
-                                        
+
                                         <li class="profile-field-container">
                                             <p>Piso/Departamento</p> <span>
-                                                <%= user.userAddress?.apartment? user.userAddress?.apartment : 'Sin especificar'
-                                                    %>
+                                                <%= user.userAddress?.apartment? user.userAddress?.apartment
+                                                    : 'Sin especificar' %>
                                             </span>
                                             <div class="profile-input input-container-inactive">
                                                 <input type="text" name="apartment"
-                                                    value="<%=user.userAddress?.apartment || null%>"
-                                                    placeholder="3F">
+                                                    value="<%=user.userAddress?.apartment || null%>" placeholder="3F">
                                             </div>
                                         </li>
                                         <li class="profile-field-container">
                                             <p>Ciudad</p> <span>
-                                                <%= user.userAddress?.city? user.userAddress?.city : 'Sin especificar' %>
+                                                <%= user.userAddress?.city? user.userAddress?.city : 'Sin especificar'
+                                                    %>
                                             </span>
                                             <div class="profile-input input-container-inactive">
                                                 <input type="text" name="city" value="<%=user.city || null%>"
@@ -128,13 +132,15 @@
                                         <li class="profile-field-container">
                                             <p>Provincia</p> <span>
                                                 <%= user.userAddress?.provinces_id ? provinces.find(prov=>
-                                                    user.userAddress?.provinces_id == prov.id).name : 'Sin especificar' %>
+                                                    user.userAddress?.provinces_id == prov.id).name : 'Sin especificar'
+                                                    %>
                                             </span>
                                             <div class="profile-input input-container-inactive">
                                                 <select name="provinces_id" id="province">
                                                     <% provinces.forEach(prov=> { %>
                                                         <option value="<%= prov.id %>"
-                                                            <%=user.userAddress?.provinces_id==prov.id ? 'selected' : '' %>>
+                                                            <%=user.userAddress?.provinces_id==prov.id ? 'selected' : ''
+                                                            %>>
                                                             <%= prov.name %>
                                                         </option>
                                                         <% }) %>
@@ -143,13 +149,12 @@
                                         </li>
                                         <li class="profile-field-container">
                                             <p>Codigo Postal</p> <span>
-                                                <%= user.userAddress?.zip_code? user.userAddress?.zip_code : 'Sin especificar'
-                                                    %>
+                                                <%= user.userAddress?.zip_code? user.userAddress?.zip_code
+                                                    : 'Sin especificar' %>
                                             </span>
                                             <div class="profile-input input-container-inactive">
                                                 <input class="numeric-only-input" type="text" name="zip_code"
-                                                    value="<%=user.userAddress?.zip_code || null%>"
-                                                    placeholder="1111">
+                                                    value="<%=user.userAddress?.zip_code || null%>" placeholder="1111">
                                             </div>
                                         </li>
                                     </ul>
@@ -164,7 +169,7 @@
                                     <p>Email</p> <span class="bold">
                                         <%= user.email %>
                                     </span>
-                                    
+
                                 </li>
                                 <div class="profile-radio-p-container">
                                     <p>Quiero recibir notificaciónes por correo electrónico</p>
@@ -227,8 +232,9 @@
 
                         <div class="profile-options-container">
                             <ul class="profile-options-list">
-                                <li class="profile-option-item profile-option-item-active"><i class='bx bx-info-circle'></i></li>
-                                <li class="profile-option-item"><i class='bx bxs-truck' ></i></li>
+                                <li class="profile-option-item profile-option-item-active"><i
+                                        class='bx bx-info-circle'></i></li>
+                                <li class="profile-option-item"><i class='bx bxs-truck'></i></li>
                                 <li class="profile-option-item"><i class='bx bx-user-check'></i></li>
                             </ul>
                         </div>
@@ -259,8 +265,8 @@
                                             <%= user.first_name %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
-                                            <input class="desktop-required letter-only-input" type="text" name="first_name"
-                                                value="<%=user.first_name || null%>"
+                                            <input class="desktop-required letter-only-input" type="text"
+                                                name="first_name" value="<%=user.first_name || null%>"
                                                 placeholder="Ingresar nombre">
                                         </div>
                                     </li>
@@ -270,13 +276,12 @@
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <input class="desktop-required" type="text" name="last_name"
-                                                value="<%=user.last_name || null%>"
-                                                placeholder="Ingresar apellido/s">
+                                                value="<%=user.last_name || null%>" placeholder="Ingresar apellido/s">
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
                                         <p>Fecha de nacimiento</p> <span>
-                                                <%= user.birth_date ? dateFormated : 'Sin Especificar' %>
+                                            <%= user.birth_date ? dateFormated : 'Sin Especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <input type="date" name="birth_date"
@@ -290,11 +295,12 @@
                                         <div class="profile-input input-container-inactive">
                                             <select name="genre" id="">
                                                 <% genres.forEach(gen=> { %>
-                                                    <option value="<%= gen.id %>" <%= gen.id == user.genres_id && 'selected'%>>
+                                                    <option value="<%= gen.id %>" <%=gen.id==user.genres_id
+                                                        && 'selected' %>>
                                                         <%=gen.name%>
                                                     </option>
                                                     <% }) %>
-                                                </select>
+                                            </select>
 
                                         </div>
                                     </li>
@@ -305,9 +311,9 @@
                                         <div class="profile-input input-container-inactive phone-field">
                                             <select name="phone_code" class="prefix-phone">
                                                 <% countryCodes.forEach(country=> { %>
-                                                    <option value="<%=country.id %>" 
-                                                    <%=user.country_codes_id == country.id && 'selected' %>> 
-                                                    (+<%= country.code %>) <%= country.country_name %>
+                                                    <option value="<%=country.id %>"
+                                                        <%=user.country_codes_id==country.id && 'selected' %>>
+                                                        (+<%= country.code %>) <%= country.country_name %>
                                                     </option>
                                                     <% }) %>
                                             </select>
@@ -320,10 +326,14 @@
                                             <%= user.dni? user.dni : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
-                                            <input class="desktop-dni numeric-only-input desktop-required" type="text" name="dni"
-                                                value="<%=user.dni || null%>"
-                                                placeholder="23083620">
+                                            <input class="desktop-dni numeric-only-input desktop-required" type="text"
+                                                name="dni" value="<%=user.dni || null%>" placeholder="23083620">
                                         </div>
+                                        <% if(locals.errors && locals.errors.dni) { %>
+                                            <p class="error-msg">
+                                                <%= errors.dni.msg %>
+                                            </p>
+                                            <% } %>
                                     </li>
 
                                 </ul>
@@ -336,22 +346,24 @@
                                 <ul class="profile-selected-list address-list">
                                     <li class="profile-field-container">
                                         <p>Calle & Altura</p> <span>
-                                            <%= user.userAddress?.street? user.userAddress?.street : 'Sin especificar' %>
+                                            <%= user.userAddress?.street? user.userAddress?.street : 'Sin especificar'
+                                                %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
-                                            <input type="text" name="street" value="<%=user.userAddress?.street || null%>"
+                                            <input type="text" name="street"
+                                                value="<%=user.userAddress?.street || null%>"
                                                 placeholder="Santa Fe 3322">
                                         </div>
                                     </li>
 
                                     <li class="profile-field-container">
                                         <p>Piso/Departamento</p> <span>
-                                            <%= user.userAddress?.apartment? user.userAddress?.apartment : 'Sin especificar' %>
+                                            <%= user.userAddress?.apartment? user.userAddress?.apartment
+                                                : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <input type="text" name="apartment"
-                                                value="<%=user.userAddress?.apartment || null%>"
-                                                placeholder="3F">
+                                                value="<%=user.userAddress?.apartment || null%>" placeholder="3F">
                                         </div>
                                     </li>
                                     <li class="profile-field-container">
@@ -381,12 +393,12 @@
                                     </li>
                                     <li class="profile-field-container">
                                         <p>Codigo Postal</p> <span>
-                                            <%= user.userAddress?.zip_code? user.userAddress?.zip_code : 'Sin especificar' %>
+                                            <%= user.userAddress?.zip_code? user.userAddress?.zip_code
+                                                : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
                                             <input class="numeric-only-input" type="text" name="zip_code"
-                                                value="<%=user.userAddress?.zip_code || null%>"
-                                                placeholder="1111">
+                                                value="<%=user.userAddress?.zip_code || null%>" placeholder="1111">
                                         </div>
                                     </li>
                                 </ul>
