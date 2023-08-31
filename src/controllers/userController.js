@@ -240,7 +240,7 @@ const controller = {
             let errors = validationResult(req);
             let userBodyData = req.body;
             if (!errors.isEmpty()) { //Si hay errores en el back...
-                errors = errors.mappgited();
+                errors = errors.mapped();
                 // return res.send(errors)
                 return res.redirect('/user/profile?putErrors=true');
             }
