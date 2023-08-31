@@ -287,12 +287,9 @@ window.addEventListener('load', () => {
                     let div = document.createElement('div');
                     div.classList.add('error-msg-container');
                     input.closest('.profile-field-container').appendChild(div);    
-                    // Armo el mensaje de error
-                    // Crear el mensaje adiciónal
                     const additionalMessage = document.createElement('span');
                     additionalMessage.classList.add('error-msg');
                     additionalMessage.innerHTML = 'Campo requerido'
-                    // Insertar el mensaje adiciónal después del input
                     div.appendChild(additionalMessage)
                 }
             });
@@ -301,12 +298,9 @@ window.addEventListener('load', () => {
                     let div = document.createElement('div');
                     div.classList.add('error-msg-container');
                     dniInput.closest('.profile-field-container').appendChild(div);    
-                    // Armo el mensaje de error
-                    // Crear el mensaje adiciónal
                     const additionalMessage = document.createElement('span');
                     additionalMessage.classList.add('error-msg');
                     additionalMessage.innerHTML = 'DNI debe tener 8 numeros'
-                    // Insertar el mensaje adiciónal después del input
                     div.appendChild(additionalMessage)
             }
             if(flag){
