@@ -28,22 +28,11 @@ window.addEventListener('load', () => {
         blackScreen.classList.remove('black-screen-active');
         userOptionsPopup.classList.remove('user-options-popup-active');
 
-
     });
     closeUserOptionsBtn.addEventListener('click', () => {
         // La agrego por si no la tenia
         blackScreen.classList.remove('black-screen-active');
         userOptionsPopup.classList.remove('user-options-popup-active');
-        // Le saco la clase a cada opción para que se traslade
-        userOptions.forEach(opt => {
-            opt.classList.remove('translate-option-left');
-            opt.querySelector('.error-msg')?.remove();
-            // Borro el valor de los input
-            opt.querySelectorAll('input').forEach(inp => inp.value = '');
-            opt.querySelector('button').classList.remove('send-form-button-error');
-        });
-        // Le saco la clase active a la flecha para atras
-        backUserOptionsBtn.classList.remove('back-user-option-btn-active');
     });
 
     // Una vez que mandan el login Form
