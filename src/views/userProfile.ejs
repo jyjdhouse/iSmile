@@ -84,6 +84,7 @@
                                             <input class="required numeric-only-input mobile-dni" type="text" name="dni"
                                                 value="<%=user.dni || null%>" placeholder="23083620">
                                         </div>
+                                        <% console.log(locals.errors && locals.errors.dni) %>
                                         <% if(locals.errors && locals.errors.dni) { %>
                                             <p class="error-msg">
                                                 <%= errors.dni.msg %>
