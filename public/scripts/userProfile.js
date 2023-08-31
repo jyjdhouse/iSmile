@@ -30,11 +30,11 @@ window.addEventListener('load', () => {
                 const firstParent = div.closest('.options-selected-container')
                 const spanParent = div.querySelectorAll('.profile-field-container')
                 spanParent.forEach(span => {
-                    if(span?.classList.contains('unique-email-field'))return
+                    if (span?.classList.contains('unique-email-field')) return
                     span?.querySelector('span').classList.add('span-inactive')
                 })
                 const inputContainers = div.querySelectorAll('.profile-input')
-                inputContainers.forEach(cont => { 
+                inputContainers.forEach(cont => {
                     cont?.classList.remove('input-container-inactive')
                     cont?.classList.add('input-container-active');
                 })
@@ -54,11 +54,11 @@ window.addEventListener('load', () => {
             secondParent.forEach(div => {
                 const spanParent = div.querySelectorAll('.profile-field-container')
                 spanParent.forEach(span => {
-                    if(span?.classList.contains('unique-email-field'))return
+                    if (span?.classList.contains('unique-email-field')) return
                     span?.querySelector('span')?.classList.add('span-inactive')
                 })
                 const inputContainers = div.querySelectorAll('.profile-data-container .profile-input')
-                inputContainers.forEach(cont => { 
+                inputContainers.forEach(cont => {
                     cont?.classList.remove('input-container-inactive')
                     cont?.classList.add('input-container-active')
                 })
@@ -71,17 +71,17 @@ window.addEventListener('load', () => {
                 radio.disabled = false
             })
             const requiredInputs = document.querySelectorAll('.desktop-required');
-            requiredInputs.forEach(input => {   
-                    let div = document.createElement('div');
-                    div.classList.add('error-msg-container');
-                    input.closest('.profile-field-container').appendChild(div);   
-                    // Armo el mensaje de error
-                    // Crear el mensaje adiciónal
-                    const additionalMessage = document.createElement('span');
-                    additionalMessage.classList.add('error-msg');
-                    additionalMessage.innerHTML = 'Campo requerido'
-                    // Insertar el mensaje adiciónal después del input
-                    div.appendChild(additionalMessage)
+            requiredInputs.forEach(input => {
+                let div = document.createElement('div');
+                div.classList.add('error-msg-container');
+                input.closest('.profile-field-container').appendChild(div);
+                // Armo el mensaje de error
+                // Crear el mensaje adiciónal
+                const additionalMessage = document.createElement('span');
+                additionalMessage.classList.add('error-msg');
+                additionalMessage.innerHTML = 'Campo requerido'
+                // Insertar el mensaje adiciónal después del input
+                div.appendChild(additionalMessage)
             });
         }
     }
@@ -124,28 +124,28 @@ window.addEventListener('load', () => {
             const firstParent = div.closest('.options-selected-container')
             const spanParent = div.querySelectorAll('.profile-field-container')
             spanParent.forEach(parent => {
-                if(parent?.classList.contains('unique-email-field'))return
+                if (parent?.classList.contains('unique-email-field')) return
                 let spanTrue;
-                if(parent && method == 'add'){
+                if (parent && method == 'add') {
                     spanTrue = parent?.querySelector('span').classList.add('span-inactive')
                 } else {
                     spanTrue = parent?.querySelector('span').classList.remove('span-inactive')
-                }          
+                }
             })
             const inputContainers = div.querySelectorAll('.profile-input')
-            inputContainers.forEach(cont => { 
-                if(method == 'add') {
+            inputContainers.forEach(cont => {
+                if (method == 'add') {
                     cont?.classList.remove('input-container-inactive')
                     cont?.classList.add('input-container-active')
                 } else {
                     cont?.classList.add('input-container-inactive')
                     cont?.classList.remove('input-container-active')
-                }        
+                }
             })
             firstParent.style.height = `${firstParent.offsetHeight + 10}px`
         })
 
-        if(method == 'add' && btn){
+        if (method == 'add' && btn) {
             btn.classList.add('form-btn-inactive')
             btn.nextElementSibling.classList.remove('form-btn-inactive')
         } else {
@@ -153,10 +153,10 @@ window.addEventListener('load', () => {
             saveChangesBtn.classList.add('form-btn-inactive')
             saveChangesBtn.previousElementSibling.classList.remove('form-btn-inactive')
             saveChangesBtn.nextElementSibling.remove()
-        }     
+        }
 
         radioButtons.forEach(radio => {
-            method == 'add' ? radio.disabled = false : radio.disabled = true    
+            method == 'add' ? radio.disabled = false : radio.disabled = true
         })
     }
 
@@ -165,25 +165,25 @@ window.addEventListener('load', () => {
         secondParent.forEach(div => {
             const spanParent = div.querySelectorAll('.profile-field-container')
             spanParent.forEach(span => {
-                if(span?.classList.contains('unique-email-field'))return
-                if(method == 'add'){
+                if (span?.classList.contains('unique-email-field')) return
+                if (method == 'add') {
                     span?.querySelector('span')?.classList.add('span-inactive')
                 } else {
                     span?.querySelector('span')?.classList.remove('span-inactive')
-                }          
+                }
             })
             const inputContainers = div.querySelectorAll('.profile-data-container .profile-input')
-            inputContainers.forEach(cont => { 
-                if(method == 'add'){
+            inputContainers.forEach(cont => {
+                if (method == 'add') {
                     cont?.classList.remove('input-container-inactive')
                     cont?.classList.add('input-container-active')
                 } else {
                     cont?.classList.add('input-container-inactive')
                     cont?.classList.remove('input-container-active')
-                }         
+                }
             })
         })
-        if(method == 'add' && btn){
+        if (method == 'add' && btn) {
             btn.classList.add('form-btn-inactive')
             btn.nextElementSibling?.classList.remove('form-btn-inactive')
         } else {
@@ -193,7 +193,7 @@ window.addEventListener('load', () => {
             saveChangesBtn.nextElementSibling.remove()
         }
         radioButtons.forEach(radio => {
-            method == 'add' ? radio.disabled = false : radio.disabled = true    
+            method == 'add' ? radio.disabled = false : radio.disabled = true
         })
     }
 
@@ -202,12 +202,12 @@ window.addEventListener('load', () => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             let method = 'remove';
-            if(window.innerWidth <= 768){
+            if (window.innerWidth <= 768) {
                 handleMobileClickBtn(null, method);
             } else {
                 handleDesktopClickBtn(null, method)
             }
-            
+
         })
     }
 
@@ -224,8 +224,8 @@ window.addEventListener('load', () => {
                 editContentContainer.appendChild(discardChangesBtn);
                 const method = 'add';
                 handleMobileClickBtn(btn, method)
-               
-            } else {  
+
+            } else {
                 let editContentContainer = document.querySelector('.desktop-edit-content-container');
                 let discardChangesBtn = document.createElement('button');
                 discardChangesBtn.classList.add('discard-changes-btn');
@@ -247,7 +247,7 @@ window.addEventListener('load', () => {
         let lastInputValue = input.value;
         input.addEventListener("input", function (e) {
             var inputValue = e.target.value;
-            if (isLetter(inputValue) || inputValue == '') { 
+            if (isLetter(inputValue) || inputValue == '') {
                 lastInputValue = inputValue; // Almacenar el último valor válido
             } else {// Si no es letra, borra el contenido del campo
                 e.target.value = lastInputValue;
@@ -257,56 +257,56 @@ window.addEventListener('load', () => {
 
     // Logica para no permitir envio de formulario si no se completa lo requerido
     const sendFormBtns = document.querySelectorAll('.send-user-info-form-btn');
+    let dniInput;
+    if (window.innerWidth <= 768) {
+        requiredInputs = document.querySelectorAll('.required');
+        dniInput = document.querySelector('.mobile-dni');
+    } else {
+        requiredInputs = document.querySelectorAll('.desktop-required');
+        dniInput = document.querySelector('.desktop-dni');
+    }
     sendFormBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             // Agarro el formulario que envio
             const form = btn.closest('.user-info-form');
             let errorsElements = form.querySelectorAll('.error-msg');
-            if(errorsElements){
+            if (errorsElements) {
                 errorsElements.forEach(err => {
                     err.remove()
-                }) 
+                })
             }
-            
+
             // Bandera para saber si se completo lo necesario
             let flag = true;
             //Agarro los inputs requeridos
-            let requiredInputs; 
-            let dniInput;
-            if(window.innerWidth <= 768){
-                requiredInputs = document.querySelectorAll('.required');
-                dniInput = document.querySelector('.mobile-dni');
-            } else {
-                requiredInputs = document.querySelectorAll('.desktop-required');
-                dniInput = document.querySelector('.desktop-dni');
-            }
+            let requiredInputs;
+
             requiredInputs.forEach(input => {
                 if (!input.value) {
                     flag = false;
                     let div = document.createElement('div');
                     div.classList.add('error-msg-container');
-                    input.closest('.profile-field-container').appendChild(div);    
+                    input.closest('.profile-field-container').appendChild(div);
                     const additionalMessage = document.createElement('span');
                     additionalMessage.classList.add('error-msg');
                     additionalMessage.innerHTML = 'Campo requerido'
                     div.appendChild(additionalMessage)
                 }
             });
-            console.log(dniInput.value.length)
-            if(dniInput.value.length != 8){
-                    console.log('entro')
-                    flag = false;
-                    let div = document.createElement('div');
-                    div.classList.add('error-msg-container');
-                    dniInput.closest('.profile-field-container').appendChild(div);    
-                    const additionalMessage = document.createElement('span');
-                    additionalMessage.classList.add('error-msg');
-                    additionalMessage.innerHTML = 'DNI debe tener 8 numeros'
-                    div.appendChild(additionalMessage)
+            if (dniInput.value.length != 8) {
+                console.log('entro')
+                flag = false;
+                let div = document.createElement('div');
+                div.classList.add('error-msg-container');
+                dniInput.closest('.profile-field-container').appendChild(div);
+                const additionalMessage = document.createElement('span');
+                additionalMessage.classList.add('error-msg');
+                additionalMessage.innerHTML = 'DNI debe tener 8 numeros'
+                div.appendChild(additionalMessage)
             }
-            if(flag){
-                form.submit()       
+            if (flag) {
+                form.submit()
             }
         })
     });
