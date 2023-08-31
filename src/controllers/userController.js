@@ -241,6 +241,7 @@ const controller = {
             let userBodyData = req.body;
             if (!errors.isEmpty()) { //Si hay errores en el back...
                 errors = errors.mapped();
+                console.log(errors)
                 // return res.send(errors)
                 return res.redirect('/user/profile?putErrors=true');
             }
