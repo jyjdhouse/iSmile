@@ -207,11 +207,14 @@ window.addEventListener('load', () => {
             } else {
                 handleDesktopClickBtn(null, method);
             }
-            const form = document.querySelector('.user-info-form');
-            let errorsElements = form.querySelectorAll('.error-msg');
-            if (errorsElements) {
-                errorsElements.forEach(err => {
-                    err.remove()
+
+            const profileFieldContainer = document.querySelectorAll('.profile-field-container')
+            if (profileFieldContainer) {
+                profileFieldContainer.forEach(profile => {
+                    let errorMsg = profile.querySelector('.error-msg-container');
+                    if (errorMsg) {
+                        errorMsg.remove();
+                    }
                 })
             }
         })
