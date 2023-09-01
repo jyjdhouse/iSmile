@@ -91,6 +91,12 @@ module.exports = {
                 throw new Error("La longitud debe ser 8");
             }
             return true
+        }),
+        body('phone').custom((value, { req }) => {
+            if (value.length > 11) {
+                throw new Error("Longitud mayor a la esperada");
+            }
+            return true
         })
     ],
     productFieldsValidations: [

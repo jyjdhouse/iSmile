@@ -257,14 +257,8 @@ window.addEventListener('load', () => {
 
     // Logica para no permitir envio de formulario si no se completa lo requerido
     const sendFormBtns = document.querySelectorAll('.send-user-info-form-btn');
-    let dniInput;
-    if (window.innerWidth <= 768) {
-        requiredInputs = document.querySelectorAll('.required');
-        dniInput = document.querySelector('.mobile-dni');
-    } else {
-        requiredInputs = document.querySelectorAll('.desktop-required');
-        dniInput = document.querySelector('.desktop-dni');
-    }
+    //Agarro los inputs requeridos
+
     sendFormBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -279,8 +273,20 @@ window.addEventListener('load', () => {
 
             // Bandera para saber si se completo lo necesario
             let flag = true;
-            //Agarro los inputs requeridos
+
             let requiredInputs;
+            let dniInput;
+            let phoneInp;
+            if (window.innerWidth <= 768) {
+                requiredInputs = document.querySelectorAll('.required');
+                dniInput = document.querySelector('.mobile-dni');
+                phoneInp = document.querySelector('.mobile-phone')
+            } else {
+                requiredInputs = document.querySelectorAll('.desktop-required');
+                dniInput = document.querySelector('.desktop-dni');
+                phoneInp = document.querySelector('.desktop-phone')
+            }
+
 
             requiredInputs.forEach(input => {
                 if (!input.value) {
@@ -294,14 +300,26 @@ window.addEventListener('load', () => {
                     div.appendChild(additionalMessage)
                 }
             });
-            if (dniInput.value.length != 8) {
+            if (Number(dniInput.value.length) != 8) {
                 flag = false;
+                console.log(dniInput)
                 let div = document.createElement('div');
                 div.classList.add('error-msg-container');
                 dniInput.closest('.profile-field-container').appendChild(div);
                 const additionalMessage = document.createElement('span');
                 additionalMessage.classList.add('error-msg');
                 additionalMessage.innerHTML = 'DNI debe tener 8 numeros'
+                div.appendChild(additionalMessage)
+            }
+
+            if (Number(phoneInp.value.length) > 11) {
+                flag = false;
+                let div = document.createElement('div');
+                div.classList.add('error-msg-container');
+                phoneInp.closest('.profile-field-container').appendChild(div);
+                const additionalMessage = document.createElement('span');
+                additionalMessage.classList.add('error-msg');
+                additionalMessage.innerHTML = 'Longitud incorrecta'
                 div.appendChild(additionalMessage)
             }
             if (flag) {

@@ -72,7 +72,7 @@
                                                     </option>
                                                     <% }) %>
                                             </select>
-                                            <input class="numeric-only-input required" type="text" name="phone"
+                                            <input class="numeric-only-input required mobile-phone" type="text" name="phone"
                                                 value="<%=user.phone || null%>" placeholder="1158731281">
                                         </div>
                                     </li>
@@ -196,7 +196,7 @@
                                         <div class="radio-label-container">
                                             <label for="wpp_notifications_true">SI</label>
                                             <input id="wpp_notifications_true" type="radio" name="wpp_notifications"
-                                                value="1" <%=user.wpp_notifications==1? 'checked' : '' %>>
+                                                value="<%=user.wpp_notifications==1 %>" <%=user.wpp_notifications==1? 'checked' : '' %>>
                                         </div>
                                         <div class="radio-label-container">
 
@@ -318,7 +318,7 @@
                                                     </option>
                                                     <% }) %>
                                             </select>
-                                            <input class="numeric-only-input desktop-required" type="text" name="phone"
+                                            <input class="numeric-only-input desktop-required desktop-phone" type="text" name="phone"
                                                 value="<%=user.phone || null%>" placeholder="1158731281">
                                         </div>
                                     </li>
