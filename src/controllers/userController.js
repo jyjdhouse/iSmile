@@ -255,9 +255,9 @@ const controller = {
                 phone: userBodyData.phone,
                 dni: userBodyData.dni,
                 verified_essential_data: 1,
-                wpp_notifications: userBodyData.wpp_notifications ? 1 : 0,
-                email_notifications: userBodyData.email_notifications ? 1 : 0,
-                email_newsletter: userBodyData.email_newsletter ? 1 : 0,
+                wpp_notifications: userBodyData.wpp_notifications,
+                email_notifications: userBodyData.email_notifications,
+                email_newsletter: userBodyData.email_newsletter,
             };
             let userToUpdate = await getUser(userToUpdateId)
             // Actualizo el usuario
