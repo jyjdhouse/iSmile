@@ -300,7 +300,7 @@ window.addEventListener('load', () => {
                     div.appendChild(additionalMessage)
                 }
             });
-            if (dniInput.value.length != 8) {
+            if (Number(dniInput.value.length) != 8) {
                 flag = false;
                 console.log(dniInput)
                 let div = document.createElement('div');
