@@ -205,9 +205,15 @@ window.addEventListener('load', () => {
             if (window.innerWidth <= 768) {
                 handleMobileClickBtn(null, method);
             } else {
-                handleDesktopClickBtn(null, method)
+                handleDesktopClickBtn(null, method);
             }
-
+            const form = document.querySelector('.user-info-form');
+            let errorsElements = form.querySelectorAll('.error-msg');
+            if (errorsElements) {
+                errorsElements.forEach(err => {
+                    err.remove()
+                })
+            }
         })
     }
 
