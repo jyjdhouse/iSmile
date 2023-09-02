@@ -19,7 +19,7 @@ router.get('/regist', onlyGuestsMiddleware,userController.regist);
 router.get('/logout', getLastURL,userController.logout);
 router.get('/checkout',userController.checkout); 
 router.get('/profile', guestMiddleware,userController.userProfile);
-router.get('/cambiar-contrasena/:token',userController.changePasswordView);
+router.get('/cambiar-contrasena/:token',guestMiddleware,userController.changePasswordView);
 router.get('/contrasena-error',userController.passwordError);
 router.get('/booking',userController.bookingView);
 router.get('/historial-compras',guestMiddleware,userController.orderHistory);
