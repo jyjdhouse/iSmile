@@ -10,6 +10,7 @@ const getLastURL = require('../middlewares/getLastURL');
 const guestMiddleware = require('../middlewares/guestMiddleware');
 const onlyGuestsMiddleware = require('../middlewares/onlyGuestsMiddleware');
 const onlyUnverifiedUsers = require('../middlewares/onlyUnverifiedUsers');
+
 // Rutas
 
 // GET

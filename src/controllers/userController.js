@@ -186,7 +186,6 @@ const controller = {
         }
     },
     login: (req, res) => {
-        console.log(req.session);
         return res.render('login');
     },
     regist: (req, res) => {
