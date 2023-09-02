@@ -19,11 +19,14 @@ app.use(express.json());
 app.use(cors());
 // Express-session
 const session = require('express-session');
+const csrf = require('lusca').csrf;
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,// No guardar la sesión en cada solicitud si no hay cambios
     saveUninitialized: false // Guardar sesiones incluso si están vacías o no modificadas
 }));
+// Para evitar ataques csrf
+app.use(csrf());
 
 
 // Cookie-parser
@@ -60,8 +63,8 @@ const apiPaymentRouter = require('./routes/api/apiPaymentRouter.js')
 // Middlewares
 const userLogged = require('./middlewares/userLogged.js');
 const userIsIncomplete = require('./middlewares/userIsIncomplete');
-const guestMiddleware = require('./middlewares/guestMiddleware')
-const headerMiddleware = require('./middlewares/headerMiddleware')
+const guestMiddleware = require('./middlewares/guestMiddleware');
+const headerMiddleware = require('./middlewares/headerMiddleware');
 
 
 
