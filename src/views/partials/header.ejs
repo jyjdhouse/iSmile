@@ -28,6 +28,7 @@
                         <div class="logged-menu-container">
                         <ul class="logged-menu-list">
                             <li class="logged-menu-list-item bold"><%= userLogged.first_name || 'User' %></li>
+                            <li class="logged-menu-list-item"><a href="/user/profile">Mi perfil</a></li>
                             <% if (locals.userLogged.user_categories_id!=3) { %>
                                 <!--SI ES ADMIN userLogged.user_categories_id-->
                                 <li class="logged-menu-list-item expandable-list-item">
@@ -46,7 +47,6 @@
                                 <li class="logged-menu-list-item"><a href="/api/admin/get-clients"
                                         target="_blank">Descargar clientes</a></li>
                                 <% } %>
-                                    <li class="logged-menu-list-item"><a href="/user/profile">Mi perfil</a></li>
                                     <li class="logged-menu-list-item"><a href="/user/historial-compras">Historial compras</a></li>
                                     <li class="logged-menu-list-item"><a href="/user/logout">Cerrar Sesion</a></li>
                         </ul>
