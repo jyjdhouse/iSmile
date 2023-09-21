@@ -116,6 +116,11 @@ const controller = {
         }
         return res.render('checkout.ejs', { provinces, countryCodes });
     },
+    safePaymentView:async(req,res)=>{
+        const order_tra_id = req.session.order_tra_id;
+        console.log(req.session);
+        return res.render('creditPayment',{order_tra_id})
+    },
     processRegist: async (req, res) => {
         // Ultima ruta que estuvo, para luego redirigir
         

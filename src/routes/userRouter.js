@@ -18,6 +18,7 @@ router.get('/login', onlyGuestsMiddleware,getLastURL,userController.login);
 router.get('/regist', onlyGuestsMiddleware,userController.regist);
 router.get('/logout', getLastURL,userController.logout);
 router.get('/checkout',userController.checkout); 
+router.get('/checkout/pago-seguro',userController.safePaymentView); 
 router.get('/profile', guestMiddleware,userController.userProfile);
 router.get('/cambiar-contrasena/:token',guestMiddleware,userController.changePasswordView);
 router.get('/contrasena-error',userController.passwordError);

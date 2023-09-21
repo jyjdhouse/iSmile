@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/creditPayment.css" />
+    <script src="https://live.decidir.com/static/v2.6.4/decidir.js"></script>
+    <script src="/scripts/creditPayment.js"></script>
+    <title>Pago Seguro</title>
+  </head>
+  <body>
+    <form action="" method="post" class="formulario">
+      <fieldset>
+        <ul>
+          <li>
+            <input type="hidden" name="order_tra_id" id="oder_tra_id" value="<%= locals.order_tra_id ?  order_tra_id : null%>">
+            <label for="card_number">Numero de tarjeta:</label>
+            <input
+              type="text"
+              data-decidir="card_number"
+              placeholder="XXXXXXXXXXXXXXXX"
+              value="4507990000004905"
+            />
+          </li>
+          <li>
+            <label for="security_code">Codigo de seguridad:</label>
+            <input
+              type="text"
+              data-decidir="security_code"
+              placeholder="XXX"
+              value="123"
+            />
+          </li>
+          <li>
+            <label for="card_expiration_month">Mes de vencimiento:</label>
+            <input
+              type="text"
+              data-decidir="card_expiration_month"
+              placeholder="MM"
+              value="12"
+            />
+          </li>
+          <li>
+            <label for="card_expiration_year">Año de vencimiento:</label>
+            <input
+              type="text"
+              data-decidir="card_expiration_year"
+              placeholder="AA"
+              value="20"
+            />
+          </li>
+          <li>
+            <label for="card_holder_name">Nombre del titular:</label>
+            <input
+              type="text"
+              data-decidir="card_holder_name"
+              placeholder="TITULAR"
+              value="TITULAR"
+            />
+          </li>
+          <li>
+            <label for="card_holder_doc_type">Tipo de documento:</label>
+            <select data-decidir="card_holder_doc_type">
+              <option value="dni">DNI</option>
+            </select>
+          </li>
+          <li>
+            <label for="card_holder_doc_type">Numero de documento:</label>
+            <input
+              type="text"
+              data-decidir="card_holder_doc_number"
+              placeholder="XXXXXXXXXX"
+              value="27859328"
+            />
+          </li>
+        </ul>
+        <input type="submit" value="Generar Token" />
+      </fieldset>
+    </form>
+  </body>
+</html>

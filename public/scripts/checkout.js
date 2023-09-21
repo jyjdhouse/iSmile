@@ -1104,28 +1104,7 @@ form.addEventListener('submit', async (e) => {
             shipping_zip_code,
         };
 
-        // Hago el fetch para pedir el boton de pago
-        // const paymentButtonRequestBody = {
-        //     items,
-        //     name,
-        //     last_name,
-        // }
-        let paymentButtonFetchResponse = await fetch('/api/payment/getPaymentRequest', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' // Tipo de contenido del cuerpo de la solicitud
-            },
-            body: JSON.stringify(bodyForm)
-        }); // Para obtener la respuesta
-        paymentButtonFetchResponse = await paymentButtonFetchResponse.json();
-        // Si hay error aca ==> Repinto la vista con errores
-        if (!paymentButtonFetchResponse.ok) {
-            return console.log(paymentButtonFetchResponse);
-            window.location.href = `/user/checkout?checkoutErrors=${true}`;
-            return
-        };
 
-        // Sino, hay que pintar el boton del checkout TODO:
 
         // Aca es para mandar por post el pedido y armar la orden en db
         let fetchResponse = await fetch('/api/user/checkout', {
@@ -1142,7 +1121,11 @@ form.addEventListener('submit', async (e) => {
             const errorMsg = 'Error al procesar la venta';
             window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${errorMsg}`;
             return
+        }else if(fetchResponse.redirect){
+            window.location.href = fetchResponse.redirect;
+            return
         };
+        console.log("Redirijo a vista de compra exitosa");
         // Una vez que se compra, si no hay usuario se borra el carro del locale
         if (!window.userLogged) {
             localStorage.removeItem('temporalCart');
