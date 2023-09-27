@@ -49,6 +49,9 @@ window.addEventListener("load", () => {
     if (activeStep == 1 && window.innerWidth > 768) {
       stepsContainer.style.height = '1000px';
       main.style.height = '1000px';
+    } else if(activeStep == 1 && window.innerWidth < 768){
+      stepsContainer.style.height = '800px';
+      main.style.height = '800px';
     } else {
       stepsContainer.style.height = '700px';
       main.style.height = '700px';
