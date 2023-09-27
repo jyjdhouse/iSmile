@@ -39,6 +39,7 @@ const orderStatuses = require('../utils/staticDB/orderStatus');
 const orderTypes = require('../utils/staticDB/orderTypes');
 const generateRandomCodeWithExpiration = require('../utils/generateRandomCodeWithExpiration');
 const sendVerificationCodeMail = require('../utils/sendverificationCodeMail');
+const acceptedCards = require('../utils/staticDB/acceptedCards');
 
 // CONTROLLER
 const controller = {
@@ -118,7 +119,7 @@ const controller = {
     },
     safePaymentView:async(req,res)=>{
         const order_tra_id = req.session.order_tra_id;
-        const cards = await db.AcceptedCard.findAll();
+        const cards = acceptedCards;
         return res.render('creditPayment',{order_tra_id, cards})
     },
     processRegist: async (req, res) => {
