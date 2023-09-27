@@ -118,8 +118,8 @@ const controller = {
     },
     safePaymentView:async(req,res)=>{
         const order_tra_id = req.session.order_tra_id;
-        console.log(req.session);
-        return res.render('creditPayment',{order_tra_id})
+        const cards = await db.AcceptedCard.findAll();
+        return res.render('creditPayment',{order_tra_id, cards})
     },
     processRegist: async (req, res) => {
         // Ultima ruta que estuvo, para luego redirigir
@@ -453,7 +453,6 @@ const controller = {
     verifyEmailCode: async(req,res) =>{
         return res.render('userEmailVerify')
     }
-
 };
 
 module.exports = controller;

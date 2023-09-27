@@ -17,7 +17,7 @@ var privateKey = process.env.PAYMENT_API_KEY;
 const controller = {
   getPaymentRequest: async (req, res) => {
     try {
-      let { token, bin, order_tra_id, device_unique_identifier, card_id } = req.body;
+      let { token, bin, order_tra_id, device_unique_identifier, card_id, payment_methods_id } = req.body;
 
       //Busco la orden
       let orderToPay = await db.Order.findOne({
