@@ -4,7 +4,8 @@
     --gold-color: #bba059;
     --red-color: rgb(198, 23, 23);
     --bold-color: #580846;
-    --gold-bg-color: #aa9477
+    --gold-bg-color: #aa9477;
+    --light-grey-color: #d6d6d6;
 }
 
 * {
