@@ -1,30 +1,39 @@
 const db = require("../../database/models");
+
 // Librerias
-const axios = require("axios");
 const { validationResult } = require("express-validator");
+
 // From utils
 const handleStock = require("../../utils/handleStock");
 const provinces = require("../../utils/staticDB/provinces");
+const getDoubleNumber = require("../../utils/getDoubleNumber");
+
 // SDK IMPORT MODULES
 const sdkModule = require("../../../lib/sdk");
 const paymentMod = require("../../../lib/payment");
 const PaymentDataModule = require("../../../lib/payment_data");
 var ambient = "developer"; //valores posibles: "developer" o "production";
 var sdk = new sdkModule.sdk(ambient, publicKey, privateKey);
+
 // KEYS
 var publicKey = process.env.PAYMENT_PUBLIC_KEY;
 var privateKey = process.env.PAYMENT_API_KEY;
 const controller = {
   getPaymentRequest: async (req, res) => {
     try {
-      let { token, bin, order_tra_id, device_unique_identifier, card_id } = req.body;
-
+      let { token, bin, order_tra_id, device_unique_identifier, card_id } =
+        req.body;
+      let errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        errors = errors.mapped();
+        console.log(errors);
+      }
       //Busco la orden
       let orderToPay = await db.Order.findOne({
         where: {
           tra_id: order_tra_id,
         },
-        include: ["billingAddress", "shippingAddress",'orderItems'],
+        include: ["billingAddress", "shippingAddress", "orderItems"],
       });
       // return res.status(200).json({
       //   orderToPay
@@ -45,7 +54,7 @@ const controller = {
         token,
         payment_method_id: 1, //tipo de tarjeta que uso
         bin, //Primeros digitos de la tarjeta
-        amount: orderToPay.total,
+        amount: orderToPay.total, //TODO: Ver como queda esto con los requerimientos de payway
         currency: "ARS",
         installments: 1, //Cuotas
         description: "Compra Online",
@@ -56,7 +65,7 @@ const controller = {
         apiKey: privateKey,
       };
       var customer = {
-        id: "juanpepito",
+        id: orderToPay.billing_name,
         email: orderToPay.billing_email,
       };
       var paymentData = new PaymentDataModule.paymentData(args);
@@ -66,14 +75,16 @@ const controller = {
       var send_to_cs = true;
 
       if (send_to_cs == true) {
-        let shipToData = { //Direccion de envio
+        let shipToData = {
+          //Direccion de envio
           country: "AR",
           email: orderToPay.billing_email, //Mismo que facturacion
           first_name: orderToPay.billing_name, //Mismo que facturacion
           last_name: orderToPay.billing_name, //Mismo que facturacion
           phone_number: orderToPay.billing_phone, //Mismo que facturacion
         };
-        if (orderToPay.shippingAddress) { //Si tiene direccion de entrega, le agrego a shipTo los datos del shippingAddress
+        if (orderToPay.shippingAddress) {
+          //Si tiene direccion de entrega, le agrego a shipTo los datos del shippingAddress
           // Busco el codigo de provincia de esa direccion
           const shippingProvinceCode = provinces.find(
             (prov) => prov.id == orderToPay.shippingAddress.provinces_id
@@ -83,22 +94,25 @@ const controller = {
           shipToData.postal_code = orderToPay.shippingAddress.zip_code;
           shipToData.state = shippingProvinceCode;
           shipToData.street1 = orderToPay.shippingAddress.street;
-          shipToData.street2 = orderToPay.shippingAddress.apartment ? orderToPay.shippingAddress.apartment
-          : "";
-        } else if (orderToPay.order_types_id == 2){ //Retiro por el local
+          shipToData.street2 = orderToPay.shippingAddress.apartment
+            ? orderToPay.shippingAddress.apartment
+            : "";
+        } else if (orderToPay.order_types_id == 2) {
+          //Retiro por el local
           shipToData.city = "CABA";
-          shipToData.postal_code = '1425';
-          shipToData.state = 'C';
+          shipToData.postal_code = "1425";
+          shipToData.state = "C";
           shipToData.street1 = "Avenida Santa Fe 2911";
-          shipToData.street2 = "Piso 3, departamento 'F' "
-        } else { // Envio a la direccion de facturacion
+          shipToData.street2 = "Piso 3, departamento 'F' ";
+        } else {
+          // Envio a la direccion de facturacion
           shipToData.city = orderToPay.billingAddress.city;
           shipToData.postal_code = orderToPay.billingAddress.zip_code;
           shipToData.state = billingProvinceCode;
           shipToData.street1 = orderToPay.billingAddress.street;
           shipToData.street2 = orderToPay.billingAddress.apartment
-          ? orderToPay.billingAddress.apartment
-          : "";
+            ? orderToPay.billingAddress.apartment
+            : "";
         }
         //CyberSource
         var datos_cs = {
@@ -109,7 +123,7 @@ const controller = {
             //Direccion de facturacion
             city: orderToPay.billingAddress.city,
             country: "AR",
-            customer_id: "juanpepito",
+            customer_id: orderToPay.billing_name,
             email: orderToPay.billing_email,
             first_name: orderToPay.billing_name,
             last_name: orderToPay.billing_name,
@@ -127,33 +141,78 @@ const controller = {
           },
           retail_transaction_data: {
             ship_to: shipToData,
-            items: [ //TODO: Hacer for-each de los productos
-              {
-                code: "item1",
-                description: "desc1",
-                name: "name1",
-                sku: "sku1",
-                quantity: 2,
-                unit_price: 500,
-                total_amount: 1000,
-              },
-            ],
           },
         };
         args.data.fraud_detection = datos_cs;
+        // Hago el forEach de los orderItems
+        let transactionItems = [];
+        orderToPay.orderItems.forEach((item) => {
+          let itemToPush = {
+            code: item.products_id,
+            description: "desc1",
+            name: item.name,
+            sku: "sku1",
+            quantity: item.quantity,
+            unit_price: item.price * (1 - (item.discount || 0) / 100), //Contempla el descuento
+          };
+          itemToPush.total_amount = itemToPush.quantity * itemToPush.unit_price;
+          transactionItems.push(itemToPush);
+        });
+        // Lo agrego al objeto para le cs
+        datos_cs.retail_transaction_data.items = transactionItems;
       }
       var instPayment = await new paymentMod.payment(sdk, args);
-      if (typeof instPayment == "string") {
+      if (typeof instPayment == "string" || instPayment?.status != "approved") {
         //Hay errores --> Devuelvo un 400
-        console.log(err);
+        console.log(err, instPayment);
         return res.status(400).json({
           meta: {
             status: 400,
           },
           ok: false,
-          error: instPayment,
+          response: instPayment,
+          items: datos_cs.retail_transaction_data.items,
+          error: err,
+          redirect: "/user/checkout", //TODO: Poner params para que renderize tarjeta con error
         });
       }
+      // Aca no hubo errores, doy por finalizada la compra.
+
+      //Borro de la session el tra_id
+      delete req.session.order_tra_id;
+
+      //Borro el carro si habia usuario loggeado
+      if (req.session.userLoggedId) {
+        // Si se proceso el pago entonces limpio el carro del usuario
+        await db.TemporalCart.destroy({
+          where: {
+            users_id: req.session.userLoggedId,
+          },
+        });
+        // Tambien reinicio los mails del carro por si vuelve a meter cosas
+        await db.User.update(
+          {
+            last_cart_email: null,
+            cart_period_type: null,
+          },
+          {
+            where: {
+              id: req.session.userLoggedId,
+            },
+          }
+        );
+      }
+      // Cambio el status de la orden
+      await db.Order.update(
+        {
+          order_status_id: orderToPay.order_types_id == 1 ? 2 : 6, //pendiente de retiro o  de envio
+        },
+        {
+          where: {
+            id: orderToPay.id,
+          },
+        }
+      );
       return res.status(200).json({
         meta: {
           status: 200,
@@ -162,29 +221,53 @@ const controller = {
         paymentResponse: instPayment,
         redirect: `/compra-exitosa/${order_tra_id}`,
       });
-
-      // sdk.payment(args, function (result, err) {
-      //   console.log("");
-      //   console.log(
-      //     "Se realiza una petición de pago enviando el payload y el token de pago "
-      //   );
-      //   console.log("generado anteriormente");
-      //   console.log("             PAYMENT REQUEST             ");
-      //   console.log("sendPaymentRequest result:");
-      //   console.log(result);
-      //   console.log("sendPaymentRequest error:");
-      //   console.log(err);
-      //   return res.status(200).json({
-      //     meta: {
-      //       status: 200,
-      //     },
-      //     ok: true,
-      //     paymentResponse: result,
-      //   });
-      // });
     } catch (error) {
       console.error("Error:", error);
       return res.status(404).json({ error });
+    }
+  },
+  handlePaymentError: async (req, res) => {
+    try {
+      let { order_tra_id } = req.body;
+      let method = "suma";
+      let stockItems = [];
+
+      //Busco la orden
+      let orderToPay = await db.Order.findOne({
+        where: {
+          tra_id: order_tra_id,
+        },
+        include: ["orderItems"],
+      });
+      orderToPay.orderItems.forEach((item) => {
+        stockItems.push({
+          id: item.products_id,
+          quantity: item.quantity,
+        });
+      });
+      // Sumo los items nuevamente al stock
+      let stockResponse = await handleStock(stockItems, method);
+      console.log(stockResponse);
+      // Modifico el status de la orden (Pago rechazado)
+      await db.Order.update(
+        {
+          order_status_id: 7,
+        },
+        {
+          where: {
+            id: orderToPay.id,
+          },
+        }
+      );
+      return res.status(200).json({
+        meta: {
+          status: 200,
+        },
+        ok: true,
+      });
+    } catch (error) {
+      console.log(`Falle en apiPaymentController.handlePaymentError: ${error}`);
+      return res.json({ error });
     }
   },
 };

@@ -220,7 +220,7 @@ const controller = {
         // Pendiente de pago && antes era pendiente de confirmacion
         case 3 && order.order_status_id == 4:
           method = 'resta';
-          handleStock(stockItems, method);
+          await handleStock(stockItems, method);
           // hago el update con el inicio de la fecha para pagar
           await db.Order.update(
             {
@@ -275,7 +275,7 @@ const controller = {
         // veo si se anula
         case 5:
           method = 'suma';
-          handleStock(stockItems, method);
+          await handleStock(stockItems, method);
           await db.Order.update({
             order_status_id: categoryId,
             pending_payment_date: null,

@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('./partials/head.ejs') %>
     <link rel="stylesheet" href="/css/creditPayment.css" />
+    <link rel="stylesheet" href="/css/orderOverlay.css" type="text/css">
     <script src="https://live.decidir.com/static/v2.6.4/decidir.js"></script>
     <script src="/scripts/creditPayment.js"></script>
     <title>Pago Seguro</title>
   </head>
   <body>
+    <main class="main">
+      <%- include('./partials/orderOverlay.ejs') %>
+    
     <form action="" method="post" class="formulario">
       <fieldset>
         <ul>
@@ -77,5 +80,6 @@
         <input type="submit" value="Generar Token" />
       </fieldset>
     </form>
+  </main>
   </body>
 </html>

@@ -225,5 +225,30 @@ module.exports = {
             }
             return true;
         })
+    ],
+    paymentCardsValidations: [
+        //token, bin, order_tra_id, device_unique_identifier, card_id
+        body(['token','bin','order_tra_id','device_unique_identifier','card_id']).notEmpty(),
+        body(['token','order_tra_id']).custom((value,{req})=>{
+            if(value.length > 36){
+                throw new Error('Ha ocurrido un error, intente nuevamente')
+            }
+            // Validacion para que el token tenga la longitud que payway provee
+            return true
+        }),
+        body('bin').custom((value,{req})=>{
+            if(value.length > 6){
+                throw new Error('Ha ocurrido un error, intente nuevamente')
+            }
+            // Validacion para que el token tenga la longitud que payway provee
+            return true
+        }),
+        body('bin').custom((value,{req})=>{
+            if(value.length > 6){
+                throw new Error('Ha ocurrido un error, intente nuevamente')
+            }
+            // Validacion para que el token tenga la longitud que payway provee
+            return true
+        }),
     ]
 }

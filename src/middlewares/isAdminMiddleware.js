@@ -15,7 +15,7 @@ const isAdmin = async (req, res, next) => {
         //Lo deslogueo
         res.clearCookie('userAccessToken');
         res.clearCookie('adminToken')
-        req.session.destroy();
+        delete req.session.userLoggedId;
         return res.redirect('/')
     }
     next();

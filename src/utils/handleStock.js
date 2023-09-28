@@ -32,10 +32,10 @@ module.exports = async function (productsArray, method) { //[1,2,3]
             }
         };
         if (allProductOK) {
-            await db.Order.bulkCreate(arrayToBulkUpdate, {
+            await db.Product.bulkCreate(arrayToBulkUpdate, {
                 updateOnDuplicate: ["stock"]
             });
-            return { ok: true, message: `Item ${method == 'suma' ? 'sumado' : 'restado'} del stock  exitosamente.` };
+            return { ok: true, message: `Items ${method == 'suma' ? 'sumados' : 'restados'} al stock  exitosamente.` };
         }
 
 

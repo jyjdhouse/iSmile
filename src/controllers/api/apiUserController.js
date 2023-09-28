@@ -323,7 +323,7 @@ const controller = {
           msg: "Error al procesar la compra, intente nuevamente",
         });
       }
-
+      
       // Si no hay errores
       let productsInDB = getDeepCopy(await getAllProducts());
       // return res.send({productsInDB,items});
@@ -465,8 +465,6 @@ const controller = {
       } else {
         //Retiro por local o venta fisica ==> los checkbox de la direccion de entrega van en false
         orderDataToDB.is_same_address = 0;
-        orderDataToDB.use_user_address = 0;
-        orderDataToDB.save_user_address = 0;
       }
       // Hasta aca ya arme todo. (BillingAddress - Order - OrderItem - ShippingAddress) ==> Tengo que insertar en la DB
 
@@ -481,13 +479,14 @@ const controller = {
         orderDataToDB.order_status_id = 3; //Pendiente de pago
       } else if (payment_methods_id == 1) {
         //Transferencia
+
         orderDataToDB.order_status_id = 4; //Pendiente de confirmacion
       }
 
-      // Tema total
+      // Tema total price
       let orderTotalPrice = 0;
       orderItemsToDB.forEach((item) => {
-        orderTotalPrice += parseInt(item.price) * parseInt(item.quantity);
+        orderTotalPrice += parseInt(item.price) * (1-(item.discount/100)) * parseInt(item.quantity);
       });
       // Hago los insert en la base de datos
 
@@ -518,32 +517,31 @@ const controller = {
       orderCreated = await getOrder(orderCreated.id);
       // Tengo que armar 2 mails: 1 al que compro y otro a las chicas
       await sendOrderMails(orderCreated);
-    //   TODO: Esto no se borra aca si es payment method Tarjeta, porque si se rechaza el pago no deberia borrar el carro
-    //   if (users_id) {
-    //     // Si se creo la orden entonces limpio el carro del usuario
-    //     await db.TemporalCart.destroy({
-    //       where: {
-    //         users_id,
-    //       },
-    //     });
-    //     // Tambien reinicio los mails del carro por si vuelve a meter cosas
-    //     await db.User.update(
-    //       {
-    //         last_cart_email: null,
-    //         cart_period_type: null,
-    //       },
-    //       {
-    //         where: {
-    //           id: users_id,
-    //         },
-    //       }
-    //     );
-    //   }
-    
-    // Si paga con tarjetas llevo a sesion el tra_id
-      if(payment_methods_id == 2 || payment_methods_id == 3){
-        console.log("Tengo que armar el session");
+      //   TODO: Esto no se borra aca si es payment method Tarjeta, porque si se rechaza el pago no deberia borrar el carro
+
+      // Si paga con tarjetas
+      if (payment_methods_id == 2 || payment_methods_id == 3) {
+        //Armo el session con el tra_id
         req.session.order_tra_id = orderCreated.tra_id;
+      } else if (users_id) { //Si medio de pago NO es tarjeta ==> Veo si tiene usuario y si tiene limpio de db
+        // Limpio el carro del usuario
+        await db.TemporalCart.destroy({
+          where: {
+            users_id,
+          },
+        });
+        // Tambien reinicio los mails del carro por si vuelve a meter cosas
+        await db.User.update(
+          {
+            last_cart_email: null,
+            cart_period_type: null,
+          },
+          {
+            where: {
+              id: users_id,
+            },
+          }
+        );
       }
       // Mando la respuesta
       return res.status(200).json({
@@ -557,14 +555,11 @@ const controller = {
         redirect:
           payment_methods_id == 2 || payment_methods_id == 3
             ? "/user/checkout/pago-seguro"
-            : false,
+            : `/compra-exitosa/${orderCreated.tra_id}`,
       });
     } catch (error) {
       console.log(`Falle en userController.proccessCheckout: ${error}`);
       return res.status(404).json({ error });
-      return res.redirect(
-        `/user/checkout?checkoutErrors=${true}&msg="Error al procesar la compra, intente nuevamente"`
-      );
     }
   },
   getEstimateShipmentData: async (req, res) => {
