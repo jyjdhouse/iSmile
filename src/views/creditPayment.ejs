@@ -20,7 +20,7 @@
           <form class="select-card-form">
             <% cards.forEach(card=> { %>
             <label
-              for="card<%= card.id %>"
+              for="card-<%= card.id %>"
               class="card-label"
               data-payment_methods_id="<%= card.payment_method_id%>"
               data-card_id="<%=card.decidir_id%>"
@@ -37,10 +37,10 @@
             <input
               type="radio"
               hidden
-              name="card-selector"
-              value="card<%=card.decidir_id%>"
+              name="card_id"
+              value="<%=card.decidir_id%>"
               class="select-card-input"
-              id="card<%=card.id%>"
+              id="card-<%=card.id%>"
             />
             <% }) %>
             <div class="select-card-btn-container">

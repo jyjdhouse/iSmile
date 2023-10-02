@@ -66,6 +66,10 @@
                                     <p class="shipping-province"><%=  provinces.find(prov=> prov.id == order.shippingAddress ? order.shippingAddress.provinces_id : order.billingAddress.provinces_id).name %></p>
                                 </div>
                             <% } %>
+                            <div class="payment-method-details hidden">
+                                <p class="payment-method-label"> <%= order.paymentMethod.name %> </p>
+                                <p class="payment-method-desc"> <%= order.paymentMethod.desc %> </p>
+                            </div>
                         </article>
                     <% }) %>
 

@@ -163,7 +163,7 @@ window.addEventListener("load", () => {
   let card_id;
   selectCardForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const cardRadioSelected = document.querySelector('input[name="card-selector"]:checked');
+    const cardRadioSelected = document.querySelector('input[name="card_id"]:checked');
     const labelSelected = document.querySelector('.card-active-label');
     if (cardRadioSelected) {
       payment_methods_id = labelSelected.dataset.payment_methods_id

@@ -221,6 +221,7 @@ const controller = {
         case 3 && order.order_status_id == 4:
           method = 'resta';
           await handleStock(stockItems, method);
+          // TODO: Poner aca un if (porque si rebota hay que hacer algo con ese rebote)
           // hago el update con el inicio de la fecha para pagar
           await db.Order.update(
             {

@@ -7,11 +7,15 @@ const { validationResult } = require("express-validator");
 const handleStock = require("../../utils/handleStock");
 const provinces = require("../../utils/staticDB/provinces");
 const getDoubleNumber = require("../../utils/getDoubleNumber");
+const sendOrderMails = require("../../utils/sendOrderMails");
+const acceptedCards = require("../../utils/staticDB/acceptedCards");
 
 // SDK IMPORT MODULES
 const sdkModule = require("../../../lib/sdk");
 const paymentMod = require("../../../lib/payment");
 const PaymentDataModule = require("../../../lib/payment_data");
+
+
 var ambient = "developer"; //valores posibles: "developer" o "production";
 var sdk = new sdkModule.sdk(ambient, publicKey, privateKey);
 
@@ -53,9 +57,9 @@ const controller = {
       let args = {
         site_transaction_id: order_tra_id, //tra_id de la transaccion
         token,
-        payment_method_id: 1, //tipo de tarjeta que uso
+        payment_method_id: parseInt(card_id), //tipo de tarjeta que uso
         bin, //Primeros digitos de la tarjeta
-        amount: orderToPay.total, //TODO: Ver como queda esto con los requerimientos de payway
+        amount: orderToPay.total * 100, 
         currency: "ARS",
         installments: 1, //Cuotas
         description: "Compra Online",
@@ -70,6 +74,7 @@ const controller = {
         email: orderToPay.billing_email,
       };
       var paymentData = new PaymentDataModule.paymentData(args);
+      console.log(args.amount);
       paymentData.setCustomer(customer);
       args = paymentData.getJSON();
       // send_to_cs = TRUE O FALSE PARA ENVIAR PARAMETROS CS
@@ -138,7 +143,7 @@ const controller = {
           },
           purchase_totals: {
             currency: "ARS",
-            amount: orderToPay.total,
+            amount: orderToPay.total * 100,
           },
           retail_transaction_data: {
             ship_to: shipToData,
@@ -174,7 +179,7 @@ const controller = {
           response: instPayment,
           items: datos_cs.retail_transaction_data.items,
           error: err,
-          redirect: "/user/checkout", //TODO: Poner params para que renderize tarjeta con error
+          redirect: "/user/checkout?checkoutErrors=true",
         });
       }
       // Aca no hubo errores, doy por finalizada la compra.
@@ -204,9 +209,14 @@ const controller = {
         );
       }
       // Cambio el status de la orden
+      // Esto es para agregar detalle del pago
+      let cardUsed = acceptedCards.find(card=>card.decidir_id == card_id);
+      let details = `${cardUsed?.name} **0015`; //TODO: Capturar ultimos 4 digitos
       await db.Order.update(
         {
           order_status_id: orderToPay.order_types_id == 1 ? 2 : 6, //pendiente de retiro o  de envio
+          payment_methods_id,
+          details
         },
         {
           where: {
@@ -214,6 +224,9 @@ const controller = {
           },
         }
       );
+      // Mando el mail de confirmacion de compra
+      // Tengo que armar 2 mails: 1 al que compro y otro a las chicas.
+      await sendOrderMails(orderToPay);
       return res.status(200).json({
         meta: {
           status: 200,

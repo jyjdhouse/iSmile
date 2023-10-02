@@ -184,15 +184,13 @@
     cursor: pointer;
 }
 
-.order-detail-item-wrapper,
-.order-detail-shipping-info {
+.order-detail-collapsable-row {
     cursor: pointer;
     padding-bottom: 5px;
     border-bottom: 1px solid rgba(100, 100, 100, .4);
 }
 
-.order-detail-item-wrapper>*,
-.order-detail-shipping-info>* {
+.order-detail-collapsable-row > * {
     margin-left: 10px;
     transition: all .3s ease;
     overflow: hidden;
@@ -228,16 +226,17 @@
     overflow-y: auto;
 }
 
-.order-detail-item-wrapper-active>.order-detail-item {
+.order-detail-collapsable-row-active>.order-detail-item {
     max-height: 70px;
 }
 
-.order-detail-shipping-item {
+.order-detail-collapsable-detail{
     max-height: 0;
     font-size: 13px;
 }
 
-.order-detail-shipping-info-active>.order-detail-shipping-item {
+.order-detail-collapsable-row-active>.order-detail-shipping-item,
+.order-detail-collapsable-row-active >.order-detail-payment-item {
     max-height: 40px;
 }
 
@@ -319,6 +318,7 @@
     color: #fff;
     font-size: 11px;
 }
+
 @media(min-width:768px) {
     .main-title {
         font-size: 22px;
@@ -414,7 +414,7 @@
         max-height: 250px;
     }
 
-    .order-detail-item-wrapper-active>.order-detail-item {
+    .order-detail-collapsable-row-active>.order-detail-item {
         max-height: 100px;
     }
 
@@ -431,7 +431,7 @@
         font-size: 16px;
     }
 
-    .order-detail-shipping-item {
+    .order-detail-collapsable-detail {
         font-size: 16px;
     }
 }

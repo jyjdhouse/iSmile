@@ -22,7 +22,8 @@ module.exports = (sequelize, dataTypes) => {
         tra_id: {type: dataTypes.TEXT},
         date: { type: dataTypes.DATE},
         pending_payment_date: {type: dataTypes.DATE},
-        is_pending_payment_expired : {type: dataTypes.TINYINT}
+        is_pending_payment_expired : {type: dataTypes.TINYINT},
+        details: {type: dataTypes.TEXT},
     }
 
     let config = {

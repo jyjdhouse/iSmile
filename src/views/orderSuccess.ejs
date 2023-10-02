@@ -5,7 +5,7 @@
     <%- include('./partials/head.ejs') %>
     <link rel="stylesheet" href="/css/orderSuccess.css">
     <script src="/scripts/orderSuccess.js" type="module"></script>
-        <title>Compra exitosa</title>
+    <title>Compra exitosa</title>
 </head>
 
 <body>
@@ -25,6 +25,8 @@
             <div class="box-field">
                 <p class="box-field-label bold">Metodo de pago</p>
                 <p class="box-field-info"><%= order.paymentMethod.name %></p>
+                <p class="box-field-info order-details-p grey"><%= order.details %></p>
+
             </div>
             <% if (order.paymentMethod.disclaimer) { %>
              <div class="box-field disclaimer-field">
