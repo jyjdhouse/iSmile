@@ -43,11 +43,12 @@ window.addEventListener("load", () => {
 
   let activeStep = 0;
 
+  // manejo la altura para los pasos
   const handleMainHeight = () => {
     if (activeStep == 1 && window.innerWidth > 768) {
       stepsContainer.style.height = '1000px';
       main.style.height = '1000px';
-    } else if(activeStep == 1 && window.innerWidth < 768){
+    } else if (activeStep == 1 && window.innerWidth < 768) {
       stepsContainer.style.height = '800px';
       main.style.height = '800px';
     } else {
@@ -59,6 +60,7 @@ window.addEventListener("load", () => {
 
   handleMainHeight();
 
+  // cuando toca continuar para el siguiente paso
   const handleNextStep = () => {
     steps.forEach((step, i) => {
       if (i === activeStep) {
@@ -72,6 +74,7 @@ window.addEventListener("load", () => {
     handleMainHeight();
   }
 
+  // cuando toca volver para el anterior paso
   const handlePrevStep = () => {
     steps.forEach((step, i) => {
       if (i === activeStep) {
@@ -85,26 +88,38 @@ window.addEventListener("load", () => {
     handleMainHeight();
   }
 
+  // hago el evento click para que cuando se active llame a prev step
   goBackArrowContainer.addEventListener('click', () => {
     activeStep--;
     handlePrevStep();
   })
 
-  const deleteOrAddClassToLabel = (method) => {
+  // logica para manejar que se le agregue o saque las clases de error
+  // a las tarjetas en caso de que no se seleccione una o se seleccione una
+  const deleteOrAddErrorClassMultiple = (method, array) => {
     if (method === 'del') {
-      selectCardLabels.forEach(label => {
+      array.forEach(label => {
         label.classList.contains('error-label') && label.classList.remove('error-label');
       })
     } else {
-      selectCardLabels.forEach(label => {
+      array.forEach(label => {
         label.classList.add('error-label');
       })
     }
   }
 
+  const deleteOrAddErrorClassSingle = (method, element) => {
+    if (method === 'del') {
+      element.classList.contains('error-label') && element.classList.remove('error-label');
+    } else {
+      element.classList.add('error-label');
+    }
+  }
+
+  // logica para manejar cuando toca una tarjeta
   selectCardLabels.forEach(label => {
     label.addEventListener('click', () => {
-      deleteOrAddClassToLabel('del');
+      deleteOrAddErrorClassMultiple('del', selectCardLabels);
       let activeLabel = document.querySelector('.card-active-label');
       if (activeLabel) {
         activeLabel.classList.remove('card-active-label');
@@ -113,12 +128,14 @@ window.addEventListener("load", () => {
     })
   })
 
+  // logica para que la imagen de la tarjeta sea la misma en la tarjeta modelo del siguiente paso
   const replaceSrcCardImg = (label) => {
     const img = label.querySelector('.card-img-container img');
     const cardLogo = document.querySelector('.card-logo-container img');
     cardLogo.src = img.src;
   }
 
+  // para ir completando los campos de la tarjeta modelo a medida
   const handleCompleteCard = () => {
     const cardNumberInput = document.querySelector('.card-number-inp');
     const cardNumbP = document.querySelector('.card-number-p');
@@ -138,14 +155,15 @@ window.addEventListener("load", () => {
     });
 
     cardholderNameInp.addEventListener('input', () => {
-      cardholderNameP.textContent = cardholderNameInp.value;
+      let input = cardholderNameInp.value.toUpperCase();
+      cardholderNameP.textContent = input;
     });
 
     validThruMonthInp.addEventListener('input', () => {
       validThruMonthP.textContent = validThruMonthInp.value;
       let length = validThruMonthP.textContent.length
 
-      if(length == 2){
+      if (length == 2) {
         slash.textContent = '/';
       } else {
         slash.textContent = '';
@@ -173,10 +191,48 @@ window.addEventListener("load", () => {
       handleCompleteCard();
       handleNextStep();
     } else {
-      deleteOrAddClassToLabel('add');
+      deleteOrAddErrorClassMultiple('add', selectCardLabels);
     }
 
   })
+
+  // chequeo los posibles errores
+  const checkForPaymentErrors = () => {
+    let isFormToSubmit = true;
+    deleteOrAddErrorClassMultiple('del', paymentFormInp);
+    paymentFormInp.forEach(inp => {
+      if (!inp.value) {
+        deleteOrAddErrorClassSingle('add', inp);
+        isFormToSubmit = false;
+      }
+      if (inp.classList.contains('month-valid-thru-inp')) {
+        if (inp.value < 1 || inp.value > 12) {
+          deleteOrAddErrorClassSingle('add', inp);
+          isFormToSubmit = false;
+        }
+      }
+      if (inp.classList.contains('year-valid-thru-inp')) {
+        let date = new Date();
+        let year = String(date.getFullYear());
+        let lastTwoCurrentYear = year.substring(year.length - 2);
+        let lastTwoInputYear = inp.value.substring(inp.value.length - 2);
+
+        if (Number(lastTwoInputYear) < Number(lastTwoCurrentYear)) {
+          deleteOrAddErrorClassSingle('add', inp);
+          isFormToSubmit = false;
+        }
+      }
+      if (inp.classList.contains('cardholder-name-inp')) {
+        let nameSplitted = inp.value.split(' ');
+        if (nameSplitted.length < 2) {
+          deleteOrAddErrorClassSingle('add', inp);
+          isFormToSubmit = false;
+        }
+      }
+    })
+    return isFormToSubmit;
+  }
+
 
   const errorMsg = 'Ocurrio un error al procesar el pago, intente nuevamente'; //Mensaje de error, ante cualquier error de la API Decidir hay que armar algo con eso
   const publicApiKey = "5Y7Bs8TmrnHWeAFgUksbuhxbcsfskS8l";
@@ -198,15 +254,10 @@ window.addEventListener("load", () => {
   //Asigna la funcion de invocacion al evento de submit del formulario
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    let isFormToSubmit = true;
-    paymentFormInp.forEach(inp => {
-      inp.classList.remove('error-label');
-      if(!inp.value){
-        inp.classList.add('error-label');
-        isFormToSubmit = false;
-      }
-    })
-    if(isFormToSubmit){
+    let isFormToSubmit = checkForPaymentErrors();
+    if (isFormToSubmit) {
+      let cardInp = document.querySelector('.card-number-inp');
+      let lastFourDigits = cardInp.value.slice(-4);
       sendForm(e);
     }
   });
