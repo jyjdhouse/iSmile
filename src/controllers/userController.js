@@ -10,6 +10,7 @@ const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const cron = require("node-cron");
 // AWS S3
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
@@ -137,20 +138,26 @@ const controller = {
       const order_tra_id = req.session.order_tra_id;
       const cards = acceptedCards;
       // Me tengo que fijar que los items que este por pagar se encuentren en stock
-      const orderToPay = await db.Order.findOne({
-        where: {
-          tra_id: order_tra_id || "",
-        },
-        include: ["orderItems"],
-      });
+      const orderToPay = getDeepCopy(
+        await db.Order.findOne({
+          where: {
+            tra_id: order_tra_id || "",
+          },
+          include: ["orderItems"],
+        })
+      );
+
       // Si no hay orden, o la orden que esta no esta ni pendiente de pago ni de confirmacion lo devuelvo al checkout
-      if (!order_tra_id || !orderToPay || (orderToPay.order_status_id != 4 &&  orderToPay.order_status_id != 3) ) {
+      if (
+        !order_tra_id ||
+        !orderToPay ||
+        (orderToPay.order_status_id != 4 && orderToPay.order_status_id != 3)
+      ) {
         return res.redirect("/user/checkout?checkoutErrors=true");
       }
       //Si esta pendiente de confirmacion
       if (orderToPay.order_status_id == 4) {
-        //Pendiente de confirmacion
-        //   Resto los items del stock antes de llevarlo a la vista(por si paga y justo se liquida uno para que no se quede sin)
+        //Resto los items del stock antes de llevarlo a la vista(por si paga y justo se liquida uno para que no se quede sin)
         let stockItems = [];
         let method = "resta";
         orderToPay.orderItems.forEach((item) => {
@@ -162,7 +169,7 @@ const controller = {
         });
         let stockResponse = await handleStock(stockItems, method);
         if (!stockResponse.ok) {
-          console.log('Falle en el stock');
+          console.log("Falle en el stock");
           //Alguno de los items que quiere pagar ya no se encuentra en stock
           // Tengo que borrar la orden (porque sino queda pendiente de confirmacion y cuando vuelve a mandar
           // crea una nueva)
@@ -178,6 +185,7 @@ const controller = {
         await db.Order.update(
           {
             order_status_id: 3, //Pendiente de pago
+            pending_payment_date: Date.now(), //Fecha del momento
           },
           {
             where: {
@@ -186,8 +194,72 @@ const controller = {
           }
         );
         //De esta manera, si hace refresh no vuelve a descontar de stock
-      }
 
+        const checkForPaymentDone = async () => {
+          const order = await db.Order.findOne({
+            where: { id: orderToPay.id },
+            include: ["orderItems"],
+          });
+          //Si la orden esta pendiente de pago...
+          if (order && order.order_status_id == 3) {
+            // Me fijo los tiempos (inicial, actual)
+            const currentTime = new Date();
+            const fifteenMinLater = new Date(
+              order.pending_payment_date.getTime() + 60 * 1000 * 15
+            );
+            // Si pasaron 15 min y la orden sigue con el pago pendiente
+            if (currentTime >= fifteenMinLater) {
+              console.log(
+                "Han transcurrido 15 minutos. Actualización de estado realizada."
+              );
+
+              await db.Order.update(
+                {
+                  is_pending_payment_expired: 1,
+                  pending_payment_date: null,
+                  order_status_id: 5, //Anulada,
+                  details: `Compra anulada por vencimiento de pago`,
+                },
+                {
+                  where: { id: orderToPay.id },
+                }
+              );
+              // Tengo que sumar el stock nuevamente
+              let method = "suma";
+              let stockItems = [];
+              order.orderItems.forEach((item) => {
+                // pusheo los objetos al stockItems
+                stockItems.push({
+                  id: item.products_id, //El id del producto
+                  quantity: item.quantity,
+                });
+              });
+              let stockResponse = await handleStock(stockItems, method);
+              if (!stockResponse.ok) {
+                console.log("Hubo un error al sumar los items al stock");
+              }
+              // Detengo la tarea periodica
+              periodicTask.stop();
+            }
+          } else {
+            //Si no esta pendiente de pago...
+
+            // Detengo la tarea periodica
+            periodicTask.stop();
+          }
+        };
+        // cada 5 min me fijo si pago, si no pago a partir de 15 minutos doy por anulada la transferencia
+        const periodicTask = cron.schedule("*/5 * * * *", checkForPaymentDone);
+      }
+      // Para mostrar cuanto tiempo falta para que expire el pago
+      const paymentDueDate = new Date(orderToPay.pending_payment_date);
+      // Suma 15 minutos a la fecha de la orden
+      const expireTime = new Date(paymentDueDate.getTime() + 15 * 60 * 1000); // 15 minutos en milisegundos
+      const actualTime = new Date();
+      // Calcula la diferencia en milisegundos entre la fecha actual y la fecha de vencimiento
+      const timeLeft = expireTime - actualTime;
+      orderToPay.timeLeft = timeLeft; //Milisegundos
+      // return res.send(orderToPay)
       return res.render("creditPayment", { order_tra_id, cards });
     } catch (error) {
       console.log(error);

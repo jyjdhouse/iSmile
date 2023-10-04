@@ -349,7 +349,7 @@ const controller = {
     },
     updateHomeFile: async (req, res) => {
         try {
-            const { home_sections_id, position, old_filename } = req.body;
+            const { home_sections_id, position, old_filename, device_types_id } = req.body;
 
             const file = req.file;
             const fileType = file.mimetype.startsWith('video/') ? 2 : 1;

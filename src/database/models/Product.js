@@ -14,6 +14,8 @@ module.exports = (sequelize, dataTypes) => {
         ingredients: { type: dataTypes.TEXT },
         size: { type: dataTypes.TEXT },
         discount: { type: dataTypes.TINYINT },
+        volume: { type: dataTypes.FLOAT },
+        weight: { type: dataTypes.FLOAT }
     }
 
     let config = {

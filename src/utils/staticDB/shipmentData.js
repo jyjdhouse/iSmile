@@ -1,6 +1,9 @@
 
 const shipmentStaticInfo = {
-    Operativa: '94567',
+    Operativa: {
+        PaP:408350,
+        PaS: 408351
+    },
     PesoTotal: {
         1: '1.5',
         2: '2',
@@ -11,7 +14,7 @@ const shipmentStaticInfo = {
         2: '1',
         3: '2'
     },
-    CodigoPostalOrigen: '1878',
+    CodigoPostalOrigen: '1425',
     // CantidadPaquetes:
     // ValorDeclarado:
 }

@@ -187,21 +187,24 @@ const checkIfAllProductsAreInStock = () => {
   }
 };
 
-const getShipmentInfo = async (zipCodeInp) => {
+const getShipmentInfo = async (zip) => {
+  //TODO: Modificar para agarrar id y quantity
   const cards = document.querySelectorAll(".product-card");
-  let quantity = 0;
-  cards.forEach((card) => {
-    let quantityInput = Number(
-      card.querySelector(".product-quantity-container .product-quantity").value
-    );
-    quantity += quantityInput;
-  });
-  const bodyObject = {
-    zipCodeValue: zipCodeInp.value,
-    quantity,
+  let bodyObject = {
+    zip,
+    items: [],
   };
+  cards.forEach((card) => {
+    bodyObject.items.push({
+      id: card.dataset.productid,
+      quantity: card.querySelector(
+        ".product-quantity-container .product-quantity"
+      ).value,
+    });
+  });
+
   const response = await fetch(
-    "http:/ismile.com.ar/api/user/get-estimate-shipping-data",
+    `${window.location.origin}/api/user/getEstimateShipmentCost`,
     {
       method: "POST",
       headers: {
@@ -213,8 +216,10 @@ const getShipmentInfo = async (zipCodeInp) => {
   if (!response.ok) {
     throw new Error("Error mientras se pedia el estimado de envio");
   }
-  const data = response.json();
+  const data = await response.json();
+  console.log(data);
   const shipmentData = data.shippingData;
+  // TODO: Pintar donde corresponda precio y tiempo de entrega
 };
 
 const deliveryTypes = document.querySelectorAll(".delivery-option-box");
@@ -231,14 +236,22 @@ deliveryTypes.forEach((devT) => {
 
 const getShipmentPriceBtn = document.querySelector(".get-shipment-price");
 let shippingZipCodeInp = document.getElementById("shipping_zip_code");
-getShipmentPriceBtn.addEventListener("click", () => {
-  if (Number(shippingZipCodeInp.value) === 4) {
-    getShipmentPriceBtn.classList.contains("get-shipment-price-error") &&
-      getShipmentPriceBtn.classList.remove("get-shipment-price-error");
-    //getShipmentInfo(zipCodeInp);
-  } else {
-    !getShipmentPriceBtn.classList.contains("get-shipment-price-error") &&
-      getShipmentPriceBtn.classList.add("get-shipment-price-error");
+getShipmentPriceBtn.addEventListener("click", async (e) => {
+  try {
+    let zipCodeValue = shippingZipCodeInp.value;
+    e.preventDefault();
+    if (Number(zipCodeValue.length) === 4) {
+      getShipmentPriceBtn.classList.contains("get-shipment-price-error") &&
+        getShipmentPriceBtn.classList.remove("get-shipment-price-error");
+      await getShipmentInfo(zipCodeValue);
+      return
+    } else {
+      !getShipmentPriceBtn.classList.contains("get-shipment-price-error") &&
+        getShipmentPriceBtn.classList.add("get-shipment-price-error");
+        return 
+    }
+  } catch (error) {
+    return console.log(`Falle en getShipmentPriceBtn.addEventListener: ${error}`);
   }
 });
 
@@ -875,69 +888,6 @@ startPaymentButton.addEventListener("click", (e) => {
   if (e.target.classList.contains("disabled")) e.preventDefault();
 });
 
-// // LOGICA PARA PAGAR MERCADOPAGO
-// const mercadopago = new MercadoPago('TEST-9f50e49e-6924-4a8c-aa39-b3ecb5b4e4c4', {
-//     locale: 'es-AR' // The most common are: 'pt-BR', 'es-AR' and 'en-US'
-// });
-// // Handle call to backend and generate preference.
-// document.getElementById("button-checkout").addEventListener("click", function () {
-//     let products = [];
-//     // Agarro a las tarjetas de productos
-//     let productCards = document.querySelectorAll('.product-card');
-//     productCards.forEach(card => {
-//         products.push({
-//             quantity: card.querySelector('.product-quantity').value,
-//             description: card.querySelector('.product-name').innerHTML,
-//             price: card.querySelector('.product-price-span').innerHTML
-//         })
-//     })
-
-//     fetch("http://localhost:4500/payment/create_preference", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(products),
-//     })
-//         .then(function (response) {
-//             return response.json();
-//         })
-//         .then(function (preference) {
-//             createCheckoutButton(preference.id);
-
-//         })
-//         .catch(function (e) {
-//             console.log(e);
-//             alert("Unexpected error");
-//         });
-// });
-// function createCheckoutButton(preferenceId) {
-//     // Initialize the checkout
-//     const bricksBuilder = mercadopago.bricks();
-
-//     const renderComponent = async (bricksBuilder) => {
-//         if (window.checkoutButton) window.checkoutButton.unmount();
-//         await bricksBuilder.create(
-//             'wallet',
-//             'checkout-button-container', // class/id where the payment button will be displayed
-//             {
-//                 initialization: {
-//                     preferenceId: preferenceId
-//                 },
-//                 callbacks: {
-//                     onError: (error) => console.error(error),
-//                     onReady: () => { }
-//                 }
-//             }
-//         );
-//     };
-
-//     window.checkoutButton = renderComponent(bricksBuilder);
-//     document.querySelector('#button-checkout').remove();
-//     // document.querySelector('#button-checkout').innerHTML ='';
-//     // document.querySelector('#button-checkout').style.background ='none';
-// }
-
 async function checkForUserLogged() {
   try {
     let userLogged = window.userLogged;
@@ -1292,13 +1242,17 @@ form.addEventListener("submit", async (e) => {
     // Para obtener la respuesta
     fetchResponse = await fetchResponse.json();
     if (!fetchResponse.ok) {
-    //   return console.log(fetchResponse);
+      //   return console.log(fetchResponse);
       const errorMsg = "Error al procesar la venta";
       window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${errorMsg}`;
       return;
     } else if (fetchResponse.redirect) {
       // Una vez que se compra, si no hay usuario se borra el carro del locale
-      if (!window.userLogged && payment_methods_id != 2 && payment_methods_id != 3)  {
+      if (
+        !window.userLogged &&
+        payment_methods_id != 2 &&
+        payment_methods_id != 3
+      ) {
         localStorage.removeItem("temporalCart");
       }
       window.location.href = fetchResponse.redirect;

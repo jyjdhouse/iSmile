@@ -179,6 +179,7 @@ window.addEventListener("load", () => {
 
   let payment_methods_id;
   let card_id;
+  let lastFourDigits;
   selectCardForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const cardRadioSelected = document.querySelector('input[name="card_id"]:checked');
@@ -257,7 +258,7 @@ window.addEventListener("load", () => {
     let isFormToSubmit = checkForPaymentErrors();
     if (isFormToSubmit) {
       let cardInp = document.querySelector('.card-number-inp');
-      let lastFourDigits = cardInp.value.slice(-4);
+      lastFourDigits = cardInp.value.slice(-4);
       sendForm(e);
     }
   });
@@ -294,7 +295,8 @@ window.addEventListener("load", () => {
         order_tra_id,
         device_unique_identifier: decidir.device_unique_identifier,
         payment_methods_id,
-        card_id
+        card_id,
+        lastFourDigits
       };
       // Hago el fetch
       let paymentFetchResponse = await fetch(
@@ -308,7 +310,6 @@ window.addEventListener("load", () => {
         }
       );
       paymentFetchResponse = await paymentFetchResponse.json();
-      console.log(paymentFetchResponse);
       if (!paymentFetchResponse.ok) {
         //Manejar error del procesamiento de pago
         // Hago el pedido para que den como anulada la compra y sumen devuelta los items al stock

@@ -20,6 +20,7 @@ router.post('/addTempItem',checkForToken,apiUserController.addTempItem);
 router.post('/forget-password',apiUserController.forgetPassword);
 router.post('/checkout',validations.orderIsCompleteValidations,apiUserController.processCheckout);
 router.post('/check-verification-code',checkForToken,apiUserController.checkVerificationCode);
+router.post('/getEstimateShipmentCost',checkForToken,apiUserController.getEstimateShipmentData);
 // DELETE   
 router.delete('/deleteTempItem',checkForToken,apiUserController.deleteTempItem)
 

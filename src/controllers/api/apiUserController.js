@@ -6,6 +6,8 @@ const getUser = require("../../utils/getUser");
 const nodemailer = require("nodemailer");
 const { validationResult } = require("express-validator");
 const { v4: uuidv4 } = require("uuid");
+const axios = require("axios");
+const { DOMParser } = require("xmldom");
 // From utils
 const webTokenSecret = process.env.JSONWEBTOKEN_SECRET;
 const isJwtError = require("../../utils/isJwtError");
@@ -473,13 +475,17 @@ const controller = {
       if (order_types_id == 3) {
         orderDataToDB.order_status_id = 1;
       } // Aca es venta online ==> Chequeo metodo de pago
-      else if (payment_methods_id == 1 || payment_methods_id == 2 || payment_methods_id == 3) {
-        //Debito o Credito o Transferencia 
+      else if (
+        payment_methods_id == 1 ||
+        payment_methods_id == 2 ||
+        payment_methods_id == 3
+      ) {
+        //Debito o Credito o Transferencia
         orderDataToDB.order_status_id = 4; //Pendiente de confirmacion
-        
+
         //ACLARACION:  Si payment_methods_id es 2 o 3 quiere decir que tiene que ir a la pasarela de pagos, cuando pinto esa
         // vista ahi le cambio el status a 3 (Pendiente de pago)
-      } 
+      }
 
       // Tema total price
       let orderTotalPrice = 0;
@@ -566,46 +572,54 @@ const controller = {
     }
   },
   getEstimateShipmentData: async (req, res) => {
-    const { zipCodeValue, quantity } = req.body;
-
+    let { zip, items } = req.body;
+    items = JSON.parse(items);
+    // TODO: hacer forEach en items y determinar: VolumenTotal - PesoTotal - ValorDeclarado
     // restaria aca hacer la logica segun la cantidad de elementos, que volumen y peso mandamos
-    let totalWeigth;
-    let totalVolume;
+    let totalWeigth = 1;
+    let totalVolume = 0.005;
 
     try {
       const bodyObject = {
-        Cuit: process.env.CUIT,
-        Operativa: shipmentStaticInfo.Operativa,
-        PesoTotal: totalWeigth,
-        VolumenTotal: totalVolume,
+        CUIT: process.env.CUIT,
+        Operativa: shipmentStaticInfo.Operativa.PaP, //TODO: ver biene este tema
+        PesoTotal: totalWeigth, //Sumar un poco +
+        VolumenTotal: totalVolume, //Sumar un poco +
         CodigoPostalOrigen: shipmentStaticInfo.CodigoPostalOrigen,
-        CodigoPostalDestino: zipCodeValue,
-        CantidadPaquetes: --TODO,
-        ValorDeclarado: --TODO,
+        CodigoPostalDestino: parseInt(zip),
+        CantidadPaquetes: 1,
+        ValorDeclarado: 3000, // Total de compra
       };
-      const response = await fetch(shipmentEstimateUrl, {
-        method: "POST",
+      const response = await axios.post(shipmentEstimateUrl, bodyObject, {
         headers: {
-          "Content-Type": "application/xml",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify(bodyObject),
       });
-      if (!response.ok) {
-        throw new Error("Error en la solicitud de la api de OCA");
+      if (response.statusText != "OK") {
+        console.log(response);
+        return res.json({
+          ok: false,
+          meta: {
+            status: 200,
+          },
+          msg: `Error al calcular coste de envio.`
+        });
+        
       }
-      const data = await response.text();
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(data, "text/xml");
 
-      const totalValue = xmlDoc.querySelector("Total").textContent;
+      const xmlString = response.data;
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+
+      const totalValue = xmlDoc.getElementsByTagName("Total")[0].textContent;
       const plazoEntregaValue =
-        xmlDoc.querySelector("PlazoEntrega").textContent;
+        xmlDoc.getElementsByTagName("PlazoEntrega")[0].textContent;
+      
 
       return res.json({
         ok: true,
         meta: {
-          status: 200,
-          url: `api/product/addTempItem`,
+          status: 200
         },
         shippingData: {
           totalValue,

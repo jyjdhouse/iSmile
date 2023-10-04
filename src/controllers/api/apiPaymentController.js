@@ -17,6 +17,7 @@ const PaymentDataModule = require("../../../lib/payment_data");
 
 
 var ambient = "developer"; //valores posibles: "developer" o "production";
+//TODO: CUando cambio esto tambien tengo que cambiar en el front el endpoint
 var sdk = new sdkModule.sdk(ambient, publicKey, privateKey);
 
 // KEYS
@@ -25,7 +26,7 @@ var privateKey = process.env.PAYMENT_API_KEY;
 const controller = {
   getPaymentRequest: async (req, res) => {
     try {
-      let { token, bin, order_tra_id, device_unique_identifier, card_id, payment_methods_id } = req.body;
+      let { token, bin, order_tra_id, device_unique_identifier, card_id, payment_methods_id, lastFourDigits } = req.body;
       let errors = validationResult(req);
       if (!errors.isEmpty()) {
         errors = errors.mapped();
@@ -211,7 +212,7 @@ const controller = {
       // Cambio el status de la orden
       // Esto es para agregar detalle del pago
       let cardUsed = acceptedCards.find(card=>card.decidir_id == card_id);
-      let details = `${cardUsed?.name} **0015`; //TODO: Capturar ultimos 4 digitos
+      let details = `${cardUsed?.name} **${lastFourDigits}`;
       await db.Order.update(
         {
           order_status_id: orderToPay.order_types_id == 1 ? 2 : 6, //pendiente de retiro o  de envio
