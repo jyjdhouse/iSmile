@@ -205,7 +205,7 @@ const controller = {
             // Me fijo los tiempos (inicial, actual)
             const currentTime = new Date();
             const fifteenMinLater = new Date(
-              order.pending_payment_date.getTime() + 60 * 1000 * 15
+              order.pending_payment_date.getTime() + 60 * 1000 * 5
             );
             // Si pasaron 15 min y la orden sigue con el pago pendiente
             if (currentTime >= fifteenMinLater) {

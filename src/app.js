@@ -95,5 +95,9 @@ const PORT = process.env.PORT || 4500;
 app.listen(PORT, () => {
     console.log(" 🚀 Se levanto proyecto en http://localhost:" + PORT)
 });
+// Para el envio de mails
 const scheduleMail = require('./mail-scheduler');
 scheduleMail.start(); 
+// Para chequear por ordenes sin pagar
+const checkForPendigPaymentOrders = require('./utils/checkForPendigPaymentOrders.js');
+checkForPendigPaymentOrders.start();

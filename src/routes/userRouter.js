@@ -10,6 +10,7 @@ const getLastURL = require('../middlewares/getLastURL');
 const guestMiddleware = require('../middlewares/guestMiddleware');
 const onlyGuestsMiddleware = require('../middlewares/onlyGuestsMiddleware');
 const onlyUnverifiedUsers = require('../middlewares/onlyUnverifiedUsers');
+const hasAlreadyAPendingOrder = require('../middlewares/hasAlreadyAPendingOrder');
 
 // Rutas
 
@@ -17,7 +18,7 @@ const onlyUnverifiedUsers = require('../middlewares/onlyUnverifiedUsers');
 router.get('/login', onlyGuestsMiddleware,getLastURL,userController.login);
 router.get('/regist', onlyGuestsMiddleware,userController.regist);
 router.get('/logout', getLastURL,userController.logout);
-router.get('/checkout',userController.checkout); 
+router.get('/checkout',hasAlreadyAPendingOrder,userController.checkout); 
 router.get('/checkout/pago-seguro',userController.safePaymentView); 
 router.get('/profile', guestMiddleware,userController.userProfile);
 router.get('/cambiar-contrasena/:token',guestMiddleware,userController.changePasswordView);
