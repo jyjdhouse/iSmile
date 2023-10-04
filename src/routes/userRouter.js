@@ -26,6 +26,7 @@ router.get('/contrasena-error',userController.passwordError);
 router.get('/booking',userController.bookingView);
 router.get('/historial-compras',guestMiddleware,userController.orderHistory);
 router.get('/verificar-email',onlyUnverifiedUsers,userController.verifyEmailCode);
+router.get('/cancelOrderPayment',userController.cancelOrderPayment);
 
 // POST
 router.post('/login',userController.processLogin);

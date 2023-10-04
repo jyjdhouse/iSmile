@@ -177,7 +177,7 @@ const controller = {
             where: {
               id: orderToPay.id,
             },
-            paranoid: false, //Para que la borre entera
+            force: true // Habilita la eliminación forzada. Para que la borre entera
           });
           return res.redirect("/user/checkout?checkoutErrors=true");
         }
@@ -668,6 +668,29 @@ const controller = {
   verifyEmailCode: async (req, res) => {
     return res.render("userEmailVerify");
   },
+  cancelOrderPayment: async(req,res) =>{
+    const orderTraId = req.session.order_tra_id;
+    
+    const order = await db.Order.findOne({
+      where: {
+        tra_id: orderTraId
+      }
+    });
+    // Si no hay orden en el session, o no encuentra orden simplemente redirijo
+    if(!orderTraId || !order){
+      orderTraId && delete req.session.order_tra_id;
+      return res.redirect('/user/checkout');
+    };
+    // Si hay orden, la elimino de db y de session
+    await db.Order.destroy({
+      where: {
+        id: order.id,
+      },
+      force: true // Habilita la eliminación forzada
+    });
+    delete req.session.order_tra_id;
+    return res.redirect('/user/checkout');
+  }
 };
 
 module.exports = controller;

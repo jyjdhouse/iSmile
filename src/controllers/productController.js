@@ -209,7 +209,7 @@ const controller = {
     },
     processProductCreation: async (req, res) => {
         try {
-            let { name, price, description, ingredients, size, mainImage, stock, discount } = req.body;
+            let { name, price, description, ingredients, size, mainImage, stock, discount, volume, weight } = req.body;
             let images = req.files;
             let errors = validationResult(req);
             // Si hay errores..
@@ -248,7 +248,9 @@ const controller = {
                 ingredients,
                 size,
                 stock: parseInt(stock) || 0,
-                discount: parseInt(discount) || 0
+                discount: parseInt(discount) || 0,
+                volume, 
+                weight
             };
 
             const newProduct = await db.Product.create(productObject);
@@ -323,13 +325,14 @@ const controller = {
         try {
             let errors = validationResult(req);
             const productId = req.params.productId;
-            const { name, price, description, current_imgs, ingredients, size, mainImage, stock, discount } = req.body
+            const { name, price, description, current_imgs, ingredients, size, mainImage, stock, discount, volume, weight } = req.body
             if (!errors.isEmpty()) {
                 errors = errors.mapped();
                 // Si el error es por nombre y/o precio ==> repinto la vista
                 if (errors.name || errors.price) {
                     return res.redirect(`/product/update/${productId}`)
                 }
+                return res.send(errors)
                 // Sino es un error de tipo de dato ==> tiro bad Request
                 return res.send('Bad Request')
             };
@@ -350,8 +353,10 @@ const controller = {
                 description,
                 ingredients,
                 size,
-                stock: parseInt(stock) || 0,
-                discount: parseInt(discount) || 0
+                stock: stock ? parseInt(stock) : 0,
+                discount: discount ? parseInt(discount) : 0,
+                volume, 
+                weight
             }, {
                 where: {
                     id: productToUpdate.id
