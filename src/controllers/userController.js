@@ -449,6 +449,7 @@ const controller = {
       let createdAddress, userAddressDataDB;
       let userAddressBody = {
         street: userBodyData.street || null,
+        street_number: userBodyData.street_number || null,
         apartment: userBodyData.apartment || null,
         city: userBodyData.city || null,
         zip_code: userBodyData.zip_code || null,

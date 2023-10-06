@@ -14,6 +14,8 @@ router.get('/order',adminCredentialsMiddleware,apiAdminController.getOrders);
 router.put('/update-order/:orderId',adminCredentialsMiddleware,apiAdminController.updateOrders);
 router.put('/updateServicesPrice',adminCredentialsMiddleware,upload.any('files'),apiAdminController.processServicesPriceUpdating);
 
+// POST
+router.post('/generateShipmentTag',apiAdminController.generateShipmentTag);
 // DELETE
 router.delete('/delete-order/:orderId',adminCredentialsMiddleware,apiAdminController.deleteOrders);
 

@@ -16,21 +16,21 @@ async function sendOrderMails(order) {
             const province = provinces.find(prov => prov.id == order.billingAddress.provinces_id).name
             userMailContentDeliveryMethod +=
                 `    
-                <p style="color: #666;">${order.billingAddress.street} - C.P. ${order.billingAddress.zip_code} - ${order.billingAddress.city}, ${province}</p>
+                <p style="color: #666;">${order.billingAddress.street} ${order.billingAddress.street_number} - C.P. ${order.billingAddress.zip_code} - ${order.billingAddress.city}, ${province}</p>
                 `;
             operatorMailContentDeliveryMethod +=
                 `    
-                <p style="color: #666;">${order.billingAddress.street} - C.P. ${order.billingAddress.zip_code} - ${order.billingAddress.city}, ${province}</p>
+                <p style="color: #666;">${order.billingAddress.street} ${order.billingAddress.street_number} - C.P. ${order.billingAddress.zip_code} - ${order.billingAddress.city}, ${province}</p>
                 `;
         } else { //Distinta direccion (uso shippingAddress)
             const province = provinces.find(prov => prov.id == order.shippingAddress.provinces_id).name
             userMailContentDeliveryMethod +=
                 `
-                <p style="color: #666;">${order.shippingAddress.street} - C.P. ${order.shippingAddress.zip_code} - ${order.shippingAddress.city}, ${province}</p>
+                <p style="color: #666;">${order.shippingAddress.street} ${order.shippingAddress.street_number} - C.P. ${order.shippingAddress.zip_code} - ${order.shippingAddress.city}, ${province}</p>
                 `;
             operatorMailContentDeliveryMethod +=
                 `
-                <p style="color: #666;">${order.shippingAddress.street} - C.P. ${order.shippingAddress.zip_code} - ${order.shippingAddress.city}, ${province}</p>
+                <p style="color: #666;">${order.shippingAddress.street} ${order.shippingAddress.street_number} - C.P. ${order.shippingAddress.zip_code} - ${order.shippingAddress.city}, ${province}</p>
                 `
         }
     } else if(order.order_types_id == 2) { //Retiro por local
@@ -65,7 +65,7 @@ async function sendOrderMails(order) {
     <p style="font-weight:600;">Fecha</p>
     <p style="color: #666;">${dateFormater(order.createdAt)}</p>
     <p style="font-weight:600;">Datos de facturación</p>
-    <p style="color: #666;">${order.billing_name} - Tel: ${order.billing_phone} - DNI: ${order.billing_id}</p>
+    <p style="color: #666;">${order.billing_first_name} ${order.billing_last_name} - Tel: ${order.billing_phone} - DNI: ${order.billing_id}</p>
     ${userMailContentDeliveryMethod}
     
     <table style="width:100%">
@@ -90,7 +90,7 @@ async function sendOrderMails(order) {
     <p style="font-weight:600;">Fecha</p>
     <p style="color: #666;">${dateFormater(order.createdAt)}</p>
     <p style="font-weight:600;">Datos de facturación</p>
-    <p style="color: #666;">${order.billing_name} - Tel: ${order.billing_phone} - DNI: ${order.billing_id}</p>
+    <p style="color: #666;">${order.billing_first_name} ${order.billing_last_name} - Tel: ${order.billing_phone} - DNI: ${order.billing_id}</p>
     ${operatorMailContentDeliveryMethod}
     
     <table style="width:100%">

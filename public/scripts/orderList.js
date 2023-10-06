@@ -141,7 +141,7 @@ window.addEventListener('load', async () => {
                     <p>DNI</p>
                 </div>
                 <div class="order-detail-user-data">
-                    <p class="copy-value">${order.billing_name}</p>
+                    <p class="copy-value">${order.billing_first_name} ${order.billing_last_name}</p>
                     <p class="copy-value">${order.billing_email}</p>
                     <p class="copy-value">${order.billing_phone}</p>
                     <p class="copy-value">${order.billing_id}</p>
@@ -288,7 +288,7 @@ window.addEventListener('load', async () => {
             <tr class=${order.is_pending_payment_expired == 1 && order.order_status_id == 3 && 'order-expired'}>
                 <td class='order-id'>${order.tra_id.split('-')[1] /*Solo la parte alfanumerica */}</td>
                 <td class='order-date'>${order.date}</td>
-                <td>${order.billing_name}</td>
+                <td>${order.billing_first_name} ${order.billing_last_name}</td>
                 <td class="order-total-column">$${order.total}</td>
                 <td class="item-quantity-column">${order.orderItems.length}</td>
                 <td>${orderStatus}</td>

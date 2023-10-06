@@ -149,6 +149,7 @@ module.exports = {
       "phone",
       "dni",
       "billing_street",
+      "billing_street_number",
       "billing_zip_code",
       "billing_province",
       "billing_city",
@@ -185,7 +186,7 @@ module.exports = {
       }
       return true;
     }),
-    body("shipping_street").custom((value, { req }) => {
+    body(["shipping_street","shipping_street_number","shipping_zip_code","shipping_city"]).custom((value, { req }) => {
       let useSameAddress = req.body.use_same_address;
       let orderType = req.body.order_types_id;
       let useUserAddress = req.body.use_user_address;
@@ -195,26 +196,7 @@ module.exports = {
       }
       return true;
     }),
-    body("shipping_zip_code").custom((value, { req }) => {
-      let useSameAddress = req.body.use_same_address;
-      let orderType = req.body.order_types_id;
-      let useUserAddress = req.body.use_user_address;
-      //Si es envio, no usan misma direccion y esta vacio doy error
-      if (orderType == 1 && !useUserAddress && !useSameAddress && !value) {
-        throw new Error(msg);
-      }
-      return true;
-    }),
-    body("shipping_city").custom((value, { req }) => {
-      let useSameAddress = req.body.use_same_address;
-      let orderType = req.body.order_types_id;
-      let useUserAddress = req.body.use_user_address;
-      //Si es envio, no usan misma direccion y esta vacio doy error
-      if (orderType == 1 && !useUserAddress && !useSameAddress && !value) {
-        throw new Error(msg);
-      }
-      return true;
-    }),
+
     body("shipping_province").custom((value, { req }) => {
       let useSameAddress = req.body.use_same_address;
       let provinceInDB = value

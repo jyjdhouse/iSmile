@@ -21,5 +21,9 @@ const shipmentStaticInfo = {
 
 const shipmentEstimateUrl = "http://webservice.oca.com.ar/ePak_tracking/Oep_TrackEPak.asmx/Tarifar_Envio_Corporativo";
 
-module.exports = {shipmentEstimateUrl, shipmentStaticInfo}
+const shipmentGenerateOrderUrl = "http://webservice.oca.com.ar/ePak_tracking/Oep_TrackEPak.asmx/IngresoORMultiplesRetiros";
+
+const generateTagUrl = "http://webservice.oca.com.ar/oep_tracking/Oep_Track.asmx/GetPdfDeEtiquetasPorOrdenOrNumeroEnvio";
+
+module.exports = {shipmentEstimateUrl, shipmentStaticInfo,shipmentGenerateOrderUrl,generateTagUrl}
 
