@@ -63,7 +63,7 @@ async function sendOrderMails(order) {
     <p style="font-weight:600;">Id de venta</p>
     <p style="color: #666;">${order.tra_id}</p>
     <p style="font-weight:600;">Fecha</p>
-    <p style="color: #666;">${dateFormater(order.createdAt)}</p>
+    <p style="color: #666;">${dateFormater(order.createdAt,false)}</p>
     <p style="font-weight:600;">Datos de facturación</p>
     <p style="color: #666;">${order.billing_first_name} ${order.billing_last_name} - Tel: ${order.billing_phone} - DNI: ${order.billing_id}</p>
     ${userMailContentDeliveryMethod}
@@ -88,7 +88,7 @@ async function sendOrderMails(order) {
     <p style="font-weight:600;">Id de venta</p>
     <p style="color: #666;">${order.tra_id}</p>
     <p style="font-weight:600;">Fecha</p>
-    <p style="color: #666;">${dateFormater(order.createdAt)}</p>
+    <p style="color: #666;">${dateFormater(order.createdAt,false)}</p>
     <p style="font-weight:600;">Datos de facturación</p>
     <p style="color: #666;">${order.billing_first_name} ${order.billing_last_name} - Tel: ${order.billing_phone} - DNI: ${order.billing_id}</p>
     ${operatorMailContentDeliveryMethod}

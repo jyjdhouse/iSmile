@@ -25,6 +25,8 @@ module.exports = (sequelize, dataTypes) => {
         pending_payment_date: {type: dataTypes.DATE},
         is_pending_payment_expired : {type: dataTypes.TINYINT},
         details: {type: dataTypes.TEXT},
+        oca_numero_envio: {type: dataTypes.STRING(20)},
+        oca_orden_retiro: {type: dataTypes.STRING(20)},
     }
 
     let config = {

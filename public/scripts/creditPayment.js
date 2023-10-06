@@ -182,7 +182,7 @@ window.addEventListener("load", () => {
 
   let payment_methods_id;
   let card_id;
-  let lastFourDigits;
+  let lastFourDigits,firstSixDigits;
   selectCardForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const cardRadioSelected = document.querySelector('input[name="card_id"]:checked');
@@ -262,6 +262,7 @@ window.addEventListener("load", () => {
     if (isFormToSubmit) {
       let cardInp = document.querySelector('.card-number-inp');
       lastFourDigits = cardInp.value.slice(-4);
+      firstSixDigits = cardInp.value.slice(0,6);
       sendForm(e);
     }
   });
@@ -294,7 +295,7 @@ window.addEventListener("load", () => {
     } else {
       const responseBody = {
         token: response.id,
-        bin: response.bin,
+        bin: firstSixDigits,
         order_tra_id,
         device_unique_identifier: decidir.device_unique_identifier,
         payment_methods_id,

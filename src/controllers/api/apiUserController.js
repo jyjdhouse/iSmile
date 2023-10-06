@@ -604,9 +604,9 @@ const controller = {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlString, "text/xml");
 
-      const totalValue = xmlDoc.getElementsByTagName("Total")[0].textContent;
+      const totalValue = xmlDoc.getElementsByTagName("Total")[0]?.textContent;
       const plazoEntregaValue =
-        xmlDoc.getElementsByTagName("PlazoEntrega")[0].textContent;
+        xmlDoc.getElementsByTagName("PlazoEntrega")[0]?.textContent;
 
       if(totalValue && plazoEntregaValue){
         return res.json({

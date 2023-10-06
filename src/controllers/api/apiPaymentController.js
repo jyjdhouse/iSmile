@@ -71,11 +71,10 @@ const controller = {
         apiKey: privateKey,
       };
       var customer = {
-        id: `${order.billing_first_name} ${order.billing_last_name}`,
+        id: `${orderToPay.billing_first_name} ${orderToPay.billing_last_name}`,
         email: orderToPay.billing_email,
       };
       var paymentData = new PaymentDataModule.paymentData(args);
-      console.log(args.amount);
       paymentData.setCustomer(customer);
       args = paymentData.getJSON();
       // send_to_cs = TRUE O FALSE PARA ENVIAR PARAMETROS CS
@@ -130,7 +129,7 @@ const controller = {
             //Direccion de facturacion
             city: orderToPay.billingAddress.city,
             country: "AR",
-            customer_id: `${order.billing_first_name} ${order.billing_last_name}`,
+            customer_id: `${orderToPay.billing_first_name} ${orderToPay.billing_last_name}`,
             email: orderToPay.billing_email,
             first_name: orderToPay.billing_first_name,
             last_name: orderToPay.billing_last_name,

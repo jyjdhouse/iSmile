@@ -49,7 +49,7 @@ const controller = {
       let dateFormated;
       // Formateo la fecha
       if (user.birth_date) {
-        dateFormated = dateFormater(user.birth_date);
+        dateFormated = dateFormater(user.birth_date,false);
         user.birth_date = dateFormaterForInput(user.birth_date);
       }
       // busco aca el prefijo del numero y lo pongo

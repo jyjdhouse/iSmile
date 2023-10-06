@@ -126,7 +126,7 @@ const controller = {
 
       let statuses = orderStatuses;
       orders.forEach((ord) => {
-        ord.date = dateFormater(ord.date);
+        ord.date = dateFormater(ord.date,false);
       });
 
       return res.status(200).json({
@@ -455,7 +455,9 @@ const controller = {
   },
   generateShipmentTag: async(req,res)=>{
     try {
-      const shipmentResponse = await getShipment('02a7e9b0-8a77-4cc1-a7d4-31dbc0aa67b9',1);
+      const {orderTraId,boxSizeId} = req.body;
+      console.log(req.body);
+      const shipmentResponse = await getShipment(orderTraId,boxSizeId);
       if(!shipmentResponse.ok){
         return res.status(400).json({ok:false,msg: "Hubo un problema al generar la etiqueta PDF"})
       };
