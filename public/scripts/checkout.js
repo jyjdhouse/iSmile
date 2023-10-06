@@ -13,6 +13,8 @@ await checkForUserLogged();
 // Si no hay usuario, se pinto devuelta la vista => llamo a la función
 if (!window.userLogged) handleRemoveCartBtnClick(window.userLogged);
 
+let lastShipmentPrice;
+
 //Agarro las provincias
 const provinces = Array.from(
   document.querySelectorAll("#billing_province option")
@@ -82,6 +84,11 @@ productCards.forEach((card) => {
     }
   });
 });
+
+const deleteShipmentErrors = () => {
+  const errorContainers = document.querySelectorAll('.shipment-error-p');
+  errorContainers.forEach(err => err.remove());
+}
 
 // logica para si viene checkout errors de stock error
 const cards = document.querySelectorAll(".product-card");
@@ -187,40 +194,81 @@ const checkIfAllProductsAreInStock = () => {
   }
 };
 
-const getShipmentInfo = async (zip) => {
-  //TODO: Modificar para agarrar id y quantity
-  const cards = document.querySelectorAll(".product-card");
-  let bodyObject = {
-    zip,
-    items: [],
-  };
-  cards.forEach((card) => {
-    bodyObject.items.push({
-      id: card.dataset.productid,
-      quantity: card.querySelector(
-        ".product-quantity-container .product-quantity"
-      ).value,
-    });
-  });
+const shipmentPriceSpan = document.querySelector('.shipment-price-span');
+const innerShipmentPrice = (price) => {
+  shipmentPriceSpan.innerText = `${price}`;
+  getTotalPrice();
+}
 
-  const response = await fetch(
-    `${window.location.origin}/api/user/getEstimateShipmentCost`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(bodyObject),
+const getShipmentInfo = async (zip) => {
+  try {
+    const cards = document.querySelectorAll(".product-card");
+    const zipCode = Number(zip);
+    let bodyObject = {
+      zip,
+      items: [],
+    };
+    cards.forEach((card) => {
+      bodyObject.items.push({
+        id: card.dataset.productid,
+        quantity: card.querySelector(
+          ".product-quantity-container .product-quantity"
+        ).value,
+      });
+    });
+
+    deliverOptionBoxes.forEach(box => {
+      if (box.classList.contains('delivery-option-box-active') && box.dataset.typeid == 1) {
+        deleteShipmentErrors();
+      }
+    })
+
+    const response = await fetch(
+      `${window.location.origin}/api/user/getEstimateShipmentCost`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bodyObject),
+      }
+    );
+    const data = await response.json();
+    const { status } = data.meta;
+    if (status && status === 200) {
+      const shipmentData = data.shippingData;
+      const shipmentPrice = Math.ceil(shipmentData.totalValue).toString();
+      innerShipmentPrice(shipmentPrice);
+
+    } else {
+
+      deliverOptionBoxes.forEach(box => {
+        if (box.classList.contains('delivery-option-box-active') && box.dataset.typeid == 1) {
+          const useSameAddress = document.querySelector("#use-same-address");
+          let errorContainer;
+          if (useSameAddress.checked) {
+            console.log('check entro')
+            errorContainer = document.querySelector('.product-side-shipment-info');
+
+          } else {
+            console.log('entro')
+            errorContainer = document.querySelector('.zip-code-error-container');
+          }
+          console.log(errorContainer)
+          const error = document.createElement("p");
+          error.setAttribute('class', 'shipment-error-p');
+          error.textContent = "Error al calcular coste de envío";
+          errorContainer.appendChild(error);
+        }
+      })
     }
-  );
-  if (!response.ok) {
-    throw new Error("Error mientras se pedia el estimado de envio");
+  } catch (error) {
+    console.log(error)
   }
-  const data = await response.json();
-  console.log(data);
-  const shipmentData = data.shippingData;
-  // TODO: Pintar donde corresponda precio y tiempo de entrega
+
+
 };
+
 
 const deliveryTypes = document.querySelectorAll(".delivery-option-box");
 deliveryTypes.forEach((devT) => {
@@ -248,7 +296,7 @@ getShipmentPriceBtn.addEventListener("click", async (e) => {
     } else {
       !getShipmentPriceBtn.classList.contains("get-shipment-price-error") &&
         getShipmentPriceBtn.classList.add("get-shipment-price-error");
-        return 
+      return
     }
   } catch (error) {
     return console.log(`Falle en getShipmentPriceBtn.addEventListener: ${error}`);
@@ -347,11 +395,21 @@ function getTotalPrice() {
   let subTotalElement = document.querySelector(".cart-subtotal-span");
   let totalElement = document.querySelector(".cart-total-span");
   let counter = 0;
+  let shipmentPrice = document.querySelector('.shipment-price-span');
+  let subTotalElementCheckout = document.querySelector('.product-side-wrapper-row-subtotal-price-span');
+  let totalElementCheckout = document.querySelector('.product-side-wrapper-row-total-price-span');
+  if(shipmentPrice){
+    shipmentPrice = parseInt(shipmentPrice.innerText);
+  }
   subTotals.forEach((subtotal) => {
     counter += parseInt(subtotal);
   });
   subTotalElement.innerHTML = counter;
+  subTotalElementCheckout.innerText = counter;
+  counter += shipmentPrice;
+  totalElementCheckout.innerText = counter;
   totalElement.innerHTML = counter;
+
 }
 getTotalPrice();
 
@@ -389,6 +447,9 @@ const updateDeliveryChoice = (e) => {
     opt.classList.remove("delivery-option-box-active")
   );
   e.target.classList.add("delivery-option-box-active");
+  if (e.target.dataset.typeid == 2) {
+    innerShipmentPrice(0);
+  }
 };
 const deliveryOptions = document.querySelectorAll(".delivery-option-box");
 deliveryOptions.forEach((opt) => {
@@ -415,9 +476,8 @@ const paintSideCards = () => {
       productDiscount = parseFloat(productDiscount.innerHTML.match(/\d+/)[0]);
     }
     inyectedHTML += `
-            <article class="product-side-card" data-productid="${
-              card.dataset.productid
-            }">
+            <article class="product-side-card" data-productid="${card.dataset.productid
+      }">
                 <div class="image-container">
                     <img src="${imgPath}" alt="product-side-image" class="product-side-image">
                 </div>
@@ -425,19 +485,16 @@ const paintSideCards = () => {
                     <p class="product-side-name bold">${productName}</p>
                     <p class="product-side-quantity grey">Cantidad: <span class="product-side-quantity-span">${productQuantity}</span></p>
                     <p class="product-side-price">
-                    ${
-                      productDiscount
-                        ? `<span class="product-side-discount-tag-span">${discountTag}% OFF</span>`
-                        : ""
-                    }
-                    <span class="product-side-price-span ${
-                      productDiscount ? `striked grey` : ""
-                    }">${productPrice}</span>
-                    ${
-                      productDiscount
-                        ? `<span class="product-side-discount-price-span">$${productDiscount}</span>`
-                        : ""
-                    }
+                    ${productDiscount
+        ? `<span class="product-side-discount-tag-span">${discountTag}% OFF</span>`
+        : ""
+      }
+                    <span class="product-side-price-span ${productDiscount ? `striked grey` : ""
+      }">${productPrice}</span>
+                    ${productDiscount
+        ? `<span class="product-side-discount-price-span">$${productDiscount}</span>`
+        : ""
+      }
                     </p>
                 </div>
             </article>
@@ -489,14 +546,15 @@ continueButtons.forEach((btn) => {
 
     // Si es true, es el de info
     if (isInfoStep) {
-      let userName = document.querySelector("#name").value;
+      let userName = document.querySelector("#first_name").value;
       let userLastName = document.querySelector("#last-name").value;
       let userFullName = `${userName} ${userLastName}`;
       let userMail = stepFormContainer.querySelector("#email").value;
       let userPhone = stepFormContainer.querySelector("#phone").value;
 
       let billingAddress = {
-        street: stepFormContainer.querySelector("#billing_street").value,
+        billing_street: stepFormContainer.querySelector("#billing_street").value,
+        billing_street_number: stepFormContainer.querySelector('#billing_street_number').value,
         zipCode: stepFormContainer.querySelector("#billing_zip-code").value,
         apartment:
           stepFormContainer.querySelector("#billing_floor")?.value || "",
@@ -507,6 +565,7 @@ continueButtons.forEach((btn) => {
         ).innerHTML,
         city: stepFormContainer.querySelector("#billing_city").value,
       };
+      console.log(billingAddress)
 
       // invierto que contendor se ve
       stepFormContainer.classList.add("hidden");
@@ -520,7 +579,7 @@ continueButtons.forEach((btn) => {
         billingAddress.zipCode;
       stepWrapper.querySelector(
         ".info-wrapper-street"
-      ).innerHTML = `${billingAddress.street} ${billingAddress.apartment}, ${billingAddress.city} , ${billingAddress.province}`;
+      ).innerHTML = `${billingAddress.billing_street} ${billingAddress.billing_street_number} ${billingAddress.apartment}, ${billingAddress.city} , ${billingAddress.province}`;
 
       // Pregunto si ambos deliver-form y deliver-wrapper estan ocultos, si lo estan es porque es la
       // primera vez que toca en continuar ==> lo hago aparecer. Sino no pasa nada
@@ -551,6 +610,16 @@ continueButtons.forEach((btn) => {
         ) {
           startPaymentButton.classList.remove("disabled");
         }
+        const useSameAddress = document.querySelector("#use-same-address");
+        // hay que fijarse de nuevo el zipcode porque quizás cambió
+        if (useSameAddress.checked) {
+          const zipCode = document.querySelector('.info-wrapper-zip-code-span');
+          const changeZipCodeWithSameAddressChecked = async () => {
+            await getShipmentInfo(zipCode.innerText);
+          }
+          changeZipCodeWithSameAddressChecked();
+        }
+
       }
       modifyMainHeight("second-view");
     } else {
@@ -558,10 +627,13 @@ continueButtons.forEach((btn) => {
 
       let shippingAddress;
       // Aca pregunto si uso el check de "Usar direccion asociada al usuario"
+      console.log('aca editar')
       let useSameAddressCheckbox = document.querySelector("#use-user-address");
       if (useSameAddressCheckbox && useSameAddressCheckbox.checked) {
         shippingAddress = {
           street: stepFormContainer.querySelector("#shipping-address-street-p")
+            .innerHTML,
+            street_number: stepFormContainer.querySelector("#shipping-address-street-number-p")
             .innerHTML,
           zipCode: stepFormContainer.querySelector(
             "#shipping-address-zip-code-p"
@@ -575,9 +647,11 @@ continueButtons.forEach((btn) => {
           city: stepFormContainer.querySelector("#shipping-address-city-p")
             .innerHTML,
         };
+        console.log(shippingAddress)
       } else {
         shippingAddress = {
           street: stepFormContainer.querySelector("#shipping_street").value,
+          street_number: stepFormContainer.querySelector("#shipping_street_number").value,
           zipCode: stepFormContainer.querySelector("#shipping_zip_code").value,
           apartment:
             stepFormContainer.querySelector("#shipping_floor")?.value || "",
@@ -625,7 +699,7 @@ continueButtons.forEach((btn) => {
           ).innerHTML = shippingAddress.zipCode;
           stepWrapper.querySelector(
             ".deliver-wrapper-address"
-          ).innerHTML = `${shippingAddress.street} ${shippingAddress.apartment}, ${shippingAddress.city}, ${shippingAddress.province} `;
+          ).innerHTML = `${shippingAddress.street} ${shippingAddress.street_number} ${shippingAddress.apartment}, ${shippingAddress.city}, ${shippingAddress.province} `;
         }
       } else {
         //RETIRO
@@ -736,7 +810,7 @@ const sectionIsComplete = (btn) => {
   return allFieldsComplete;
 };
 
-const checkForInputChange = () => {
+/* const checkForInputChange = () => {
   let requiredInputs = document.querySelectorAll(".required");
   requiredInputs.forEach((input) => {
     input.addEventListener("input", (e) => {
@@ -748,7 +822,7 @@ const checkForInputChange = () => {
     });
   });
 };
-checkForInputChange();
+checkForInputChange(); */
 
 // Logica para que todos los inputs numericos no acepten letras
 checkForNumericInputs();
@@ -821,7 +895,8 @@ const useSameAddress = document.querySelector("#use-same-address");
 const shippingAddressSection = document.querySelector(
   ".shipping-address-section"
 );
-useSameAddress.addEventListener("click", (e) => {
+useSameAddress.addEventListener("click", async (e) => {
+  console.log('entro')
   let requiredInputs = shippingAddressSection.querySelectorAll(
     ".required-field input"
   );
@@ -829,11 +904,14 @@ useSameAddress.addEventListener("click", (e) => {
     shippingAddressSection.classList.add("hidden");
     // Le saco el required a todos los campos del shipping address
     requiredInputs.forEach((inp) => inp.classList.remove("required"));
+    let zipCode = document.querySelector('.info-wrapper-zip-code-span').innerText;
+    await getShipmentInfo(zipCode);
     return;
   }
   shippingAddressSection.classList.remove("hidden");
   // Le meto el required a todos los campos del shipping address
   requiredInputs.forEach((inp) => inp.classList.add("required"));
+  innerShipmentPrice(0);
 });
 
 // Logica para tipo de orden (ENVIO/RETIRAR)
@@ -841,12 +919,12 @@ const deliverOptionBoxes = document.querySelectorAll(".delivery-option-box");
 const deliverTypeInput = document.querySelector("#order_types_id");
 const retireSection = document.querySelector(".retire-section");
 deliverOptionBoxes.forEach((opt) => {
-  opt.addEventListener("click", () => {
+  opt.addEventListener("click", async () => {
     let typeId = opt.dataset.typeid;
     let requiredInputs = shippingAddressSection.querySelectorAll(
       ".required-field input"
     );
-
+    deleteShipmentErrors();
     // Le meto el valor ese al input
     deliverTypeInput.value = typeId;
     // Pregunto si es retirar por el local se muestra el section de RETIRO, sino el otro
@@ -864,6 +942,8 @@ deliverOptionBoxes.forEach((opt) => {
         shippingAddressSection.classList.add("hidden");
         // Si esta chequeado,les saco el required
         requiredInputs.forEach((inp) => inp.classList.remove("required"));
+        let zipCode = document.querySelector('.info-wrapper-zip-code-span').innerText;
+        await getShipmentInfo(zipCode);
         return;
       }
       // Si no esta chequeado, le agrego devuelta el required
@@ -944,13 +1024,11 @@ async function checkForUserLogged() {
       let cardHTML = `
                 <article class="product-card" data-productid="${product.id}">
                                     <div class="product-card-image-container article-div-child">
-                                        <img src="${
-                                          product.file_url ||
-                                          "/img/product/default.png"
-                                        }"
-                                        alt="${
-                                          product.name
-                                        }" class="product-image">
+                                        <img src="${product.file_url ||
+        "/img/product/default.png"
+        }"
+                                        alt="${product.name
+        }" class="product-image">
                                     </div>
                                     <div class="product-info-delete-container">
                                         <div class="product-info-container">
@@ -960,9 +1038,8 @@ async function checkForUserLogged() {
                                                 </p>
                                                 <div class="check-stock-error">
                                                </div>
-                                               <p class="stock-number" style="display:none";>${
-                                                 product.stock
-                                               } </p>
+                                               <p class="stock-number" style="display:none";>${product.stock
+        } </p>
                                             </div>
                                             <div class="product-price-container article-div-child">
                                                 <p class="product price">$<span class="product-price-span">
@@ -976,23 +1053,20 @@ async function checkForUserLogged() {
                                                 <input type="number" name="quantity" id="" class="product-quantity">
                                             </div>
                                             <div class="product-subtotal-container article-div-child">
-                                                <p class="product-subtotal ${
-                                                  product.discount
-                                                    ? "discount-product-price-container"
-                                                    : ""
-                                                }"> 
-                                               ${
-                                                 product.discount
-                                                   ? `<span class="span-discount-tag">
+                                                <p class="product-subtotal ${product.discount
+          ? "discount-product-price-container"
+          : ""
+        }"> 
+                                               ${product.discount
+          ? `<span class="span-discount-tag">
                                                         ${product.discount}% OFF
                                                     </span>`
-                                                   : ""
-                                               }
-                                                <span class="product-subtotal-span ${
-                                                  product.discount
-                                                    ? "striked grey"
-                                                    : ""
-                                                }">
+          : ""
+        }
+                                                <span class="product-subtotal-span ${product.discount
+          ? "striked grey"
+          : ""
+        }">
                                                 $${product.price}
                                                 </span>
                                                 </p>
@@ -1021,9 +1095,8 @@ async function checkForUserLogged() {
       // Antes de terminar, me fijo si el producto en cuestion tiene descuento para agregar ese precio con descuento
       if (product.discount) {
         let discountPriceHTML = `
-                <span class="span-discount-price" data-discount= '${
-                  product.discount
-                }' >
+                <span class="span-discount-price" data-discount= '${product.discount
+          }' >
                  $${product.price * (1 - product.discount / 100)} 
             </span>`;
         let productCards = productCardWrapper.querySelectorAll(".product-card");
@@ -1164,6 +1237,9 @@ form.addEventListener("submit", async (e) => {
     let billing_street = form.querySelector(
       'input[name="billing_street"]'
     ).value;
+    let billing_street_number = form.querySelector(
+      'input[name="billing_street_number"]'
+    ).value;
     let billing_zip_code = form.querySelector(
       'input[name="billing_zip_code"]'
     ).value;
@@ -1180,6 +1256,9 @@ form.addEventListener("submit", async (e) => {
     ).value;
     let shipping_street = form.querySelector(
       'input[name="shipping_street"]'
+    ).value;
+    let shipping_street_number = form.querySelector(
+      'input[name="shipping_street_number"]'
     ).value;
     let shipping_floor = form.querySelector(
       'input[name="shipping_floor"]'
@@ -1215,6 +1294,7 @@ form.addEventListener("submit", async (e) => {
       phone_code,
       phone,
       billing_street,
+      billing_street_number,
       billing_zip_code,
       billing_floor,
       billing_province,
@@ -1225,6 +1305,7 @@ form.addEventListener("submit", async (e) => {
       save_user_address,
       use_user_address,
       shipping_street,
+      shipping_street_number,
       shipping_floor,
       shipping_city,
       shipping_province,
