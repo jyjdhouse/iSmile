@@ -160,10 +160,21 @@ window.addEventListener('load', async () => {
                     <p class="copy-value">${provinces.find(prov => prov.id == order.billingAddress.provinces_id).name}</p>
                     <p class="copy-value">${order.billingAddress.city}</p>
                     <p class="copy-value">${order.billingAddress.street}</p>
+                    <p class="copy-value">${order.billingAddress.street_number}</p>
                     <p class="order-address-detail copy-value">${order.billingAddress.apartment || '-'}</p>
                     <p class="order-address-detail copy-value">${order.billingAddress.zip_code}</p>
                 </div>
             </div>
+            ${order.order_status_id === 5 ? 
+                `<p class="order-label order-detail-user-data-title bold">Causa anulación</p>
+                <div class="order-detail-user-data-container">
+                    <div class="order-detail-user-data">
+                        <p class="copy-value">${order.details}</p>
+                    </div>
+                </div>`
+                :
+                ''
+            }
         </section>
         <section class="order-detail-status-section">
             <form class="update-order-status" action="">
@@ -209,6 +220,7 @@ window.addEventListener('load', async () => {
                 <p class="copy-value">${provinces.find(prov => prov.id == order.shippingAddress.provinces_id).name}</p>
                 <p class="copy-value">${order.shippingAddress.city}</p>
                 <p class="copy-value">${order.shippingAddress.street}</p>
+                <p class="copy-value">${order.shippingAddress.street_number}</p>
                 <p class="order-address-detail copy-value">${order.shippingAddress.apartment || '-'}</p>
                 <p class="order-address-detail copy-value">${order.shippingAddress.zip_code}</p>
             </div>

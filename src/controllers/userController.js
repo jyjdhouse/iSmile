@@ -257,10 +257,10 @@ const controller = {
       const expireTime = new Date(paymentDueDate.getTime() + 15 * 60 * 1000); // 15 minutos en milisegundos
       const actualTime = new Date();
       // Calcula la diferencia en milisegundos entre la fecha actual y la fecha de vencimiento
-      const timeLeft = expireTime - actualTime;
+      const timeLeft = actualTime - expireTime;
       orderToPay.timeLeft = timeLeft; //Milisegundos
       // return res.send(orderToPay)
-      return res.render("creditPayment", { order_tra_id, cards });
+      return res.render("creditPayment", { order_tra_id, cards, orderToPay });
     } catch (error) {
       console.log(error);
       return res.json({ error });

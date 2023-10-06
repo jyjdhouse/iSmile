@@ -59,7 +59,8 @@
                             </div>
                             <% if (order.order_types_id == 1) { //Entrega a domicilio %>
                                 <div class="shipping-details hidden">
-                                    <p class="shipping-street"><%= order.shippingAddress ?  order.shippingAddress.street : order.billingAddress.street%></p>
+                                    <p class="shipping-street"><%= order.shippingAddress ?  order.shippingAddress.street : order.billingAddress.billing_street%></p>
+                                    <p class="shipping-street"><%= order.shippingAddress ?  order.shippingAddress.street_number : order.billingAddress.billing_street_number%></p>
                                     <p class="shipping-apartment"><%= order.shippingAddress ?  order.shippingAddress.apartment : order.billingAddress.apartment%></p>
                                     <p class="shipping-city"><%= order.shippingAddress ?  order.shippingAddress.city : order.billingAddress.city%></p>
                                     <p class="shipping-zip-code"><%= order.shippingAddress ?  order.shippingAddress.zip_code : order.billingAddress.zip_code%></p>

@@ -220,6 +220,7 @@ window.addEventListener('load', () => {
             let dni = form.querySelector('input[name="dni"]')?.value;
             let payment_methods_id = form.querySelector('select[name="payment_methods"]')?.value;
             let billing_street = form.querySelector('input[name="billing_street"]')?.value;
+            let billing_street_number = form.querySelector('input[name="billing_street_number"]')?.value;
             let billing_floor = form.querySelector('input[name="billing_floor"]')?.value;
             let billing_zip_code = form.querySelector('input[name="billing_zip_code"]')?.value;
             let billing_city = form.querySelector('input[name="billing_city"]')?.value;
@@ -241,6 +242,7 @@ window.addEventListener('load', () => {
                 save_user_address: false,
                 payment_methods_id,
                 billing_street,
+                billing_street_number,
                 billing_floor,
                 billing_zip_code,
                 billing_city,

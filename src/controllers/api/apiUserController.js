@@ -579,7 +579,6 @@ const controller = {
   },
   getEstimateShipmentData: async (req, res) => {
     let { zip, items } = req.body;
-    items = JSON.parse(items);
     // TODO: hacer forEach en items y determinar: VolumenTotal - PesoTotal - ValorDeclarado
     // restaria aca hacer la logica segun la cantidad de elementos, que volumen y peso mandamos
     let totalWeigth = 1;
@@ -601,18 +600,6 @@ const controller = {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      if (response.statusText != "OK") {
-        console.log(response);
-        return res.json({
-          ok: false,
-          meta: {
-            status: 200,
-          },
-          msg: `Error al calcular coste de envio.`
-        });
-        
-      }
-
       const xmlString = response.data;
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlString, "text/xml");
@@ -620,21 +607,34 @@ const controller = {
       const totalValue = xmlDoc.getElementsByTagName("Total")[0].textContent;
       const plazoEntregaValue =
         xmlDoc.getElementsByTagName("PlazoEntrega")[0].textContent;
-      
 
-      return res.json({
-        ok: true,
-        meta: {
-          status: 200
-        },
-        shippingData: {
-          totalValue,
-          plazoEntregaValue,
-        },
-      });
+      if(totalValue && plazoEntregaValue){
+        return res.json({
+          ok: true,
+          meta: {
+            status: 200
+          },
+          shippingData: {
+            totalValue,
+            plazoEntregaValue,
+          },
+        });
+  
+      } else {
+        return res.json({
+          ok: false,
+          meta: {
+            status: 400,
+          },
+          msg: `Error al calcular coste de envio.`
+        });
+      }
+    
+  
+
     } catch (error) {
       console.log("Error pidiendo datos del envio:", error);
-      return res.json({ error });
+      return res.json({ error: "Error pidiendo datos del envío", ok: false, meta: {status: 500} });
     }
   },
   getEmailCode: async (req, res) => {

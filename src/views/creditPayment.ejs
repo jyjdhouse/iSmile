@@ -14,6 +14,7 @@
 
     <main class="secure-payment-main">
       <%- include('./partials/orderOverlay.ejs') %>
+      <p style="display: none;" class="time-left" data-timeleft=<%orderToPay.timeLeft%>></p>
       <div class="steps-list-container">
         <div class="step-container step-1 active-step">
           <h2>Seleccioná el tipo de tarjeta</h2>

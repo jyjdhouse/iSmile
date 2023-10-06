@@ -12,6 +12,9 @@ window.addEventListener("load", () => {
   const stepsContainer = document.querySelector('.steps-list-container');
   const errorCard = document.querySelector('.error-card');
   const paymentFormInp = document.querySelectorAll('.payment-form-input');
+  const timeLeftElement = document.querySelector('.time-left');
+  const timeLeft = timeLeftElement.dataset.timeLeft;
+  console.log(timeLeft)
 
   const changePaymentInpsValue = () => {
     paymentFormInp.forEach(inp => {
