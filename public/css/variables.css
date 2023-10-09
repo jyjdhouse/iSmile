@@ -18,6 +18,9 @@
     overflow: hidden;
     /* pointer-events: none; */
 }
+.nowrap{
+    flex-wrap: nowrap !important;
+}
 .icon{
     font-size: 26px !important;
 }

@@ -9,6 +9,7 @@ const upload = require('../../middlewares/multerMiddleware');
 // GET
 router.get('/get-clients',adminCredentialsMiddleware, apiAdminController.downloadClients);
 router.get('/order',adminCredentialsMiddleware,apiAdminController.getOrders);
+router.get('/getShipmentTag',adminCredentialsMiddleware,apiAdminController.getShipmentTag);
 
 // PUT
 router.put('/update-order/:orderId',adminCredentialsMiddleware,apiAdminController.updateOrders);

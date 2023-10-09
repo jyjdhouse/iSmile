@@ -304,7 +304,71 @@ tbody tr {
 }
 
 /*  */
+
 /* SECTIONS */
+/* OCA SECTION */
+.order-detail-shipment-data-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.order-detail-shipment-data-logo-container{
+    width: 45%;
+    height: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+.order-detail-shipment-data-logo{
+    width: 100%;
+    max-width: 200px;
+    height: 100%;
+    object-fit: cover;
+    
+}
+.order-detail-shipment-tag-btn{
+    height: 15%;
+    width: 45%;
+    max-width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--gold-color);
+    color: var(--violet-color);
+    border-radius: 10px;
+    font-size: 13px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.order-detail-shipment-label{
+    height: 10%;
+    max-height: 30px;
+    width: 45%;
+    height: fit-content;
+    font-size: 14px;
+    text-align: center;
+}
+.order-detail-shipment-label.long-p{
+    width: 100%;
+    margin-bottom: 10px;
+}
+#boxes-used{
+    height: 30%;
+    width: 45%;
+    max-width: 50px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    border: 1px solid var(--gold-color);
+    text-align: center;
+    border-radius: 10px;
+}
+.order-detail-shipment-generate-tag-btn{
+    height: 30%;
+    margin: auto;
+}
+/* PRODUCT LIST SECTION */
 .order-detail-product-list-section,
 .order-detail-user-data-section {
     width: 95%;
@@ -466,6 +530,7 @@ tbody tr {
     top: 50%;
     left: 50%;
     opacity: 0;
+    scale: 0;
     color: #fff;
     padding: 5px;
     background-color: #000;
@@ -474,6 +539,7 @@ tbody tr {
 
 .copy-msg-active {
     opacity: 1;
+    scale: 1;
 }
 
 .copy-value {
@@ -502,7 +568,8 @@ tbody tr {
     padding: 5% 0;
     border: 2px solid var(--violet-color);
     opacity: 0;
-    transition: opacity 0.5s;
+    scale: 0;
+    transition: opacity 0.5s, scale 0.5s;
 }
 
 .controls-remove-transaction {
@@ -528,6 +595,7 @@ tbody tr {
 
 .remove-transaction-popup-active {
     opacity: 1;
+    scale: 1;
 }
 
 .remove-transaction-popup h3 {
@@ -698,7 +766,14 @@ tbody tr {
     .order-detail-date {
         font-size: 17px;
     }
-
+    /* OCA SECTION */
+    .order-detail-shipment-tag-btn{
+        font-size: 15px;
+    }
+    .order-detail-shipment-label{
+        font-size: 16px;
+    }
+    /* PRODUCT LIST SECTION */
     .order-detail-product-list-section,
     .order-detail-user-data-section {
         width: 80%;
@@ -722,4 +797,9 @@ tbody tr {
     }
 }
 
-@media(min-width:1024px) {}
+@media(min-width:1024px) {
+    .order-detail-shipment-data-container{
+        width: 70%;
+        margin: 0 auto;
+    }
+}

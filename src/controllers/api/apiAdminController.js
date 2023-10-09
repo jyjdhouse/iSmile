@@ -39,7 +39,7 @@ const provinces = require("../../utils/staticDB/provinces");
 const paymentMethods = require("../../utils/staticDB/paymentMethods");
 const orderTypes = require("../../utils/staticDB/orderTypes");
 const orderStatuses = require("../../utils/staticDB/orderStatus");
-const getShipment = require('../../utils/getShipment');
+const getShipment = require("../../utils/getShipment");
 
 const controller = {
   downloadClients: async (req, res) => {
@@ -126,7 +126,7 @@ const controller = {
 
       let statuses = orderStatuses;
       orders.forEach((ord) => {
-        ord.date = dateFormater(ord.date,false);
+        ord.date = dateFormater(ord.date, false);
       });
 
       return res.status(200).json({
@@ -141,6 +141,34 @@ const controller = {
         paymentMethods,
         orderTypes,
         statuses,
+      });
+    } catch (error) {
+      console.log(`Falle en adminApiController.getOrders: ${error}`);
+      return res.status(500).json({
+        true: false,
+        error,
+      });
+    }
+  },
+  getShipmentTag: async (req, res) => {
+    try {
+      // Obtengo las fechas del query si hay
+      let tra_id = req.query?.tra_id || "";
+      tra_id = `${tra_id}.pdf`;
+      // Busco el pdf
+      const getObjectParams = {
+        Bucket: bucketName,
+        Key: `shippingTags/${tra_id}`,
+      };
+      const command = new GetObjectCommand(getObjectParams);
+      const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+
+      return res.status(200).json({
+        meta: {
+          status: 200,
+          url: `api/admin/getShipmentTag`,
+        },
+        pdf: url,
       });
     } catch (error) {
       console.log(`Falle en adminApiController.getOrders: ${error}`);
@@ -453,25 +481,56 @@ const controller = {
 
     return res.redirect("/");
   },
-  generateShipmentTag: async(req,res)=>{
+  generateShipmentTag: async (req, res) => {
     try {
-      const {orderTraId,boxSizeId} = req.body;
-      console.log(req.body);
-      const shipmentResponse = await getShipment(orderTraId,boxSizeId);
-      if(!shipmentResponse.ok){
-        return res.status(400).json({ok:false,msg: "Hubo un problema al generar la etiqueta PDF"})
+      const { orderTraId, boxesUsed } = req.body;
+      let tra_id = `${orderTraId}.pdf`;
+      const orderToGenerateShipment = await db.Order.findOne({
+        where: {
+          tra_id: orderTraId,
+        },
+      });
+      if (orderToGenerateShipment.oca_numero_envio) {
+        //Quiere decir que ya se genero el shipment, lo busco
+        // Busco el pdf
+        const getObjectParams = {
+          Bucket: bucketName,
+          Key: `shippingTags/${tra_id}`,
+        };
+        const command = new GetObjectCommand(getObjectParams);
+        const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+        return res.status(200).json({
+          ok: true,
+          msg: "etiqueta PDF generada",
+          pdf: url,
+        });
+      }; //Sino lo genero para mandarlo
+      const shipmentResponse = await getShipment(orderTraId, boxesUsed);
+      if (!shipmentResponse.ok) {
+        return res.status(400).json({
+          ok: false,
+          msg: "Hubo un problema al generar la etiqueta PDF",
+        });
+      }
+      // Busco el archivo en AWS y se lo mando en la respuesta para que se descargue automaticamente
+      // Busco el pdf
+      const getObjectParams = {
+        Bucket: bucketName,
+        Key: `shippingTags/${tra_id}`,
       };
-      // Busco el archivo en AWS y se lo mando en la respuesta para que se descargue automaticamente TODO:
-      
+      const command = new GetObjectCommand(getObjectParams);
+      const url = await getSignedUrl(s3, command, { expiresIn: 1800 }); //30 min
+
       return res.status(200).json({
         ok: true,
-        msg: "etiqueta PDF generada"
-      })
+        msg: "etiqueta PDF generada",
+        pdf: url,
+      });
     } catch (error) {
       console.log(`Falle en generateShipmentTag: ${error}`);
-      return res.json({error})
+      return res.json({ error });
     }
-  }
+  },
 };
 
 module.exports = controller;

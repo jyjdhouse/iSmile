@@ -78,7 +78,7 @@ function buildXml(data) {
  cp="${data.zip}" telefono="" email="${data.email}" idci="0"
  celular="${data.phone}" observaciones="Prueba" />
  <paquetes>
- <paquete alto="${data.boxUsed.sizes.alto}" ancho="${data.boxUsed.sizes.ancho}" largo="${data.boxUsed.sizes.largo}" peso="1" valor="0" cant="1" />
+ <paquete alto="${data.boxUsed.sizes.alto}" ancho="${data.boxUsed.sizes.ancho}" largo="${data.boxUsed.sizes.largo}" peso="1" valor="0" cant="${data.boxesUsed}" />
  </paquetes>
  </envio>
  </envios>
@@ -86,8 +86,9 @@ function buildXml(data) {
  </origenes>
 </ROWS>`;
   return xml;
-}
-module.exports = async function (orderId, boxSizeId) {
+};
+// TODO: FALTA A PARTIR DEL PESO DE LOS PRODUCTOS DE LA ORDEN VER CUANTO PESA
+module.exports = async function (orderId, boxesUsed) {
   let order;
   try {
     order = getDeepCopy(await db.Order.findOne({
@@ -99,7 +100,7 @@ module.exports = async function (orderId, boxSizeId) {
     const orderDate = `${orderDateArray[2]}${orderDateArray[1]}${orderDateArray[0]}`;
  
     // Busco el box que le corresponde
-    const boxUsed = dbBoxSizes.find((box) => box.id == boxSizeId);
+    const boxUsed = dbBoxSizes.find((box) => box.id == 1); //Solo tienen una medida de caja. TODO: Ver cual es
 
     // Armo el objeto para pasar a la funcion que arma el xml
     let xmlData = {
@@ -110,6 +111,7 @@ module.exports = async function (orderId, boxSizeId) {
       phone: order.billing_phone,
       date: orderDate,
       boxUsed,
+      boxesUsed
     };
     // Me fijo que direccion de envio uso
     if (order.is_same_address) {
