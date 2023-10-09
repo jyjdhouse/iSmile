@@ -601,7 +601,7 @@ const controller = {
       const totalValue = xmlDoc.getElementsByTagName("Total")[0].textContent;
       const plazoEntregaValue =
         xmlDoc.getElementsByTagName("PlazoEntrega")[0].textContent;
-
+        console.log(totalValue)
       if(totalValue && plazoEntregaValue){
         return res.json({
           ok: true,

@@ -11,10 +11,13 @@
 
   <body>
     <%- include('./partials/header.ejs') %>
-
+    <% console.log(orderToPay.timeLeft) %>
+    <div class="counter-container" data-timeleft=<%=orderToPay.timeLeft%>>
+      <p class="counter-title">Tiempo restante</p>
+      <p class="counter"></p>
+  </div>
     <main class="secure-payment-main">
       <%- include('./partials/orderOverlay.ejs') %>
-      <p style="display: none;" class="time-left" data-timeleft=<%orderToPay.timeLeft%>></p>
       <div class="steps-list-container">
         <div class="step-container step-1 active-step">
           <h2>Seleccioná el tipo de tarjeta</h2>
