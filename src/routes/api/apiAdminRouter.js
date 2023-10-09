@@ -10,13 +10,14 @@ const upload = require('../../middlewares/multerMiddleware');
 router.get('/get-clients',adminCredentialsMiddleware, apiAdminController.downloadClients);
 router.get('/order',adminCredentialsMiddleware,apiAdminController.getOrders);
 router.get('/getShipmentTag',adminCredentialsMiddleware,apiAdminController.getShipmentTag);
+router.get('/cancelShipmentTag'/*,adminCredentialsMiddleware*/,apiAdminController.cancelShipmentTag);
 
 // PUT
 router.put('/update-order/:orderId',adminCredentialsMiddleware,apiAdminController.updateOrders);
 router.put('/updateServicesPrice',adminCredentialsMiddleware,upload.any('files'),apiAdminController.processServicesPriceUpdating);
 
 // POST
-router.post('/generateShipmentTag',apiAdminController.generateShipmentTag);
+router.post('/generateShipmentTag'/*,adminCredentialsMiddleware*/,apiAdminController.generateShipmentTag);
 // DELETE
 router.delete('/delete-order/:orderId',adminCredentialsMiddleware,apiAdminController.deleteOrders);
 

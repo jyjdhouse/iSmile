@@ -40,6 +40,8 @@ const paymentMethods = require("../../utils/staticDB/paymentMethods");
 const orderTypes = require("../../utils/staticDB/orderTypes");
 const orderStatuses = require("../../utils/staticDB/orderStatus");
 const getShipment = require("../../utils/getShipment");
+const boxSizes = require("../../utils/staticDB/boxSizes");
+const cancelShipment = require("../../utils/cancelShipment");
 
 const controller = {
   downloadClients: async (req, res) => {
@@ -141,6 +143,7 @@ const controller = {
         paymentMethods,
         orderTypes,
         statuses,
+        boxSizes,
       });
     } catch (error) {
       console.log(`Falle en adminApiController.getOrders: ${error}`);
@@ -174,6 +177,73 @@ const controller = {
       console.log(`Falle en adminApiController.getOrders: ${error}`);
       return res.status(500).json({
         true: false,
+        error,
+      });
+    }
+  },
+  cancelShipmentTag: async (req, res) => {
+    try {
+      let tra_id = req.query?.tra_id || "";
+      // Busco la orden para mandarle los datos a la funcion
+      const orderToCancelShipment = await db.Order.findOne({
+        where: {
+          tra_id,
+        },
+      });
+      // Si no encuentra orden o la orden no tiene retiro devuelvo un 500
+      if (!orderToCancelShipment || !orderToCancelShipment.oca_orden_retiro) {
+        return res.status(500).json({
+          ok: false,
+        });
+      }
+      const orderResponse = await cancelShipment(
+        orderToCancelShipment.oca_orden_retiro
+      );
+      if (orderResponse.code == 100) {
+        //fue exitoso
+        // Borro de db los numeros de seguimiento y de retiro
+        await db.Order.update(
+          {
+            oca_numero_envio: null,
+            oca_orden_retiro: null,
+          },
+          {
+            where: {
+              tra_id,
+            },
+          }
+        );
+        // Borro en AWS el archivo
+        tra_id = `${tra_id}.pdf`;
+        params = {
+          Bucket: bucketName,
+          Key: `shippingTags/${tra_id}`,
+        };
+        command = new DeleteObjectCommand(params);
+        // Hago el delete de la base de datos
+        await s3.send(command);
+        return res.status(200).json({
+          meta: {
+            status: 200,
+            url: `api/admin/cancelShipmentTag`,
+          },
+          ok: true,
+        });
+      };
+      // si no fue exitoso, devuelvo un 200 pero con ok false y el mensaje de error
+      return res.status(200).json({
+        meta: {
+          status: 200,
+          url: `api/admin/cancelShipmentTag`,
+        },
+        ok: false,
+        msg: orderResponse.msg
+      });
+      
+    } catch (error) {
+      console.log(`Falle en adminApiController.getOrders: ${error}`);
+      return res.status(500).json({
+        ok: false,
         error,
       });
     }
@@ -483,14 +553,15 @@ const controller = {
   },
   generateShipmentTag: async (req, res) => {
     try {
-      const { orderTraId, boxesUsed } = req.body;
+      let { orderTraId, boxesUsed } = req.body;
+      // boxesUsed = JSON.parse(boxesUsed);
       let tra_id = `${orderTraId}.pdf`;
       const orderToGenerateShipment = await db.Order.findOne({
         where: {
           tra_id: orderTraId,
         },
       });
-      if (orderToGenerateShipment.oca_numero_envio) {
+      if (orderToGenerateShipment?.oca_numero_envio) {
         //Quiere decir que ya se genero el shipment, lo busco
         // Busco el pdf
         const getObjectParams = {
@@ -504,7 +575,9 @@ const controller = {
           msg: "etiqueta PDF generada",
           pdf: url,
         });
-      }; //Sino lo genero para mandarlo
+      }
+      //Sino lo genero para mandarlo
+
       const shipmentResponse = await getShipment(orderTraId, boxesUsed);
       if (!shipmentResponse.ok) {
         return res.status(400).json({

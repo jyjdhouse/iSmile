@@ -23,7 +23,9 @@ const shipmentEstimateUrl = !process.env.ENVIROMENT ? "http://webservice.oca.com
 
 const shipmentGenerateOrderUrl = !process.env.ENVIROMENT ? "http://webservice.oca.com.ar/ePak_tracking/Oep_TrackEPak.asmx/IngresoORMultiplesRetiros" : "http://webservice.oca.com.ar/ePak_tracking_TEST/Oep_TrackEPak.asmx/IngresoORMultiplesRetiros";
 
+const shipmentCancelOrderUrl = !process.env.ENVIROMENT ? "http://webservice.oca.com.ar/ePak_tracking/Oep_TrackEPak.asmx/AnularOrdenGenerada" : "http://webservice.oca.com.ar/ePak_tracking_TEST/Oep_TrackEPak.asmx/AnularOrdenGenerada";
+
 const generateTagUrl = !process.env.ENVIROMENT ? "http://webservice.oca.com.ar/oep_tracking/Oep_Track.asmx/GetPdfDeEtiquetasPorOrdenOrNumeroEnvio" :  "http://webservice.oca.com.ar/oep_tracking_TEST/Oep_Track.asmx/GetPdfDeEtiquetasPorOrdenOrNumeroEnvio";
 
-module.exports = {shipmentEstimateUrl, shipmentStaticInfo,shipmentGenerateOrderUrl,generateTagUrl}
+module.exports = {shipmentEstimateUrl, shipmentStaticInfo,shipmentGenerateOrderUrl,generateTagUrl,shipmentCancelOrderUrl}
 

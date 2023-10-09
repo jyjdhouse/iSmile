@@ -76,9 +76,9 @@ function buildXml(data) {
  <destinatario apellido="${data.last_name}" nombre="${data.first_name}" calle="${data.street}" nro="${data.street_number}"
  piso="" depto="${data.apartment || ''}" localidad="${data.city}" provincia="${data.province}"
  cp="${data.zip}" telefono="" email="${data.email}" idci="0"
- celular="${data.phone}" observaciones="Prueba" />
+ celular="${data.phone}" observaciones="" />
  <paquetes>
- <paquete alto="${data.boxUsed.sizes.alto}" ancho="${data.boxUsed.sizes.ancho}" largo="${data.boxUsed.sizes.largo}" peso="1" valor="0" cant="${data.boxesUsed}" />
+ <paquete alto="${data.boxesUsed.sizes[0]}" ancho="${data.boxesUsed.sizes[1]}" largo="${data.boxesUsed.sizes[2]}" peso="${data.orderWeight}" valor="0" cant="${data.boxesUsed.boxQuantityTotal}" />
  </paquetes>
  </envio>
  </envios>
@@ -87,7 +87,6 @@ function buildXml(data) {
 </ROWS>`;
   return xml;
 };
-// TODO: FALTA A PARTIR DEL PESO DE LOS PRODUCTOS DE LA ORDEN VER CUANTO PESA
 module.exports = async function (orderId, boxesUsed) {
   let order;
   try {
@@ -98,10 +97,23 @@ module.exports = async function (orderId, boxesUsed) {
     // Para la fecha YYYYMMDD
     const orderDateArray = dateFormater(order.date,true).split("/");
     const orderDate = `${orderDateArray[2]}${orderDateArray[1]}${orderDateArray[0]}`;
- 
-    // Busco el box que le corresponde
-    const boxUsed = dbBoxSizes.find((box) => box.id == 1); //Solo tienen una medida de caja. TODO: Ver cual es
 
+    // Me fijo el peso
+    let orderWeight = 0;
+    let idsToCheck = []; //Array de items para consultar en db
+    order.orderItems.forEach(item => {
+      idsToCheck.push(item.products_id)
+    });
+    // Ahora consulto por esos productos en db
+    const productsToCheck = await db.Product.findAll({
+      where: {
+        id: idsToCheck
+      }
+    });
+    productsToCheck.forEach(prod => {
+      const productQuantity = order.orderItems.find(item=>item.products_id == prod.id).quantity
+      orderWeight += parseFloat(prod.weight || 0) * productQuantity;
+    });
     // Armo el objeto para pasar a la funcion que arma el xml
     let xmlData = {
       user_dni: order.billing_id,
@@ -110,9 +122,10 @@ module.exports = async function (orderId, boxesUsed) {
       email: order.billing_email,
       phone: order.billing_phone,
       date: orderDate,
-      boxUsed,
-      boxesUsed
+      boxesUsed,
+      orderWeight
     };
+    
     // Me fijo que direccion de envio uso
     if (order.is_same_address) {
       //Uso la de billingAddress
@@ -147,7 +160,6 @@ module.exports = async function (orderId, boxesUsed) {
     const parser = new DOMParser();
 
     let xmlBuilt = buildXml(xmlData);
-    
     let bodyData = {
       Usr: !process.env.ENVIROMENT
         ? process.env.OCA_USER

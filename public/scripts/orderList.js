@@ -1,4 +1,4 @@
-import { getDeepCopy, checkForNumericInputs } from "./utils.js";
+import { getDeepCopy, checkForNumericInputs, checkForFloatInputs } from "./utils.js";
 window.addEventListener("load", async () => {
   let orders,
     status,
@@ -7,7 +7,9 @@ window.addEventListener("load", async () => {
     ordersResponse,
     ordersToDisplay,
     orderTypes,
-    paymentMethods;
+    paymentMethods,
+    boxSizes,
+    boxesUsed;
   let pageNumber = 1; //Primera pagina
   let limit = 10; //Aca controlo cuantas se muestran
   // Apenas carga hago el fetch de las ventas
@@ -28,6 +30,7 @@ window.addEventListener("load", async () => {
     provinces = response.provinces;
     paymentMethods = response.paymentMethods;
     orderTypes = response.orderTypes;
+    boxSizes = response.boxSizes;
   }
   orders = ordersResponse;
   // Desactivo el spinner
@@ -119,20 +122,24 @@ window.addEventListener("load", async () => {
       updateOrders(categoryValue, formParent, orderId);
     });
   }
-  function listenToShipmentTagBtn() {
+  function listenToShipmentTagBtns() {
     const shipmentViewTagBtn = document.querySelector(
       ".order-detail-shipment-view-tag-btn"
     );
     const shipmentGenerateTagBtn = document.querySelector(
-        ".order-detail-shipment-generate-tag-btn"
-      );
+      ".order-detail-shipment-generate-tag-btn"
+    );
+    const shipmentCancelTagBtn = document.querySelector(
+      ".order-detail-shipment-cancel-tag-btn"
+    );
     shipmentViewTagBtn?.addEventListener("click", async (e) => {
       try {
         const tra_id = e.target.dataset.ordertraid;
         const shipmentOrderTag = await (
           await fetch(`/api/admin/getShipmentTag?tra_id=${tra_id}`)
         ).json();
-        if (shipmentOrderTag.pdf) { //Fue bien
+        if (shipmentOrderTag.pdf) {
+          //Fue bien
           const link = document.createElement("a");
           link.href = shipmentOrderTag.pdf; // Establece la URL del PDF
           link.target = "_blank"; // Abre en una nueva pestaña
@@ -146,7 +153,7 @@ window.addEventListener("load", async () => {
 
           // Limpia el elemento <a> después de la simulación de clic
           document.body.removeChild(link);
-        };
+        }
         console.log(shipmentOrderTag);
       } catch (error) {
         return console.log(
@@ -154,43 +161,203 @@ window.addEventListener("load", async () => {
         );
       }
     });
-    shipmentGenerateTagBtn?.addEventListener('click',async(e)=>{
-        try {
-            let tra_id = e.target.dataset.ordertraid;
-            let boxesUsed = document.querySelector('#boxes-used').value || '1';
-            const generateShipmentOrderTag = await(await fetch('/api/admin/generateShipmentTag', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json' // Tipo de contenido del cuerpo de la solicitud
-                },
-                body: JSON.stringify({
-                    orderTraId: tra_id,
-                    boxesUsed
-                })
-            })).json();
-            if (generateShipmentOrderTag.ok) { //Fue bien
-                const link = document.createElement("a");
-                link.href = generateShipmentOrderTag.pdf; // Establece la URL del PDF
-                link.target = "_blank"; // Abre en una nueva pestaña
-                link.style.display = "none"; // Oculta el enlace en la página
-      
-                // Agrega el elemento <a> al DOM
-                document.body.appendChild(link);
-      
-                // Simula un clic en el enlace
-                link.click();
-      
-                // Limpia el elemento <a> después de la simulación de clic
-                document.body.removeChild(link);
-              };
-              console.log(generateShipmentOrderTag);
-        } catch (error) {
-            return console.log(`Falle en shipmentGenerateTagBtn?.addEventListener: ${error}`);
+    shipmentGenerateTagBtn?.addEventListener("click", async (e) => {
+      try {
+        let tra_id = e.target.dataset.ordertraid;
+        let formIsComplete = true;
+        // Le limpio el border de error
+        document.querySelector('.order-detail-shipment-generate-tag-btn').classList.remove('error-border');
+        // Me fijo como empaqueto las cosas
+        let boxTypeSelected = document.querySelector("#select-box-type").value;
+        if(boxTypeSelected == 3){ //Envio personalizado
+          const measureInputs = document.querySelectorAll('.mesure-details input')
+          measureInputs.forEach(inp => {
+            if(!inp.value || inp.value == 0)formIsComplete = false;
+          });
+          const quantityInputs = document.querySelectorAll('.quantity-details input')
+          let flag = false; //Para ver que almenos 1 este completo
+          quantityInputs.forEach(inp => {
+            if(inp.value && inp.value != 0)flag = true;
+          });
+          // Si es false es porque no hay ninguno completo
+          if(!flag) formIsComplete = false
+          // Aca ta todo bien, armo el objeto para mandarle el paquete
+          boxesUsed = {
+            id: 3,
+            sizes: [0,0,0],
+            boxQuantities: {
+              grande: 0,
+              chica: 0,
+            }
+          };
+          // Le pego con las medidas
+          measureInputs.forEach((input,i) => {
+            boxesUsed.sizes[i] = parseFloat(input.value)
+          });
+          // Le pego con las cantidades
+          quantityInputs.forEach((inp,i) => {
+            i==0 ? boxesUsed.boxQuantities.chica = parseInt(inp.value):
+            boxesUsed.boxQuantities.grande = parseInt(inp.value);
+          });
+          let boxQuantity = boxesUsed.boxQuantities.grande + boxesUsed.boxQuantities.chica;
+          boxesUsed.boxQuantityTotal = boxQuantity
+        } else{ //Cualquiera de las otras 2 opciones
+          // Busco la caja que uso
+          let boxUsed = boxSizes.find(box=>box.id == parseInt(boxTypeSelected))
+          boxesUsed = {
+            id: boxUsed.id,
+            sizes: [boxUsed.sizes.alto,boxUsed.sizes.ancho,boxUsed.sizes.largo],
+            boxQuantities: {
+              grande: boxUsed.id == 1 ? 0 : 1,
+              chica:  boxUsed.id == 1 ? 1 : 0,
+            },
+            boxQuantityTotal: 1
+          };
+          
         }
+        if(!formIsComplete){
+          if(!document.querySelector('.order-detail-shipment-data-container .error-msg')){
+            const errorMsg = document.createElement('p');
+            errorMsg.classList.add('error-msg');
+            errorMsg.innerHTML = "Debes completar las medidas y seleccionar al menos 1 caja "
+            document.querySelector('.order-detail-shipment-data-container').appendChild(errorMsg);
+          }
+          document.querySelector('.order-detail-shipment-generate-tag-btn').classList.add('error-border');
+          return
+        };
+        // Limpio el msg de error
+        document.querySelector('.order-detail-shipment-data-container .error-msg')?.remove();
+        const generateShipmentOrderTag = await (
+          await fetch("/api/admin/generateShipmentTag", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json", // Tipo de contenido del cuerpo de la solicitud
+            },
+            body: JSON.stringify({
+              orderTraId: tra_id,
+              boxesUsed,
+            }),
+          })
+        ).json();
+        if (generateShipmentOrderTag.ok) {
+          //Fue bien
+          const link = document.createElement("a");
+          link.href = generateShipmentOrderTag.pdf; // Establece la URL del PDF
+          link.target = "_blank"; // Abre en una nueva pestaña
+          link.style.display = "none"; // Oculta el enlace en la página
+
+          // Agrega el elemento <a> al DOM
+          document.body.appendChild(link);
+
+          // Simula un clic en el enlace
+          link.click();
+
+          // Limpia el elemento <a> después de la simulación de clic
+          document.body.removeChild(link);
+        }
+        console.log(generateShipmentOrderTag);
+      } catch (error) {
+        console.log(
+          `Falle en shipmentGenerateTagBtn?.addEventListener: ${error}`
+        );
+        const errorMsg = document.createElement('p');
+            errorMsg.classList.add('error-msg');
+            errorMsg.innerHTML = "Hubo un error al solicitar la generacion de etiqueta OCA "
+            document.querySelector('.order-detail-shipment-data-container').appendChild(errorMsg);
+            return
+      }
+    });
+    shipmentCancelTagBtn?.addEventListener("click", async (e) => {
+      try {
+        const tra_id = e.target.dataset.ordertraid;
+        const cancelShipmentOrderTag = await (
+          await fetch(`/api/admin/cancelShipmentTag?tra_id=${tra_id}`)
+        ).json();
+        
+        if (cancelShipmentOrderTag.ok) { //La anulacion fue exitosa, pinto devuelta para generar
+          //Fue bien
+          // modifico la orden aca y pinto la tabla devuelta
+          const orderToModify = orders.find(ord=>ord.tra_id == tra_id);
+          orderToModify.oca_numero_envio = null;
+          orderToModify.oca_orden_retiro = null;
+          paintShipmentStep(2,orderToModify);
+          return
+        }
+        // Sino pinto el error que tiro
+        document.querySelector('.cancel-shipment-tag-btn-container').innerHTML += 
+        `<p class="error-msg">${cancelShipmentOrderTag.msg}</p>`
+      } catch (error) {
+        return console.log(
+          `Falle en shipmentCancelTagBtn?.addEventListener: ${error}`
+        );
+      }
+    });
+  }
+  function paintShipmentStep(step,order){
+    const stepContainer = document.querySelector('.order-detail-shipment-data-container')
+    if(step == 2){
+      stepContainer.innerHTML = `
+                  <p class="order-detail-shipment-label long-p bold">Bulto/s Utilizado/s</p>
+                  <select id="select-box-type">
+                      <option value="1">1 Caja Chica</option>
+                      <option value="2">1 Caja Grande</option>
+                      <option value="3">Personalizado (+ de 1 caja utilizada)</option>
+                  </select>
+                  <section class="custom-box-details hidden">
+                    <p class="custom-box-details-title bold">Medidas Bulto (cm)</p>
+                    <div class="mesure-details">
+                      <label class="custom-box-label">Alto</label>
+                      <input type="text" class="float-only-input">
+                      <label class="custom-box-label">Ancho</label>
+                      <input type="text" class="float-only-input">
+                      <label class="custom-box-label">Largo</label>
+                      <input type="text" class="float-only-input">
+                    </div>
+                    <p class="custom-box-details-title bold">Cajas Utilizadas</p>
+                    <div class="quantity-details">
+                      <label class="custom-box-label">Chicas</label>
+                      <input type="text" class="numeric-only-input" value="0">
+                      <label class="custom-box-label">Grandes</label>
+                      <input type="text" class="numeric-only-input" value="0">
+                    </div>
+                  </section>
+            
+                  <p class="order-detail-shipment-tag-btn order-detail-shipment-generate-tag-btn" data-ordertraid="${order.tra_id}">Generar Etiqueta</p>
+                  `
+    } else{
+      stepContainer.innerHTML = `
+      <div class="cancel-shipment-tag-btn-container">
+                  <p class="order-detail-shipment-tag-btn order-detail-shipment-cancel-tag-btn" data-ordertraid="${order.tra_id}">Anular Pedido de Retiro</p>
+                  </div>
+                  <div class="order-detail-shipment-data-logo-btn-container">
+                    <div class="order-detail-shipment-data-logo-container">
+                      <img src="/img/pdf_logo.png" alt="pdf-${order.tra_id}" class="order-detail-shipment-data-logo">
+                    </div>
+                    <p class="order-detail-shipment-tag-btn order-detail-shipment-view-tag-btn" data-ordertraid="${order.tra_id}">Ver Etiqueta</p>
+                  </div>
+                  <div class="order-detail-shipment-data-details-container">
+                    <p class="order-detail-shipment-label bold">ID. Orden Retiro</p>
+                    <p class="order-detail-shipment-label copy-value">${order.oca_orden_retiro}</p>
+                    <p class="order-detail-shipment-label bold">ID. Numero Envio</p>
+                    <p class="order-detail-shipment-label copy-value">${order.oca_numero_envio}</p>
+                  </div>`
+    }
+  }
+  
+  function listenBoxInteractions() {
+    const selectBoxType = document.querySelector('#select-box-type');
+    const customBoxDetails = document.querySelector('.custom-box-details')
+    selectBoxType?.addEventListener('input',(e)=>{
+      customBoxDetails.classList.add('hidden');
+      const value = e.target.value;
+      if(e.target.value == 3){
+        customBoxDetails.classList.remove('hidden');
+      } else{ //Reinicio los inputs
+        customBoxDetails.querySelectorAll('input').forEach(inp=>inp.value = '0');
+      };
     })
   }
   function generateOrderPopup(order) {
-    console.log(order);
     let orderType = orderTypes.find(
       (type) => type.id == order.order_types_id
     ).type;
@@ -209,32 +376,13 @@ window.addEventListener("load", async () => {
     if (order.order_types_id == 1 && order.order_status_id == 2) {
       //Envio a domicilio && Pendiente de envio
       orderDetailPopup.innerHTML += `
-            <p class="order-detail-product-list-title bold order-label">Etiqueta OCA</p>`;
-
+            <p class="order-detail-product-list-title bold order-label">Etiqueta OCA</p>
+            <div class="order-detail-shipment-data-container"></div>
+            `;
       if (order.oca_numero_envio) {
-        //Ya genero la etiqueta, la muestro
-        orderDetailPopup.innerHTML += ` 
-                <div class="order-detail-shipment-data-container">
-                    <div class="order-detail-shipment-data-logo-container">
-                        <img src="/img/pdf_logo.png" alt="pdf-${order.tra_id}" class="order-detail-shipment-data-logo">
-                    </div>
-                    <p class="order-detail-shipment-tag-btn order-detail-shipment-view-tag-btn" data-ordertraid="${order.tra_id}">Ver Etiqueta</p>
-                    <p class="order-detail-shipment-label bold">ID. Orden Retiro</p>
-                    <p class="order-detail-shipment-label copy-value">${order.oca_orden_retiro}</p>
-                    <p class="order-detail-shipment-label bold">ID. Numero Envio</p>
-                    <p class="order-detail-shipment-label copy-value">${order.oca_numero_envio}</p>
-                </div>`;
+        paintShipmentStep(1,order)
       } else {
-        //Pido cantidad de cajas que se usaron
-        orderDetailPopup.innerHTML += ` 
-                <div class="order-detail-shipment-data-container nowrap">
-                    
-                <p class="order-detail-shipment-label long-p bold">Cajas Utilizadas</p>
-                <input type="text" class="numeric-only-input" id="boxes-used" value="1">
-                <p class="order-detail-shipment-tag-btn order-detail-shipment-generate-tag-btn" data-ordertraid="${order.tra_id}">Generar Etiqueta</p>
-                    
-                </div>`;
-        
+        paintShipmentStep(2,order);
       }
     }
     orderDetailPopup.innerHTML += `<section class="order-detail-product-list-section">
@@ -283,7 +431,9 @@ window.addEventListener("load", async () => {
                       ).name
                     }</p>
                     <p class="copy-value">${order.billingAddress.city}</p>
-                    <p class="copy-value">${order.billingAddress.street} ${order.billingAddress.street_number}</p>
+                    <p class="copy-value">${order.billingAddress.street} ${
+      order.billingAddress.street_number
+    }</p>
                     <p class="order-address-detail copy-value">${
                       order.billingAddress.apartment || "-"
                     }</p>
@@ -356,7 +506,9 @@ window.addEventListener("load", async () => {
                   ).name
                 }</p>
                 <p class="copy-value">${order.shippingAddress.city}</p>
-                <p class="copy-value">${order.shippingAddress.street} ${order.shippingAddress.street_number}</p>
+                <p class="copy-value">${order.shippingAddress.street} ${
+          order.shippingAddress.street_number
+        }</p>
                 <p class="order-address-detail copy-value">${
                   order.shippingAddress.apartment || "-"
                 }</p>
@@ -385,8 +537,10 @@ window.addEventListener("load", async () => {
     let form = document.querySelector(".update-order-status");
     let btn = document.querySelector(".save-changes-btn");
     listenToUpdateStatus(selectOrderStatus, form, btn, order.tra_id);
-    listenToShipmentTagBtn();
+    listenToShipmentTagBtns();
+    listenBoxInteractions();
     checkForNumericInputs();
+    checkForFloatInputs();
   }
 
   // Esucha los botones dentro del popup
