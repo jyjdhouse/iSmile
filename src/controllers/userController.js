@@ -49,7 +49,7 @@ const controller = {
       let dateFormated;
       // Formateo la fecha
       if (user.birth_date) {
-        dateFormated = dateFormater(user.birth_date);
+        dateFormated = dateFormater(user.birth_date,false);
         user.birth_date = dateFormaterForInput(user.birth_date);
       }
       // busco aca el prefijo del numero y lo pongo
@@ -177,7 +177,7 @@ const controller = {
             where: {
               id: orderToPay.id,
             },
-            paranoid: false, //Para que la borre entera
+            force: true // Habilita la eliminación forzada. Para que la borre entera
           });
           return res.redirect("/user/checkout?checkoutErrors=true");
         }
@@ -205,7 +205,7 @@ const controller = {
             // Me fijo los tiempos (inicial, actual)
             const currentTime = new Date();
             const fifteenMinLater = new Date(
-              order.pending_payment_date.getTime() + 60 * 1000 * 15
+              order.pending_payment_date.getTime() + 60 * 1000 * 5
             );
             // Si pasaron 15 min y la orden sigue con el pago pendiente
             if (currentTime >= fifteenMinLater) {
@@ -450,6 +450,7 @@ const controller = {
       let createdAddress, userAddressDataDB;
       let userAddressBody = {
         street: userBodyData.street || null,
+        street_number: userBodyData.street_number || null,
         apartment: userBodyData.apartment || null,
         city: userBodyData.city || null,
         zip_code: userBodyData.zip_code || null,
@@ -669,6 +670,29 @@ const controller = {
   verifyEmailCode: async (req, res) => {
     return res.render("userEmailVerify");
   },
+  cancelOrderPayment: async(req,res) =>{
+    const orderTraId = req.session.order_tra_id;
+    
+    const order = await db.Order.findOne({
+      where: {
+        tra_id: orderTraId
+      }
+    });
+    // Si no hay orden en el session, o no encuentra orden simplemente redirijo
+    if(!orderTraId || !order){
+      orderTraId && delete req.session.order_tra_id;
+      return res.redirect('/user/checkout');
+    };
+    // Si hay orden, la elimino de db y de session
+    await db.Order.destroy({
+      where: {
+        id: order.id,
+      },
+      force: true // Habilita la eliminación forzada
+    });
+    delete req.session.order_tra_id;
+    return res.redirect('/user/checkout');
+  }
 };
 
 module.exports = controller;

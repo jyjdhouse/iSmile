@@ -294,6 +294,7 @@ const controller = {
         phone_code,
         phone,
         billing_street,
+        billing_street_number,
         billing_zip_code,
         billing_floor,
         billing_province,
@@ -333,6 +334,7 @@ const controller = {
       const billingAddressToDB = {
         id: uuidv4(),
         street: billing_street,
+        street_number: billing_street_number,
         apartment: billing_floor || null,
         city: billing_city,
         provinces_id: billing_province,
@@ -345,7 +347,8 @@ const controller = {
       let orderDataToDB = {
         id: uuidv4(),
         tra_id: `${Date.now().toString()}-${randomString}`,
-        billing_name: `${name} ${last_name}`,
+        billing_first_name: name,
+        billing_last_name: last_name,
         billing_email: email,
         billing_id: dni,
         billing_phone: phone_code + phone,
@@ -414,6 +417,7 @@ const controller = {
             shippingAddressToDB = {
               id: uuidv4(),
               street: userAddressDB?.street,
+              street_number: userAddressDB?.street_number,
               apartment: userAddressDB?.apartment || null,
               city: userAddressDB?.city,
               provinces_id: userAddressDB?.provinces_id,
@@ -424,6 +428,7 @@ const controller = {
             //armo el objeto shippingAddress con los datos del front
             shippingAddressToDB = {
               street: req.body.shipping_street,
+              street_number: req.body.shipping_street_number,
               apartment: req.body.shipping_floor || null,
               city: req.body.shipping_city,
               provinces_id: req.body.shipping_province,
@@ -509,7 +514,8 @@ const controller = {
           order_types_id: orderDataToDB.order_types_id,
           payment_methods_id: orderDataToDB.payment_methods_id,
           date: date ? new Date(date) : new Date(),
-          billing_name: orderDataToDB.billing_name,
+          billing_first_name: orderDataToDB.billing_first_name,
+          billing_last_name: orderDataToDB.billing_last_name,
           billing_email: orderDataToDB.billing_email,
           billing_phone: orderDataToDB.billing_phone,
           billing_id: orderDataToDB.billing_id,
@@ -598,7 +604,7 @@ const controller = {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlString, "text/xml");
 
-      const totalValue = xmlDoc.getElementsByTagName("Total")[0].textContent;
+      const totalValue = xmlDoc.getElementsByTagName("Total")[0]?.textContent;
       const plazoEntregaValue =
         xmlDoc.getElementsByTagName("PlazoEntrega")[0].textContent;
         console.log(totalValue)

@@ -71,11 +71,10 @@ const controller = {
         apiKey: privateKey,
       };
       var customer = {
-        id: orderToPay.billing_name,
+        id: `${orderToPay.billing_first_name} ${orderToPay.billing_last_name}`,
         email: orderToPay.billing_email,
       };
       var paymentData = new PaymentDataModule.paymentData(args);
-      console.log(args.amount);
       paymentData.setCustomer(customer);
       args = paymentData.getJSON();
       // send_to_cs = TRUE O FALSE PARA ENVIAR PARAMETROS CS
@@ -86,8 +85,8 @@ const controller = {
           //Direccion de envio
           country: "AR",
           email: orderToPay.billing_email, //Mismo que facturacion
-          first_name: orderToPay.billing_name, //Mismo que facturacion
-          last_name: orderToPay.billing_name, //Mismo que facturacion
+          first_name: orderToPay.billing_first_name, //Mismo que facturacion
+          last_name: orderToPay.billing_last_name, //Mismo que facturacion
           phone_number: orderToPay.billing_phone, //Mismo que facturacion
         };
         if (orderToPay.shippingAddress) {
@@ -100,7 +99,7 @@ const controller = {
           shipToData.city = orderToPay.shippingAddress.city;
           shipToData.postal_code = orderToPay.shippingAddress.zip_code;
           shipToData.state = shippingProvinceCode;
-          shipToData.street1 = orderToPay.shippingAddress.street;
+          shipToData.street1 = `${orderToPay.shippingAddress.street} ${orderToPay.shippingAddress.street_number}`;
           shipToData.street2 = orderToPay.shippingAddress.apartment
             ? orderToPay.shippingAddress.apartment
             : "";
@@ -116,7 +115,7 @@ const controller = {
           shipToData.city = orderToPay.billingAddress.city;
           shipToData.postal_code = orderToPay.billingAddress.zip_code;
           shipToData.state = billingProvinceCode;
-          shipToData.street1 = orderToPay.billingAddress.street;
+          shipToData.street1 = `${orderToPay.billingAddress.street} ${orderToPay.billingAddress.street_number}`;
           shipToData.street2 = orderToPay.billingAddress.apartment
             ? orderToPay.billingAddress.apartment
             : "";
@@ -130,14 +129,14 @@ const controller = {
             //Direccion de facturacion
             city: orderToPay.billingAddress.city,
             country: "AR",
-            customer_id: orderToPay.billing_name,
+            customer_id: `${orderToPay.billing_first_name} ${orderToPay.billing_last_name}`,
             email: orderToPay.billing_email,
-            first_name: orderToPay.billing_name,
-            last_name: orderToPay.billing_name,
+            first_name: orderToPay.billing_first_name,
+            last_name: orderToPay.billing_last_name,
             phone_number: orderToPay.billing_phone,
             postal_code: orderToPay.billingAddress.zip_code,
             state: billingProvinceCode,
-            street1: orderToPay.billingAddress.street, //Calle y numero
+            street1: `${orderToPay.billingAddress.street} ${orderToPay.billingAddress.street_number}`, //Calle y numero
             street2: orderToPay.billingAddress.apartment
               ? orderToPay.billingAddress.apartment
               : "", //Detalle - opcional
@@ -216,7 +215,7 @@ const controller = {
       await db.Order.update(
         {
           order_status_id: orderToPay.order_types_id == 1 ? 2 : 6, //pendiente de retiro o  de envio
-          payment_methods_id,
+          payment_methods_id: cardUsed.payment_method_id,
           details
         },
         {

@@ -20,11 +20,11 @@
             <form action="/product/<%=productToUpdate.id %>?_method=PUT" class="create-product-form"
                 enctype="multipart/form-data" method="POST">
                 <div class="input-label-container">
-                    <label for="name">Nombre</label>
+                    <label for="name" class="bold">Nombre</label>
                     <input type="text" name="name" value="<%= productToUpdate.name %>" class="required-input">
                 </div>
                 <div class="input-label-container">
-                    <label for="category">Categoría</label>
+                    <label for="category" class="bold">Categoría</label>
                     <select name="category" id="">
                         <% categories.forEach(cat=> { %>
                             <option value="<%= cat.id %>" <%=productToUpdate.category_id==cat.id ? 'selected' : '' %>>
@@ -35,23 +35,34 @@
                     </select>
                 </div>
                 <div class="input-label-container">
-                    <label for="description">Descripción</label>
+                    <label for="description" class="bold">Descripción</label>
                     <textarea name="description" id="" cols="30" rows="10"
                         class="required-input"><%= productToUpdate.description %></textarea>
                 </div>
                 <div class="input-label-container price-container">
                     <label for="">Solo numeros <span class="grey">(si no se completa es 0)</span></label>
                     <div class="field">
-                        <label for="price">Precio</label>
+                        <label for="price" class="bold">Precio</label>
                         <input type="text" name="price" value="<%= productToUpdate.price %>" class="required-input numeric-only-input" placeholder="5000">
                     </div>
                     <div class="field">
-                        <label for="discount">Descuento</label>
+                        <label for="discount" class="bold">Descuento</label>
                         <input type="text" name="discount" value="<%= productToUpdate.discount || 0 %>" class="required numeric-only-input" placeholder="10">
                     </div>
                     <div class="field">
-                        <label for="stock">Stock</label>
+                        <label for="stock" class="bold">Stock</label>
                         <input type="text" name="stock" value="<%= productToUpdate.stock || 0 %>" class="required numeric-only-input" placeholder="10">
+                    </div>
+                </div>
+                <div class="input-label-container price-container">
+                    <label for="">CARACTERISTICAS <span class="grey">(separador decimal con ".")</span></label>
+                    <div class="field volume-field">
+                        <label for="volume" class="bold">Volumen (m³)</label>
+                        <input type="text" name="volume" value="<%= productToUpdate.volume %>" class="required-input float-only-input" placeholder="0.05">
+                    </div>
+                    <div class="field volume-field">
+                        <label for="weight" class="bold">Peso (kg)</label>
+                        <input type="text" name="weight" value="<%= productToUpdate.weight %>" class="required float-only-input" placeholder="0.5">
                     </div>
                 </div>
                 <div class="input-label-container">
@@ -69,7 +80,7 @@
                     <input class="form-input files" type="file" name="images" multiple>
                 </div>
                 <div class="input-label-container files-displayed-wrapper">
-                    <label class="form-labels files-displayed-wrapper-title">Imagenes actuales <span class="grey">(toca el tick para destildar la que quieres sacar)</span></label>
+                    <label class="form-labels files-displayed-wrapper-title bold">Imagenes actuales <span class="grey">(toca el tick para destildar la que quieres sacar)</span></label>
                     <% productToUpdate.files.map((file, i)=> { %>
                         <div class="current-img-subcontainer">
                             <div class="file-container">
@@ -90,7 +101,7 @@
                         <% }) %>
                 </div>
                 <div class="input-label-container images-radio-content-wrapper">
-                    <label class="main-label" for="main-img">Selecciónar 1er imagen que se mostrara</label>
+                    <label class="main-label bold" for="main-img">Selecciónar 1er imagen que se mostrara</label>
                     <div class="images-radio-box-wrapper">
                         <% productToUpdate.files.map((file, i) => { %>
                             <% if (file.file_types_id==1) { //IMAGEN %>
@@ -107,11 +118,11 @@
                     </div>
                 </div>
                 <div class="input-label-container">
-                    <label for="images">Ingredientes</label>
+                    <label for="images" class="bold">Ingredientes</label>
                     <textarea name="ingredients"cols="30" rows="10"><%= productToUpdate.ingredients %></textarea>
                 </div>
                 <div class="input-label-container">
-                    <label for="images">Tamaño</label>
+                    <label for="images" class="bold">Tamaño</label>
                     <textarea name="size"cols="30" rows="10"><%= productToUpdate.size %></textarea>
                 </div>
                 <button type="submit">Actualizar</button>

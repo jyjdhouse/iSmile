@@ -1,8 +1,8 @@
 
 const shipmentStaticInfo = {
     Operativa: {
-        PaP:408350,
-        PaS: 408351
+        PaP: !process.env.ENVIROMENT ? 408350 : 64665,
+        PaS: !process.env.ENVIROMENT ? 408351: 62342
     },
     PesoTotal: {
         1: '1.5',
@@ -19,7 +19,11 @@ const shipmentStaticInfo = {
     // ValorDeclarado:
 }
 
-const shipmentEstimateUrl = "http://webservice.oca.com.ar/ePak_tracking/Oep_TrackEPak.asmx/Tarifar_Envio_Corporativo";
+const shipmentEstimateUrl = !process.env.ENVIROMENT ? "http://webservice.oca.com.ar/ePak_tracking/Oep_TrackEPak.asmx/Tarifar_Envio_Corporativo" :  "http://webservice.oca.com.ar/ePak_tracking_TEST/Oep_TrackEPak.asmx/Tarifar_Envio_Corporativo";
 
-module.exports = {shipmentEstimateUrl, shipmentStaticInfo}
+const shipmentGenerateOrderUrl = !process.env.ENVIROMENT ? "http://webservice.oca.com.ar/ePak_tracking/Oep_TrackEPak.asmx/IngresoORMultiplesRetiros" : "http://webservice.oca.com.ar/ePak_tracking_TEST/Oep_TrackEPak.asmx/IngresoORMultiplesRetiros";
+
+const generateTagUrl = !process.env.ENVIROMENT ? "http://webservice.oca.com.ar/oep_tracking/Oep_Track.asmx/GetPdfDeEtiquetasPorOrdenOrNumeroEnvio" :  "http://webservice.oca.com.ar/oep_tracking_TEST/Oep_Track.asmx/GetPdfDeEtiquetasPorOrdenOrNumeroEnvio";
+
+module.exports = {shipmentEstimateUrl, shipmentStaticInfo,shipmentGenerateOrderUrl,generateTagUrl}
 

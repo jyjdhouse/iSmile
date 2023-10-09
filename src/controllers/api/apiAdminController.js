@@ -39,6 +39,7 @@ const provinces = require("../../utils/staticDB/provinces");
 const paymentMethods = require("../../utils/staticDB/paymentMethods");
 const orderTypes = require("../../utils/staticDB/orderTypes");
 const orderStatuses = require("../../utils/staticDB/orderStatus");
+const getShipment = require('../../utils/getShipment');
 
 const controller = {
   downloadClients: async (req, res) => {
@@ -125,7 +126,7 @@ const controller = {
 
       let statuses = orderStatuses;
       orders.forEach((ord) => {
-        ord.date = dateFormater(ord.date);
+        ord.date = dateFormater(ord.date,false);
       });
 
       return res.status(200).json({
@@ -452,6 +453,25 @@ const controller = {
 
     return res.redirect("/");
   },
+  generateShipmentTag: async(req,res)=>{
+    try {
+      const {orderTraId,boxSizeId} = req.body;
+      console.log(req.body);
+      const shipmentResponse = await getShipment(orderTraId,boxSizeId);
+      if(!shipmentResponse.ok){
+        return res.status(400).json({ok:false,msg: "Hubo un problema al generar la etiqueta PDF"})
+      };
+      // Busco el archivo en AWS y se lo mando en la respuesta para que se descargue automaticamente TODO:
+      
+      return res.status(200).json({
+        ok: true,
+        msg: "etiqueta PDF generada"
+      })
+    } catch (error) {
+      console.log(`Falle en generateShipmentTag: ${error}`);
+      return res.json({error})
+    }
+  }
 };
 
 module.exports = controller;

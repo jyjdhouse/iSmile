@@ -15,7 +15,8 @@ module.exports = (sequelize, dataTypes) => {
         order_types_id: {type: dataTypes.INTEGER},
         payment_methods_id: { type: dataTypes.INTEGER },
         total: { type: dataTypes.INTEGER },
-        billing_name: {type: dataTypes.STRING(255)},
+        billing_first_name: {type: dataTypes.STRING(255)},
+        billing_last_name: {type: dataTypes.STRING(255)},
         billing_email: {type: dataTypes.STRING(255)},
         billing_phone: {type: dataTypes.STRING(45)},
         billing_id: {type: dataTypes.STRING(45)},
@@ -24,6 +25,8 @@ module.exports = (sequelize, dataTypes) => {
         pending_payment_date: {type: dataTypes.DATE},
         is_pending_payment_expired : {type: dataTypes.TINYINT},
         details: {type: dataTypes.TEXT},
+        oca_numero_envio: {type: dataTypes.STRING(20)},
+        oca_orden_retiro: {type: dataTypes.STRING(20)},
     }
 
     let config = {

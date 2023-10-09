@@ -78,13 +78,18 @@ export function getTodaysDate() {
 }
 
 // Devuelve true si es todo numerico el valor
-export function isNumeric(value) {
+export function isNumber(value) {
     return /^[0-9]*$/.test(value);
 }
 
 // Devuelve true si es todo letras el valor
 export function isLetter(value) {
     return /^[A-Za-z\s]+$/.test(value)
+}
+
+// Devuelve true si es todo numerico el valor
+export function isFloat(value) {
+    return /^[0-9]*\.?[0-9]*$/.test(value);
 }
 
 // Devuelve longitud del carro del usuario
@@ -298,7 +303,7 @@ export function checkForNumericInputs() {
         let lastInputValue = input.value;
         input.addEventListener("input", function (e) {
             var inputValue = e.target.value;
-            if (!isNumeric(inputValue)) { // Si no es un número, borra el contenido del campo
+            if (!isNumber(inputValue)) { // Si no es un número, borra el contenido del campo
                 e.target.value = lastInputValue;
             } else {
                 lastInputValue = inputValue; // Almacenar el último valor válido
@@ -306,6 +311,24 @@ export function checkForNumericInputs() {
         });
     });
 }
+// Logica para todos los inputs float 
+export function checkForFloatInputs() {
+    let floatInputs = document.querySelectorAll('.float-only-input');
+    floatInputs.forEach(input => {
+        // Tomo el ultimo valor
+        let lastInputValue = input.value;
+        input.addEventListener("input", function (e) {
+            var inputValue = e.target.value;
+            if (!isFloat(inputValue)) { // Si no es un número, borra el contenido del campo
+                e.target.value = lastInputValue;
+            } else {
+                lastInputValue = inputValue; // Almacenar el último valor válido
+            }
+        });
+    });
+}
+
+
 // Condiciones de la contrasena
 export function passwordValidation(password) {
     // Al menos 1 número
