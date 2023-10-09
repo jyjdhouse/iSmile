@@ -12,9 +12,39 @@ window.addEventListener("load", () => {
   const stepsContainer = document.querySelector('.steps-list-container');
   const errorCard = document.querySelector('.error-card');
   const paymentFormInp = document.querySelectorAll('.payment-form-input');
-  const timeLeftElement = document.querySelector('.time-left');
-  const timeLeft = timeLeftElement.dataset.timeLeft;
-  console.log(timeLeft)
+  const counterContainer = document.querySelector('.counter-container');
+  const counterContainerTitle = document.querySelector('.counter-title');
+  const counterContainerP = document.querySelector('.counter');
+  let timeLeft = counterContainer.dataset.timeleft;
+  let interval;
+
+  
+  function convertirAMinutosYSegundos(milliseconds) {
+    let segundosTotales = Math.abs(Math.floor(milliseconds / 1000));
+    let minutos = Math.floor(segundosTotales / 60);
+    let segundos = segundosTotales % 60;
+    console.log(minutos, segundos)
+    return { minutos, segundos };
+  }
+  
+  function actualizarContador() {
+    let { minutos, segundos } = convertirAMinutosYSegundos(timeLeft);
+    let minutosConverted = minutos.toString().padStart(2, '0'); // Rellenar con ceros a la izquierda si es necesario
+    let segundosConverted = segundos.toString().padStart(2, '0');
+  
+    counterContainerP.textContent = `${minutosConverted}:${segundosConverted}`;
+
+    if (timeLeft < 0) {
+      timeLeft += 1000; // Restamos 1 segundo (1000 milisegundos)
+    } else {
+      clearInterval(interval);
+      counterContainerP.textContent = "Tiempo agotado";
+      counterContainerTitle.textContent = ""
+    }
+  }
+  
+  actualizarContador();
+  interval = setInterval(actualizarContador, 1000);
 
   const changePaymentInpsValue = () => {
     paymentFormInp.forEach(inp => {

@@ -236,6 +236,7 @@ const getShipmentInfo = async (zip) => {
     const data = await response.json();
     const { status } = data.meta;
     if (status && status === 200) {
+      getTotalPrice();
       const shipmentData = data.shippingData;
       const shipmentPrice = Math.ceil(shipmentData.totalValue).toString();
       innerShipmentPrice(shipmentPrice);
@@ -398,7 +399,7 @@ function getTotalPrice() {
   let shipmentPrice = document.querySelector('.shipment-price-span');
   let subTotalElementCheckout = document.querySelector('.product-side-wrapper-row-subtotal-price-span');
   let totalElementCheckout = document.querySelector('.product-side-wrapper-row-total-price-span');
-  if(shipmentPrice){
+  if (shipmentPrice) {
     shipmentPrice = parseInt(shipmentPrice.innerText);
   }
   subTotals.forEach((subtotal) => {
@@ -633,7 +634,7 @@ continueButtons.forEach((btn) => {
         shippingAddress = {
           street: stepFormContainer.querySelector("#shipping-address-street-p")
             .innerHTML,
-            street_number: stepFormContainer.querySelector("#shipping-address-street-number-p")
+          street_number: stepFormContainer.querySelector("#shipping-address-street-number-p")
             .innerHTML,
           zipCode: stepFormContainer.querySelector(
             "#shipping-address-zip-code-p"
@@ -647,7 +648,7 @@ continueButtons.forEach((btn) => {
           city: stepFormContainer.querySelector("#shipping-address-city-p")
             .innerHTML,
         };
-        console.log(shippingAddress)
+
       } else {
         shippingAddress = {
           street: stepFormContainer.querySelector("#shipping_street").value,
@@ -662,6 +663,7 @@ continueButtons.forEach((btn) => {
           ).innerHTML,
           city: stepFormContainer.querySelector("#shipping_city").value,
         };
+
       }
 
       // invierto que contendor se ve
@@ -896,7 +898,6 @@ const shippingAddressSection = document.querySelector(
   ".shipping-address-section"
 );
 useSameAddress.addEventListener("click", async (e) => {
-  console.log('entro')
   let requiredInputs = shippingAddressSection.querySelectorAll(
     ".required-field input"
   );
@@ -1192,6 +1193,21 @@ useUserAddress?.addEventListener("input", (e) => {
     return;
   });
 });
+
+let calculateShipmentPriceBtn = document.querySelector('.get-shipment-price');
+useUserAddress.addEventListener('click', async () => {
+  console.log('entro')
+  if (!calculateShipmentPriceBtn.classList.contains('hidden')) {
+    calculateShipmentPriceBtn.classList.add('hidden');
+  } else {
+    calculateShipmentPriceBtn.classList.remove('hidden');
+  }
+ setTimeout(async () => {
+    console.log('entro time')
+    const zipCode = document.querySelector('#shipping-address-zip-code-p').innerText;
+    await getShipmentInfo(zipCode);
+  }, 1000) 
+})
 
 const form = document.getElementById("checkout-form");
 form.addEventListener("submit", async (e) => {
