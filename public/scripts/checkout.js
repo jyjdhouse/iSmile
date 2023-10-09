@@ -1020,7 +1020,6 @@ async function checkForUserLogged() {
     document.querySelector(".spinner-overlay").remove();
     productCardWrapper.innerHTML = "";
     localStorageCart?.forEach((item) => {
-      // TODO: Preguntar a martin si esto al ser front deberia manejarse con otro campo
       let product = products.find((prod) => prod.id == item.products_id);
       let cardHTML = `
                 <article class="product-card" data-productid="${product.id}">

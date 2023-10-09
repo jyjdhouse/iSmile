@@ -26,20 +26,38 @@ window.addEventListener("load", () => {
     console.log(minutos, segundos)
     return { minutos, segundos };
   }
+  // Recibo milisegundos y devuelvo mm:ss
+  function milisecondsToViewableTime(milisegundos) {
+    // Calcula las horas, minutos y segundos
+    const totalSeconds = Math.floor(milisegundos / 1000);
+    const minutos = Math.floor((totalSeconds % 3600) / 60);
+    const segundos = totalSeconds % 60;
+  
+    // Formatea los valores con dos dígitos
+    const minutosFormateados = String(minutos).padStart(2, '0');
+    const segundosFormateados = String(segundos).padStart(2, '0');
+  
+    // Construye el tiempo en formato HH:MM:SS
+    return {minutos: minutosFormateados, segundos: segundosFormateados};
+  }
   
   function actualizarContador() {
-    let { minutos, segundos } = convertirAMinutosYSegundos(timeLeft);
+    let { minutos, segundos } = milisecondsToViewableTime(timeLeft);
     let minutosConverted = minutos.toString().padStart(2, '0'); // Rellenar con ceros a la izquierda si es necesario
     let segundosConverted = segundos.toString().padStart(2, '0');
   
     counterContainerP.textContent = `${minutosConverted}:${segundosConverted}`;
 
-    if (timeLeft < 0) {
-      timeLeft += 1000; // Restamos 1 segundo (1000 milisegundos)
+    if (timeLeft >= 0) {
+      timeLeft -= 1000; // Restamos 1 segundo (1000 milisegundos)
     } else {
       clearInterval(interval);
       counterContainerP.textContent = "Tiempo agotado";
       counterContainerTitle.textContent = ""
+      setTimeout(() => {
+        return window.location.href = '/user/checkout'
+      }, 1000);
+      return 
     }
   }
   
@@ -269,10 +287,11 @@ window.addEventListener("load", () => {
 
 
   const errorMsg = 'Ocurrio un error al procesar el pago, intente nuevamente'; //Mensaje de error, ante cualquier error de la API Decidir hay que armar algo con eso
-  const publicApiKey = "5Y7Bs8TmrnHWeAFgUksbuhxbcsfskS8l";
-  const urlSandbox = "https://developers.decidir.com/api/v2";
+  const isInProd = window.location.origin.includes('ismile.com');
+  const publicApiKey = isInProd ? 'b15ae86872c141479b523a691dd2ce67' : "5Y7Bs8TmrnHWeAFgUksbuhxbcsfskS8l";
+  const decidirURL = isInProd ? "https://live.decidir.com/api/v2": "https://developers.decidir.com/api/v2";
   //Para el ambiente de desarrollo
-  const decidir = new Decidir(urlSandbox);
+  const decidir = new Decidir(decidirURL);
   //Se indica la public API Key
   decidir.setPublishableKey(publicApiKey);
   decidir.setTimeout(5000); //timeout de 5 segundos

@@ -110,7 +110,6 @@ window.addEventListener("load", async () => {
     }
   }
 
-  // TODO: - HANDLE WHEN FORM SUBMITTED
   function listenToUpdateStatus(select, form, btn, orderId) {
     select.addEventListener("change", () => {
       btn.classList.remove("save-btn-inactive");

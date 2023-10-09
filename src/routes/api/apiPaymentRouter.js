@@ -11,6 +11,6 @@ const validations = require('../../middlewares/validations')
 
 // POST
 router.post('/getPaymentRequest',validations.paymentCardsValidations,apiPaymentController.getPaymentRequest);
-router.post('/handlePaymentRequestError',validations.paymentCardsValidations,apiPaymentController.handlePaymentError);
+router.post('/handlePaymentRequestError',apiPaymentController.handlePaymentError);
 
 module.exports=router;

@@ -16,21 +16,27 @@ const paymentMod = require("../../../lib/payment");
 const PaymentDataModule = require("../../../lib/payment_data");
 
 
-var ambient = "developer"; //valores posibles: "developer" o "production";
-//TODO: CUando cambio esto tambien tengo que cambiar en el front el endpoint
+var ambient = process.env.ENVIROMENT ? "developer" : "production"; //valores posibles: "developer" o "production";
 var sdk = new sdkModule.sdk(ambient, publicKey, privateKey);
 
 // KEYS
-var publicKey = process.env.PAYMENT_PUBLIC_KEY;
-var privateKey = process.env.PAYMENT_API_KEY;
+var publicKey = process.env.ENVIROMENT ? process.env.PAYMENT_PUBLIC_KEY_TEST :  process.env.PAYMENT_PUBLIC_KEY;
+var privateKey = process.env.ENVIROMENT ? process.env.PAYMENT_API_KEY_TEST :  process.env.PAYMENT_AP_KEY;
 const controller = {
   getPaymentRequest: async (req, res) => {
     try {
-      let { token, bin, order_tra_id, device_unique_identifier, card_id, payment_methods_id, lastFourDigits } = req.body;
+      let { token, bin, order_tra_id, device_unique_identifier, card_id, lastFourDigits } = req.body;
       let errors = validationResult(req);
       if (!errors.isEmpty()) {
         errors = errors.mapped();
         console.log(errors);
+        return res.status(400).json({
+          meta: {
+            status: 400,
+          },
+          ok: false,
+          redirect: "/user/checkout?checkoutErrors=true",
+        });
       }
       
 
@@ -177,7 +183,6 @@ const controller = {
           },
           ok: false,
           response: instPayment,
-          items: datos_cs.retail_transaction_data.items,
           error: err,
           redirect: "/user/checkout?checkoutErrors=true",
         });

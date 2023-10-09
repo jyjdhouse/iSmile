@@ -94,7 +94,7 @@ module.exports = async function (orderId, boxesUsed) {
       where: { tra_id: orderId },
       include: ["shippingAddress", "billingAddress", "orderItems"],
     }));
-    // Para la fecha YYYYMMDD
+    // Para la fecha YYYYMMDD TODO: ver tema de si la fecha ya paso
     const orderDateArray = dateFormater(order.date,true).split("/");
     const orderDate = `${orderDateArray[2]}${orderDateArray[1]}${orderDateArray[0]}`;
 

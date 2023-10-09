@@ -382,7 +382,6 @@ const controller = {
                     });
                     // Detengo la tarea periodica
                     periodicTask.stop();
-                    //TODO: Restockear
                     let method = "suma";
                     let stockResponse = await handleStock(stockItems, method);
                     if (!stockResponse.ok) {

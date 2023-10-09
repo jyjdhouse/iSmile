@@ -581,13 +581,13 @@ const controller = {
     let { zip, items } = req.body;
     // TODO: hacer forEach en items y determinar: VolumenTotal - PesoTotal - ValorDeclarado
     // restaria aca hacer la logica segun la cantidad de elementos, que volumen y peso mandamos
-    let totalWeigth = 1;
-    let totalVolume = 0.005;
+    let totalWeigth = 1; //TODO: Agregar esto + 
+    let totalVolume = 0.005;//TODO: Agregar esto + 
 
     try {
       const bodyObject = {
-        CUIT: process.env.CUIT,
-        Operativa: shipmentStaticInfo.Operativa.PaP, //TODO: ver biene este tema
+        CUIT: process.env.ENVIROMENT ? process.env.CUIT_TEST: process.env.CUIT,
+        Operativa: shipmentStaticInfo.Operativa.PaP,
         PesoTotal: totalWeigth, //Sumar un poco +
         VolumenTotal: totalVolume, //Sumar un poco +
         CodigoPostalOrigen: shipmentStaticInfo.CodigoPostalOrigen,
@@ -595,6 +595,7 @@ const controller = {
         CantidadPaquetes: 1,
         ValorDeclarado: 3000, // Total de compra
       };
+      console.log(bodyObject);
       const response = await axios.post(shipmentEstimateUrl, bodyObject, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -603,11 +604,8 @@ const controller = {
       const xmlString = response.data;
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlString, "text/xml");
-
       const totalValue = xmlDoc.getElementsByTagName("Total")[0]?.textContent;
-      const plazoEntregaValue =
-        xmlDoc.getElementsByTagName("PlazoEntrega")[0].textContent;
-        console.log(totalValue)
+      const plazoEntregaValue =xmlDoc.getElementsByTagName("PlazoEntrega")[0]?.textContent;
       if(totalValue && plazoEntregaValue){
         return res.json({
           ok: true,
@@ -676,7 +674,7 @@ const controller = {
       // Aca el tiempo es correcto ==> Chequeo codigo
       if (code != user.verification_code) {
         return res.status(200).json({
-          ok: false, //TODO: Preguntar como manejar los codigos incorrectos (si pedir otro o dejar que intente)
+          ok: false, 
           msg: "El codigo introducido es incorrecto. Intente nuevamente",
         });
       }

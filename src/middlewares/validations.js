@@ -270,18 +270,12 @@ module.exports = {
       return true;
     }),
     body("bin").custom((value, { req }) => {
-      if (value.length > 6) {
+      if (value.length != 6) {
         throw new Error("Ha ocurrido un error, intente nuevamente");
       }
       // Validacion para que el token tenga la longitud que payway provee
       return true;
     }),
-    body("bin").custom((value, { req }) => {
-      if (value.length > 6) {
-        throw new Error("Ha ocurrido un error, intente nuevamente");
-      }
-      // Validacion para que el token tenga la longitud que payway provee
-      return true;
-    }),
+    
   ],
 };
