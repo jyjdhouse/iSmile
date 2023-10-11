@@ -67,7 +67,7 @@ form {
 
 .prod-list-container {
     margin-top: 5%;
-    min-height: 100px;
+    min-height: 115px;
     border: 1px solid var(--bold-color);
     overflow: auto;
     padding: 3%;
@@ -109,7 +109,7 @@ form {
 }
 
 .secure-payment-main {
-    padding: 10% 0;
+    padding: 7% 0;
     
     min-height: 600px;
     overflow: hidden;

@@ -39,8 +39,8 @@ document.querySelectorAll(".product-quantity").forEach((inp) => {
 });
 
 const createTimeoutForCard = (card) => {
-  let timeout; 
-  clearTimeout(timeout); 
+  let timeout;
+  clearTimeout(timeout);
   timeout = setTimeout(() => {
     console.log('entro time');
     checkInputPrice(card);
@@ -212,14 +212,16 @@ const checkIfAllProductsAreInStock = () => {
 const shipmentPriceSpan = document.querySelector('.shipment-price-span');
 const disclaimer = document.querySelector('.shipment-disclaimer');
 const innerShipmentPrice = (price) => {
-  shipmentPriceSpan.innerText = `${price}`;
-  getTotalPrice();
-  if(Number(price) > 0){
+  if (Number(price) > 0) {
     disclaimer.classList.remove('hide');
     disclaimer.classList.add('show');
+    shipmentPriceSpan.innerText = `${price}`;
+    getTotalPrice();
   } else {
-      disclaimer.classList.add('hide');
-      disclaimer.classList.remove('show');
+    disclaimer.classList.add('hide');
+    disclaimer.classList.remove('show');
+    shipmentPriceSpan.innerText = `${0}`;
+    getTotalPrice();
   }
 }
 
@@ -265,7 +267,6 @@ const getShipmentInfo = async (zip) => {
       innerShipmentPrice(shipmentPrice);
 
     } else {
-
       deliverOptionBoxes.forEach(box => {
         if (box.classList.contains('delivery-option-box-active') && box.dataset.typeid == 1) {
           const useSameAddress = document.querySelector("#use-same-address");
@@ -285,6 +286,7 @@ const getShipmentInfo = async (zip) => {
           errorContainer.appendChild(error);
         }
       })
+      innerShipmentPrice(-1);
     }
   } catch (error) {
     console.log(error)
