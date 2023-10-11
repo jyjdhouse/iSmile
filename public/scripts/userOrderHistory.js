@@ -62,11 +62,12 @@ window.addEventListener('load', () => {
         const orderShippingInfo = {};
         if (card.querySelector('.shipping-details')) {
             orderShippingInfo.street = card.querySelector('.shipping-street').innerHTML;
+            orderShippingInfo.street_number = card.querySelector('.shipping-street-number').innerHTML;
             orderShippingInfo.apartment = card.querySelector('.shipping-apartment')?.innerHTML
             orderShippingInfo.city = card.querySelector('.shipping-city').innerHTML
             orderShippingInfo.zip_code = card.querySelector('.shipping-zip-code').innerHTML
             orderShippingInfo.province = card.querySelector('.shipping-province').innerHTML
-        }
+        };
         let html;
         orderDetailPopup.innerHTML =
             `
@@ -116,7 +117,7 @@ window.addEventListener('load', () => {
             let shippingAddressChild = `
             <div class="order-detail-shipping-info order-detail-collapsable-row">
                 <p class="order-detail-collapsable-title order-detail-shipping-title order-detail-label">Direccion de Envio <span class="collapsable-row-toggler shipping-info-toggler">+</span></p>
-                <p class="order-detail-collapsable-detail order-detail-shipping-item">${orderShippingInfo.street} <span class="apartment-span"></span></p>
+                <p class="order-detail-collapsable-detail order-detail-shipping-item">${orderShippingInfo.street} ${orderShippingInfo.street_number}<span class="apartment-span"></span></p>
                 <p class="order-detail-collapsable-detail order-detail-shipping-item">CP: ${orderShippingInfo.zip_code}</p>
                 <p class="order-detail-collapsable-detail order-detail-shipping-item">${orderShippingInfo.city}, ${orderShippingInfo.province}</p>
             </div>`;

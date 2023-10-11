@@ -14,7 +14,7 @@ module.exports = cron.schedule("0 */6 * * *", async () => {
       await db.Order.findAll({
         where: {
           order_status_id: 3, //pendiente de pago
-          order_types_id: { [Op.in]: [2, 3]} //Que sea pago con tarjeta
+          payment_methods_id: { [Op.in]: [2, 3]} //Que sea pago con tarjeta
         },
         include: ["orderItems"],
       })

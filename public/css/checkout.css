@@ -918,9 +918,9 @@ body {
 }
 
 .shipment-disclaimer p {
-    color: var(--bold-color);
+    /* color: var(--bold-color); */
     font-size: 0.875rem;
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 
 @media(min-width:768px) {

@@ -397,12 +397,14 @@ window.addEventListener("load", async () => {
                     <p class="order-detail-product-name">Nombre</p>
                     <p class="order-detail-product-quantity">Cantidad</p>
                     <p class="order-detail-product-total">Precio (Unit.)</p>
+                    <p class="order-detail-product-total">Descuento</p>
                     <p class="order-detail-product-total">Precio (Ttal)</p>
                 </div>
             </div>
-            <p class="bold order-label">Direccion Entrega</p>
         </section>
         <section class="order-detail-user-data-section">
+            <p class="bold order-label">Direccion Entrega</p>
+            <div class="order-detail-shipping-data-container"></div>
             <p class="order-label order-detail-user-data-title bold">Datos Facturación (usuario)</p>
             <div class="order-detail-user-data-container">
                 <div class="order-detail-user-data order-detail-user-data-head">
@@ -478,7 +480,8 @@ window.addEventListener("load", async () => {
             <div class="order-detail-product-card order-detail-product-card-body">
                 <p class="order-detail-product-name">${item.name}</p>
                 <p class="order-detail-product-quantity">${item.quantity}</p>
-                <p class="order-detail-product-total">$${itemPrice}</p>
+                <p class="order-detail-product-total">$${item.price}</p>
+                <p class="order-detail-product-total">${item.discount ? `${item.discount}%` : 'No'}</p>
                 <p class="order-detail-product-total">$${
                   item.quantity * itemPrice
                 }</p>
@@ -495,8 +498,7 @@ window.addEventListener("load", async () => {
       //Entrega a domicilio
       if (!order.is_same_address) {
         //Distintas direcciones
-        orderDetailProductListSection.innerHTML += `
-        <div class="order-detail-shipping-data-container">
+        document.querySelector('.order-detail-shipping-data-container').innerHTML = `
             <div class="order-detail-shipping-data order-detail-shipping-data-head">
                 <p>Provincia</p>
                 <p>Ciudad</p>
@@ -521,15 +523,14 @@ window.addEventListener("load", async () => {
                   order.shippingAddress.zip_code
                 }</p>
             </div>
-        </div>
         `;
       } else {
         //Misma direcciones
-        orderDetailProductListSection.innerHTML += `<p class="order-deliver-method-p">Misma que direccion de facturación</p>`;
+        document.querySelector('.order-detail-shipping-data-container').innerHTML += `<p class="order-deliver-method-p">Misma que direccion de facturación</p>`;
       }
     } else {
       //Retiro local o Venta Presencial
-      orderDetailProductListSection.innerHTML += `<p class="order-deliver-method-p">No corresponde</p>`;
+      document.querySelector('.order-detail-shipping-data-container').innerHTML += `<p class="order-deliver-method-p">No corresponde</p>`;
     }
 
     // Ahora modifico la parte del estado

@@ -38,7 +38,7 @@ window.addEventListener('load', () => {
     }
     let slideIntervalId;
     function handleVisibleSlideSection() {
-        slideIntervalId = setInterval(updateSlideShow, 3500);
+        !slideIntervalId ? slideIntervalId = setInterval(updateSlideShow, 3500): null;
     }
 
     const slideImageContainers = document.querySelectorAll('.slide-image-container')
@@ -64,6 +64,7 @@ window.addEventListener('load', () => {
     let slideShowIndex = 1;
 
     function updateSlideShow() {
+        console.log(`Entre`);
         // Le saco el nombre porque aparece una vez que esta en vista
         slideImagesGroup.forEach((container, index) => {
             container.classList.remove('slide-image-group-active', 'slide-image-group-next', 'slide-image-group-prev');

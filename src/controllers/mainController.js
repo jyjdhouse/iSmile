@@ -246,7 +246,7 @@ const controller = {
 
             // return res.send(discountLabel);
             // return res.send({ productsInDb, productsGroupDesktop, productsGroupMobile });
-            return res.render('index', {maxDiscount, lastBlogs, videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile })
+            return res.render('index', {maxDiscount, lastBlogs, videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile, discountLabel })
 
         } catch (error) {
             console.log(`Falle en mainController.list: ${error}`);

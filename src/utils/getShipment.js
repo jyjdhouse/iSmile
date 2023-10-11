@@ -16,6 +16,7 @@ const dateFormater = require("../utils/dateFormater");
 const shipmentData = require("../utils/staticDB/shipmentData");
 const sendShippingOrderMail = require("./sendShippingOrderMail");
 const getDeepCopy = require("./getDeepCopy");
+const getNextValidDay = require("./getNextValidDay");
 // AWS S3
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
@@ -95,7 +96,8 @@ module.exports = async function (orderId, boxesUsed) {
       include: ["shippingAddress", "billingAddress", "orderItems"],
     }));
     // Para la fecha YYYYMMDD TODO: ver tema de si la fecha ya paso
-    const orderDateArray = dateFormater(order.date,true).split("/");
+    const validDay = getNextValidDay(new Date(order.date)); //Obtengo el dia habil mas cercano a la fecha de la orden
+    const orderDateArray = dateFormater(validDay,true).split("/");
     const orderDate = `${orderDateArray[2]}${orderDateArray[1]}${orderDateArray[0]}`;
 
     // Me fijo el peso
