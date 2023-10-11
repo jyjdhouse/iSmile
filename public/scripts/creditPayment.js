@@ -97,14 +97,16 @@ window.addEventListener("load", () => {
   // manejo la altura para los pasos
   const handleMainHeight = () => {
     if (activeStep == 1 && window.innerWidth > 768) {
-      stepsContainer.style.height = '1000px';
-      main.style.height = '1000px';
-    } else if (activeStep == 1 && window.innerWidth < 768) {
+      stepsContainer.style.height = '1200px';
+      main.style.height = '1200px';
+    } 
+    else if (activeStep == 0 && window.innerWidth > 768) {
       stepsContainer.style.height = '800px';
       main.style.height = '800px';
-    } else {
-      stepsContainer.style.height = '700px';
-      main.style.height = '700px';
+    }
+    else {
+      stepsContainer.style.height = '1000px';
+      main.style.height = '1000px';
     }
   }
 

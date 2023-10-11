@@ -38,8 +38,19 @@ document.querySelectorAll(".product-quantity").forEach((inp) => {
   });
 });
 
+const createTimeoutForCard = (card) => {
+  let timeout; 
+  clearTimeout(timeout); 
+  timeout = setTimeout(() => {
+    console.log('entro time');
+    checkInputPrice(card);
+    getTotalPrice();
+  }, 10);
+};
+
 // logica para chequear el stock de cada producto
 const productCards = document.querySelectorAll(".product-card");
+const productQuantityContainer = document.querySelector('.product-quantity-container');
 productCards.forEach((card) => {
   let stock = card.querySelector(".stock-number").innerText;
   let addQuantityBtn = card.querySelector(".add-quantity-btn");
@@ -61,8 +72,10 @@ productCards.forEach((card) => {
       "<p class='stock-error-p'>Último en stock !</p>";
   }
   quantityNumImput.addEventListener("change", () => {
-    if (quantityNumImput.value >= stock) {
-      quantityNumImput.value = stock;
+    if (Number(quantityNumImput.value) >= Number(stock)) {
+      quantityNumImput.value = Number(stock);
+      console.log('entro change', quantityNumImput.value)
+      createTimeoutForCard(card)
     } else {
       addQuantityBtn.style.pointerEvents = "none";
     }
@@ -83,6 +96,8 @@ productCards.forEach((card) => {
       addQuantityBtn.style.pointerEvents = "all";
     }
   });
+  let quantity = parseInt(card.querySelector(".product-quantity").value);
+
 });
 
 const deleteShipmentErrors = () => {
@@ -109,7 +124,7 @@ cards.forEach((card) => {
     addQuantityBtn.style.pointerEvents = "none";
     let quantityNumImput = card.querySelector(".product-quantity");
     quantityNumImput.style.pointerEvents = "none";
-    quantityNumImput.value = 0;
+    quantityNumImput.value = 0; uantity
     quantityNumImput.addEventListener("change", () => {
       quantityNumImput.value = 0;
     });
@@ -365,6 +380,7 @@ function checkInputPrice(card) {
   // agarro el <p> con el precio
   let price = parseInt(card.querySelector(".product-price-span").innerHTML);
   let quantity = parseInt(card.querySelector(".product-quantity").value);
+  console.log(quantity)
   let totalElement = card.querySelector(".product-subtotal-span");
   let discountPriceElement = card.querySelector(".span-discount-price");
   totalElement.innerHTML = `$${quantity * price}`;
@@ -1194,18 +1210,18 @@ useUserAddress?.addEventListener("input", (e) => {
 });
 
 let calculateShipmentPriceBtn = document.querySelector('.get-shipment-price');
-useUserAddress.addEventListener('click', async () => {
+useUserAddress?.addEventListener('click', async () => {
   console.log('entro')
   if (!calculateShipmentPriceBtn.classList.contains('hidden')) {
     calculateShipmentPriceBtn.classList.add('hidden');
   } else {
     calculateShipmentPriceBtn.classList.remove('hidden');
   }
- setTimeout(async () => {
+  setTimeout(async () => {
     console.log('entro time')
     const zipCode = document.querySelector('#shipping-address-zip-code-p').innerText;
     await getShipmentInfo(zipCode);
-  }, 1000) 
+  }, 1000)
 })
 
 const form = document.getElementById("checkout-form");
@@ -1343,6 +1359,7 @@ form.addEventListener("submit", async (e) => {
       window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${errorMsg}`;
       return;
     } else if (fetchResponse.redirect) {
+      console.log(fetchResponse.redirect)
       // Una vez que se compra, si no hay usuario se borra el carro del locale
       if (
         !window.userLogged &&

@@ -352,7 +352,7 @@
                                             <%= user.userAddress?.street? user.userAddress?.street : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
-                                            <input type="text" name="street" value="<%=user.userAddress?.street || null%>"
+                                            <input class="shipment-input" type="text" name="street" value="<%=user.userAddress?.street || null%>"
                                                 placeholder="Santa Fe">
                                         </div>
                                     </li>
@@ -361,7 +361,7 @@
                                             <%= user.userAddress?.street? user.userAddress?.street_number : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
-                                            <input type="text" name="street_number" value="<%=user.userAddress?.street_number || null%>"
+                                            <input class="shipment-input" type="text" name="street_number" value="<%=user.userAddress?.street_number || null%>"
                                                 placeholder="3322">
                                         </div>
                                     </li>
@@ -381,7 +381,7 @@
                                             <%= user.userAddress?.city? user.userAddress?.city : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
-                                            <input type="text" name="city" value="<%=user.userAddress?.city || null%>"
+                                            <input class="shipment-input" type="text" name="city" value="<%=user.userAddress?.city || null%>"
                                                 placeholder="Palermo">
                                         </div>
                                     </li>
@@ -406,7 +406,7 @@
                                             <%= user.userAddress?.zip_code? user.userAddress?.zip_code : 'Sin especificar' %>
                                         </span>
                                         <div class="profile-input input-container-inactive">
-                                            <input class="numeric-only-input" type="text" name="zip_code"
+                                            <input class="shipment-input numeric-only-input" type="text" name="zip_code"
                                                 value="<%=user.userAddress?.zip_code || null%>"
                                                 placeholder="1111">
                                         </div>

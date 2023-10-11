@@ -1,185 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('./partials/head.ejs') %>
+
+<head>
+  <%- include('./partials/head.ejs') %>
     <link rel="stylesheet" href="/css/creditPayment.css" />
     <link rel="stylesheet" href="/css/orderOverlay.css" type="text/css" />
     <script src="https://live.decidir.com/static/v2.6.4/decidir.js"></script>
     <script src="/scripts/creditPayment.js" type="module"></script>
     <title>Pago Seguro</title>
-  </head>
+</head>
 
-  <body>
-    <%- include('./partials/header.ejs') %>
-    <% console.log(orderToPay.timeLeft) %>
-    <div class="counter-container" data-timeleft=<%=orderToPay.timeLeft%>>
-      <p class="counter-title">Tiempo restante</p>
-      <p class="counter"></p>
+<body>
+  <%- include('./partials/header.ejs') %>
+  <% console.log(orderToPay) %>
+  <div class="anch-steps">
+    <div class="go-back-arrow-container">
+      <i class="bx bx-chevron-left"></i>
+      <p>Volver</p>
+    </div>
+    <div class="cancel-payment">
+     <a href="/user/cancelOrderPayment">Cancelar pago</a>
+     <i class='bx bx-x'></i>
+    </div>
   </div>
-    <main class="secure-payment-main">
-      <%- include('./partials/orderOverlay.ejs') %>
-      <div class="steps-list-container">
-        <div class="step-container step-1 active-step">
-          <h2>Seleccioná el tipo de tarjeta</h2>
-          <form class="select-card-form">
-            <% cards.forEach(card=> { %>
-            <label
-              for="card-<%= card.id %>"
-              class="card-label"
-              data-payment_methods_id="<%= card.payment_method_id%>"
-              data-card_id="<%=card.decidir_id%>"
-            >
-              <p>Tarjeta <%= card.name %></p>
-              <div class="card-img-container">
-                <img
-                  class="card-img"
-                  src="/img/cards/<%= card.img_src %>-remove.png"
-                  alt=""
-                />
-              </div>
-            </label>
-            <input
-              type="radio"
-              hidden
-              name="card_id"
-              value="<%=card.decidir_id%>"
-              class="select-card-input"
-              id="card-<%=card.id%>"
-            />
-            <% }) %>
-            <div class="select-card-btn-container">
-              <button class="select-card-btn" type="submit">Seleccionar</button>
-            </div>
-          </form>
-        </div>
-        <div class="step-container step-2 next-step">
-          <h2>Ingresá los datos de pago</h2>
-          <div class="go-back-arrow-container">
-            <i class="bx bx-chevron-left"></i>
-            <p>Volver</p>
-          </div>
-          <div class="step2-columns-container">
-            <div class="step2-first-column">
-              <form action="" method="post" class="formulario">
-                <ul>
-                  <li>
-                    <input
-                      type="hidden"
-                      name="order_tra_id"
-                      id="oder_tra_id"
-                      value="<%= locals.order_tra_id ?  order_tra_id : null%>"
-                    />
-                    <label for="card_number">Numero de tarjeta:</label>
-                    <input
-                      type="text"
-                      class="payment-form-input numeric-only-input card-number-inp"
-                      data-decidir="card_number"
-                      placeholder="XXXXXXXXXXXXXXXX"
-                      value=""
-                      maxlength="16"
-                    />
-                  </li>
-                  <li>
-                    <label for="security_code">Codigo de seguridad:</label>
-                    <input
-                      type="text"
-                      class="payment-form-input numeric-only-input"
-                      data-decidir="security_code"
-                      placeholder="XXX"
-                      value=""
-                      maxlength="4"
-                    />
-                  </li>
-                  <li>
-                    <label for="card_expiration_month"
-                      >Mes de vencimiento:</label
-                    >
-                    <input
-                      type="text"
-                      class="payment-form-input month-valid-thru-inp"
-                      data-decidir="card_expiration_month"
-                      placeholder="MM"
-                      value=""
-                      maxlength="2"
-                    />
-                  </li>
-                  <li>
-                    <label for="card_expiration_year"
-                      >Año de vencimiento:</label
-                    >
-                    <input
-                      type="text"
-                      class="payment-form-input year-valid-thru-inp"
-                      data-decidir="card_expiration_year"
-                      placeholder="AA"
-                      value=""
-                      maxlength="2"
-                    />
-                  </li>
-                  <li>
-                    <label for="card_holder_name">Nombre del titular:</label>
-                    <input
-                      type="text"
-                      class="payment-form-input cardholder-name-inp"
-                      data-decidir="card_holder_name"
-                      placeholder="TITULAR"
-                      value=""
-                    />
-                  </li>
-                  <li>
-                    <label for="card_holder_doc_type">Tipo de documento:</label>
-                    <select
-                      data-decidir="card_holder_doc_type"
-                      class="payment-form-input"
-                    >
-                      <option value="dni">DNI</option>
-                    </select>
-                  </li>
-                  <li>
-                    <label for="card_holder_doc_type"
-                      >Numero de documento:</label
-                    >
-                    <input
-                      type="text"
-                      class="payment-form-input"
-                      data-decidir="card_holder_doc_number"
-                      placeholder="XXXXXXXXXX"
-                      value=""
-                      maxlength="8"
-                    />
-                  </li>
-                </ul>
-                <div class="submit-payment-container">
-                  <input type="submit" value="Pagar" class="pay-button" />
-                </div>
+  <div class="counter-container" data-timeleft=<%=orderToPay.timeLeft%>>
+    <p class="counter-title">Tiempo restante</p>
+    <p class="counter"></p>
+  </div>
+      <main class="secure-payment-main">
+        <%- include('./partials/orderOverlay.ejs') %>
+          <div class="steps-list-container">
+            <div class="step-container step-1 active-step">
+              <h2>Seleccioná el tipo de tarjeta</h2>
+              <form class="select-card-form">
+                <% cards.forEach(card=> { %>
+                  <label for="card-<%= card.id %>" class="card-label"
+                    data-payment_methods_id="<%= card.payment_method_id%>" data-card_id="<%=card.decidir_id%>">
+                    <p>Tarjeta <%= card.name %>
+                    </p>
+                    <div class="card-img-container">
+                      <img class="card-img" src="/img/cards/<%= card.img_src %>-remove.png" alt="" />
+                    </div>
+                  </label>
+                  <input type="radio" hidden name="card_id" value="<%=card.decidir_id%>" class="select-card-input"
+                    id="card-<%=card.id%>" />
+                  <% }) %>
+                    <div class="select-card-btn-container">
+                      <button class="select-card-btn" type="submit">Seleccionar</button>
+                    </div>
               </form>
             </div>
-            <div class="step2-second-column">
-              <div class="card-container">
-                <div class="card-chip-container">
-                  <img src="/img/cards/chip_tarjeta.png" alt="" />
+            <div class="step-container step-2 next-step">
+              
+             
+              <div class="summary-container">
+                <h3 class="total-title">Resumen</h3>
+                <ul class="prod-list-container">
+                  <h4>Items</h4>
+                  <% orderToPay.orderItems.forEach((item, i) => { %>
+                    <li class="prod-container">
+                      <span><%= i + 1 %>-</span><p><%= item.name %> x <%= item.quantity%></p>
+                    </li>
+                  <% }) %>
+                  </ul>
+                <div class="total-container">
+                  <h4>Total</h4>
+                  <h4 class="total-subtitle">
+                    $<%= orderToPay.total %>
+                  </h4>
                 </div>
-                <div class="card-logo-container">
-                  <img src="" alt="" />
+                
+              </div>
+              <h2>Ingresá los datos de pago</h2>
+              <div class="step2-columns-container">
+                <div class="step2-first-column">
+                  <form action="" method="post" class="formulario">
+                    <ul>
+                      <li>
+                        <label for="card_holder_name">Nombre del titular:</label>
+                        <input type="text" class="payment-form-input cardholder-name-inp reg-input"
+                          data-decidir="card_holder_name" placeholder="TITULAR" value="" />
+                      </li>
+                      <li>
+                        <input type="hidden" name="order_tra_id" id="oder_tra_id"
+                          value="<%= locals.order_tra_id ?  order_tra_id : null%>" />
+                        <label for="card_number">Numero de tarjeta:</label>
+                        <input type="text" class="payment-form-input numeric-only-input card-number-inp reg-input"
+                          data-decidir="card_number" placeholder="XXXXXXXXXXXXXXXX" value="" maxlength="16" />
+                      </li>
+                      <div class="short-input-container">
+
+
+                        <li class="short-li">
+                          <label for="security_code">Codigo de seguridad:</label>
+                          <input type="text" class="payment-form-input numeric-only-input short-input"
+                            data-decidir="security_code" placeholder="XXX" value="" maxlength="4" />
+                        </li>
+                      </div>
+                      <div class="short-input-container">
+                        <li class="short-li">
+                          <label for="card_expiration_month">Mes de vencimiento:</label>
+                          <input type="text" class="payment-form-input month-valid-thru-inp  short-input"
+                            data-decidir="card_expiration_month" placeholder="MM" value="" maxlength="2" />
+                        </li>
+
+
+                        <li class="short-li">
+                          <label for="card_expiration_year">Año de vencimiento:</label>
+                          <input type="text" class="payment-form-input year-valid-thru-inp    short-input"
+                            data-decidir="card_expiration_year" placeholder="AA" value="" maxlength="2" />
+                        </li>
+                      </div>
+                      <div class="short-input-container">
+
+
+                        <li class="short-li">
+                          <label for="card_holder_doc_type">Tipo de documento:</label>
+                          <select data-decidir="card_holder_doc_type" class="payment-form-input    short-input">
+                            <option value="dni">DNI</option>
+                          </select>
+                        </li>
+                        <li class="short-li">
+                          <label for="card_holder_doc_type">Numero:</label>
+                          <input type="text" class="payment-form-input   short-input"
+                            data-decidir="card_holder_doc_number" placeholder="XXXXXXXXXX" value="" maxlength="8" />
+                        </li>
+                      </div>
+                    </ul>
+                    <div class="submit-payment-container">
+                      <input type="submit" value="Pagar" class="pay-button" />
+                    </div>
+                  </form>
                 </div>
-                <div class="card-number-container">
-                  <p class="card-number-p"></p>
-                </div>
-                <div class="cardholder-name-container">
-                  <p class="cardholder-name-p"></p>
-                </div>
-                <div class="cardholder-expiry-dates-container">
-                  <p class="month-valid-thru-p"></p>
-                  <span class="slash"></span>
-                  <p class="year-valid-thru-p"></p>
+                <div class="step2-second-column">
+                  <div class="card-container">
+                    <div class="card-chip-container">
+                      <img src="/img/cards/chip_tarjeta.png" alt="" />
+                    </div>
+                    <div class="card-logo-container">
+                      <img src="" alt="" />
+                    </div>
+                    <div class="card-number-container">
+                      <p class="card-number-p"></p>
+                    </div>
+                    <div class="cardholder-name-container">
+                      <p class="cardholder-name-p"></p>
+                    </div>
+                    <div class="cardholder-expiry-dates-container">
+                      <p class="month-valid-thru-p"></p>
+                      <span class="slash"></span>
+                      <p class="year-valid-thru-p"></p>
+                    </div>
+                  </div>
+                  
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </main>
+      </main>
 
-    <%- include('./partials/footer.ejs') %>
-  </body>
+      <%- include('./partials/footer.ejs') %>
+</body>
+
 </html>

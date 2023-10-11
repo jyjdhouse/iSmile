@@ -595,7 +595,6 @@ const controller = {
         CantidadPaquetes: 1,
         ValorDeclarado: 3000, // Total de compra
       };
-      console.log(bodyObject);
       const response = await axios.post(shipmentEstimateUrl, bodyObject, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -606,6 +605,7 @@ const controller = {
       const xmlDoc = parser.parseFromString(xmlString, "text/xml");
       const totalValue = xmlDoc.getElementsByTagName("Total")[0]?.textContent;
       const plazoEntregaValue =xmlDoc.getElementsByTagName("PlazoEntrega")[0]?.textContent;
+      console.log(xmlDoc)
       if(totalValue && plazoEntregaValue){
         return res.json({
           ok: true,

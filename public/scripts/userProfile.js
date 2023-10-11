@@ -225,7 +225,6 @@ window.addEventListener('load', () => {
         btn.addEventListener('click', (e) => {
             e.preventDefault()
             if (window.innerWidth <= 768) {
-                console.log('entro mob')
                 let editContentContainer = document.querySelector('.mobile-edit-content-container');
                 let discardChangesBtn = document.createElement('button');
                 discardChangesBtn.classList.add('discard-changes-btn');
@@ -266,8 +265,7 @@ window.addEventListener('load', () => {
 
     // Logica para no permitir envio de formulario si no se completa lo requerido
     const sendFormBtns = document.querySelectorAll('.send-user-info-form-btn');
-    //Agarro los inputs requeridos
-
+    const shipmentInputs = document.querySelectorAll('.shipment-input');
     sendFormBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -330,6 +328,23 @@ window.addEventListener('load', () => {
                 additionalMessage.classList.add('error-msg');
                 additionalMessage.innerHTML = 'Longitud incorrecta'
                 div.appendChild(additionalMessage)
+            }
+            let completedIndexes = [];
+           
+            shipmentInputs.forEach((inp, i) => {
+                inp.classList.contains('error-incomplete') && inp.classList.remove('error-incomplete');
+                if(inp.value){
+                    completedIndexes.push(i);
+                }
+            })
+
+            if(completedIndexes.length != 0 && completedIndexes.length < 4){
+                for (let i = 0; i < shipmentInputs.length; i++) {
+                    if (!completedIndexes.includes(i)) {
+                      flag = false;
+                      shipmentInputs[i].classList.add('error-incomplete');
+                    }
+                  }                      
             }
             if (flag) {
                 form.submit()
