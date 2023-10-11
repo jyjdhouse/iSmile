@@ -210,9 +210,17 @@ const checkIfAllProductsAreInStock = () => {
 };
 
 const shipmentPriceSpan = document.querySelector('.shipment-price-span');
+const disclaimer = document.querySelector('.shipment-disclaimer');
 const innerShipmentPrice = (price) => {
   shipmentPriceSpan.innerText = `${price}`;
   getTotalPrice();
+  if(Number(price) > 0){
+    disclaimer.classList.remove('hide');
+    disclaimer.classList.add('show');
+  } else {
+      disclaimer.classList.add('hide');
+      disclaimer.classList.remove('show');
+  }
 }
 
 const getShipmentInfo = async (zip) => {

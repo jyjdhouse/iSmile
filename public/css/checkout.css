@@ -923,6 +923,14 @@ body {
     font-weight: 700;
 }
 
+.hide {
+    display: none;
+}
+
+.show {
+    display: flex;
+}
+
 @media(min-width:768px) {
     .view {
         justify-content: space-around;

@@ -12,21 +12,21 @@
 
 <body>
   <%- include('./partials/header.ejs') %>
-  <% console.log(orderToPay) %>
-  <div class="anch-steps">
-    <div class="go-back-arrow-container">
-      <i class="bx bx-chevron-left"></i>
-      <p>Volver</p>
-    </div>
-    <div class="cancel-payment">
-     <a href="/user/cancelOrderPayment">Cancelar pago</a>
-     <i class='bx bx-x'></i>
-    </div>
-  </div>
-  <div class="counter-container" data-timeleft=<%=orderToPay.timeLeft%>>
-    <p class="counter-title">Tiempo restante</p>
-    <p class="counter"></p>
-  </div>
+    <% console.log(orderToPay) %>
+      <div class="anch-steps">
+        <div class="go-back-arrow-container hide">
+          <i class="bx bx-chevron-left"></i>
+          <p>Volver</p>
+        </div>
+        <div class="cancel-payment">
+          <a href="/user/cancelOrderPayment">Cancelar pago</a>
+          <i class='bx bx-x'></i>
+        </div>
+      </div>
+      <div class="counter-container" data-timeleft=<%=orderToPay.timeLeft%>>
+        <p class="counter-title">Tiempo restante</p>
+        <p class="counter"></p>
+      </div>
       <main class="secure-payment-main">
         <%- include('./partials/orderOverlay.ejs') %>
           <div class="steps-list-container">
@@ -51,29 +51,13 @@
               </form>
             </div>
             <div class="step-container step-2 next-step">
-              
-             
-              <div class="summary-container">
-                <h3 class="total-title">Resumen</h3>
-                <ul class="prod-list-container">
-                  <h4>Items</h4>
-                  <% orderToPay.orderItems.forEach((item, i) => { %>
-                    <li class="prod-container">
-                      <span><%= i + 1 %>-</span><p><%= item.name %> x <%= item.quantity%></p>
-                    </li>
-                  <% }) %>
-                  </ul>
-                <div class="total-container">
-                  <h4>Total</h4>
-                  <h4 class="total-subtitle">
-                    $<%= orderToPay.total %>
-                  </h4>
-                </div>
-                
-              </div>
-              <h2>Ingresá los datos de pago</h2>
+
+
+
+
               <div class="step2-columns-container">
                 <div class="step2-first-column">
+                  <h3 class="payment-form-title">Ingresá los datos de pago</h3>
                   <form action="" method="post" class="formulario">
                     <ul>
                       <li>
@@ -152,7 +136,20 @@
                       <p class="year-valid-thru-p"></p>
                     </div>
                   </div>
-                  
+                  <ul class="prod-list-container">
+                    <h4>Resumen</h4>
+
+                    <% orderToPay.orderItems.forEach((item, i)=> { %>
+                      <li class="prod-container">
+                        <span>
+                          <%= i + 1 %>-
+                        </span>
+                        <p>
+                          <%= item.name %> x <%= item.quantity%>
+                        </p>
+                      </li>
+                      <% }) %>
+                  </ul>
                 </div>
               </div>
             </div>

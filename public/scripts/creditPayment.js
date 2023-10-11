@@ -97,8 +97,8 @@ window.addEventListener("load", () => {
   // manejo la altura para los pasos
   const handleMainHeight = () => {
     if (activeStep == 1 && window.innerWidth > 768) {
-      stepsContainer.style.height = '1200px';
-      main.style.height = '1200px';
+      stepsContainer.style.height = '1000px';
+      main.style.height = '1000px';
     } 
     else if (activeStep == 0 && window.innerWidth > 768) {
       stepsContainer.style.height = '800px';
@@ -109,12 +109,13 @@ window.addEventListener("load", () => {
       main.style.height = '1000px';
     }
   }
-
-
   handleMainHeight();
 
+  const goBackBtn = document.querySelector('.go-back-arrow-container');
   // cuando toca continuar para el siguiente paso
   const handleNextStep = () => {
+    goBackBtn.classList.remove('hide');
+    goBackBtn.classList.add('show');
     steps.forEach((step, i) => {
       if (i === activeStep) {
         step.classList.add('active-step');
@@ -129,6 +130,8 @@ window.addEventListener("load", () => {
 
   // cuando toca volver para el anterior paso
   const handlePrevStep = () => {
+    goBackBtn.classList.add('hide');
+    goBackBtn.classList.remove('show');
     steps.forEach((step, i) => {
       if (i === activeStep) {
         step.classList.add('active-step');
