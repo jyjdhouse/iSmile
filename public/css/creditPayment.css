@@ -67,11 +67,12 @@ form {
 
 .prod-list-container {
     margin-top: 5%;
-    min-height: 100px;
+    min-height: 115px;
     border: 1px solid var(--bold-color);
     overflow: auto;
     padding: 3%;
     max-height: 200px;
+    border-radius: 5px;
 }
 
 .prod-container {
@@ -108,12 +109,20 @@ form {
 }
 
 .secure-payment-main {
-    padding: 10% 0;
+    padding: 7% 0;
     
     min-height: 600px;
     overflow: hidden;
     transition: min-height .5s;
 }
+
+.step2-columns-container {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+    flex-direction: column-reverse;
+}
+
 
 .step-container h2 {
     font-size: 1.5rem;
@@ -230,9 +239,14 @@ form {
 .formulario {
     padding: 2% 1%;
     border: 1px solid var(--gold-bg-color);
-    width: 90%;
+
     margin: 5% auto 0;
     border-radius: 5px;
+}
+
+.payment-form-title {
+    color: black;
+    margin-top: 5%;
 }
 
 .formulario ul li {
@@ -302,7 +316,7 @@ input, select {
     text-align: center;
 }
 
-.step2-second-column {
+.card-container {
     display: none;
 }
 
@@ -310,8 +324,21 @@ input, select {
     width: 100%;
 }
 
+.hide {
+    display: none;
+}
+
+.show {
+    display: flex;
+}
+
 @media(min-width: 768px){
 
+
+    .step2-columns-container {
+        width: 95%;
+        flex-direction: row;
+    }
 
     .secure-payment-main {
         padding: 5%;
@@ -326,7 +353,6 @@ input, select {
     }
 
     .go-back-arrow-container {
-        display: flex;
         width: 50%;
         justify-content: center;
         align-items: center;
@@ -346,9 +372,9 @@ input, select {
     }
 
     .prod-list-container {
-        width: 100%;
+        max-width: 345px;
        padding: 1.5%;
-        max-height: 225px;
+        max-height: 70%;
     }
 
     .steps-list-container {
@@ -356,11 +382,7 @@ input, select {
         min-height: 500px;
     }
     
-    .step2-columns-container {
-        display: flex;
-        width: 100%;
-    }
-
+   
     .step2-first-column {
         width: 50%;
     }
@@ -391,15 +413,18 @@ input, select {
         align-items: flex-start;
         width: 50%;
         height: 700px;
+        flex-direction: column;
+        padding-left: 2%;
     }
     
     .card-container {
-        height: 200px;
-        width: 350px;
+        display: flex;
+        height: 30%;
+        width: 340px;
         background-color: var(--light-grey-color);
         border-radius: 10px;
         position: relative;
-        margin-top: 5%;
+        margin-top: 17%;
     }
 
     .card-logo-container {

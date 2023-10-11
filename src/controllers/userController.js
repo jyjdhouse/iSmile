@@ -135,7 +135,7 @@ const controller = {
   },
   safePaymentView: async (req, res) => {
     try {
-      const order_tra_id = req.session.order_tra_id;
+      const order_tra_id = "1695654773982-9w2cydl1lf";
       const cards = acceptedCards;
       // Me tengo que fijar que los items que este por pagar se encuentren en stock
       const orderToPay = getDeepCopy(
