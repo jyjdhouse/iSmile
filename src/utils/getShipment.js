@@ -260,7 +260,7 @@ module.exports = async function (orderId, boxesUsed) {
         orderId: order.tra_id,
       };
     }
-    return { ok: true };
+    return { ok: true , numero_envio: numeroEnvio, orden_retiro: ordenRetiro};
   } catch (error) {
     console.log(`Falle en getShipment: ${error}`);
     return {

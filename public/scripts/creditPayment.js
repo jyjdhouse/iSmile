@@ -299,7 +299,6 @@ window.addEventListener("load", () => {
   // overlay de transaccion correcta/incorrecta
   const overlay = document.querySelector(".overlay");
   const loadingSpinner = document.querySelector(".overlay .loading-container");
-  console.log(overlay,loadingSpinner);
   // tra_id de la order
   const order_tra_id = document.querySelector("#oder_tra_id").value;
   //formulario

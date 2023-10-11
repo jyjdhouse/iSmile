@@ -579,9 +579,24 @@ const controller = {
   },
   getEstimateShipmentData: async (req, res) => {
     let { zip, items } = req.body;
+    let idsToCheck = [];
+    let totalWeigth = 0;
     // TODO: hacer forEach en items y determinar: VolumenTotal - PesoTotal - ValorDeclarado
     // restaria aca hacer la logica segun la cantidad de elementos, que volumen y peso mandamos
-    let totalWeigth = 1; //TODO: Agregar esto + 
+    items.forEach(item => {
+      !idsToCheck.includes(item.id) ? idsToCheck.push(item.id) : null;
+    });
+    let productsToCheck = await db.Product.findAll({
+      where: {
+        id: idsToCheck
+      }
+    });
+    // Voy por cada producto de la db y le calculo el peso
+    productsToCheck.forEach(dbProd => {
+      let quantity = items.find(it=>it.id == dbProd.id).quantity;
+      totalWeigth += (parseFloat(dbProd.weight) || 0) * parseInt(quantity);
+    });
+     //TODO: Agregar esto + 
     let totalVolume = 0.005;//TODO: Agregar esto + 
 
     try {
@@ -616,6 +631,7 @@ const controller = {
             totalValue,
             plazoEntregaValue,
           },
+          redirect: '/user/checkout/pago-seguro'
         });
   
       } else {

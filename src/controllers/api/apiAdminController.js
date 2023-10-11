@@ -597,6 +597,8 @@ const controller = {
         ok: true,
         msg: "etiqueta PDF generada",
         pdf: url,
+        numero_envio: shipmentResponse.numero_envio,
+        orden_retiro: shipmentResponse.orden_retiro
       });
     } catch (error) {
       console.log(`Falle en generateShipmentTag: ${error}`);

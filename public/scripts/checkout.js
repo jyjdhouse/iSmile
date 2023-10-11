@@ -31,7 +31,7 @@ function checkIfCartIsEmpty() {
 // Logica para hacer a todos los input con valor 1
 document.querySelectorAll(".product-quantity").forEach((inp) => {
   inp.value = 1;
-  inp.addEventListener("change", () => {
+  inp?.addEventListener("change", () => {
     if (inp.value <= 0) inp.value = 1;
     const card = inp.closest(".product-card");
     checkInputPrice(card);
@@ -60,14 +60,14 @@ productCards.forEach((card) => {
     stockErrorContainer.innerHTML =
       "<p class='stock-error-p'>Último en stock !</p>";
   }
-  quantityNumImput.addEventListener("change", () => {
+  quantityNumImput?.addEventListener("change", () => {
     if (quantityNumImput.value >= stock) {
       quantityNumImput.value = stock;
     } else {
       addQuantityBtn.style.pointerEvents = "none";
     }
   });
-  addQuantityBtn.addEventListener("click", () => {
+  addQuantityBtn?.addEventListener("click", () => {
     if (quantityNumImput.value == Number(stock) - 1) {
       addQuantityBtn.style.pointerEvents = "none";
       let prodNameContainer = card.querySelector(
@@ -78,7 +78,7 @@ productCards.forEach((card) => {
       stockErrorContainer.innerHTML = `<p class='stock-error-p'>${stock} en stock disponibles</p>`;
     }
   });
-  substractQuantityBtn.addEventListener("click", () => {
+  substractQuantityBtn?.addEventListener("click", () => {
     if (addQuantityBtn.style.pointerEvents == "none") {
       addQuantityBtn.style.pointerEvents = "all";
     }
@@ -110,7 +110,7 @@ cards.forEach((card) => {
     let quantityNumImput = card.querySelector(".product-quantity");
     quantityNumImput.style.pointerEvents = "none";
     quantityNumImput.value = 0;
-    quantityNumImput.addEventListener("change", () => {
+    quantityNumImput?.addEventListener("change", () => {
       quantityNumImput.value = 0;
     });
   }
@@ -273,7 +273,7 @@ const getShipmentInfo = async (zip) => {
 
 const deliveryTypes = document.querySelectorAll(".delivery-option-box");
 deliveryTypes.forEach((devT) => {
-  devT.addEventListener("click", () => {
+  devT?.addEventListener("click", () => {
     if (devT.dataset.typeid == 2) {
       let shipmentPriceSpan = document.querySelector(".shipment-price-span");
       let shipmentDelaySpan = document.querySelector(".shipment-delay-span");
@@ -285,7 +285,7 @@ deliveryTypes.forEach((devT) => {
 
 const getShipmentPriceBtn = document.querySelector(".get-shipment-price");
 let shippingZipCodeInp = document.getElementById("shipping_zip_code");
-getShipmentPriceBtn.addEventListener("click", async (e) => {
+getShipmentPriceBtn?.addEventListener("click", async (e) => {
   try {
     let zipCodeValue = shippingZipCodeInp.value;
     e.preventDefault();
@@ -356,7 +356,7 @@ reduceProductQuantityBtns.forEach((btn) => {
 });
 addProductQuantityBtns.forEach((btn) => {
   // Da click en el +
-  btn.addEventListener("click", (e) => {
+  btn?.addEventListener("click", (e) => {
     handleAddingQuantity(e);
   });
 });
@@ -419,7 +419,7 @@ const removeProductCardBtns = document.querySelectorAll(".remove-cart-product");
 
 removeProductCardBtns.forEach((btn) => {
   btn.classList.add("bx-trash-active");
-  btn.addEventListener("click", () => {
+  btn?.addEventListener("click", () => {
     // Agarro a la card
     const card = btn.closest(".product-card");
     /*  btn.classList.remove('.bx-trash-active') */
@@ -454,7 +454,7 @@ const updateDeliveryChoice = (e) => {
 };
 const deliveryOptions = document.querySelectorAll(".delivery-option-box");
 deliveryOptions.forEach((opt) => {
-  opt.addEventListener("click", updateDeliveryChoice);
+  opt?.addEventListener("click", updateDeliveryChoice);
 });
 
 // Logica para que una vez que toque el boton que lleve al segundo paso, se pinten los productos
@@ -516,14 +516,14 @@ const paintSideCards = () => {
   ).innerHTML = total;
 };
 const nextViewButton = document.querySelector(".continue-view-button");
-nextViewButton.addEventListener("click", () => {
+nextViewButton?.addEventListener("click", () => {
   paintSideCards();
 });
 
 // Logica que cuando vayan tocando el boton de continuar, se pinte el resumen de cada paso
 const continueButtons = document.querySelectorAll(".continue-procedure-button");
 continueButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
+  btn?.addEventListener("click", () => {
     let allSectionComplete = sectionIsComplete(btn);
     if (!allSectionComplete) {
       //Si esta incompleto no hago nada
@@ -742,7 +742,7 @@ continueButtons.forEach((btn) => {
   // LOGICA DE SI TOCAN EL BOTON DE EDITAR
   const editStepBtns = document.querySelectorAll(".edit-step-btn");
   editStepBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn?.addEventListener("click", () => {
       // No pueden iniciar compra si esta abierto el edit
       startPaymentButton.classList.add("disabled");
       modifyMainHeight("second-view");
@@ -764,7 +764,7 @@ const main = document.querySelector(".main");
 // Cuando arranca le tengo que decir al main que tome la altura del 1er view
 modifyMainHeight("first-view");
 
-continueViewBtn.addEventListener("click", () => {
+continueViewBtn?.addEventListener("click", () => {
   window.scrollTo(0, 0);
   stepViews.forEach((view) => (view.style.transform = `translateX(-100%)`));
   // Aca se que esta en el 2do paso
@@ -834,7 +834,7 @@ let letterInputs = document.querySelectorAll(".letter-only-input");
 letterInputs.forEach((input) => {
   // Tomo el ultimo valor
   let lastInputValue = input.value;
-  input.addEventListener("input", function (e) {
+  input?.addEventListener("input", function (e) {
     var inputValue = e.target.value;
     if (isLetter(inputValue) || inputValue == "") {
       // Si no es letra, borra el contenido del campo
@@ -897,7 +897,7 @@ const useSameAddress = document.querySelector("#use-same-address");
 const shippingAddressSection = document.querySelector(
   ".shipping-address-section"
 );
-useSameAddress.addEventListener("click", async (e) => {
+useSameAddress?.addEventListener("click", async (e) => {
   let requiredInputs = shippingAddressSection.querySelectorAll(
     ".required-field input"
   );
@@ -1194,8 +1194,7 @@ useUserAddress?.addEventListener("input", (e) => {
 });
 
 let calculateShipmentPriceBtn = document.querySelector('.get-shipment-price');
-useUserAddress.addEventListener('click', async () => {
-  console.log('entro')
+useUserAddress?.addEventListener('click', async () => {
   if (!calculateShipmentPriceBtn.classList.contains('hidden')) {
     calculateShipmentPriceBtn.classList.add('hidden');
   } else {
@@ -1209,7 +1208,7 @@ useUserAddress.addEventListener('click', async () => {
 })
 
 const form = document.getElementById("checkout-form");
-form.addEventListener("submit", async (e) => {
+form?.addEventListener("submit", async (e) => {
   try {
     e.preventDefault();
     // si esta loggeado

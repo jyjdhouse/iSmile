@@ -43,7 +43,7 @@ window.addEventListener('load', () => {
 
     const slideImageContainers = document.querySelectorAll('.slide-image-container')
     slideImageContainers?.forEach(container => {
-        container.addEventListener('mouseenter', () => {
+        container?.addEventListener('mouseenter', () => {
             // Freno el slideShow
             clearInterval(slideIntervalId);
         });
@@ -411,23 +411,22 @@ window.addEventListener('load', () => {
     });
 
     // Logica para video in full screen
-    const fullScreenVideoBtn = document.querySelector('.full-screen-btn');
-    const homeVideo = document.querySelector('.landing-video-container .video');
-    var fullscreen = homeVideo.webkitRequestFullscreen || homeVideo.mozRequestFullScreen || homeVideo.msRequestFullscreen;
+    // const fullScreenVideoBtn = document.querySelector('.full-screen-btn');
+    // const homeVideo = document.querySelector('.landing-video-container .video');
+    // var fullscreen = homeVideo.webkitRequestFullscreen || homeVideo.mozRequestFullScreen || homeVideo.msRequestFullscreen;
     
-    fullScreenVideoBtn.addEventListener('click',()=>{
-        // homeVideo.pause()
-        // if (homeVideo.requestFullscreen) {
-        //     // Solicita el modo de pantalla completa para el elemento de video
-        //     homeVideo.requestFullscreen();
-        //   } else if (homeVideo.mozRequestFullScreen) { // Para navegadores Firefox
-        //     homeVideo.mozRequestFullScreen();
-        //   } else if (homeVideo.webkitRequestFullscreen) { // Para navegadores WebKit (Safari, Chrome)
-        //     homeVideo.webkitRequestFullscreen();
-        //   } else if (homeVideo.msRequestFullscreen) { // Para navegadores Microsoft (Edge)
-        //     homeVideo.msRequestFullscreen();
-        //   }
-        console.log('Di click');
-        fullscreen.call(homeVideo);
-    })
+    // fullScreenVideoBtn.addEventListener('click',()=>{
+    //     // homeVideo.pause()
+    //     // if (homeVideo.requestFullscreen) {
+    //     //     // Solicita el modo de pantalla completa para el elemento de video
+    //     //     homeVideo.requestFullscreen();
+    //     //   } else if (homeVideo.mozRequestFullScreen) { // Para navegadores Firefox
+    //     //     homeVideo.mozRequestFullScreen();
+    //     //   } else if (homeVideo.webkitRequestFullscreen) { // Para navegadores WebKit (Safari, Chrome)
+    //     //     homeVideo.webkitRequestFullscreen();
+    //     //   } else if (homeVideo.msRequestFullscreen) { // Para navegadores Microsoft (Edge)
+    //     //     homeVideo.msRequestFullscreen();
+    //     //   }
+    //     fullscreen.call(homeVideo);
+    // })
 });

@@ -253,8 +253,13 @@ window.addEventListener("load", async () => {
 
           // Limpia el elemento <a> después de la simulación de clic
           document.body.removeChild(link);
+
+          // modifico la orden aca y pinto la tabla devuelta
+          const orderToModify = orders.find(ord=>ord.tra_id == tra_id);
+          orderToModify.oca_numero_envio = generateShipmentOrderTag.numero_envio;
+          orderToModify.oca_orden_retiro = generateShipmentOrderTag.orden_retiro;
+          paintShipmentStep(1,orderToModify);
         }
-        console.log(generateShipmentOrderTag);
       } catch (error) {
         console.log(
           `Falle en shipmentGenerateTagBtn?.addEventListener: ${error}`
@@ -340,7 +345,8 @@ window.addEventListener("load", async () => {
                     <p class="order-detail-shipment-label bold">ID. Numero Envio</p>
                     <p class="order-detail-shipment-label copy-value">${order.oca_numero_envio}</p>
                   </div>`
-    }
+    };
+    listenToShipmentTagBtns();
   }
   
   function listenBoxInteractions() {
