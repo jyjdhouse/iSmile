@@ -20,12 +20,22 @@ form {
 
 }
 
+.anch-steps {
+        display: flex;
+        width: 90%;
+        margin: 14vh auto 0;
+        justify-content: center;
+        align-items: center;
+}
+
+
 .counter-container {
-    margin-top: 14vh;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    margin-top: 5%;
 }
 
 .counter-title, .counter {
@@ -35,6 +45,66 @@ form {
 .counter {
    
     color: var(--bold-color);
+}
+
+.cancel-payment {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.cancel-payment i {
+   font-size: 1.5rem;
+   color: red;
+}
+
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5%;
+    padding: 3%;
+}
+
+.prod-list-container {
+    margin-top: 5%;
+    min-height: 100px;
+    border: 1px solid var(--bold-color);
+    overflow: auto;
+    padding: 3%;
+    max-height: 200px;
+}
+
+.prod-container {
+    display: flex;
+    margin-top: 3%;
+}
+
+.prod-container span {
+    font-weight: 700;
+}
+
+.prod-container p {
+    margin-left: 3%;
+}
+
+.total-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.total-container h4 {
+    font-size: 1.2rem;
+}
+
+.total-title {
+    color: black;
+}
+
+.total-subtitle {
+    color: var(--bold-color);
+    font-size: 1.2rem;
 }
 
 .secure-payment-main {
@@ -141,37 +211,42 @@ form {
 
 .go-back-arrow-container {
     display: flex;
-    width: 30%;
+    width: 50%;
     justify-content: center;
     align-items: center;
-    margin: 2% auto 5%;
-    cursor: pointer;
-}
 
-.go-back-arrow-container i {
-    font-size: 1-rem;
+    cursor: pointer;
+   
 }
 
 .go-back-arrow-container p {
-    font-size: 0.875rem;
+    font-size: 1rem;
+}
+
+.go-back-arrow-container i {
+    font-size: 1.5rem;
 }
 
 .formulario {
     padding: 2% 1%;
     border: 1px solid var(--gold-bg-color);
     width: 90%;
-    margin: 0 auto;
+    margin: 5% auto 0;
     border-radius: 5px;
 }
 
 .formulario ul li {
     display: flex;
     flex-direction: column;
-    margin: 7% 2% 0;
+    margin: 25px 5px 0;
 }
 
-.formulario ul li:first-child {
-    margin-top: 2%;
+.short-li {
+    width: 45%;
+}
+
+.formulario ul {
+    padding: 3% 0;
 }
 
 .formulario ul li label {
@@ -179,9 +254,18 @@ form {
     font-weight: 700;
 }
 
-.formulario ul li input, select {
-    margin-top: 2%;
-    width: 50%;
+.short-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+input, select {
+    margin-top: 3%;
+}
+
+.reg-input {
+    width: 60%;
 }
 
 .submit-payment-container {
@@ -222,10 +306,49 @@ form {
     display: none;
 }
 
+.short-input {
+    width: 100%;
+}
+
 @media(min-width: 768px){
+
 
     .secure-payment-main {
         padding: 5%;
+    }
+
+    .anch-steps {
+        display: flex;
+        width: 60%;
+        margin: 14vh auto 0;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .go-back-arrow-container {
+        display: flex;
+        width: 50%;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        margin: 0;
+    }
+
+    .summary-container {
+        max-width: 500px;
+        margin: 1% auto 5%;
+    }
+    
+    
+    .counter-container {
+        width: 50%;
+        margin: 3% auto 1%;
+    }
+
+    .prod-list-container {
+        width: 100%;
+       padding: 1.5%;
+        max-height: 225px;
     }
 
     .steps-list-container {
@@ -276,6 +399,7 @@ form {
         background-color: var(--light-grey-color);
         border-radius: 10px;
         position: relative;
+        margin-top: 5%;
     }
 
     .card-logo-container {
@@ -350,7 +474,43 @@ form {
         position: absolute;
         display: flex;
     }
+
+    .total-subtitle {
+        margin-top: 1.5%;
+    }
     
+@media (min-width: 1024px) {
+
+    .summary-container {
+        padding-top: 0%;
+    }
+    
+    .secure-payment-main {
+        padding-top: 2%;
+    }
+
+    .total-container h4, .total-title {
+        font-size: 1.5rem;
+    }
+
+    .anch-steps {
+        width: 50%;
+    }
+
+    .prod-list-container {
+        min-height: 125px;
+        max-height: 215px;
+    }
+
+    .prod-container {
+        font-size: 1rem;
+    }
+
+    .counter-container p{
+        font-size: 1.2rem;
+    }
+
+}
 
 
 }

@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+.error-incomplete {
+    border: 1px solid red;
+}
+
 select {
     width: 70%;
     padding-left: 2px;

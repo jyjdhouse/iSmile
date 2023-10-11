@@ -610,7 +610,7 @@ body {
 }
 
 .short-input {
-    width: 90%;
+    width: 50%;
     border-radius: 1rem;
     border: 1px solid var(--gold-color);
     padding: 5px 10px;
@@ -917,6 +917,12 @@ body {
     font-size: 1.2rem;
 }
 
+.shipment-disclaimer p {
+    color: var(--bold-color);
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
 @media(min-width:768px) {
     .view {
         justify-content: space-around;
@@ -981,6 +987,11 @@ body {
     .payment-logo-label {
         font-size: 20px;
     }
+
+    .shipment-disclaimer p {
+        font-size: 1rem;
+    }
+
 }
 
 @media(min-width:1024px) {

@@ -193,7 +193,6 @@ const controller = {
             },
           }
         );
-        orderToPay.pending_payment_date = Date.now(); //La actualizo en el momento para poder usarla
         //De esta manera, si hace refresh no vuelve a descontar de stock
 
         const checkForPaymentDone = async () => {
@@ -254,14 +253,14 @@ const controller = {
       }
       // Para mostrar cuanto tiempo falta para que expire el pago
       const paymentDueDate = new Date(orderToPay.pending_payment_date);
-    
       // Suma 15 minutos a la fecha de la orden
-      const expireTime =  paymentDueDate.setTime(paymentDueDate.getTime() + 15 * 60 * 1000); // 15 minutos en milisegundos
-      const actualTime = new Date().getTime();
+      const expireTime = new Date(paymentDueDate.getTime() + 15 * 60 * 1000); // 15 minutos en milisegundos
+      const actualTime = new Date();
       // Calcula la diferencia en milisegundos entre la fecha actual y la fecha de vencimiento
-      const timeLeft =  expireTime - actualTime;
-     
+      const timeLeft = expireTime -  actualTime;
       orderToPay.timeLeft = timeLeft; //Milisegundos
+      console.log(orderToPay.timeLeft)
+      // return res.send(orderToPay)
       return res.render("creditPayment", { order_tra_id, cards, orderToPay });
     } catch (error) {
       console.log(error);
