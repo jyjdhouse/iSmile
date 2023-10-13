@@ -259,6 +259,14 @@ window.addEventListener("load", async () => {
           orderToModify.oca_numero_envio = generateShipmentOrderTag.numero_envio;
           orderToModify.oca_orden_retiro = generateShipmentOrderTag.orden_retiro;
           paintShipmentStep(1,orderToModify);
+        } else{ //Hubo algun error ==> Pinto el mensaje que me trajo el pedido 
+          const errorCard = document.querySelector('.error-card');
+          errorCard.classList.remove('hidden');
+          errorCard.innerHTML = generateShipmentOrderTag.msg ? generateShipmentOrderTag.msg : 
+          "Ocurrio un error, refresca la pagina e intente nuevamente";
+          setTimeout(() => {
+            errorCard.classList.add('hidden');
+          }, 1000);
         }
       } catch (error) {
         console.log(

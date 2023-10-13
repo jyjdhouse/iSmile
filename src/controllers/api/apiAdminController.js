@@ -42,6 +42,7 @@ const orderStatuses = require("../../utils/staticDB/orderStatus");
 const getShipment = require("../../utils/getShipment");
 const boxSizes = require("../../utils/staticDB/boxSizes");
 const cancelShipment = require("../../utils/cancelShipment");
+const sendShippingOrderMailCancelation = require("../../utils/sendShippingOrderMailCancelation");
 
 const controller = {
   downloadClients: async (req, res) => {
@@ -220,8 +221,21 @@ const controller = {
           Key: `shippingTags/${tra_id}`,
         };
         command = new DeleteObjectCommand(params);
-        // Hago el delete de la base de datos
         await s3.send(command);
+        // Envio mail al usuario para informarle
+        const mailResponse = await sendShippingOrderMailCancelation(
+          orderToCancelShipment
+        );
+        if (!mailResponse.ok) {
+          return res.status(200).json({
+            meta: {
+              status: 200,
+              url: `api/admin/cancelShipmentTag`,
+            },
+            ok: false,
+            msg: mailResponse.msg,
+          });
+        }
         return res.status(200).json({
           meta: {
             status: 200,
@@ -229,7 +243,7 @@ const controller = {
           },
           ok: true,
         });
-      };
+      }
       // si no fue exitoso, devuelvo un 200 pero con ok false y el mensaje de error
       return res.status(200).json({
         meta: {
@@ -237,9 +251,8 @@ const controller = {
           url: `api/admin/cancelShipmentTag`,
         },
         ok: false,
-        msg: orderResponse.msg
+        msg: orderResponse.msg,
       });
-      
     } catch (error) {
       console.log(`Falle en adminApiController.getOrders: ${error}`);
       return res.status(500).json({
@@ -257,7 +270,6 @@ const controller = {
         where: { tra_id: orderId },
         include: ["orderItems"],
       });
-      console.log(categoryNumber);
       let method;
 
       // armo el stock items para mandarle a la funcion
@@ -296,13 +308,16 @@ const controller = {
           break;
         // Pendiente de envio
         case 2:
-          await db.Order.update(
-            {
-              order_status_id: categoryId,
-              pending_payment_date: null, //Por si habia fecha de pago
-            },
-            { where: { tra_id: orderId } }
-          );
+          // Primero me fijo que la orden no sea pago con tarjetas (Eso cambia solo)
+          if (order.payment_methods_id == 1) {
+            await db.Order.update(
+              {
+                order_status_id: categoryId,
+                pending_payment_date: null, //Por si habia fecha de pago
+              },
+              { where: { tra_id: orderId } }
+            );
+          }
 
           break;
         // Pendiente de pago && antes era pendiente de confirmacion
@@ -420,6 +435,20 @@ const controller = {
               where: { tra_id: orderId },
             }
           );
+          break;
+        // Pendiente de retiro
+        case 6:
+          // Primero me fijo que la orden no sea pago con tarjetas (Eso cambia solo)
+          if (order.payment_methods_id == 1) {
+            await db.Order.update(
+              {
+                order_status_id: categoryId,
+                pending_payment_date: null, //Por si habia fecha de pago
+              },
+              { where: { tra_id: orderId } }
+            );
+          }
+
           break;
       }
 
@@ -598,7 +627,7 @@ const controller = {
         msg: "etiqueta PDF generada",
         pdf: url,
         numero_envio: shipmentResponse.numero_envio,
-        orden_retiro: shipmentResponse.orden_retiro
+        orden_retiro: shipmentResponse.orden_retiro,
       });
     } catch (error) {
       console.log(`Falle en generateShipmentTag: ${error}`);

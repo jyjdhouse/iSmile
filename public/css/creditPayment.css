@@ -68,7 +68,9 @@ form {
 .prod-list-container {
     margin-top: 5%;
     min-height: 115px;
-    border: 1px solid var(--bold-color);
+    /* border: 1px solid var(--bold-color); */
+     /* Aplicar el sombreado */
+     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
     overflow: auto;
     padding: 3%;
     max-height: 200px;
@@ -372,7 +374,7 @@ input, select {
     }
 
     .prod-list-container {
-        max-width: 345px;
+        width: 345px;
        padding: 1.5%;
         max-height: 70%;
     }

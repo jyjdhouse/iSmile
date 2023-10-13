@@ -1,16 +1,14 @@
 const nodemailer = require('nodemailer');
 const emailConfig = require('./staticDB/mailConfig');
-async function sendShippingOrderMail(order) {
+async function sendShippingOrderMailCancelation(order) {
     // Configuración del transporte del correo
     const transporter = nodemailer.createTransport(emailConfig);
 
     // Contenido del correo
     let mailHTML = `<p>Hola ${order.billing_first_name},</p>
-    <p>Tu pedido ha sido empaquetado y listo para el envío.</p>
-    <p>Puedes consultar el estado de tu pedido en https://www.oca.com.ar/Busquedas/Envios</p>
-    <p>Número de seguimiento: ${order.oca_numero_envio}</p>
-    <p>Coste de envío: $${order.shipping_cost}</p>
-    <p>¡Gracias por elegirnos!</p>
+    <p>El envío de tu pedido ha sido cancelado. En breve recibirás otro mail de seguimiento para tu orden.</p>
+    <p>Lamentamos los inconvenientes que esto pueda ocacionar.</p>
+    <p>Atentamente,</p>
     <img src="cid:galleryPhoto" id="mail-image" alt="mail-image" style="width:100%;height:35vh;object-fit:contain;">`;
     
     // Opciones del correo
@@ -31,7 +29,8 @@ async function sendShippingOrderMail(order) {
         return {ok: true}
     } catch (error) {
         console.error('Error al enviar el correo:', error);
+        return {ok:false, error}
     }
 };
 
-module.exports = sendShippingOrderMail
+module.exports = sendShippingOrderMailCancelation

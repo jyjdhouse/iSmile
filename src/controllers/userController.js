@@ -135,7 +135,7 @@ const controller = {
   },
   safePaymentView: async (req, res) => {
     try {
-      const order_tra_id = "1695654773982-9w2cydl1lf";
+      const order_tra_id = req.session.order_tra_id;
       const cards = acceptedCards;
       // Me tengo que fijar que los items que este por pagar se encuentren en stock
       const orderToPay = getDeepCopy(
@@ -193,6 +193,7 @@ const controller = {
             },
           }
         );
+        orderToPay.pending_payment_date = new Date();
         //De esta manera, si hace refresh no vuelve a descontar de stock
 
         const checkForPaymentDone = async () => {
@@ -224,6 +225,7 @@ const controller = {
                   where: { id: orderToPay.id },
                 }
               );
+             
               // Tengo que sumar el stock nuevamente
               let method = "suma";
               let stockItems = [];
@@ -259,7 +261,6 @@ const controller = {
       // Calcula la diferencia en milisegundos entre la fecha actual y la fecha de vencimiento
       const timeLeft = expireTime -  actualTime;
       orderToPay.timeLeft = timeLeft; //Milisegundos
-      console.log(orderToPay.timeLeft)
       // return res.send(orderToPay)
       return res.render("creditPayment", { order_tra_id, cards, orderToPay });
     } catch (error) {
@@ -676,12 +677,27 @@ const controller = {
     const order = await db.Order.findOne({
       where: {
         tra_id: orderTraId
-      }
+      },
+      include: ['orderItems']
     });
     // Si no hay orden en el session, o no encuentra orden simplemente redirijo
     if(!orderTraId || !order){
       orderTraId && delete req.session.order_tra_id;
       return res.redirect('/user/checkout');
+    };
+    // Tengo que sumar el stock nuevamente
+    let method = "suma";
+    let stockItems = [];
+    order.orderItems.forEach((item) => {
+      // pusheo los objetos al stockItems
+      stockItems.push({
+        id: item.products_id, //El id del producto
+        quantity: item.quantity,
+      });
+    });
+    let stockResponse = await handleStock(stockItems, method);
+    if (!stockResponse.ok) {
+      console.log("Hubo un error al sumar los items al stock");
     };
     // Si hay orden, la elimino de db y de session
     await db.Order.destroy({

@@ -73,13 +73,23 @@ function buildXml(data) {
  email="info@ismile.com.ar" solicitante="" observaciones="" centrocosto="18"
  idfranjahoraria="3" idcentroimposicionorigen="0" fecha="${data.date}">
  <envios>
- <envio idoperativa="${shipmentData.shipmentStaticInfo.Operativa.PaP}" nroremito="${data.user_dni}">
- <destinatario apellido="${data.last_name}" nombre="${data.first_name}" calle="${data.street}" nro="${data.street_number}"
- piso="" depto="${data.apartment || ''}" localidad="${data.city}" provincia="${data.province}"
+ <envio idoperativa="${
+   shipmentData.shipmentStaticInfo.Operativa.PaP
+ }" nroremito="${data.user_dni}">
+ <destinatario apellido="${data.last_name}" nombre="${
+    data.first_name
+  }" calle="${data.street}" nro="${data.street_number}"
+ piso="" depto="${data.apartment || ""}" localidad="${data.city}" provincia="${
+    data.province
+  }"
  cp="${data.zip}" telefono="" email="${data.email}" idci="0"
  celular="${data.phone}" observaciones="" />
  <paquetes>
- <paquete alto="${data.boxesUsed.sizes[0]}" ancho="${data.boxesUsed.sizes[1]}" largo="${data.boxesUsed.sizes[2]}" peso="${data.orderWeight}" valor="0" cant="${data.boxesUsed.boxQuantityTotal}" />
+ <paquete alto="${data.boxesUsed.sizes[0]}" ancho="${
+    data.boxesUsed.sizes[1]
+  }" largo="${data.boxesUsed.sizes[2]}" peso="${
+    data.orderWeight
+  }" valor="0" cant="${data.boxesUsed.boxQuantityTotal}" />
  </paquetes>
  </envio>
  </envios>
@@ -87,33 +97,37 @@ function buildXml(data) {
  </origenes>
 </ROWS>`;
   return xml;
-};
+}
 module.exports = async function (orderId, boxesUsed) {
   let order;
   try {
-    order = getDeepCopy(await db.Order.findOne({
-      where: { tra_id: orderId },
-      include: ["shippingAddress", "billingAddress", "orderItems"],
-    }));
+    order = getDeepCopy(
+      await db.Order.findOne({
+        where: { tra_id: orderId },
+        include: ["shippingAddress", "billingAddress", "orderItems"],
+      })
+    );
     // Para la fecha YYYYMMDD TODO: ver tema de si la fecha ya paso
     const validDay = getNextValidDay(new Date(order.date)); //Obtengo el dia habil mas cercano a la fecha de la orden
-    const orderDateArray = dateFormater(validDay,true).split("/");
+    const orderDateArray = dateFormater(validDay, true).split("/");
     const orderDate = `${orderDateArray[2]}${orderDateArray[1]}${orderDateArray[0]}`;
 
     // Me fijo el peso
     let orderWeight = 0;
     let idsToCheck = []; //Array de items para consultar en db
-    order.orderItems.forEach(item => {
-      idsToCheck.push(item.products_id)
+    order.orderItems.forEach((item) => {
+      idsToCheck.push(item.products_id);
     });
     // Ahora consulto por esos productos en db
     const productsToCheck = await db.Product.findAll({
       where: {
-        id: idsToCheck
-      }
+        id: idsToCheck,
+      },
     });
-    productsToCheck.forEach(prod => {
-      const productQuantity = order.orderItems.find(item=>item.products_id == prod.id).quantity
+    productsToCheck.forEach((prod) => {
+      const productQuantity = order.orderItems.find(
+        (item) => item.products_id == prod.id
+      ).quantity;
       orderWeight += parseFloat(prod.weight || 0) * productQuantity;
     });
     // Armo el objeto para pasar a la funcion que arma el xml
@@ -125,9 +139,9 @@ module.exports = async function (orderId, boxesUsed) {
       phone: order.billing_phone,
       date: orderDate,
       boxesUsed,
-      orderWeight
+      orderWeight,
     };
-    
+
     // Me fijo que direccion de envio uso
     if (order.is_same_address) {
       //Uso la de billingAddress
@@ -206,18 +220,10 @@ module.exports = async function (orderId, boxesUsed) {
         msg: `No se pudo procesar el servicio con OCA. Reintentar`,
         orderId: order.tra_id,
       };
-    };
-    await db.Order.update({
-      oca_numero_envio: numeroEnvio,
-      oca_orden_retiro: ordenRetiro
-    },{
-      where: {
-        id : order.id
-      }
-    });
+    }
+    
     // Esto es para usarlo en el mail
     order.oca_numero_envio = numeroEnvio;
-    await sendShippingOrderMail(order)
     // Armo el bodyData para el nuevo fetch
     bodyData = {
       IdOrdenRetiro: ordenRetiro,
@@ -235,7 +241,6 @@ module.exports = async function (orderId, boxesUsed) {
     );
 
     //la respuesta para la etiqueta es un pdf que viene en base64 en formato xml
-
     // Analizar el XML
     xmlDoc = parser.parseFromString(getTagResponse.data, "text/xml");
     // Obtener el valor de la etiqueta <string>
@@ -262,7 +267,58 @@ module.exports = async function (orderId, boxesUsed) {
         orderId: order.tra_id,
       };
     }
-    return { ok: true , numero_envio: numeroEnvio, orden_retiro: ordenRetiro};
+    // Ahora hago la peticion para saber el coste
+    // Convertir las medidas de cm a metros
+    const sizesInMts = boxesUsed.sizes.map((size) => size / 100);
+    let totalVolume = sizesInMts[0] * sizesInMts[1] * sizesInMts[2];
+    bodyData = {
+      CUIT: process.env.ENVIROMENT ? process.env.CUIT_TEST : process.env.CUIT,
+      Operativa: shipmentData.shipmentStaticInfo.Operativa.PaP,
+      PesoTotal: xmlData.orderWeight, 
+      VolumenTotal: totalVolume, 
+      CodigoPostalOrigen: shipmentData.shipmentStaticInfo.CodigoPostalOrigen, 
+      CodigoPostalDestino: parseInt(xmlData.zip),
+      CantidadPaquetes: boxesUsed.boxQuantityTotal,
+      ValorDeclarado: order.total,
+    };
+    const response = await axios.post(
+      shipmentData.shipmentEstimateUrl,
+      bodyData,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    xmlDoc = parser.parseFromString(response.data, "text/xml");
+    const totalValue = xmlDoc.getElementsByTagName("Total")[0]?.textContent;
+    if (!totalValue) {
+      console.log(`Falle en el pedido para calcular el total: ${error}`);
+      return res.json({
+        ok: false,
+        msg: `Hubo un error al calcular coste de envio.`,
+      });
+    }
+    // Lo pego aca para
+    order.shipping_cost = parseFloat(totalValue).toFixed(2);
+    await sendShippingOrderMail(order);
+    await db.Order.update(
+      {
+        oca_numero_envio: numeroEnvio,
+        oca_orden_retiro: ordenRetiro,
+      },
+      {
+        where: {
+          id: order.id,
+        },
+      }
+    );
+    return {
+      ok: true,
+      numero_envio: numeroEnvio,
+      orden_retiro: ordenRetiro,
+    };
   } catch (error) {
     console.log(`Falle en getShipment: ${error}`);
     return {
