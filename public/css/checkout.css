@@ -3,9 +3,8 @@ body {
 
 }
 
-.continue-button.disabled {
-    color: #ccc;
-    background-color: #eee;
+.continue-button-disabled {
+    background-color: #ccc;
     cursor: unset;
     pointer-events: none;
 }
@@ -852,7 +851,7 @@ body {
 }
 
 .payment-box i {
-    color: rgb(224, 37, 37);
+    color: var(--bold-color);
     height: 30px;
     font-size: 30px;
 }
@@ -917,11 +916,19 @@ body {
     font-size: 1.2rem;
 }
 
+.shipment-disclaimer {
+    display: flex;
+    flex-direction: column;
+}
+
 .shipment-disclaimer p {
     color: var(--bold-color);
     font-size: 0.875rem;
-    font-weight: 700;
+
+    margin: 3% 0;
 }
+
+
 
 .hide {
     display: none;
