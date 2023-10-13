@@ -110,14 +110,14 @@ module.exports = {
   ],
   productFieldsValidations: [
     // Validar que los campos necesarios esten
-    body(["name", "price", "volume", "weight"]).notEmpty().bail(),
+    body(["name", "price", "sizes_id", "weight"]).notEmpty().bail(),
     // Me fijo que estos campos sean STRINGS
     body(["name", "description", "ingredients", "size", "mainImage"])
       .optional()
       .isString()
       .bail(),
     // Me fijo que estos campos sean INT
-    body(["price", "stock", "discount"]).custom((value, { req }) => {
+    body(["price", "stock", "discount", "sizes_id"]).custom((value, { req }) => {
       value = value ? value : 0;
       if (!regExs.justNumbers.test(value)) {
         throw new Error();
@@ -125,7 +125,7 @@ module.exports = {
       return true;
     }),
     // Me fijo que estos campos sean FLOAT
-    body(["volume", "weight"]).optional().isFloat().bail(),
+    body("weight").optional().isFloat().bail(),
     // Esto es para chequear currentImgs (puede ser array o string nomas)
     body("current_imgs").custom((value, { req }) => {
       let currentImgs = req.body.current_imgs;

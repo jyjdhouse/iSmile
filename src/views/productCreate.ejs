@@ -55,8 +55,13 @@
                 <div class="input-label-container price-container">
                     <label for="">CARACTERISTICAS <span class="grey">(separador decimal con ".")</span></label>
                     <div class="field volume-field">
-                        <label for="volume" class="bold">Volumen (m³)</label>
-                        <input type="text" name="volume"  class="required float-only-input" placeholder="0.05">
+                        <label for="volume" class="bold">Tamaño de producto</label>
+                        <div class="radio-field">
+                            <% productSizes.forEach((size,i) => { %>
+                                <input type="radio" name="sizes_id" value="<%= size.id%>" id="product-size-<%= size.id %>" <%= i== 0 ? 'checked' : null %> class="product-size-input">
+                                <label for="product-size-<%= size.id %>" class="product-size-label"><%= size.size %></label>
+                            <% }) %>
+                        </div>
                     </div>
                     <div class="field volume-field">
                         <label for="weight" class="bold">Peso (kg)</label>
