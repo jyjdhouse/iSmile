@@ -18,6 +18,9 @@ const getAllProducts = require("../../utils/getAllProducts");
 const getOrder = require("../../utils/getOrder");
 const emailConfig = require("../../utils/staticDB/mailConfig");
 const handleStock = require("../../utils/handleStock");
+const boxSizes = require("../../utils/staticDB/boxSizes");
+const productSizes = require("../../utils/staticDB/productSizes");
+
 const {
   shipmentStaticInfo,
   shipmentEstimateUrl,
@@ -25,6 +28,108 @@ const {
 const generateRandomCodeWithExpiration = require("../../utils/generateRandomCodeWithExpiration");
 const sendVerificationCodeMail = require("../../utils/sendverificationCodeMail");
 
+function calculateVolumeUsed(sizeOfproductsUsed) {
+  let boxesEstimate = [...boxSizes];
+  boxesEstimate = boxesEstimate.map((box) => {
+    return {
+      ...box,
+      quantityUsed: 0,
+    };
+  });
+  // Sumo las cajas gdes
+  boxesEstimate[1].quantityUsed += sizeOfproductsUsed["3"]; //Le sumo cada producto gde que haya
+
+  // Ahora para los productos medianos/chicos tengo que ver depenediendo cuantos productos tiene la orden de ese tipo
+  const mediumSizeSmallBoxMaxAmount = productSizes.find(
+    (size) => size.id == 2
+  ).maxInSmallSize;
+  const mediumSizeBigBoxMaxAmount = productSizes.find(
+    (size) => size.id == 2
+  ).maxInBigSize;
+  const smallSizeSmallBoxMaxAmount = productSizes.find(
+    (size) => size.id == 1
+  ).maxInSmallSize;
+  const smallSizeBigBoxMaxAmount = productSizes.find(
+    (size) => size.id == 1
+  ).maxInBigSize;
+  // Para los productos chicos...
+  if (sizeOfproductsUsed["1"] > smallSizeSmallBoxMaxAmount) {
+    //Si hay mas que las que entran en caja chica
+    if (sizeOfproductsUsed["1"] > smallSizeBigBoxMaxAmount) {
+      //Si hay mas de las que entran en gde
+      // Le sumo las cajas gdes necesarias
+      boxesEstimate[1].quantityUsed += Math.floor(
+        sizeOfproductsUsed["1"] / smallSizeBigBoxMaxAmount
+      );
+      // Agarro los productos que quedan (cantidad - cantidad que fueron encajadas (cajas usadas por maxima cantidad de objetos que entran en esa caja))
+      const remanent =
+        sizeOfproductsUsed["1"] -
+        Math.floor(sizeOfproductsUsed["1"] / smallSizeBigBoxMaxAmount) *
+          smallSizeBigBoxMaxAmount;
+      // Si quedo remanente
+      if (remanent > 0) {
+        // Si entran en caja chica los meto ahi
+        if (remanent <= smallSizeSmallBoxMaxAmount)
+          boxesEstimate[0].quantityUsed += 1;
+        // Sino le sumo una gde
+        if (remanent > smallSizeSmallBoxMaxAmount)
+          boxesEstimate[1].quantityUsed += 1;
+      }
+    } else {
+      //Aca quiere decir que hay cantidad que no entran en chica pero si en 1 gde
+      // Le sumo 1 gde
+      boxesEstimate[1].quantityUsed += 1;
+    }
+  } else {
+    //Aca quiere decir que entran en 1 chica
+    boxesEstimate[0].quantityUsed += 1;
+  }
+
+  // Para los productos medianos...
+  if (sizeOfproductsUsed["2"] > mediumSizeSmallBoxMaxAmount) {
+    //Si hay mas que las que entran en caja chica
+    if (sizeOfproductsUsed["2"] > mediumSizeBigBoxMaxAmount) {
+      //Si hay mas de las que entran en gde
+      // Le sumo las cajas gdes necesarias
+      boxesEstimate[1].quantityUsed += Math.floor(
+        sizeOfproductsUsed["2"] / mediumSizeBigBoxMaxAmount
+      );
+      // Agarro los productos que quedan (cantidad - cantidad que fueron encajadas (cajas usadas por maxima cantidad de objetos que entran en esa caja))
+      const remanent =
+        sizeOfproductsUsed["2"] -
+        Math.floor(sizeOfproductsUsed["2"] / mediumSizeBigBoxMaxAmount) *
+          mediumSizeBigBoxMaxAmount;
+      // Si quedo remanente
+      if (remanent > 0) {
+        // Si entran en caja chica los meto ahi
+        if (remanent <= mediumSizeSmallBoxMaxAmount)
+          boxesEstimate[0].quantityUsed += 1;
+        // Sino le sumo una gde
+        if (remanent > mediumSizeSmallBoxMaxAmount)
+          boxesEstimate[1].quantityUsed += 1;
+      }
+    } else {
+      //Aca quiere decir que hay cantidad que no entran en chica pero si en 1 gde
+      // Le sumo 1 gde
+      boxesEstimate[1].quantityUsed += 1;
+    }
+  } else {
+    //Aca quiere decir que entran en 1 chica
+    boxesEstimate[0].quantityUsed += 1;
+  }
+  let totalVolumeEstimate = 0;
+  // Recorre el array de objetos y calcula el volumen para cada caja
+  for (var i = 0; i < boxesEstimate.length; i++) {
+    var box = boxesEstimate[i];
+    var m1 = box.sizes.alto / 100; // Convierte centímetros a metros
+    var m2 = box.sizes.ancho / 100;
+    var m3 = box.sizes.largo / 100;
+
+    // Calcula el volumen de la caja actual en metros cúbicos
+    totalVolumeEstimate += m1 * m2 * m3 * box.quantityUsed;
+  }
+  return totalVolumeEstimate;
+}
 const controller = {
   getLoggedUserId: async (req, res) => {
     try {
@@ -581,30 +686,34 @@ const controller = {
     let { zip, items } = req.body;
     let idsToCheck = [];
     let totalWeigth = 0;
-    // TODO: hacer forEach en items y determinar: VolumenTotal - PesoTotal - ValorDeclarado
-    // restaria aca hacer la logica segun la cantidad de elementos, que volumen y peso mandamos
-    items.forEach(item => {
+    let sizeOfproductsUsed = {
+      1: 0,
+      2: 0,
+      3: 0,
+    };
+    items.forEach((item) => {
       !idsToCheck.includes(item.id) ? idsToCheck.push(item.id) : null;
     });
     let productsToCheck = await db.Product.findAll({
       where: {
-        id: idsToCheck
-      }
+        id: idsToCheck,
+      },
     });
     // Voy por cada producto de la db y le calculo el peso
-    productsToCheck.forEach(dbProd => {
-      let quantity = items.find(it=>it.id == dbProd.id).quantity;
+    productsToCheck.forEach((dbProd) => {
+      let quantity = items.find((it) => it.id == dbProd.id).quantity;
       totalWeigth += (parseFloat(dbProd.weight) || 0) * parseInt(quantity);
+      let size_id = dbProd.sizes_id;
+      sizeOfproductsUsed[size_id] += parseInt(quantity);
     });
-     //TODO: Agregar esto + 
-    let totalVolume = 0.005;//TODO: Agregar esto + 
-
+    let volumeEstimate = parseFloat(calculateVolumeUsed(sizeOfproductsUsed));
+  
     try {
       const bodyObject = {
-        CUIT: process.env.ENVIROMENT ? process.env.CUIT_TEST: process.env.CUIT,
+        CUIT: process.env.ENVIROMENT ? process.env.CUIT_TEST : process.env.CUIT,
         Operativa: shipmentStaticInfo.Operativa.PaP,
         PesoTotal: totalWeigth, //Sumar un poco +
-        VolumenTotal: totalVolume, //Sumar un poco +
+        VolumenTotal: volumeEstimate, //Sumar un poco +
         CodigoPostalOrigen: shipmentStaticInfo.CodigoPostalOrigen,
         CodigoPostalDestino: parseInt(zip),
         CantidadPaquetes: 1,
@@ -619,36 +728,37 @@ const controller = {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlString, "text/xml");
       const totalValue = xmlDoc.getElementsByTagName("Total")[0]?.textContent;
-      const plazoEntregaValue =xmlDoc.getElementsByTagName("PlazoEntrega")[0]?.textContent;
-      console.log(xmlDoc)
-      if(totalValue && plazoEntregaValue){
+      const plazoEntregaValue =
+        xmlDoc.getElementsByTagName("PlazoEntrega")[0]?.textContent;
+      console.log(xmlDoc);
+      if (totalValue && plazoEntregaValue) {
         return res.json({
           ok: true,
           meta: {
-            status: 200
+            status: 200,
           },
           shippingData: {
             totalValue,
             plazoEntregaValue,
           },
-          redirect: '/user/checkout/pago-seguro'
+          redirect: "/user/checkout/pago-seguro",
         });
-  
       } else {
         return res.json({
           ok: false,
           meta: {
             status: 400,
           },
-          msg: `Error al calcular coste de envio.`
+          msg: `Error al calcular coste de envio.`,
         });
       }
-    
-  
-
     } catch (error) {
       console.log("Error pidiendo datos del envio:", error);
-      return res.json({ error: "Error pidiendo datos del envío", ok: false, meta: {status: 500} });
+      return res.json({
+        error: "Error pidiendo datos del envío",
+        ok: false,
+        meta: { status: 500 },
+      });
     }
   },
   getEmailCode: async (req, res) => {
@@ -690,7 +800,7 @@ const controller = {
       // Aca el tiempo es correcto ==> Chequeo codigo
       if (code != user.verification_code) {
         return res.status(200).json({
-          ok: false, 
+          ok: false,
           msg: "El codigo introducido es incorrecto. Intente nuevamente",
         });
       }

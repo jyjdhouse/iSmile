@@ -1,4 +1,5 @@
-module.exports = [
+module.exports = [ 
+  //SI AGREGO ALGUNA MEDIDA TENGO QUE CONTEMPLAR EN LA FUNCION EN APIUSERCONTROLLER LA QUE CALCULO EL VOLUMEN
   {
     id: 1,
     name: "Chica",
