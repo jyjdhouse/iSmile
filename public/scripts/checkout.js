@@ -42,7 +42,6 @@ const createTimeoutForCard = (card) => {
   let timeout;
   clearTimeout(timeout);
   timeout = setTimeout(() => {
-    console.log('entro time');
     checkInputPrice(card);
     getTotalPrice();
   }, 10);
@@ -74,7 +73,6 @@ productCards.forEach((card) => {
   quantityNumImput?.addEventListener("change", () => {
     if (Number(quantityNumImput.value) >= Number(stock)) {
       quantityNumImput.value = Number(stock);
-      console.log('entro change', quantityNumImput.value)
       createTimeoutForCard(card)
     } else {
       addQuantityBtn.style.pointerEvents = "none";
@@ -112,7 +110,6 @@ const checkForStock = () => {
   cards = document.querySelectorAll(".product-card");
   let stockEmptyFlag = false;
   cards.forEach((card) => {
-    console.log(card);
     let stock = Number(card.querySelector(".stock-number")?.innerText);
     if (stock != NaN && stock <= 0) {
       stockEmptyFlag = true;
@@ -134,11 +131,9 @@ const checkForStock = () => {
     }
   })
   if (stockEmptyFlag) {
-    console.log('entro flag true');
     startPurchaseBtn.disabled = true;
     startPurchaseBtn.classList.add('continue-button-disabled');
   } else {
-    console.log('entro flag false');
     startPurchaseBtn.disabled = false;
     startPurchaseBtn.classList.remove('continue-button-disabled');
   }
@@ -224,7 +219,6 @@ const innerShipmentPrice = (price) => {
     disclaimer.classList.remove('hide');
     disclaimer.classList.add('show');
     let adjustedPrice = Number(price) + 1000;
-    console.log(adjustedPrice)
     shipmentPriceSpan.innerText = `$${price} - $${adjustedPrice}`;
   } else {
     disclaimer.classList.add('hide');
@@ -268,6 +262,7 @@ const getShipmentInfo = async (zip) => {
       }
     );
     const data = await response.json();
+    console.log(data);
     const { status } = data.meta;
     if (status && status === 200) {
       getTotalPrice();
@@ -281,14 +276,11 @@ const getShipmentInfo = async (zip) => {
           const useSameAddress = document.querySelector("#use-same-address");
           let errorContainer;
           if (useSameAddress.checked) {
-            console.log('check entro')
             errorContainer = document.querySelector('.product-side-shipment-info');
 
           } else {
-            console.log('entro')
             errorContainer = document.querySelector('.zip-code-error-container');
           }
-          console.log(errorContainer)
           const error = document.createElement("p");
           error.setAttribute('class', 'shipment-error-p');
           error.textContent = "Error al calcular coste de envío";
@@ -400,7 +392,6 @@ function checkInputPrice(card) {
   // agarro el <p> con el precio
   let price = parseInt(card.querySelector(".product-price-span").innerHTML);
   let quantity = parseInt(card.querySelector(".product-quantity").value);
-  console.log(quantity)
   let totalElement = card.querySelector(".product-subtotal-span");
   let discountPriceElement = card.querySelector(".span-discount-price");
   totalElement.innerHTML = `$${quantity * price}`;
@@ -600,7 +591,6 @@ continueButtons.forEach((btn) => {
         ).innerHTML,
         city: stepFormContainer.querySelector("#billing_city").value,
       };
-      console.log(billingAddress)
 
       // invierto que contendor se ve
       stepFormContainer.classList.add("hidden");
@@ -662,7 +652,7 @@ continueButtons.forEach((btn) => {
 
       let shippingAddress;
       // Aca pregunto si uso el check de "Usar direccion asociada al usuario"
-      console.log('aca editar')
+      // console.log('aca editar')
       let useSameAddressCheckbox = document.querySelector("#use-user-address");
       if (useSameAddressCheckbox && useSameAddressCheckbox.checked) {
         shippingAddress = {
@@ -1375,7 +1365,6 @@ form?.addEventListener("submit", async (e) => {
       window.location.href = `/user/checkout?checkoutErrors=${true}&msg=${errorMsg}`;
       return;
     } else if (fetchResponse.redirect) {
-      console.log(fetchResponse.redirect)
       // Una vez que se compra, si no hay usuario se borra el carro del locale
       if (
         !window.userLogged &&

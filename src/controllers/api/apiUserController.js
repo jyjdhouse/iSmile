@@ -694,7 +694,10 @@ const controller = {
     items.forEach((item) => {
       !idsToCheck.includes(item.id) ? idsToCheck.push(item.id) : null;
     });
-    let productsToCheck = await db.Product.findAll({
+    
+  
+    try {
+      let productsToCheck = await db.Product.findAll({
       where: {
         id: idsToCheck,
       },
@@ -707,8 +710,6 @@ const controller = {
       sizeOfproductsUsed[size_id] += parseInt(quantity);
     });
     let volumeEstimate = parseFloat(calculateVolumeUsed(sizeOfproductsUsed));
-  
-    try {
       const bodyObject = {
         CUIT: process.env.ENVIROMENT ? process.env.CUIT_TEST : process.env.CUIT,
         Operativa: shipmentStaticInfo.Operativa.PaP,
@@ -730,7 +731,6 @@ const controller = {
       const totalValue = xmlDoc.getElementsByTagName("Total")[0]?.textContent;
       const plazoEntregaValue =
         xmlDoc.getElementsByTagName("PlazoEntrega")[0]?.textContent;
-      console.log(xmlDoc);
       if (totalValue && plazoEntregaValue) {
         return res.json({
           ok: true,
@@ -750,6 +750,7 @@ const controller = {
             status: 400,
           },
           msg: `Error al calcular coste de envio.`,
+          xmlString
         });
       }
     } catch (error) {
