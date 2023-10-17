@@ -212,6 +212,7 @@ window.addEventListener("load", () => {
 
     cardholderNameInp.addEventListener('input', () => {
       let input = cardholderNameInp.value.toUpperCase();
+      cardholderNameInp.value = cardholderNameInp.value.toUpperCase();
       cardholderNameP.textContent = input;
     });
 
