@@ -106,37 +106,45 @@ const deleteShipmentErrors = () => {
 }
 
 // logica para si viene checkout errors de stock error
-const cards = document.querySelectorAll(".product-card");
-let stockEmptyFlag = false;
-cards.forEach((card) => {
-  let stock = Number(card.querySelector(".stock-number")?.innerText);
-
-  if (stock != NaN && stock <= 0) {
-    stockEmptyFlag = true;
-    let prodNameContainer = card.querySelector(
-      ".product-info-container .product-name-container"
-    );
-    let stockErrorContainer =
-      prodNameContainer.querySelector(".check-stock-error");
-    stockErrorContainer.innerHTML =
-      "<p class='stock-error-p'>Este producto está fuera de stock</p>";
-    let addQuantityBtn = card.querySelector(".add-quantity-btn");
-    addQuantityBtn.style.pointerEvents = "none";
-    let quantityNumImput = card.querySelector(".product-quantity");
-    quantityNumImput.style.pointerEvents = "none";
-    quantityNumImput.value = 0; 
-    quantityNumImput?.addEventListener("change", () => {
-      quantityNumImput.value = 0;
-    });
+let cards = document.querySelectorAll(".product-card");
+let startPurchaseBtn = document.querySelector(".start-buy-button");
+const checkForStock = () => {
+  cards = document.querySelectorAll(".product-card");
+  let stockEmptyFlag = false;
+  cards.forEach((card) => {
+    console.log(card);
+    let stock = Number(card.querySelector(".stock-number")?.innerText);
+    if (stock != NaN && stock <= 0) {
+      stockEmptyFlag = true;
+      let prodNameContainer = card.querySelector(
+        ".product-info-container .product-name-container"
+      );
+      let stockErrorContainer =
+        prodNameContainer.querySelector(".check-stock-error");
+      stockErrorContainer.innerHTML =
+        "<p class='stock-error-p'>Este producto está fuera de stock</p>";
+      let addQuantityBtn = card.querySelector(".add-quantity-btn");
+      addQuantityBtn.style.pointerEvents = "none";
+      let quantityNumImput = card.querySelector(".product-quantity");
+      quantityNumImput.style.pointerEvents = "none";
+      quantityNumImput.value = 0; 
+      quantityNumImput.addEventListener("change", () => {
+        quantityNumImput.value = 0;
+      });
+    }
+  })
+  if (stockEmptyFlag) {
+    console.log('entro flag true');
+    startPurchaseBtn.disabled = true;
+    startPurchaseBtn.classList.add('continue-button-disabled');
+  } else {
+    console.log('entro flag false');
+    startPurchaseBtn.disabled = false;
+    startPurchaseBtn.classList.remove('continue-button-disabled');
   }
-});
+};
+checkForStock();
 
-let btn = document.querySelector(".start-buy-button");
-if (stockEmptyFlag) {
-  btn.disabled = true;
-} else {
-  btn.disabled = false;
-}
 
 // Logica para que funcióne el mas y el menos
 const reduceProductQuantityBtns = document.querySelectorAll(
@@ -215,14 +223,15 @@ const innerShipmentPrice = (price) => {
   if (Number(price) > 0) {
     disclaimer.classList.remove('hide');
     disclaimer.classList.add('show');
-    shipmentPriceSpan.innerText = `${price}`;
-    getTotalPrice();
+    let adjustedPrice = Number(price) + 1000;
+    console.log(adjustedPrice)
+    shipmentPriceSpan.innerText = `$${price} - $${adjustedPrice}`;
   } else {
     disclaimer.classList.add('hide');
     disclaimer.classList.remove('show');
     shipmentPriceSpan.innerText = `${0}`;
-    getTotalPrice();
   }
+  getTotalPrice();
 }
 
 const getShipmentInfo = async (zip) => {
@@ -347,6 +356,7 @@ const checkClickTrashOrScreen = (btn) => {
       getTotalPrice();
       checkIfCartIsEmpty();
       checkIfAllProductsAreInStock();
+      checkForStock();
     } else {
       const btnClicked = btn;
       const card = btnClicked.closest(".product-card");
@@ -432,9 +442,7 @@ function getTotalPrice() {
     counter += parseInt(subtotal);
   });
   subTotalElement.innerHTML = counter;
-  subTotalElementCheckout.innerText = counter;
   counter += shipmentPrice;
-  totalElementCheckout.innerText = counter;
   totalElement.innerHTML = counter;
 
 }
@@ -1227,7 +1235,6 @@ useUserAddress?.addEventListener('click', async () => {
     calculateShipmentPriceBtn.classList.remove('hidden');
   }
   setTimeout(async () => {
-    console.log('entro time')
     const zipCode = document.querySelector('#shipping-address-zip-code-p').innerText;
     await getShipmentInfo(zipCode);
   }, 1000)
