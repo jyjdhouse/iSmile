@@ -136,8 +136,9 @@
                       <p class="year-valid-thru-p"></p>
                     </div>
                   </div>
-                  <ul class="prod-list-container">
+                  <div class="prod-list-container">
                     <h4>Resumen</h4>
+                    <ul class="prod-list">
                     <% orderToPay.orderItems.forEach((item, i)=> { %>
                       <li class="prod-container">
                         <span>
@@ -148,7 +149,12 @@
                         </p>
                       </li>
                       <% }) %>
-                  </ul>
+                    </ul>
+                    <div class="order-total-container">
+                      <p class="bold">Total</p>
+                      <p>$<%= orderToPay.total %></p>
+                    </div>
+                    </div>
                 </div>
               </div>
             </div>
