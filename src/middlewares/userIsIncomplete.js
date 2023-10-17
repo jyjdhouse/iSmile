@@ -13,7 +13,7 @@ const userIsIncomplete = async (req, res, next) => {
                 }
             });
             // Quiere decir que no verifico el mail
-            if (!userLogged.verified_email) {           
+            if (!userLogged.verified_email) {      
                 if (req.originalUrl) {
                     // Verificar si el usuario se encuentra en una URL específica
                     if (!req.originalUrl.includes('/user/verificar-email')) {

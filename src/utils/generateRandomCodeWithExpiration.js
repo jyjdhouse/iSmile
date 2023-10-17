@@ -1,6 +1,6 @@
 module.exports = function () {
   const length = 6;
-  const chars = '0123456789';
+  const chars = '123456789';
   const expirationMinutes = 30; // Tiempo de expiración en minutos
   const currentTime = new Date();
   const expirationTime = new Date(currentTime.getTime() + expirationMinutes * 60 * 1000); // Calcula la fecha de expiración

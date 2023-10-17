@@ -51,6 +51,7 @@ select {
     border: 0;
     color: red;
     cursor: pointer;
+    text-align: center;
 }
 /*  */
 .user-profile-main {
@@ -276,7 +277,37 @@ select {
     flex-direction: column;
    
 }
-
+/* POPUP para eliminar cuenta  */
+.destroy-account-popup{
+    width: 50vw;
+    height: 30vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    scale: 0;
+    opacity: 0;
+    transition: all .3s ease;
+    z-index: 45;
+}
+.destroy-account-popup-active{
+    scale: 1;
+    opacity: 1;
+}
+.destroy-account-popup>p{
+    width: 100%;
+    text-align: center;
+}
+.destroy-account-popup>button{
+    width: 45%;
+    height: 30px;
+}
 @media (min-width: 768px) {
 
 

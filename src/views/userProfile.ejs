@@ -236,7 +236,7 @@
                                 </div>
                                 <div class="profile-radio-p-container">
                                     <button class="change-password-btn">Cambiar contraseña</a>
-                                        <button class="destroy-account-btn">Eliminar cuenta</button>
+                                    <button class="destroy-account-btn">Eliminar cuenta</button>
                                 </div>
                             </div>
 
@@ -487,8 +487,9 @@
                                         </div>
                                     </div>
                                     <div class="profile-radio-p-container profile-field-container">
-                                        <button class="change-password-btn">Cambiar contraseña</a>
-                                            <button class="destroy-account-btn">Eliminar cuenta</button>
+                                        <button class="change-password-btn">Cambiar contraseña</button>
+                                        <button class="destroy-account-btn">Eliminar cuenta</button>
+                                            
                                     </div>
                                 </ul>
 
@@ -511,10 +512,14 @@
 
                 </div>
 
-
-
-
             </main>
+            <form class="destroy-account-popup" action="/user/destroy-account?_method=DELETE"
+                method="POST">
+                <p class="product-delete-popup-label">Estas seguro que quieres eliminar tu cuenta?</p>
+                <p class="grey">Una vez borrada deberas crearte otra</p>
+                <button type="button" class="cancel-user-delete">Cancelar</button>
+                <button type="submit" class="confirm-user-delete" type="submit">Eliminar</button>
+            </form>
 
 
             <%- include('./partials/footer.ejs') %>

@@ -19,12 +19,11 @@ const userLogged = async (req, res, next) => {
         let pathToGo = getRelativePath(req.url);
         // Si quiere ir a logout no quiero nada de aca
         if (pathToGo == '/user/logout') return next();
-
         if (token) {
             const decodedData = jwt.verify(token, webTokenSecret);
             if (decodedData) { //Si verifico el token, solo agarro el id
                 userInCookie = await getUser(decodedData?.id);
-                delete userInCookie.password; // Para no llevar la password session
+                userInCookie && delete userInCookie.password; // Para no llevar la password session
             } else { //Si no lo verifica, lo deslogueo
                 res.clearCookie('userAccessToken');
                 res.clearCookie('adminToken');

@@ -34,6 +34,7 @@ router.post('/regist',validations.userRegistValidations,validations.passwordVali
 router.post('/change-password/:token',validations.passwordValidations,userController.processNewPassword)
 //PUT
 router.put('/profile',guestMiddleware,validations.userUpdateValidations,userController.update)
-
+//DELETe
+router.delete('/destroy-account',guestMiddleware,userController.destroyAccount)
 
 module.exports=router;

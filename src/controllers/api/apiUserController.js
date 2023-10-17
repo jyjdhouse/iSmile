@@ -823,7 +823,10 @@ const controller = {
       });
     } catch (error) {
       console.log(`Falle en apiUserController.checkVerificationCode: ${error}`);
-      return res.status(400).json({ error });
+      return res.status(200).json({
+        ok: false,
+        msg: "El codigo introducido es incorrecto. Intente nuevamente",
+      });
     }
   },
   sendVerificationCode: async (req, res) => {

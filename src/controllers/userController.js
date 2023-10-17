@@ -709,6 +709,20 @@ const controller = {
     delete req.session.order_tra_id;
     return res.redirect("/user/checkout");
   },
+  destroyAccount: async(req,res) =>{
+    const userId = req.session.userLoggedId;
+    // Lo borro de db
+    await db.User.destroy({
+      where: {
+        id: userId
+      }
+    });
+    // Borro cookie y session
+    res.clearCookie("userAccessToken");
+    res.clearCookie("adminToken");
+    delete req.session.userLoggedId;
+    return res.redirect('/')
+  }
 };
 
 module.exports = controller;

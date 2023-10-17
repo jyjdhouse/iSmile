@@ -372,6 +372,24 @@ window.addEventListener('load', () => {
         });
     })
 
+    // Logica para eliminar cuenta
+    const destroyAccountBtn = document.querySelectorAll('.destroy-account-btn');
+    const destroyAccountPopup = document.querySelector('.destroy-account-popup');
+    const blackScreen = document.querySelector('.black-screen');
+    const cancelDestroyBtn = document.querySelector('.cancel-user-delete')
+    destroyAccountBtn.forEach(btn => {
+        btn.addEventListener('click',(e)=>{
+            e.preventDefault();
+            destroyAccountPopup.classList.add('destroy-account-popup-active');
+            blackScreen.classList.add('black-screen-active')
+        })
+    });
+    cancelDestroyBtn.addEventListener('click',()=>{
+        destroyAccountPopup.classList.remove('destroy-account-popup-active');
+        blackScreen.classList.remove('black-screen-active')
+    })
+    
+
 
 
 })
