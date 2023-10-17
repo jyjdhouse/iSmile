@@ -21,7 +21,7 @@ router.get('/logout', getLastURL,userController.logout);
 router.get('/checkout',hasAlreadyAPendingOrder,userController.checkout); 
 router.get('/checkout/pago-seguro',userController.safePaymentView); 
 router.get('/profile', guestMiddleware,userController.userProfile);
-router.get('/cambiar-contrasena/:token',guestMiddleware,userController.changePasswordView);
+router.get('/cambiar-contrasena/:token',userController.changePasswordView);
 router.get('/contrasena-error',userController.passwordError);
 router.get('/booking',userController.bookingView);
 router.get('/historial-compras',guestMiddleware,userController.orderHistory);
