@@ -387,9 +387,11 @@ window.addEventListener('load', () => {
     cancelDestroyBtn.addEventListener('click',()=>{
         destroyAccountPopup.classList.remove('destroy-account-popup-active');
         blackScreen.classList.remove('black-screen-active')
-    })
-    
-
-
+    });
+    blackScreen?.addEventListener('click',()=>{
+        // Hago desaparecer el popup
+        destroyAccountPopup.classList.remove('destroy-account-popup-active');
+        blackScreen.classList.remove('black-screen-active');
+    });
 
 })
