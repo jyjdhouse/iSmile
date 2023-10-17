@@ -45,7 +45,7 @@ window.addEventListener('load', async () => {
     };
     const addRowButton = document.querySelector('.add-budget-product-btn');
     const table = document.querySelector('.budget-table>tbody')
-    addRowButton.addEventListener('click', () => {
+    addRowButton?.addEventListener('click', () => {
         var rowToAppend = getRowToCopy();
         table.appendChild(rowToAppend);
         iniciateSelect2()
@@ -72,7 +72,7 @@ window.addEventListener('load', async () => {
         let inputs = document.querySelectorAll('.quantity-input');
         inputs.forEach(input => {
             !input.value ? input.value = 1 : null;
-            input.addEventListener('change', (e) => {
+            input?.addEventListener('change', (e) => {
                 (!e.target.value || e.target.value < 1) ? input.value = 1 : null;
                 checkRowPrices();
             });
@@ -81,10 +81,10 @@ window.addEventListener('load', async () => {
         let substractQuantityBtns = document.querySelectorAll('.subtract-quantity-btn');
         let addQuantityBtns = document.querySelectorAll('.add-quantity-btn');
         substractQuantityBtns.forEach(btn => {
-            btn.addEventListener('click', handleSubstractingQuantity);
+            btn?.addEventListener('click', handleSubstractingQuantity);
         });
         addQuantityBtns.forEach(btn => {
-            btn.addEventListener('click', handleAddingQuantity);
+            btn?.addEventListener('click', handleAddingQuantity);
         })
     };
     handleInputsQuantity();
@@ -149,7 +149,7 @@ window.addEventListener('load', async () => {
     function listenRemoveRowBtns() {
         let removeRowBtns = document.querySelectorAll('.remove-row-btn');
         removeRowBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn?.addEventListener('click', () => {
                 const row = btn.closest('.row');
                 row.remove();
                 getTotalPrice();
@@ -208,13 +208,13 @@ window.addEventListener('load', async () => {
     // Logica para que apenas cargue mostrar descuento en 0
     discountInput.value = 0;
     // Logica que para al tocar el input aparezca selecciónado
-    discountInput.addEventListener('focus', () => {
+    discountInput?.addEventListener('focus', () => {
         discountInput.select();
     })
     numericInputs.forEach(input => {
         // Tomo el ultimo valor
         let lastInputValue = input.value;
-        input.addEventListener("input", function (e) {
+        input?.addEventListener("input", function (e) {
             var inputValue = e.target.value;
             if (!isNumeric(inputValue)) { // Si no es un número, borra el contenido del campo
                 e.target.value = lastInputValue;
@@ -238,7 +238,7 @@ window.addEventListener('load', async () => {
 
     // Escucho el "Generar PDF"
     let PDFGeneratorButton = document.querySelector('.generate-pdf-btn');
-    PDFGeneratorButton.addEventListener('click', async () => {
+    PDFGeneratorButton?.addEventListener('click', async () => {
         // Logica para clonar repo
         let bodyClone = document.body.cloneNode(true);
         // Remuevo lo innecesario

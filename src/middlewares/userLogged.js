@@ -28,7 +28,7 @@ const userLogged = async (req, res, next) => {
             } else { //Si no lo verifica, lo deslogueo
                 res.clearCookie('userAccessToken');
                 res.clearCookie('adminToken');
-                req.session.destroy();
+                delete req.session.userLoggedId;
                 return res.redirect(lastPath)
             }
         };

@@ -7,6 +7,7 @@ module.exports = (sequelize, dataTypes) => {
             primaryKey: true
         },
         street: { type: dataTypes.STRING(255) },
+        street_number: { type: dataTypes.STRING(10) },
         apartment: { type: dataTypes.STRING(45) },
         city: { type: dataTypes.STRING(100) },
         provinces_id: { type: dataTypes.INTEGER },

@@ -11,6 +11,7 @@
 
     <body>
         <%- include('./partials/header.ejs') %>
+         
             <main class="main checkout-main">
                 <%- include('./partials/orderOverlay.ejs') %>
                     <section class="first-view view view-active">
@@ -127,12 +128,12 @@
                                                 placeholder="marialopez@gmail.com">
                                         </div>
                                         <div class="field">
-                                            <label for="name" class="label bold">Nombres*</label>
-                                            <input type="text" name="name" id="name"
+                                            <label for="name" class="label bold">Nombre*</label>
+                                            <input type="text" name="name" id="first_name"
                                                 class="input required letter-only-input" placeholder="Maria">
                                         </div>
                                         <div class="field">
-                                            <label for="last-name" class="label bold">Apellidos*</label>
+                                            <label for="last-name" class="label bold">Apellido*</label>
                                             <input type="text" name="last_name" id="last-name"
                                                 class="input required letter-only-input" placeholder="Lopez">
                                         </div>
@@ -160,20 +161,25 @@
                                         <label class="bold label step-label">Completa tu dirección de
                                             facturación</label>
                                         <div class="field">
-                                            <label for="billing_street" class="label bold">Calle & Numero*</label>
+                                            <label for="billing_street" class="label bold">Calle*</label>
                                             <input type="text" name="billing_street" id="billing_street"
-                                                class="input required" placeholder="Av. Santa Fé 2911">
+                                                class="input required" placeholder="Av. Santa Fé">
                                         </div>
                                         <div class="field">
-                                            <div class="field short-field">
+                                            <label for="billing_street" class="label bold">Número*</label>
+                                            <input type="text" name="billing_street_number" id="billing_street_number"
+                                                class="input required numeric-only-input" placeholder="2911">
+                                        </div>
+                                        <div class="field">
+                                            <div class="short-field">
                                                 <label for="billing_zip-code" class="label bold">Codigo Postal*</label>
                                                 <input type="text" name="billing_zip_code" id="billing_zip-code"
-                                                    class="input required numeric-only-input" placeholder="1111">
+                                                    class="input required numeric-only-input short-input" placeholder="1111">
                                             </div>
-                                            <div class="field short-field">
-                                                <label for="billing_floor" class="label bold">Piso /
+                                            <div class="short-field">
+                                                <label for="billing_floor" class="label bold">
                                                     Departamento</label>
-                                                <input type="text" name="billing_floor" id="billing_floor" class="input"
+                                                <input type="text" name="billing_floor" id="billing_floor" class="input short-input"
                                                     placeholder="1A">
                                             </div>
                                         </div>
@@ -241,8 +247,7 @@
                                             </div>
                                             <% } %>
                                                 <div class="field required-field shipping-field">
-                                                    <label for="shipping_street" class="label bold">Calle &
-                                                        Numero*</label>
+                                                    <label for="shipping_street" class="label bold">Calle</label>
                                                     <input type="text" name="shipping_street" id="shipping_street"
                                                         class="input required">
                                                     <% if (locals.userLogged && userLogged.userAddress) { %>
@@ -253,12 +258,24 @@
                                                         <% } %>
                                                 </div>
                                                 <div class="field required-field shipping-field">
+                                                    <label for="shipping_street_number" class="label bold">Número</label>
+                                                    <input type="text" name="shipping_street_number" id="shipping_street_number"
+                                                        class="input required">
+                                                        <% if (locals.userLogged && userLogged.userAddress) { %>
+                                                            <p class="shipping-address-p hidden"
+                                                                id="shipping-address-street-number-p">
+                                                                <%= userLogged.userAddress.street_number %>
+                                                            </p>
+                                                            <% } %>
+                                                </div>
+                                                <div class="field required-field shipping-field">
                                                     <label for="shipping_zip_code" class="label bold">Codigo
                                                         Postal*</label>
                                                         <div class="zip-code-container">
                                                             <input type="text" name="shipping_zip_code" id="shipping_zip_code"
                                                             class="input required numeric-only-input">
                                                             <button class="get-shipment-price">Calcular</button>
+                                                            <div class="zip-code-error-container"></div>
                                                         </div>
                                                 
                                                     <% if (locals.userLogged && userLogged.userAddress) { %>
@@ -370,8 +387,7 @@
                                         </div>
                                     </div>
                                     <div class="field payment-field">
-                                        <p class="field-label grey">Finaliza tu compra y paga de forma segura, con o sin
-                                            cuenta de Mercado Pago</p>
+                                        <p class="field-label grey">Finaliza tu compra y paga de forma segura</p>
                                         <div class="payment-box">
                                             <i class='bx bxs-credit-card'></i>
                                             <p class="payment-box-label">Tarjeta de credito</p>
@@ -381,16 +397,15 @@
                                             <p class="payment-box-label">Tarjeta de debito</p>
                                         </div>
                                     </div>
-                                    <div class="field payment-field payment-field-active">
-                                        <p class="field-label grey">Finaliza tu compra y paga de forma segura, con o sin
-                                            cuenta de Mercado Pago</p>
+                                    <div class="field payment-field">
+                                        <p class="field-label grey">Stock sujeto a disponibilidad. Recibirás una confirmación con los datos por whatsapp y tendrás 24 horas para efectuar el pago</p>
                                         <div class="payment-box">
                                             <i class='bx bxs-credit-card'></i>
                                             <p class="payment-box-label">Transferencia</p>
                                         </div>
                                         <div class="payment-box">
                                             <i class='bx bx-credit-card-front'></i>
-                                            <p class="payment-box-label">Transferneica</p>
+                                            <p class="payment-box-label">Transferencia</p>
                                         </div>
                                     </div>
                                 </div>
@@ -405,7 +420,11 @@
                             <div class="product-side-cards-wrapper"></div>
                             <div class="product-side-shipment-info">
                                 <div class="shipment.price">
-                                    <p><span class="bold">Envio: </span><span>$</span><span class="shipment-price-span">3000</span></p>
+                                    <p><span class="bold">Envio: </span><span class="shipment-price-span">0</span></p>
+                                    <div class="shipment-disclaimer hide">
+                                        <p class="grey">Rango de precio </p>
+                                        <p class="grey">Se abona al recibir la compra</p>
+                                    </div>
                                 </div>
                                 <div class="shipment-delay">
                                     <p><span class="bold">Demora: </span> <span class="shipment-delay-span"> 1 a 3 días hábiles</span></p>
@@ -415,12 +434,12 @@
                                 <div class="product-side-wrapper-row product-side-wrapper-subtotal-row">
                                     <p class="product-side-wrapper-row-label grey">Subtotal</p>
                                     <p class="product-side-wrapper-row-price grey">$<span
-                                            class="product-side-wrapper-row-subtotal-price-span">15000</span> </p>
+                                            class="product-side-wrapper-row-subtotal-price-span"></span> </p>
                                 </div>
                                 <div class="product-side-wrapper-row product-side-wrapper-total-row">
                                     <p class="product-side-wrapper-row-label bold">Total</p>
                                     <p class="product-side-wrapper-row-price bold">$<span
-                                            class="product-side-wrapper-row-total-price-span">15000</span> </p>
+                                            class="product-side-wrapper-row-total-price-span"></span> </p>
                                 </div>
                             </div>
                             <div id="checkout-button-container" class="button-container">

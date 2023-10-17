@@ -15,6 +15,7 @@
 
         <main class="main">
             <section class="landing-video-container">
+                <!-- <i class='bx bx-expand full-screen-btn'></i> -->
                 <video class="video" src="<%= videoFile.file_url %>" playsinline muted autoplay loop></video>
                 <% if (locals.userLogged && (locals.userLogged.user_categories_id==1 ||
                     locals.userLogged.user_categories_id==2)) { %>

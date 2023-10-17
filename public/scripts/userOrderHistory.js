@@ -4,25 +4,17 @@ window.addEventListener('load', () => {
     const main = document.querySelector('.main');
     function listenPopupBtns() {
         // Logica para cuando tocan en los desplegables del popup
-        const orderDetailItemsWrapperToggler = document.querySelector('.order-detail-item-wrapper-title');
-        orderDetailItemsWrapperToggler?.addEventListener('click', () => {
-            const container = orderDetailItemsWrapperToggler.closest('.order-detail-item-wrapper');
-            container.classList.toggle('order-detail-item-wrapper-active');
-            if (container.classList.contains('order-detail-item-wrapper-active')) {
-                container.querySelector('.item-wrapper-toggler').innerHTML = '-';
-            } else {
-                container.querySelector('.item-wrapper-toggler').innerHTML = '+';
-            }
-        });
-        const orderDetailShippingToggler = document.querySelector('.order-detail-shipping-title');
-        orderDetailShippingToggler?.addEventListener('click', () => {
-            const container = orderDetailShippingToggler.closest('.order-detail-shipping-info');
-            container.classList.toggle('order-detail-shipping-info-active');
-            if (container.classList.contains('order-detail-shipping-info-active')) {
-                container.querySelector('.shipping-info-toggler').innerHTML = '-';
-            } else {
-                container.querySelector('.shipping-info-toggler').innerHTML = '+';
-            }
+        const collapsableRows = document.querySelectorAll('.order-detail-collapsable-title');
+        collapsableRows.forEach(rowTitle => {
+            rowTitle.addEventListener('click',()=>{
+                const container = rowTitle.closest('.order-detail-collapsable-row');
+                container.classList.toggle('order-detail-collapsable-row-active');
+                if (container.classList.contains('order-detail-collapsable-row-active')) {
+                    container.querySelector('.collapsable-row-toggler').innerHTML = '-';
+                } else {
+                    container.querySelector('.collapsable-row-toggler').innerHTML = '+';
+                }
+            });
         });
 
         // Para cerrar el popup
@@ -65,14 +57,17 @@ window.addEventListener('load', () => {
         const orderStatus = card.querySelector('.order-card-status').innerHTML;
         const orderType = card.querySelector('.order-card-type').innerHTML;
         const orderTotal = card.querySelector('.order-card-total-price').innerHTML;
+        const orderPaymentName = card.querySelector('.payment-method-label').innerHTML;
+        const orderPaymentDesc = card.querySelector('.payment-method-desc').innerHTML;
         const orderShippingInfo = {};
         if (card.querySelector('.shipping-details')) {
             orderShippingInfo.street = card.querySelector('.shipping-street').innerHTML;
+            orderShippingInfo.street_number = card.querySelector('.shipping-street-number').innerHTML;
             orderShippingInfo.apartment = card.querySelector('.shipping-apartment')?.innerHTML
             orderShippingInfo.city = card.querySelector('.shipping-city').innerHTML
             orderShippingInfo.zip_code = card.querySelector('.shipping-zip-code').innerHTML
             orderShippingInfo.province = card.querySelector('.shipping-province').innerHTML
-        }
+        };
         let html;
         orderDetailPopup.innerHTML =
             `
@@ -82,8 +77,8 @@ window.addEventListener('load', () => {
                 <p class="order-detail-id grey">${orderTraId}</p>
                 <p class="order-detail-type">${orderType}</p>
                 <p class="order-detail-status">${orderStatus}</p>
-                <div class="order-detail-item-wrapper">
-                    <p class="order-detail-item-wrapper-title order-detail-label">Productos (${orderItems.length}) <span class="item-wrapper-toggler">+</span></p>
+                <div class="order-detail-item-wrapper order-detail-collapsable-row">
+                    <p class="order-detail-collapsable-title order-detail-item-wrapper-title order-detail-label">Productos (${orderItems.length}) <span class="collapsable-row-toggler item-wrapper-toggler">+</span></p>
                 </div>
                 
         `;
@@ -120,18 +115,26 @@ window.addEventListener('load', () => {
         });
         if (orderShippingInfo.street) {
             let shippingAddressChild = `
-            <div class="order-detail-shipping-info">
-                <p class="order-detail-shipping-title order-detail-label">Direccion de Envio <span class="shipping-info-toggler">+</span></p>
-                <p class="order-detail-shipping-item">${orderShippingInfo.street} <span class="apartment-span"></span></p>
-                <p class="order-detail-shipping-item">CP: ${orderShippingInfo.zip_code}</p>
-                <p class="order-detail-shipping-item">${orderShippingInfo.city}, ${orderShippingInfo.province}</p>
+            <div class="order-detail-shipping-info order-detail-collapsable-row">
+                <p class="order-detail-collapsable-title order-detail-shipping-title order-detail-label">Direccion de Envio <span class="collapsable-row-toggler shipping-info-toggler">+</span></p>
+                <p class="order-detail-collapsable-detail order-detail-shipping-item">${orderShippingInfo.street} ${orderShippingInfo.street_number}<span class="apartment-span"></span></p>
+                <p class="order-detail-collapsable-detail order-detail-shipping-item">CP: ${orderShippingInfo.zip_code}</p>
+                <p class="order-detail-collapsable-detail order-detail-shipping-item">${orderShippingInfo.city}, ${orderShippingInfo.province}</p>
             </div>`;
             orderDetailPopup.innerHTML += shippingAddressChild;
             // si tiene apartment le agrego el span
             if (orderShippingInfo.apartment) {
                 orderDetailPopup.querySelector('.order-detail-shipping-item .apartment-span').innerHTML = `- ${orderShippingInfo.apartment}`
             }
-        }
+        };
+        // Agrego metodo de pago
+        let paymentMethodChild = `
+        <div class="order-detail-payment-method order-detail-collapsable-row">
+            <p class="order-detail-collapsable-title order-detail-label">Método de pago <span class="collapsable-row-toggler shipping-info-toggler">+</span></p>
+            <p class="order-detail-collapsable-detail order-detail-payment-item">${orderPaymentName}</p>
+            <p class="order-detail-collapsable-detail order-detail-payment-item grey">${orderPaymentDesc}</p>
+        </div>`;
+        orderDetailPopup.innerHTML += paymentMethodChild;
         orderDetailPopup.innerHTML += `<p class="order-detail-total-price bold">TOTAL: <span>${orderTotal}</span></p>`
         formatPriceNumber();
     }

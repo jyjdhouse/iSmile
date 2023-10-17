@@ -73,7 +73,9 @@
     margin-left: 10px;
     text-align: center;
 }
-
+.order-details-p{
+    font-size: 13px;
+}
 @media(min-width: 768px){
     .order-success-box{
         width: 60vw;

@@ -60,12 +60,17 @@
                             <% if (order.order_types_id == 1) { //Entrega a domicilio %>
                                 <div class="shipping-details hidden">
                                     <p class="shipping-street"><%= order.shippingAddress ?  order.shippingAddress.street : order.billingAddress.street%></p>
+                                    <p class="shipping-street-number"><%= order.shippingAddress ?  order.shippingAddress.street_number : order.billingAddress.street_number%></p>
                                     <p class="shipping-apartment"><%= order.shippingAddress ?  order.shippingAddress.apartment : order.billingAddress.apartment%></p>
                                     <p class="shipping-city"><%= order.shippingAddress ?  order.shippingAddress.city : order.billingAddress.city%></p>
                                     <p class="shipping-zip-code"><%= order.shippingAddress ?  order.shippingAddress.zip_code : order.billingAddress.zip_code%></p>
                                     <p class="shipping-province"><%=  provinces.find(prov=> prov.id == order.shippingAddress ? order.shippingAddress.provinces_id : order.billingAddress.provinces_id).name %></p>
                                 </div>
                             <% } %>
+                            <div class="payment-method-details hidden">
+                                <p class="payment-method-label"> <%= order.paymentMethod.name %> </p>
+                                <p class="payment-method-desc"> <%= order.paymentMethod.desc %> </p>
+                            </div>
                         </article>
                     <% }) %>
 

@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+.error-incomplete {
+    border: 1px solid red;
+}
+
 select {
     width: 70%;
     padding-left: 2px;
@@ -362,8 +366,6 @@ select {
         /* marginb: 0; */
         width: 100%;
     }
-
-
     .profile-input input {
         padding: 1px 0;
         width: 70%;

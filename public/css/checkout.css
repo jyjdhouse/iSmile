@@ -3,9 +3,8 @@ body {
 
 }
 
-.continue-button.disabled {
-    color: #ccc;
-    background-color: #eee;
+.continue-button-disabled {
+    background-color: #ccc;
     cursor: unset;
     pointer-events: none;
 }
@@ -409,6 +408,7 @@ body {
     height: 100%;
     display: flex;
     flex-wrap: wrap;
+    padding: 0 1rem;
 }
 
 .step-container {
@@ -440,17 +440,18 @@ body {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    padding: 0 5vw;
     margin-bottom: 2.5vh;
 }
+
+
 
 .field>label,
 .step-container .label {
     width: 100%;
 }
 
-.field>.input {
-    width: 100%;
+.field .input {
+    width: 80%;
     border-radius: 1rem;
     border: 1px solid var(--gold-color);
     padding: 5px 10px;
@@ -474,7 +475,7 @@ body {
 }
 
 #phone {
-    width: 70%;
+    width: 50%;
 }
 
 /*  */
@@ -531,9 +532,6 @@ body {
     width: fit-content;
 }
 
-#billing_zip-code {
-    width: 4rem;
-}
 
 .zip-code-container {
     width: 100%;
@@ -606,7 +604,19 @@ body {
 .short-field {
     width: 50%;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
+
+.short-input {
+    width: 50%;
+    border-radius: 1rem;
+    border: 1px solid var(--gold-color);
+    padding: 5px 10px;
+    margin-top: 1vh;
+}
+
 
 .field>.short-field {
     margin-bottom: 0;
@@ -842,7 +852,7 @@ body {
 }
 
 .payment-box i {
-    color: rgb(224, 37, 37);
+    color: var(--bold-color);
     height: 30px;
     font-size: 30px;
 }
@@ -886,9 +896,13 @@ body {
     width: 100%;
 }
 
-.check-stock-error p {
+.check-stock-error p, .shipment-error-p {
     font-size: 0.675rem;
     color: red;
+}
+
+.shipment-error-p {
+    margin-top: 2%;
 }
 
 .product-side-shipment-info {
@@ -901,6 +915,28 @@ body {
 
 .product-side-shipment-info div  {
     font-size: 1.2rem;
+}
+
+.shipment-disclaimer {
+    display: flex;
+    flex-direction: column;
+}
+
+.shipment-disclaimer p {
+    /* color: var(--bold-color); */
+    font-size: 0.875rem;
+    /* font-weight: 700; */
+    margin: 3% 0;
+}
+
+
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: flex;
 }
 
 @media(min-width:768px) {
@@ -967,6 +1003,11 @@ body {
     .payment-logo-label {
         font-size: 20px;
     }
+
+    .shipment-disclaimer p {
+        font-size: 1rem;
+    }
+
 }
 
 @media(min-width:1024px) {
@@ -1067,10 +1108,6 @@ body {
         width: 65%;
     }
 
-    .field {
-        padding: 0 2.5vw;
-    }
-
     .payment-field {
         width: 100%;
     }
@@ -1131,5 +1168,11 @@ body {
 
     .product-side-wrapper-row {
         width: 100%;
+    }
+
+    .short-field {
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
     }
 }

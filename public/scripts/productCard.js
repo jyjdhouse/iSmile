@@ -7,7 +7,7 @@ function loadDependentScripts() { //Carga los scripts que usan la variable del f
         checkoutScript.src = '/scripts/checkout.js';
         checkoutScript.type = 'module'; // Agregar el atributo type="module"
         document.head.appendChild(checkoutScript);
-    }
+    } 
 }
 window.addEventListener('load', async () => {
     try {

@@ -38,12 +38,12 @@ window.addEventListener('load', () => {
     }
     let slideIntervalId;
     function handleVisibleSlideSection() {
-        slideIntervalId = setInterval(updateSlideShow, 3500);
+        !slideIntervalId ? slideIntervalId = setInterval(updateSlideShow, 3500): null;
     }
 
     const slideImageContainers = document.querySelectorAll('.slide-image-container')
     slideImageContainers?.forEach(container => {
-        container.addEventListener('mouseenter', () => {
+        container?.addEventListener('mouseenter', () => {
             // Freno el slideShow
             clearInterval(slideIntervalId);
         });
@@ -64,6 +64,7 @@ window.addEventListener('load', () => {
     let slideShowIndex = 1;
 
     function updateSlideShow() {
+        console.log(`Entre`);
         // Le saco el nombre porque aparece una vez que esta en vista
         slideImagesGroup.forEach((container, index) => {
             container.classList.remove('slide-image-group-active', 'slide-image-group-next', 'slide-image-group-prev');
@@ -410,4 +411,23 @@ window.addEventListener('load', () => {
         form.submit();
     });
 
+    // Logica para video in full screen
+    // const fullScreenVideoBtn = document.querySelector('.full-screen-btn');
+    // const homeVideo = document.querySelector('.landing-video-container .video');
+    // var fullscreen = homeVideo.webkitRequestFullscreen || homeVideo.mozRequestFullScreen || homeVideo.msRequestFullscreen;
+    
+    // fullScreenVideoBtn.addEventListener('click',()=>{
+    //     // homeVideo.pause()
+    //     // if (homeVideo.requestFullscreen) {
+    //     //     // Solicita el modo de pantalla completa para el elemento de video
+    //     //     homeVideo.requestFullscreen();
+    //     //   } else if (homeVideo.mozRequestFullScreen) { // Para navegadores Firefox
+    //     //     homeVideo.mozRequestFullScreen();
+    //     //   } else if (homeVideo.webkitRequestFullscreen) { // Para navegadores WebKit (Safari, Chrome)
+    //     //     homeVideo.webkitRequestFullscreen();
+    //     //   } else if (homeVideo.msRequestFullscreen) { // Para navegadores Microsoft (Edge)
+    //     //     homeVideo.msRequestFullscreen();
+    //     //   }
+    //     fullscreen.call(homeVideo);
+    // })
 });

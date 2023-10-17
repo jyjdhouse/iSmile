@@ -244,10 +244,9 @@ const controller = {
                 })).label;
             };
 
-
             // return res.send(discountLabel);
             // return res.send({ productsInDb, productsGroupDesktop, productsGroupMobile });
-            return res.render('index', { lastBlogs, videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile })
+            return res.render('index', {maxDiscount, lastBlogs, videoFile, galleryFiles: galleryFilesToRender, igFiles: igFilesToRender, blogFile, homePageLabels, slideShowDesktop: productsGroupDesktop, slideShowMobile: productsGroupMobile, discountLabel })
 
         } catch (error) {
             console.log(`Falle en mainController.list: ${error}`);
@@ -350,7 +349,7 @@ const controller = {
     },
     updateHomeFile: async (req, res) => {
         try {
-            const { home_sections_id, position, old_filename } = req.body;
+            const { home_sections_id, position, old_filename, device_types_id } = req.body;
 
             const file = req.file;
             const fileType = file.mimetype.startsWith('video/') ? 2 : 1;

@@ -161,7 +161,25 @@ button{
 .price-container input::placeholder{
     opacity: .4;
 }
+.price-container .volume-field{
+    width: 40%;
+}
+.radio-field{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 
+}
+.radio-field .product-size-label{
+    width: 80%;
+    cursor: pointer;
+}
+.radio-field .product-size-input{
+    width: 15%;
+    margin: 0;
+    cursor: pointer;
+}
 @media(min-width:1024px){
     .images-radio-box-wrapper{
         flex-wrap: nowrap;

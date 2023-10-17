@@ -37,7 +37,7 @@ const getDeepCopy = require('../utils/getDeepCopy');
 const getAllProducts = require('../utils/getAllProducts');
 const orderMainImageFile = require('../utils/orderMainImageFile');
 // const adaptProductsToBeListed = require('../utils/adaptProductsToBeListed');
-// const getCountryCodes = require('../utils/getCountryCodes');
+const productSizes = require('../utils/staticDB/productSizes');
 const controller = {
     list: async (req, res) => { //Controlador que renderiza listado de productos
         try {
@@ -205,11 +205,11 @@ const controller = {
         }
     },
     createProduct: async (req, res) => {
-        return res.render('productCreate.ejs', { categories: await getCategories() })
+        return res.render('productCreate.ejs', { categories: await getCategories(), productSizes})
     },
     processProductCreation: async (req, res) => {
         try {
-            let { name, price, description, ingredients, size, mainImage, stock, discount } = req.body;
+            let { name, price, description, ingredients, size, mainImage, stock, discount, sizes_id, weight } = req.body;
             let images = req.files;
             let errors = validationResult(req);
             // Si hay errores..
@@ -248,7 +248,9 @@ const controller = {
                 ingredients,
                 size,
                 stock: parseInt(stock) || 0,
-                discount: parseInt(discount) || 0
+                discount: parseInt(discount) || 0,
+                sizes_id: parseInt(sizes_id), 
+                weight
             };
 
             const newProduct = await db.Product.create(productObject);
@@ -316,20 +318,21 @@ const controller = {
             file.file_url = url; //en el href product.files[x].file_url
         }
         const categories = await getCategories()
-        // return res.send(productToUpdate);
-        return res.render('productUpdate', { productToUpdate, categories })
+        // return res.send({productToUpdate,productSizes});
+        return res.render('productUpdate', { productToUpdate, categories, productSizes })
     },
     processProductUpdate: async (req, res) => {
         try {
             let errors = validationResult(req);
             const productId = req.params.productId;
-            const { name, price, description, current_imgs, ingredients, size, mainImage, stock, discount } = req.body
+            const { name, price, description, current_imgs, ingredients, size, mainImage, stock, discount, sizes_id, weight } = req.body
             if (!errors.isEmpty()) {
                 errors = errors.mapped();
                 // Si el error es por nombre y/o precio ==> repinto la vista
                 if (errors.name || errors.price) {
                     return res.redirect(`/product/update/${productId}`)
                 }
+                return res.send(errors)
                 // Sino es un error de tipo de dato ==> tiro bad Request
                 return res.send('Bad Request')
             };
@@ -350,8 +353,10 @@ const controller = {
                 description,
                 ingredients,
                 size,
-                stock: parseInt(stock) || 0,
-                discount: parseInt(discount) || 0
+                stock: stock ? parseInt(stock) : 0,
+                discount: discount ? parseInt(discount) : 0,
+                sizes_id, 
+                weight
             }, {
                 where: {
                     id: productToUpdate.id
