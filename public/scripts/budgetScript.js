@@ -1,4 +1,4 @@
-import { dateFormater, getTodaysDate, isNumeric, formatPriceNumber, removeNumberSeparators } from "./utils.js";
+import { dateFormater, getTodaysDate, isNumber, formatPriceNumber, removeNumberSeparators } from "./utils.js";
 window.addEventListener('load', async () => {
     // In your Javascript (external .js resource or <script> tag)
 
@@ -216,7 +216,7 @@ window.addEventListener('load', async () => {
         let lastInputValue = input.value;
         input?.addEventListener("input", function (e) {
             var inputValue = e.target.value;
-            if (!isNumeric(inputValue)) { // Si no es un número, borra el contenido del campo
+            if (!isNumber(inputValue)) { // Si no es un número, borra el contenido del campo
                 e.target.value = lastInputValue;
             } else {
                 lastInputValue = inputValue; // Almacenar el último valor válido
