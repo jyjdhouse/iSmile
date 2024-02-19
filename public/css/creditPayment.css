@@ -71,10 +71,27 @@ form {
     /* border: 1px solid var(--bold-color); */
      /* Aplicar el sombreado */
      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
-    overflow: auto;
+   
     padding: 3%;
-    max-height: 200px;
+    max-height: 300px;
     border-radius: 5px;
+}
+
+.prod-list {
+    max-height: 120px;
+    overflow: auto;
+}
+
+.order-total-container {
+    padding: 3% 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.order-total-container p:last-child {
+    font-weight: 700;
 }
 
 .prod-container {

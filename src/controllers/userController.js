@@ -146,13 +146,14 @@ const controller = {
           include: ["orderItems"],
         })
       );
-
+       
       // Si no hay orden, o la orden que esta no esta ni pendiente de pago ni de confirmacion lo devuelvo al checkout
       if (
         !order_tra_id ||
         !orderToPay ||
         (orderToPay.order_status_id != 4 && orderToPay.order_status_id != 3)
       ) {
+        console.log("primer", order_tra_id, orderToPay, orderToPay.order_status_id)
         return res.redirect("/user/checkout?checkoutErrors=true");
       }
       //Si esta pendiente de confirmacion
