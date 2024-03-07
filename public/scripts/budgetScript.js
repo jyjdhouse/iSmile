@@ -279,10 +279,10 @@ window.addEventListener('load', async () => {
             `
                     
                     <p class="disclaimer-p">Presupuesto Valido por 7 días</p>
-                    <p class="disclaimer-p">Los precios son con tarjeta de débito, transferencia y tarjeta de crédito hasta 3 cuotas</p>
+                    <p class="disclaimer-p">Los precios son con tarjeta de débito, transferencia y tarjeta de crédito.</p>
                     <p class="disclaimer-final-msg">Agradecemos su confianza, Atentamente</p>
                     <div class="disclaimer-details-container">
-                        <p class="disclaimer-detail">4824-5430</p>
+                        <p class="disclaimer-detail">11-2485-2020 / 4824-5430</p>
                         <p class="disclaimer-detail">info@ismile.com.ar</p>
                         <p class="disclaimer-detail">Av.Santa Fe 2911 3 "D"<br>Palermo, Bs.As.</p>
                     </div>
