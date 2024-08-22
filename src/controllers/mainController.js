@@ -40,6 +40,7 @@ const paymentMethods = require('../utils/staticDB/paymentMethods');
 const controller = {
     index: async (req, res) => {
         try {
+            
             let homeFiles = await db.HomeFile.findAll({
                 where: {
                     home_sections_id: {

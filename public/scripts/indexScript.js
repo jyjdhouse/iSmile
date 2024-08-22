@@ -302,7 +302,8 @@ window.addEventListener('load', () => {
     hiddenInputsFile.forEach(input => {
         input.addEventListener('change', (e) => { //Subieron un archivo para cambiar la foto
             // Agarro esa foto
-            const form = input.closest('.edit-file-overlay');
+            const form = e.target.closest('.edit-file-overlay');
+            console.log(e.target,form);
             const fileElement = form.closest('.instagram-card')?.querySelector('.instagram-image') ||
                 form.closest('.landing-video-container')?.querySelector('.video') ||
                 form.closest('.blog-background')?.querySelector('.blog-background-image') ||
