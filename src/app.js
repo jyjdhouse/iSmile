@@ -5,7 +5,7 @@ const path = require('path');
 const dotenv = require('dotenv')
 dotenv.config()
 
-
+// Com
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 
