@@ -350,10 +350,12 @@ window.addEventListener("load", async () => {
         html: bodyClone.innerHTML,
       }),
     });
+    
     if (response.ok) {
       document.querySelector(".spinner-overlay").classList.add("hidden");
       // Convierte la respuesta en un Blob (archivo)
       const archivoBlob = await response.blob();
+      
       // Crea un enlace de descarga
       const linkToDownload = document.createElement("a");
       linkToDownload.href = URL.createObjectURL(archivoBlob);
