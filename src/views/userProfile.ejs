@@ -1,0 +1,529 @@
+<%- include('./partials/head.ejs') %>
+    <script src="/scripts/userProfile.js" type="module"></script>
+    <link rel="stylesheet" href="/css/userProfile.css">
+    <link rel="stylesheet" href="/css/variables.css">
+    <title>Perfil</title>
+    </head>
+
+    <body>
+
+        <%- include('./partials/header.ejs') %>
+
+            <main class="user-profile-main">
+                <div class="mobile-profile-content-wrapper">
+                    <form action="/user/profile?_method=PUT" method="POST" class="user-info-form">
+                        <div class="options-selected-container">
+                            <div
+                                class="profile-selected-field-container profile-selected-field-container-active user-data">
+                                <ul class="profile-selected-list data-list">
+                                    <li class="profile-field-container">
+                                        <p>Nombre</p> <span>
+
+                                            <%= user.first_name %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input class="required letter-only-input" type="text" name="first_name"
+                                                value="<%=user.first_name || null%>" placeholder="Ingresar nombre">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Apellido</p> <span>
+                                            <%= user.last_name %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input class="required letter-only-input" type="text" name="last_name"
+                                                value="<%=user.last_name || null%>" placeholder='Ingresar apellido/s'>
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Fecha de nacimiento</p> <span>
+                                            <%= user.birth_date ? dateFormated : 'Sin Especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input type="date" name="birth_date" <%=user.birth_date ?
+                                                `value=${user.birth_date}` : null%>>
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Género</p> <span>
+                                            <%= user.genre ? user.genre.name : 'Sin Especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <select name="genre" id="">
+                                                <% genres.forEach(gen=> { %>
+                                                    <option value="<%= gen.id %>" <%=gen.id==user.genres_id
+                                                        && 'selected' %>>
+                                                        <%=gen.name%>
+                                                    </option>
+                                                    <% }) %>
+                                            </select>
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Celular</p> <span>
+                                            <%= user.phone? `(+${user.prefixCode}) ${user.phone}` : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive phone-field">
+                                            <select name="phone_code" class="prefix-phone">
+                                                <% countryCodes.forEach(country=> { %>
+                                                    <option value="<%=country.id %>" <%=country.code==54 && 'selected'
+                                                        %>
+                                                        > (+<%= country.code %>) <%= country.country_name %>
+                                                    </option>
+                                                    <% }) %>
+                                            </select>
+                                            <input class="numeric-only-input required mobile-phone" type="text" name="phone"
+                                                value="<%=user.phone || null%>" placeholder="1158731281">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>DNI</p> <span>
+                                            <%= user.dni? user.dni : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input class="required numeric-only-input mobile-dni" type="text" name="dni"
+                                                value="<%=user.dni || null%>" placeholder="23083620">
+                                        </div>
+                                        <% console.log(locals.errors && locals.errors.dni) %>
+                                        <% if(locals.errors && locals.errors.dni) { %>
+                                            <p class="error-msg">
+                                                <%= errors.dni.msg %>
+                                            </p>
+                                            <% } %>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <div class="profile-selected-field-container user-address">
+                                <div class="profile-selected-content-wrapper">
+                                    <ul class="profile-selected-list address-list">
+                                        <li class="profile-field-container">
+                                            <p>Calle</p> <span>
+                                                <%= user.userAddress?.street? user.userAddress?.street : 'Sin especificar' %>
+                                            </span>
+                            
+                                            <div class="profile-input input-container-inactive">
+                                                <input type="text" name="street"
+                                                    value="<%=user.userAddress?.street || null%>"
+                                                    placeholder="Santa Fe">
+                                            </div>
+                                            
+                                        </li>
+
+                                        <li class="profile-field-container">
+                                            <p>Número</p> <span>
+                                                <%= user.userAddress?.street_number? user.userAddress?.street_number : 'Sin especificar' %>
+                                            </span>
+                                            <div class="profile-input input-container-inactive">
+                                                <input type="text" name="street_number"
+                                                    value="<%=user.userAddress?.street_number || null%>"
+                                                    placeholder="3322">
+                                            </div>
+                                        </li>
+
+                                        <li class="profile-field-container">
+                                            <p>Piso/Departamento</p> <span>
+                                                <%= user.userAddress?.apartment? user.userAddress?.apartment
+                                                    : 'Sin especificar' %>
+                                            </span>
+                                            <div class="profile-input input-container-inactive">
+                                                <input type="text" name="apartment"
+                                                    value="<%=user.userAddress?.apartment || null%>" placeholder="3F">
+                                            </div>
+                                        </li>
+                                        <li class="profile-field-container">
+                                            <p>Ciudad</p> <span>
+                                                <%= user.userAddress?.city? user.userAddress?.city : 'Sin especificar'
+                                                    %>
+                                            </span>
+                                            <div class="profile-input input-container-inactive">
+                                                <input type="text" name="city" value="<%=user.city || null%>"
+                                                    placeholder="Palermo">
+                                            </div>
+                                        </li>
+                                        <li class="profile-field-container">
+                                            <p>Provincia</p> <span>
+                                                <%= user.userAddress?.provinces_id ? provinces.find(prov=>
+                                                    user.userAddress?.provinces_id == prov.id).name : 'Sin especificar'
+                                                    %>
+                                            </span>
+                                            <div class="profile-input input-container-inactive">
+                                                <select name="provinces_id" id="province">
+                                                    <% provinces.forEach(prov=> { %>
+                                                        <option value="<%= prov.id %>"
+                                                            <%=user.userAddress?.provinces_id==prov.id ? 'selected' : ''
+                                                            %>>
+                                                            <%= prov.name %>
+                                                        </option>
+                                                        <% }) %>
+                                                </select>
+                                            </div>
+                                        </li>
+                                        <li class="profile-field-container">
+                                            <p>Codigo Postal</p> <span>
+                                                <%= user.userAddress?.zip_code? user.userAddress?.zip_code
+                                                    : 'Sin especificar' %>
+                                            </span>
+                                            <div class="profile-input input-container-inactive">
+                                                <input class="numeric-only-input" type="text" name="zip_code"
+                                                    value="<%=user.userAddress?.zip_code || null%>" placeholder="1111">
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="profile-selected-field-container user-preferences">
+                                <li class="profile-field-container unique-email-field">
+                                    <p>Email</p> <span class="bold">
+                                        <%= user.email %>
+                                    </span>
+
+                                </li>
+                                <div class="profile-radio-p-container">
+                                    <p>Quiero recibir notificaciónes por correo electrónico</p>
+                                    <div class="profile-radio-container">
+
+                                        <div class="radio-label-container">
+                                            <label for="email_notifications_true">SI</label>
+                                            <input id="email_notifications_true" type="radio" name="email_notifications"
+                                                value="1" <%=user.email_notifications==1? 'checked' : '' %>>
+                                        </div>
+                                        <div class="radio-label-container">
+
+                                            <label for="email_notifications_false">NO</label>
+                                            <input id="email_notifications_false" type="radio"
+                                                name="email_notifications" value="0"
+                                                <%=user.email_notifications==0? 'checked' : '' %>>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="profile-radio-p-container">
+                                    <p>Quiero recibir notificaciónes por WhatsApp.</p>
+                                    <div class="profile-radio-container">
+                                        <div class="radio-label-container">
+                                            <label for="wpp_notifications_true">SI</label>
+                                            <input id="wpp_notifications_true" type="radio" name="wpp_notifications"
+                                                value="<%=user.wpp_notifications==1 %>" <%=user.wpp_notifications==1? 'checked' : '' %>>
+                                        </div>
+                                        <div class="radio-label-container">
+
+                                            <label for="wpp_notifications_false">NO</label>
+                                            <input id="wpp_notifications_false" type="radio" name="wpp_notifications"
+                                                value="0" <%=user.wpp_notifications==0? 'checked' : '' %>>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="profile-radio-p-container">
+                                    <p>Quiero recibir el newsletter por correo electrónico.</p>
+                                    <div class="profile-radio-container">
+                                        <div class="radio-label-container">
+                                            <label for="email_newsletter_true">SI</label>
+                                            <input id="email_newsletter_true" type="radio" name="email_newsletter"
+                                                value="1" <%=user.email_newsletter==1? 'checked' : '' %>>
+                                        </div>
+                                        <div class="radio-label-container">
+
+                                            <label for="email_newsletter_false">NO</label>
+                                            <input id="email_newsletter_false" type="radio" name="email_newsletter"
+                                                value="0" <%=user.email_newsletter==0? 'checked' : '' %>>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="profile-radio-p-container">
+                                    <button class="change-password-btn">Cambiar contraseña</a>
+                                    <button class="destroy-account-btn">Eliminar cuenta</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="profile-options-container">
+                            <ul class="profile-options-list">
+                                <li class="profile-option-item profile-option-item-active"><i
+                                        class='bx bx-info-circle'></i></li>
+                                <li class="profile-option-item"><i class='bx bxs-truck'></i></li>
+                                <li class="profile-option-item"><i class='bx bx-user-check'></i></li>
+                            </ul>
+                        </div>
+
+                        <div class="edit-content-container mobile-edit-content-container">
+                            <button class="form-btn edit-content">
+                                Editar datos
+                            </button>
+                            <button type="submit"
+                                class="form-btn submit-form form-btn-inactive send-user-info-form-btn">
+                                Guardar cambios
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="desktop-profile-content-wrapper">
+                    <form action="/user/profile?_method=PUT" method="POST" class="desktop-form user-info-form">
+                        <div class="options-container">
+                            <div class="profile-data-container user-data">
+                                <div class="profile-data-title">
+                                    <h2>Mis datos</h2>
+                                </div>
+                                <ul class="profile-selected-list data-list">
+                                    <li class="profile-field-container">
+                                        <p>Nombre</p> <span>
+                                            <%= user.first_name %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input class="desktop-required letter-only-input" type="text"
+                                                name="first_name" value="<%=user.first_name || null%>"
+                                                placeholder="Ingresar nombre">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Apellido</p> <span>
+                                            <%= user.last_name %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input class="desktop-required" type="text" name="last_name"
+                                                value="<%=user.last_name || null%>" placeholder="Ingresar apellido/s">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Fecha de nacimiento</p> <span>
+                                            <%= user.birth_date ? dateFormated : 'Sin Especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input type="date" name="birth_date"
+                                                value="<%= user.birth_date ? user.birth_date : null %>">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Género</p> <span>
+                                            <%= user.genre ? user.genre.name : 'Sin Especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <select name="genre" id="">
+                                                <% genres.forEach(gen=> { %>
+                                                    <option value="<%= gen.id %>" <%=gen.id==user.genres_id
+                                                        && 'selected' %>>
+                                                        <%=gen.name%>
+                                                    </option>
+                                                    <% }) %>
+                                            </select>
+
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Celular</p> <span>
+                                            <%= user.phone? `(+${user.prefixCode}) ${user.phone}` : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive phone-field">
+                                            <select name="phone_code" class="prefix-phone">
+                                                <% countryCodes.forEach(country=> { %>
+                                                    <option value="<%=country.id %>"
+                                                        <%=user.country_codes_id==country.id && 'selected' %>>
+                                                        (+<%= country.code %>) <%= country.country_name %>
+                                                    </option>
+                                                    <% }) %>
+                                            </select>
+                                            <input class="numeric-only-input desktop-required desktop-phone" type="text" name="phone"
+                                                value="<%=user.phone || null%>" placeholder="1158731281">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>DNI</p> <span>
+                                            <%= user.dni? user.dni : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input class="desktop-dni numeric-only-input desktop-required" type="text"
+                                                name="dni" value="<%=user.dni || null%>" placeholder="23083620">
+                                        </div>
+                                        <% if(locals.errors && locals.errors.dni) { %>
+                                            <p class="error-msg">
+                                                <%= errors.dni.msg %>
+                                            </p>
+                                            <% } %>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <div class="profile-data-container user-address">
+                                <div class="profile-data-title">
+                                    <h2>Dirección de entrega</h2>
+                                </div>
+                                <ul class="profile-selected-list address-list">
+                                    <li class="profile-field-container">
+                                        <p>Calle</p> <span>
+                                            <%= user.userAddress?.street? user.userAddress?.street : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input class="shipment-input" type="text" name="street" value="<%=user.userAddress?.street || null%>"
+                                                placeholder="Santa Fe">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Número</p> <span>
+                                            <%= user.userAddress?.street? user.userAddress?.street_number : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input class="shipment-input" type="text" name="street_number" value="<%=user.userAddress?.street_number || null%>"
+                                                placeholder="3322">
+                                        </div>
+                                    </li>
+
+                                    <li class="profile-field-container">
+                                        <p>Piso/Departamento</p> <span>
+                                            <%= user.userAddress?.apartment? user.userAddress?.apartment
+                                                : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input type="text" name="apartment"
+                                                value="<%=user.userAddress?.apartment || null%>" placeholder="3F">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Ciudad</p> <span>
+                                            <%= user.userAddress?.city? user.userAddress?.city : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input class="shipment-input" type="text" name="city" value="<%=user.userAddress?.city || null%>"
+                                                placeholder="Palermo">
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Provincia</p> <span>
+                                            <%= user.userAddress?.provinces_id ? provinces.find(prov=>
+                                                user.userAddress?.provinces_id == prov.id).name : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <select name="provinces_id" id="province">
+                                                <% provinces.forEach(prov=> { %>
+                                                    <option value="<%= prov.id %>"
+                                                        <%=user.userAddress?.provinces_id==prov.id && 'selected' %>><%=
+                                                            prov.name %>
+                                                    </option>
+                                                    <% }) %>
+                                            </select>
+                                        </div>
+                                    </li>
+                                    <li class="profile-field-container">
+                                        <p>Codigo Postal</p> <span>
+                                            <%= user.userAddress?.zip_code? user.userAddress?.zip_code
+                                                : 'Sin especificar' %>
+                                        </span>
+                                        <div class="profile-input input-container-inactive">
+                                            <input class="shipment-input numeric-only-input" type="text" name="zip_code"
+                                                value="<%=user.userAddress?.zip_code || null%>"
+                                                placeholder="1111">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="profile-data-container user-preferences">
+                                <div class="profile-data-title">
+                                    <h2>Preferencias</h2>
+                                </div>
+                                <ul class="profile-selected-list">
+                                    <li class="profile-field-container unique-email-field">
+                                        <p>Email</p> <span class="bold">
+                                            <%= user.email %>
+                                        </span>
+                                    </li>
+                                    <div class="profile-radio-p-container profile-field-container">
+                                        <p>Quiero recibir notificaciónes por correo electrónico</p>
+                                        <div class="profile-radio-container">
+
+                                            <div class="radio-label-container">
+                                                <label for="email_notifications_true">SI</label>
+                                                <input id="email_notifications_true" type="radio"
+                                                    name="email_notifications" value="1" <%=user.email_notifications==1
+                                                    ? 'checked' : '' %>>
+                                            </div>
+                                            <div class="radio-label-container">
+
+                                                <label for="email_notifications_false">NO</label>
+                                                <input id="email_notifications_false" type="radio"
+                                                    name="email_notifications" value="0" <%=user.email_notifications==0
+                                                    ? 'checked' : '' %>>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-radio-p-container profile-field-container">
+                                        <p>Quiero recibir notificaciónes por WhatsApp.</p>
+                                        <div class="profile-radio-container">
+                                            <div class="radio-label-container">
+                                                <label for="wpp_notifications_true">SI</label>
+                                                <input id="wpp_notifications_true" type="radio" name="wpp_notifications"
+                                                    value="1" <%=user.wpp_notifications==1? 'checked' : '' %>>
+                                            </div>
+                                            <div class="radio-label-container">
+                                                <label for="wpp_notifications_false">NO</label>
+                                                <input id="wpp_notifications_false" type="radio"
+                                                    name="wpp_notifications" value="0"
+                                                    <%=user.wpp_notifications==0? 'checked' : '' %>>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-radio-p-container profile-field-container">
+                                        <p>Quiero recibir el newsletter por correo electrónico.</p>
+                                        <div class="profile-radio-container">
+                                            <div class="radio-label-container">
+                                                <label for="email_newsletter_true">SI</label>
+                                                <input id="email_newsletter_true" type="radio" name="email_newsletter"
+                                                    value="1" <%=user.email_newsletter==1? 'checked' : '' %>>
+                                            </div>
+                                            <div class="radio-label-container">
+
+                                                <label for="email_newsletter_false">NO</label>
+                                                <input id="email_newsletter_false" type="radio" name="email_newsletter"
+                                                    value="0" <%=user.email_newsletter==0? 'checked' : '' %>>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-radio-p-container profile-field-container">
+                                        <button class="change-password-btn">Cambiar contraseña</button>
+                                        <button class="destroy-account-btn">Eliminar cuenta</button>
+                                            
+                                    </div>
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                        <div class="edit-content-container desktop-edit-content-container">
+                            <button class="form-btn edit-content">
+                                Editar datos
+                            </button>
+                            <button type="submit"
+                                class="form-btn submit-form form-btn-inactive send-user-info-form-btn">
+                                Guardar cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+
+                </div>
+
+            </main>
+            <form class="destroy-account-popup" action="/user/destroy-account?_method=DELETE"
+                method="POST">
+                <p class="product-delete-popup-label">Estas seguro que quieres eliminar tu cuenta?</p>
+                <p class="grey">Una vez borrada deberas crearte otra</p>
+                <button type="button" class="cancel-user-delete">Cancelar</button>
+                <button type="submit" class="confirm-user-delete" type="submit">Eliminar</button>
+            </form>
+
+
+            <%- include('./partials/footer.ejs') %>
+
+    </body>
+
+    </html>

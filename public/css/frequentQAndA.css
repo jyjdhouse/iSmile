@@ -1,0 +1,196 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.frequent-q-a-wrapper {
+    margin-top: 11vh;
+}
+
+.title-container {
+    padding-top: 5%;
+    text-align: center;
+}
+
+.frequent-a-q-list-item {
+    margin: 7% auto;
+    width: 95%;
+    border: 1px;
+    border: 1px solid var(--gold-color);
+    padding: 5%;
+}
+
+.frequent-a-q-list-item p {
+    margin-top: 5%;
+}
+.frequent-a-q-list-item p a{
+    color: var(--violet-color);
+    text-decoration: underline 1px var(--violet-color);
+    cursor: pointer;
+}
+
+.form-content-container {
+    width: 100%;
+    margin-top: 20%;
+}
+
+.form-title-container h2 {
+    text-align: center;
+    color: black;
+}
+
+.form-title-container h3 {
+    text-align: center;
+    margin-top: 2%;
+    color: #686868;
+}
+
+
+.faq-form {
+    margin-top: 10%;
+    margin-bottom: 8%;
+}
+
+.faq-input-container,
+.faq-textarea-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+
+    margin: 5% auto;
+}
+
+.faq-checkbox-container {
+    display: flex;
+    width: 80%;
+    margin: 5% auto;
+}
+
+.faq-checkbox-container input {
+    width: 10%;
+    height: 15px;
+}
+
+.faq-checkbox-container label {
+    margin-left: 2%;
+}
+
+.faq-form-label {
+    text-align: left;
+    text-transform: uppercase;
+}
+
+
+.faq-input-container input,
+textarea {
+    width: 100%;
+    margin: 3% auto;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    border-bottom: 1px solid #3b3b3b;
+}
+
+.faq-input-container,
+.faq-textarea-container label {
+    color: var(--violet-color);
+}
+
+.faq-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.faq-send-question {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    border: 1px solid var(--gold-color);
+    background-color: transparent;
+    color: black;
+    padding: 1% 0;
+    margin-top: 3%;
+    font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+
+    .frequent-a-q-list-item {       
+        width: 85%;
+    }
+
+    .form-content-container {
+        margin-top: 10%;
+    }
+
+
+    .faq-input-container,
+    .faq-textarea-container, 
+    .faq-checkbox-container{
+        width: 70%;
+        margin: 3% auto;
+    }
+
+    .faq-checkbox-container {
+        width: 70%;
+    }
+
+
+    .faq-send-question {
+        width: 50%;
+    }
+
+}
+
+@media (min-width: 1024px) {
+    
+    .form-content-container {
+        margin-top: 5%;
+    }
+
+    .frequent-a-q-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
+    .frequent-a-q-list-item {
+        width: 30%;
+        padding: 3% 5%;
+        margin: 4% auto;
+    }
+
+
+    .faq-input-container,
+    .faq-textarea-container
+     {
+        width: 60%;   
+    }
+
+    .faq-checkbox-container {
+        width: 65%;
+    }
+
+    .faq-checkbox-container input {
+        width: 8%;
+    }
+
+    .faq-form-label {
+        text-align: left;
+        font-size: 1rem;
+    }
+
+    .faq-send-question {
+        width: 30%;
+    }
+
+
+
+
+
+}

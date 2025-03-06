@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/budget.css">
+    <link rel="stylesheet" href="/css/spinner.css">
+    <link rel="stylesheet" href="/css/alternativeHeader.css">
+    <!-- Script -->
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/scripts/budgetScript.js" type="module"></script>
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- Box-icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Para el logo del navegador -->
+    <link rel="icon" type="image/png" href="/img/logo-background.png">
+    <title>Budget</title>
+</head>
+
+<body>
+    <%- include('./partials/spinner.ejs') %>
+        <%- include('./partials/alternativeHeader.ejs') %>
+            <main class="main">
+                <section class="client-details">
+                    <div class="field">
+                        <p class="client-name">Nombre:</p>
+                        <input type="text" name="client-name" id="client-name" class="change-element">
+
+                    </div>
+                    <div class="field date-field">
+                        <p class="date">Fecha:</p>
+                        <input type="date" name="date" id="date" class="change-element">
+
+                    </div>
+                </section>
+                <button class="add-budget-product-btn remove-element">Agregar <i
+                        class='bx bx-plus-medical'></i></button>
+                <section class="discount-section remove-element">
+                    <p class="discount-label">Descuento: </p>
+                    <input type="text" class="numeric-only-input discount-input">
+                </section>
+
+                <table class="budget-table">
+                    <thead>
+                        <tr>
+                            <th class="remove-row-column remove-element"></th>
+                            <th>Tratamiento</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unit.</th>
+                            <th>Total</th>
+                            <th class="cash-column">Precio Unit. <span class="budget-type">Efectivo</span></th>
+                            <th class="cash-column">Total <span class="budget-type">Efectivo</span> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="row">
+                            <td class="remove-row-column remove-element"><i class='bx bx-trash-alt remove-row-btn'></i>
+                            </td>
+                            <td class="select-column">
+                                <select class="js-example-placeholder-single description" name="treatment">
+                                    <% products.forEach(prod=> { %>
+                                        <option></option>
+                                        <option value=<%=prod.id %> data.price = <%= prod.price %> data.cash_price = <%=
+                                                    prod.cash_price %>>
+                                                    <%= prod.name %>
+                                        </option>
+                                        <% }) %>
+                                </select>
+                            </td>
+                            <td class="relative-container">
+                                <i class='bx bx-minus subtract-quantity-btn remove-element'></i>
+                                <input type="number" class="quantity-input change-element" min="1">
+                                <i class='bx bx-plus-medical add-quantity-btn remove-element'></i>
+                            </td>
+                            <td><span class="single-price price-number"></span></td>
+                            <td><span class="total price-number"></span></td>
+                            <td class="cash-column"><span class="single-cash-price price-number"></span></td>
+                            <td class="cash-column"><span class="total-cash price-number"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="total-prices-container">
+                    <p class="total-prices-label bold">Total a abonar: $<span class="total-budget price-number"></span>
+                    </p>
+                    <p class="total-prices-label bold">Total a abonar (<span class="budget-type">Efectivo</span>): $<span
+                            class="total-cash-budget price-number"></span></p>
+                </div>
+
+                <div class="button-container remove-element">
+                    <button class="generate-pdf-btn">GENERAR PDF</button>
+                </div>
+            </main>
+
+</body>
+
+</html>

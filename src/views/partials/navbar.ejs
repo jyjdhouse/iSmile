@@ -1,0 +1,29 @@
+<div class="navbar-container hidden">
+    <div class="pattern-container">
+        <img src="/img/goldBackground.png" alt="pattern" class="background-pattern background-pattern-top">
+    </div>
+
+    <nav class="navbar">
+        <i class='bx bx-x close-menu-btn'></i>
+        <ul>
+            <li class="navbar-list-item"><a href="/nosotros">Nosotros</a></li>
+            <li class="navbar-list-item item-dropdown">
+                <div class="item-dropdown-visible-part">
+                    <a href="/servicios">Servicios</a>
+                    <i class='bx bx-chevron-right'></i>
+                </div>
+                <ul class="dropdown-items-container">
+                    <% locals.headerSpecialties && headerSpecialties.forEach((specialty, i) => { %>
+                        <li class="dropdown-list-item"><a href="/servicios?open=<%= i %>"><%= specialty.name %></a></li>
+                    <% }) %>
+                    
+                </ul>
+            </li>
+            <li class="navbar-list-item"><a href="/product">Productos</a></li>
+            <li class="navbar-list-item"><a href="/blog">Blog</a></li>
+        </ul>
+    </nav>
+    <div class="pattern-container">
+        <img src="/img/goldBackground.png" alt="pattern" class="background-pattern background-pattern-bottom">
+    </div>
+</div>

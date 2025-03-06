@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.book-consultation-intro-container {
+    margin-top: 1rem;
+}
+
+.book-consultation-intro-container h2,
+h3 {
+    color: #fff;
+}
+
+.book-consultation-intro-container h3 {
+    margin: 3% 0;
+}
+
+.book-consultation-container {
+    position: fixed;
+    z-index: 10000;
+    right: 0;
+    left: 0;
+    top: 100%;
+    height: 40%;
+    transition: all .35s ease;
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    border-top: 2px solid var(--gold-color);
+    justify-content: center;
+    background-color: var(--violet-color);
+}
+
+
+.book-consultation-container-active {
+    top: 60%;
+}
+
+.h2-booking-title-container {
+    width: 100%;
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+}
+
+
+.h2-booking-title-container a {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: var(--violet-color);
+    border: 1px solid var(--gold-color);
+    width: 65%;
+    padding: 25px 0;
+    border-radius: 1rem;
+    background-color: #fff;
+    font-weight: 700;
+}
+
+.book-consultation-title {
+    width: 100%;
+    height: fit-content;
+    color: #fff;
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+.book-consultation-image-container{
+    height: 35%;
+}
+.book-consultation-image-container img{
+    width: 250px;
+    height: 100px;
+    object-fit: cover;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -5%;
+}
+@media(min-width: 435px){
+    .book-consultation-image-container img{
+        bottom: 0;
+    }
+}
+@media(min-width: 768px) {
+    .book-consultation-form {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .book-consultation-img-container {
+        width: 65%;
+        margin: 3% auto;
+    }
+    
+    .h2-booking-title-container a {
+        font-size: 1.1rem;
+        padding: 2.5% 0;
+        width: 50%;
+    }
+
+
+}
+
+@media(min-width: 1024px) {
+
+    .book-consultation-container {
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        width: 50%;
+        transform: translate(100%, 0);
+        padding: 5%;
+        left: 100%;
+        border-top: 0;
+        border-left: 3px solid var(--gold-color);
+        justify-content: center;
+    }
+
+    .book-consultation-container-active {
+        left: 0;
+    }
+    .h2-booking-title-container a {
+        padding: 3.5% 0;
+    }
+
+    .book-consultation-image-container img{
+        bottom: 35%;
+        width: 350px;
+    }
+
+}

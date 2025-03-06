@@ -1,0 +1,360 @@
+.main {
+    margin: 10vh 0;
+}
+
+select {
+    cursor: pointer;
+}
+
+textarea {
+    resize: none;
+}
+
+.main h1,
+.main h6 {
+    text-align: center;
+}
+
+.form-label {
+    width: 100%;
+    margin: 3vh auto;
+    font-size: 18px;
+    text-align: center;
+}
+
+.form {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.choose-service-section {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.choose-service-checkbox-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1.5rem;
+    column-gap: 2%;
+    padding: 15px 0;
+    justify-content: space-evenly;
+    height: 60vh;
+    overflow-y: scroll;
+    border: 1px solid;
+}
+
+.shown-labels-section {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    height: fit-content;
+    align-content: flex-start;
+}
+
+.shown-labels-title {
+    width: 100%;
+    height: fit-content;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 2.5vh;
+}
+
+.shown-labels-container {
+    width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: 1.333%;
+    height: 60vh;
+    overflow-y: auto;
+}
+
+.shown-label-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 48%;
+    margin-bottom: 30px;
+    border-bottom: 1px dashed;
+    padding-bottom: 15px;
+}
+
+.shown-label {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px;
+    background: #eee;
+    height: fit-content;
+    margin-bottom: 20px;
+    border: .5px solid rgba(0, 0, 0, .7);
+    text-align: center;
+    align-self: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.shown-label-container input {
+    cursor: pointer;
+}
+
+.shown-label:hover {
+    background-color: rgb(143, 6, 6);
+    color: #ccc;
+}
+
+.remove-shown-label {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    font-size: 10px;
+}
+
+.new-price-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: space-between;
+}
+
+.new-price-container .field {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    align-items: center;
+    justify-content: space-between;
+    margin: 25px 0;
+}
+
+.service-checkbox-container {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 0.6rem;
+}
+
+.search-checkbox-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.search-checkbox {
+    width: 80%;
+    border: 1px solid var(--violet-color);
+    padding: 10px;
+    border-radius: 1rem;
+
+}
+
+.checkbox-label {
+    cursor: pointer;
+    text-align: center;
+    font-size: .65rem;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid var(--light-violet-color);
+    height: fit-content;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+
+.field>input,
+.field>select,
+.field>textarea {
+    width: 60%;
+    border: 1px solid var(--gold-color);
+    outline: none;
+    border-radius: 1rem;
+    padding: 5px 10px;
+    height: fit-content;
+    margin-top: 15px;
+}
+
+.send-form-button-container {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.button-loading-spinner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.button-loading-spinner-active {
+    z-index: 1;
+}
+
+.form button {
+    background: none;
+    border: 1px solid var(--gold-color);
+    border-radius: 1rem;
+    width: 100%;
+    padding: 10px 0;
+    cursor: pointer;
+    height: fit-content;
+}
+
+/* Para agregar servicios */
+.add-treatment-form,
+.delete-treatment-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 80px;
+    padding: 15px 30px;
+    border-top: 1px dashed var(--violet-color);
+    border-bottom: 1px dashed var(--violet-color);
+}
+
+.add-treatment-title {
+    width: 100%;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+}
+
+.add-treatment-form .field {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    align-items: center;
+    margin-top: 25px;
+    text-align: center;
+}
+
+.add-treatment-form .field>textarea {
+    height: 80px;
+    width: 80%;
+}
+
+.image-label {
+    border: 1px solid var(--gold-color);
+    width: 50px;
+    border-radius: 50%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.image-label>i {
+    font-size: 35px;
+}
+
+.add-treatment-form button,
+.delete-treatment-form button {
+    width: 60%;
+    margin: 25px auto 0;
+    padding: 10px 0;
+    border: 1px solid var(--gold-color);
+    outline: none;
+    font-size: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.add-treatment-form button:hover,
+.delete-treatment-form button:hover {
+    background-color: #ddd;
+}
+
+/* PARA BORRAR TRATAMIENTOS */
+.delete-treatment-form button .add-treatment-title {
+    margin-bottom: 20px;
+}
+
+.delete-treatment-form .choose-service-section {
+    width: 100%;
+}
+
+@media(min-width: 1024px) {
+    .form {
+        flex-wrap: nowrap;
+    }
+
+    .choose-service-section {
+        width: 40%;
+    }
+
+    .choose-service-checkbox-container {
+        border: 1px solid rgba(200, 200, 200, .4);
+    }
+
+    .checkbox-label {
+        font-size: .8rem;
+        width: 25%;
+    }
+
+    .form-label {
+        margin: 3vh 5vw;
+        font-size: 20px;
+        text-align: unset;
+    }
+
+    .shown-labels-section {
+        width: 35%;
+        height: 60vh;
+    }
+
+    .shown-labels-container {
+        height: fit-content;
+        justify-content: flex-start;
+    }
+
+    .shown-label-container {
+        width: 32%;
+    }
+
+    .new-price-container {
+        width: 20%;
+        height: 60vh;
+    }
+
+    .new-price-container .field {
+        width: 100%;
+        justify-content: unset;
+    }
+
+    .add-treatment-form .field {
+        width: 20%;
+        text-align: unset;
+    }
+
+    .add-treatment-form button,
+    .delete-treatment-form button {
+        width: 30%;
+        font-size: 25px;
+    }
+
+    .delete-treatment-form .choose-service-section {
+        width: 60%;
+    }
+
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <%- include('./partials/head.ejs') %>
+        <link rel="stylesheet" href="/css/preCheckout.css">
+        <!-- <script src="/scripts/preCheckout.js" type="module"></script> -->
+    <title>Checkout</title>
+</head>
+<body>
+    <%- include('./partials/header.ejs') %>
+    <%- include('./partials/blackScreen.ejs') %>
+    <%- include('partials/shoppingCartPopup.ejs') %>
+    <main class="main pre-checkout-main-desktop">
+        <section class="shopping-bag-section">
+            <div class="shopping-bag-title-container">
+                <p class="shopping-bag-title">Carro de Compras</p>
+            </div>
+            <div class="shopping-bag-product-cards-container">
+                <div class="shopping-bag-product-card">
+                    <div class="product-image-container">
+                        <img src="/img/products/dresses/dress1.webp" alt="product-dress" class="product-image">
+                    </div>
+                    <div class="product-info-container">
+                        <a href="" class="product-name">Vestido Azul Fashion</a>
+                        <p class="product-single-price">U$ 50</p>
+                        <p class="product-color">Color: Veige</p>
+                        <p class="product size">Tamaño: M</p>
+                    </div>
+                    <div class="product-quantity-container">
+                        <div class="number-box-container">
+                            <div class="minus-sign-container">
+                                <p class="minus-sign">-</p>
+                            </div>
+                            <input type="number" class="quantity-input" value="2">
+                            <div class="plus-sign-container">
+                                <p class="plus-sign">+</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-price-container">
+                        <p class="product-total-price">U$ 100</p>
+                    </div>
+                    <i class="fa-regular fa-x remove-bag-item"></i>
+                </div>
+            </div>
+        </section>
+        <section class="checkout-section">
+
+        </section>
+        <section class="related-products-section"></section>
+    </main>
+</body>
+</html>

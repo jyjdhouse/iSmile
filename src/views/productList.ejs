@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+        <script src="/scripts/productList.js" type="module"></script>
+        <!-- <script type="module" src="/scripts/productCard.js"></script> -->
+        <!--<script src="/scripts/productCard.js" type="module"></script> -->
+        <link rel="stylesheet" href="/css/productList.css">
+        <link rel="stylesheet" href="/css/productCard.css">
+        <!-- <link rel="stylesheet" href="/css/loadingAnimation.css"> -->
+        <title>Productos - Lista</title>
+</head>
+
+<body>
+    <%- include('./partials/header.ejs') %>
+
+        <main class="main">
+            <section class="gallery-photo-section">
+                <i class='bx bx-left-arrow change-gallery-photo-btn previous-photo-btn'></i>
+                <i class='bx bx-right-arrow change-gallery-photo-btn next-photo-btn'></i>
+                <div class="photo-wrapper">
+                    <% productGalleryfiles.forEach(file=> { %>
+                        <article class="gallery-photo">
+                            <img src="<%= file.file_url %>" alt="gallery-photo-<%= file.filename %>">
+                        </article>
+                        <% }) %>
+                </div>
+                <div class="dots-wrapper">
+                    <% for( let i=0; i < productGalleryfiles?.length; i++ ) { %>
+                        <div class="gallery-dot <%= i == 0 ? 'gallery-dot-active' : '' %>"></div>
+                        <% } %>
+                </div>
+            </section>
+            <div class="product-list-intro">
+                <div class="product-title">
+                    <h2 class="bold">
+                        <%= viewLabel ? viewLabel : 'PRODUCTOS DE BELLEZA Y BIENESTAR' %>
+                    </h2>
+                </div>
+            </div>
+
+            <section class="product-list-section">
+                <% products.forEach(prod=> { %>
+                    <article class="product-card-container <%= !prod.stock   && 'prod-card-out-of-stock' %>" data-productId="<%=prod.id%>">
+                        <% if (prod.discount) { %>
+                            <div class="card-discount-tag-container">
+                                <p class="card-discount-tag"><%=prod.discount %>% OFF</p>
+                            </div>
+                        <% } %>
+                        <a href="/product/<%= prod.id %>" class="product-card-link">
+                            <div class="image-container">
+                                <div class="image-carousel">
+                                    <% if (prod.files.length) { %>
+                                        <%prod.files.forEach((file, i)=>{ %>
+                                            <% if (file.file_types_id==1) { %> <!--FOTO-->
+                                                <% if(i==0) { %>
+                                                    <img src="<%= file.file_url %>"
+                                                        alt="<%= prod.name%>-<%=file.filenanme %>"
+                                                        class="product-image-test product-image-test-active">
+                                                    <% } else { %>
+                                                        <img src="<%= file.file_url %>"
+                                                            alt="<%= prod.name%>-<%=file.filenanme %>"
+                                                            class="product-image-test <%= prod.files.length == 2 ? 'carousel-animation' : ''%>">
+                                                        <% } %>
+
+                                                            <% }else if(file.file_types_id==2){ %><!--VIDEO--> %>
+                                                                <video class="video product-image-test" muted
+                                                                    playsinline loop>
+                                                                    <source src="<%= file.file_url %>" type="video/mp4">
+                                                                    <source src="<%= file.file_url %>"
+                                                                        type="video/webm">
+                                                                    No se puede reproducir el video
+                                                                </video>
+                                                                <% } %>
+                                                                    <% })%>
+                                                                        <% } else{ %>
+                                                                            <img src="/img/product/default.png"
+                                                                                alt="<%= prod.name%>"
+                                                                                class="product-image-test product-image-test-active">
+                                                                            <% } %>
+
+                                </div>
+                            </div>
+                            <div class="product-info-container">
+                                <div class="price-name-container">
+                                    <p class="product-name">
+                                        <%= prod.name %>
+                                    </p>
+                                    <% if (prod.discount) { %>
+                                        <div class="price-with-discount">
+                                            <p class="product-price striked">$<%= prod.price %></p>
+                                            <p class="product-price-discount">$<%= Math.round(prod.price * (1-prod.discount/100)) %></p>
+                                        </div>
+                                    <% } else{ %>
+                                        <p class="product-price">$<%= prod.price %></p>
+                                    <% } %>
+                                </div>
+                                <% if(!prod.stock) { %>
+                                    <div class="product-out-of-stock">
+                                        <p class="out-of-stock">Sin Stock</p>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </a>
+                        <div class="product-quick-actions-container" data-productId="<%=prod.id %>">
+                            <div class="quick-cart-container <%= !prod.stock && 'pointer-events-inactive'%>" data-productid="<%=prod.id %>">
+                                <div class="logo-container">
+                                    <i class='bx bx-shopping-bag quick-add-cart-btn '></i>
+                                    <i class='bx bx-check-circle remove-cart-product hidden'></i>
+                                </div>
+                            </div>
+                            <div class="loading-container">
+                                <div class="load-wrapp">
+                                    <div class="load-3">
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                        <div class="line"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <% }) %>
+
+
+            </section>
+        </main>
+        <%- include('./partials/footer.ejs') %>
+
+
+
+
+
+
+</body>
+
+</html>

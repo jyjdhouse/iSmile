@@ -1,0 +1,593 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    user-select: none;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+
+
+
+.lupa-desktop {
+    display: none;
+}
+
+.side-navbar-container li {
+    list-style: none;
+}
+
+
+.black-screen {
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.error-msg {
+    color: #d00;
+    margin-top: 2%;
+}
+
+/* MENU HAMBURGUESA */
+
+.burguer-menu-btns-container {
+    display: inline;
+    width: 12.5%;
+    text-align: center;
+    position: relative;
+}
+
+.open-menu-button {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* MENU  */
+
+.side-navbar-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    z-index: 110;
+    right: 0;
+    width: 0;
+    overflow: hidden;
+    transition: width 350ms ease;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.side-navbar-container-active {
+    width: 100%;
+}
+
+.close-button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 30px;
+    cursor: pointer;
+    padding: 2%;
+    border-bottom: 1px solid rgba(40, 40, 40, .2);
+}
+
+.close-menu-button {
+    margin-right: 20px;
+}
+
+.close-menu-text {
+    font-size: 19px;
+}
+
+.logged-logo-mobile {
+    margin-right: 4%;
+}
+
+.burguer-menu-category {
+    padding: 0 2rem;
+    margin-bottom: 15%;
+    border-bottom: 1px solid rgba(40, 40, 40, .2);
+}
+
+.burguer-menu-category:first-child {
+    margin: 15% 0;
+}
+
+.category-link {
+    color: #000;
+    font-size: 20px;
+}
+
+.burguer-menu-category-list {
+    padding: 0 6%;
+}
+
+.burguer-menu-option-list {
+    padding-left: 15%;
+}
+
+.burguer-menu-option-list:last-child {
+    margin-bottom: 15%;
+}
+
+.burguer-menu-option {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0.8rem 0;
+    font-size: 15px;
+}
+
+.burguer-menu-option a {
+    color: #555;
+    font-size: 1.2rem;
+}
+
+.burguer-menu-option i {
+    margin: auto 0;
+}
+
+.burger-submenu-back {
+    color: rgb(166, 166, 166);
+    font-size: 25px;
+}
+
+.burger-menu-info-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 6%;
+    margin: 1.5rem;
+}
+
+.burger-menu-info-container * {
+    color: #000;
+}
+
+.burger-menu-item-container:first-child {
+    margin-bottom: 1rem;
+}
+
+.fa-location-dot,
+.bx-phone {
+    font-size: 1.25rem;
+    margin-right: 0.700rem;
+}
+
+
+
+/* END MENU HAMBURGUESA */
+
+.header {
+    width: 100%;
+    /* background-color: rgba(255, 255, 255, .1); */
+    height: 10vh;
+    transition: visibility .2s ease-out;
+    position: fixed;
+    z-index: 11;
+    top: 0;
+    padding-top: 1vh;
+    background-color: #fff;
+    border-bottom: 2px solid var(--gold-color);
+}
+
+.header-hidden {
+    animation: fadeOutUp .4s ease;
+    visibility: hidden;
+
+}
+
+.header-hidden .open-search-form-button {
+    transition: none;
+}
+
+.header-active {
+    /* Para cuando scrollean para arriba */
+    animation: fadeInDown .4s ease;
+    visibility: visible;
+}
+
+.header i {
+    font-size: 20px;
+    color: var(--bold-color);
+}
+
+.header .open-popup-cart-btn {
+    font-size: 24px;
+}
+
+.nav-start,
+.nav-end {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    /* column-gap: 1.2rem; NO ES COMPATIBLE */
+    align-items: center;
+    position: relative;
+}
+
+.nav-start {
+    justify-content: flex-start;
+    padding-left: 1rem;
+}
+.nav-start>*{
+    margin-right: 1.2rem !important;
+}
+.nav-end>*{
+    margin-left: 1.2rem !important;
+}
+.nav-end {
+    padding-right: 5%;
+    justify-content: flex-end;
+}
+
+.nav-bar-section {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.search-container {
+    width: 12.5%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.brand-name {
+    width: 25%;
+    height: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+    transition: transform .5s ease, background-color 1s ease;
+    transition-delay: .3s;
+    background-color: transparent;
+}
+
+.brand-name-active {
+    transition: transform .5s ease;
+    transition-delay: .2s;
+    transform: translateX(100%);
+    background-color: #fff;
+}
+
+.brand-name-image-container {
+    height: 100%;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.header-logo {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.wishlist-container {
+    position: relative;
+}
+
+.wishlist-logo {
+    font-size: 18px;
+}
+
+.login-toggler {
+    cursor: pointer;
+}
+
+
+.shopping-cart-container {
+    position: relative;
+    width: fit-content;
+    display: flex;
+}
+
+.shopping-cart-desktop {
+    display: none;
+}
+
+.products-quantity {
+    position: absolute;
+    color: var(--bold-color);
+    border-radius: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    top: -43%;
+    right: -15%;
+    font-size: .85rem;
+    font-weight: 700;
+}
+
+/* Deslpegable de cuando el usuario este loggeado */
+.user-logged-container {
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    width: fit-content;
+}
+.user-logged-container .user-logged-name{
+    border: 1px solid var(--gold-color);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--violet-color);
+    color: #fff;
+    cursor: pointer;
+}
+.user-logged-container .bx-chevron-down {
+    width: 10%;
+    font-size: 22px;
+}
+.logged-menu-container {
+    scale: 0;
+    opacity: 0;
+    transition: scale 1s ease, opacity .3s ease;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0.5rem;
+    min-width: 110px;
+    background-color: #fefefe;
+    border: 1px solid var(--gold-color);
+    overflow: hidden;
+}
+
+.logged-menu-container-active {
+    scale: 1;
+    opacity: 1;
+    transition: scale .01s ease, opacity .8s ease;
+}
+
+.logged-menu-list-item * {
+    font-size: 12px;
+}
+.logged-menu-list {
+    margin: 10% 5%;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+}
+
+.expandable-list-item {
+    overflow: hidden;
+}
+
+.create-options-toggler {
+    transition: all .3s ease;
+}
+
+.create-options-toggler.rotated {
+    transform: rotate(90deg);
+}
+
+.admin-menu-list {
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 0;
+    overflow: hidden;
+    margin: 0;
+    transition: all .3s linear;
+    row-gap: 5px;
+    padding-left: 10%;
+    margin-top: 6px;
+
+}
+
+.admin-menu-list-active {
+    max-height: 100%;
+}
+
+.admin-menu-list li {
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.logged-menu-list-item {
+    width: 100%;
+    padding-left: 3px;
+}
+
+/* MEDIAS QUERIES */
+@media(min-width: 444px) {
+    .brand-name-image-container {
+        width: 65%;
+    }
+    .brand-name-active{
+        transform: translateX(110%);
+    }
+}
+
+/* TABLET */
+@media (min-width:768px) {
+    .brand-name-image-container {
+        width: 54.5%;
+    }
+    .header-logo{
+        object-fit: cover;
+    }
+    /* MENU */
+    .side-navbar-container-active {
+        width: 50%;
+    }
+    .logged-menu-list-item *{
+        font-size: 13.5px;
+    }
+}
+
+/* MOBILE */
+@media (min-width: 1024px) {
+    .header {
+        padding-top: 0;
+    }
+
+    .header:hover {
+        background-color: #fff;
+    }
+
+    .header i {
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .header .open-popup-cart-btn {
+        font-size: 22px;
+    }
+
+
+    .lupa-mobile {
+        display: none;
+    }
+
+    .lupa-desktop {
+        display: initial;
+    }
+
+    .mobile-category {
+        display: none;
+    }
+
+    .side-navbar-container-active {
+        width: 40%;
+    }
+
+    .brand-name {
+        font-size: 40px;
+        width: 50%;
+    }
+
+    .brand-name-image-container {
+        width: 20%;
+    }
+    
+    .nav-start {
+        padding-left: 3%;
+        justify-content: flex-start;
+    }
+    .nav-start>*{
+        margin-right: 1.8rem;
+    }
+    .nav-end>*{
+        margin-left: 1.8rem;
+    }
+    .nav-end {
+        padding-right: 3%;
+        justify-content: flex-end;
+    }
+
+    .nav-start,
+    .nav-end {
+        width: 25%;
+        /* column-gap: 1.8rem; NO ES COMPATIBLE*/ 
+    }
+
+    .shopping-cart-mobile {
+        display: none;
+    }
+
+    .shopping-cart-desktop {
+        display: flex;
+    }
+
+    .shopping-cart-container .fa-bag-shopping {
+        font-size: 20px;
+    }
+
+    .products-quantity {
+        font-size: 16px;
+        font-weight: 600;
+        top: -55%;
+        right: -30%;
+    }
+
+    .wishlist-container .products-quantity {
+        right: -70%;
+    }
+
+
+    .category-link {
+        font-size: 24px;
+    }
+
+    .burguer-menu-option:hover {
+        text-decoration: underline;
+        text-decoration-color: #555;
+    }
+
+    .info-menu-item {
+        margin-top: .6rem;
+    }
+
+    .info-menu-item i {
+        margin-right: .5rem;
+    }
+
+    .info-menu-item a {
+        color: #000;
+    }
+
+    .user-logged-container {
+        justify-content: flex-end;
+        width: fit-content;
+        position: static;
+    }
+
+    .user-logged-container .logged-menu-container {
+        left: unset;
+        width: 160px;
+        right: 8%;
+        transform: unset;
+        top: 72%;
+    }
+    .logged-menu-list-item *{
+        font-size: 15px;
+    }
+
+}
+
+
+
+/* ANIMAciónES */
+@keyframes fadeInDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutUp {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}

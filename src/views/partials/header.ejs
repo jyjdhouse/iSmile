@@ -1,0 +1,84 @@
+<%- include('./googleTagManager.ejs') %>
+<%- include('./pixelCode.ejs') %>
+<header class="header">
+    <!-- <img src="/img/goldBackground.png" alt=""> -->
+    <nav class="nav-bar-section">
+            <div class="nav-start">
+                <i class="fa-solid fa-bars open-menu-button "></i>
+                <div class="search-section-container mobile-only">
+                    <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-mobile "></i>
+                    <!-- Contenedor con el input que se abre -->
+                    <form class="search-form-container bigger-search-form" action="/product" method="GET">
+                        <i class="fa-solid fa-x close-search-form-button"></i>
+                        <input type="text" class="search-form-input" placeholder="Busca productos" name="s">
+                        <!-- <i class="fa-solid fa-magnifying-glass send-search-form-button"></i> -->
+                    </form>
+                </div>
+            </div>
+            <a href="/" class="brand-name" id="header-name">
+                <div class="brand-name-image-container">
+                    <img src="/img/logo.png" alt="header-logo"
+                    class="header-logo">
+                </div>
+            </a>
+            <div class="nav-end">
+                <% if (locals.isLogged) { %> <!--LOGGEADO-->
+                    <div class="user-logged-container">
+                        <p class="user-logged-name login-menu-btn-desktop bold"> 
+                               <%= userLogged.first_name && userLogged.first_name[0].toUpperCase() || 'U' %>
+                        </p>
+                        <div class="logged-menu-container">
+                        <ul class="logged-menu-list">
+                            <li class="logged-menu-list-item bold"><%= userLogged.first_name || 'User' %></li>
+                            <li class="logged-menu-list-item"><a href="/user/profile">Mi perfil</a></li>
+                            <% if (locals.userLogged.user_categories_id!=3) { %>
+                                <!--SI ES ADMIN userLogged.user_categories_id-->
+                                <li class="logged-menu-list-item expandable-list-item">
+                                    <p>Crear <i class='bx bx-chevron-right create-options-toggler'></i> </p>
+                                    <ul class="admin-menu-list">
+                                        <li><a href="/admin/consent" target="_blank">Consentimiento</a></li>
+                                        <li><a href="/admin/medicalInfo" target="_blank">Historia Medica</a></li>
+                                        <li><a href="/admin/budget" target="_blank">Presupuesto</a></li>
+                                        <li><a href="/product/create">Producto</a></li>
+                                        <li><a href="/blog/create">Blog</a></li>
+                                        <li><a href="/admin/registrar-venta">Venta</a></li>
+                                    </ul>
+                                </li>
+                                <li class="logged-menu-list-item"><a href="/admin/servicios-modificar-precio">Edicion Servicios</a>
+                                <li class="logged-menu-list-item"><a href="/admin/ventas">Ver ventas</a>
+                                <li class="logged-menu-list-item"><a href="/api/admin/get-clients"
+                                        target="_blank">Descargar clientes</a></li>
+                                <% } %>
+                                    <li class="logged-menu-list-item"><a href="/user/historial-compras">Historial compras</a></li>
+                                    <li class="logged-menu-list-item"><a href="/user/logout">Cerrar Sesion</a></li>
+                        </ul>
+                        </div>
+                    </div>
+                <% }else{ %> <!-- Si no esta loggeado...-->
+                    <i class="fa-regular fa-user login-toggler login-toggler-desktop user-options-trigger-btn"></i>
+                <% } %>
+                <div class="shopping-cart-container "> <!--En mobile solo que ve asi-->
+                    <a href="/user/checkout"><i class='bx bx-shopping-bag open-popup-cart-btn'></i></a>
+                    <p class="products-quantity"></p>
+                </div>
+                <div class="search-section-container desktop-only">
+                    <i class="fa-solid fa-magnifying-glass open-search-form-button lupa-desktop"></i>
+                    <!-- Contenedor con el input que se abre -->
+                    <form class="search-form-container bigger-search-form" action="/product" method="GET">
+                        <i class="fa-solid fa-x close-search-form-button"></i>
+                        <input type="text" class="search-form-input" placeholder="Busca productos" name="s">
+                        <!-- <i class="fa-solid fa-magnifying-glass send-search-form-button"></i> -->
+                    </form>
+                </div>
+            </div>
+
+    </nav>
+
+</header>
+<%- include('./navbar.ejs') %>
+    <%- include('./bookConsultation.ejs') %>
+        <%- include('./blackScreen.ejs') %>
+            <%- include('./shoppingCartPopup.ejs') %>
+                <%- include('./searchSection.ejs') %>
+                    <%- include('./userOptionsPopup.ejs') %>
+                    <%- include('./wpp.ejs') %>

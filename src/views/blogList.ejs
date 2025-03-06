@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+        <link rel="stylesheet" href="./css/blogList.css">
+        <script type="module" src="./scripts/blogList.js"></script>
+        <title>Blogs</title>
+</head>
+
+<body>
+    <%- include('./partials/header.ejs') %>
+        <main class="main blog-list-main">
+            <div class="blog-intro-container">
+                <h2 class="blog-title bold">I SMILE BLOG</h2>
+            </div>
+            <section class="blogs-container">
+                <div class="blogs-wrapper">
+                    <% blogs.forEach(blog => { %>
+                        <a href="/blog/<%= blog.id %>" class="blog-link">
+                            <article class="blog-card">
+                                <div class="blog-img-container">
+                                    <img src="<%= blog.mainImageURL %>" class="blog-image" alt="<%= blog.title %>-main-image">
+                                </div>
+                                <div class="blog-info-container">
+                                    <p class="blog-author-date">By <%= blog.author %> | <span class="blog-date"><%= blog.createdAt %></span></p>
+                                    <h3 class="blog-card-title"><%= blog.title %></h3>
+                                    <p class="blog-card-description"><%= blog.cutDesc %></p>
+                                </div>
+                                <button class="blog-card-button">LEER MAS</button>
+                            </article>
+                        </a>
+                    <% }) %>
+                </div>
+            </section>
+        </main>
+        <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

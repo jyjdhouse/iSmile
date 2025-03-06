@@ -1,0 +1,135 @@
+.about-us-img-container {
+    position: relative;
+    background: url('/img/about_us_background.jpg');
+    height: 300px;
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: center center;
+}
+
+
+.about-us-intro-container {
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: rgba(230, 230, 230, .85);
+
+    border-radius: 10px;
+}
+
+.about-us-intro-container h1 {
+    font-size: 1.2rem;
+    color: var(--violet-color);
+}
+
+.about-us-intro-container p {
+    font-size: 0.875rem;
+}
+
+.about-us-info-container {
+    padding-top: 50px;
+    position: relative;
+}
+/* Patterns */
+.right-pattern{
+    top: 0;
+}
+.left-pattern{
+    z-index: -1;
+}
+/*  */
+.about-us-copies-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.first-intro-container {
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    margin: 3% auto;
+    max-width: 500px;
+}
+
+.about-us-copy {
+    width: 90%;
+    border: 1px solid var(--gold-color);
+    text-align: center;
+    margin: 5% 0;
+    font-size: 0.875rem;
+    padding: 3% ;
+    border-radius: 10px;
+    max-width: 420px;
+    background-color: white;
+}
+
+.about-us-copy-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--violet-color);
+    margin-bottom: 3%;
+    text-transform: uppercase;
+}
+
+@media (min-width: 768px){
+
+    .about-us-img-container {
+        height: 500px;
+    }
+
+    .about-us-intro-container h1 {
+        font-size: 1.5rem;
+    }
+    
+    .first-intro-container {
+        font-size: 1.2rem;
+    }
+
+    .about-us-copies-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 0 3%;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+
+    .about-us-copy {
+        width: 45%;
+        height: 220px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 400px;
+    }
+
+}
+
+@media (min-width: 1024px){
+    .about-us-img-container {
+        height: 700px;
+    }
+
+    .about-us-copy {
+        width: 45%;
+        height: 250px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 450px;
+    }
+
+    .about-us-copy-title {
+        font-size: 1.2rem;
+    }
+
+    .about-us-copy {
+        font-size: 1rem;
+    }
+
+
+}

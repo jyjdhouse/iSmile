@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/spinner.css">
+    <link rel="stylesheet" href="/css/alternativeHeader.css">
+    <link rel="stylesheet" href="/css/lastFormRow.css">
+    <link rel="stylesheet" href="/css/clientConsent.css">
+    <script src="/scripts/clientConsent.js" type="module"></script>
+    <!-- Para las firmas -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Para el logo del navegador -->
+    <link rel="icon" type="image/png" href="/img/logo-background.png">
+    <title>Consentimiento</title>
+</head>
+
+<body>
+    <%- include('./partials/spinner.ejs') %>
+        <%- include('./partials/alternativeHeader.ejs') %>
+            <form action="" method="POST" class="form">
+                <p class="form-title bold">Consentimiento informado de prótesis</p>
+                <p class="consentment-text">
+                    <span class="paragraph">
+                        Yo: <input type="text" id="name" class="input" data-errorClass="name-error"><span
+                            class="name-error error-msg red hidden"><i class='bx bx-info-square'></i>Debes completar tu
+                            nombre</span>,
+                        DNI: <input type="text" id="dni" class="input" data-errorClass="id-error"><span
+                            class="id-error error-msg red hidden"><i class='bx bx-info-square'></i>Debes completar tu
+                            DNI</span>
+                        domicilio en: <input type="text" class="input" id="address"
+                            data-errorClass="address-error"><span class="address-error error-msg red hidden"><i
+                                class='bx bx-info-square'></i>Debes completar tu dirección</span>. Autorizo al centro
+                        odontológico I Smile, y sus profesionales, para la realización e instalación de la prótesis:
+                    </span>
+                    <span class="paragraph">
+                        1. El o los procedimientos necesarios para tratar la o las afecciónes menciónadas me han sido
+                        explicadas y yo entiendo la naturaleza del procedimiento denominado:
+                        <textarea name="procedure" class="textarea"></textarea>
+                    </span>
+                    <span class="paragraph">
+                        2. El pronostico para este o estos procedimientos fue descripto como:
+                        <textarea name="procedure" class="textarea"></textarea>
+                    </span>
+                    <span class="paragraph">
+                        3. Yo he sido informado de posibles métodos alternativos de tratamiento, incluso al respecto de
+                        no
+                        realizar ningún tratamiento o procedimiento.
+                    </span>
+                    <span class="paragraph">
+                        4. Yo entiendo que los siguientes pueden ser riesgos potenciales inherentes al tratamiento que
+                        recibiré:
+                        - Dar la impresión de que los dientes artificiales pueden tener diferencia en tamaño y forma
+                        con los dientes naturales
+                        - La pronuncia con de ciertos sonidos puede resultar un poco alterada
+                        - Es posible que se muerda fácilmente las mejillas y la lengua
+                        - Si se ha cementado la prótesis provisoriamente: se le puede desprender o notar ligeras
+                        molestias con bebidas y alimentos fríos, calientes y dulces en los dientes que sirven de
+                        sujeción.
+                        - Cambios en la coloración de la prótesis fija.
+                        - Pueden fracturarse al consumir alimentos muy duros.
+                    </span>
+                    <span class="paragraph">
+                        5. Se me ha dado la oportunidad de preguntar al Doctor/a, al respecto de la naturaleza del
+                        procedimiento, los riesgos inherentes al tratamiento, y de las alternativas a este tratamiento.
+                    </span>
+                    <span class="paragraph">
+                        6. Este consentimiento no abarca la totalidad de la discusión que he tenido con el Doctor al
+                        respecto del tratamiento.
+                    </span>
+                    <span class="paragraph">
+                        7. Asumo también la responsabilidad total por el pago de estos servicios y acuerdo pagarlos
+                        totalmente.
+                    </span>
+                    <span class="paragraph">
+                        Riesgos personalizados:
+                        Además de los riesgos arriba descriptos por mis circunstancias especiales, hay que esperar
+                        también los siguientes riesgos:
+                        <textarea name="procedure" class="textarea"></textarea>
+                    </span>
+                </p>
+                <%- include('./partials/lastFormRow.ejs') %>
+                    <div class="button-container">
+                        <button type="submit" class="send-form-button">Enviar Formulario</button>
+                    </div>
+            </form>
+</body>
+
+</html>

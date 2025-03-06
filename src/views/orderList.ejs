@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head.ejs') %>
+        <link rel="stylesheet" href="/css/orderList.css">
+        <script src="/scripts/orderList.js" type="module"></script>
+        <title>Ventas</title>
+</head>
+
+<body>
+    <%- include('./partials/header.ejs') %>
+        <main class="main">
+            <div class="loading-spinner">
+                <p>Cargando Ventas...</p>
+                <%- include('./partials/loadingSpinner.ejs') %>
+            </div>
+            <section class="filter-search-section">
+                <div class="filter-toggler">
+                    <p>Filtros</p>
+                    <i class='bx bx-plus-medical filter-section-toggler'></i>
+                    <i class='bx bx-minus filter-section-toggler hidden'></i>
+                </div>
+                <div class="left-side-filter-section filter-div-section">
+                    <p class="filter-section-title">Filtar ventas por <span class="clean-filters">Limpiar filtros</span>
+                    </p>
+                    <input type="text" class="filter-order-input" placeholder="Busqueda por ID de venta">
+                    <select id="filter-order-select">
+                        <option value="0">Todas</option>
+                        <% orderStatus.forEach(status=> { %>
+                            <option value="<%= status.id %>">
+                                <%= status.status %>
+                            </option>
+                            <% }) %>
+                    </select>
+                </div>
+                
+                <div class="right-side-filter-section filter-div-section">
+                    <p>¿No encontras la venta?</p>
+                    <p class="filter-section-disclaimer">Busca por rango de fechas</p>
+                    <div class="filter-field">
+                        <label for="">Desde</label>
+                        <input type="date" class="input-date" name="input_from">
+                        <i class="fa-solid fa-arrows-rotate restart-input-from"></i>
+                    </div>
+                    <div class="filter-field">
+                        <label for="">Hasta</label>
+                        <input type="date" class="input-date" name="input_to">
+                        <i class="fa-solid fa-arrows-rotate restart-input-to"></i>
+                    </div>
+                    <div class="filter-button-container hidden">
+                        <p class="filter-date-button">Filtrar por fechas</p>
+                    </div>
+                </div>
+            </section>
+            <p class="order-disclaimer">Ventas de las ultimas 2 semanas</p>
+            <section class="pagination-section"></section>
+            <div class="popup-table-container">
+                <div class='remove-popup-overlay'></div>
+                <div class='remove-transaction-popup'>
+                    <div class="controls-remove-transaction">
+                        <h3> ¿Seguro queres eliminar esta venta? </h3>
+                        <div class='btn-container'>
+                            <button value='1' type='button'>Si</button>
+                            <button value='0' type='button'>No</button>
+                        </div>
+                    </div>
+
+                   
+                </div>
+                <div class="remove-transaction-loading-spinner">
+                    <div class="loading-spinner">
+                        <%- include('./partials/loadingSpinner.ejs') %>
+                    </div>
+
+                </div>
+                
+                <table class="order-table">
+                    <thead>
+                        <tr>
+                            <th>ID venta</th>
+                            <th>Fecha</th>
+                            <th>Nombre</th>
+                            <th class="order-total-column">Total</th>
+                            <th class="item-quantity-column">Items</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <!-- Aquí se agregarán las filas con los datos de las ventas -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="order-detail-popup popup"></div>
+            <div class="remove-order-popup popup"></div>
+        </main>
+        <p class="error-card hidden"></p>
+        <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

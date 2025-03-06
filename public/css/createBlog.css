@@ -1,0 +1,95 @@
+.blog-creation-main {
+    margin-top: 12vh;
+    margin-bottom: 5vh;
+    padding: 0 5%;
+}
+
+.input-error {
+    border: 1px solid red;
+}
+
+.input-label-container {
+    display: flex;
+    flex-direction: column;
+    margin: 7% 0;
+}
+
+main h1 {
+    font-size: 1.5rem;
+}
+
+.input-label-container label {
+    font-size: 1rem;
+}
+
+.text-input {
+    margin-top: 3%;
+    border: 1px solid grey;
+}
+
+input[type="checkbox"] {
+    width: 10%;
+}
+
+.text-input {
+    width: 60%;
+}
+
+.input-label-container textarea {
+    padding-left: 5px;
+    border: 1px solid grey;
+}
+
+.create-blog-form button {
+    width: 70%;
+    max-width: 250px;
+}
+
+/* Box de fotos */
+.images-radio-box-wrapper{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 20px;
+
+}
+.image-radio-box{
+    height: fit-content;
+    width: 45%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+.image-radio-box .image-container{
+    width: 100%;
+    height: 80%;
+}
+.image-container label{
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+.image-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+button{
+    border: 1px solid var(--violet-color);
+    padding: 15px 20px;
+    font-size: 18px;
+    border-radius: 15px;
+    margin: 0 auto;
+    color: var(--bold-color);
+}
+@media(min-width:1024px){
+    .images-radio-box-wrapper{
+        justify-content: unset;
+        column-gap: 15px;
+    }
+    .image-radio-box{
+        width: 150px;
+    }
+}

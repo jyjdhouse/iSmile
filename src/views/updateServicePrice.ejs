@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head.ejs') %>
+    <link rel="stylesheet" href="/css/serviceUpdatePrice.css">
+    <script type="module" src="/scripts/updateServicePrice.js"></script>
+    <title>Servicios - edicion</title>
+</head>
+<body>
+    <%- include('./partials/header.ejs') %>
+    <main class="main">
+        <h1>Tratamientos</h1>
+        <h6>Modificación precio</h6>
+        <p class="form-label">Seleccióne tratamientos a modificar</p>
+        <form action="/admin/updateServicesPrice?_method=PUT" method="POST" class="form" enctype="multipart/form-data">
+            <section class="choose-service-section">
+                <div class="search-checkbox-container">
+                    <input type="text" class="search-checkbox" placeholder="Busca por nombre">
+                </div>
+                <div class="choose-service-checkbox-container">
+                    <% treatments.forEach(treat => { %>
+                        <label class="checkbox-label" data-id="<%= treat.id %>"><%= treat.name %></label>
+                <% }) %>
+                </div>
+                
+            </section>
+            <section class="shown-labels-section">
+                <p class="shown-labels-title bold">Tratamientos elegidos (toca para remover)</p>
+                <div class="shown-labels-container">
+
+                </div>
+            </section>
+            <section class="new-price-container">
+                <div class="field">
+                    <label class="new-price-label bold">Nuevo Precio</label>
+                    <input type="text" class="numeric-only-input" name="new_price">
+                </div>
+                <div class="field">
+                    <label class="new-price-label bold">Nuevo Precio en Efectivo</label>
+                    <input type="text" class="numeric-only-input" name="new_cash_price">
+                </div>
+                <div class="send-form-button-container">
+                    <div class="button-loading-spinner">
+                        <%- include('./partials/loadingSpinner.ejs') %>
+                    </div>
+                    <button type="submit">Modificar</button>
+                </div>
+
+            </section>
+        </form>
+        <form action="/admin/addTreatment" method="POST" class="add-treatment-form" enctype="multipart/form-data">
+            <p class="add-treatment-title">Agregar Tratamiento</p>
+            <div class="field">
+                <label for="treatment_name">Nombre</label>
+                <input type="text" name="treatment_name" id="treatment_name" class="required">
+            </div>
+            <div class="field">
+                <label for="treatment_description">Descripcion</label>
+                <textarea name="treatment_description" id="treatment_description" class="required"></textarea>
+            </div>
+            <div class="field">
+                <label for="specialty_id">Especialidad</label>
+                <select name="specialty_id" id="specialty_id" class="required">
+                    <option value="">Elegir una especialidad</option>
+                    <% specialties.forEach(spec => { %>
+                        <option value="<%= spec.id %>"  data-subCategory = <%= spec.subSpec %>><%= spec.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="field">
+                <label for="specialtyService_id">Subespecialidad</label>
+                <select name="specialtyService_id" id="specialtyService_id" >
+                    <option value="">Elegir una subespecialidad</option>
+                    <% specialtiesServices.forEach(specServ => { %>
+                        <option value="<%= specServ.id %>" class="hidden" data-specialtyId = <%= specServ.specialties_id %>><%= specServ.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="field">
+                <label for="">Imagen</label>
+                <label for="treatment_image" class="image-label"><i class='bx bx-image'></i></label>
+                <input type="file" class="hidden" name="treatment_image" accept="image/*" id="treatment_image">
+            </div>
+
+            <div class="field">
+                <label for="application_time">Tiempo aplicacion</label>
+                <input type="text" name="application_time" id="application_time" placeholder="30 min" class="required">
+            </div>
+            <div class="field">
+                <label for="duration">Tiempo duracion</label>
+                <input type="text" name="duration" id="duration" placeholder="6-12 meses" class="required">
+            </div>
+            <div class="field">
+                <label for="price">Precio</label>
+                <input type="text" name="price" id="price" class="required numeric-only-input">
+            </div>
+            <div class="field">
+                <label for="cash_price">Precio (efectivo)</label>
+                <input type="text" name="cash_price" id="cash_price" class="required numeric-only-input">
+            </div>
+            
+            <button type="submit">Crear</button>
+        </form>
+
+        <form action="/admin/destroyTreatment?_method=DELETE" method="POST" class="delete-treatment-form">
+            <p class="add-treatment-title">Borrar Tratamiento/s</p>
+            <section class="choose-service-section">
+                <div class="search-checkbox-container">
+                    <input type="text" class="search-checkbox" placeholder="Busca por nombre">
+                </div>
+                <div class="choose-service-checkbox-container">
+                    <% treatments.forEach(treat => { %>
+                        <label class="checkbox-label" data-id="<%= treat.id %>"><%= treat.name %></label>
+                <% }) %>
+                </div>
+            </section>
+            <section class="shown-labels-section">
+                <p class="shown-labels-title bold">Tratamientos elegidos (toca para remover)</p>
+                <div class="shown-labels-container">
+
+                </div>
+            </section>
+            <input type="hidden" id="ids" name="ids">
+            <button type="submit">Borrar</button>
+        </form>
+    </main>
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head') %>
+    <link rel="stylesheet" href="/css/login.css">
+        <title>Inicio Sesion</title>
+</head>
+
+<body>
+    <%- include('./partials/header') %>
+        <main class="main login-main">
+            <form action="/user/login" method="POST"
+                class="popup login-form">
+                <div class="login-field">
+                    <label for="login-email" class="bold">Email</label>
+                    <input type="text" id="login-email" class="input" placeholder="Ingrese su Email" name="email">
+                </div>
+                <div class="login-field pass-field">
+                    <label for="login-password" class="bold">Contraseña</label>
+                    <input type="password" id="login-password" class="input" placeholder="Ingrese su Contraseña"
+                        name="password" autocomplete="off">
+                        <div class="login-password-toggler-container">
+                            <i class="fa-solid fa-eye show-password-btn password-btn-toggler"></i>
+                            <i class="fa-solid fa-eye-slash hide-password-btn password-btn-toggler hidden"></i>
+                        </div>
+                    
+                    <div class="additional-options">
+                        <p class="forget-password-btn">Olvide mi contraseña</p>
+                        <a class="back-to-login" href="/user/regist">No tenes una cuenta? Registrate</a>
+                    </div>
+                   
+                </div>
+                <% if (locals.errors) { %>
+                    <p class="error-msg">Los datos ingresados no son válidos.</p>
+                <% } %>
+                        <div class="button-container">
+                            <button type="submit" class="login-button bold">Iniciar Sesion</button>
+                        </div>
+            </form>
+            <section class="forget-password-section popup">
+                <p class="forget-password-section-title">Por favor, ingrese el mail asociado a su cuenta</p>
+                <input type="email" id="user-forget-password-email">
+                <div class="buttons-container">
+                    <button class="forget-password-link">Recuperar</button>
+                    <p class="close-forget-password-section">volver</p>
+                </div>
+            </section>
+        </main>
+        <%- include('./partials/footer') %>
+</body>
+
+</html>
