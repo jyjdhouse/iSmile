@@ -5,7 +5,7 @@ dotenv.config()
 module.exports = {
   "development": {
     "username": process.env.DEV_USER,
-    "password": process.env.DEV_PASSWORD || null,
+    "password": process.env.DEV_PASSWORD || "admin",
     "database": process.env.DEV_DB,
     "host": process.env.DEV_HOST,
     "port": process.env.DEV_PORT,

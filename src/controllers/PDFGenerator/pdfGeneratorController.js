@@ -27,7 +27,7 @@ const controller = {
       "./alternativeHeader.css"
     );
     const lastRowCssFilePath = path.resolve(__dirname, "./lastFormRow.css");
-    const imageFilePath = path.resolve(__dirname, "./logo-background.png");
+    const imageFilePath = path.resolve(__dirname, "./logo-background.jpg");
 
     // await page.emulateMedia('screen');
     // MODIFICO LAS IMAGENES
@@ -104,7 +104,7 @@ const controller = {
         __dirname,
         "./alternativeHeader.css"
       );
-      const imageFilePath = path.resolve(__dirname, "./logo-background.png");
+      const imageFilePath = path.resolve(__dirname, "./logo-background.jpg");
 
       // await page.emulateMedia('screen');
       // MODIFICO LAS IMAGENES
@@ -191,7 +191,7 @@ const controller = {
         "./alternativeHeader.css"
       );
       const lastRowCssFilePath = path.resolve(__dirname, "./lastFormRow.css");
-      const imageFilePath = path.resolve(__dirname, "./logo-background.png");
+      const imageFilePath = path.resolve(__dirname, "./logo-background.jpg");
 
       // await page.emulateMedia('screen');
       // MODIFICO LAS IMAGENES

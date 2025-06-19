@@ -11,7 +11,7 @@
     width: 80%;
     height: 100%;
     position: relative;
-    background-color: var(--light-violet-color);
+    background-color: #5e068d;
     display: flex;
     align-items: center;
 }
@@ -24,7 +24,7 @@
 }
 
 .gradient-border {
-    background: linear-gradient(to left, var(--violet-color), #cf74e6);
+    background: linear-gradient(to left,#5e068d,  #cf74ed);
     position: absolute;
     width: 100%;
     bottom: 0;
